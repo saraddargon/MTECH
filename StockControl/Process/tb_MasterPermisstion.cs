@@ -10,6 +10,7 @@ using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
 using Telerik.WinControls;
 using Telerik.WinControls.Data;
+using System.Globalization;
 
 namespace StockControl
 {
@@ -57,23 +58,23 @@ namespace StockControl
 
         private void Unit_Load(object sender, EventArgs e)
         {
-            Screen = new DataTable();
-            Screen.Columns.Add(new DataColumn("LinkNode", typeof(string)));
-            Screen.Columns.Add(new DataColumn("id", typeof(string)));
+            //Screen = new DataTable();
+            //Screen.Columns.Add(new DataColumn("LinkNode", typeof(string)));
+            //Screen.Columns.Add(new DataColumn("id", typeof(string)));
 
-            RootNode = new DataTable();
-            RootNode.Columns.Add(new DataColumn("RootName", typeof(string)));
-            RootNode.Columns.Add(new DataColumn("LinkNode", typeof(string)));
-            RootNode.Columns.Add(new DataColumn("id", typeof(string)));
+            //RootNode = new DataTable();
+            //RootNode.Columns.Add(new DataColumn("RootName", typeof(string)));
+            //RootNode.Columns.Add(new DataColumn("LinkNode", typeof(string)));
+            //RootNode.Columns.Add(new DataColumn("id", typeof(string)));
 
-            dt_Permisstion = new DataTable();
-            dt_Permisstion.Columns.Add(new DataColumn("id", typeof(int)));
-            dt_Permisstion.Columns.Add(new DataColumn("Refid_UserID", typeof(string)));
-            dt_Permisstion.Columns.Add(new DataColumn("UserID", typeof(string)));
-            dt_Permisstion.Columns.Add(new DataColumn("RootNode", typeof(string)));
-            dt_Permisstion.Columns.Add(new DataColumn("LineNode", typeof(string)));
-            dt_Permisstion.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
-            dt_Permisstion.Columns.Add(new DataColumn("CreateBy", typeof(string)));
+            //dt_Permisstion = new DataTable();
+            //dt_Permisstion.Columns.Add(new DataColumn("id", typeof(int)));
+            //dt_Permisstion.Columns.Add(new DataColumn("Refid_UserID", typeof(string)));
+            //dt_Permisstion.Columns.Add(new DataColumn("UserID", typeof(string)));
+            //dt_Permisstion.Columns.Add(new DataColumn("RootNode", typeof(string)));
+            //dt_Permisstion.Columns.Add(new DataColumn("LineNode", typeof(string)));
+            //dt_Permisstion.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
+            //dt_Permisstion.Columns.Add(new DataColumn("CreateBy", typeof(string)));
 
 
             Load_Default();
@@ -93,16 +94,31 @@ namespace StockControl
             {
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    this.cboRootNode.AutoFilter = true;
-                    this.cboRootNode.DisplayMember = "RootName";
+                    this.cboUser.AutoFilter = true;
+                    this.cboUser.DisplayMember = "UserID";
                     FilterDescriptor filter = new FilterDescriptor();
-                    filter.PropertyName = this.cboRootNode.DisplayMember;
+                    filter.PropertyName = this.cboUser.DisplayMember;
                     filter.Operator = FilterOperator.Contains;
-                    this.cboRootNode.AutoCompleteMode = AutoCompleteMode.Append;
-                    this.cboRootNode.EditorControl.MasterTemplate.FilterDescriptors.Add(filter);
+                    this.cboUser.AutoCompleteMode = AutoCompleteMode.Append;
+                    this.cboUser.EditorControl.MasterTemplate.FilterDescriptors.Add(filter);
+                    cboUser.MultiColumnComboBoxElement.DropDownWidth = 230;
+                    cboUser.MultiColumnComboBoxElement.EditorControl.Columns[0].Width = 100;
+                    cboUser.MultiColumnComboBoxElement.EditorControl.Columns[1].Width = 100;
+                    //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[0].IsVisible = false;
+                    //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[3].IsVisible = false;
+                    //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[4].IsVisible = false;
+                    //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[5].IsVisible = false;
+                    //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[6].IsVisible = false;
+                    //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[7].IsVisible = false;
+                    //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[8].IsVisible = false;
+                    //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[9].IsVisible = false;
+                    //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[10].IsVisible = false;
+                    cboUser.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
+                    cboUser.DropDownMinSize = new Size(230, 150);
 
-                    cboRootNode.DisplayMember = "RootName";
-                    cboRootNode.ValueMember = "LinkNode";
+                    cboUser.DisplayMember = "UserID";
+                    cboUser.ValueMember = "UserID";
+                   
 
                     //RootNode.Rows.Clear();
                     //var G = (from ix in db.OpenForms
@@ -117,17 +133,10 @@ namespace StockControl
                     //    cboRootNode.DataSource = RootNode;
                     //    cboRootNode.SelectedIndex = 0;
                     //}
-                    cboRootNode.DataSource = db.OpenForms.OrderBy(a=>a.NodeName).ToList();
-                   
-                    //try
-                    //{
-                    //    if (!cboRootNode.Text.Equals(""))
-                    //    {
-                    //        DefaultType();
-                    //    }
-                    //}
-                    //catch { }
+                    cboUser.DataSource = db.tb_Users.Where(ab=> ab.Status==true).OrderBy(a=>a.UserID).ToList();
 
+                    cboUser.SelectedIndex = -1;
+                    cboUser.Text = "";
                     
                 }
             }
@@ -213,49 +222,12 @@ namespace StockControl
            // throw new NotImplementedException();
         }
 
-        private void LoadDefualt()
-        {
-            //try
-            //{
-
-
-            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
-            //    {
-            //        var gt = (from ix in db.tb_CRRNCies select ix).ToList();
-            //        GridViewComboBoxColumn comboBoxColumn = this.dgvData.Columns["CRRNCY"] as GridViewComboBoxColumn;
-            //        comboBoxColumn.DisplayMember = "CRRNCY";
-            //        comboBoxColumn.ValueMember = "CRRNCY";
-            //        comboBoxColumn.DataSource = gt;
-          
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //    dbClss.AddError("CRRNCY", ex.Message, this.Name);
-            //}
-        }
+       
         private void DataLoad()
         {
-            //dt.Rows.Clear();
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-               
-               // var g = (from ix in db.tb_Users select ix).ToList();
-               //// DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
-               // dgvData.DataSource = g;
-               // SetRowNo1(dgvData);
-               // //int ck = 1;
-               // //foreach (var x in dgvData.Rows)
-               // //{
-                    
-               // //    x.Cells["dgvNo"].Value = ck;
-                   
-               // //    ck += 1;
-               // //}
+            cboRootNode_SelectedIndexChanged(null, null);
 
-            }
-            
+
         }
         private bool CheckDuplicate(string code)
         {
@@ -305,51 +277,51 @@ namespace StockControl
             try
             {
                 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    int Refid_UserID = 0;
-                    string RootNode = "";
-                    string LineNode = "";
-                    string UserID = "";
+                //using (DataClasses1DataContext db = new DataClasses1DataContext())
+                //{
+                //    int Refid_UserID = 0;
+                //    string RootNode = "";
+                //    string LineNode = "";
+                //    string UserID = "";
 
-                    if (txtScreen.Text.Trim() == "")
-                        return;
+                //    if (txtScreen.Text.Trim() == "")
+                //        return;
                     
-                    foreach (DataRow dr in dt_Permisstion.Rows)
-                    {
-                        foreach (Object obj in listBox1.SelectedItems)
-                        {
-                            // Refid_UserID = dbClss.TInt(dr["Refid_UserID"].ToString());
-                            //RootNode = dr["RootNode"].ToString();
-                            // LineNode = dr["LineNode"].ToString();
-                            UserID = dr["UserID"].ToString();
+                //    foreach (DataRow dr in dt_Permisstion.Rows)
+                //    {
+                //        foreach (Object obj in listBox1.SelectedItems)
+                //        {
+                //            // Refid_UserID = dbClss.TInt(dr["Refid_UserID"].ToString());
+                //            //RootNode = dr["RootNode"].ToString();
+                //            // LineNode = dr["LineNode"].ToString();
+                //            UserID = dr["UserID"].ToString();
 
-                            var u = (from ix in db.tb_Users
-                                     where ix.UserID.ToUpper().Trim() == UserID.ToUpper().Trim()
-                                     select ix).ToList();
-                            if (u.Count > 0)
-                            {
-                                Refid_UserID = Convert.ToInt16(u.FirstOrDefault().id);
-                            }
+                //            var u = (from ix in db.tb_Users
+                //                     where ix.UserID.ToUpper().Trim() == UserID.ToUpper().Trim()
+                //                     select ix).ToList();
+                //            if (u.Count > 0)
+                //            {
+                //                Refid_UserID = Convert.ToInt16(u.FirstOrDefault().id);
+                //            }
 
-                            if (Refid_UserID > 0)
-                            {
-                                var dd = (from ix in db.tb_Permisstions
-                                          where ix.Refid_UserID == Refid_UserID
-                                          select ix).ToList();
-                                if (dd.Count > 0)
-                                {
+                //            if (Refid_UserID > 0)
+                //            {
+                //                var dd = (from ix in db.tb_Permisstions
+                //                          where ix.Refid_UserID == Refid_UserID
+                //                          select ix).ToList();
+                //                if (dd.Count > 0)
+                //                {
 
-                                    dbClss.AddHistory(this.Name, "ลบ", "ลบ User Permisstions [ Screen : " + txtScreen.Text + " UserID : " + UserID + "]", "");
+                //                    dbClss.AddHistory(this.Name, "ลบ", "ลบ User Permisstions [ Screen : " + txtScreen.Text + " UserID : " + UserID + "]", "");
 
-                                    db.tb_Permisstions.DeleteAllOnSubmit(dd);
-                                    db.SubmitChanges();
+                //                    db.tb_Permisstions.DeleteAllOnSubmit(dd);
+                //                    db.SubmitChanges();
 
-                                    C += 1;
-                                }
-                            }
-                        }
-                    }
+                //                    C += 1;
+                //                }
+                //            }
+                //        }
+                //    }
 
                     //foreach (var g in dgvData.Rows)
                     //{
@@ -425,7 +397,7 @@ namespace StockControl
                     //        }
                     //    }
                     //}
-                }
+                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message);
                 dbClss.AddError(this.Name, ex.Message, this.Name);
@@ -1064,34 +1036,83 @@ namespace StockControl
                 mccbEl.EditorControl.MasterTemplate.FilterDescriptors.Add(filterDescriptor);
             }
         }
+        
 
         private void cboRootNode_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                if (cboRootNode.Text != "")
+                radGridView1.Rows.Clear();
+                radGridView2.Rows.Clear();
+                txtid.Text = "0";
+                
+
+                if (cboUser.Text != "")
                 {
-                    txtLinkNode.Text = cboRootNode.SelectedValue.ToString();
-
-
                     using (DataClasses1DataContext db = new DataClasses1DataContext())
                     {
-                        var G = (from ix in db.OpenForms
-                                 where ix.RootName == cboRootNode.Text
-                                    && ix.LinkNode == txtLinkNode.Text
+                        var u = (from ix in db.tb_Users
+                                 where ix.UserID == cboUser.Text
+                                    && ix.Status == true
                                  select ix).ToList();
+                        if(u.Count>0)
+                        {
+                            txtid.Text = dbClss.TSt(u.FirstOrDefault().id);
+                        }
+
+                        var G = (from a in db.tb_Permisstions
+                                 join b in db.tb_Users on a.Refid_UserID equals b.id
+                                 join c in db.OpenForms on a.LineNode equals c.LinkNode
+                                 where b.UserID.Trim().ToUpper() == cboUser.Text.Trim().ToUpper()
+                                 && a.Refid_UserID == Convert.ToInt16(txtid.Text)
+                                 && b.Status == true
+
+                                 select new
+                                 {
+                                     id = a.id
+                                    , Layout = a.RootNode
+                                    , TextNode = c.TextNode
+                                    , RefidUser = b.id
+                                 }//.Where(ab => ab.VendorNo.Contains(Vendorno))
+                             ).ToList();
                         if (G.Count() > 0)
                         {
-                            txtScreen.Text = Convert.ToString(G.FirstOrDefault().TextNode);
+                            radGridView2.DataSource = G;
+                            dbClss.SetRowNo1(radGridView2);
+
+                            txtid.Text = dbClss.TSt(G.FirstOrDefault().RefidUser);
                         }
-                        LoadTextBox1();
-                        LoadTextBox2();
+
+                        //var G1 = (from a in db.OpenForms
+                        //              //join b in db.tb_Users on a.Refid_UserID equals b.id
+                        //          join c in db.tb_Permisstions on a.LinkNode equals c.LineNode
+
+                        //          where 
+                        //            a.LinkNode != c.LineNode
+                        //            && a.NodeName != c.RootNode
+                        //            && c.Refid_UserID == dbClss.TInt(txtid.Text)
+                        //          select new
+                        //          {
+                        //              id = a.ID
+                        //             ,
+                        //              Layout = a.NodeName
+                        //             ,
+                        //              TextNode = a.TextNode
+                        //            ,LinkNode = a.LinkNode
+                        //          }//.Where(ab => ab.VendorNo.Contains(Vendorno))
+                        //     ).ToList();
+                        var G1 = (from ix in db.sp_050_Permission_select(cboUser.Text,dbClss.TInt(txtid.Text)) select ix).ToList();
+                        if (G1.Count() > 0)
+                        {
+                            radGridView1.DataSource = G1;
+                            dbClss.SetRowNo1(radGridView1);
+                        }
                     }
                 }
                 else
                 {
-                    txtLinkNode.Text = "";
-                    txtScreen.Text = "";
+                    radGridView1.Rows.Clear();
+                    radGridView2.Rows.Clear();
                 }
 
             }
@@ -1099,51 +1120,51 @@ namespace StockControl
         }
         private void LoadTextBox1()
         {
-            try
-            {
-                listBox1.Items.Clear();
-                if (cboRootNode.Text != "" && txtLinkNode.Text != "")
-                {
-                    using (DataClasses1DataContext db = new DataClasses1DataContext())
-                    {
-                        var G = (from ix in db.sp_029_Permisstion1(cboRootNode.Text, txtLinkNode.Text)
-                                 select ix).ToList();
-                        if (G.Count() > 0)
-                        {
-                            foreach (var GG in G)
-                            {
-                                listBox1.Items.Add(GG.UserID);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //try
+            //{
+            //    listBox1.Items.Clear();
+            //    if (cboUser.Text != "" && txtLinkNode.Text != "")
+            //    {
+            //        using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //        {
+            //            var G = (from ix in db.sp_029_Permisstion1(cboUser.Text, txtLinkNode.Text)
+            //                     select ix).ToList();
+            //            if (G.Count() > 0)
+            //            {
+            //                foreach (var GG in G)
+            //                {
+            //                    listBox1.Items.Add(GG.UserID);
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void LoadTextBox2()
         {
-            try
-            {
-                listBox2.Items.Clear();
-                dt_Permisstion.Rows.Clear();
-                if (cboRootNode.Text != "" && txtLinkNode.Text != "")
-                {
-                    using (DataClasses1DataContext db = new DataClasses1DataContext())
-                    {
-                        var G = (from ix in db.sp_030_Permisstion2(cboRootNode.Text, txtLinkNode.Text)
-                                 select ix).ToList();
-                        if (G.Count() > 0)
-                        {
-                            foreach(var GG in G)
-                            {
-                                listBox2.Items.Add(GG.UserID);
-                            }
-                            dt_Permisstion = StockControl.dbClss.LINQToDataTable(G);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //try
+            //{
+            //    listBox2.Items.Clear();
+            //    dt_Permisstion.Rows.Clear();
+            //    if (cboUser.Text != "" && txtLinkNode.Text != "")
+            //    {
+            //        using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //        {
+            //            var G = (from ix in db.sp_030_Permisstion2(cboUser.Text, txtLinkNode.Text)
+            //                     select ix).ToList();
+            //            if (G.Count() > 0)
+            //            {
+            //                foreach(var GG in G)
+            //                {
+            //                    listBox2.Items.Add(GG.UserID);
+            //                }
+            //                dt_Permisstion = StockControl.dbClss.LINQToDataTable(G);
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void listBox1_Click(object sender, EventArgs e)
@@ -1159,131 +1180,145 @@ namespace StockControl
         {
             try
             {
-                if (listBox1.Items.Count > 0)
+                if (radGridView1.Rows.Count <= 0 && dbClss.TInt(txtid.Text) > 0 && cboUser.Text != "")
+                    return;
+                else
                 {
-                    if (this.listBox1.SelectedIndex >= 0)
+                    using (DataClasses1DataContext db = new DataClasses1DataContext())
                     {
-                        string UserID = listBox1.SelectedItem.ToString();
-                        listBox2.Items.Add(listBox1.SelectedItem.ToString());
-                        //if (this.listBox1.SelectedIndex >= 0)
-                            this.listBox1.Items.RemoveAt(this.listBox1.SelectedIndex);
+                        radGridView1.EndEdit();
+                        foreach (GridViewRowInfo rd in radGridView1.Rows)
+                        {
+                            if (rd.IsSelected)
+                            {
+                                tb_Permisstion pm = new tb_Permisstion();
+                                pm.Refid_UserID = dbClss.TInt(txtid.Text);
+                                pm.RootNode = dbClss.TSt(rd.Cells["dgvLayout"].Value);
+                                pm.LineNode = dbClss.TSt(rd.Cells["dgvLinkNode"].Value);
+                                pm.CreateBy = ClassLib.Classlib.User;
+                                pm.CreateDate =  Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                db.tb_Permisstions.InsertOnSubmit(pm);
+                                db.SubmitChanges();
 
-                        Edit = 1;
-
-                        Add(UserID);
-
+                            }
+                        }
+                        dbClss.AddHistory(this.Name, "เพิ่มสิทธ์", "ทำการเพิ่มสิทธ์  [" + cboUser.Text + "] เข้าระบบ", ClassLib.Classlib.User);
+                        
+                        DataLoad();
                     }
                 }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.Message);
+                dbClss.AddError(this.Name, ex.Message, this.Name);
+            }
         }
         private void Add(string UserID)
         {
-            try
-            {
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    int Refid_UserID = 0;
-                    string RootNode = "";
-                    string LineNode = "";
+            //try
+            //{
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        int Refid_UserID = 0;
+            //        string RootNode = "";
+            //        string LineNode = "";
 
-                    if (txtScreen.Text.Trim() == "")
-                        return;
+            //        if (txtScreen.Text.Trim() == "")
+            //            return;
 
 
 
-                    var u = (from ix in db.tb_Users
-                             where ix.UserID.ToUpper().Trim() == UserID.ToUpper().Trim()
-                             select ix).ToList();
-                    if (u.Count > 0)
-                    {
-                        Refid_UserID = Convert.ToInt16(u.FirstOrDefault().id);
-                    }
+            //        var u = (from ix in db.tb_Users
+            //                 where ix.UserID.ToUpper().Trim() == UserID.ToUpper().Trim()
+            //                 select ix).ToList();
+            //        if (u.Count > 0)
+            //        {
+            //            Refid_UserID = Convert.ToInt16(u.FirstOrDefault().id);
+            //        }
 
-                    if (Refid_UserID > 0)
-                    {
-                        var a = (from ix in db.tb_Permisstions
-                                 where ix.Refid_UserID == Refid_UserID
-                                    && ix.LineNode == txtLinkNode.Text.Trim()
-                                    && ix.RootNode == cboRootNode.Text.Trim()
-                                 select ix).ToList();
-                        if (a.Count <= 0)
-                        {
-                            tb_Permisstion gy = new tb_Permisstion();
-                            gy.Refid_UserID = Refid_UserID;
-                            gy.RootNode = cboRootNode.Text.Trim();
-                            gy.LineNode = txtLinkNode.Text.Trim();
-                            gy.CreateBy = ClassLib.Classlib.User;                         
-                            gy.CreateDate = DateTime.Now;                    
+            //        if (Refid_UserID > 0)
+            //        {
+            //            var a = (from ix in db.tb_Permisstions
+            //                     where ix.Refid_UserID == Refid_UserID
+            //                        && ix.LineNode == txtLinkNode.Text.Trim()
+            //                        && ix.RootNode == cboUser.Text.Trim()
+            //                     select ix).ToList();
+            //            if (a.Count <= 0)
+            //            {
+            //                tb_Permisstion gy = new tb_Permisstion();
+            //                gy.Refid_UserID = Refid_UserID;
+            //                gy.RootNode = cboUser.Text.Trim();
+            //                gy.LineNode = txtLinkNode.Text.Trim();
+            //                gy.CreateBy = ClassLib.Classlib.User;                         
+            //                gy.CreateDate = DateTime.Now;                    
 
-                            db.tb_Permisstions.InsertOnSubmit(gy);
-                            db.SubmitChanges();
-                            dbClss.AddHistory(this.Name, "เพิ่ม User Permisstion", "เพิ่ม User Permisstion RootNode : [" +gy.RootNode + " Screen : " + txtScreen.Text.ToString()+" UserID : " + UserID+ "]", "");
+            //                db.tb_Permisstions.InsertOnSubmit(gy);
+            //                db.SubmitChanges();
+            //                dbClss.AddHistory(this.Name, "เพิ่ม User Permisstion", "เพิ่ม User Permisstion RootNode : [" +gy.RootNode + " Screen : " + txtScreen.Text.ToString()+" UserID : " + UserID+ "]", "");
                          
-                        }
-                    }
+            //            }
+            //        }
 
-                }
+            //    }
 
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                dbClss.AddError(this.Name, ex.Message + "Add", this.Name);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //    dbClss.AddError(this.Name, ex.Message + "Add", this.Name);
+            //}
 
         }
         private void Del(string UserID)
         {
-            try
-            {
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    int Refid_UserID = 0;
-                    //string RootNode = "";
-                    //string LineNode = "";
+            //try
+            //{
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        int Refid_UserID = 0;
+            //        //string RootNode = "";
+            //        //string LineNode = "";
 
-                    if (txtScreen.Text.Trim() == "")
-                        return;
-
-
-
-                    var u = (from ix in db.tb_Users
-                             where ix.UserID.ToUpper().Trim() == UserID.ToUpper().Trim()
-                             select ix).ToList();
-                    if (u.Count > 0)
-                    {
-                        Refid_UserID = Convert.ToInt16(u.FirstOrDefault().id);
-                    }
-
-                    if (Refid_UserID > 0)
-                    {
-                        var dd = (from ix in db.tb_Permisstions
-                                  where ix.Refid_UserID == Refid_UserID
-                                   && ix.LineNode == txtLinkNode.Text.Trim()
-                                    && ix.RootNode == cboRootNode.Text.Trim()
-                                  select ix).ToList();
-                        if (dd.Count > 0)
-                        {
-                            dbClss.AddHistory(this.Name, "ลบ", "ลบ User Permisstions [ Screen : " + txtScreen.Text + " UserID : " + UserID + "]", "");
-
-                            db.tb_Permisstions.DeleteAllOnSubmit(dd);
-                            db.SubmitChanges();
+            //        if (txtScreen.Text.Trim() == "")
+            //            return;
 
 
-                        }
-                    }
 
-                }
+            //        var u = (from ix in db.tb_Users
+            //                 where ix.UserID.ToUpper().Trim() == UserID.ToUpper().Trim()
+            //                 select ix).ToList();
+            //        if (u.Count > 0)
+            //        {
+            //            Refid_UserID = Convert.ToInt16(u.FirstOrDefault().id);
+            //        }
+
+            //        if (Refid_UserID > 0)
+            //        {
+            //            var dd = (from ix in db.tb_Permisstions
+            //                      where ix.Refid_UserID == Refid_UserID
+            //                       && ix.LineNode == txtLinkNode.Text.Trim()
+            //                        && ix.RootNode == cboUser.Text.Trim()
+            //                      select ix).ToList();
+            //            if (dd.Count > 0)
+            //            {
+            //                dbClss.AddHistory(this.Name, "ลบ", "ลบ User Permisstions [ Screen : " + txtScreen.Text + " UserID : " + UserID + "]", "");
+
+            //                db.tb_Permisstions.DeleteAllOnSubmit(dd);
+            //                db.SubmitChanges();
 
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                dbClss.AddError(this.Name, ex.Message + "Add", this.Name);
-            }
+            //            }
+            //        }
+
+            //    }
+
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //    dbClss.AddError(this.Name, ex.Message + "Add", this.Name);
+            //}
 
         }
 
@@ -1291,23 +1326,53 @@ namespace StockControl
         {
             try
             {
-                if (listBox2.Items.Count > 0)
+                if (radGridView2.Rows.Count <= 0 && dbClss.TInt(txtid.Text) > 0 && cboUser.Text != "")
+                    return;
+                else
                 {
-                    if (this.listBox2.SelectedIndex >= 0)
+                    using (DataClasses1DataContext db = new DataClasses1DataContext())
                     {
-                        listBox1.Items.Add(listBox2.SelectedItem.ToString());
-                        //if (this.listBox2.SelectedIndex >= 0)
-                        Del(listBox2.SelectedItem.ToString());
+                        radGridView2.EndEdit();
+                        foreach (GridViewRowInfo rd in radGridView2.Rows)
+                        {
+                            if (rd.IsSelected)
+                            {
+                                int id = 0;
+                                id = dbClss.TInt(rd.Cells["dgvid"].Value);
+                                if (id > 0)
+                                {
+                                    var unit1 = (from ix in db.tb_Permisstions
+                                                 where ix.id == id
+                                                 select ix).ToList();
+                                    foreach (var d in unit1)
+                                    {
+                                        db.tb_Permisstions.DeleteOnSubmit(d);
+                                        db.SubmitChanges();
+                                        dbClss.AddHistory(this.Name, "ลบสิทธ์", "ทำการลบสิทธ์  [" + cboUser.Text + "] ออกจากระบบ", ClassLib.Classlib.User);
 
-                        this.listBox2.Items.RemoveAt(this.listBox2.SelectedIndex);
+                                    }
+                                }
+                                //tb_Permisstion pm = new tb_Permisstion();
+                                //pm.Refid_UserID = dbClss.TInt(txtid.Text);
+                                //pm.RootNode = dbClss.TSt(rd.Cells["dgvLayout"].Value);
+                                //pm.LineNode = dbClss.TSt(rd.Cells["dgvLinkNode"].Value);
+                                //pm.CreateBy = ClassLib.Classlib.User;
+                                //pm.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                //db.tb_Permisstions.InsertOnSubmit(pm);
+                                //db.SubmitChanges();
 
-                        Edit = 1;
-
+                            }
+                        }
                         
+                        DataLoad();
                     }
                 }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                dbClss.AddError(this.Name, ex.Message, this.Name);
+            }
         }
 
         private void cboRootNode_Click(object sender, EventArgs e)

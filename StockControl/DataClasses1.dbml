@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dbWHControl" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=mac-pc;Initial Catalog=dbWHControl;User ID=sa" SettingsObjectName="StockControl.Properties.Settings" SettingsPropertyName="dbStockControlConnectionString1" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dbMTECH" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=1.179.133.222,2018;Initial Catalog=dbMTECH;User ID=sa" SettingsObjectName="StockControl.Properties.Settings" SettingsPropertyName="dbStockControlConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.ErrorLog" Member="ErrorLogs">
     <Type Name="ErrorLog">
       <Column Name="ErrorLogNo" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -3297,5 +3297,19 @@
     <Parameter Name="CodeNo1" Parameter="codeNo1" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="CodeNo2" Parameter="codeNo2" Type="System.String" DbType="VarChar(50)" />
     <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_050_Permission_select" Method="sp_050_Permission_select">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefUserid" Parameter="refUserid" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_050_Permission_selectResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RootName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NodeName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TypeNode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TextNode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LinkNode" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="DialogFlag" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Version" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
   </Function>
 </Database>
