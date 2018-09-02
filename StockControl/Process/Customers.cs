@@ -12,9 +12,9 @@ using Telerik.WinControls;
 
 namespace StockControl
 {
-    public partial class Vendor : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Customers : Telerik.WinControls.UI.RadRibbonForm
     {
-        public Vendor()
+        public Customers()
         {
             InitializeComponent();
         }
@@ -54,12 +54,13 @@ namespace StockControl
             dt.Columns.Add("FaxNo", typeof(string));
             dt.Columns.Add("Email", typeof(string));
             dt.Columns.Add("ContactName", typeof(string));
-            dt.Columns.Add("VendorGroup", typeof(int));
+            dt.Columns.Add("CreditLimit", typeof(decimal));
+            dt.Columns.Add("CustomerGroup", typeof(int));
             dt.Columns.Add("VatGroup", typeof(int));
             dt.Columns.Add("DefaultCurrency", typeof(int));
             dt.Columns.Add("ShippingTime", typeof(int));
             dt.Columns.Add("PriceIncludeingVat", typeof(bool));
-            dt.Columns.Add("ReceiveAddress", typeof(string));
+            dt.Columns.Add("ShippingAddress", typeof(string));
             dt.Columns.Add("AttachFile", typeof(string));
 
         }
@@ -154,7 +155,7 @@ namespace StockControl
                     var com1 = radGridView1.Columns["VendorGroup"] as GridViewComboBoxColumn;
                     com1.DisplayMember = "Value";
                     com1.ValueMember = "id";
-                    com1.DataSource = db.mh_VendorGroups.ToList();
+                    com1.DataSource = db.mh_CustomerGroups.ToList();
 
                     var com2 = radGridView1.Columns["VatGroup"] as GridViewComboBoxColumn;
                     com2.DisplayMember = "Value";
@@ -195,7 +196,7 @@ namespace StockControl
                 //    ck += 1;
                 //}
 
-                var g = db.mh_Vendors.ToList();
+                var g = db.mh_Customers.ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.DataSource = dt2;
                 int ck = 0;
@@ -269,8 +270,8 @@ namespace StockControl
                                     //gy.Remark = Convert.ToString(g.Cells["Remark"].Value);
                                     //db.tb_Vendors.InsertOnSubmit(gy);
                                     //db.SubmitChanges();
-                                    mh_Vendor t = new mh_Vendor();
-                                    t.No = dbClss.GetNo(1, 2);
+                                    var t = new mh_Customer();
+                                    t.No = dbClss.GetNo(24, 2);
                                     t.Name = g.Cells["VendorName"].Value.ToSt();
                                     t.Active = g.Cells["Active"].Value.ToBool();
                                     t.Address = g.Cells["Address"].Value.ToSt();
@@ -281,14 +282,15 @@ namespace StockControl
                                     t.FaxNo = g.Cells["FaxNo"].Value.ToSt();
                                     t.PhoneNo = g.Cells["PhoneNo"].Value.ToSt();
                                     t.PriceIncludeingVat = g.Cells["PriceIncludeVat"].ToBool();
-                                    t.ReceivingAddress = g.Cells["ReceiveAddress"].Value.ToSt();
+                                    t.ShippingAddress = g.Cells["ReceiveAddress"].Value.ToSt();
                                     t.ShippingTime = g.Cells["ShippingTime"].Value.ToInt();
                                     t.VatGroup = g.Cells["VatGroup"].Value.ToInt();
                                     t.VATRegistration = g.Cells["VatRegis"].Value.ToBool();
-                                    t.VendorGroup = g.Cells["VendorGroup"].Value.ToInt();
-                                    dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + t.Name + "]", "");
+                                    t.CustomerGroup = g.Cells["VendorGroup"].Value.ToInt();
+                                    t.CreditLimit = g.Cells["CreditLimit"].Value.ToDecimal();
+                                    dbClss.AddHistory(this.Name, "เพิ่มผู้ซื้อ", "เพิ่มผู้ซื้อ [" + t.Name + "]", "");
                                     //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
-                                    db.mh_Vendors.InsertOnSubmit(t);
+                                    db.mh_Customers.InsertOnSubmit(t);
                                     db.SubmitChanges();
                                     C += 1;
                                 }
@@ -310,7 +312,7 @@ namespace StockControl
                                     //db.SubmitChanges();
                                     //dbClss.AddHistory(this.Name, "แก้ไข", "แก้ไขผู้ขาย [" + unit1.VendorName + "]", "");
 
-                                    var t = db.mh_Vendors.Where(x => x.No == g.Cells["dgvCodeTemp"].Value.ToSt()).First();
+                                    var t = db.mh_Customers.Where(x => x.No == g.Cells["dgvCodeTemp"].Value.ToSt()).First();
                                     t.Name = g.Cells["VendorName"].Value.ToSt();
                                     t.Active = g.Cells["Active"].Value.ToBool();
                                     t.Address = g.Cells["Address"].Value.ToSt();
@@ -321,15 +323,16 @@ namespace StockControl
                                     t.FaxNo = g.Cells["FaxNo"].Value.ToSt();
                                     t.PhoneNo = g.Cells["PhoneNo"].Value.ToSt();
                                     t.PriceIncludeingVat = g.Cells["PriceIncludeVat"].ToBool();
-                                    t.ReceivingAddress = g.Cells["ReceiveAddress"].Value.ToSt();
+                                    t.ShippingAddress = g.Cells["ReceiveAddress"].Value.ToSt();
                                     t.ShippingTime = g.Cells["ShippingTime"].Value.ToInt();
                                     t.VatGroup = g.Cells["VatGroup"].Value.ToInt();
                                     t.VATRegistration = g.Cells["VatRegis"].Value.ToBool();
-                                    t.VendorGroup = g.Cells["VendorGroup"].Value.ToInt();
+                                    t.CustomerGroup = g.Cells["VendorGroup"].Value.ToInt();
+                                    t.CreditLimit = g.Cells["CreditLimit"].Value.ToDecimal();
 
                                     C += 1;
                                     db.SubmitChanges();
-                                    dbClss.AddHistory(this.Name, "แก้ไข", "แก้ไขผู้ขาย [" + t.Name + "]", "");
+                                    dbClss.AddHistory(this.Name, "แก้ไข", "แก้ไขผู้ซื้อ [" + t.Name + "]", "");
                                 }
                             }
                         }
@@ -343,7 +346,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("เพิ่มผู้ขาย", ex.Message, this.Name);
+                dbClss.AddError("เพิ่มผู้ซื้อ", ex.Message, this.Name);
             }
 
             if (C > 0)
@@ -382,11 +385,11 @@ namespace StockControl
                                     //    db.tb_Vendors.DeleteOnSubmit(d);
                                     //    dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.VendorName + "]", "");
                                     //}
-                                    var unit1 = db.mh_Vendors.Where(x => x.No == CodeDelete).ToList();
+                                    var unit1 = db.mh_Customers.Where(x => x.No == CodeDelete).ToList();
                                     foreach (var d in unit1)
                                     {
-                                        db.mh_Vendors.DeleteOnSubmit(d);
-                                        dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.Name + "]", "");
+                                        db.mh_Customers.DeleteOnSubmit(d);
+                                        dbClss.AddHistory(this.Name, "ลบผู้ซื้อ", "Delete Customer [" + d.Name + "]", "");
                                     }
                                     C += 1;
 
@@ -404,7 +407,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("ลบผู้ขาย", ex.Message, this.Name);
+                dbClss.AddError("ลบผู้ซื้อ", ex.Message, this.Name);
             }
 
             if (C > 0)
@@ -476,11 +479,11 @@ namespace StockControl
                     if (g.IsVisible)
                     {
                         if (Convert.ToString(g.Cells["VendorName"].Value).Equals(""))
-                            err += "- “ชื่อผู้ขาย:” เป็นค่าว่างไม่ได้ \n";
+                            err += "- “ชื่อผู้ซื้อ:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["DefaultCrrncy"].Value).Equals(""))
                             err += "- “ค่าเงิน:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["VendorGroup"].Value).Equals(""))
-                            err += "- “กลุ่มผู้ขาย:” เป็นค่าว่างไม่ได้ \n";
+                            err += "- “กลุ่มผู้ซื้อ:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["VatGroup"].Value).Equals(""))
                             err += "- “กลุ่มภาษี:” เป็นค่าว่างไม่ได้ \n";
 
@@ -785,7 +788,7 @@ namespace StockControl
 
         private void MasterTemplate_CellFormatting(object sender, CellFormattingEventArgs e)
         {
-            if (e.CellElement.ColumnInfo.HeaderText == "รหัสผู้ขาย")
+            if (e.CellElement.ColumnInfo.HeaderText == "รหัสผู้ซื้อ")
             {
                 if (e.CellElement.RowInfo.Cells["VendorNo"].Value != null)
                 {
