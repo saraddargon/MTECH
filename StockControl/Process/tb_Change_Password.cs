@@ -1,0 +1,1175 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.Linq;
+using Microsoft.VisualBasic.FileIO;
+using Telerik.WinControls.UI;
+using Telerik.WinControls;
+using Telerik.WinControls.Data;
+using System.Globalization;
+
+namespace StockControl
+{
+    public partial class tb_Change_Password : Telerik.WinControls.UI.RadRibbonForm
+    {
+        public tb_Change_Password()
+        {
+            InitializeComponent();
+        }
+
+        //private int RowView = 50;
+        //private int ColView = 10;
+        DataTable dt = new DataTable();
+        private void radMenuItem2_Click(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            HistoryView hw = new HistoryView(this.Name);
+            this.Cursor = Cursors.Default;
+            hw.ShowDialog();
+        }
+
+        private void radRibbonBar1_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void GETDTRow()
+        {
+            dt.Columns.Add(new DataColumn("VendorNo", typeof(string)));
+            dt.Columns.Add(new DataColumn("VendorName", typeof(string)));
+            dt.Columns.Add(new DataColumn("Address", typeof(string)));
+            dt.Columns.Add(new DataColumn("CRRNCY", typeof(string)));
+            dt.Columns.Add(new DataColumn("Remark", typeof(string)));
+            dt.Columns.Add(new DataColumn("Active", typeof(bool)));
+            dt.Columns.Add(new DataColumn("ContactName", typeof(string)));
+            dt.Columns.Add(new DataColumn("Tel", typeof(string)));
+            dt.Columns.Add(new DataColumn("Fax", typeof(string)));
+            dt.Columns.Add(new DataColumn("email", typeof(string)));
+            
+        }
+        System.Drawing.Font MyFont;
+        DataTable Screen = new DataTable();
+        DataTable RootNode = new DataTable();
+        DataTable dt_Permisstion = new DataTable();
+
+
+        private void Unit_Load(object sender, EventArgs e)
+        {
+            
+
+            DataLoad();
+            ////LoadDefualt();
+            //MyFont = new System.Drawing.Font(
+            //                "Tahoma", 9,
+            //                FontStyle.Italic,    // + obviously doesn't work, but what am I meant to do?
+            //                GraphicsUnit.Pixel);
+
+            //ViewClick();
+        }
+        //private void Load_Default()
+        //{
+        //    try
+        //    {
+        //        using (DataClasses1DataContext db = new DataClasses1DataContext())
+        //        {
+        //            this.cboUser.AutoFilter = true;
+        //            this.cboUser.DisplayMember = "UserID";
+        //            FilterDescriptor filter = new FilterDescriptor();
+        //            filter.PropertyName = this.cboUser.DisplayMember;
+        //            filter.Operator = FilterOperator.Contains;
+        //            this.cboUser.AutoCompleteMode = AutoCompleteMode.Append;
+        //            this.cboUser.EditorControl.MasterTemplate.FilterDescriptors.Add(filter);
+        //            cboUser.MultiColumnComboBoxElement.DropDownWidth = 230;
+        //            cboUser.MultiColumnComboBoxElement.EditorControl.Columns[0].Width = 100;
+        //            cboUser.MultiColumnComboBoxElement.EditorControl.Columns[1].Width = 100;
+        //            //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[0].IsVisible = false;
+        //            //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[3].IsVisible = false;
+        //            //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[4].IsVisible = false;
+        //            //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[5].IsVisible = false;
+        //            //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[6].IsVisible = false;
+        //            //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[7].IsVisible = false;
+        //            //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[8].IsVisible = false;
+        //            //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[9].IsVisible = false;
+        //            //cboUser.MultiColumnComboBoxElement.EditorControl.Columns[10].IsVisible = false;
+        //            cboUser.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
+        //            cboUser.DropDownMinSize = new Size(230, 150);
+
+        //            cboUser.DisplayMember = "UserID";
+        //            cboUser.ValueMember = "UserID";
+                   
+
+        //            //RootNode.Rows.Clear();
+        //            //var G = (from ix in db.OpenForms
+        //            //         //where ix.RootName == cboRootNode.Text
+        //            //         select ix).ToList();
+        //            //if (G.Count() > 0)
+        //            //{
+        //            //    foreach (var gg in G)
+        //            //    {
+        //            //        RootNode.Rows.Add(gg.RootName,gg.LinkNode, gg.ID);
+        //            //    }
+        //            //    cboRootNode.DataSource = RootNode;
+        //            //    cboRootNode.SelectedIndex = 0;
+        //            //}
+        //            cboUser.DataSource = db.tb_Users.Where(ab=> ab.Status==true).OrderBy(a=>a.UserID).ToList();
+
+        //            cboUser.SelectedIndex = -1;
+        //            cboUser.Text = "";
+                    
+        //        }
+        //    }
+        //    catch(Exception ex ){ MessageBox.Show(ex.Message); }
+        //}
+        
+
+        //private void DefaultType()
+        //{
+        //    try
+        //    {
+        //        using (DataClasses1DataContext db = new DataClasses1DataContext())
+        //        {
+        //            cboScreen.DataSource = null;
+        //            cboScreen.DisplayMember = "LinkNode";
+        //            cboScreen.ValueMember = "ID";
+        //            //cboScreen.DataSource = db.OpenForms.Where(t => t.RootName.Equals(cboRootNode.Text)).ToList();
+
+        //            Screen.Rows.Clear();
+
+        //            var G = (from ix in db.OpenForms
+        //                     where ix.RootName == cboRootNode.Text
+        //                     select ix).ToList();
+        //            if (G.Count() > 0)
+        //            {
+        //                foreach(var gg in G)
+        //                {
+        //                    Screen.Rows.Add(gg.LinkNode, gg.ID);
+        //                }
+        //                cboScreen.DataSource = Screen;
+        //                cboScreen.SelectedIndex = 0;
+        //            }
+
+                    
+
+        //        }
+        //    }
+        //    catch (Exception ex) { MessageBox.Show(ex.Message); }
+        //}
+
+        private void RMenu6_Click(object sender, EventArgs e)
+        {
+            //ลบ
+            //throw new NotImplementedException();
+            btnDelete_Click(sender, e);
+        }
+
+        private void RMenu5_Click(object sender, EventArgs e)
+        {
+            btnEdit_Click(sender, e);
+        }
+
+        private void RMenu4_Click(object sender, EventArgs e)
+        {
+            ////เพิ่มผู้ขาย
+            //throw new NotImplementedException();
+            btnNew_Click(sender, e);
+        }
+
+        private void RMenu3_Click(object sender, EventArgs e)
+        {
+            ////เพิ่มผุ้ติดต่อ
+            //if (row >= 0)
+            //{
+
+
+            //    this.Cursor = Cursors.WaitCursor;
+            //    Contact ct = new Contact(Convert.ToString(dgvData.Rows[row].Cells["VendorNo"].Value),
+            //        Convert.ToString(dgvData.Rows[row].Cells["VendorName"].Value));
+            //    this.Cursor = Cursors.Default;
+            //    ct.ShowDialog();
+            //    GC.Collect();
+            //    GC.WaitForPendingFinalizers();
+
+            //    ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+            //    ClassLib.Memory.Heap();
+            //}
+        }
+
+        private void RadMenuItem3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("menu");
+           // throw new NotImplementedException();
+        }
+
+       
+        private void DataLoad()
+        {
+            try
+            {
+                txtPassNew.Text = "";
+                txtPassold.Text = "";
+                txtUserID.Text = ClassLib.Classlib.User;
+                txtUserName.Text = "";
+                txtPasswordOld_Sis.Text = "";
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+
+                    var g = (from ix in db.tb_Users
+                             where ix.UserID == dbClss.TSt(txtUserID.Text)
+                             && ix.Status == true
+                             select ix).ToList();
+                    if (g.Count > 0)
+                    {
+                        txtPasswordOld_Sis.Text = dbClss.TSt(g.FirstOrDefault().Password);
+                        txtUserName.Text = dbClss.TSt(g.FirstOrDefault().UserName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                dbClss.AddError(this.Name, ex.Message, this.Name);
+            }
+        }
+
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DataLoad();
+        }
+        private void NewClick()
+        {
+            //dgvData.ReadOnly = false;
+            //dgvData.AllowAddNewRow = false;
+            btnEdit.Enabled = false;
+            btnView.Enabled = true;
+            //dgvData.Rows.AddNew();
+            Ac = "New";
+        }
+        string Ac = "";
+        int Edit = 0;
+        private void EditClick()
+        {
+            //dgvData.ReadOnly = false;
+            txtPassNew.Enabled = true;
+            txtPassold.Enabled = true;
+            btnEdit.Enabled = false;
+            btnView.Enabled = true;
+            btnSave.Enabled = true;
+            //dgvData.AllowAddNewRow = true;
+            Ac = "Edit";
+        }
+        private void ViewClick()
+        {
+            //dgvData.ReadOnly = true;
+            txtPassNew.Enabled = false;
+            txtPassold.Enabled = false;
+            btnView.Enabled = false;
+            btnEdit.Enabled = true;
+            btnSave.Enabled = false;
+            //dgvData.AllowAddNewRow = false;
+            
+        }
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            NewClick();
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            ViewClick();
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            EditClick();
+        }
+
+        private bool Check_Save()
+        {
+            bool re = true;
+            string err = "";
+            try
+            {
+                string PasswordOld_Sis = txtPasswordOld_Sis.Text.Trim();
+                string PasswordOld = txtPassold.Text.Trim();
+                string PasswordNew = txtPassNew.Text.Trim();
+
+                if (PasswordOld.Equals(""))
+                    err += "- “ Password old :” must not be empty .\n";
+                else
+                {
+                    if (!PasswordOld.Equals(PasswordOld_Sis))
+                        err += "- “ Password old :” is invalid.\n";
+                }
+
+                if (err == "")
+                {
+                    if (PasswordNew.Equals(""))
+                        err += "- “ Password New :” must not be empty. .\n";
+
+                    if (PasswordOld.Equals(PasswordNew))
+                        err += "- Duplicate is password old .\n";
+                }
+
+                if (!err.Equals(""))
+                    MessageBox.Show(err);
+                else
+                    re = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                dbClss.AddError(this.Name, ex.Message, this.Name);
+            }
+
+            return re;
+        }
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (Check_Save())
+                return;
+
+            if (MessageBox.Show("ต้องการบันทึก ?","บันทึก",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
+            {
+                //if (Ac == "Edit" || Ac == "New")
+                //{
+
+                    try
+                    {
+
+                    using (DataClasses1DataContext db = new DataClasses1DataContext())
+                    {
+
+                        var g = (from ix in db.tb_Users
+                                 where ix.UserID == dbClss.TSt(txtUserID.Text)
+                                 && ix.Status == true
+                                 select ix).ToList();
+                        if (g.Count > 0)
+                        {
+                            var gg = (from ix in db.tb_Users
+                                      where ix.UserID == dbClss.TSt(txtUserID.Text)
+                                                 && ix.Status == true
+                                      select ix).First();
+
+                            gg.ModifyBy = ClassLib.Classlib.User;
+                            gg.ModifyDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                            gg.Password = txtPassNew.Text.Trim();
+
+                            dbClss.AddHistory(this.Name, this.Name, "แก้ไข Password", "tb_MasterUser");
+                            db.SubmitChanges();
+                            DataLoad();
+                        }
+
+
+                    }
+                    
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        dbClss.AddError(this.Name, ex.Message, this.Name);
+                    }
+
+                    MessageBox.Show("บันทึกสำเร็จ!");
+                //}
+                //else
+                //    MessageBox.Show("สถานะต้องเป็น New or Edit");
+            }
+        }
+
+        private void radGridView1_CellEndEdit(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
+        {
+            try
+            {
+               e.Row.Cells["dgvC"].Value = true;
+                //string check1 = Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["VendorName"].Value);
+                //string TM= Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["dgvCodeTemp2"].Value);
+                //if (!check1.Trim().Equals("") && TM.Equals(""))
+                //{
+
+                //    if (!CheckDuplicate(check1.Trim()))
+                //    {
+                //        MessageBox.Show("ชื้อผู้ขายซ้ำ ซ้ำ");
+                //        radGridView1.Rows[e.RowIndex].Cells["GroupCode"].Value = "";
+                //        radGridView1.Rows[e.RowIndex].Cells["GroupCode"].IsSelected = true;
+
+                //    }
+                //}
+                // if (dgvData.Columns["Department"].Index == e.ColumnIndex)
+                //{
+                //    var cc = e.Row.Cells["Department"];
+                //    string DepartmentTemp = Convert.ToString(e.Row.Cells["Department"].Value);
+                //    try
+                //    {
+                //        if (!DepartmentTemp.Equals(Department_Edit) && !Department_Edit.Equals(""))
+                //        {
+                //            (e.Row.Cells["Department"].Value) = Department_Edit;
+                //            Department_Edit = "";
+                //        }
+                //    }
+                //    catch { }
+                //}
+
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+        string Department_Edit = "";
+        private void Unit_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+           // MessageBox.Show(e.KeyCode.ToString());
+        }
+
+        private void radGridView1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            //// MessageBox.Show(e.KeyCode.ToString());
+
+            //if (e.KeyData == (Keys.Control | Keys.S))
+            //{
+            //    if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            //    {
+            //        AddUnit();
+            //        DataLoad();
+            //    }
+            //}
+            ////else if (e.KeyCode == Keys.Delete)
+            ////{
+            ////}
+
+            ////else if(e.KeyData == (Keys.Control | Keys.N))
+            ////{
+            ////    if (MessageBox.Show("ต้องการสร้างใหม่ ?", "สร้างใหม่", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            ////    {
+            ////        NewClick();
+            ////    }
+
+            ////}
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            
+                //DeleteUnit();
+                DataLoad();
+            
+        }
+
+        int row = -1;
+        private void radGridView1_CellClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
+        {
+            row = e.RowIndex;
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            //dbClss.ExportGridCSV(radGridView1);
+           //dbClss.ExportGridXlSX(dgvData);
+        }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Filter = "Spread Sheet files (*.csv)|*.csv|All files (*.csv)|*.csv";
+            if (op.ShowDialog() == DialogResult.OK)
+            {
+
+
+                using (TextFieldParser parser = new TextFieldParser(op.FileName))
+                {
+                    dt.Rows.Clear();
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters(",");
+                    int a = 0;
+                    int c = 0;
+                    while (!parser.EndOfData)
+                    {
+                        //Processing row
+                        a += 1;
+                        DataRow rd = dt.NewRow();
+                        // MessageBox.Show(a.ToString());
+                        string[] fields = parser.ReadFields();
+                        c = 0;
+                        foreach (string field in fields)
+                        {
+                            c += 1;
+                            //TODO: Process field
+                            //MessageBox.Show(field);
+                            if (a>1)
+                            {
+                                if(c==1)
+                                    rd["VendorNo"] = Convert.ToString(field);
+                                else if(c==2)
+                                    rd["VendorName"] = Convert.ToString(field);
+                                else if (c == 3)
+                                    rd["Address"] = Convert.ToString(field);
+                                else if (c == 4)
+                                    rd["CRRNCY"] = Convert.ToString(field);
+                                else if (c == 5)
+                                    rd["Remark"] = Convert.ToString(field);
+                                else if (c == 6)
+                                    rd["Active"] = Convert.ToBoolean(field);
+
+                            }
+                            else
+                            {
+                                if (c == 1)
+                                    rd["VendorNo"] = "";
+                                else if (c == 2)
+                                    rd["VendorName"] = "";
+                                else if (c == 3)
+                                    rd["Address"] = "";
+                                else if (c == 4)
+                                    rd["CRRNCY"] = "";
+                                else if (c == 5)
+                                    rd["Remark"] = "";
+                                else if (c == 6)
+                                    rd["Active"] = false;
+
+
+
+
+                            }
+
+                            //
+                            //rd[""] = "";
+                            //rd[""]
+                        }
+                        dt.Rows.Add(rd);
+
+                    }
+                }
+                if(dt.Rows.Count>0)
+                {
+                    dbClss.AddHistory(this.Name, "Import", "Import file CSV in to System", "");
+                    ImportData();
+                    MessageBox.Show("Import Completed.");
+
+                    DataLoad();
+                }
+               
+            }
+        }
+
+        private void ImportData()
+        {
+            //try
+            //{
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+                   
+            //        foreach (DataRow rd in dt.Rows)
+            //        {
+            //            if (!rd["VendorName"].ToString().Equals(""))
+            //            {
+
+            //                var x = (from ix in db.tb_Vendors where ix.VendorNo.ToLower().Trim() == rd["VendorNo"].ToString().ToLower().Trim() select ix).FirstOrDefault();
+
+            //                if(x==null)
+            //                {
+                                
+            //                    tb_Vendor ts = new tb_Vendor();
+            //                    ts.VendorNo = dbClss.GetNo(1, 2);
+            //                    ts.VendorName = Convert.ToString(rd["VendorName"].ToString());
+            //                    ts.Address = Convert.ToString(rd["Address"].ToString());
+            //                    ts.CRRNCY = Convert.ToString(rd["CRRNCY"].ToString());
+            //                    ts.Remark = Convert.ToString(rd["Remark"].ToString());
+            //                    ts.Active = Convert.ToBoolean(rd["Active"].ToString());
+            //                    db.tb_Vendors.InsertOnSubmit(ts);
+            //                    db.SubmitChanges();
+            //                }
+            //                else
+            //                {
+            //                    x.VendorName = Convert.ToString(rd["VendorName"].ToString());
+            //                    x.Address = Convert.ToString(rd["Address"].ToString());
+            //                    x.CRRNCY = Convert.ToString(rd["CRRNCY"].ToString());
+            //                    x.Remark = Convert.ToString(rd["Remark"].ToString());
+                               
+            //                    x.Active = Convert.ToBoolean(rd["Active"].ToString());
+            //                    db.SubmitChanges();
+
+            //                }
+
+                       
+            //            }
+            //        }
+                   
+            //    }
+            //}
+            //catch(Exception ex) { MessageBox.Show(ex.Message);
+            //    dbClss.AddError(this.Name, ex.Message, this.Name);
+            //}
+        }
+
+        private void btnFilter1_Click(object sender, EventArgs e)
+        {
+            //dgvData.EnableFiltering = true;
+        }
+
+        private void btnUnfilter1_Click(object sender, EventArgs e)
+        {
+            //dgvData.EnableFiltering = false;
+        }
+
+        private void radMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MasterTemplate_CellValueChanged(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
+        {
+           //if(radGridView1.Columns["VendorName"].Index==e.ColumnIndex
+           //     || radGridView1.Columns["VendorName"].Index == e.ColumnIndex
+           //     || radGridView1.Columns["Address"].Index == e.ColumnIndex
+           //     || radGridView1.Columns["CRRNCY"].Index == e.ColumnIndex
+           //     || radGridView1.Columns["Remark"].Index == e.ColumnIndex
+           //     )
+           // {
+
+           // }
+        }
+
+        private void MasterTemplate_RowFormatting(object sender, RowFormattingEventArgs e)
+        {
+            //if (e.RowElement.RowInfo.Cells["VendorNo"].Value == null)
+            //{
+            //    e.RowElement.ResetValue(LightVisualElement.BackColorProperty, ValueResetFlags.Local);
+            //    e.RowElement.ResetValue(LightVisualElement.GradientStyleProperty, ValueResetFlags.Local);
+            //    e.RowElement.ResetValue(LightVisualElement.DrawFillProperty, ValueResetFlags.Local);
+            //}
+            //else if(!e.RowElement.RowInfo.Cells["VendorNo"].Value.Equals(""))
+            //{ 
+            //    e.RowElement.DrawFill = true;
+            //    // e.RowElement.GradientStyle = GradientStyles.Solid;
+            //    e.RowElement.BackColor = Color.WhiteSmoke;
+          
+            //}
+            //else
+            //{
+            //    e.RowElement.ResetValue(LightVisualElement.BackColorProperty, ValueResetFlags.Local);
+            //    e.RowElement.ResetValue(LightVisualElement.GradientStyleProperty, ValueResetFlags.Local);
+            //    e.RowElement.ResetValue(LightVisualElement.DrawFillProperty, ValueResetFlags.Local);
+            //}
+        }
+
+        private void MasterTemplate_CellFormatting(object sender, CellFormattingEventArgs e)
+        {
+            //if (e.CellElement.ColumnInfo.HeaderText == "รหัสผู้ขาย")
+            //{
+            //    if (e.CellElement.RowInfo.Cells["VendorNo"].Value != null)
+            //    {
+            //        if (!e.CellElement.RowInfo.Cells["VendorNo"].Value.Equals(""))
+            //        {
+            //            e.CellElement.DrawFill = true;
+            //           // e.CellElement.ForeColor = Color.Blue;
+            //            e.CellElement.NumberOfColors = 1;
+            //            e.CellElement.BackColor = Color.WhiteSmoke;
+            //        }
+            //        else
+            //        {
+            //            e.CellElement.DrawFill = true;
+            //            //e.CellElement.ForeColor = Color.Yellow;
+            //            e.CellElement.NumberOfColors = 1;
+            //            e.CellElement.BackColor = Color.WhiteSmoke;
+            //        }
+            //    }
+            //}
+            //else if (e.CellElement.ColumnInfo.HeaderText == "ผู้ติดต่อ"
+            //    || e.CellElement.ColumnInfo.HeaderText == "เบอร์โทร"
+            //    || e.CellElement.ColumnInfo.HeaderText == "เบอร์แฟกซ์"
+            //    || e.CellElement.ColumnInfo.HeaderText == "อีเมล์"
+            //    )
+            //{
+            //    if (e.CellElement.RowInfo.Cells["ContactName"].Value != null
+            //        || e.CellElement.RowInfo.Cells["Tel"].Value != null
+            //        || e.CellElement.RowInfo.Cells["FAX"].Value != null
+            //        || e.CellElement.RowInfo.Cells["Email"].Value != null)
+            //    {
+            //        e.CellElement.DrawFill = true;
+            //        // e.CellElement.ForeColor = Color.Blue;
+            //        e.CellElement.NumberOfColors = 1;
+            //        e.CellElement.BackColor = Color.WhiteSmoke;
+            //        //if (!e.CellElement.RowInfo.Cells["ContactName"].Value.Equals("")
+            //        //    )
+            //        //{
+            //        //    e.CellElement.DrawFill = true;
+            //        //    // e.CellElement.ForeColor = Color.Blue;
+            //        //    e.CellElement.NumberOfColors = 1;
+            //        //    e.CellElement.BackColor = SystemColors.ButtonHighlight;
+            //        //}
+            //        //else
+            //        //{
+            //        //    //e.CellElement.DrawFill = true;
+            //        //    ////e.CellElement.ForeColor = Color.Yellow;
+            //        //    //e.CellElement.NumberOfColors = 1;
+            //        //    //e.CellElement.BackColor = Color.WhiteSmoke;
+            //        //}
+            //    }
+            //}
+            //else
+            //{
+            //    e.CellElement.ResetValue(LightVisualElement.DrawFillProperty, ValueResetFlags.Local);
+            //    e.CellElement.ResetValue(LightVisualElement.ForeColorProperty, ValueResetFlags.Local);
+            //    e.CellElement.ResetValue(LightVisualElement.NumberOfColorsProperty, ValueResetFlags.Local);
+            //    e.CellElement.ResetValue(LightVisualElement.BackColorProperty, ValueResetFlags.Local);
+            //}
+        }
+
+        private void radButtonElement1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MasterTemplate_CellDoubleClick(object sender, GridViewCellEventArgs e)
+        {
+            try
+            {
+                //if (dgvData.Columns["dgvDel"].Index == e.ColumnIndex)  //dgvDel
+                //    Delete_Item();
+            }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
+        }
+        private void Delete_Item()
+        {
+            try
+            {
+
+                //if (dgvData.Rows.Count < 0)
+                //    return;
+
+
+                //if (Ac.Equals("New") || Ac.Equals("Edit"))
+                //{
+                //    this.Cursor = Cursors.WaitCursor;
+
+                   
+                //        int id = 0;
+                //        int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["id"].Value), out id);
+                //    if (id <= 0)
+                //        dgvData.Rows.Remove(dgvData.CurrentRow);
+
+                //    else
+                //    {
+                //        string Department = "";
+                //        Department = StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["Department"].Value);
+                //        if (MessageBox.Show("ต้องการลบรายการ ( " + Department + " ) ออกจากรายการ หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                //        {
+                //            dgvData.CurrentRow.IsVisible = false;
+                //        }
+                //    }
+                //        SetRowNo1(dgvData);
+                //}
+                //else
+                //{
+                //    MessageBox.Show("ไม่สามารถทำการลบรายการได้");
+                //}
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { this.Cursor = Cursors.Default; }
+        }
+        public static void SetRowNo1(RadGridView Grid)//เลขลำดับ
+        {
+            int i = 1;
+            Grid.Rows.Where(o => o.IsVisible).ToList().ForEach(o =>
+            {
+                o.Cells["dgvNo"].Value = i;
+                i++;
+            });
+        }
+
+        private void dgvData_EditorRequired(object sender, EditorRequiredEventArgs e)
+        {
+            GridViewEditManager manager = sender as GridViewEditManager;
+            // Assigning DropDownListAddEditor to the right column
+            if (manager.GridViewElement.CurrentColumn.Name == "Department")
+            {
+                DropDownListAddEditor editor = new DropDownListAddEditor();
+                editor.InputValueNotFound += new DropDownListAddEditor.InputValueNotFoundHandler(DropDownListAddEditor_InputValueNotFound);
+                e.Editor = editor;
+            }
+          
+        }
+        internal class DropDownListAddEditor :
+                 RadDropDownListEditor
+        {
+            protected GridDataCellElement cell;
+            protected InputValueNotFoundArgs e;
+            /// <summary>
+            /// Event handler for missing values in item list of editor
+            /// </summary>
+            /// <param name="sender">Event source of type DropDownListAddEditor</param>
+            /// <param name="e">Event arguments</param>
+            public delegate void InputValueNotFoundHandler(object sender,
+                                                           InputValueNotFoundArgs e);
+            /// <summary>
+            /// Event for missing values in item list of editor
+            /// </summary>
+            public event InputValueNotFoundHandler InputValueNotFound;
+            /// <summary>
+            /// Constructor
+            /// </summary>
+            public DropDownListAddEditor() :
+                base()
+            {
+                // Nothing to do
+            }
+            public override bool EndEdit()
+            {
+                RadDropDownListEditorElement element = this.EditorElement as RadDropDownListEditorElement;
+                string text = element.Text;
+                RadListDataItem item = null;
+                foreach (RadListDataItem entry in element.Items)
+                {
+                    if (entry.Text == text)
+                    {
+                        item = entry;
+                        break;
+                    }
+                }
+                if ((item == null) &&
+                   (InputValueNotFound != null))
+                {
+                    // Get cell for handling CellEndEdit event
+                    this.cell = (this.EditorManager as GridViewEditManager).GridViewElement.CurrentCell;
+                    // Add event handling for setting value to cell
+                    (this.OwnerElement as GridComboBoxCellElement).GridControl.CellEndEdit += new GridViewCellEventHandler(OnCellEndEdit);
+                    this.e = new InputValueNotFoundArgs(element);
+                    this.InputValueNotFound(this,
+                                            this.e);
+                }
+                return base.EndEdit();
+            }
+            /// <summary>
+            /// Puts added value into cell value
+            /// </summary>
+            /// <param name="sender">Event source of type GridViewEditManager</param>
+            /// <param name="e">Event arguments</param>
+            /// <remarks>Connected to GridView event CellEndEdit</remarks>
+            protected void OnCellEndEdit(object sender,
+                                         GridViewCellEventArgs e)
+            {
+                if (this.e != null)
+                {
+                    // Handle only added value, others by default handling of grid
+                    if ((this.cell == (sender as GridViewEditManager).GridViewElement.CurrentCell) &&
+                        this.e.ValueAdded)
+                    {
+                        e.Row.Cells[e.ColumnIndex].Value = this.e.Value;
+                    }
+                    this.e = null;
+                }
+            }
+            /// <summary>
+            /// Event arguments for InputValueNotFound
+            /// </summary>
+            public class InputValueNotFoundArgs :
+                             EventArgs
+            {
+                /// <summary>
+                /// Constructor
+                /// </summary>
+                /// <param name="editorElement">Editor assiciated element</param>
+                internal protected InputValueNotFoundArgs(RadDropDownListEditorElement editorElement)
+                {
+                    this.EditorElement = editorElement;
+                    this.Text = editorElement.Text;
+                }
+                /// <summary>
+                /// Editor associated element 
+                /// </summary>
+                public RadDropDownListEditorElement EditorElement { get; protected set; }
+                /// <summary>
+                /// Input text with no match in drop down list
+                /// </summary>
+                public string Text { get; protected set; }
+                /// <summary>
+                /// Text related missing value
+                /// </summary>
+                /// <remarks>Has to be set during event processing</remarks>
+                /// <seealso cref="ValueAdded"/>
+                public object Value { get; set; }
+                /// <summary>
+                /// Missing value added
+                /// </summary>
+                /// <remarks>Set also the Value property</remarks>
+                public bool ValueAdded { get; set; }
+            }
+        }
+        private void DropDownListAddEditor_InputValueNotFound(object sender, DropDownListAddEditor.InputValueNotFoundArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(e.Text))
+                {
+                    List<string> values = e.EditorElement.DataSource as List<string>;
+                    if (values == null)
+                    {
+                        List<string> aa = new List<string>();
+                        e.EditorElement.DataSource = aa;
+                        values = e.EditorElement.DataSource as List<string>;
+                    }
+                    if (!e.Text.Equals(""))
+                    {
+                        Department_Edit = e.Text;
+
+                    }
+                    values.Add(e.Text);
+                    e.Value = e.Text;
+                    e.ValueAdded = true;
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void dgvData_CellEditorInitialized(object sender, GridViewCellEventArgs e)
+        {
+            RadMultiColumnComboBoxElement mccbEl = e.ActiveEditor as RadMultiColumnComboBoxElement;
+            if (mccbEl != null)
+            {
+                mccbEl.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
+                mccbEl.DropDownMinSize = new Size(550, 300);
+                mccbEl.DropDownMaxSize = new Size(550, 300);
+
+                mccbEl.AutoSizeDropDownToBestFit = false;
+                mccbEl.DropDownAnimationEnabled = false;
+                mccbEl.AutoFilter = true;
+                FilterDescriptor filterDescriptor = new FilterDescriptor(mccbEl.DisplayMember, FilterOperator.Contains, string.Empty);
+                mccbEl.EditorControl.MasterTemplate.FilterDescriptors.Add(filterDescriptor);
+            }
+        }
+        
+
+        private void cboRootNode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+        }
+       
+
+        private void listBox1_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    MessageBox.Show(listBox1.SelectedItem.ToString());
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void btnInclude_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    if (radGridView1.Rows.Count <= 0 && dbClss.TInt(txtUserID.Text) > 0 && cboUser.Text != "")
+            //        return;
+            //    else
+            //    {
+            //        using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //        {
+            //            radGridView1.EndEdit();
+            //            foreach (GridViewRowInfo rd in radGridView1.Rows)
+            //            {
+            //                if (rd.IsSelected)
+            //                {
+            //                    tb_Permisstion pm = new tb_Permisstion();
+            //                    pm.Refid_UserID = dbClss.TInt(txtUserID.Text);
+            //                    pm.RootNode = dbClss.TSt(rd.Cells["dgvLayout"].Value);
+            //                    pm.LineNode = dbClss.TSt(rd.Cells["dgvLinkNode"].Value);
+            //                    pm.CreateBy = ClassLib.Classlib.User;
+            //                    pm.CreateDate =  Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            //                    db.tb_Permisstions.InsertOnSubmit(pm);
+            //                    db.SubmitChanges();
+
+            //                }
+            //            }
+            //            dbClss.AddHistory(this.Name, "เพิ่มสิทธ์", "ทำการเพิ่มสิทธ์  [" + cboUser.Text + "] เข้าระบบ", ClassLib.Classlib.User);
+                        
+            //            DataLoad();
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message);
+            //    dbClss.AddError(this.Name, ex.Message, this.Name);
+            //}
+        }
+        private void Add(string UserID)
+        {
+            //try
+            //{
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        int Refid_UserID = 0;
+            //        string RootNode = "";
+            //        string LineNode = "";
+
+            //        if (txtScreen.Text.Trim() == "")
+            //            return;
+
+
+
+            //        var u = (from ix in db.tb_Users
+            //                 where ix.UserID.ToUpper().Trim() == UserID.ToUpper().Trim()
+            //                 select ix).ToList();
+            //        if (u.Count > 0)
+            //        {
+            //            Refid_UserID = Convert.ToInt16(u.FirstOrDefault().id);
+            //        }
+
+            //        if (Refid_UserID > 0)
+            //        {
+            //            var a = (from ix in db.tb_Permisstions
+            //                     where ix.Refid_UserID == Refid_UserID
+            //                        && ix.LineNode == txtLinkNode.Text.Trim()
+            //                        && ix.RootNode == cboUser.Text.Trim()
+            //                     select ix).ToList();
+            //            if (a.Count <= 0)
+            //            {
+            //                tb_Permisstion gy = new tb_Permisstion();
+            //                gy.Refid_UserID = Refid_UserID;
+            //                gy.RootNode = cboUser.Text.Trim();
+            //                gy.LineNode = txtLinkNode.Text.Trim();
+            //                gy.CreateBy = ClassLib.Classlib.User;                         
+            //                gy.CreateDate = DateTime.Now;                    
+
+            //                db.tb_Permisstions.InsertOnSubmit(gy);
+            //                db.SubmitChanges();
+            //                dbClss.AddHistory(this.Name, "เพิ่ม User Permisstion", "เพิ่ม User Permisstion RootNode : [" +gy.RootNode + " Screen : " + txtScreen.Text.ToString()+" UserID : " + UserID+ "]", "");
+                         
+            //            }
+            //        }
+
+            //    }
+
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //    dbClss.AddError(this.Name, ex.Message + "Add", this.Name);
+            //}
+
+        }
+        private void Del(string UserID)
+        {
+            //try
+            //{
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        int Refid_UserID = 0;
+            //        //string RootNode = "";
+            //        //string LineNode = "";
+
+            //        if (txtScreen.Text.Trim() == "")
+            //            return;
+
+
+
+            //        var u = (from ix in db.tb_Users
+            //                 where ix.UserID.ToUpper().Trim() == UserID.ToUpper().Trim()
+            //                 select ix).ToList();
+            //        if (u.Count > 0)
+            //        {
+            //            Refid_UserID = Convert.ToInt16(u.FirstOrDefault().id);
+            //        }
+
+            //        if (Refid_UserID > 0)
+            //        {
+            //            var dd = (from ix in db.tb_Permisstions
+            //                      where ix.Refid_UserID == Refid_UserID
+            //                       && ix.LineNode == txtLinkNode.Text.Trim()
+            //                        && ix.RootNode == cboUser.Text.Trim()
+            //                      select ix).ToList();
+            //            if (dd.Count > 0)
+            //            {
+            //                dbClss.AddHistory(this.Name, "ลบ", "ลบ User Permisstions [ Screen : " + txtScreen.Text + " UserID : " + UserID + "]", "");
+
+            //                db.tb_Permisstions.DeleteAllOnSubmit(dd);
+            //                db.SubmitChanges();
+
+
+            //            }
+            //        }
+
+            //    }
+
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //    dbClss.AddError(this.Name, ex.Message + "Add", this.Name);
+            //}
+
+        }
+
+        private void btnExclude_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    if (radGridView2.Rows.Count <= 0 && dbClss.TInt(txtUserID.Text) > 0 && cboUser.Text != "")
+            //        return;
+            //    else
+            //    {
+            //        using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //        {
+            //            radGridView2.EndEdit();
+            //            foreach (GridViewRowInfo rd in radGridView2.Rows)
+            //            {
+            //                if (rd.IsSelected)
+            //                {
+            //                    int id = 0;
+            //                    id = dbClss.TInt(rd.Cells["dgvid"].Value);
+            //                    if (id > 0)
+            //                    {
+            //                        var unit1 = (from ix in db.tb_Permisstions
+            //                                     where ix.id == id
+            //                                     select ix).ToList();
+            //                        foreach (var d in unit1)
+            //                        {
+            //                            db.tb_Permisstions.DeleteOnSubmit(d);
+            //                            db.SubmitChanges();
+            //                            dbClss.AddHistory(this.Name, "ลบสิทธ์", "ทำการลบสิทธ์  [" + cboUser.Text + "] ออกจากระบบ", ClassLib.Classlib.User);
+
+            //                        }
+            //                    }
+            //                    //tb_Permisstion pm = new tb_Permisstion();
+            //                    //pm.Refid_UserID = dbClss.TInt(txtid.Text);
+            //                    //pm.RootNode = dbClss.TSt(rd.Cells["dgvLayout"].Value);
+            //                    //pm.LineNode = dbClss.TSt(rd.Cells["dgvLinkNode"].Value);
+            //                    //pm.CreateBy = ClassLib.Classlib.User;
+            //                    //pm.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            //                    //db.tb_Permisstions.InsertOnSubmit(pm);
+            //                    //db.SubmitChanges();
+
+            //                }
+            //            }
+                        
+            //            DataLoad();
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //    dbClss.AddError(this.Name, ex.Message, this.Name);
+            //}
+        }
+
+        private void cboRootNode_Click(object sender, EventArgs e)
+        {
+            //if(Edit != 0)
+            //{
+            //    if (MessageBox.Show("มีการแก้ไขเปลี่ยนแปลง Permisstion Screen"+ txtScreen.Text + "ต้องการบันทึกรายการก่อนหรือไม่ ?", "แก้ไข Permisstion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            //    {
+            //        AddUnit();
+            //        Edit = 0;
+            //    }
+            //}
+        }
+
+        private void btnList_Click(object sender, EventArgs e)
+        {
+            tb_MasterPermisstion_List a = new tb_MasterPermisstion_List();
+            a.ShowDialog();
+        }
+    }
+}

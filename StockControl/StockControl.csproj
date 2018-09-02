@@ -173,6 +173,12 @@
     <Compile Include="Process\Report\ReportConsumableBalance.Designer.cs">
       <DependentUpon>ReportConsumableBalance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\tb_Change_Password.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\tb_Change_Password.Designer.cs">
+      <DependentUpon>tb_Change_Password.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\tb_MasterPermisstion_List.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -737,6 +743,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Report\ReportConsumableBalance.resx">
       <DependentUpon>ReportConsumableBalance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\tb_Change_Password.resx">
+      <DependentUpon>tb_Change_Password.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\tb_MasterPermisstion_List.resx">
       <DependentUpon>tb_MasterPermisstion_List.cs</DependentUpon>
