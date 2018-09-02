@@ -133,6 +133,7 @@
     <Compile Include="Main\Mainfrom.Designer.cs">
       <DependentUpon>Mainfrom.cs</DependentUpon>
     </Compile>
+    <Compile Include="MasterClass\baseClass.cs" />
     <Compile Include="Process\About.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -589,6 +590,12 @@
     <Compile Include="Process\tb_MasterDepartment.Designer.cs">
       <DependentUpon>tb_MasterDepartment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Vendor_Backup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Vendor_Backup.Designer.cs">
+      <DependentUpon>Vendor_Backup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\WaitingPR.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -943,6 +950,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\tb_MasterDepartment.resx">
       <DependentUpon>tb_MasterDepartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Vendor_Backup.resx">
+      <DependentUpon>Vendor_Backup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\WaitingPR.resx">
       <DependentUpon>WaitingPR.cs</DependentUpon>

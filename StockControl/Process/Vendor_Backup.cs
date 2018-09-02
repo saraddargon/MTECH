@@ -12,9 +12,9 @@ using Telerik.WinControls;
 
 namespace StockControl
 {
-    public partial class Vendor : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Vendor_Backup : Telerik.WinControls.UI.RadRibbonForm
     {
-        public Vendor()
+        public Vendor_Backup()
         {
             InitializeComponent();
         }
@@ -36,33 +36,17 @@ namespace StockControl
         }
         private void GETDTRow()
         {
-            //dt.Columns.Add(new DataColumn("VendorNo", typeof(string)));
-            //dt.Columns.Add(new DataColumn("VendorName", typeof(string)));
-            //dt.Columns.Add(new DataColumn("Address", typeof(string)));
-            //dt.Columns.Add(new DataColumn("CRRNCY", typeof(string)));
-            //dt.Columns.Add(new DataColumn("Remark", typeof(string)));
-            //dt.Columns.Add(new DataColumn("Active", typeof(bool)));
-            //dt.Columns.Add(new DataColumn("ContactName", typeof(string)));
-            //dt.Columns.Add(new DataColumn("Tel", typeof(string)));
-            //dt.Columns.Add(new DataColumn("Fax", typeof(string)));
-            //dt.Columns.Add(new DataColumn("email", typeof(string)));
-            dt.Columns.Add("No", typeof(string));
-            dt.Columns.Add("Name", typeof(string));
-            dt.Columns.Add("Address", typeof(string));
-            dt.Columns.Add("VATRegistration", typeof(bool));
-            dt.Columns.Add("PhoneNo", typeof(string));
-            dt.Columns.Add("FaxNo", typeof(string));
-            dt.Columns.Add("Email", typeof(string));
-            dt.Columns.Add("ContactName", typeof(string));
-            dt.Columns.Add("CreditLimit", typeof(decimal));
-            dt.Columns.Add("VendorGroup", typeof(int));
-            dt.Columns.Add("VatGroup", typeof(int));
-            dt.Columns.Add("DefaultCurrency", typeof(int));
-            dt.Columns.Add("ReceiveAddress", typeof(int));
-            dt.Columns.Add("PriceIncludeingVat", typeof(bool));
-            dt.Columns.Add("ShippingAddress", typeof(string));
-            dt.Columns.Add("AttachFile", typeof(string));
-
+            dt.Columns.Add(new DataColumn("VendorNo", typeof(string)));
+            dt.Columns.Add(new DataColumn("VendorName", typeof(string)));
+            dt.Columns.Add(new DataColumn("Address", typeof(string)));
+            dt.Columns.Add(new DataColumn("CRRNCY", typeof(string)));
+            dt.Columns.Add(new DataColumn("Remark", typeof(string)));
+            dt.Columns.Add(new DataColumn("Active", typeof(bool)));
+            dt.Columns.Add(new DataColumn("ContactName", typeof(string)));
+            dt.Columns.Add(new DataColumn("Tel", typeof(string)));
+            dt.Columns.Add(new DataColumn("Fax", typeof(string)));
+            dt.Columns.Add(new DataColumn("email", typeof(string)));
+            
         }
         System.Drawing.Font MyFont;
         private void Unit_Load(object sender, EventArgs e)
@@ -82,12 +66,12 @@ namespace StockControl
             //    rd["UnitActive"] = false;
             //    dt.Rows.Add(rd);
             //}
-
-
-            DataLoad();
+            
+            
+          DataLoad();
             LoadDefualt();
             MyFont = new System.Drawing.Font(
-    "Tahoma", 9,
+    "Tahoma",9,
     FontStyle.Italic,    // + obviously doesn't work, but what am I meant to do?
     GraphicsUnit.Pixel);
         }
@@ -134,7 +118,7 @@ namespace StockControl
         private void RadMenuItem3_Click(object sender, EventArgs e)
         {
             MessageBox.Show("menu");
-            // throw new NotImplementedException();
+           // throw new NotImplementedException();
         }
 
         private void LoadDefualt()
@@ -145,22 +129,12 @@ namespace StockControl
 
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var gt = (from ix in db.mh_CRRNCies select ix).ToList();
-                    GridViewComboBoxColumn comboBoxColumn = this.radGridView1.Columns["DefaultCrrncy"] as GridViewComboBoxColumn;
+                    var gt = (from ix in db.tb_CRRNCies select ix).ToList();
+                    GridViewComboBoxColumn comboBoxColumn = this.radGridView1.Columns["CRRNCY"] as GridViewComboBoxColumn;
                     comboBoxColumn.DisplayMember = "CRRNCY";
-                    comboBoxColumn.ValueMember = "id";
+                    comboBoxColumn.ValueMember = "CRRNCY";
                     comboBoxColumn.DataSource = gt;
-
-
-                    var com1 = radGridView1.Columns["VendorGroup"] as GridViewComboBoxColumn;
-                    com1.DisplayMember = "Value";
-                    com1.ValueMember = "id";
-                    com1.DataSource = db.mh_VendorGroups.ToList();
-
-                    var com2 = radGridView1.Columns["VatGroup"] as GridViewComboBoxColumn;
-                    com2.DisplayMember = "Value";
-                    com2.ValueMember = "id";
-                    com2.DataSource = db.mh_VatGroups.ToList();
+          
                 }
             }
             catch (Exception ex)
@@ -174,47 +148,28 @@ namespace StockControl
             //dt.Rows.Clear();
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-
-                //var g = (from ix in db.sp_SelectVendor() select ix).ToList();
-                //DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
-                //radGridView1.DataSource = dt2;
-                //int ck = 0;
-                //foreach (var x in radGridView1.Rows)
-                //{
-                //    x.Cells["dgvCodeTemp"].Value = x.Cells["VendorNo"].Value.ToString();
-                //    x.Cells["dgvCodeTemp2"].Value = x.Cells["VendorName"].Value.ToString();
-
-                //    x.Cells["VendorNo"].ReadOnly = true;
-                //    x.Cells["VendorNo"].Style.ForeColor = Color.MidnightBlue;
-                //    x.Cells["VendorNo"].Style.Font = new Font("Tahoma", 8, FontStyle.Italic);
-                //    if (row >= 0 && row == ck)
-                //    {
-
-                //        x.ViewInfo.CurrentRow = x;
-
-                //    }
-                //    ck += 1;
-                //}
-
-                var g = db.mh_Vendors.ToList();
+               
+                var g = (from ix in db.sp_SelectVendor() select ix).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.DataSource = dt2;
                 int ck = 0;
-                foreach (var x in radGridView1.Rows)
+                foreach(var x in radGridView1.Rows)
                 {
-                    x.Cells["dgvCodeTemp"].Value = x.Cells["VendorNo"].Value.ToSt();
-                    x.Cells["dgvCodeTemp2"].Value = x.Cells["VendorName"].Value.ToSt();
+                    x.Cells["dgvCodeTemp"].Value = x.Cells["VendorNo"].Value.ToString();
+                    x.Cells["dgvCodeTemp2"].Value = x.Cells["VendorName"].Value.ToString();
 
                     x.Cells["VendorNo"].ReadOnly = true;
                     x.Cells["VendorNo"].Style.ForeColor = Color.MidnightBlue;
-                    x.Cells["VendorNo"].Style.Font = new Font("Tahoma", 8, FontStyle.Italic);
-
+                    x.Cells["VendorNo"].Style.Font = new Font ("Tahoma",8,FontStyle.Italic);
                     if (row >= 0 && row == ck)
                     {
+
                         x.ViewInfo.CurrentRow = x;
+
                     }
                     ck += 1;
                 }
+               
             }
 
 
@@ -250,100 +205,57 @@ namespace StockControl
                     {
                         if (
                              !Convert.ToString(g.Cells["VendorName"].Value).Equals("")
-                            && !Convert.ToString(g.Cells["DefaultCrrncy"].Value).Equals("")
+                            && !Convert.ToString(g.Cells["CRRNCY"].Value).Equals("")
                             )
                         {
                             if (Convert.ToString(g.Cells["dgvC"].Value).Equals("T"))
                             {
-
+                               
                                 if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
                                 {
                                     // MessageBox.Show("11");
 
 
-                                    //tb_Vendor gy = new tb_Vendor();
-                                    //gy.VendorNo = dbClss.GetNo(1, 2);
-                                    //gy.Active = Convert.ToBoolean(g.Cells["Active"].Value);
-                                    //gy.VendorName = Convert.ToString(g.Cells["VendorName"].Value);
-                                    //gy.CRRNCY = Convert.ToString(g.Cells["CRRNCY"].Value);
-                                    //gy.Address = Convert.ToString(g.Cells["Address"].Value);
-                                    //gy.Remark = Convert.ToString(g.Cells["Remark"].Value);
-                                    //db.tb_Vendors.InsertOnSubmit(gy);
-                                    //db.SubmitChanges();
-                                    mh_Vendor t = new mh_Vendor();
-                                    t.No = dbClss.GetNo(1, 2);
-                                    t.Name = g.Cells["VendorName"].Value.ToSt();
-                                    t.Active = g.Cells["Active"].Value.ToBool();
-                                    t.Address = g.Cells["Address"].Value.ToSt();
-                                    t.AttachFile = g.Cells["AttachFile"].Value.ToSt();
-                                    t.ContactName = g.Cells["ContactName"].Value.ToSt();
-                                    t.DefaultCurrency = g.Cells["DefaultCrrncy"].Value.ToInt();
-                                    t.Email = g.Cells["Email"].Value.ToSt();
-                                    t.FaxNo = g.Cells["FaxNo"].Value.ToSt();
-                                    t.PhoneNo = g.Cells["PhoneNo"].Value.ToSt();
-                                    t.PriceIncludeingVat = g.Cells["PriceIncludeVat"].ToBool();
-                                    t.ReceivingAddress = g.Cells["ReceiveAddress"].Value.ToSt();
-                                    t.ShippingTime = g.Cells["ShippingTime"].Value.ToInt();
-                                    t.VatGroup = g.Cells["VatGroup"].Value.ToInt();
-                                    t.VATRegistration = g.Cells["VatRegis"].Value.ToBool();
-                                    t.VendorGroup = g.Cells["VendorGroup"].Value.ToInt();
-                                    dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + t.Name + "]", "");
-                                    //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
-                                    db.mh_Vendors.InsertOnSubmit(t);
+                                    tb_Vendor gy = new tb_Vendor();
+                                    gy.VendorNo = dbClss.GetNo(1, 2);
+                                    gy.Active = Convert.ToBoolean(g.Cells["Active"].Value);
+                                    gy.VendorName= Convert.ToString(g.Cells["VendorName"].Value);
+                                    gy.CRRNCY = Convert.ToString(g.Cells["CRRNCY"].Value);
+                                    gy.Address = Convert.ToString(g.Cells["Address"].Value);
+                                    gy.Remark = Convert.ToString(g.Cells["Remark"].Value);
+                                    db.tb_Vendors.InsertOnSubmit(gy);
                                     db.SubmitChanges();
+                                    dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName+ "]","");
                                     C += 1;
                                 }
                                 else
                                 {
-
-                                    //var unit1 = (from ix in db.tb_Vendors
-                                    //             where ix.VendorNo == Convert.ToString(g.Cells["dgvCodeTemp"].Value)
-                                    //             select ix).First();
-                                    //unit1.VendorName = Convert.ToString(g.Cells["VendorName"].Value);
-                                    //unit1.Active = Convert.ToBoolean(g.Cells["Active"].Value);
-                                    //unit1.Address = Convert.ToString(g.Cells["Address"].Value);
-                                    //unit1.CRRNCY = Convert.ToString(g.Cells["CRRNCY"].Value);
-                                    //unit1.Remark = Convert.ToString(g.Cells["Remark"].Value);
-                                    //// unit1.VendorName = Convert.ToString(g.Cells["VendorName"].Value);
-
-                                    //C += 1;
-
-                                    //db.SubmitChanges();
-                                    //dbClss.AddHistory(this.Name, "แก้ไข", "แก้ไขผู้ขาย [" + unit1.VendorName + "]", "");
-
-                                    var t = db.mh_Vendors.Where(x => x.No == g.Cells["dgvCodeTemp"].Value.ToSt()).First();
-                                    t.Name = g.Cells["VendorName"].Value.ToSt();
-                                    t.Active = g.Cells["Active"].Value.ToBool();
-                                    t.Address = g.Cells["Address"].Value.ToSt();
-                                    t.AttachFile = g.Cells["AttachFile"].Value.ToSt();
-                                    t.ContactName = g.Cells["ContactName"].Value.ToSt();
-                                    t.DefaultCurrency = g.Cells["DefaultCrrncy"].Value.ToInt();
-                                    t.Email = g.Cells["Email"].Value.ToSt();
-                                    t.FaxNo = g.Cells["FaxNo"].Value.ToSt();
-                                    t.PhoneNo = g.Cells["PhoneNo"].Value.ToSt();
-                                    t.PriceIncludeingVat = g.Cells["PriceIncludeVat"].ToBool();
-                                    t.ReceivingAddress = g.Cells["ReceiveAddress"].Value.ToSt();
-                                    t.ShippingTime = g.Cells["ShippingTime"].Value.ToInt();
-                                    t.VatGroup = g.Cells["VatGroup"].Value.ToInt();
-                                    t.VATRegistration = g.Cells["VatRegis"].Value.ToBool();
-                                    t.VendorGroup = g.Cells["VendorGroup"].Value.ToInt();
+                                   
+                                    var unit1 = (from ix in db.tb_Vendors
+                                                 where ix.VendorNo == Convert.ToString(g.Cells["dgvCodeTemp"].Value)
+                                                 select ix).First();
+                                       unit1.VendorName = Convert.ToString(g.Cells["VendorName"].Value);
+                                       unit1.Active = Convert.ToBoolean(g.Cells["Active"].Value);
+                                    unit1.Address = Convert.ToString(g.Cells["Address"].Value);
+                                    unit1.CRRNCY = Convert.ToString(g.Cells["CRRNCY"].Value);
+                                    unit1.Remark = Convert.ToString(g.Cells["Remark"].Value);
+                                   // unit1.VendorName = Convert.ToString(g.Cells["VendorName"].Value);
 
                                     C += 1;
+
                                     db.SubmitChanges();
-                                    dbClss.AddHistory(this.Name, "แก้ไข", "แก้ไขผู้ขาย [" + t.Name + "]", "");
+                                    dbClss.AddHistory(this.Name, "แก้ไข", "แก้ไขผู้ขาย [" + unit1.VendorName+ "]","");
+
                                 }
                             }
-                        }
-                        else
+                        }else
                         {
                             MessageBox.Show("กรอกข้อมูลไม่ครบ!");
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            catch (Exception ex) { MessageBox.Show(ex.Message);
                 dbClss.AddError("เพิ่มผู้ขาย", ex.Message, this.Name);
             }
 
@@ -355,7 +267,7 @@ namespace StockControl
         private bool DeleteUnit()
         {
             bool ck = false;
-
+         
             int C = 0;
             try
             {
@@ -365,7 +277,7 @@ namespace StockControl
                     string CodeDelete = Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value);
                     string CodeTemp = Convert.ToString(radGridView1.Rows[row].Cells["dgvCodeTemp"].Value);
                     radGridView1.EndEdit();
-                    if (MessageBox.Show("ต้องการลบรายการ ( " + CodeDelete + " ) หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show("ต้องการลบรายการ ( "+ CodeDelete+" ) หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
@@ -375,19 +287,13 @@ namespace StockControl
                                 if (!CodeTemp.Equals(""))
                                 {
 
-                                    //var unit1 = (from ix in db.tb_Vendors
-                                    //             where ix.VendorNo == CodeDelete
-                                    //             select ix).ToList();
-                                    //foreach (var d in unit1)
-                                    //{
-                                    //    db.tb_Vendors.DeleteOnSubmit(d);
-                                    //    dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.VendorName + "]", "");
-                                    //}
-                                    var unit1 = db.mh_Vendors.Where(x => x.No == CodeDelete).ToList();
+                                    var unit1 = (from ix in db.tb_Vendors
+                                                 where ix.VendorNo == CodeDelete
+                                                 select ix).ToList();
                                     foreach (var d in unit1)
                                     {
-                                        db.mh_Vendors.DeleteOnSubmit(d);
-                                        dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.Name + "]", "");
+                                        db.tb_Vendors.DeleteOnSubmit(d);
+                                        dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor ["+d.VendorName+"]","");
                                     }
                                     C += 1;
 
@@ -402,20 +308,18 @@ namespace StockControl
                 }
             }
 
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            catch (Exception ex) { MessageBox.Show(ex.Message);
                 dbClss.AddError("ลบผู้ขาย", ex.Message, this.Name);
             }
 
             if (C > 0)
             {
                 row = row - 1;
-                MessageBox.Show("ลบรายการ สำเร็จ!");
+                    MessageBox.Show("ลบรายการ สำเร็จ!");
             }
+              
 
-
-
+           
 
             return ck;
         }
@@ -478,15 +382,10 @@ namespace StockControl
                     {
                         if (Convert.ToString(g.Cells["VendorName"].Value).Equals(""))
                             err += "- “ชื่อผู้ขาย:” เป็นค่าว่างไม่ได้ \n";
-                        if (Convert.ToString(g.Cells["DefaultCrrncy"].Value).Equals(""))
-                            err += "- “ค่าเงิน:” เป็นค่าว่างไม่ได้ \n";
-                        if (Convert.ToString(g.Cells["VendorGroup"].Value).Equals(""))
-                            err += "- “กลุ่มผู้ขาย:” เป็นค่าว่างไม่ได้ \n";
-                        if (Convert.ToString(g.Cells["VatGroup"].Value).Equals(""))
-                            err += "- “กลุ่มภาษี:” เป็นค่าว่างไม่ได้ \n";
-
+                        if (Convert.ToString(g.Cells["CRRNCY"].Value).Equals(""))
+                            err += "- “ค่าเงิน:” เป็นค่าว่างไม่ได้ \n";                        
                     }
-
+                    
 
                 }
 
@@ -509,7 +408,7 @@ namespace StockControl
             if (Check_Save())
                 return;
 
-            if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("ต้องการบันทึก ?","บันทึก",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
             {
                 AddUnit();
                 DataLoad();
@@ -537,19 +436,19 @@ namespace StockControl
 
 
             }
-            catch (Exception ex) { }
+            catch(Exception ex) { }
         }
 
         private void Unit_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            // MessageBox.Show(e.KeyCode.ToString());
+           // MessageBox.Show(e.KeyCode.ToString());
         }
 
         private void radGridView1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            // MessageBox.Show(e.KeyCode.ToString());
+           // MessageBox.Show(e.KeyCode.ToString());
 
-            if (e.KeyData == (Keys.Control | Keys.S))
+            if(e.KeyData==(Keys.Control|Keys.S))
             {
                 btnSave_Click(null, null);
                 //if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -558,7 +457,7 @@ namespace StockControl
                 //    DataLoad();
                 //}
             }
-            else if (e.KeyData == (Keys.Control | Keys.N))
+            else if(e.KeyData == (Keys.Control | Keys.N))
             {
                 if (MessageBox.Show("ต้องการสร้างใหม่ ?", "สร้างใหม่", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
@@ -570,10 +469,10 @@ namespace StockControl
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-
-            DeleteUnit();
-            DataLoad();
-
+            
+                DeleteUnit();
+                DataLoad();
+            
         }
 
         int row = -1;
@@ -585,7 +484,7 @@ namespace StockControl
         private void btnExport_Click(object sender, EventArgs e)
         {
             //dbClss.ExportGridCSV(radGridView1);
-            dbClss.ExportGridXlSX(radGridView1);
+           dbClss.ExportGridXlSX(radGridView1);
         }
 
         private void btnImport_Click(object sender, EventArgs e)
@@ -616,11 +515,11 @@ namespace StockControl
                             c += 1;
                             //TODO: Process field
                             //MessageBox.Show(field);
-                            if (a > 1)
+                            if (a>1)
                             {
-                                if (c == 1)
+                                if(c==1)
                                     rd["VendorNo"] = Convert.ToString(field);
-                                else if (c == 2)
+                                else if(c==2)
                                     rd["VendorName"] = Convert.ToString(field);
                                 else if (c == 3)
                                     rd["Address"] = Convert.ToString(field);
@@ -660,7 +559,7 @@ namespace StockControl
 
                     }
                 }
-                if (dt.Rows.Count > 0)
+                if(dt.Rows.Count>0)
                 {
                     dbClss.AddHistory(this.Name, "Import", "Import file CSV in to System", "");
                     ImportData();
@@ -668,7 +567,7 @@ namespace StockControl
 
                     DataLoad();
                 }
-
+               
             }
         }
 
@@ -678,18 +577,17 @@ namespace StockControl
             {
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-
+                   
                     foreach (DataRow rd in dt.Rows)
                     {
                         if (!rd["VendorName"].ToString().Equals(""))
                         {
 
                             var x = (from ix in db.tb_Vendors where ix.VendorNo.ToLower().Trim() == rd["VendorNo"].ToString().ToLower().Trim() select ix).FirstOrDefault();
-                            //var x = db.mh_Vendors.Where(x => x.No.ToLower() == rd["VendorNo"].ToSt().ToLower().Trim()).FirstOrDefault();
 
-                            if (x == null)
+                            if(x==null)
                             {
-
+                                
                                 tb_Vendor ts = new tb_Vendor();
                                 ts.VendorNo = dbClss.GetNo(1, 2);
                                 ts.VendorName = Convert.ToString(rd["VendorName"].ToString());
@@ -699,7 +597,6 @@ namespace StockControl
                                 ts.Active = Convert.ToBoolean(rd["Active"].ToString());
                                 db.tb_Vendors.InsertOnSubmit(ts);
                                 db.SubmitChanges();
-
                             }
                             else
                             {
@@ -707,19 +604,19 @@ namespace StockControl
                                 x.Address = Convert.ToString(rd["Address"].ToString());
                                 x.CRRNCY = Convert.ToString(rd["CRRNCY"].ToString());
                                 x.Remark = Convert.ToString(rd["Remark"].ToString());
+                               
                                 x.Active = Convert.ToBoolean(rd["Active"].ToString());
                                 db.SubmitChanges();
+
                             }
 
-
+                       
                         }
                     }
-
+                   
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            catch(Exception ex) { MessageBox.Show(ex.Message);
                 dbClss.AddError("InportData", ex.Message, this.Name);
             }
         }
@@ -741,24 +638,15 @@ namespace StockControl
 
         private void MasterTemplate_CellValueChanged(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
-            //if(radGridView1.Columns["VendorName"].Index==e.ColumnIndex
-            //     || radGridView1.Columns["VendorName"].Index == e.ColumnIndex
-            //     || radGridView1.Columns["Address"].Index == e.ColumnIndex
-            //     || radGridView1.Columns["CRRNCY"].Index == e.ColumnIndex
-            //     || radGridView1.Columns["Remark"].Index == e.ColumnIndex
-            //     )
-            // {
+           //if(radGridView1.Columns["VendorName"].Index==e.ColumnIndex
+           //     || radGridView1.Columns["VendorName"].Index == e.ColumnIndex
+           //     || radGridView1.Columns["Address"].Index == e.ColumnIndex
+           //     || radGridView1.Columns["CRRNCY"].Index == e.ColumnIndex
+           //     || radGridView1.Columns["Remark"].Index == e.ColumnIndex
+           //     )
+           // {
 
-            // }
-            if(e.Column.Name == "DefaultCrrncy")
-            {
-                var ee = e.Value;
-            }
-            else if(e.Column.Name == "VendorGroup")
-            {
-                var ee = e.Value;
-                var eee = e.Value.ToInt();
-            }
+           // }
         }
 
         private void MasterTemplate_RowFormatting(object sender, RowFormattingEventArgs e)
@@ -774,7 +662,7 @@ namespace StockControl
             //    e.RowElement.DrawFill = true;
             //    // e.RowElement.GradientStyle = GradientStyles.Solid;
             //    e.RowElement.BackColor = Color.WhiteSmoke;
-
+          
             //}
             //else
             //{
@@ -793,7 +681,7 @@ namespace StockControl
                     if (!e.CellElement.RowInfo.Cells["VendorNo"].Value.Equals(""))
                     {
                         e.CellElement.DrawFill = true;
-                        // e.CellElement.ForeColor = Color.Blue;
+                       // e.CellElement.ForeColor = Color.Blue;
                         e.CellElement.NumberOfColors = 1;
                         e.CellElement.BackColor = Color.WhiteSmoke;
                     }
@@ -813,8 +701,8 @@ namespace StockControl
                 )
             {
                 if (e.CellElement.RowInfo.Cells["ContactName"].Value != null
-                    || e.CellElement.RowInfo.Cells["PhoneNo"].Value != null
-                    || e.CellElement.RowInfo.Cells["FaxNo"].Value != null
+                    || e.CellElement.RowInfo.Cells["Tel"].Value != null
+                    || e.CellElement.RowInfo.Cells["FAX"].Value != null
                     || e.CellElement.RowInfo.Cells["Email"].Value != null)
                 {
                     e.CellElement.DrawFill = true;
@@ -853,7 +741,7 @@ namespace StockControl
             if (row >= 0)
             {
 
-
+                
                 this.Cursor = Cursors.WaitCursor;
                 Contact ct = new Contact(Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value),
                     Convert.ToString(radGridView1.Rows[row].Cells["VendorName"].Value));

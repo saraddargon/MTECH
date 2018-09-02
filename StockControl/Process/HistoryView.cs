@@ -63,12 +63,17 @@ namespace StockControl
                     if (RefNo.Equals(""))
                     {
                         //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
-                        radGridView1.DataSource = db.tb_Histories.Where(s => s.ScreenName == ScreenSearch
-                        ).OrderBy(o => o.CreateDate).ToList();
+                        //radGridView1.DataSource = db.tb_Histories.Where(s => s.ScreenName == ScreenSearch
+                        //).OrderBy(o => o.CreateDate).ToList();
+                        radGridView1.DataSource = db.mh_Histories.Where(x => x.ScreenName == ScreenSearch).OrderBy(x => x.CreateDate).ToList();
                     }
                     else
                     {
-                        radGridView1.DataSource = db.tb_Histories.Where(s => s.ScreenName == ScreenSearch
+                        //radGridView1.DataSource = db.tb_Histories.Where(s => s.ScreenName == ScreenSearch
+                        //   && (s.RefNo) == RefNo
+
+                        //).OrderBy(o => o.CreateDate).ToList();
+                        radGridView1.DataSource = db.mh_Histories.Where(s => s.ScreenName == ScreenSearch
                            && (s.RefNo) == RefNo
 
                         ).OrderBy(o => o.CreateDate).ToList();

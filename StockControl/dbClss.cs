@@ -186,7 +186,8 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     //MessageBox.Show(Screen);
-                    tb_History hy = new tb_History();
+                    //tb_History hy = new tb_History();
+                    mh_History hy = new mh_History();
                     hy.id = 0;
                     hy.ScreenName = Screen;
                     hy.ApplicationNme = App;
@@ -194,7 +195,8 @@ namespace StockControl
                     hy.RefNo = Ref;
                     hy.CreateBy = ClassLib.Classlib.User;
                     hy.CreateDate = DateTime.Now;
-                    db.tb_Histories.InsertOnSubmit(hy);
+                    //db.tb_Histories.InsertOnSubmit(hy);
+                    db.mh_Histories.InsertOnSubmit(hy);
                     db.SubmitChanges();
                 }
 
