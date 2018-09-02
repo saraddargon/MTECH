@@ -62,7 +62,7 @@ namespace StockControl
             {
                 Application.Exit();
                 Application.ExitThread();
-                Environment.Exit(1);
+                //Environment.Exit(1);
             }
             catch { }
         }

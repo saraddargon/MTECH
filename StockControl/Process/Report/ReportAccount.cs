@@ -58,58 +58,58 @@ namespace StockControl
         {
             try
             {
-                ColumnGroupsViewDefinition view = new ColumnGroupsViewDefinition();
-                view.ColumnGroups.Add(new GridViewColumnGroup("Item Information"));
-                view.ColumnGroups.Add(new GridViewColumnGroup("Purchase Information"));
-                view.ColumnGroups.Add(new GridViewColumnGroup("Current Inventory"));
-                view.ColumnGroups.Add(new GridViewColumnGroup("On Order"));
-                view.ColumnGroups.Add(new GridViewColumnGroup("Recived"));
-                view.ColumnGroups.Add(new GridViewColumnGroup("Backorder"));
-                view.ColumnGroups.Add(new GridViewColumnGroup("Supplied"));
-                view.ColumnGroups.Add(new GridViewColumnGroup(""));
+                //ColumnGroupsViewDefinition view = new ColumnGroupsViewDefinition();
+                //view.ColumnGroups.Add(new GridViewColumnGroup("Item Information"));
+                //view.ColumnGroups.Add(new GridViewColumnGroup("Purchase Information"));
+                //view.ColumnGroups.Add(new GridViewColumnGroup("Current Inventory"));
+                //view.ColumnGroups.Add(new GridViewColumnGroup("On Order"));
+                //view.ColumnGroups.Add(new GridViewColumnGroup("Recived"));
+                //view.ColumnGroups.Add(new GridViewColumnGroup("Backorder"));
+                //view.ColumnGroups.Add(new GridViewColumnGroup("Supplied"));
+                //view.ColumnGroups.Add(new GridViewColumnGroup(""));
 
-                view.ColumnGroups[0].Rows.Add(new GridViewColumnGroupRow());
-                view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["No"]);
-                view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["InventoryID"]);
-                view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["Name"]);
-                view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["Description"]);
-                view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["Area"]);
-                view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["ShelfBin"]);
+                //view.ColumnGroups[0].Rows.Add(new GridViewColumnGroupRow());
+                //view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["No"]);
+                //view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["InventoryID"]);
+                //view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["Name"]);
+                //view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["Description"]);
+                //view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["Area"]);
+                //view.ColumnGroups[0].Rows[0].Columns.Add(this.dgvData.Columns["ShelfBin"]);
 
-                view.ColumnGroups[1].Rows.Add(new GridViewColumnGroupRow());
-                view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["Maker"]);
-                view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["Supplier"]);
-                view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["Price"]);
-                view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["Leadtime"]);
-                view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["MinStock"]);
-                view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["Plan"]);
+                //view.ColumnGroups[1].Rows.Add(new GridViewColumnGroupRow());
+                //view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["Maker"]);
+                //view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["Supplier"]);
+                //view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["Price"]);
+                //view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["Leadtime"]);
+                //view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["MinStock"]);
+                //view.ColumnGroups[1].Rows[0].Columns.Add(this.dgvData.Columns["Plan"]);
 
-                view.ColumnGroups[2].Rows.Add(new GridViewColumnGroupRow());
-                view.ColumnGroups[2].Rows[0].Columns.Add(this.dgvData.Columns["CurrentInventory_Qty"]);
-                view.ColumnGroups[2].Rows[0].Columns.Add(this.dgvData.Columns["CurrentInventory_Velue"]);
+                //view.ColumnGroups[2].Rows.Add(new GridViewColumnGroupRow());
+                //view.ColumnGroups[2].Rows[0].Columns.Add(this.dgvData.Columns["CurrentInventory_Qty"]);
+                //view.ColumnGroups[2].Rows[0].Columns.Add(this.dgvData.Columns["CurrentInventory_Velue"]);
 
-                view.ColumnGroups[3].Rows.Add(new GridViewColumnGroupRow());
-                view.ColumnGroups[3].Rows[0].Columns.Add(this.dgvData.Columns["OnOrder_Qty"]);
-                view.ColumnGroups[3].Rows[0].Columns.Add(this.dgvData.Columns["OnOrder_Value"]);
+                //view.ColumnGroups[3].Rows.Add(new GridViewColumnGroupRow());
+                //view.ColumnGroups[3].Rows[0].Columns.Add(this.dgvData.Columns["OnOrder_Qty"]);
+                //view.ColumnGroups[3].Rows[0].Columns.Add(this.dgvData.Columns["OnOrder_Value"]);
 
-                view.ColumnGroups[4].Rows.Add(new GridViewColumnGroupRow());
-                view.ColumnGroups[4].Rows[0].Columns.Add(this.dgvData.Columns["Receive_Qty"]);
-                view.ColumnGroups[4].Rows[0].Columns.Add(this.dgvData.Columns["Receive_Value"]);
+                //view.ColumnGroups[4].Rows.Add(new GridViewColumnGroupRow());
+                //view.ColumnGroups[4].Rows[0].Columns.Add(this.dgvData.Columns["Receive_Qty"]);
+                //view.ColumnGroups[4].Rows[0].Columns.Add(this.dgvData.Columns["Receive_Value"]);
 
-                view.ColumnGroups[5].Rows.Add(new GridViewColumnGroupRow());
-                view.ColumnGroups[5].Rows[0].Columns.Add(this.dgvData.Columns["BackOrder_Qty"]);
-                view.ColumnGroups[5].Rows[0].Columns.Add(this.dgvData.Columns["BackOrder_Value"]);
+                //view.ColumnGroups[5].Rows.Add(new GridViewColumnGroupRow());
+                //view.ColumnGroups[5].Rows[0].Columns.Add(this.dgvData.Columns["BackOrder_Qty"]);
+                //view.ColumnGroups[5].Rows[0].Columns.Add(this.dgvData.Columns["BackOrder_Value"]);
 
-                view.ColumnGroups[6].Rows.Add(new GridViewColumnGroupRow());
-                view.ColumnGroups[6].Rows[0].Columns.Add(this.dgvData.Columns["Supplied_Qty"]);
-                view.ColumnGroups[6].Rows[0].Columns.Add(this.dgvData.Columns["Supplied_Value"]);
+                //view.ColumnGroups[6].Rows.Add(new GridViewColumnGroupRow());
+                //view.ColumnGroups[6].Rows[0].Columns.Add(this.dgvData.Columns["Supplied_Qty"]);
+                //view.ColumnGroups[6].Rows[0].Columns.Add(this.dgvData.Columns["Supplied_Value"]);
 
-                view.ColumnGroups[7].Rows.Add(new GridViewColumnGroupRow());
-                view.ColumnGroups[7].Rows[0].Columns.Add(this.dgvData.Columns["Balance_Value"]);
-                view.ColumnGroups[7].Rows[0].Columns.Add(this.dgvData.Columns["GrandTotal_Value"]);
-                view.ColumnGroups[7].Rows[0].Columns.Add(this.dgvData.Columns["Remark"]);
+                //view.ColumnGroups[7].Rows.Add(new GridViewColumnGroupRow());
+                //view.ColumnGroups[7].Rows[0].Columns.Add(this.dgvData.Columns["Balance_Value"]);
+                //view.ColumnGroups[7].Rows[0].Columns.Add(this.dgvData.Columns["GrandTotal_Value"]);
+                //view.ColumnGroups[7].Rows[0].Columns.Add(this.dgvData.Columns["Remark"]);
 
-                dgvData.ViewDefinition = view;
+                //dgvData.ViewDefinition = view;
             }catch(Exception ex) { MessageBox.Show(ex.Message); }
 
         }
