@@ -1537,6 +1537,13 @@ namespace StockControl
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), codeNo1, codeNo2);
 			return ((int)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_050_Permission_select")]
+		public ISingleResult<sp_050_Permission_selectResult> sp_050_Permission_select([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="VarChar(50)")] string userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefUserid", DbType="Int")] System.Nullable<int> refUserid)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, refUserid);
+			return ((ISingleResult<sp_050_Permission_selectResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ErrorLog")]
@@ -51076,6 +51083,158 @@ namespace StockControl
 				if ((this._AmountBal != value))
 				{
 					this._AmountBal = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_050_Permission_selectResult
+	{
+		
+		private int _ID;
+		
+		private string _RootName;
+		
+		private string _NodeName;
+		
+		private string _TypeNode;
+		
+		private string _TextNode;
+		
+		private string _LinkNode;
+		
+		private System.Nullable<bool> _DialogFlag;
+		
+		private string _Version;
+		
+		public sp_050_Permission_selectResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RootName", DbType="VarChar(50)")]
+		public string RootName
+		{
+			get
+			{
+				return this._RootName;
+			}
+			set
+			{
+				if ((this._RootName != value))
+				{
+					this._RootName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NodeName", DbType="VarChar(50)")]
+		public string NodeName
+		{
+			get
+			{
+				return this._NodeName;
+			}
+			set
+			{
+				if ((this._NodeName != value))
+				{
+					this._NodeName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeNode", DbType="VarChar(50)")]
+		public string TypeNode
+		{
+			get
+			{
+				return this._TypeNode;
+			}
+			set
+			{
+				if ((this._TypeNode != value))
+				{
+					this._TypeNode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TextNode", DbType="VarChar(50)")]
+		public string TextNode
+		{
+			get
+			{
+				return this._TextNode;
+			}
+			set
+			{
+				if ((this._TextNode != value))
+				{
+					this._TextNode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LinkNode", DbType="VarChar(1000)")]
+		public string LinkNode
+		{
+			get
+			{
+				return this._LinkNode;
+			}
+			set
+			{
+				if ((this._LinkNode != value))
+				{
+					this._LinkNode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DialogFlag", DbType="Bit")]
+		public System.Nullable<bool> DialogFlag
+		{
+			get
+			{
+				return this._DialogFlag;
+			}
+			set
+			{
+				if ((this._DialogFlag != value))
+				{
+					this._DialogFlag = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Version", DbType="VarChar(50)")]
+		public string Version
+		{
+			get
+			{
+				return this._Version;
+			}
+			set
+			{
+				if ((this._Version != value))
+				{
+					this._Version = value;
 				}
 			}
 		}

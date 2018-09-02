@@ -3377,4 +3377,18 @@
     <Parameter Name="CodeNo2" Parameter="codeNo2" Type="System.String" DbType="VarChar(50)" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.sp_050_Permission_select" Method="sp_050_Permission_select">
+    <Parameter Name="UserID" Parameter="userID" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefUserid" Parameter="refUserid" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_050_Permission_selectResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RootName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NodeName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TypeNode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TextNode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="LinkNode" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="DialogFlag" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Version" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>
