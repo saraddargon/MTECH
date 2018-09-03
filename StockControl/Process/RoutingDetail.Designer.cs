@@ -323,6 +323,7 @@
             this.btnHolidays});
             this.radRibbonBarGroup6.Name = "radRibbonBarGroup6";
             this.radRibbonBarGroup6.Text = "Working day";
+            this.radRibbonBarGroup6.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
             // btnWorkingDays
             // 
