@@ -170,7 +170,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
-                var g = db.mh_Routings.Where(x => x.RoutingNo == RoutingNo).OrderBy(x => x.RNo).ToList();
+                var g = db.mh_Routings.Where(x => x.RoutingNo == RoutingNo && x.Active).OrderBy(x => x.RNo).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 dgvData.DataSource = null;
                 dgvData.DataSource = dt2;
@@ -308,7 +308,8 @@ namespace StockControl
                                 var t = db.mh_Routings.Where(x => x.id == CodeTemp.ToInt()).ToList();
                                 foreach (var d in t)
                                 {
-                                    db.mh_Routings.DeleteOnSubmit(d);
+                                    //db.mh_Routings.DeleteOnSubmit(d);
+                                    d.Active = false;
                                     dbClss.AddHistory(this.Name, "ลบ Routing", $"Delete Routing [{d.RoutingNo}]", "");
                                 }
                                 C += 1;
