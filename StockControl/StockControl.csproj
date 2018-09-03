@@ -174,6 +174,12 @@
     <Compile Include="Process\Absence.Designer.cs">
       <DependentUpon>Absence.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Calendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Calendar.Designer.cs">
+      <DependentUpon>Calendar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Report\ReportConsumableBalance.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -774,6 +780,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Absence.resx">
       <DependentUpon>Absence.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Calendar.resx">
+      <DependentUpon>Calendar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Report\ReportConsumableBalance.resx">
       <DependentUpon>ReportConsumableBalance.cs</DependentUpon>

@@ -350,7 +350,7 @@
             // 
             this.radLabelElement1.Name = "radLabelElement1";
             this.radStatusStrip1.SetSpring(this.radLabelElement1, false);
-            this.radLabelElement1.Text = "Status : รายละเอียดผู้ขาย";
+            this.radLabelElement1.Text = "Status : รายละเอียดวันทำงาน";
             this.radLabelElement1.TextWrap = true;
             // 
             // panel1

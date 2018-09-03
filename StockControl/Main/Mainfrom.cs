@@ -367,7 +367,8 @@ namespace StockControl
             if (StockControl.dbClss.Permisstion("", "WorkDays", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
             {
                 this.Cursor = Cursors.WaitCursor;
-                WorkDays sc = new WorkDays();
+                //WorkDays sc = new WorkDays();
+                var sc = new Calendar();
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -515,48 +516,6 @@ namespace StockControl
 
         private void radMenuItem24_Click(object sender, EventArgs e)
         {
-        }
-
-        private void radMenuItem25_Click(object sender, EventArgs e)
-        {
-            if (StockControl.dbClss.Permisstion("", "WorkingDay", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
-            {
-                this.Cursor = Cursors.WaitCursor;
-                var sc = new WorkingDay();
-                this.Cursor = Cursors.Default;
-                sc.ShowDialog();
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
-                ClassLib.Memory.Heap();
-            }
-            else
-            {
-                dbClss.WarningIT("No Permisstion.");
-            }
-        }
-
-        private void radMenuItem26_Click(object sender, EventArgs e)
-        {
-            if (StockControl.dbClss.Permisstion("", "Holiday", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
-            {
-                this.Cursor = Cursors.WaitCursor;
-                var sc = new Holiday();
-                this.Cursor = Cursors.Default;
-                sc.ShowDialog();
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
-                ClassLib.Memory.Heap();
-            }
-            else
-            {
-                dbClss.WarningIT("No Permisstion.");
-            }
-        }
-
-        private void radMenuItem27_Click(object sender, EventArgs e)
-        {
             if (StockControl.dbClss.Permisstion("", "Absence", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
             {
                 this.Cursor = Cursors.WaitCursor;
@@ -573,5 +532,6 @@ namespace StockControl
                 dbClss.WarningIT("No Permisstion.");
             }
         }
+        
     }
 }
