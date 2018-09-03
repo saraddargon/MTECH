@@ -167,7 +167,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
-                var g = db.mh_CapacityAbsences.Where(x => x.idWorkCenters == idWorkCenters).ToList();
+                var g = db.mh_CapacityAbsences.Where(x => x.idWorkCenters == idWorkCenters && x.Active).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.DataSource = dt2;
                 int ck = 0;
@@ -281,7 +281,8 @@ namespace StockControl
                                 var t = db.mh_CapacityAbsences.Where(x => x.id == CodeTemp.ToInt()).ToList();
                                 foreach (var d in t)
                                 {
-                                    db.mh_CapacityAbsences.DeleteOnSubmit(d);
+                                    d.Active = false;
+                                    //db.mh_CapacityAbsences.DeleteOnSubmit(d);
                                     dbClss.AddHistory(this.Name, "ลบวันหยุดงาน", $"Delete HoliDay [{d.Date.ToDtString()}]", "");
                                 }
                                 C += 1;

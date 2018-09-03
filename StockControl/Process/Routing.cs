@@ -149,7 +149,9 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
-                var g = db.mh_Routings.GroupBy(x => new { x.RoutingNo, x.RoutingName }).Select(x => new { RoutingNo = x.Key.RoutingNo, RoutingName = x.Key.RoutingName }).ToList();
+                var g = db.mh_Routings.Where(x => x.Active)
+                    .GroupBy(x => new { x.RoutingNo, x.RoutingName })
+                    .Select(x => new { RoutingNo = x.Key.RoutingNo, RoutingName = x.Key.RoutingName }).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.AutoGenerateColumns = false;
                 radGridView1.DataSource = dt2;
@@ -261,7 +263,8 @@ namespace StockControl
                                 var t = db.mh_Routings.Where(x => x.RoutingNo == CodeTemp).ToList();
                                 foreach (var d in t)
                                 {
-                                    db.mh_Routings.DeleteOnSubmit(d);
+                                    //db.mh_Routings.DeleteOnSubmit(d);
+                                    d.Active = false;
                                     if (m == 0)
                                         dbClss.AddHistory(this.Name, "ลบ Routing", $"Delete Routing [{d.RoutingNo}]", "");
                                     m++;

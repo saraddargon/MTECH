@@ -165,7 +165,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
-                var g = db.mh_Calendars.ToList();
+                var g = db.mh_Calendars.Where(x => x.Active).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.DataSource = dt2;
                 int ck = 0;
@@ -275,7 +275,8 @@ namespace StockControl
                                 var t = db.mh_Calendars.Where(x => x.id == CodeTemp.ToInt()).ToList();
                                 foreach (var d in t)
                                 {
-                                    db.mh_Calendars.DeleteOnSubmit(d);
+                                    //db.mh_Calendars.DeleteOnSubmit(d);
+                                    d.Active = false;
                                     dbClss.AddHistory(this.Name, "ลบปฏิทิน", $"Delete Calendar [{d.Description}]", "");
                                 }
                                 C += 1;
