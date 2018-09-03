@@ -458,5 +458,17 @@
         <elementListCompartment Id="b560079d-ca8b-4db4-b98d-4fc0404f1a03" absoluteBounds="3.3899999999999997, 17.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="717f7fea-6874-49e4-886e-b77b72ee4c2e" isExpanded="false" absoluteBounds="4.875, 14.625, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/mh_RoutingType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d6cbdcfb-b197-4094-947f-1e50e9ad36d6" absoluteBounds="4.89, 15.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2be0c99e-48dd-45b7-899c-8f425da48a3d" isExpanded="false" absoluteBounds="3.375, 14.25, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/mh_Routing" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6d11c993-e4cb-4ef5-8ab2-29c053062b27" absoluteBounds="3.3899999999999997, 14.71, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
