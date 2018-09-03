@@ -642,6 +642,24 @@
     <Compile Include="Process\Holiday.Designer.cs">
       <DependentUpon>Holiday.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\tb_Master_VATGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\tb_Master_VATGroup.Designer.cs">
+      <DependentUpon>tb_Master_VATGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\tb_Master_VATSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\tb_Master_VATSetup.Designer.cs">
+      <DependentUpon>tb_Master_VATSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\tb_Master_VATType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\tb_Master_VATType.Designer.cs">
+      <DependentUpon>tb_Master_VATType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\WorkingDay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1032,6 +1050,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Holiday.resx">
       <DependentUpon>Holiday.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\tb_Master_VATGroup.resx">
+      <DependentUpon>tb_Master_VATGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\tb_Master_VATSetup.resx">
+      <DependentUpon>tb_Master_VATSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\tb_Master_VATType.resx">
+      <DependentUpon>tb_Master_VATType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\WorkingDay.resx">
       <DependentUpon>WorkingDay.cs</DependentUpon>

@@ -296,7 +296,7 @@ namespace StockControl
 
                 cboVatType.DisplayMember = "VatType";
                 cboVatType.ValueMember = "VatType";
-                cboVatType.DataSource = db.mh_VATTypes.ToList();
+                cboVatType.DataSource = db.mh_VATTypes.Where(ab=>ab.Active==true).ToList();
                 cboVatType.SelectedIndex = -1;
                 cboVatType.Text = "";
 
@@ -629,127 +629,128 @@ namespace StockControl
 
                                 if (!txtInternalName.Text.Trim().Equals(row["InternalName"].ToString()))
                                 {
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขชื่อทูล [ เดิม : " + row["InternalName"].ToString() +" ใหม่ : " + txtInternalName.Text.Trim() + "]", txtInternalNo.Text);
                                     gg.InternalName = txtInternalName.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขชื่อทูล [" + txtInternalName.Text.Trim() + "]", txtInternalNo.Text);
+                                    
                                 }
                                 if (!txtCustomerPartNo.Text.Trim().Equals(row["CustomerPartNo"].ToString()))
                                 {
                                     gg.CustomerPartNo = txtCustomerPartNo.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขรหัสสินค้า [" + txtCustomerPartNo.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขรหัสสินค้า [ เดิม : " + row["CustomerPartNo"].ToString() + " ใหม่ : " + txtCustomerPartNo.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!txtCustomerPartName.Text.Trim().Equals(row["CustomerPartName"].ToString()))
                                 {
                                     gg.CustomerPartName = txtCustomerPartName.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขชื่อสินค้า[" + txtCustomerPartName.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขชื่อสินค้า[ เดิม : " + row["CustomerPartName"].ToString() + " ใหม่ : " + txtCustomerPartName.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!cboGroupType.Text.Trim().Equals(row["GroupType"].ToString()))
                                 {
                                     gg.GroupType = cboGroupType.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขประเภทกลุ่มสินค้า [" + cboGroupType.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขประเภทกลุ่มสินค้า [ เดิม : " + row["GroupType"].ToString() + " ใหม่ : " + cboGroupType.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!cboTypeCode.Text.Trim().Equals(row["Type"].ToString()))
                                 {
                                     gg.Type = cboTypeCode.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขประเภทสินค้า [" + cboTypeCode.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขประเภทสินค้า [ เดิม : " + row["Type"].ToString() + " ใหม่ : " + cboTypeCode.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!ddlInventoryGroup.Text.Trim().Equals(row["InventoryGroup"].ToString()))
                                 {
                                     gg.InventoryGroup = ddlInventoryGroup.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขประเภททูล [" + ddlInventoryGroup.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขประเภททูล [ เดิม : " + row["InventoryGroup"].ToString() + " ใหม่ : " + ddlInventoryGroup.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!cboVendorName.Text.Trim().Equals(row["VendorName"].ToString()))
                                 {
                                     gg.VendorName = cboVendorName.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขชื่อผู้ขาย [" + cboVendorName.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขชื่อผู้ขาย [ เดิม : " + row["VendorName"].ToString() + " ใหม่ : " + cboVendorName.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!txtVendorNo.Text.Trim().Equals(row["VendorNo"].ToString()))
                                 {
                                     gg.VendorNo = txtVendorNo.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขชื่อผู้ขาย [" + txtVendorNo.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขชื่อผู้ขาย [ เดิม : " + row["VendorNo"].ToString() + " ใหม่ : " + txtVendorNo.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!cboBaseUOM.Text.Trim().Equals(row["BaseUOM"].ToString()))
                                 {
                                     gg.BaseUOM = cboBaseUOM.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขหน่วยพื้นฐาน [" + cboPurchaseUOM.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขหน่วยพื้นฐาน [ เดิม : " + row["BaseUOM"].ToString() + " ใหม่ : " + cboBaseUOM.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!cboPurchaseUOM.Text.Trim().Equals(row["PurchaseUOM"].ToString()))
                                 {
                                     gg.PurchaseUOM = cboPurchaseUOM.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขหน่วยซื้อ [" + cboPurchaseUOM.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขหน่วยซื้อ [ เดิม : " + row["PurchaseUOM"].ToString() + " ใหม่ : " + cboPurchaseUOM.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!cboSalseUOM.Text.Trim().Equals(row["SalesUOM"].ToString()))
                                 {
                                     gg.SalesUOM = cboSalseUOM.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขหน่วยขาย [" + cboSalseUOM.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขหน่วยขาย [ เดิม : " + row["SalesUOM"].ToString() + " ใหม่ : " + cboSalseUOM.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!cboConsumptionUOM.Text.Trim().Equals(row["ConsumptionUOM"].ToString()))
                                 {
                                     gg.ConsumptionUOM = cboConsumptionUOM.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขหน่วยเบิก [" + cboConsumptionUOM.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขหน่วยเบิก [ เดิม : " + row["ConsumptionUOM"].ToString() + " ใหม่ : " + cboConsumptionUOM.Text.Trim() + "]", txtInternalNo.Text);
                                 }
 
                                 if (!cboVatType.Text.Trim().Equals(row["VatType"].ToString()))
                                 {
                                     gg.VatType = cboVatType.Text;
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขประเภทภาษี [" + cboVatType.Text + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขประเภทภาษี [ เดิม : " + row["VatType"].ToString() + " ใหม่ : " + cboVatType.Text + "]", txtInternalNo.Text);
                                 }
                                 if (!ddlReplenishmentType.Text.Trim().Equals(row["ReplenishmentType"].ToString()))
                                 {
                                     gg.ReplenishmentType = ddlReplenishmentType.Text;
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขทดแทน [" + ddlReplenishmentType.Text + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขทดแทน [ เดิม : " + row["ReplenishmentType"].ToString() + " ใหม่ : " + ddlReplenishmentType.Text + "]", txtInternalNo.Text);
                                 }                               
                                 if (!seInternalLeadTime.Text.Trim().Equals(row["InternalLeadTime"].ToString()))
                                 {
                                     int InternalLeadTime = dbClss.TInt(seInternalLeadTime.Value);
                                     gg.InternalLeadTime = InternalLeadTime;
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขระยะเวลาเคลื่อนย้าย [" + InternalLeadTime.ToString() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขระยะเวลาเคลื่อนย้าย [ เดิม : " + row["InternalLeadTime"].ToString() + " ใหม่ : " + InternalLeadTime.ToString() + "]", txtInternalNo.Text);
                                 }                             
                               
                                 if (!seMaximum.Text.Trim().Equals(row["MaximumQty"].ToString()))
                                 {
                                     decimal Maximum = 0; dbClss.TDe(seMaximum.Value);
                                     gg.MaximumQty = Maximum;
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข MaximumStock [" + Maximum.ToString() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข MaximumStock [ เดิม : " + row["MaximumQty"].ToString() + " ใหม่ : " + Maximum.ToString() + "]", txtInternalNo.Text);
                                 }
                                 if (!seMinimum.Text.Trim().Equals(row["MinimumQty"].ToString()))
                                 {
                                     decimal Minimum =  dbClss.TDe(seMinimum.Value);
                                     gg.MinimumQty = Minimum;
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข MinimumStock [" + Minimum.ToString() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข MinimumStock [ เดิม : " + row["MinimumQty"].ToString() + " ใหม่ : " + Minimum.ToString() + "]", txtInternalNo.Text);
                                 }
                                 if (!ddlReOrderType.Text.Trim().Equals(row["ReorderType"].ToString()))
                                 {
                                     gg.ReorderType = ddlReOrderType.Text;
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขการวางผนการซื้อ [" + ddlReOrderType.ToString() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขการวางผนการซื้อ [ เดิม : " + row["ReorderType"].ToString() + " ใหม่ : " + ddlReOrderType.ToString() + "]", txtInternalNo.Text);
                                 }
                                 if (!seReOrderPoint.Text.Trim().Equals(row["ReorderPoint"].ToString()))
                                 {
                                     decimal ReorderPoint = dbClss.TDe(seReOrderPoint.Value);
                                     gg.ReorderPoint = ReorderPoint;
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขจุดสั่งซื้อ [" + ReorderPoint.ToString() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขจุดสั่งซื้อ [ เดิม : " + row["ReorderPoint"].ToString() + " ใหม่ : " + ReorderPoint.ToString() + "]", txtInternalNo.Text);
                                 }
                                 if (!seReOrderQty.Text.Trim().Equals(row["ReorderQty"].ToString()))
                                 {
                                     decimal ReOrderQty = dbClss.TDe(seReOrderQty.Value);
                                     gg.ReorderQty = ReOrderQty;
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขจำนวนสั่งซื้อ [" + ReOrderQty.ToString() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขจำนวนสั่งซื้อ [ เดิม : " + row["ReorderQty"].ToString() + " ใหม่ : " + ReOrderQty.ToString() + "]", txtInternalNo.Text);
                                 }
                                 if (!seSafetyStock.Text.Trim().Equals(row["SafetyStock"].ToString()))
                                 {
                                     decimal SafetyStock = dbClss.TDe(seSafetyStock.Value);
                                     gg.SafetyStock = SafetyStock;
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขจำนวนสั่งซื้อ [" + SafetyStock.ToString() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขจำนวนสั่งซื้อ [ เดิม : " + row["SafetyStock"].ToString() + " ใหม่ : " + SafetyStock.ToString() + "]", txtInternalNo.Text);
                                 }
                                 if (!seTimebucket.Text.Trim().Equals(row["Timebucket"].ToString()))
                                 {
                                     int Timebucket = dbClss.TInt(seTimebucket.Value);
                                     gg.Timebucket = Timebucket;
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขกำหนดระยะเวลาที่: จะใช้ในการรวม order[" + Timebucket.ToString() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขกำหนดระยะเวลาที่: จะใช้ในการรวม order[ เดิม : " + row["Timebucket"].ToString() + " ใหม่ : " + Timebucket.ToString() + "]", txtInternalNo.Text);
                                 }
                                 if (!txtDrawing.Text.Trim().Equals(row["Drawing"].ToString()))
                                 {
                                     gg.Drawing = txtDrawing.Text.Trim();
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข Drawing No [" + txtDrawing.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข Drawing No [ เดิม : " + row["Drawing"].ToString() + " ใหม่ : " + txtDrawing.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!chkDWG.Checked.ToString().Trim().Equals(row["chkDrawing"].ToString()))
                                 {

@@ -552,5 +552,63 @@ namespace StockControl
                 dbClss.WarningIT("No Permisstion.");
             }
         }
+
+        private void radMenuItem31_Click(object sender, EventArgs e)
+        {
+            if (StockControl.dbClss.Permisstion("", "tb_Master_VATType", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
+            {
+                this.Cursor = Cursors.WaitCursor;
+                var sc = new tb_Master_VATType();
+                this.Cursor = Cursors.Default;
+                sc.ShowDialog();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+                ClassLib.Memory.Heap();
+            }
+            else
+            {
+                dbClss.WarningIT("No Permisstion.");
+            }
+        }
+
+        private void radMenuItem34_Click(object sender, EventArgs e)
+        {
+            if (StockControl.dbClss.Permisstion("", "tb_Change_Password", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
+            {
+                this.Cursor = Cursors.WaitCursor;
+                var sc = new tb_Change_Password();
+                this.Cursor = Cursors.Default;
+                sc.ShowDialog();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+                ClassLib.Memory.Heap();
+            }
+            else
+            {
+                dbClss.WarningIT("No Permisstion.");
+            }
+        }
+
+        private void radMenuItem32_Click(object sender, EventArgs e)
+        {
+            
+                if (StockControl.dbClss.Permisstion("", "tb_Master_VATGroup", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
+            {
+                this.Cursor = Cursors.WaitCursor;
+                var sc = new tb_Master_VATGroup();
+                this.Cursor = Cursors.Default;
+                sc.ShowDialog();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+                ClassLib.Memory.Heap();
+            }
+            else
+            {
+                dbClss.WarningIT("No Permisstion.");
+            }
+        }
     }
 }
