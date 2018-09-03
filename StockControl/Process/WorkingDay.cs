@@ -14,9 +14,11 @@ namespace StockControl
 {
     public partial class WorkingDay : Telerik.WinControls.UI.RadRibbonForm
     {
-        public WorkingDay()
+        int idCalendar = 0;
+        public WorkingDay(int id)
         {
             InitializeComponent();
+            idCalendar = id;
         }
 
         //private int RowView = 50;
@@ -56,7 +58,6 @@ namespace StockControl
         System.Drawing.Font MyFont;
         private void Unit_Load(object sender, EventArgs e)
         {
-            RMenu3.Click += RMenu3_Click;
             RMenu4.Click += RMenu4_Click;
             RMenu5.Click += RMenu5_Click;
             RMenu6.Click += RMenu6_Click;
@@ -166,7 +167,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
-                var g = db.mh_WorkingDays.ToList();
+                var g = db.mh_WorkingDays.Where(x => x.idCalendar == idCalendar).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.DataSource = dt2;
                 int ck = 0;
@@ -221,7 +222,8 @@ namespace StockControl
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
                                 //t.ShiftCode = g.Cells["ShiftCode"].Value.ToSt();
                                 t.StartingTime = g.Cells["StartTime"].Value.ToSt();
-                                
+                                t.idCalendar = idCalendar;
+
                                 dbClss.AddHistory(this.Name, "เพิ่มวันทำงาน", "เพิ่มวันทำงาน [" + t.Day + "]", "");
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
                                 db.mh_WorkingDays.InsertOnSubmit(t);
@@ -236,6 +238,7 @@ namespace StockControl
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
                                 //t.ShiftCode = g.Cells["ShiftCode"].Value.ToSt();
                                 t.StartingTime = g.Cells["StartTime"].Value.ToSt();
+                                t.idCalendar = idCalendar;
 
                                 C += 1;
                                 db.SubmitChanges();
@@ -285,7 +288,7 @@ namespace StockControl
                                     //    dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.Name + "]", "");
                                     //}
                                     var t = db.mh_WorkingDays.Where(x => x.id == CodeTemp.ToInt()).ToList();
-                                    foreach(var d in t)
+                                    foreach (var d in t)
                                     {
                                         db.mh_WorkingDays.DeleteOnSubmit(d);
                                         dbClss.AddHistory(this.Name, "ลบวันทำงาน", $"Delete Working Day [{d.Day}]", "");
@@ -387,7 +390,7 @@ namespace StockControl
                             err += "- “เวลาเริ่ม:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["EndTime"].Value).Equals(""))
                             err += "- “เวลาสิ้นสุด:” เป็นค่าว่างไม่ได้ \n";
-                        if(g.Cells["StartTime"].Value.ToSt().Contains("_"))
+                        if (g.Cells["StartTime"].Value.ToSt().Contains("_"))
                             err += "- “เวลาเริ่ม:” กรอกข้อมูลไม่ถูกต้อง \n";
                         if (g.Cells["EndTime"].Value.ToSt().Contains("_"))
                             err += "- “เวลาสิ้นสุด:” กรอกข้อมูลไม่ถูกต้อง \n";

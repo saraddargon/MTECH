@@ -14,9 +14,11 @@ namespace StockControl
 {
     public partial class Holiday : Telerik.WinControls.UI.RadRibbonForm
     {
-        public Holiday()
+        int idCalendar = 0;
+        public Holiday(int id)
         {
             InitializeComponent();
+            idCalendar = id;
         }
 
         //private int RowView = 50;
@@ -56,7 +58,6 @@ namespace StockControl
         System.Drawing.Font MyFont;
         private void Unit_Load(object sender, EventArgs e)
         {
-            RMenu3.Click += RMenu3_Click;
             RMenu4.Click += RMenu4_Click;
             RMenu5.Click += RMenu5_Click;
             RMenu6.Click += RMenu6_Click;
@@ -166,7 +167,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
-                var g = db.mh_Holidays.ToList();
+                var g = db.mh_Holidays.Where(x=>x.idCalendar == idCalendar).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.DataSource = dt2;
                 int ck = 0;
@@ -222,6 +223,7 @@ namespace StockControl
                                 t.StartTime = g.Cells["StartTime"].Value.ToSt();
                                 t.EndingTime = g.Cells["EndTime"].Value.ToSt();
                                 t.Description = g.Cells["Description"].Value.ToSt();
+                                t.idCalendar = idCalendar;
 
                                 dbClss.AddHistory(this.Name, "เพิ่มวันทำงานในวันหยุด", $"เพิ่มวันทำงานในวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", "");
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
@@ -238,6 +240,7 @@ namespace StockControl
                                 t.EndingTime = g.Cells["EndTime"].Value.ToSt();
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
                                 t.Description = g.Cells["Description"].Value.ToSt();
+                                t.idCalendar = idCalendar;
 
                                 C += 1;
                                 db.SubmitChanges();

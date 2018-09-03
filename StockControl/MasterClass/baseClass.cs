@@ -130,5 +130,13 @@ namespace StockControl
         }
     }
     
+
+    public enum TypeAction
+    {
+        Add,
+        Edit,
+        Delete,
+        View
+    }
     
 }

@@ -12,13 +12,11 @@ using Telerik.WinControls;
 
 namespace StockControl
 {
-    public partial class Absence : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Routing : Telerik.WinControls.UI.RadRibbonForm
     {
-        int idWorkCenters = 0;
-        public Absence(int id)
+        public Routing()
         {
             InitializeComponent();
-            idWorkCenters = id;
         }
 
         //private int RowView = 50;
@@ -132,27 +130,11 @@ namespace StockControl
         {
             try
             {
-                DayOfWeek.Clear();
-                DayOfWeek.Add(0, "Monday");
-                DayOfWeek.Add(1, "Tueday");
-                DayOfWeek.Add(2, "Wednesday");
-                DayOfWeek.Add(3, "Thursday");
-                DayOfWeek.Add(4, "Friday");
-                DayOfWeek.Add(5, "Saturday");
-                DayOfWeek.Add(6, "Sunday");
 
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    //var gt = (from ix in db.mh_CRRNCies select ix).ToList();
-                    //GridViewComboBoxColumn comboBoxColumn = this.radGridView1.Columns["DefaultCrrncy"] as GridViewComboBoxColumn;
-                    //comboBoxColumn.DisplayMember = "CRRNCY";
-                    //comboBoxColumn.ValueMember = "id";
-                    //comboBoxColumn.DataSource = gt;
+                    var unit = db.mh_UnitTimes.ToList();
 
-                    //var com = radGridView1.Columns["Day"] as GridViewComboBoxColumn;
-                    //com.DisplayMember = "Value";
-                    //com.ValueMember = "Key";
-                    //com.DataSource = DayOfWeek;
                 }
             }
             catch (Exception ex)
@@ -167,8 +149,9 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
-                var g = db.mh_CapacityAbsences.Where(x => x.idWorkCenters == idWorkCenters).ToList();
+                var g = db.mh_Routings.GroupBy(x => new { x.RoutingNo, x.RoutingName }).Select(x => new { RoutingNo = x.Key.RoutingNo, RoutingName = x.Key.RoutingName }).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
+                radGridView1.AutoGenerateColumns = false;
                 radGridView1.DataSource = dt2;
                 int ck = 0;
                 foreach (var x in radGridView1.Rows)
@@ -216,33 +199,23 @@ namespace StockControl
                         {
                             if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
                             {
-                                var t = new mh_CapacityAbsence();
-                                t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
-                                t.Date = g.Cells["Date"].Value.ToDateTime().Value.Date;
-                                t.StartingTime = g.Cells["StartTime"].Value.ToSt();
-                                t.EndingTime = g.Cells["EndTime"].Value.ToSt();
-                                t.Capacity = g.Cells["Capacity"].Value.ToDecimal();
-                                t.idWorkCenters = idWorkCenters;
+                                var t = new mh_Calendar();
+                                t.Description = g.Cells["Description"].Value.ToSt();
 
-                                dbClss.AddHistory(this.Name, "เพิ่มวัน", $"เพิ่มวันหยุดงาน [{t.Date.ToDtString()}]", "");
+                                dbClss.AddHistory(this.Name, "เพิ่มปฏิทิน", $"เพิ่มปฏิทิน [{t.Description}]", "");
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
-                                db.mh_CapacityAbsences.InsertOnSubmit(t);
+                                db.mh_Calendars.InsertOnSubmit(t);
                                 db.SubmitChanges();
                                 C += 1;
                             }
                             else
                             {
-                                var t = db.mh_CapacityAbsences.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
-                                t.Date = g.Cells["Date"].Value.ToDateTime().Value.Date;
-                                t.StartingTime = g.Cells["StartTime"].Value.ToSt();
-                                t.EndingTime = g.Cells["EndTime"].Value.ToSt();
-                                t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
-                                t.Capacity = g.Cells["Capacity"].Value.ToDecimal();
-                                t.idWorkCenters = idWorkCenters;
+                                var t = db.mh_Calendars.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
+                                t.Description = t.Description;
 
                                 C += 1;
                                 db.SubmitChanges();
-                                dbClss.AddHistory(this.Name, "แก้ไขวันหยุดงาน", $"แก้ไขวันหยุดงาน [{t.Date.ToDtString()}]", "");
+                                dbClss.AddHistory(this.Name, "แก้ไขปฏิทิน", $"แก้ไขปฏิทิน [{t.Description}]", "");
 
                             }
                         }
@@ -252,7 +225,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("เพิ่มวันหยุดงาน", ex.Message, this.Name);
+                dbClss.AddError("เพิ่มปฏิทิน", ex.Message, this.Name);
             }
 
             if (C > 0)
@@ -265,12 +238,13 @@ namespace StockControl
             bool ck = false;
 
             int C = 0;
+            int m = 0;
             try
             {
 
                 if (row >= 0)
                 {
-                    string CodeTemp = Convert.ToString(radGridView1.Rows[row].Cells["dgvCodeTemp"].Value);
+                    string CodeTemp = Convert.ToString(radGridView1.Rows[row].Cells["No"].Value);
                     radGridView1.EndEdit();
                     if (MessageBox.Show("ต้องการลบรายการหรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
@@ -278,11 +252,19 @@ namespace StockControl
                         {
                             if (!CodeTemp.Equals(""))
                             {
-                                var t = db.mh_CapacityAbsences.Where(x => x.id == CodeTemp.ToInt()).ToList();
+                                //var unit1 = db.mh_Vendors.Where(x => x.No == CodeDelete).ToList();
+                                //foreach (var d in unit1)
+                                //{
+                                //    db.mh_Vendors.DeleteOnSubmit(d);
+                                //    dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.Name + "]", "");
+                                //}
+                                var t = db.mh_Routings.Where(x => x.RoutingNo == CodeTemp).ToList();
                                 foreach (var d in t)
                                 {
-                                    db.mh_CapacityAbsences.DeleteOnSubmit(d);
-                                    dbClss.AddHistory(this.Name, "ลบวันหยุดงาน", $"Delete HoliDay [{d.Date.ToDtString()}]", "");
+                                    db.mh_Routings.DeleteOnSubmit(d);
+                                    if (m == 0)
+                                        dbClss.AddHistory(this.Name, "ลบ Routing", $"Delete Routing [{d.RoutingNo}]", "");
+                                    m++;
                                 }
                                 C += 1;
 
@@ -299,7 +281,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("ลบวันทำงาน", ex.Message, this.Name);
+                dbClss.AddError("ลบ Routing", ex.Message, this.Name);
             }
 
             if (C > 0)
@@ -342,17 +324,34 @@ namespace StockControl
         }
         private void btnNew_Click(object sender, EventArgs e)
         {
-            NewClick();
+            //NewClick();
+            var rd = new RoutingDetail("", TypeAction.Add);
+            rd.ShowDialog();
+
+            DataLoad();
+
         }
 
         private void btnView_Click(object sender, EventArgs e)
         {
-            ViewClick();
+            //ViewClick();
+            if (row >= 0)
+            {
+                var rd = new RoutingDetail(radGridView1.Rows[row].Cells["No"].Value.ToSt(), TypeAction.View);
+                rd.ShowDialog();
+                DataLoad();
+            }
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            EditClick();
+            //EditClick();
+            if (row >= 0)
+            {
+                var rd = new RoutingDetail(radGridView1.Rows[row].Cells["No"].Value.ToSt(), TypeAction.Edit);
+                rd.ShowDialog();
+                DataLoad();
+            }
         }
         private bool Check_Save()
         {
@@ -370,18 +369,8 @@ namespace StockControl
                 {
                     if (g.IsVisible)
                     {
-                        if (Convert.ToString(g.Cells["Date"].Value).Equals(""))
-                            err += "- “วันที่.:” เป็นค่าว่างไม่ได้ \n";
-                        if (Convert.ToString(g.Cells["StartTime"].Value).Equals(""))
-                            err += "- “เวลาเริ่ม.:” เป็นค่าว่างไม่ได้ \n";
-                        if (Convert.ToString(g.Cells["EndTime"].Value).Equals(""))
-                            err += "- “เวลาสิ้นสุด.:” เป็นค่าว่างไม่ได้ \n";
-                        if (Convert.ToString(g.Cells["WorkHours"].Value).Equals(""))
-                            err += "- “จำนวนชม.:” เป็นค่าว่างไม่ได้ \n";
-                        if (g.Cells["StartTime"].Value.ToSt().Replace(":", ".").ToDecimal() > 23.59m)
-                            err += "- “เวลาเริ่ม:” กรอกข้อมูลไม่ถูกต้อง \n";
-                        if (g.Cells["EndTime"].Value.ToSt().Replace(":", ".").ToDecimal() > 23.59m)
-                            err += "- “เวลาสิ้นสุด:” กรอกข้อมูลไม่ถูกต้อง \n";
+                        if (Convert.ToString(g.Cells["Description"].Value).Equals(""))
+                            err += "- “รายละเอียด.:” เป็นค่าว่างไม่ได้ \n";
                     }
 
 
@@ -477,6 +466,19 @@ namespace StockControl
         private void radGridView1_CellClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             row = e.RowIndex;
+            if (e.RowIndex >= 0)
+            {
+                if (radGridView1.Rows[e.RowIndex].Cells["dgvCodeTemp"].Value.ToInt() > 0)
+                {
+                    btnHolidays.Enabled = true;
+                    btnWorkingDays.Enabled = true;
+                }
+                else
+                {
+                    btnHolidays.Enabled = false;
+                    btnWorkingDays.Enabled = false;
+                }
+            }
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -683,57 +685,12 @@ namespace StockControl
 
         private void MasterTemplate_CellFormatting(object sender, CellFormattingEventArgs e)
         {
-            if (e.CellElement.ColumnInfo.HeaderText == "รหัสผู้ขาย")
+            if (e.CellElement.ColumnInfo.Name == "Code")
             {
-                if (e.CellElement.RowInfo.Cells["VendorNo"].Value != null)
-                {
-                    if (!e.CellElement.RowInfo.Cells["VendorNo"].Value.Equals(""))
-                    {
-                        e.CellElement.DrawFill = true;
-                        // e.CellElement.ForeColor = Color.Blue;
-                        e.CellElement.NumberOfColors = 1;
-                        e.CellElement.BackColor = Color.WhiteSmoke;
-                    }
-                    else
-                    {
-                        e.CellElement.DrawFill = true;
-                        //e.CellElement.ForeColor = Color.Yellow;
-                        e.CellElement.NumberOfColors = 1;
-                        e.CellElement.BackColor = Color.WhiteSmoke;
-                    }
-                }
-            }
-            else if (e.CellElement.ColumnInfo.HeaderText == "ผู้ติดต่อ"
-                || e.CellElement.ColumnInfo.HeaderText == "เบอร์โทร"
-                || e.CellElement.ColumnInfo.HeaderText == "เบอร์แฟกซ์"
-                || e.CellElement.ColumnInfo.HeaderText == "อีเมล์"
-                )
-            {
-                if (e.CellElement.RowInfo.Cells["ContactName"].Value != null
-                    || e.CellElement.RowInfo.Cells["PhoneNo"].Value != null
-                    || e.CellElement.RowInfo.Cells["FaxNo"].Value != null
-                    || e.CellElement.RowInfo.Cells["Email"].Value != null)
-                {
-                    e.CellElement.DrawFill = true;
-                    // e.CellElement.ForeColor = Color.Blue;
-                    e.CellElement.NumberOfColors = 1;
-                    e.CellElement.BackColor = Color.WhiteSmoke;
-                    //if (!e.CellElement.RowInfo.Cells["ContactName"].Value.Equals("")
-                    //    )
-                    //{
-                    //    e.CellElement.DrawFill = true;
-                    //    // e.CellElement.ForeColor = Color.Blue;
-                    //    e.CellElement.NumberOfColors = 1;
-                    //    e.CellElement.BackColor = SystemColors.ButtonHighlight;
-                    //}
-                    //else
-                    //{
-                    //    //e.CellElement.DrawFill = true;
-                    //    ////e.CellElement.ForeColor = Color.Yellow;
-                    //    //e.CellElement.NumberOfColors = 1;
-                    //    //e.CellElement.BackColor = Color.WhiteSmoke;
-                    //}
-                }
+                e.CellElement.DrawFill = true;
+                // e.CellElement.ForeColor = Color.Blue;
+                e.CellElement.NumberOfColors = 1;
+                e.CellElement.BackColor = Color.WhiteSmoke;
             }
             else
             {
@@ -749,11 +706,10 @@ namespace StockControl
 
             if (row >= 0)
             {
-
-
                 this.Cursor = Cursors.WaitCursor;
-                Contact ct = new Contact(Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value),
-                    Convert.ToString(radGridView1.Rows[row].Cells["VendorName"].Value));
+                //Contact ct = new Contact(Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value),
+                //    Convert.ToString(radGridView1.Rows[row].Cells["VendorName"].Value));
+                var ct = new WorkingDay(radGridView1.Rows[row].Cells["Code"].Value.ToInt());
                 this.Cursor = Cursors.Default;
                 ct.ShowDialog();
                 GC.Collect();
@@ -763,5 +719,27 @@ namespace StockControl
                 ClassLib.Memory.Heap();
             }
         }
+
+        private void btnHolidays_Click(object sender, EventArgs e)
+        {
+
+            if (row >= 0)
+            {
+                this.Cursor = Cursors.WaitCursor;
+                //Contact ct = new Contact(Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value),
+                //    Convert.ToString(radGridView1.Rows[row].Cells["VendorName"].Value));
+                var ct = new Holiday(radGridView1.Rows[row].Cells["Code"].Value.ToInt());
+                this.Cursor = Cursors.Default;
+                ct.ShowDialog();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+                ClassLib.Memory.Heap();
+            }
+        }
+
+
+
     }
 }

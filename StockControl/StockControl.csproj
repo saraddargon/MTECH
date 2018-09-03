@@ -162,6 +162,24 @@
     <Compile Include="Process\Calculate_Movement.Designer.cs">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\RoutingDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\RoutingDetail.Designer.cs">
+      <DependentUpon>RoutingDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Routing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Routing.Designer.cs">
+      <DependentUpon>Routing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\WorkCenters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\WorkCenters.Designer.cs">
+      <DependentUpon>WorkCenters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\ChargePO_List_2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +191,12 @@
     </Compile>
     <Compile Include="Process\Absence.Designer.cs">
       <DependentUpon>Absence.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Calendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Calendar.Designer.cs">
+      <DependentUpon>Calendar.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Report\ReportConsumableBalance.cs">
       <SubType>Form</SubType>
@@ -787,11 +811,23 @@
     <EmbeddedResource Include="Process\Calculate_Movement.resx">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\RoutingDetail.resx">
+      <DependentUpon>RoutingDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Routing.resx">
+      <DependentUpon>Routing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\WorkCenters.resx">
+      <DependentUpon>WorkCenters.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\ChargePO_List_2.resx">
       <DependentUpon>ChargePO_List_2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Absence.resx">
       <DependentUpon>Absence.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Calendar.resx">
+      <DependentUpon>Calendar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Report\ReportConsumableBalance.resx">
       <DependentUpon>ReportConsumableBalance.cs</DependentUpon>

@@ -16,13 +16,13 @@ namespace StockControl
         public Mainfrom()
         {
             InitializeComponent();
-            lblUser.Text= ClassLib.Classlib.User;
+            lblUser.Text = ClassLib.Classlib.User;
             lblDomain.Text = Classlib.DomainUser;
             lblresolution.Text = Classlib.ScreenWidth.ToString("#,###") + " x " + Classlib.ScreenHight.ToString("#,###");
         }
-   
 
-        string SqlGetName= "";
+
+        string SqlGetName = "";
         display formshow;
         Home1600x900 homeshow;
         private void Mainfrom_FormClosed(object sender, FormClosedEventArgs e)
@@ -76,7 +76,8 @@ namespace StockControl
 
                 GC.Collect();
                 GC.WaitForFullGCComplete();
-            }catch(Exception ex) { MessageBox.Show(ex.Message); }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         public void ShowTreeForm(Form Show1)
         {
@@ -86,7 +87,7 @@ namespace StockControl
             Show1.FormBorderStyle = FormBorderStyle.None;
             Show1.ShowInTaskbar = false;
             // set panal1 show
-            
+
             this.panel3.Controls.Clear();
             this.panel3.Controls.Add(Show1);
             Show1.Show();
@@ -160,7 +161,7 @@ namespace StockControl
                 CallDisplayHome();
                 return;
             }
-            else if(CountDisplay==0 && !SqlGetName.Equals(""))
+            else if (CountDisplay == 0 && !SqlGetName.Equals(""))
             {
                 formshow = new display(ref SqlGetName);
                 ShowTreeForm(formshow);
@@ -175,9 +176,9 @@ namespace StockControl
             if (WindowState == FormWindowState.Minimized)
             {
                 //MessageBox.Show("Minimize");
-               
+
             }
-            else if(WindowState==FormWindowState.Normal)
+            else if (WindowState == FormWindowState.Normal)
             {
                 // MessageBox.Show("restore down");
                 CountDisplay = 0;
@@ -261,7 +262,7 @@ namespace StockControl
 
         private void radMenuItem8_Click(object sender, EventArgs e)
         {
-           
+
             if (MessageBox.Show("ต้องการที่จะ Run Job Query หรือไม่ ?", "Run Job", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
@@ -269,13 +270,13 @@ namespace StockControl
                     db.sp_RunJOB();
                     db.sp_SelectItemUpdate();
                 }
-                    MessageBox.Show("Script Run StoreProcedure Agent Completed.");
+                MessageBox.Show("Script Run StoreProcedure Agent Completed.");
             }
         }
 
         private void radMenuItem7_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("ต้องการที่จะ Backup ฐานข้อมูล","Backup",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
+            if (MessageBox.Show("ต้องการที่จะ Backup ฐานข้อมูล", "Backup", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 try
                 {
@@ -367,7 +368,8 @@ namespace StockControl
             if (StockControl.dbClss.Permisstion("", "WorkDays", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
             {
                 this.Cursor = Cursors.WaitCursor;
-                WorkDays sc = new WorkDays();
+                //WorkDays sc = new WorkDays();
+                var sc = new Calendar();
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -383,7 +385,7 @@ namespace StockControl
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-           
+
         }
 
         private void linkLabel1_MouseClick(object sender, MouseEventArgs e)
@@ -395,9 +397,9 @@ namespace StockControl
                 SqlGetName.Equals("home");
                 CallDisplayHome();
 
-                
+
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void radMenuItem10_Click(object sender, EventArgs e)
@@ -448,7 +450,7 @@ namespace StockControl
                 ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
                 ClassLib.Memory.Heap();
             }
-             else
+            else
             {
                 dbClss.WarningIT("No Permisstion.");
             }
@@ -513,16 +515,12 @@ namespace StockControl
             }
         }
 
-        private void radMenuItem24_Click(object sender, EventArgs e)
+        private void btnWorkCenters_Click(object sender, EventArgs e)
         {
-        }
-
-        private void radMenuItem25_Click(object sender, EventArgs e)
-        {
-            if (StockControl.dbClss.Permisstion("", "WorkingDay", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
+            if (StockControl.dbClss.Permisstion("", "WorkCenters", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
             {
                 this.Cursor = Cursors.WaitCursor;
-                var sc = new WorkingDay();
+                var sc = new WorkCenters();
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -536,31 +534,12 @@ namespace StockControl
             }
         }
 
-        private void radMenuItem26_Click(object sender, EventArgs e)
+        private void btnRoutings_Click(object sender, EventArgs e)
         {
-            if (StockControl.dbClss.Permisstion("", "Holiday", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
+            if (StockControl.dbClss.Permisstion("", "Routing", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
             {
                 this.Cursor = Cursors.WaitCursor;
-                var sc = new Holiday();
-                this.Cursor = Cursors.Default;
-                sc.ShowDialog();
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
-                ClassLib.Memory.Heap();
-            }
-            else
-            {
-                dbClss.WarningIT("No Permisstion.");
-            }
-        }
-
-        private void radMenuItem27_Click(object sender, EventArgs e)
-        {
-            if (StockControl.dbClss.Permisstion("", "Absence", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
-            {
-                this.Cursor = Cursors.WaitCursor;
-                var sc = new Absence();
+                var sc = new Routing();
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
