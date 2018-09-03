@@ -1,6 +1,6 @@
 ﻿namespace StockControl
 {
-    partial class Vendor
+    partial class Customers
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Vendor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Customers));
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject1 = new Telerik.WinControls.UI.ConditionalFormattingObject();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
@@ -43,10 +43,11 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn9 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn10 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn11 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn2 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn3 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn2 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn12 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewBrowseColumn gridViewBrowseColumn1 = new Telerik.WinControls.UI.GridViewBrowseColumn();
@@ -414,14 +415,14 @@
             gridViewTextBoxColumn1.ConditionalFormattingObjectList.Add(conditionalFormattingObject1);
             gridViewTextBoxColumn1.EnableExpressionEditor = false;
             gridViewTextBoxColumn1.FieldName = "No";
-            gridViewTextBoxColumn1.HeaderText = "รหัสผู้ขาย";
+            gridViewTextBoxColumn1.HeaderText = "รหัสผู้ซื้อ";
             gridViewTextBoxColumn1.Name = "VendorNo";
             gridViewTextBoxColumn1.ReadOnly = true;
             gridViewTextBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewTextBoxColumn1.Width = 60;
             gridViewTextBoxColumn2.EnableExpressionEditor = false;
             gridViewTextBoxColumn2.FieldName = "Name";
-            gridViewTextBoxColumn2.HeaderText = "ชื่อผู้ขายสินค้า";
+            gridViewTextBoxColumn2.HeaderText = "ชื่อผู้ซื้อสินค้า";
             gridViewTextBoxColumn2.Name = "VendorName";
             gridViewTextBoxColumn2.Width = 150;
             gridViewTextBoxColumn3.EnableExpressionEditor = false;
@@ -477,9 +478,13 @@
             gridViewTextBoxColumn11.HeaderText = "ผู้ติดต่อ";
             gridViewTextBoxColumn11.Name = "ContactName";
             gridViewTextBoxColumn11.Width = 135;
+            gridViewDecimalColumn1.EnableExpressionEditor = false;
+            gridViewDecimalColumn1.FieldName = "CreditLimit";
+            gridViewDecimalColumn1.HeaderText = "จำกัดวงเงิน";
+            gridViewDecimalColumn1.Name = "CreditLimit";
             gridViewComboBoxColumn1.EnableExpressionEditor = false;
-            gridViewComboBoxColumn1.FieldName = "VendorGroup";
-            gridViewComboBoxColumn1.HeaderText = "กลุ่มผู้ขาย";
+            gridViewComboBoxColumn1.FieldName = "CustomerGroup";
+            gridViewComboBoxColumn1.HeaderText = "กลุ่มผู้ซื้อ";
             gridViewComboBoxColumn1.Name = "VendorGroup";
             gridViewComboBoxColumn1.Width = 101;
             gridViewComboBoxColumn2.EnableExpressionEditor = false;
@@ -492,11 +497,11 @@
             gridViewComboBoxColumn3.HeaderText = "ค่าเงิน";
             gridViewComboBoxColumn3.Name = "DefaultCrrncy";
             gridViewComboBoxColumn3.Width = 82;
-            gridViewDecimalColumn1.EnableExpressionEditor = false;
-            gridViewDecimalColumn1.FieldName = "ShippingTime";
-            gridViewDecimalColumn1.HeaderText = "ระยะเวลาขนส่ง";
-            gridViewDecimalColumn1.Name = "ShippingTime";
-            gridViewDecimalColumn1.Width = 84;
+            gridViewDecimalColumn2.EnableExpressionEditor = false;
+            gridViewDecimalColumn2.FieldName = "ShippingTime";
+            gridViewDecimalColumn2.HeaderText = "ระยะเวลาขนส่ง";
+            gridViewDecimalColumn2.Name = "ShippingTime";
+            gridViewDecimalColumn2.Width = 84;
             gridViewCheckBoxColumn2.EnableExpressionEditor = false;
             gridViewCheckBoxColumn2.FieldName = "PriceIncludeVat";
             gridViewCheckBoxColumn2.HeaderText = "ราคารวมภาษี";
@@ -504,8 +509,8 @@
             gridViewCheckBoxColumn2.Name = "PriceIncludeVat";
             gridViewCheckBoxColumn2.Width = 93;
             gridViewTextBoxColumn12.EnableExpressionEditor = false;
-            gridViewTextBoxColumn12.FieldName = "ReceiveAddress";
-            gridViewTextBoxColumn12.HeaderText = "ที่อยู่รับสินค้า";
+            gridViewTextBoxColumn12.FieldName = "ShippingAddress";
+            gridViewTextBoxColumn12.HeaderText = "ที่อยู่ส่งสินค้า";
             gridViewTextBoxColumn12.Name = "ReceiveAddress";
             gridViewTextBoxColumn12.Width = 162;
             gridViewBrowseColumn1.EnableExpressionEditor = false;
@@ -531,10 +536,11 @@
             gridViewTextBoxColumn9,
             gridViewTextBoxColumn10,
             gridViewTextBoxColumn11,
+            gridViewDecimalColumn1,
             gridViewComboBoxColumn1,
             gridViewComboBoxColumn2,
             gridViewComboBoxColumn3,
-            gridViewDecimalColumn1,
+            gridViewDecimalColumn2,
             gridViewCheckBoxColumn2,
             gridViewTextBoxColumn12,
             gridViewBrowseColumn1,
@@ -633,7 +639,7 @@
             this.RMenu6.Name = "RMenu6";
             this.RMenu6.Text = "ลบรายการ";
             // 
-            // Vendor
+            // Customers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -643,7 +649,7 @@
             this.Controls.Add(this.radRibbonBar1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "Vendor";
+            this.Name = "Customers";
             // 
             // 
             // 

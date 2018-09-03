@@ -78,6 +78,7 @@
             this.radMenuItem16 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem17 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem18 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem23 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem20 = new Telerik.WinControls.UI.RadMenuItem();
             this.btnPermisstion = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem4 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
@@ -135,7 +136,6 @@
             this.radStatusStrip1.Name = "radStatusStrip1";
             this.radStatusStrip1.Size = new System.Drawing.Size(1072, 23);
             this.radStatusStrip1.TabIndex = 0;
-            this.radStatusStrip1.Text = "radStatusStrip1";
             this.radStatusStrip1.ThemeName = "Office2010Blue";
             // 
             // radLabelElement1
@@ -154,7 +154,7 @@
             this.lblStatusconnect.TextWrap = true;
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.lblStatusconnect.GetChildAt(0))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(129)))), ((int)(((byte)(4)))));
             ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblStatusconnect.GetChildAt(2).GetChildAt(1))).TextWrap = true;
-            ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblStatusconnect.GetChildAt(2).GetChildAt(1))).TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblStatusconnect.GetChildAt(2).GetChildAt(1))).TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblStatusconnect.GetChildAt(2).GetChildAt(1))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(129)))), ((int)(((byte)(4)))));
             ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblStatusconnect.GetChildAt(2).GetChildAt(1))).Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
@@ -178,7 +178,7 @@
             this.lblServer.Text = "(local)";
             this.lblServer.TextWrap = true;
             ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblServer.GetChildAt(2).GetChildAt(1))).TextWrap = true;
-            ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblServer.GetChildAt(2).GetChildAt(1))).TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblServer.GetChildAt(2).GetChildAt(1))).TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblServer.GetChildAt(2).GetChildAt(1))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(129)))));
             // 
             // commandBarSeparator2
@@ -201,7 +201,7 @@
             this.lblDomain.Text = "WorkGroup";
             this.lblDomain.TextWrap = true;
             ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblDomain.GetChildAt(2).GetChildAt(1))).TextWrap = true;
-            ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblDomain.GetChildAt(2).GetChildAt(1))).TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblDomain.GetChildAt(2).GetChildAt(1))).TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblDomain.GetChildAt(2).GetChildAt(1))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(4)))), ((int)(((byte)(129)))));
             // 
             // commandBarSeparator3
@@ -224,7 +224,7 @@
             this.lblUser.Text = "None";
             this.lblUser.TextWrap = true;
             ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblUser.GetChildAt(2).GetChildAt(1))).TextWrap = true;
-            ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblUser.GetChildAt(2).GetChildAt(1))).TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblUser.GetChildAt(2).GetChildAt(1))).TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblUser.GetChildAt(2).GetChildAt(1))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(6)))), ((int)(((byte)(197)))));
             ((Telerik.WinControls.Primitives.TextPrimitive)(this.lblUser.GetChildAt(2).GetChildAt(1))).Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
@@ -334,6 +334,7 @@
             this.radMenuItem16,
             this.radMenuItem17,
             this.radMenuItem18,
+            this.radMenuItem23,
             this.radMenuItem20,
             this.btnPermisstion,
             this.radMenuSeparatorItem4,
@@ -411,6 +412,13 @@
             this.radMenuItem18.Name = "radMenuItem18";
             this.radMenuItem18.Text = "Master Vendor";
             this.radMenuItem18.Click += new System.EventHandler(this.radMenuItem18_Click);
+            // 
+            // radMenuItem23
+            // 
+            this.radMenuItem23.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem23.Image")));
+            this.radMenuItem23.Name = "radMenuItem23";
+            this.radMenuItem23.Text = "Master Customer";
+            this.radMenuItem23.Click += new System.EventHandler(this.radMenuItem23_Click);
             // 
             // radMenuItem20
             // 
@@ -673,7 +681,6 @@
             this.radMenu1.Name = "radMenu1";
             this.radMenu1.Size = new System.Drawing.Size(1072, 29);
             this.radMenu1.TabIndex = 1;
-            this.radMenu1.Text = "radMenu1";
             this.radMenu1.ThemeName = "Office2010Blue";
             ((Telerik.WinControls.UI.RadMenuElement)(this.radMenu1.GetChildAt(0))).BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(4)))), ((int)(((byte)(129)))));
@@ -764,11 +771,11 @@
         private Telerik.WinControls.UI.RadMenuItem radMenuItem16;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem17;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem18;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem23;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem19;
         private Telerik.WinControls.UI.RadMenuSeparatorItem radMenuSeparatorItem4;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem21;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem22;
-        private Telerik.WinControls.UI.RadMenu radMenu1;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem20;
         private Telerik.WinControls.UI.CommandBarSeparator commandBarSeparator4;
         private Telerik.WinControls.UI.RadLabelElement radLabelElement4;
@@ -783,5 +790,6 @@
         private Telerik.WinControls.UI.RadLabel radLabel3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Telerik.WinControls.UI.RadLabel radLabel1;
+        private Telerik.WinControls.UI.RadMenu radMenu1;
     }
 }
