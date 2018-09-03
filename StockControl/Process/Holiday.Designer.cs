@@ -112,14 +112,14 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(895, 160);
+            this.radRibbonBar1.Size = new System.Drawing.Size(692, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
             this.radMenuSeparatorItem1,
             this.radMenuItem2});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Vendor (รายละเอียดผู้ขาย)";
+            this.radRibbonBar1.Text = "Holiday (รายละเอียดวันทำงานในวันหยุด)";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
             // 
@@ -342,9 +342,9 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 608);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 537);
             this.radStatusStrip1.Name = "radStatusStrip1";
-            this.radStatusStrip1.Size = new System.Drawing.Size(895, 26);
+            this.radStatusStrip1.Size = new System.Drawing.Size(692, 26);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
             // 
@@ -362,7 +362,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(895, 448);
+            this.panel1.Size = new System.Drawing.Size(692, 377);
             this.panel1.TabIndex = 2;
             // 
             // radGridView1
@@ -418,6 +418,7 @@
             gridViewDateTimeColumn1.CustomFormat = "dd/MM/yyyy";
             gridViewDateTimeColumn1.EnableExpressionEditor = false;
             gridViewDateTimeColumn1.FieldName = "StartingDate";
+            gridViewDateTimeColumn1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             gridViewDateTimeColumn1.FormatString = "{0:dd/MM/yyyy}";
             gridViewDateTimeColumn1.HeaderText = "วันที่เริ่ม";
             gridViewDateTimeColumn1.Name = "StartDate";
@@ -425,13 +426,14 @@
             gridViewDateTimeColumn2.CustomFormat = "dd/MM/yyyy";
             gridViewDateTimeColumn2.EnableExpressionEditor = false;
             gridViewDateTimeColumn2.FieldName = "EndingDate";
+            gridViewDateTimeColumn2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             gridViewDateTimeColumn2.FormatString = "{0:dd/MM/yyyy}";
             gridViewDateTimeColumn2.HeaderText = "วันที่สิ้นสุด";
             gridViewDateTimeColumn2.Name = "EndDate";
             gridViewDateTimeColumn2.Width = 98;
             gridViewMaskBoxColumn1.EnableExpressionEditor = false;
             gridViewMaskBoxColumn1.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
-            gridViewMaskBoxColumn1.FieldName = "StartingTime";
+            gridViewMaskBoxColumn1.FieldName = "StartTime";
             gridViewMaskBoxColumn1.HeaderText = "เวลาเริ่ม";
             gridViewMaskBoxColumn1.Mask = "00:00";
             gridViewMaskBoxColumn1.MaskType = Telerik.WinControls.UI.MaskType.Standard;
@@ -467,7 +469,7 @@
             this.radContextMenuManager1.SetRadContextMenu(this.radGridView1, this.radContextMenu1);
             this.radGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.radGridView1.ShowGroupPanel = false;
-            this.radGridView1.Size = new System.Drawing.Size(895, 448);
+            this.radGridView1.Size = new System.Drawing.Size(692, 377);
             this.radGridView1.TabIndex = 0;
             this.radGridView1.ThemeName = "Office2010Blue";
             this.radGridView1.RowFormatting += new Telerik.WinControls.UI.RowFormattingEventHandler(this.MasterTemplate_RowFormatting);
@@ -559,7 +561,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(895, 634);
+            this.ClientSize = new System.Drawing.Size(692, 563);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);
@@ -571,7 +573,7 @@
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Vendor (รายละเอียดผู้ขาย)";
+            this.Text = "Holiday (รายละเอียดวันทำงานในวันหยุด)";
             this.Load += new System.EventHandler(this.Unit_Load);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Unit_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();

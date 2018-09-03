@@ -12,9 +12,9 @@ using Telerik.WinControls;
 
 namespace StockControl
 {
-    public partial class WorkingDay : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Absence : Telerik.WinControls.UI.RadRibbonForm
     {
-        public WorkingDay()
+        public Absence()
         {
             InitializeComponent();
         }
@@ -148,10 +148,10 @@ namespace StockControl
                     //comboBoxColumn.ValueMember = "id";
                     //comboBoxColumn.DataSource = gt;
 
-                    var com = radGridView1.Columns["Day"] as GridViewComboBoxColumn;
-                    com.DisplayMember = "Value";
-                    com.ValueMember = "Key";
-                    com.DataSource = DayOfWeek;
+                    //var com = radGridView1.Columns["Day"] as GridViewComboBoxColumn;
+                    //com.DisplayMember = "Value";
+                    //com.ValueMember = "Key";
+                    //com.DataSource = DayOfWeek;
                 }
             }
             catch (Exception ex)
@@ -166,7 +166,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
-                var g = db.mh_WorkingDays.ToList();
+                var g = db.mh_CapacityAbsences.ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.DataSource = dt2;
                 int ck = 0;
@@ -215,31 +215,32 @@ namespace StockControl
                         {
                             if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
                             {
-                                var t = new mh_WorkingDay();
-                                t.Day = g.Cells["Day"].Value.ToInt();
-                                t.EndingTime = g.Cells["EndTime"].Value.ToSt();
+                                var t = new mh_CapacityAbsence();
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
-                                //t.ShiftCode = g.Cells["ShiftCode"].Value.ToSt();
+                                t.Date = g.Cells["Date"].Value.ToDateTime().Value.Date;
                                 t.StartingTime = g.Cells["StartTime"].Value.ToSt();
-                                
-                                dbClss.AddHistory(this.Name, "เพิ่มวันทำงาน", "เพิ่มวันทำงาน [" + t.Day + "]", "");
+                                t.EndingTime = g.Cells["EndTime"].Value.ToSt();
+                                t.Capacity = g.Cells["Capacity"].Value.ToDecimal();
+
+                                dbClss.AddHistory(this.Name, "เพิ่มวัน", $"เพิ่มวันหยุดงาน [{t.Date.ToDtString()}]", "");
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
-                                db.mh_WorkingDays.InsertOnSubmit(t);
+                                db.mh_CapacityAbsences.InsertOnSubmit(t);
                                 db.SubmitChanges();
                                 C += 1;
                             }
                             else
                             {
-                                var t = db.mh_WorkingDays.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
-                                t.Day = g.Cells["Day"].Value.ToInt();
+                                var t = db.mh_CapacityAbsences.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
+                                t.Date = g.Cells["Date"].Value.ToDateTime().Value.Date;
+                                t.StartingTime = g.Cells["StartTime"].Value.ToSt();
                                 t.EndingTime = g.Cells["EndTime"].Value.ToSt();
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
-                                //t.ShiftCode = g.Cells["ShiftCode"].Value.ToSt();
-                                t.StartingTime = g.Cells["StartTime"].Value.ToSt();
+                                t.Capacity = g.Cells["Capacity"].Value.ToDecimal();
 
                                 C += 1;
                                 db.SubmitChanges();
-                                dbClss.AddHistory(this.Name, "แก้ไขวันทำงาน", "แก้ไขวันทำงาน [" + t.Day + "]", "");
+                                dbClss.AddHistory(this.Name, "แก้ไขวันหยุดงาน", $"แก้ไขวันหยุดงาน [{t.Date.ToDtString()}]", "");
+
                             }
                         }
                     }
@@ -248,7 +249,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("เพิ่มวันทำงาน", ex.Message, this.Name);
+                dbClss.AddError("เพิ่มวันหยุดงาน", ex.Message, this.Name);
             }
 
             if (C > 0)
@@ -266,36 +267,25 @@ namespace StockControl
 
                 if (row >= 0)
                 {
-                    string CodeDelete = radGridView1.Rows[row].Cells["Day"].Value.ToSt(); //Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value);
                     string CodeTemp = Convert.ToString(radGridView1.Rows[row].Cells["dgvCodeTemp"].Value);
                     radGridView1.EndEdit();
-                    if (MessageBox.Show("ต้องการลบรายการ ( " + CodeDelete + " ) หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show("ต้องการลบรายการหรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-
-                            if (!CodeDelete.Equals(""))
+                            if (!CodeTemp.Equals(""))
                             {
-                                if (!CodeTemp.Equals(""))
+                                var t = db.mh_CapacityAbsences.Where(x => x.id == CodeTemp.ToInt()).ToList();
+                                foreach (var d in t)
                                 {
-                                    //var unit1 = db.mh_Vendors.Where(x => x.No == CodeDelete).ToList();
-                                    //foreach (var d in unit1)
-                                    //{
-                                    //    db.mh_Vendors.DeleteOnSubmit(d);
-                                    //    dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.Name + "]", "");
-                                    //}
-                                    var t = db.mh_WorkingDays.Where(x => x.id == CodeTemp.ToInt()).ToList();
-                                    foreach(var d in t)
-                                    {
-                                        db.mh_WorkingDays.DeleteOnSubmit(d);
-                                        dbClss.AddHistory(this.Name, "ลบวันทำงาน", $"Delete Working Day [{d.Day}]", "");
-                                    }
-                                    C += 1;
-
-
-
-                                    db.SubmitChanges();
+                                    db.mh_CapacityAbsences.DeleteOnSubmit(d);
+                                    dbClss.AddHistory(this.Name, "ลบวันหยุดงาน", $"Delete HoliDay [{d.Date.ToDtString()}]", "");
                                 }
+                                C += 1;
+
+
+
+                                db.SubmitChanges();
                             }
 
                         }
@@ -377,20 +367,14 @@ namespace StockControl
                 {
                     if (g.IsVisible)
                     {
-                        if (Convert.ToString(g.Cells["Day"].Value).Equals(""))
-                            err += "- “วัน:” เป็นค่าว่างไม่ได้ \n";
+                        if (Convert.ToString(g.Cells["Date"].Value).Equals(""))
+                            err += "- “วันที่.:” เป็นค่าว่างไม่ได้ \n";
+                        if (Convert.ToString(g.Cells["StartTime"].Value).Equals(""))
+                            err += "- “เวลาเริ่ม.:” เป็นค่าว่างไม่ได้ \n";
+                        if (Convert.ToString(g.Cells["EndTime"].Value).Equals(""))
+                            err += "- “เวลาสิ้นสุด.:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["WorkHours"].Value).Equals(""))
                             err += "- “จำนวนชม.:” เป็นค่าว่างไม่ได้ \n";
-                        //if (Convert.ToString(g.Cells["ShiftCode"].Value).Equals(""))
-                        //    err += "- “กะทำงาน:” เป็นค่าว่างไม่ได้ \n";
-                        if (Convert.ToString(g.Cells["StartTime"].Value).Equals(""))
-                            err += "- “เวลาเริ่ม:” เป็นค่าว่างไม่ได้ \n";
-                        if (Convert.ToString(g.Cells["EndTime"].Value).Equals(""))
-                            err += "- “เวลาสิ้นสุด:” เป็นค่าว่างไม่ได้ \n";
-                        if(g.Cells["StartTime"].Value.ToSt().Contains("_"))
-                            err += "- “เวลาเริ่ม:” กรอกข้อมูลไม่ถูกต้อง \n";
-                        if (g.Cells["EndTime"].Value.ToSt().Contains("_"))
-                            err += "- “เวลาสิ้นสุด:” กรอกข้อมูลไม่ถูกต้อง \n";
                     }
 
 

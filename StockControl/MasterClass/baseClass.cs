@@ -90,6 +90,10 @@ namespace StockControl
                 return null;
             }
         }
+        public static string ToDtString(this DateTime val)
+        {
+            return val.ToString("dd/MM/yyyy");
+        }
 
         public static void Info(string Mssg)
         {

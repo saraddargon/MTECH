@@ -168,6 +168,12 @@
     <Compile Include="Process\ChargePO_List_2.Designer.cs">
       <DependentUpon>ChargePO_List_2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Absence.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Absence.Designer.cs">
+      <DependentUpon>Absence.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Report\ReportConsumableBalance.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -759,6 +765,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\ChargePO_List_2.resx">
       <DependentUpon>ChargePO_List_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Absence.resx">
+      <DependentUpon>Absence.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Report\ReportConsumableBalance.resx">
       <DependentUpon>ReportConsumableBalance.cs</DependentUpon>
