@@ -234,9 +234,6 @@ namespace StockControl
     partial void Insertmh_Item(mh_Item instance);
     partial void Updatemh_Item(mh_Item instance);
     partial void Deletemh_Item(mh_Item instance);
-    partial void Insertmh_VATType(mh_VATType instance);
-    partial void Updatemh_VATType(mh_VATType instance);
-    partial void Deletemh_VATType(mh_VATType instance);
     partial void Insertmh_CapacityAbsence(mh_CapacityAbsence instance);
     partial void Updatemh_CapacityAbsence(mh_CapacityAbsence instance);
     partial void Deletemh_CapacityAbsence(mh_CapacityAbsence instance);
@@ -252,6 +249,9 @@ namespace StockControl
     partial void Insertmh_Routing(mh_Routing instance);
     partial void Updatemh_Routing(mh_Routing instance);
     partial void Deletemh_Routing(mh_Routing instance);
+    partial void Insertmh_VATType(mh_VATType instance);
+    partial void Updatemh_VATType(mh_VATType instance);
+    partial void Deletemh_VATType(mh_VATType instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -860,14 +860,6 @@ namespace StockControl
 			}
 		}
 		
-		public System.Data.Linq.Table<mh_VATType> mh_VATTypes
-		{
-			get
-			{
-				return this.GetTable<mh_VATType>();
-			}
-		}
-		
 		public System.Data.Linq.Table<mh_CapacityAbsence> mh_CapacityAbsences
 		{
 			get
@@ -905,6 +897,14 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<mh_Routing>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_VATType> mh_VATTypes
+		{
+			get
+			{
+				return this.GetTable<mh_VATType>();
 			}
 		}
 		
@@ -28705,164 +28705,6 @@ namespace StockControl
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_VATType")]
-	public partial class mh_VATType : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _VatType;
-		
-		private string _Remark;
-		
-		private System.Nullable<System.DateTime> _CreateDate;
-		
-		private string _CreateBy;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnVatTypeChanging(string value);
-    partial void OnVatTypeChanged();
-    partial void OnRemarkChanging(string value);
-    partial void OnRemarkChanged();
-    partial void OnCreateDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnCreateDateChanged();
-    partial void OnCreateByChanging(string value);
-    partial void OnCreateByChanged();
-    #endregion
-		
-		public mh_VATType()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VatType", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string VatType
-		{
-			get
-			{
-				return this._VatType;
-			}
-			set
-			{
-				if ((this._VatType != value))
-				{
-					this.OnVatTypeChanging(value);
-					this.SendPropertyChanging();
-					this._VatType = value;
-					this.SendPropertyChanged("VatType");
-					this.OnVatTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(50)")]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this.OnRemarkChanging(value);
-					this.SendPropertyChanging();
-					this._Remark = value;
-					this.SendPropertyChanged("Remark");
-					this.OnRemarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this.OnCreateDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreateDate = value;
-					this.SendPropertyChanged("CreateDate");
-					this.OnCreateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="VarChar(50)")]
-		public string CreateBy
-		{
-			get
-			{
-				return this._CreateBy;
-			}
-			set
-			{
-				if ((this._CreateBy != value))
-				{
-					this.OnCreateByChanging(value);
-					this.SendPropertyChanging();
-					this._CreateBy = value;
-					this.SendPropertyChanged("CreateBy");
-					this.OnCreateByChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CapacityAbsence")]
 	public partial class mh_CapacityAbsence : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -29844,6 +29686,188 @@ namespace StockControl
 					this._RNo = value;
 					this.SendPropertyChanged("RNo");
 					this.OnRNoChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_VATType")]
+	public partial class mh_VATType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _VatType;
+		
+		private string _Remark;
+		
+		private System.Nullable<System.DateTime> _CreateDate;
+		
+		private string _CreateBy;
+		
+		private System.Nullable<bool> _Active;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnVatTypeChanging(string value);
+    partial void OnVatTypeChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnCreateDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreateDateChanged();
+    partial void OnCreateByChanging(string value);
+    partial void OnCreateByChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public mh_VATType()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VatType", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string VatType
+		{
+			get
+			{
+				return this._VatType;
+			}
+			set
+			{
+				if ((this._VatType != value))
+				{
+					this.OnVatTypeChanging(value);
+					this.SendPropertyChanging();
+					this._VatType = value;
+					this.SendPropertyChanged("VatType");
+					this.OnVatTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(50)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="VarChar(50)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this.OnCreateByChanging(value);
+					this.SendPropertyChanging();
+					this._CreateBy = value;
+					this.SendPropertyChanged("CreateBy");
+					this.OnCreateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
 				}
 			}
 		}
