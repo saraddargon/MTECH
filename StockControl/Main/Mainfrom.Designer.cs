@@ -426,15 +426,15 @@
             // 
             this.radMenuItem20.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem20.Image")));
             this.radMenuItem20.Name = "radMenuItem20";
-            this.radMenuItem20.Text = "Working Days";
+            this.radMenuItem20.Text = "Calendar";
             this.radMenuItem20.Click += new System.EventHandler(this.radMenuItem20_Click);
             // 
             // radMenuItem24
             // 
             this.radMenuItem24.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem24.Image")));
             this.radMenuItem24.Name = "radMenuItem24";
-            this.radMenuItem24.Text = "Absence";
-            this.radMenuItem24.Click += new System.EventHandler(this.radMenuItem24_Click);
+            this.radMenuItem24.Text = "Work Centers";
+            this.radMenuItem24.Click += new System.EventHandler(this.btnWorkCenters_Click);
             // 
             // btnPermisstion
             // 

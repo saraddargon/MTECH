@@ -75,8 +75,6 @@
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             this.radContextMenu1 = new Telerik.WinControls.UI.RadContextMenu(this.components);
-            this.RMenu3 = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenuSeparatorItem2 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.RMenu4 = new Telerik.WinControls.UI.RadMenuItem();
             this.RMenu5 = new Telerik.WinControls.UI.RadMenuItem();
             this.RMenu6 = new Telerik.WinControls.UI.RadMenuItem();
@@ -416,7 +414,7 @@
             gridViewDateTimeColumn1.FormatString = "{0:dd/MM/yyyy}";
             gridViewDateTimeColumn1.HeaderText = "วันที่";
             gridViewDateTimeColumn1.Name = "Date";
-            gridViewDateTimeColumn1.Width = 103;
+            gridViewDateTimeColumn1.Width = 117;
             gridViewMaskBoxColumn1.EnableExpressionEditor = false;
             gridViewMaskBoxColumn1.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
             gridViewMaskBoxColumn1.FieldName = "StartingTime";
@@ -424,25 +422,23 @@
             gridViewMaskBoxColumn1.Mask = "00:00";
             gridViewMaskBoxColumn1.MaskType = Telerik.WinControls.UI.MaskType.Standard;
             gridViewMaskBoxColumn1.Name = "StartTime";
-            gridViewMaskBoxColumn1.Width = 85;
+            gridViewMaskBoxColumn1.Width = 76;
             gridViewMaskBoxColumn2.EnableExpressionEditor = false;
-            gridViewMaskBoxColumn2.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
             gridViewMaskBoxColumn2.FieldName = "EndingTime";
             gridViewMaskBoxColumn2.HeaderText = "เวลาสิ้นสุด";
-            gridViewMaskBoxColumn2.Mask = "00:00";
-            gridViewMaskBoxColumn2.MaskType = Telerik.WinControls.UI.MaskType.Standard;
+            gridViewMaskBoxColumn2.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
             gridViewMaskBoxColumn2.Name = "EndTime";
-            gridViewMaskBoxColumn2.Width = 79;
+            gridViewMaskBoxColumn2.Width = 72;
             gridViewDecimalColumn1.EnableExpressionEditor = false;
-            gridViewDecimalColumn1.FieldName = "NoOfWorkHours";
-            gridViewDecimalColumn1.HeaderText = "จำนวนน ชม.";
+            gridViewDecimalColumn1.FieldName = "WorkHours";
+            gridViewDecimalColumn1.HeaderText = "จำนวน ชม.";
             gridViewDecimalColumn1.Name = "WorkHours";
-            gridViewDecimalColumn1.Width = 89;
+            gridViewDecimalColumn1.Width = 65;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "Capacity";
             gridViewDecimalColumn2.HeaderText = "Capacity";
             gridViewDecimalColumn2.Name = "Capacity";
-            gridViewDecimalColumn2.Width = 85;
+            gridViewDecimalColumn2.Width = 74;
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
@@ -506,32 +502,17 @@
             // radContextMenu1
             // 
             this.radContextMenu1.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.RMenu3,
-            this.radMenuSeparatorItem2,
             this.RMenu4,
             this.RMenu5,
             this.RMenu6});
             this.radContextMenu1.ThemeName = "Office2010Blue";
-            // 
-            // RMenu3
-            // 
-            this.RMenu3.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.RMenu3.Image = ((System.Drawing.Image)(resources.GetObject("RMenu3.Image")));
-            this.RMenu3.Name = "RMenu3";
-            this.RMenu3.Text = "แก้ไขผู้ติดต่อ";
-            // 
-            // radMenuSeparatorItem2
-            // 
-            this.radMenuSeparatorItem2.Name = "radMenuSeparatorItem2";
-            this.radMenuSeparatorItem2.Text = "radMenuSeparatorItem2";
-            this.radMenuSeparatorItem2.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // RMenu4
             // 
             this.RMenu4.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.RMenu4.Image = ((System.Drawing.Image)(resources.GetObject("RMenu4.Image")));
             this.RMenu4.Name = "RMenu4";
-            this.RMenu4.Text = "เพิ่มผู้ขาย";
+            this.RMenu4.Text = "เพิ่ม";
             // 
             // RMenu5
             // 
@@ -612,8 +593,6 @@
         private Telerik.WinControls.UI.RadRibbonBarButtonGroup radRibbonBarButtonGroup5;
         private Telerik.WinControls.UI.RibbonBarGroupSeparator ribbonBarGroupSeparator1;
         private Telerik.WinControls.UI.RadContextMenu radContextMenu1;
-        private Telerik.WinControls.UI.RadMenuItem RMenu3;
-        private Telerik.WinControls.UI.RadMenuSeparatorItem radMenuSeparatorItem2;
         private Telerik.WinControls.UI.RadMenuItem RMenu4;
         private Telerik.WinControls.UI.RadMenuItem RMenu5;
         private Telerik.WinControls.UI.RadMenuItem RMenu6;

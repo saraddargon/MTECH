@@ -514,12 +514,13 @@ namespace StockControl
             }
         }
 
-        private void radMenuItem24_Click(object sender, EventArgs e)
+        private void btnWorkCenters_Click(object sender, EventArgs e)
+
         {
-            if (StockControl.dbClss.Permisstion("", "Absence", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
+            if (StockControl.dbClss.Permisstion("", "WorkCenters", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
             {
                 this.Cursor = Cursors.WaitCursor;
-                var sc = new Absence();
+                var sc = new WorkCenters();
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -532,6 +533,5 @@ namespace StockControl
                 dbClss.WarningIT("No Permisstion.");
             }
         }
-        
     }
 }

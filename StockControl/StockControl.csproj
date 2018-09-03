@@ -162,6 +162,12 @@
     <Compile Include="Process\Calculate_Movement.Designer.cs">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\WorkCenters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\WorkCenters.Designer.cs">
+      <DependentUpon>WorkCenters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\ChargePO_List_2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -774,6 +780,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Calculate_Movement.resx">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\WorkCenters.resx">
+      <DependentUpon>WorkCenters.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\ChargePO_List_2.resx">
       <DependentUpon>ChargePO_List_2.cs</DependentUpon>
