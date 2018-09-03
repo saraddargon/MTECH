@@ -94,66 +94,66 @@ namespace StockControl
 
             Set_FindData();
             Set_dt_Print();
-            LoadDefault();
+            //LoadDefault();
             //radGridView1.ReadOnly = true;
             radGridView1.AutoGenerateColumns = false;
             DataLoad();
         }
-        private void LoadDefault()
-        {
-            ddlLocation.DataSource = null;
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                ddlLocation.DisplayMember = "Location";
-                ddlLocation.ValueMember = "Location";
-               // ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
-                var g = (from ix in db.tb_Locations select ix).Where(s => s.Active == true && s.Status == "Completed").ToList();
+        //private void LoadDefault()
+        //{
+        //    ddlLocation.DataSource = null;
+        //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+        //    {
+        //        ddlLocation.DisplayMember = "Location";
+        //        ddlLocation.ValueMember = "Location";
+        //       // ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
+        //        var g = (from ix in db.tb_Locations select ix).Where(s => s.Active == true && s.Status == "Completed").ToList();
 
-                List<string> a = new List<string>();
-                if(g.Count>0)
-                {
-                    foreach (var gg in g)
-                        a.Add(gg.Location);
-                }
-                a.Add("");
-                ddlLocation.DataSource = a;
-                ddlLocation.Text = "";
+        //        List<string> a = new List<string>();
+        //        if(g.Count>0)
+        //        {
+        //            foreach (var gg in g)
+        //                a.Add(gg.Location);
+        //        }
+        //        a.Add("");
+        //        ddlLocation.DataSource = a;
+        //        ddlLocation.Text = "";
 
-            }
-        }
+        //    }
+        //}
         private void Set_FindData()
         {
             if (TypePart == "All" || TypePart =="")
             {
                 ddlTypePart.Items.Add("");
                 ddlTypePart.Items.Add("FG");
-                ddlTypePart.Items.Add("WIP");
+                ddlTypePart.Items.Add("SEMI");
                 ddlTypePart.Items.Add("RM");
-                ddlTypePart.Items.Add("Other");
+                //ddlTypePart.Items.Add("Other");
 
 
                 ddlTypePart.Text = "";
             }
-            else if (TypePart == "WIP-RM")
+            else if (TypePart == "SEMI-RM")
             {
-                ddlTypePart.Items.Add("WIP");
+                ddlTypePart.Items.Add("SEMI");
                 ddlTypePart.Items.Add("RM");
 
                 ddlTypePart.Text = "RM";
             }
-            else if (TypePart == "WIP-RM-Other")
+            else if (TypePart == "SEMI-RM-Other")
             {
-                ddlTypePart.Items.Add("WIP");
+                ddlTypePart.Items.Add("SEMI");
                 ddlTypePart.Items.Add("RM");
                 ddlTypePart.Items.Add("Other");
 
                 ddlTypePart.Text = "RM";
             }
 
-            else if (TypePart == "FG-WIP")
+            else if (TypePart == "FG-SEMI")
             {
                 ddlTypePart.Items.Add("FG");
-                ddlTypePart.Items.Add("WIP");
+                ddlTypePart.Items.Add("SEMI");
 
                 ddlTypePart.Text = "FG";
             }
@@ -162,10 +162,10 @@ namespace StockControl
                 ddlTypePart.Items.Add("FG");
                 ddlTypePart.Text = "FG";
             }
-            else if (TypePart == "WIP")
+            else if (TypePart == "SEMI")
             {
-                ddlTypePart.Items.Add("WIP");
-                ddlTypePart.Text = "WIP";
+                ddlTypePart.Items.Add("SEMI");
+                ddlTypePart.Text = "SEMI";
             }
             else if (TypePart == "RM")
             {
@@ -196,89 +196,95 @@ namespace StockControl
                 {
                     //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
                     //radGridView1.DataSource = db.tb_Histories.Where(s => s.ScreenName == ScreenSearch).OrderBy(o => o.CreateDate).ToList();
-                    int c = 0;
+                    //int c = 0;
 
-                    //var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo.Contains(txtCodeNo.Text)
-                    //    && a.ItemNo.Contains(txtPartName.Text)
-                    //    && a.ItemDescription.Contains(txtDescription.Text)
-                    //    && a.VendorItemName.Contains(txtVendorName.Text))
-                    //    .ToList();
-
-
-                    string Lo1 = dbClss.TSt(db.get_Location_No(1));
-                    string Lo2 = dbClss.TSt(db.get_Location_No(2));
-                    string Lo3 = dbClss.TSt(db.get_Location_No(3));
-                    string Lo4 = dbClss.TSt( db.get_Location_No(4));
-
-                    var g = (from ix in db.sp_014_Select_PartList(txtCodeNo.Text,txtPartName.Text                             
-                             ,txtDescription.Text,"",txtVendorName.Text,ddlTypePart.Text,"",ddlLocation.Text) select ix).ToList();
-                    if (g.Count > 0)
+                    var g = (from ix in db.mh_Items select ix)
+                        .Where(a => a.InternalNo.Contains(txtCodeNo.Text)
+                        && a.InternalName.Contains(txtPartName.Text)
+                        && a.VendorName.Contains(txtVendorName.Text)
+                        && a.InventoryGroup.Contains(ddlTypePart.Text)
+                        )
+                        .ToList();
+                    if(g.Count>0)
                     {
                         radGridView1.DataSource = g;
-
-                        if (Lo1 == "")
-                            radGridView1.Columns["QtyLocation11"].IsVisible = false;
-                        if (Lo2 == "")
-                            radGridView1.Columns["QtyLocation22"].IsVisible = false;
-                        if (Lo3 == "")
-                            radGridView1.Columns["QtyLocation33"].IsVisible = false;
-                        if (Lo4 == "")
-                            radGridView1.Columns["QtyLocation44"].IsVisible = false;
-
-                        radGridView1.Columns["QtyLocation11"].HeaderText = Lo1;
-                        radGridView1.Columns["QtyLocation22"].HeaderText = Lo2;
-                        radGridView1.Columns["QtyLocation33"].HeaderText = Lo3;
-                        radGridView1.Columns["QtyLocation44"].HeaderText = Lo4;
-
-                        foreach (var x in radGridView1.Rows)
-                        {
-                            c += 1;
-                            x.Cells["No"].Value = c;
-
-                            x.Cells["QtyLocation11"].Value = 0;
-                            x.Cells["QtyLocation22"].Value = 0;
-                            x.Cells["QtyLocation33"].Value = 0;
-                            x.Cells["QtyLocation44"].Value = 0;
-
-                            //if (Lo1 == "")
-                            //    x.Cells["QtyLocation11"].ColumnInfo.IsVisible = false;
-                            //if (Lo2 == "")
-                            //    x.Cells["QtyLocation22"].ColumnInfo.IsVisible = false;
-                            //if (Lo3 == "")
-                            //    x.Cells["QtyLocation33"].ColumnInfo.IsVisible = false;
-                            //if (Lo4 == "")
-                            //    x.Cells["QtyLocation44"].ColumnInfo.IsVisible = false;
-
-                            //x.Cells["QtyLocation11"].ColumnInfo.HeaderText = Lo1;
-                            //x.Cells["QtyLocation22"].ColumnInfo.HeaderText = Lo2;
-                            //x.Cells["QtyLocation33"].ColumnInfo.HeaderText = Lo3;
-                            //x.Cells["QtyLocation44"].ColumnInfo.HeaderText = Lo4;
-
-                            if (dbClss.TSt(x.Cells["CodeNo"].Value) != "")
-                            {
-                                
-
-                                var l = (from ix in db.sp_031_Location_Stock(dbClss.TSt(x.Cells["CodeNo"].Value), "") select ix).ToList();
-                                if (l.Count > 0)
-                                {
-                                    foreach (var ll in l)
-                                    {
-                                        if (Lo1 == ll.Location)
-                                        {
-                                            x.Cells["QtyLocation11"].Value = ll.Qty;
-                                        }
-                                        else if (Lo2 == ll.Location)
-                                            x.Cells["QtyLocation22"].Value = ll.Qty;
-                                        else if (Lo3 == ll.Location)
-                                            x.Cells["QtyLocation33"].Value = ll.Qty;
-                                        else if (Lo4 == ll.Location)
-                                            x.Cells["QtyLocation44"].Value = ll.Qty;
-                                    }
-                                }
-                            }
-                            
-                        }
+                        dbClss.SetRowNo1(radGridView1);
                     }
+
+                    ////string Lo1 = dbClss.TSt(db.get_Location_No(1));
+                    ////string Lo2 = dbClss.TSt(db.get_Location_No(2));
+                    ////string Lo3 = dbClss.TSt(db.get_Location_No(3));
+                    ////string Lo4 = dbClss.TSt( db.get_Location_No(4));
+
+                    //var g = (from ix in db.sp_014_Select_PartList(txtCodeNo.Text,txtPartName.Text                             
+                    //         ,txtDescription.Text,"",txtVendorName.Text,ddlTypePart.Text,"",ddlLocation.Text) select ix).ToList();
+                    //if (g.Count > 0)
+                    //{
+                    //    radGridView1.DataSource = g;
+
+                    //    ////if (Lo1 == "")
+                    //    ////    radGridView1.Columns["QtyLocation11"].IsVisible = false;
+                    //    ////if (Lo2 == "")
+                    //    ////    radGridView1.Columns["QtyLocation22"].IsVisible = false;
+                    //    ////if (Lo3 == "")
+                    //    ////    radGridView1.Columns["QtyLocation33"].IsVisible = false;
+                    //    ////if (Lo4 == "")
+                    //    ////    radGridView1.Columns["QtyLocation44"].IsVisible = false;
+
+                    //    ////radGridView1.Columns["QtyLocation11"].HeaderText = Lo1;
+                    //    ////radGridView1.Columns["QtyLocation22"].HeaderText = Lo2;
+                    //    ////radGridView1.Columns["QtyLocation33"].HeaderText = Lo3;
+                    //    ////radGridView1.Columns["QtyLocation44"].HeaderText = Lo4;
+
+                    //    //foreach (var x in radGridView1.Rows)
+                    //    //{
+                    //    //    c += 1;
+                    //    //    x.Cells["No"].Value = c;
+
+                    //    //    x.Cells["QtyLocation11"].Value = 0;
+                    //    //    x.Cells["QtyLocation22"].Value = 0;
+                    //    //    x.Cells["QtyLocation33"].Value = 0;
+                    //    //    x.Cells["QtyLocation44"].Value = 0;
+
+                    //    //    //if (Lo1 == "")
+                    //    //    //    x.Cells["QtyLocation11"].ColumnInfo.IsVisible = false;
+                    //    //    //if (Lo2 == "")
+                    //    //    //    x.Cells["QtyLocation22"].ColumnInfo.IsVisible = false;
+                    //    //    //if (Lo3 == "")
+                    //    //    //    x.Cells["QtyLocation33"].ColumnInfo.IsVisible = false;
+                    //    //    //if (Lo4 == "")
+                    //    //    //    x.Cells["QtyLocation44"].ColumnInfo.IsVisible = false;
+
+                    //    //    //x.Cells["QtyLocation11"].ColumnInfo.HeaderText = Lo1;
+                    //    //    //x.Cells["QtyLocation22"].ColumnInfo.HeaderText = Lo2;
+                    //    //    //x.Cells["QtyLocation33"].ColumnInfo.HeaderText = Lo3;
+                    //    //    //x.Cells["QtyLocation44"].ColumnInfo.HeaderText = Lo4;
+
+                    //    //    if (dbClss.TSt(x.Cells["CodeNo"].Value) != "")
+                    //    //    {
+
+
+                    //    //        var l = (from ix in db.sp_031_Location_Stock(dbClss.TSt(x.Cells["CodeNo"].Value), "") select ix).ToList();
+                    //    //        if (l.Count > 0)
+                    //    //        {
+                    //    //            foreach (var ll in l)
+                    //    //            {
+                    //    //                if (Lo1 == ll.Location)
+                    //    //                {
+                    //    //                    x.Cells["QtyLocation11"].Value = ll.Qty;
+                    //    //                }
+                    //    //                else if (Lo2 == ll.Location)
+                    //    //                    x.Cells["QtyLocation22"].Value = ll.Qty;
+                    //    //                else if (Lo3 == ll.Location)
+                    //    //                    x.Cells["QtyLocation33"].Value = ll.Qty;
+                    //    //                else if (Lo4 == ll.Location)
+                    //    //                    x.Cells["QtyLocation44"].Value = ll.Qty;
+                    //    //            }
+                    //    //        }
+                    //    //    }
+
+                    //    //}
+                    //}
 
 
                 }
@@ -416,7 +422,7 @@ namespace StockControl
             {
                 if (radGridView1.Rows.Count > 0)
                 {
-                    CodeNo_tt.Text = Convert.ToString(radGridView1.CurrentRow.Cells["CodeNo"].Value);
+                    CodeNo_tt.Text = Convert.ToString(radGridView1.CurrentRow.Cells["InternalNo"].Value);
                     this.Close();
                 }
             }
@@ -450,14 +456,14 @@ namespace StockControl
                     || screen.Equals(3)  // เปิดจากหน้า Bom โดยเลือกแค่ตัวเดียว
                     )
                     {
-                        CodeNo_tt.Text = Convert.ToString(e.Row.Cells["CodeNo"].Value);
+                        CodeNo_tt.Text = Convert.ToString(e.Row.Cells["InternalNo"].Value);
                         this.Close();
                     }
                     else if (screen.Equals(2))
                         return;
                     else
                     {
-                        CreatePart sc = new CreatePart(Convert.ToString(e.Row.Cells["CodeNo"].Value));
+                        CreatePart sc = new CreatePart(Convert.ToString(e.Row.Cells["InternalNo"].Value));
                         this.Cursor = Cursors.Default;
                         sc.Show();
                     }
