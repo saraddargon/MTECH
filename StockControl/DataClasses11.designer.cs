@@ -192,9 +192,6 @@ namespace StockControl
     partial void Inserttb_PurchaseRequest(tb_PurchaseRequest instance);
     partial void Updatetb_PurchaseRequest(tb_PurchaseRequest instance);
     partial void Deletetb_PurchaseRequest(tb_PurchaseRequest instance);
-    partial void Insertmh_CRRNCY(mh_CRRNCY instance);
-    partial void Updatemh_CRRNCY(mh_CRRNCY instance);
-    partial void Deletemh_CRRNCY(mh_CRRNCY instance);
     partial void Insertmh_History(mh_History instance);
     partial void Updatemh_History(mh_History instance);
     partial void Deletemh_History(mh_History instance);
@@ -252,6 +249,9 @@ namespace StockControl
     partial void Insertmh_VATSetup(mh_VATSetup instance);
     partial void Updatemh_VATSetup(mh_VATSetup instance);
     partial void Deletemh_VATSetup(mh_VATSetup instance);
+    partial void Insertmh_CRRNCY(mh_CRRNCY instance);
+    partial void Updatemh_CRRNCY(mh_CRRNCY instance);
+    partial void Deletemh_CRRNCY(mh_CRRNCY instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -748,14 +748,6 @@ namespace StockControl
 			}
 		}
 		
-		public System.Data.Linq.Table<mh_CRRNCY> mh_CRRNCies
-		{
-			get
-			{
-				return this.GetTable<mh_CRRNCY>();
-			}
-		}
-		
 		public System.Data.Linq.Table<mh_History> mh_Histories
 		{
 			get
@@ -905,6 +897,14 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<mh_VATSetup>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_CRRNCY> mh_CRRNCies
+		{
+			get
+			{
+				return this.GetTable<mh_CRRNCY>();
 			}
 		}
 		
@@ -25365,116 +25365,6 @@ namespace StockControl
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CRRNCY")]
-	public partial class mh_CRRNCY : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _Crrncy;
-		
-		private decimal _Rate;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnCrrncyChanging(string value);
-    partial void OnCrrncyChanged();
-    partial void OnRateChanging(decimal value);
-    partial void OnRateChanged();
-    #endregion
-		
-		public mh_CRRNCY()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Crrncy", DbType="VarChar(50)")]
-		public string Crrncy
-		{
-			get
-			{
-				return this._Crrncy;
-			}
-			set
-			{
-				if ((this._Crrncy != value))
-				{
-					this.OnCrrncyChanging(value);
-					this.SendPropertyChanging();
-					this._Crrncy = value;
-					this.SendPropertyChanged("Crrncy");
-					this.OnCrrncyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rate", DbType="Decimal(18,6) NOT NULL")]
-		public decimal Rate
-		{
-			get
-			{
-				return this._Rate;
-			}
-			set
-			{
-				if ((this._Rate != value))
-				{
-					this.OnRateChanging(value);
-					this.SendPropertyChanging();
-					this._Rate = value;
-					this.SendPropertyChanged("Rate");
-					this.OnRateChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_History")]
 	public partial class mh_History : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -30184,6 +30074,188 @@ namespace StockControl
 					this._CreateBy = value;
 					this.SendPropertyChanged("CreateBy");
 					this.OnCreateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CRRNCY")]
+	public partial class mh_CRRNCY : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _Crrncy;
+		
+		private decimal _Rate;
+		
+		private string _CreateBy;
+		
+		private System.Nullable<System.DateTime> _CreateDate;
+		
+		private System.Nullable<bool> _Active;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnCrrncyChanging(string value);
+    partial void OnCrrncyChanged();
+    partial void OnRateChanging(decimal value);
+    partial void OnRateChanged();
+    partial void OnCreateByChanging(string value);
+    partial void OnCreateByChanged();
+    partial void OnCreateDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreateDateChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public mh_CRRNCY()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Crrncy", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Crrncy
+		{
+			get
+			{
+				return this._Crrncy;
+			}
+			set
+			{
+				if ((this._Crrncy != value))
+				{
+					this.OnCrrncyChanging(value);
+					this.SendPropertyChanging();
+					this._Crrncy = value;
+					this.SendPropertyChanged("Crrncy");
+					this.OnCrrncyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rate", DbType="Decimal(18,6) NOT NULL")]
+		public decimal Rate
+		{
+			get
+			{
+				return this._Rate;
+			}
+			set
+			{
+				if ((this._Rate != value))
+				{
+					this.OnRateChanging(value);
+					this.SendPropertyChanging();
+					this._Rate = value;
+					this.SendPropertyChanged("Rate");
+					this.OnRateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="VarChar(50)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this.OnCreateByChanging(value);
+					this.SendPropertyChanging();
+					this._CreateBy = value;
+					this.SendPropertyChanged("CreateBy");
+					this.OnCreateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
 				}
 			}
 		}

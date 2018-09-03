@@ -174,6 +174,12 @@
     <Compile Include="Process\Routing.Designer.cs">
       <DependentUpon>Routing.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\tb_Master_CRRENCY.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\tb_Master_CRRENCY.Designer.cs">
+      <DependentUpon>tb_Master_CRRENCY.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\WorkCenters.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -816,6 +822,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Routing.resx">
       <DependentUpon>Routing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\tb_Master_CRRENCY.resx">
+      <DependentUpon>tb_Master_CRRENCY.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\WorkCenters.resx">
       <DependentUpon>WorkCenters.cs</DependentUpon>

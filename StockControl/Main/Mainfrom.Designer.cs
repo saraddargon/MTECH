@@ -109,6 +109,7 @@
             this.radMenuItem27 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem28 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem29 = new Telerik.WinControls.UI.RadMenuItem();
+            this.btnCurrency = new Telerik.WinControls.UI.RadMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
@@ -345,6 +346,7 @@
             this.radMenuItem20,
             this.radMenuItem24,
             this.btnVat,
+            this.btnCurrency,
             this.btnRouting,
             this.btnPermisstion,
             this.radMenuSeparatorItem4,
@@ -744,6 +746,13 @@
             this.radMenuItem29.Text = "Change Password";
             this.radMenuItem29.Click += new System.EventHandler(this.radMenuItem34_Click);
             // 
+            // btnCurrency
+            // 
+            this.btnCurrency.Image = ((System.Drawing.Image)(resources.GetObject("btnCurrency.Image")));
+            this.btnCurrency.Name = "btnCurrency";
+            this.btnCurrency.Text = "Currency";
+            this.btnCurrency.Click += new System.EventHandler(this.radMenuItem25_Click);
+            // 
             // Mainfrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -856,5 +865,6 @@
         private Telerik.WinControls.UI.RadMenuItem radMenuItem27;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem28;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem29;
+        private Telerik.WinControls.UI.RadMenuItem btnCurrency;
     }
 }
