@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.625, 15.25" name="DataClasses1">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.625, 15.875" name="DataClasses1">
   <DataContextMoniker Name="/DataClasses1DataContext" />
   <nestedChildShapes>
     <classShape Id="41fe0188-9cec-4a7f-a488-218e964a17e9" isExpanded="false" absoluteBounds="0.5, 0.5, 2, 0.45">
@@ -392,22 +392,28 @@
         <elementListCompartment Id="69b6a833-1eb8-4c1b-8141-795d382adfc0" absoluteBounds="0.51500000000000057, 11.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="4622d36c-7e19-4f34-a7a9-1b2dc6e8e61b" isExpanded="false" absoluteBounds="1.375, 14.25, 2, 0.45">
+    <classShape Id="4622d36c-7e19-4f34-a7a9-1b2dc6e8e61b" isExpanded="false" absoluteBounds="1.375, 14.625, 2, 0.45">
       <DataClassMoniker Name="/DataClasses1DataContext/mh_Shift" />
       <nestedChildShapes>
-        <elementListCompartment Id="4c0a4e36-3034-414c-b315-0a2dfdb86526" absoluteBounds="1.3899999999999997, 14.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="4c0a4e36-3034-414c-b315-0a2dfdb86526" absoluteBounds="1.3899999999999997, 15.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="7e279222-93ec-4591-a966-4198319c8a04" isExpanded="false" absoluteBounds="3.875, 14, 2, 0.45">
-      <DataClassMoniker Name="/DataClasses1DataContext/mh_WorkingDay" />
-      <nestedChildShapes>
-        <elementListCompartment Id="af34bcf8-f335-4a11-b014-bb7b8f85023c" absoluteBounds="3.8899999999999997, 14.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="168bcec3-36c0-42a0-88c2-e62de0a0dc53" isExpanded="false" absoluteBounds="3.625, 14.5, 2, 0.45">
+    <classShape Id="168bcec3-36c0-42a0-88c2-e62de0a0dc53" isExpanded="false" absoluteBounds="3.5, 14.625, 2, 0.45">
       <DataClassMoniker Name="/DataClasses1DataContext/mh_Holiday" />
       <nestedChildShapes>
-        <elementListCompartment Id="d4892cdf-3851-4cf3-a3ed-b60c5f7f1cb3" absoluteBounds="3.6399999999999997, 14.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d4892cdf-3851-4cf3-a3ed-b60c5f7f1cb3" absoluteBounds="3.5149999999999997, 15.085, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e84351f8-f3bc-4dad-b2b1-55db50cd1cbf" isExpanded="false" absoluteBounds="1.375, 15.125, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/mh_WorkingDay" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1376b9c6-1f82-4958-baf9-b0fc2c9e6875" absoluteBounds="1.3899999999999997, 15.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e8d8b175-3c74-43e4-ab7b-b689cfb7e61e" isExpanded="false" absoluteBounds="3.5, 15.125, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/mh_CapacityAbsence" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3de914f0-638f-4700-afed-1a5c7ed5d171" absoluteBounds="3.5149999999999997, 15.585, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="51c64245-bf64-4553-a06e-ce3355cda5cf" isExpanded="false" absoluteBounds="7, 10.125, 2, 0.45">

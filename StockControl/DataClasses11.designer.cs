@@ -216,24 +216,15 @@ namespace StockControl
     partial void Insertmh_Shift(mh_Shift instance);
     partial void Updatemh_Shift(mh_Shift instance);
     partial void Deletemh_Shift(mh_Shift instance);
-    partial void Insertmh_WorkingDay(mh_WorkingDay instance);
-    partial void Updatemh_WorkingDay(mh_WorkingDay instance);
-    partial void Deletemh_WorkingDay(mh_WorkingDay instance);
     partial void Insertmh_Holiday(mh_Holiday instance);
     partial void Updatemh_Holiday(mh_Holiday instance);
     partial void Deletemh_Holiday(mh_Holiday instance);
-    partial void Insertmh_ItemUOM(mh_ItemUOM instance);
-    partial void Updatemh_ItemUOM(mh_ItemUOM instance);
-    partial void Deletemh_ItemUOM(mh_ItemUOM instance);
-    partial void Insertmh_VATSetup(mh_VATSetup instance);
-    partial void Updatemh_VATSetup(mh_VATSetup instance);
-    partial void Deletemh_VATSetup(mh_VATSetup instance);
-    partial void Insertmh_Item(mh_Item instance);
-    partial void Updatemh_Item(mh_Item instance);
-    partial void Deletemh_Item(mh_Item instance);
-    partial void Insertmh_VATType(mh_VATType instance);
-    partial void Updatemh_VATType(mh_VATType instance);
-    partial void Deletemh_VATType(mh_VATType instance);
+    partial void Insertmh_WorkingDay(mh_WorkingDay instance);
+    partial void Updatemh_WorkingDay(mh_WorkingDay instance);
+    partial void Deletemh_WorkingDay(mh_WorkingDay instance);
+    partial void Insertmh_CapacityAbsence(mh_CapacityAbsence instance);
+    partial void Updatemh_CapacityAbsence(mh_CapacityAbsence instance);
+    partial void Deletemh_CapacityAbsence(mh_CapacityAbsence instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -794,14 +785,6 @@ namespace StockControl
 			}
 		}
 		
-		public System.Data.Linq.Table<mh_WorkingDay> mh_WorkingDays
-		{
-			get
-			{
-				return this.GetTable<mh_WorkingDay>();
-			}
-		}
-		
 		public System.Data.Linq.Table<mh_Holiday> mh_Holidays
 		{
 			get
@@ -810,35 +793,19 @@ namespace StockControl
 			}
 		}
 		
-		public System.Data.Linq.Table<mh_ItemUOM> mh_ItemUOMs
+		public System.Data.Linq.Table<mh_WorkingDay> mh_WorkingDays
 		{
 			get
 			{
-				return this.GetTable<mh_ItemUOM>();
+				return this.GetTable<mh_WorkingDay>();
 			}
 		}
 		
-		public System.Data.Linq.Table<mh_VATSetup> mh_VATSetups
+		public System.Data.Linq.Table<mh_CapacityAbsence> mh_CapacityAbsences
 		{
 			get
 			{
-				return this.GetTable<mh_VATSetup>();
-			}
-		}
-		
-		public System.Data.Linq.Table<mh_Item> mh_Items
-		{
-			get
-			{
-				return this.GetTable<mh_Item>();
-			}
-		}
-		
-		public System.Data.Linq.Table<mh_VATType> mh_VATTypes
-		{
-			get
-			{
-				return this.GetTable<mh_VATType>();
+				return this.GetTable<mh_CapacityAbsence>();
 			}
 		}
 		
@@ -26875,188 +26842,6 @@ namespace StockControl
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_WorkingDay")]
-	public partial class mh_WorkingDay : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private int _Day;
-		
-		private decimal _NoOfWorkHours;
-		
-		private string _ShiftCode;
-		
-		private string _StartingTime;
-		
-		private string _EndingTime;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnDayChanging(int value);
-    partial void OnDayChanged();
-    partial void OnNoOfWorkHoursChanging(decimal value);
-    partial void OnNoOfWorkHoursChanged();
-    partial void OnShiftCodeChanging(string value);
-    partial void OnShiftCodeChanged();
-    partial void OnStartingTimeChanging(string value);
-    partial void OnStartingTimeChanged();
-    partial void OnEndingTimeChanging(string value);
-    partial void OnEndingTimeChanged();
-    #endregion
-		
-		public mh_WorkingDay()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Day", DbType="Int NOT NULL")]
-		public int Day
-		{
-			get
-			{
-				return this._Day;
-			}
-			set
-			{
-				if ((this._Day != value))
-				{
-					this.OnDayChanging(value);
-					this.SendPropertyChanging();
-					this._Day = value;
-					this.SendPropertyChanged("Day");
-					this.OnDayChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoOfWorkHours", DbType="Decimal(18,2) NOT NULL")]
-		public decimal NoOfWorkHours
-		{
-			get
-			{
-				return this._NoOfWorkHours;
-			}
-			set
-			{
-				if ((this._NoOfWorkHours != value))
-				{
-					this.OnNoOfWorkHoursChanging(value);
-					this.SendPropertyChanging();
-					this._NoOfWorkHours = value;
-					this.SendPropertyChanged("NoOfWorkHours");
-					this.OnNoOfWorkHoursChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShiftCode", DbType="NVarChar(50)")]
-		public string ShiftCode
-		{
-			get
-			{
-				return this._ShiftCode;
-			}
-			set
-			{
-				if ((this._ShiftCode != value))
-				{
-					this.OnShiftCodeChanging(value);
-					this.SendPropertyChanging();
-					this._ShiftCode = value;
-					this.SendPropertyChanged("ShiftCode");
-					this.OnShiftCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartingTime", DbType="NVarChar(5) NOT NULL", CanBeNull=false)]
-		public string StartingTime
-		{
-			get
-			{
-				return this._StartingTime;
-			}
-			set
-			{
-				if ((this._StartingTime != value))
-				{
-					this.OnStartingTimeChanging(value);
-					this.SendPropertyChanging();
-					this._StartingTime = value;
-					this.SendPropertyChanged("StartingTime");
-					this.OnStartingTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndingTime", DbType="NVarChar(5) NOT NULL", CanBeNull=false)]
-		public string EndingTime
-		{
-			get
-			{
-				return this._EndingTime;
-			}
-			set
-			{
-				if ((this._EndingTime != value))
-				{
-					this.OnEndingTimeChanging(value);
-					this.SendPropertyChanging();
-					this._EndingTime = value;
-					this.SendPropertyChanged("EndingTime");
-					this.OnEndingTimeChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_Holiday")]
 	public partial class mh_Holiday : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -27263,19 +27048,21 @@ namespace StockControl
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_ItemUOM")]
-	public partial class mh_ItemUOM : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_WorkingDay")]
+	public partial class mh_WorkingDay : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _id;
 		
-		private string _ItemNo;
+		private int _Day;
 		
-		private string _UOMCode;
+		private decimal _NoOfWorkHours;
 		
-		private decimal _QuantityPer;
+		private string _StartingTime;
+		
+		private string _EndingTime;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -27283,15 +27070,17 @@ namespace StockControl
     partial void OnCreated();
     partial void OnidChanging(int value);
     partial void OnidChanged();
-    partial void OnItemNoChanging(string value);
-    partial void OnItemNoChanged();
-    partial void OnUOMCodeChanging(string value);
-    partial void OnUOMCodeChanged();
-    partial void OnQuantityPerChanging(decimal value);
-    partial void OnQuantityPerChanged();
+    partial void OnDayChanging(int value);
+    partial void OnDayChanged();
+    partial void OnNoOfWorkHoursChanging(decimal value);
+    partial void OnNoOfWorkHoursChanged();
+    partial void OnStartingTimeChanging(string value);
+    partial void OnStartingTimeChanged();
+    partial void OnEndingTimeChanging(string value);
+    partial void OnEndingTimeChanged();
     #endregion
 		
-		public mh_ItemUOM()
+		public mh_WorkingDay()
 		{
 			OnCreated();
 		}
@@ -27316,62 +27105,82 @@ namespace StockControl
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50)")]
-		public string ItemNo
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Day", DbType="Int NOT NULL")]
+		public int Day
 		{
 			get
 			{
-				return this._ItemNo;
+				return this._Day;
 			}
 			set
 			{
-				if ((this._ItemNo != value))
+				if ((this._Day != value))
 				{
-					this.OnItemNoChanging(value);
+					this.OnDayChanging(value);
 					this.SendPropertyChanging();
-					this._ItemNo = value;
-					this.SendPropertyChanged("ItemNo");
-					this.OnItemNoChanged();
+					this._Day = value;
+					this.SendPropertyChanged("Day");
+					this.OnDayChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UOMCode", DbType="NVarChar(50)")]
-		public string UOMCode
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoOfWorkHours", DbType="Decimal(18,2) NOT NULL")]
+		public decimal NoOfWorkHours
 		{
 			get
 			{
-				return this._UOMCode;
+				return this._NoOfWorkHours;
 			}
 			set
 			{
-				if ((this._UOMCode != value))
+				if ((this._NoOfWorkHours != value))
 				{
-					this.OnUOMCodeChanging(value);
+					this.OnNoOfWorkHoursChanging(value);
 					this.SendPropertyChanging();
-					this._UOMCode = value;
-					this.SendPropertyChanged("UOMCode");
-					this.OnUOMCodeChanged();
+					this._NoOfWorkHours = value;
+					this.SendPropertyChanged("NoOfWorkHours");
+					this.OnNoOfWorkHoursChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuantityPer", DbType="Decimal(18,2) NOT NULL")]
-		public decimal QuantityPer
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartingTime", DbType="NVarChar(5) NOT NULL", CanBeNull=false)]
+		public string StartingTime
 		{
 			get
 			{
-				return this._QuantityPer;
+				return this._StartingTime;
 			}
 			set
 			{
-				if ((this._QuantityPer != value))
+				if ((this._StartingTime != value))
 				{
-					this.OnQuantityPerChanging(value);
+					this.OnStartingTimeChanging(value);
 					this.SendPropertyChanging();
-					this._QuantityPer = value;
-					this.SendPropertyChanged("QuantityPer");
-					this.OnQuantityPerChanged();
+					this._StartingTime = value;
+					this.SendPropertyChanged("StartingTime");
+					this.OnStartingTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndingTime", DbType="NVarChar(5) NOT NULL", CanBeNull=false)]
+		public string EndingTime
+		{
+			get
+			{
+				return this._EndingTime;
+			}
+			set
+			{
+				if ((this._EndingTime != value))
+				{
+					this.OnEndingTimeChanging(value);
+					this.SendPropertyChanging();
+					this._EndingTime = value;
+					this.SendPropertyChanged("EndingTime");
+					this.OnEndingTimeChanged();
 				}
 			}
 		}
@@ -27397,19 +27206,23 @@ namespace StockControl
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_VATSetup")]
-	public partial class mh_VATSetup : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CapacityAbsence")]
+	public partial class mh_CapacityAbsence : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _id;
 		
-		private int _VatGroup;
+		private System.DateTime _Date;
 		
-		private int _VatType;
+		private string _StartingTime;
 		
-		private decimal _Vat_;
+		private string _EndingTime;
+		
+		private decimal _NoOfWorkHours;
+		
+		private decimal _Capacity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -27417,15 +27230,19 @@ namespace StockControl
     partial void OnCreated();
     partial void OnidChanging(int value);
     partial void OnidChanged();
-    partial void OnVatGroupChanging(int value);
-    partial void OnVatGroupChanged();
-    partial void OnVatTypeChanging(int value);
-    partial void OnVatTypeChanged();
-    partial void OnVat_Changing(decimal value);
-    partial void OnVat_Changed();
+    partial void OnDateChanging(System.DateTime value);
+    partial void OnDateChanged();
+    partial void OnStartingTimeChanging(string value);
+    partial void OnStartingTimeChanged();
+    partial void OnEndingTimeChanging(string value);
+    partial void OnEndingTimeChanged();
+    partial void OnNoOfWorkHoursChanging(decimal value);
+    partial void OnNoOfWorkHoursChanged();
+    partial void OnCapacityChanging(decimal value);
+    partial void OnCapacityChanged();
     #endregion
 		
-		public mh_VATSetup()
+		public mh_CapacityAbsence()
 		{
 			OnCreated();
 		}
@@ -27450,1098 +27267,102 @@ namespace StockControl
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VatGroup", DbType="Int NOT NULL")]
-		public int VatGroup
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Date
 		{
 			get
 			{
-				return this._VatGroup;
+				return this._Date;
 			}
 			set
 			{
-				if ((this._VatGroup != value))
+				if ((this._Date != value))
 				{
-					this.OnVatGroupChanging(value);
+					this.OnDateChanging(value);
 					this.SendPropertyChanging();
-					this._VatGroup = value;
-					this.SendPropertyChanged("VatGroup");
-					this.OnVatGroupChanged();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VatType", DbType="Int NOT NULL")]
-		public int VatType
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartingTime", DbType="NVarChar(5)")]
+		public string StartingTime
 		{
 			get
 			{
-				return this._VatType;
+				return this._StartingTime;
 			}
 			set
 			{
-				if ((this._VatType != value))
+				if ((this._StartingTime != value))
 				{
-					this.OnVatTypeChanging(value);
+					this.OnStartingTimeChanging(value);
 					this.SendPropertyChanging();
-					this._VatType = value;
-					this.SendPropertyChanged("VatType");
-					this.OnVatTypeChanged();
+					this._StartingTime = value;
+					this.SendPropertyChanged("StartingTime");
+					this.OnStartingTimeChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Vat%]", Storage="_Vat_", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Vat_
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndingTime", DbType="NVarChar(5)")]
+		public string EndingTime
 		{
 			get
 			{
-				return this._Vat_;
+				return this._EndingTime;
 			}
 			set
 			{
-				if ((this._Vat_ != value))
+				if ((this._EndingTime != value))
 				{
-					this.OnVat_Changing(value);
+					this.OnEndingTimeChanging(value);
 					this.SendPropertyChanging();
-					this._Vat_ = value;
-					this.SendPropertyChanged("Vat_");
-					this.OnVat_Changed();
+					this._EndingTime = value;
+					this.SendPropertyChanged("EndingTime");
+					this.OnEndingTimeChanged();
 				}
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_Items")]
-	public partial class mh_Item : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _InternalNo;
-		
-		private string _InternalName;
-		
-		private string _CustomerPartNo;
-		
-		private string _CustomerPartName;
-		
-		private string _GroupType;
-		
-		private string _Type;
-		
-		private string _InventoryGroup;
-		
-		private string _BaseUOM;
-		
-		private string _PurchaseUOM;
-		
-		private string _SalesUOM;
-		
-		private string _ConsumptionUOM;
-		
-		private string _VatType;
-		
-		private System.Nullable<bool> _chkDrawing;
-		
-		private string _Drawing;
-		
-		private string _ReplenishmentType;
-		
-		private int _InternalLeadTime;
-		
-		private string _ReorderType;
-		
-		private decimal _SafetyStock;
-		
-		private decimal _ReorderQty;
-		
-		private System.Nullable<decimal> _ReorderPoint;
-		
-		private decimal _MinimumQty;
-		
-		private decimal _MaximumQty;
-		
-		private int _BillOfMaterials;
-		
-		private int _Routing;
-		
-		private int _WorkCenter;
-		
-		private int _ItemUOM;
-		
-		private bool _Active;
-		
-		private string _VendorNo;
-		
-		private string _VendorName;
-		
-		private System.Nullable<int> _Timebucket;
-		
-		private string _CreateBy;
-		
-		private System.Nullable<System.DateTime> _CreateDate;
-		
-		private string _ModifyBy;
-		
-		private System.Nullable<System.DateTime> _ModifyDate;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnInternalNoChanging(string value);
-    partial void OnInternalNoChanged();
-    partial void OnInternalNameChanging(string value);
-    partial void OnInternalNameChanged();
-    partial void OnCustomerPartNoChanging(string value);
-    partial void OnCustomerPartNoChanged();
-    partial void OnCustomerPartNameChanging(string value);
-    partial void OnCustomerPartNameChanged();
-    partial void OnGroupTypeChanging(string value);
-    partial void OnGroupTypeChanged();
-    partial void OnTypeChanging(string value);
-    partial void OnTypeChanged();
-    partial void OnInventoryGroupChanging(string value);
-    partial void OnInventoryGroupChanged();
-    partial void OnBaseUOMChanging(string value);
-    partial void OnBaseUOMChanged();
-    partial void OnPurchaseUOMChanging(string value);
-    partial void OnPurchaseUOMChanged();
-    partial void OnSalesUOMChanging(string value);
-    partial void OnSalesUOMChanged();
-    partial void OnConsumptionUOMChanging(string value);
-    partial void OnConsumptionUOMChanged();
-    partial void OnVatTypeChanging(string value);
-    partial void OnVatTypeChanged();
-    partial void OnchkDrawingChanging(System.Nullable<bool> value);
-    partial void OnchkDrawingChanged();
-    partial void OnDrawingChanging(string value);
-    partial void OnDrawingChanged();
-    partial void OnReplenishmentTypeChanging(string value);
-    partial void OnReplenishmentTypeChanged();
-    partial void OnInternalLeadTimeChanging(int value);
-    partial void OnInternalLeadTimeChanged();
-    partial void OnReorderTypeChanging(string value);
-    partial void OnReorderTypeChanged();
-    partial void OnSafetyStockChanging(decimal value);
-    partial void OnSafetyStockChanged();
-    partial void OnReorderQtyChanging(decimal value);
-    partial void OnReorderQtyChanged();
-    partial void OnReorderPointChanging(System.Nullable<decimal> value);
-    partial void OnReorderPointChanged();
-    partial void OnMinimumQtyChanging(decimal value);
-    partial void OnMinimumQtyChanged();
-    partial void OnMaximumQtyChanging(decimal value);
-    partial void OnMaximumQtyChanged();
-    partial void OnBillOfMaterialsChanging(int value);
-    partial void OnBillOfMaterialsChanged();
-    partial void OnRoutingChanging(int value);
-    partial void OnRoutingChanged();
-    partial void OnWorkCenterChanging(int value);
-    partial void OnWorkCenterChanged();
-    partial void OnItemUOMChanging(int value);
-    partial void OnItemUOMChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    partial void OnVendorNoChanging(string value);
-    partial void OnVendorNoChanged();
-    partial void OnVendorNameChanging(string value);
-    partial void OnVendorNameChanged();
-    partial void OnTimebucketChanging(System.Nullable<int> value);
-    partial void OnTimebucketChanged();
-    partial void OnCreateByChanging(string value);
-    partial void OnCreateByChanged();
-    partial void OnCreateDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnCreateDateChanged();
-    partial void OnModifyByChanging(string value);
-    partial void OnModifyByChanged();
-    partial void OnModifyDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnModifyDateChanged();
-    #endregion
-		
-		public mh_Item()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoOfWorkHours", DbType="Decimal(18,2) NOT NULL")]
+		public decimal NoOfWorkHours
 		{
 			get
 			{
-				return this._id;
+				return this._NoOfWorkHours;
 			}
 			set
 			{
-				if ((this._id != value))
+				if ((this._NoOfWorkHours != value))
 				{
-					this.OnidChanging(value);
+					this.OnNoOfWorkHoursChanging(value);
 					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
+					this._NoOfWorkHours = value;
+					this.SendPropertyChanged("NoOfWorkHours");
+					this.OnNoOfWorkHoursChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InternalNo", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string InternalNo
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Capacity", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Capacity
 		{
 			get
 			{
-				return this._InternalNo;
+				return this._Capacity;
 			}
 			set
 			{
-				if ((this._InternalNo != value))
+				if ((this._Capacity != value))
 				{
-					this.OnInternalNoChanging(value);
+					this.OnCapacityChanging(value);
 					this.SendPropertyChanging();
-					this._InternalNo = value;
-					this.SendPropertyChanged("InternalNo");
-					this.OnInternalNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InternalName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string InternalName
-		{
-			get
-			{
-				return this._InternalName;
-			}
-			set
-			{
-				if ((this._InternalName != value))
-				{
-					this.OnInternalNameChanging(value);
-					this.SendPropertyChanging();
-					this._InternalName = value;
-					this.SendPropertyChanged("InternalName");
-					this.OnInternalNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerPartNo", DbType="NVarChar(50)")]
-		public string CustomerPartNo
-		{
-			get
-			{
-				return this._CustomerPartNo;
-			}
-			set
-			{
-				if ((this._CustomerPartNo != value))
-				{
-					this.OnCustomerPartNoChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerPartNo = value;
-					this.SendPropertyChanged("CustomerPartNo");
-					this.OnCustomerPartNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerPartName", DbType="NVarChar(100)")]
-		public string CustomerPartName
-		{
-			get
-			{
-				return this._CustomerPartName;
-			}
-			set
-			{
-				if ((this._CustomerPartName != value))
-				{
-					this.OnCustomerPartNameChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerPartName = value;
-					this.SendPropertyChanged("CustomerPartName");
-					this.OnCustomerPartNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GroupType", DbType="VarChar(100)")]
-		public string GroupType
-		{
-			get
-			{
-				return this._GroupType;
-			}
-			set
-			{
-				if ((this._GroupType != value))
-				{
-					this.OnGroupTypeChanging(value);
-					this.SendPropertyChanging();
-					this._GroupType = value;
-					this.SendPropertyChanged("GroupType");
-					this.OnGroupTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(100)")]
-		public string Type
-		{
-			get
-			{
-				return this._Type;
-			}
-			set
-			{
-				if ((this._Type != value))
-				{
-					this.OnTypeChanging(value);
-					this.SendPropertyChanging();
-					this._Type = value;
-					this.SendPropertyChanged("Type");
-					this.OnTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InventoryGroup", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string InventoryGroup
-		{
-			get
-			{
-				return this._InventoryGroup;
-			}
-			set
-			{
-				if ((this._InventoryGroup != value))
-				{
-					this.OnInventoryGroupChanging(value);
-					this.SendPropertyChanging();
-					this._InventoryGroup = value;
-					this.SendPropertyChanged("InventoryGroup");
-					this.OnInventoryGroupChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseUOM", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string BaseUOM
-		{
-			get
-			{
-				return this._BaseUOM;
-			}
-			set
-			{
-				if ((this._BaseUOM != value))
-				{
-					this.OnBaseUOMChanging(value);
-					this.SendPropertyChanging();
-					this._BaseUOM = value;
-					this.SendPropertyChanged("BaseUOM");
-					this.OnBaseUOMChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseUOM", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string PurchaseUOM
-		{
-			get
-			{
-				return this._PurchaseUOM;
-			}
-			set
-			{
-				if ((this._PurchaseUOM != value))
-				{
-					this.OnPurchaseUOMChanging(value);
-					this.SendPropertyChanging();
-					this._PurchaseUOM = value;
-					this.SendPropertyChanged("PurchaseUOM");
-					this.OnPurchaseUOMChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SalesUOM", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string SalesUOM
-		{
-			get
-			{
-				return this._SalesUOM;
-			}
-			set
-			{
-				if ((this._SalesUOM != value))
-				{
-					this.OnSalesUOMChanging(value);
-					this.SendPropertyChanging();
-					this._SalesUOM = value;
-					this.SendPropertyChanged("SalesUOM");
-					this.OnSalesUOMChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConsumptionUOM", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string ConsumptionUOM
-		{
-			get
-			{
-				return this._ConsumptionUOM;
-			}
-			set
-			{
-				if ((this._ConsumptionUOM != value))
-				{
-					this.OnConsumptionUOMChanging(value);
-					this.SendPropertyChanging();
-					this._ConsumptionUOM = value;
-					this.SendPropertyChanged("ConsumptionUOM");
-					this.OnConsumptionUOMChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VatType", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string VatType
-		{
-			get
-			{
-				return this._VatType;
-			}
-			set
-			{
-				if ((this._VatType != value))
-				{
-					this.OnVatTypeChanging(value);
-					this.SendPropertyChanging();
-					this._VatType = value;
-					this.SendPropertyChanged("VatType");
-					this.OnVatTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_chkDrawing", DbType="Bit")]
-		public System.Nullable<bool> chkDrawing
-		{
-			get
-			{
-				return this._chkDrawing;
-			}
-			set
-			{
-				if ((this._chkDrawing != value))
-				{
-					this.OnchkDrawingChanging(value);
-					this.SendPropertyChanging();
-					this._chkDrawing = value;
-					this.SendPropertyChanged("chkDrawing");
-					this.OnchkDrawingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Drawing", DbType="VarChar(100)")]
-		public string Drawing
-		{
-			get
-			{
-				return this._Drawing;
-			}
-			set
-			{
-				if ((this._Drawing != value))
-				{
-					this.OnDrawingChanging(value);
-					this.SendPropertyChanging();
-					this._Drawing = value;
-					this.SendPropertyChanged("Drawing");
-					this.OnDrawingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReplenishmentType", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string ReplenishmentType
-		{
-			get
-			{
-				return this._ReplenishmentType;
-			}
-			set
-			{
-				if ((this._ReplenishmentType != value))
-				{
-					this.OnReplenishmentTypeChanging(value);
-					this.SendPropertyChanging();
-					this._ReplenishmentType = value;
-					this.SendPropertyChanged("ReplenishmentType");
-					this.OnReplenishmentTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InternalLeadTime", DbType="Int NOT NULL")]
-		public int InternalLeadTime
-		{
-			get
-			{
-				return this._InternalLeadTime;
-			}
-			set
-			{
-				if ((this._InternalLeadTime != value))
-				{
-					this.OnInternalLeadTimeChanging(value);
-					this.SendPropertyChanging();
-					this._InternalLeadTime = value;
-					this.SendPropertyChanged("InternalLeadTime");
-					this.OnInternalLeadTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReorderType", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string ReorderType
-		{
-			get
-			{
-				return this._ReorderType;
-			}
-			set
-			{
-				if ((this._ReorderType != value))
-				{
-					this.OnReorderTypeChanging(value);
-					this.SendPropertyChanging();
-					this._ReorderType = value;
-					this.SendPropertyChanged("ReorderType");
-					this.OnReorderTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SafetyStock", DbType="Decimal(18,2) NOT NULL")]
-		public decimal SafetyStock
-		{
-			get
-			{
-				return this._SafetyStock;
-			}
-			set
-			{
-				if ((this._SafetyStock != value))
-				{
-					this.OnSafetyStockChanging(value);
-					this.SendPropertyChanging();
-					this._SafetyStock = value;
-					this.SendPropertyChanged("SafetyStock");
-					this.OnSafetyStockChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReorderQty", DbType="Decimal(18,2) NOT NULL")]
-		public decimal ReorderQty
-		{
-			get
-			{
-				return this._ReorderQty;
-			}
-			set
-			{
-				if ((this._ReorderQty != value))
-				{
-					this.OnReorderQtyChanging(value);
-					this.SendPropertyChanging();
-					this._ReorderQty = value;
-					this.SendPropertyChanged("ReorderQty");
-					this.OnReorderQtyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReorderPoint", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> ReorderPoint
-		{
-			get
-			{
-				return this._ReorderPoint;
-			}
-			set
-			{
-				if ((this._ReorderPoint != value))
-				{
-					this.OnReorderPointChanging(value);
-					this.SendPropertyChanging();
-					this._ReorderPoint = value;
-					this.SendPropertyChanged("ReorderPoint");
-					this.OnReorderPointChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MinimumQty", DbType="Decimal(18,2) NOT NULL")]
-		public decimal MinimumQty
-		{
-			get
-			{
-				return this._MinimumQty;
-			}
-			set
-			{
-				if ((this._MinimumQty != value))
-				{
-					this.OnMinimumQtyChanging(value);
-					this.SendPropertyChanging();
-					this._MinimumQty = value;
-					this.SendPropertyChanged("MinimumQty");
-					this.OnMinimumQtyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaximumQty", DbType="Decimal(18,2) NOT NULL")]
-		public decimal MaximumQty
-		{
-			get
-			{
-				return this._MaximumQty;
-			}
-			set
-			{
-				if ((this._MaximumQty != value))
-				{
-					this.OnMaximumQtyChanging(value);
-					this.SendPropertyChanging();
-					this._MaximumQty = value;
-					this.SendPropertyChanged("MaximumQty");
-					this.OnMaximumQtyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BillOfMaterials", DbType="Int NOT NULL")]
-		public int BillOfMaterials
-		{
-			get
-			{
-				return this._BillOfMaterials;
-			}
-			set
-			{
-				if ((this._BillOfMaterials != value))
-				{
-					this.OnBillOfMaterialsChanging(value);
-					this.SendPropertyChanging();
-					this._BillOfMaterials = value;
-					this.SendPropertyChanged("BillOfMaterials");
-					this.OnBillOfMaterialsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Routing", DbType="Int NOT NULL")]
-		public int Routing
-		{
-			get
-			{
-				return this._Routing;
-			}
-			set
-			{
-				if ((this._Routing != value))
-				{
-					this.OnRoutingChanging(value);
-					this.SendPropertyChanging();
-					this._Routing = value;
-					this.SendPropertyChanged("Routing");
-					this.OnRoutingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkCenter", DbType="Int NOT NULL")]
-		public int WorkCenter
-		{
-			get
-			{
-				return this._WorkCenter;
-			}
-			set
-			{
-				if ((this._WorkCenter != value))
-				{
-					this.OnWorkCenterChanging(value);
-					this.SendPropertyChanging();
-					this._WorkCenter = value;
-					this.SendPropertyChanged("WorkCenter");
-					this.OnWorkCenterChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemUOM", DbType="Int NOT NULL")]
-		public int ItemUOM
-		{
-			get
-			{
-				return this._ItemUOM;
-			}
-			set
-			{
-				if ((this._ItemUOM != value))
-				{
-					this.OnItemUOMChanging(value);
-					this.SendPropertyChanging();
-					this._ItemUOM = value;
-					this.SendPropertyChanged("ItemUOM");
-					this.OnItemUOMChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VendorNo", DbType="VarChar(50)")]
-		public string VendorNo
-		{
-			get
-			{
-				return this._VendorNo;
-			}
-			set
-			{
-				if ((this._VendorNo != value))
-				{
-					this.OnVendorNoChanging(value);
-					this.SendPropertyChanging();
-					this._VendorNo = value;
-					this.SendPropertyChanged("VendorNo");
-					this.OnVendorNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VendorName", DbType="VarChar(255)")]
-		public string VendorName
-		{
-			get
-			{
-				return this._VendorName;
-			}
-			set
-			{
-				if ((this._VendorName != value))
-				{
-					this.OnVendorNameChanging(value);
-					this.SendPropertyChanging();
-					this._VendorName = value;
-					this.SendPropertyChanged("VendorName");
-					this.OnVendorNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Timebucket", DbType="Int")]
-		public System.Nullable<int> Timebucket
-		{
-			get
-			{
-				return this._Timebucket;
-			}
-			set
-			{
-				if ((this._Timebucket != value))
-				{
-					this.OnTimebucketChanging(value);
-					this.SendPropertyChanging();
-					this._Timebucket = value;
-					this.SendPropertyChanged("Timebucket");
-					this.OnTimebucketChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="VarChar(50)")]
-		public string CreateBy
-		{
-			get
-			{
-				return this._CreateBy;
-			}
-			set
-			{
-				if ((this._CreateBy != value))
-				{
-					this.OnCreateByChanging(value);
-					this.SendPropertyChanging();
-					this._CreateBy = value;
-					this.SendPropertyChanged("CreateBy");
-					this.OnCreateByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this.OnCreateDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreateDate = value;
-					this.SendPropertyChanged("CreateDate");
-					this.OnCreateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModifyBy", DbType="VarChar(50)")]
-		public string ModifyBy
-		{
-			get
-			{
-				return this._ModifyBy;
-			}
-			set
-			{
-				if ((this._ModifyBy != value))
-				{
-					this.OnModifyByChanging(value);
-					this.SendPropertyChanging();
-					this._ModifyBy = value;
-					this.SendPropertyChanged("ModifyBy");
-					this.OnModifyByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModifyDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> ModifyDate
-		{
-			get
-			{
-				return this._ModifyDate;
-			}
-			set
-			{
-				if ((this._ModifyDate != value))
-				{
-					this.OnModifyDateChanging(value);
-					this.SendPropertyChanging();
-					this._ModifyDate = value;
-					this.SendPropertyChanged("ModifyDate");
-					this.OnModifyDateChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_VATType")]
-	public partial class mh_VATType : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _VatType;
-		
-		private string _Remark;
-		
-		private System.Nullable<System.DateTime> _CreateDate;
-		
-		private string _CreateBy;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnVatTypeChanging(string value);
-    partial void OnVatTypeChanged();
-    partial void OnRemarkChanging(string value);
-    partial void OnRemarkChanged();
-    partial void OnCreateDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnCreateDateChanged();
-    partial void OnCreateByChanging(string value);
-    partial void OnCreateByChanged();
-    #endregion
-		
-		public mh_VATType()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VatType", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string VatType
-		{
-			get
-			{
-				return this._VatType;
-			}
-			set
-			{
-				if ((this._VatType != value))
-				{
-					this.OnVatTypeChanging(value);
-					this.SendPropertyChanging();
-					this._VatType = value;
-					this.SendPropertyChanged("VatType");
-					this.OnVatTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(50)")]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this.OnRemarkChanging(value);
-					this.SendPropertyChanging();
-					this._Remark = value;
-					this.SendPropertyChanged("Remark");
-					this.OnRemarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this.OnCreateDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreateDate = value;
-					this.SendPropertyChanged("CreateDate");
-					this.OnCreateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="VarChar(50)")]
-		public string CreateBy
-		{
-			get
-			{
-				return this._CreateBy;
-			}
-			set
-			{
-				if ((this._CreateBy != value))
-				{
-					this.OnCreateByChanging(value);
-					this.SendPropertyChanging();
-					this._CreateBy = value;
-					this.SendPropertyChanged("CreateBy");
-					this.OnCreateByChanged();
+					this._Capacity = value;
+					this.SendPropertyChanged("Capacity");
+					this.OnCapacityChanged();
 				}
 			}
 		}

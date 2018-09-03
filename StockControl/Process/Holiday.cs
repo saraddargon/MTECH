@@ -223,7 +223,7 @@ namespace StockControl
                                 t.EndingTime = g.Cells["EndTime"].Value.ToSt();
                                 t.Description = g.Cells["Description"].Value.ToSt();
 
-                                dbClss.AddHistory(this.Name, "เพิ่มวันหยุดงาน", $"เพิ่มวันหยุดงาน [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", "");
+                                dbClss.AddHistory(this.Name, "เพิ่มวันทำงานในวันหยุด", $"เพิ่มวันทำงานในวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", "");
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
                                 db.mh_Holidays.InsertOnSubmit(t);
                                 db.SubmitChanges();
@@ -241,7 +241,7 @@ namespace StockControl
 
                                 C += 1;
                                 db.SubmitChanges();
-                                dbClss.AddHistory(this.Name, "แก้ไขวันหยุดงาน", $"แก้ไขวันหยุดงาน [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", "");
+                                dbClss.AddHistory(this.Name, "แก้ไขวันทำงานในวันหยุด", $"แก้ไขวันทำงานในวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", "");
 
                             }
                         }
@@ -251,7 +251,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("เพิ่มวันหยุดงาน", ex.Message, this.Name);
+                dbClss.AddError("เพิ่มวันทำงานในวันหยุด", ex.Message, this.Name);
             }
 
             if (C > 0)
@@ -287,7 +287,7 @@ namespace StockControl
                                 foreach (var d in t)
                                 {
                                     db.mh_Holidays.DeleteOnSubmit(d);
-                                    dbClss.AddHistory(this.Name, "ลบวันหยุดงาน", $"Delete HoliDay [{d.StartingDate.ToString("dd/MM/yyyy")}-{d.EndingDate.ToString("dd/MM/yyyy")}]", "");
+                                    dbClss.AddHistory(this.Name, "ลบวันทำงานในวันหยุด", $"Delete HoliDay [{d.StartingDate.ToString("dd/MM/yyyy")}-{d.EndingDate.ToString("dd/MM/yyyy")}]", "");
                                 }
                                 C += 1;
 
@@ -388,6 +388,10 @@ namespace StockControl
                         if (g.Cells["StartTime"].Value.ToSt().Contains("_"))
                             err += "- “เวลาเริ่ม:” กรอกข้อมูลไม่ถูกต้อง \n";
                         if (g.Cells["EndTime"].Value.ToSt().Contains("_"))
+                            err += "- “เวลาสิ้นสุด:” กรอกข้อมูลไม่ถูกต้อง \n";
+                        if (g.Cells["StartTime"].Value.ToSt().Replace(":", ".").ToDecimal() > 23.59m)
+                            err += "- “เวลาเริ่ม:” กรอกข้อมูลไม่ถูกต้อง \n";
+                        if (g.Cells["EndTime"].Value.ToSt().Replace(":", ".").ToDecimal() > 23.59m)
                             err += "- “เวลาสิ้นสุด:” กรอกข้อมูลไม่ถูกต้อง \n";
                     }
 

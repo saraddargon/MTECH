@@ -1,6 +1,6 @@
 ﻿namespace StockControl
 {
-    partial class WorkingDay
+    partial class Absence
     {
         /// <summary>
         /// Required designer variable.
@@ -29,16 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorkingDay));
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn1 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
-            Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn2 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
-            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Absence));
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn5 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn6 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn8 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDateTimeColumn gridViewDateTimeColumn2 = new Telerik.WinControls.UI.GridViewDateTimeColumn();
+            Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn3 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
+            Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn4 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn3 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn4 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition2 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -110,14 +111,14 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(640, 160);
+            this.radRibbonBar1.Size = new System.Drawing.Size(692, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
             this.radMenuSeparatorItem1,
             this.radMenuItem2});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Working Day (รายละเอียดวันทำงาน)";
+            this.radRibbonBar1.Text = "Absence (รายละเอียดวันหยุดงาน)";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
             // 
@@ -340,9 +341,9 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 499);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 537);
             this.radStatusStrip1.Name = "radStatusStrip1";
-            this.radStatusStrip1.Size = new System.Drawing.Size(640, 26);
+            this.radStatusStrip1.Size = new System.Drawing.Size(692, 26);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
             // 
@@ -360,7 +361,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(640, 339);
+            this.panel1.Size = new System.Drawing.Size(692, 377);
             this.panel1.TabIndex = 2;
             // 
             // radGridView1
@@ -385,71 +386,80 @@
             this.radGridView1.MasterTemplate.AllowDragToGroup = false;
             this.radGridView1.MasterTemplate.AllowRowResize = false;
             this.radGridView1.MasterTemplate.AutoGenerateColumns = false;
-            gridViewTextBoxColumn1.EnableExpressionEditor = false;
-            gridViewTextBoxColumn1.HeaderText = "column1";
-            gridViewTextBoxColumn1.IsVisible = false;
-            gridViewTextBoxColumn1.Name = "dgvC";
-            gridViewTextBoxColumn1.ReadOnly = true;
-            gridViewTextBoxColumn1.Width = 41;
-            gridViewTextBoxColumn2.EnableExpressionEditor = false;
-            gridViewTextBoxColumn2.FieldName = "None";
-            gridViewTextBoxColumn2.IsPinned = true;
-            gridViewTextBoxColumn2.Name = "None";
-            gridViewTextBoxColumn2.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Right;
-            gridViewTextBoxColumn2.ReadOnly = true;
-            gridViewTextBoxColumn2.Width = 10;
-            gridViewTextBoxColumn3.EnableExpressionEditor = false;
-            gridViewTextBoxColumn3.FieldName = "id";
-            gridViewTextBoxColumn3.HeaderText = "Code";
-            gridViewTextBoxColumn3.IsVisible = false;
-            gridViewTextBoxColumn3.Name = "dgvCodetemp";
-            gridViewTextBoxColumn3.Width = 44;
-            gridViewTextBoxColumn4.EnableExpressionEditor = false;
-            gridViewTextBoxColumn4.HeaderText = "dgvCodetemp2";
-            gridViewTextBoxColumn4.IsVisible = false;
-            gridViewTextBoxColumn4.Name = "dgvCodetemp2";
-            gridViewComboBoxColumn1.EnableExpressionEditor = false;
-            gridViewComboBoxColumn1.FieldName = "Day";
-            gridViewComboBoxColumn1.HeaderText = "วัน";
-            gridViewComboBoxColumn1.Name = "Day";
-            gridViewComboBoxColumn1.Width = 102;
-            gridViewDecimalColumn1.EnableExpressionEditor = false;
-            gridViewDecimalColumn1.FieldName = "NoOfWorkHours";
-            gridViewDecimalColumn1.HeaderText = "จำนวนน ชม.";
-            gridViewDecimalColumn1.Name = "WorkHours";
-            gridViewDecimalColumn1.Width = 89;
-            gridViewMaskBoxColumn1.EnableExpressionEditor = false;
-            gridViewMaskBoxColumn1.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
-            gridViewMaskBoxColumn1.FieldName = "StartingTime";
-            gridViewMaskBoxColumn1.HeaderText = "เวลาเริ่ม";
-            gridViewMaskBoxColumn1.Mask = "00:00";
-            gridViewMaskBoxColumn1.MaskType = Telerik.WinControls.UI.MaskType.Standard;
-            gridViewMaskBoxColumn1.Name = "StartTime";
-            gridViewMaskBoxColumn1.Width = 85;
-            gridViewMaskBoxColumn2.EnableExpressionEditor = false;
-            gridViewMaskBoxColumn2.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
-            gridViewMaskBoxColumn2.FieldName = "EndingTime";
-            gridViewMaskBoxColumn2.HeaderText = "เวลาสิ้นสุด";
-            gridViewMaskBoxColumn2.Mask = "00:00";
-            gridViewMaskBoxColumn2.MaskType = Telerik.WinControls.UI.MaskType.Standard;
-            gridViewMaskBoxColumn2.Name = "EndTime";
-            gridViewMaskBoxColumn2.Width = 79;
+            gridViewTextBoxColumn5.EnableExpressionEditor = false;
+            gridViewTextBoxColumn5.HeaderText = "column1";
+            gridViewTextBoxColumn5.IsVisible = false;
+            gridViewTextBoxColumn5.Name = "dgvC";
+            gridViewTextBoxColumn5.ReadOnly = true;
+            gridViewTextBoxColumn5.Width = 41;
+            gridViewTextBoxColumn6.EnableExpressionEditor = false;
+            gridViewTextBoxColumn6.FieldName = "None";
+            gridViewTextBoxColumn6.IsPinned = true;
+            gridViewTextBoxColumn6.Name = "None";
+            gridViewTextBoxColumn6.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Right;
+            gridViewTextBoxColumn6.ReadOnly = true;
+            gridViewTextBoxColumn6.Width = 10;
+            gridViewTextBoxColumn7.EnableExpressionEditor = false;
+            gridViewTextBoxColumn7.FieldName = "id";
+            gridViewTextBoxColumn7.HeaderText = "Code";
+            gridViewTextBoxColumn7.IsVisible = false;
+            gridViewTextBoxColumn7.Name = "dgvCodetemp";
+            gridViewTextBoxColumn7.Width = 44;
+            gridViewTextBoxColumn8.EnableExpressionEditor = false;
+            gridViewTextBoxColumn8.HeaderText = "dgvCodetemp2";
+            gridViewTextBoxColumn8.IsVisible = false;
+            gridViewTextBoxColumn8.Name = "dgvCodetemp2";
+            gridViewDateTimeColumn2.CustomFormat = "dd/MM/yyyy";
+            gridViewDateTimeColumn2.EnableExpressionEditor = false;
+            gridViewDateTimeColumn2.FieldName = "Date";
+            gridViewDateTimeColumn2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            gridViewDateTimeColumn2.FormatString = "{0:dd/MM/yyyy}";
+            gridViewDateTimeColumn2.HeaderText = "วันที่";
+            gridViewDateTimeColumn2.Name = "Date";
+            gridViewDateTimeColumn2.Width = 103;
+            gridViewMaskBoxColumn3.EnableExpressionEditor = false;
+            gridViewMaskBoxColumn3.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
+            gridViewMaskBoxColumn3.FieldName = "StartingTime";
+            gridViewMaskBoxColumn3.HeaderText = "เวลาเริ่ม";
+            gridViewMaskBoxColumn3.Mask = "00:00";
+            gridViewMaskBoxColumn3.MaskType = Telerik.WinControls.UI.MaskType.Standard;
+            gridViewMaskBoxColumn3.Name = "StartTime";
+            gridViewMaskBoxColumn3.Width = 85;
+            gridViewMaskBoxColumn4.EnableExpressionEditor = false;
+            gridViewMaskBoxColumn4.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
+            gridViewMaskBoxColumn4.FieldName = "EndingTime";
+            gridViewMaskBoxColumn4.HeaderText = "เวลาสิ้นสุด";
+            gridViewMaskBoxColumn4.Mask = "00:00";
+            gridViewMaskBoxColumn4.MaskType = Telerik.WinControls.UI.MaskType.Standard;
+            gridViewMaskBoxColumn4.Name = "EndTime";
+            gridViewMaskBoxColumn4.Width = 79;
+            gridViewDecimalColumn3.EnableExpressionEditor = false;
+            gridViewDecimalColumn3.FieldName = "NoOfWorkHours";
+            gridViewDecimalColumn3.HeaderText = "จำนวนน ชม.";
+            gridViewDecimalColumn3.Name = "WorkHours";
+            gridViewDecimalColumn3.Width = 89;
+            gridViewDecimalColumn4.EnableExpressionEditor = false;
+            gridViewDecimalColumn4.FieldName = "Capacity";
+            gridViewDecimalColumn4.HeaderText = "Capacity";
+            gridViewDecimalColumn4.Name = "Capacity";
+            gridViewDecimalColumn4.Width = 85;
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
-            gridViewTextBoxColumn1,
-            gridViewTextBoxColumn2,
-            gridViewTextBoxColumn3,
-            gridViewTextBoxColumn4,
-            gridViewComboBoxColumn1,
-            gridViewDecimalColumn1,
-            gridViewMaskBoxColumn1,
-            gridViewMaskBoxColumn2});
+            gridViewTextBoxColumn5,
+            gridViewTextBoxColumn6,
+            gridViewTextBoxColumn7,
+            gridViewTextBoxColumn8,
+            gridViewDateTimeColumn2,
+            gridViewMaskBoxColumn3,
+            gridViewMaskBoxColumn4,
+            gridViewDecimalColumn3,
+            gridViewDecimalColumn4});
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
-            this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition1;
+            this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition2;
             this.radGridView1.Name = "radGridView1";
             this.radContextMenuManager1.SetRadContextMenu(this.radGridView1, this.radContextMenu1);
             this.radGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.radGridView1.ShowGroupPanel = false;
-            this.radGridView1.Size = new System.Drawing.Size(640, 339);
+            this.radGridView1.Size = new System.Drawing.Size(692, 377);
             this.radGridView1.TabIndex = 0;
             this.radGridView1.ThemeName = "Office2010Blue";
             this.radGridView1.RowFormatting += new Telerik.WinControls.UI.RowFormattingEventHandler(this.MasterTemplate_RowFormatting);
@@ -537,23 +547,23 @@
             this.RMenu6.Name = "RMenu6";
             this.RMenu6.Text = "ลบรายการ";
             // 
-            // WorkingDay
+            // Absence
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 525);
+            this.ClientSize = new System.Drawing.Size(692, 563);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "WorkingDay";
+            this.Name = "Absence";
             // 
             // 
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Working Day (รายละเอียดวันทำงาน)";
+            this.Text = "Absence (รายละเอียดวันหยุดงาน)";
             this.Load += new System.EventHandler(this.Unit_Load);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Unit_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();

@@ -81,6 +81,9 @@
             this.radMenuItem23 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem20 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem24 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem25 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem26 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem27 = new Telerik.WinControls.UI.RadMenuItem();
             this.btnPermisstion = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem4 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem21 = new Telerik.WinControls.UI.RadMenuItem();
@@ -433,9 +436,31 @@
             // radMenuItem24
             // 
             this.radMenuItem24.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem24.Image")));
+            this.radMenuItem24.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radMenuItem25,
+            this.radMenuItem26,
+            this.radMenuItem27});
             this.radMenuItem24.Name = "radMenuItem24";
-            this.radMenuItem24.Text = "Master Working day";
+            this.radMenuItem24.Text = "Master Work day";
             this.radMenuItem24.Click += new System.EventHandler(this.radMenuItem24_Click);
+            // 
+            // radMenuItem25
+            // 
+            this.radMenuItem25.Name = "radMenuItem25";
+            this.radMenuItem25.Text = "Working Day";
+            this.radMenuItem25.Click += new System.EventHandler(this.radMenuItem25_Click);
+            // 
+            // radMenuItem26
+            // 
+            this.radMenuItem26.Name = "radMenuItem26";
+            this.radMenuItem26.Text = "Holiday";
+            this.radMenuItem26.Click += new System.EventHandler(this.radMenuItem26_Click);
+            // 
+            // radMenuItem27
+            // 
+            this.radMenuItem27.Name = "radMenuItem27";
+            this.radMenuItem27.Text = "Absense";
+            this.radMenuItem27.Click += new System.EventHandler(this.radMenuItem27_Click);
             // 
             // btnPermisstion
             // 
@@ -801,5 +826,8 @@
         private Telerik.WinControls.UI.RadLabel radLabel1;
         private Telerik.WinControls.UI.RadMenu radMenu1;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem24;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem25;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem26;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem27;
     }
 }
