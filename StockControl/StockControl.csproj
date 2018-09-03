@@ -606,6 +606,18 @@
     <Compile Include="Process\Customers.Designer.cs">
       <DependentUpon>Customers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Holiday.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Holiday.Designer.cs">
+      <DependentUpon>Holiday.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\WorkingDay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\WorkingDay.Designer.cs">
+      <DependentUpon>WorkingDay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Vendor_Backup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -972,6 +984,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Customers.resx">
       <DependentUpon>Customers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Holiday.resx">
+      <DependentUpon>Holiday.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\WorkingDay.resx">
+      <DependentUpon>WorkingDay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Vendor_Backup.resx">
       <DependentUpon>Vendor_Backup.cs</DependentUpon>

@@ -80,6 +80,7 @@
             this.radMenuItem18 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem23 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem20 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem24 = new Telerik.WinControls.UI.RadMenuItem();
             this.btnPermisstion = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem4 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem21 = new Telerik.WinControls.UI.RadMenuItem();
@@ -336,6 +337,7 @@
             this.radMenuItem18,
             this.radMenuItem23,
             this.radMenuItem20,
+            this.radMenuItem24,
             this.btnPermisstion,
             this.radMenuSeparatorItem4,
             this.radMenuItem21,
@@ -427,6 +429,13 @@
             this.radMenuItem20.Text = "Working Days";
             this.radMenuItem20.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.radMenuItem20.Click += new System.EventHandler(this.radMenuItem20_Click);
+            // 
+            // radMenuItem24
+            // 
+            this.radMenuItem24.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem24.Image")));
+            this.radMenuItem24.Name = "radMenuItem24";
+            this.radMenuItem24.Text = "Master Working day";
+            this.radMenuItem24.Click += new System.EventHandler(this.radMenuItem24_Click);
             // 
             // btnPermisstion
             // 
@@ -791,5 +800,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private Telerik.WinControls.UI.RadLabel radLabel1;
         private Telerik.WinControls.UI.RadMenu radMenu1;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem24;
     }
 }
