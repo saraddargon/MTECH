@@ -104,6 +104,11 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
+            this.btnVat = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem26 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem27 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem28 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem29 = new Telerik.WinControls.UI.RadMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
@@ -339,6 +344,7 @@
             this.radMenuItem23,
             this.radMenuItem20,
             this.radMenuItem24,
+            this.btnVat,
             this.btnRouting,
             this.btnPermisstion,
             this.radMenuSeparatorItem4,
@@ -486,7 +492,8 @@
             this.radMenuItem10,
             this.radMenuItem11,
             this.radMenuSeparatorItem2,
-            this.radMenuItem12});
+            this.radMenuItem12,
+            this.radMenuItem29});
             this.radMenuItem6.Name = "radMenuItem6";
             this.radMenuItem6.Text = "Help";
             // 
@@ -703,6 +710,40 @@
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(4)))), ((int)(((byte)(129)))));
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ClipDrawing = false;
             // 
+            // btnVat
+            // 
+            this.btnVat.Image = ((System.Drawing.Image)(resources.GetObject("btnVat.Image")));
+            this.btnVat.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radMenuItem26,
+            this.radMenuItem27,
+            this.radMenuItem28});
+            this.btnVat.Name = "btnVat";
+            this.btnVat.Text = "Vat";
+            // 
+            // radMenuItem26
+            // 
+            this.radMenuItem26.Name = "radMenuItem26";
+            this.radMenuItem26.Text = "Vat Group";
+            this.radMenuItem26.Click += new System.EventHandler(this.radMenuItem26_Click);
+            // 
+            // radMenuItem27
+            // 
+            this.radMenuItem27.Name = "radMenuItem27";
+            this.radMenuItem27.Text = "Vat Type";
+            this.radMenuItem27.Click += new System.EventHandler(this.radMenuItem27_Click);
+            // 
+            // radMenuItem28
+            // 
+            this.radMenuItem28.Name = "radMenuItem28";
+            this.radMenuItem28.Text = "Vat Setup";
+            this.radMenuItem28.Click += new System.EventHandler(this.radMenuItem28_Click);
+            // 
+            // radMenuItem29
+            // 
+            this.radMenuItem29.Name = "radMenuItem29";
+            this.radMenuItem29.Text = "Change Password";
+            this.radMenuItem29.Click += new System.EventHandler(this.radMenuItem34_Click);
+            // 
             // Mainfrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -810,5 +851,10 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private Telerik.WinControls.UI.RadLabel radLabel1;
         private Telerik.WinControls.UI.RadMenu radMenu1;
+        private Telerik.WinControls.UI.RadMenuItem btnVat;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem26;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem27;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem28;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem29;
     }
 }

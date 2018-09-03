@@ -610,5 +610,35 @@ namespace StockControl
                 dbClss.WarningIT("No Permisstion.");
             }
         }
+
+        private void radMenuItem27_Click(object sender, EventArgs e)
+        {
+            radMenuItem31_Click(null, null);
+        }
+
+        private void radMenuItem26_Click(object sender, EventArgs e)
+        {
+            //Vat Gorup
+            radMenuItem32_Click(null, null);
+        }
+
+        private void radMenuItem28_Click(object sender, EventArgs e)
+        {
+            if (StockControl.dbClss.Permisstion("", "tb_Master_VATSetup", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
+            {
+                this.Cursor = Cursors.WaitCursor;
+                var sc = new tb_Master_VATSetup();
+                this.Cursor = Cursors.Default;
+                sc.ShowDialog();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+                ClassLib.Memory.Heap();
+            }
+            else
+            {
+                dbClss.WarningIT("No Permisstion.");
+            }
+        }
     }
 }

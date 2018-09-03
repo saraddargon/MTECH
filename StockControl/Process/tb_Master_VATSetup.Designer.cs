@@ -33,6 +33,7 @@
             Telerik.WinControls.UI.GridViewCommandColumn gridViewCommandColumn1 = new Telerik.WinControls.UI.GridViewCommandColumn();
             Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn1 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
             Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn2 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn1 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
@@ -375,29 +376,39 @@
             gridViewCommandColumn1.Name = "dgvDel";
             gridViewCommandColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewCommandColumn1.UseDefaultText = true;
-            gridViewCommandColumn1.Width = 107;
+            gridViewCommandColumn1.Width = 98;
             gridViewMultiComboBoxColumn1.EnableExpressionEditor = false;
             gridViewMultiComboBoxColumn1.FieldName = "VatGroup";
             gridViewMultiComboBoxColumn1.HeaderText = "VatGroup";
             gridViewMultiComboBoxColumn1.Name = "VatGroup";
-            gridViewMultiComboBoxColumn1.ReadOnly = true;
-            gridViewMultiComboBoxColumn1.Width = 111;
+            gridViewMultiComboBoxColumn1.Width = 102;
             gridViewMultiComboBoxColumn2.EnableExpressionEditor = false;
             gridViewMultiComboBoxColumn2.FieldName = "VatType";
             gridViewMultiComboBoxColumn2.HeaderText = "VatType";
             gridViewMultiComboBoxColumn2.Name = "VatType";
-            gridViewMultiComboBoxColumn2.Width = 114;
+            gridViewMultiComboBoxColumn2.Width = 104;
+            gridViewDecimalColumn1.EnableExpressionEditor = false;
+            gridViewDecimalColumn1.FieldName = "Vat_";
+            gridViewDecimalColumn1.FormatString = "{0:N2}";
+            gridViewDecimalColumn1.HeaderText = "Vat%";
+            gridViewDecimalColumn1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            gridViewDecimalColumn1.Name = "Vat_";
+            gridViewDecimalColumn1.Width = 101;
             gridViewTextBoxColumn1.EnableExpressionEditor = false;
             gridViewTextBoxColumn1.FieldName = "Remark";
             gridViewTextBoxColumn1.HeaderText = "Remark";
             gridViewTextBoxColumn1.Name = "Remark";
-            gridViewTextBoxColumn1.Width = 163;
+            gridViewTextBoxColumn1.Width = 132;
             gridViewCheckBoxColumn1.EnableExpressionEditor = false;
             gridViewCheckBoxColumn1.FieldName = "Active";
             gridViewCheckBoxColumn1.HeaderText = "Active";
             gridViewCheckBoxColumn1.MinWidth = 20;
             gridViewCheckBoxColumn1.Name = "Active";
-            gridViewCheckBoxColumn1.Width = 70;
+            gridViewCheckBoxColumn1.Width = 57;
             gridViewTextBoxColumn2.EnableExpressionEditor = false;
             gridViewTextBoxColumn2.HeaderText = "column1";
             gridViewTextBoxColumn2.IsVisible = false;
@@ -410,7 +421,7 @@
             gridViewTextBoxColumn3.Name = "None";
             gridViewTextBoxColumn3.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Right;
             gridViewTextBoxColumn3.ReadOnly = true;
-            gridViewTextBoxColumn3.Width = 148;
+            gridViewTextBoxColumn3.Width = 120;
             gridViewTextBoxColumn4.EnableExpressionEditor = false;
             gridViewTextBoxColumn4.FieldName = "id";
             gridViewTextBoxColumn4.HeaderText = "id";
@@ -422,6 +433,7 @@
             gridViewCommandColumn1,
             gridViewMultiComboBoxColumn1,
             gridViewMultiComboBoxColumn2,
+            gridViewDecimalColumn1,
             gridViewTextBoxColumn1,
             gridViewCheckBoxColumn1,
             gridViewTextBoxColumn2,
@@ -436,6 +448,8 @@
             this.radGridView1.Size = new System.Drawing.Size(730, 333);
             this.radGridView1.TabIndex = 0;
             this.radGridView1.ThemeName = "Office2010Blue";
+            this.radGridView1.CellBeginEdit += new Telerik.WinControls.UI.GridViewCellCancelEventHandler(this.MasterTemplate_CellBeginEdit);
+            this.radGridView1.CellEditorInitialized += new Telerik.WinControls.UI.GridViewCellEventHandler(this.MasterTemplate_CellEditorInitialized);
             this.radGridView1.CellEndEdit += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellEndEdit);
             this.radGridView1.CellClick += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellClick);
             this.radGridView1.CellDoubleClick += new Telerik.WinControls.UI.GridViewCellEventHandler(this.MasterTemplate_CellDoubleClick);

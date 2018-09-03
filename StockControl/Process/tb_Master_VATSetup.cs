@@ -8,6 +8,9 @@ using System.Windows.Forms;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using System.Globalization;
+using Telerik.WinControls.UI;
+using Telerik.WinControls;
+using Telerik.WinControls.Data;
 
 namespace StockControl
 {
@@ -49,9 +52,57 @@ namespace StockControl
             radGridView1.ReadOnly = true;
             radGridView1.AutoGenerateColumns = false;
             GETDTRow();
-           
-            
+
+            Default();
             DataLoad();
+        }
+        private void Default()
+        {
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                //cboVendor.AutoCompleteMode = AutoCompleteMode.Append;
+                //cboVendor.DisplayMember = "VendorName";
+                //cboVendor.ValueMember = "VendorNo";
+                //cboVendor.DataSource = (from ix in db.tb_Vendors.Where(s => s.Active == true)
+                //                        select new { ix.VendorNo,ix.VendorName,ix.CRRNCY }).ToList();
+                //cboVendor.SelectedIndex = 0;
+                try
+                {
+
+                    GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)radGridView1.Columns["VatType"];
+                    col.DataSource = (from ix in db.mh_VATTypes.Where(s => Convert.ToBoolean(s.Active.Equals(true)))
+                                      select new { ix.VatType }).ToList();
+
+                    col.DisplayMember = "VatType";
+                    col.ValueMember = "VatType";
+                    col.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
+                    col.FilteringMode = GridViewFilteringMode.DisplayMember;
+
+                    col.AutoSizeMode = BestFitColumnMode.DisplayedDataCells;
+                    col.TextAlignment = ContentAlignment.MiddleCenter;
+                    col.DropDownStyle = RadDropDownStyle.DropDownList;
+
+                }
+                catch { }
+                try
+                {
+
+                    GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)radGridView1.Columns["VatGroup"];
+                    col.DataSource = (from ix in db.mh_VatGroups.Where(s => Convert.ToBoolean(s.Active.Equals(true)))
+                                      select new { ix.Value }).ToList();
+
+                    col.DisplayMember = "Value";
+                    col.ValueMember = "Value";
+                    col.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
+                    col.FilteringMode = GridViewFilteringMode.DisplayMember;
+
+                    col.AutoSizeMode = BestFitColumnMode.DisplayedDataCells;
+                    col.TextAlignment = ContentAlignment.MiddleCenter;
+                    col.DropDownStyle = RadDropDownStyle.DropDownList;
+
+                }
+                catch { }
+            }
         }
 
         private void RMenu6_Click(object sender, EventArgs e)
@@ -84,7 +135,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
-                radGridView1.DataSource = db.mh_VATTypes.ToList();// dt;
+                radGridView1.DataSource = db.mh_VATSetups.ToList();// dt;
                 //foreach(var x in radGridView1.Rows)
                 //{
 
@@ -130,43 +181,39 @@ namespace StockControl
                 {
                     foreach (var g in radGridView1.Rows)
                     {
-                        if (!Convert.ToString(g.Cells["VatType"].Value).Equals("") && g.IsVisible)
+                        if (!Convert.ToString(g.Cells["VatType"].Value).Equals("")
+                            && !Convert.ToString(g.Cells["VatGroup"].Value).Equals("")
+                            && g.IsVisible)
                         {
                             if (Convert.ToString(g.Cells["dgvC"].Value).Equals("T"))
                             {
-                               
-                                if(Convert.ToInt16(g.Cells["id"].Value)==0)
+
+                                var g1 = (from ix in db.mh_VATSetups
+                                          where ix.VatType == Convert.ToString(g.Cells["VatType"].Value)
+                                          && ix.VatGroup == Convert.ToString(g.Cells["VatGroup"].Value)
+                                          //&& 
+                                          //ix.id == Convert.ToInt16(g.Cells["id"].Value)
+                                          select ix).ToList();
+                                if (g1.Count > 0)
+                                //if(Convert.ToInt16(g.Cells["id"].Value)==0)
                                 //if (Convert.ToString(g.Cells["TempVatType"].Value).Equals(""))
                                 {
-                                   // MessageBox.Show("11");
-                                    
-                                    mh_VATType u = new mh_VATType();
-                                    u.VatType = Convert.ToString(g.Cells["VatType"].Value);
-                                    u.Active = Convert.ToBoolean(g.Cells["Active"].Value);
-                                    u.Remark= Convert.ToString(g.Cells["Remark"].Value);
-                                    u.CreateBy = ClassLib.Classlib.User;
-                                    u.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-                                    db.mh_VATTypes.InsertOnSubmit(u);
-                                    db.SubmitChanges();
-                                    C += 1;
-                                    dbClss.AddHistory(this.Name, "เพิ่ม", "Insert Vat Type [" + u.VatType+"]","");
-                                }
-                                else
-                                {
 
-                                    var gg = (from ix in db.mh_VATTypes
-                                                 where //ix.VatType == Convert.ToString(g.Cells["TempVatType"].Value)
-                                                 //&& 
-                                                 ix.id == Convert.ToInt16(g.Cells["id"].Value)
-                                                 select ix).ToList();
+                                    var gg = (from ix in db.mh_VATSetups
+                                              where ix.VatType == Convert.ToString(g.Cells["VatType"].Value)
+                                                && ix.VatGroup == Convert.ToString(g.Cells["VatGroup"].Value)
+                                              //ix.id == Convert.ToInt16(g.Cells["id"].Value)
+                                              select ix).ToList();
                                     if (gg.Count > 0)
                                     {
-                                        var unit1 = (from ix in db.mh_VATTypes
-                                                     where //ix.VatType == Convert.ToString(g.Cells["TempVatType"].Value)
-                                                           //&& 
-                                                     ix.id == Convert.ToInt16(gg.FirstOrDefault().id)
+                                        var unit1 = (from ix in db.mh_VATSetups
+                                                     where ix.VatType == Convert.ToString(g.Cells["VatType"].Value)
+                                                 && ix.VatGroup == Convert.ToString(g.Cells["VatGroup"].Value)
+                                                     //ix.id == Convert.ToInt16(g.Cells["id"].Value)
                                                      select ix).First();
-                                        unit1.VatType = Convert.ToString(g.Cells["VatType"].Value);
+                                        //unit1.VatType = Convert.ToString(g.Cells["VatType"].Value);
+                                        //u.VatGroup = Convert.ToString(g.Cells["VatGroup"].Value);
+                                        unit1.Vat_ =dbClss.TDe(g.Cells["Vat_"].Value);
                                         unit1.Active = Convert.ToBoolean(g.Cells["Active"].Value);
                                         unit1.Remark = Convert.ToString(g.Cells["Remark"].Value);
                                         unit1.CreateBy = ClassLib.Classlib.User;
@@ -175,8 +222,26 @@ namespace StockControl
                                         C += 1;
 
                                         db.SubmitChanges();
-                                        dbClss.AddHistory(this.Name, "แก้ไข", "Update Vat Type [" + unit1.VatType + "]", "");
+                                        dbClss.AddHistory(this.Name, "แก้ไข", "Update Vat Setup [ VatType:" + unit1.VatType + ", VatGroup:" + unit1.VatGroup +"]", "");
                                     }
+                                }
+                                else
+                                {
+
+                                    mh_VATSetup u = new mh_VATSetup();
+                                    u.VatType = Convert.ToString(g.Cells["VatType"].Value);
+                                    u.VatGroup = Convert.ToString(g.Cells["VatGroup"].Value);
+                                    u.Vat_ = dbClss.TDe(g.Cells["Vat_"].Value);
+                                    u.Active = Convert.ToBoolean(g.Cells["Active"].Value);
+                                    u.Remark = Convert.ToString(g.Cells["Remark"].Value);
+                                    u.CreateBy = ClassLib.Classlib.User;
+                                    u.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                    db.mh_VATSetups.InsertOnSubmit(u);
+                                    db.SubmitChanges();
+                                    C += 1;
+                                    dbClss.AddHistory(this.Name, "เพิ่ม", "Insert Vat Setup [ VatType:" + u.VatType + ", VatGroup:" + u.VatGroup + "]", "");
+
+
                                 }
                             }
                         }
@@ -204,26 +269,26 @@ namespace StockControl
                 {
                     int id = Convert.ToInt16(radGridView1.Rows[row].Cells["id"].Value);
                     string CodeDelete = Convert.ToString(radGridView1.Rows[row].Cells["VatType"].Value);
-                    string CodeTemp = Convert.ToString(radGridView1.Rows[row].Cells["TempVatType"].Value);
+                    string VatGroup = Convert.ToString(radGridView1.Rows[row].Cells["VatGroup"].Value);
                     radGridView1.EndEdit();
-                    if (MessageBox.Show("ต้องการลบรายการ ( "+ CodeDelete+" ) หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show("ต้องการลบรายการ ( Vat Type :"+ CodeDelete+ " Vat Group : "+ VatGroup + " ) หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
 
                             if (!CodeDelete.Equals(""))
                             {
-                                if (!CodeTemp.Equals(""))
+                                if (!VatGroup.Equals(""))
                                 {
 
-                                    var unit1 = (from ix in db.mh_VATTypes
+                                    var unit1 = (from ix in db.mh_VATSetups
                                                  where //ix.VatType == CodeDelete
                                                  ix.id == id
                                                  select ix).ToList();
                                     foreach (var d in unit1)
                                     {
-                                        db.mh_VATTypes.DeleteOnSubmit(d);
-                                        dbClss.AddHistory(this.Name, "ลบ Unit", "Delete Vat Type ["+d.VatType+"]","");
+                                        db.mh_VATSetups.DeleteOnSubmit(d);
+                                        dbClss.AddHistory(this.Name, "ลบ Unit", "Delete Vat Setup [ VatType:"+d.VatType+", VatGroup:"+d.VatGroup+"]","");
                                     }
                                     C += 1;
 
@@ -322,18 +387,18 @@ namespace StockControl
             try
             {
                 radGridView1.Rows[e.RowIndex].Cells["dgvC"].Value = "T";
-                string check1 = Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["VatType"].Value);
-                string TM= Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["TempVatType"].Value);
-                if (!check1.Trim().Equals("") && TM.Equals(""))
-                {                    
-                    if (!CheckDuplicate(check1.Trim()))
-                    {
-                        MessageBox.Show("ข้อมูล รหัสหน่วย ซ้ำ");
-                        radGridView1.Rows[e.RowIndex].Cells["VatType"].Value = "";
-                        radGridView1.Rows[e.RowIndex].Cells["VatType"].IsSelected = true;
+                //string check1 = Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["VatType"].Value);
+                //string TM= Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["TempVatType"].Value);
+                //if (!check1.Trim().Equals("") && TM.Equals(""))
+                //{                    
+                //    if (!CheckDuplicate(check1.Trim()))
+                //    {
+                //        MessageBox.Show("ข้อมูล รหัสหน่วย ซ้ำ");
+                //        radGridView1.Rows[e.RowIndex].Cells["VatType"].Value = "";
+                //        radGridView1.Rows[e.RowIndex].Cells["VatType"].IsSelected = true;
 
-                    }
-                }
+                //    }
+                //}
         
 
             }
@@ -568,6 +633,111 @@ namespace StockControl
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
+        }
+
+        private void MasterTemplate_CellEditorInitialized(object sender, GridViewCellEventArgs e)
+        {
+
+            RadMultiColumnComboBoxElement mccbEl = e.ActiveEditor as RadMultiColumnComboBoxElement;
+            if (mccbEl != null)
+            {
+                mccbEl.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
+                mccbEl.DropDownMinSize = new Size(150, 100);
+                mccbEl.DropDownMaxSize = new Size(150, 100);
+
+                mccbEl.AutoSizeDropDownToBestFit = false;
+                mccbEl.DropDownAnimationEnabled = false;
+                mccbEl.AutoFilter = true;
+                FilterDescriptor filterDescriptor = new FilterDescriptor(mccbEl.DisplayMember, FilterOperator.Contains, string.Empty);
+                mccbEl.EditorControl.MasterTemplate.FilterDescriptors.Add(filterDescriptor);
+            }
+        }
+
+        private void MasterTemplate_CellBeginEdit(object sender, GridViewCellCancelEventArgs e)
+        {
+            try
+            {
+                if (e.Column.Name.Equals("VatGroup"))
+                {
+                    /////////////มีการ เคลียร์ การ Add ก่อน แล้วค่อย Add ใหม่////////////////
+                    //Row = e.RowIndex;
+                    RadMultiColumnComboBoxElement Comcol = (RadMultiColumnComboBoxElement)e.ActiveEditor;
+                    Comcol.Columns.Clear();
+
+                    //RadMultiColumnComboBoxElement Comcol = (RadMultiColumnComboBoxElement)e.ActiveEditor;
+                    Comcol.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
+                    Comcol.DropDownWidth = 150;
+                    Comcol.DropDownHeight = 150;
+                    //Comcol.EditorControl.BestFitColumns(BestFitColumnMode.AllCells);
+                    Comcol.EditorControl.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
+                    //ปรับอัตโนมัติ
+                    //Comcol.EditorControl.AutoGenerateColumns = false;
+                    //Comcol.BestFitColumns(true, true);
+                    Comcol.AutoFilter = true;
+
+                    //Comcol.EditorControl.AllowAddNewRow = true;
+                    Comcol.EditorControl.EnableFiltering = true;
+                    Comcol.EditorControl.ReadOnly = false;
+                    Comcol.ClearFilter();
+
+
+                    //Comcol.DisplayMember = "ItemNo";
+                    //Comcol.ValueMember = "ItemNo";
+
+                    // //----------------------------- ปรับโดยกำหนดเอง
+                    Comcol.EditorControl.Columns.Add(new GridViewTextBoxColumn
+                    {
+                        HeaderText = "VatGroup",
+                        Name = "Value",
+                        FieldName = "Value",
+                        Width = 100,
+                        AllowFiltering = true,
+                        ReadOnly = false
+                    }
+                   );
+                }
+                else if (e.Column.Name.Equals("VatType"))
+                {
+                    /////////////มีการ เคลียร์ การ Add ก่อน แล้วค่อย Add ใหม่////////////////
+                    //Row = e.RowIndex;
+                    RadMultiColumnComboBoxElement Comcol = (RadMultiColumnComboBoxElement)e.ActiveEditor;
+                    Comcol.Columns.Clear();
+
+                    //RadMultiColumnComboBoxElement Comcol = (RadMultiColumnComboBoxElement)e.ActiveEditor;
+                    Comcol.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
+                    Comcol.DropDownWidth = 150;
+                    Comcol.DropDownHeight = 150;
+                    //Comcol.EditorControl.BestFitColumns(BestFitColumnMode.AllCells);
+                    Comcol.EditorControl.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
+                    //ปรับอัตโนมัติ
+                    //Comcol.EditorControl.AutoGenerateColumns = false;
+                    //Comcol.BestFitColumns(true, true);
+                    Comcol.AutoFilter = true;
+
+                    //Comcol.EditorControl.AllowAddNewRow = true;
+                    Comcol.EditorControl.EnableFiltering = true;
+                    Comcol.EditorControl.ReadOnly = false;
+                    Comcol.ClearFilter();
+
+
+                    //Comcol.DisplayMember = "ItemNo";
+                    //Comcol.ValueMember = "ItemNo";
+
+                    // //----------------------------- ปรับโดยกำหนดเอง
+                    Comcol.EditorControl.Columns.Add(new GridViewTextBoxColumn
+                    {
+                        HeaderText = "VatType",
+                        Name = "VatType",
+                        FieldName = "VatType",
+                        Width = 100,
+                        AllowFiltering = true,
+                        ReadOnly = false
+                    }
+                   );
+                }
+
+            }
+            catch { }
         }
     }
 }
