@@ -34,11 +34,11 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDateTimeColumn gridViewDateTimeColumn1 = new Telerik.WinControls.UI.GridViewDateTimeColumn();
             Telerik.WinControls.UI.GridViewDateTimeColumn gridViewDateTimeColumn2 = new Telerik.WinControls.UI.GridViewDateTimeColumn();
             Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn1 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
             Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn2 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn5 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
@@ -410,11 +410,6 @@
             gridViewTextBoxColumn4.HeaderText = "dgvCodetemp2";
             gridViewTextBoxColumn4.IsVisible = false;
             gridViewTextBoxColumn4.Name = "dgvCodetemp2";
-            gridViewDecimalColumn1.EnableExpressionEditor = false;
-            gridViewDecimalColumn1.FieldName = "NoOfWorkHours";
-            gridViewDecimalColumn1.HeaderText = "จำนวนน ชม.";
-            gridViewDecimalColumn1.Name = "WorkHours";
-            gridViewDecimalColumn1.Width = 89;
             gridViewDateTimeColumn1.CustomFormat = "dd/MM/yyyy";
             gridViewDateTimeColumn1.EnableExpressionEditor = false;
             gridViewDateTimeColumn1.FieldName = "StartingDate";
@@ -447,6 +442,11 @@
             gridViewMaskBoxColumn2.MaskType = Telerik.WinControls.UI.MaskType.Standard;
             gridViewMaskBoxColumn2.Name = "EndTime";
             gridViewMaskBoxColumn2.Width = 79;
+            gridViewDecimalColumn1.EnableExpressionEditor = false;
+            gridViewDecimalColumn1.FieldName = "NoOfWorkHours";
+            gridViewDecimalColumn1.HeaderText = "จำนวนน ชม.";
+            gridViewDecimalColumn1.Name = "WorkHours";
+            gridViewDecimalColumn1.Width = 89;
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
             gridViewTextBoxColumn5.FieldName = "Description";
             gridViewTextBoxColumn5.HeaderText = "หมายเหตุ";
@@ -457,11 +457,11 @@
             gridViewTextBoxColumn2,
             gridViewTextBoxColumn3,
             gridViewTextBoxColumn4,
-            gridViewDecimalColumn1,
             gridViewDateTimeColumn1,
             gridViewDateTimeColumn2,
             gridViewMaskBoxColumn1,
             gridViewMaskBoxColumn2,
+            gridViewDecimalColumn1,
             gridViewTextBoxColumn5});
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition1;

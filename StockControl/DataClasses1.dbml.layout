@@ -398,10 +398,10 @@
         <elementListCompartment Id="4c0a4e36-3034-414c-b315-0a2dfdb86526" absoluteBounds="1.3899999999999997, 15.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="168bcec3-36c0-42a0-88c2-e62de0a0dc53" isExpanded="false" absoluteBounds="3.625, 14.5, 2, 0.45">
+    <classShape Id="168bcec3-36c0-42a0-88c2-e62de0a0dc53" isExpanded="false" absoluteBounds="3.5, 14.625, 2, 0.45">
       <DataClassMoniker Name="/DataClasses1DataContext/mh_Holiday" />
       <nestedChildShapes>
-        <elementListCompartment Id="d4892cdf-3851-4cf3-a3ed-b60c5f7f1cb3" absoluteBounds="3.6399999999999997, 14.96, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d4892cdf-3851-4cf3-a3ed-b60c5f7f1cb3" absoluteBounds="3.5149999999999997, 15.085, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="e84351f8-f3bc-4dad-b2b1-55db50cd1cbf" isExpanded="false" absoluteBounds="1.375, 15.125, 2, 0.45">

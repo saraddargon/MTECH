@@ -389,6 +389,10 @@ namespace StockControl
                             err += "- “เวลาเริ่ม:” กรอกข้อมูลไม่ถูกต้อง \n";
                         if (g.Cells["EndTime"].Value.ToSt().Contains("_"))
                             err += "- “เวลาสิ้นสุด:” กรอกข้อมูลไม่ถูกต้อง \n";
+                        if (g.Cells["StartTime"].Value.ToSt().Replace(":", ".").ToDecimal() > 23.59m)
+                            err += "- “เวลาเริ่ม:” กรอกข้อมูลไม่ถูกต้อง \n";
+                        if (g.Cells["EndTime"].Value.ToSt().Replace(":", ".").ToDecimal() > 23.59m)
+                            err += "- “เวลาสิ้นสุด:” กรอกข้อมูลไม่ถูกต้อง \n";
                     }
 
 
