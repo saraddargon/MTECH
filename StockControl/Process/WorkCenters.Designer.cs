@@ -410,23 +410,23 @@
             gridViewTextBoxColumn4.Name = "dgvCodetemp2";
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
             gridViewTextBoxColumn5.FieldName = "WorkCenterNo";
-            gridViewTextBoxColumn5.HeaderText = "หมายเลข";
+            gridViewTextBoxColumn5.HeaderText = "No";
             gridViewTextBoxColumn5.Name = "No";
             gridViewTextBoxColumn5.ReadOnly = true;
             gridViewTextBoxColumn5.Width = 72;
             gridViewTextBoxColumn6.EnableExpressionEditor = false;
             gridViewTextBoxColumn6.FieldName = "WorkCenterName";
-            gridViewTextBoxColumn6.HeaderText = "ชื่อ";
+            gridViewTextBoxColumn6.HeaderText = "Name";
             gridViewTextBoxColumn6.Name = "Name";
             gridViewTextBoxColumn6.Width = 167;
             gridViewComboBoxColumn1.EnableExpressionEditor = false;
             gridViewComboBoxColumn1.FieldName = "UOM";
-            gridViewComboBoxColumn1.HeaderText = "หน่วย";
+            gridViewComboBoxColumn1.HeaderText = "UOM";
             gridViewComboBoxColumn1.Name = "UOM";
             gridViewComboBoxColumn1.Width = 83;
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "CostPerUOM";
-            gridViewDecimalColumn1.HeaderText = "Cost/UOM";
+            gridViewDecimalColumn1.HeaderText = "Cost per";
             gridViewDecimalColumn1.Name = "CostPer";
             gridViewDecimalColumn1.Width = 104;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
@@ -435,7 +435,7 @@
             gridViewDecimalColumn2.Width = 78;
             gridViewComboBoxColumn2.EnableExpressionEditor = false;
             gridViewComboBoxColumn2.FieldName = "Calendar";
-            gridViewComboBoxColumn2.HeaderText = "ปฏิทินงาน";
+            gridViewComboBoxColumn2.HeaderText = "Calendar";
             gridViewComboBoxColumn2.Name = "Calendar";
             gridViewComboBoxColumn2.Width = 183;
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {

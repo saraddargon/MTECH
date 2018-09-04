@@ -223,6 +223,7 @@ namespace StockControl
                                 t.EndingTime = g.Cells["EndTime"].Value.ToSt();
                                 t.Capacity = g.Cells["Capacity"].Value.ToDecimal();
                                 t.idWorkCenters = idWorkCenters;
+                                t.ShiftId = 0;
 
                                 dbClss.AddHistory(this.Name, "เพิ่มวัน", $"เพิ่มวันหยุดงาน [{t.Date.ToDtString()}]", "");
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
@@ -239,6 +240,7 @@ namespace StockControl
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
                                 t.Capacity = g.Cells["Capacity"].Value.ToDecimal();
                                 t.idWorkCenters = idWorkCenters;
+                                t.ShiftId = 0;
 
                                 C += 1;
                                 db.SubmitChanges();
