@@ -87,7 +87,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
-                radGridView1.DataSource = db.tb_GroupTypes.ToList();// dt;
+                radGridView1.DataSource = db.mh_GroupTypes.ToList();// dt;
                 int ck = 0;
                 foreach(var x in radGridView1.Rows)
                 {
@@ -113,7 +113,7 @@ namespace StockControl
 
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                int i = (from ix in db.tb_GroupTypes where ix.GroupCode == code select ix).Count();
+                int i = (from ix in db.mh_GroupTypes where ix.GroupCode == code select ix).Count();
                 if (i > 0)
                     ck = false;
                 else
@@ -142,15 +142,15 @@ namespace StockControl
                                
                                 if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
                                 {
-                                   // MessageBox.Show("11");
-                                    
-                                  
-                                    tb_GroupType gy = new tb_GroupType();
+                                    // MessageBox.Show("11");
+
+
+                                    mh_GroupType gy = new mh_GroupType();
                                     gy.GroupCode = Convert.ToString(g.Cells["GroupCode"].Value);
                                     gy.GroupActive = Convert.ToBoolean(g.Cells["GroupActive"].Value);
                                     gy.GroupName= Convert.ToString(g.Cells["GroupName"].Value);
                                     gy.Running= Convert.ToString(g.Cells["Running"].Value);
-                                    db.tb_GroupTypes.InsertOnSubmit(gy);
+                                    db.mh_GroupTypes.InsertOnSubmit(gy);
                                     db.SubmitChanges();
                                     C += 1;
                                     dbClss.AddHistory(this.Name, "เพิ่มประเภทกลุ่ม", "Insert Group Code [" + gy.GroupName+ "]","");
@@ -158,7 +158,7 @@ namespace StockControl
                                 else
                                 {
                                    
-                                    var unit1 = (from ix in db.tb_GroupTypes
+                                    var unit1 = (from ix in db.mh_GroupTypes
                                                  where ix.GroupCode == Convert.ToString(g.Cells["dgvCodeTemp"].Value)
                                                  select ix).First();
                                        unit1.GroupName = Convert.ToString(g.Cells["GroupName"].Value);
@@ -208,12 +208,12 @@ namespace StockControl
                                 if (!CodeTemp.Equals(""))
                                 {
 
-                                    var unit1 = (from ix in db.tb_GroupTypes
+                                    var unit1 = (from ix in db.mh_GroupTypes
                                                  where ix.GroupCode == CodeDelete
                                                  select ix).ToList();
                                     foreach (var d in unit1)
                                     {
-                                        db.tb_GroupTypes.DeleteOnSubmit(d);
+                                        db.mh_GroupTypes.DeleteOnSubmit(d);
                                         dbClss.AddHistory(this.Name, "ลบประเภทกลุ่ม", "Delete Group Code ["+d.GroupName+"]","");
                                     }
                                     C += 1;
@@ -510,17 +510,17 @@ namespace StockControl
                         if (!rd["GroupCode"].ToString().Equals(""))
                         {
 
-                            var x = (from ix in db.tb_GroupTypes where ix.GroupCode.ToLower().Trim() == rd["GroupCode"].ToString().ToLower().Trim() select ix).FirstOrDefault();
+                            var x = (from ix in db.mh_GroupTypes where ix.GroupCode.ToLower().Trim() == rd["GroupCode"].ToString().ToLower().Trim() select ix).FirstOrDefault();
 
                             if(x==null)
                             {
-                                
-                                tb_GroupType ts = new tb_GroupType();
+
+                                mh_GroupType ts = new mh_GroupType();
                                 ts.GroupCode= Convert.ToString(rd["GroupCode"].ToString());
                                 ts.GroupName = Convert.ToString(rd["GroupName"].ToString());
                                 ts.GroupActive = Convert.ToBoolean(rd["GroupActive"].ToString());
                                 ts.Running= Convert.ToString(rd["Running"].ToString());
-                                db.tb_GroupTypes.InsertOnSubmit(ts);
+                                db.mh_GroupTypes.InsertOnSubmit(ts);
                                 db.SubmitChanges();
                             }
                             else

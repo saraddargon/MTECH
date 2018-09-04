@@ -148,7 +148,7 @@ namespace StockControl
                     cboVendorName.SelectedIndex = 0;
 
 
-                    ddlDept.DataSource = (from ix in db.tb_Departments.Where(s => s.Status == true)
+                    ddlDept.DataSource = (from ix in db.mh_Departments.Where(s => s.Status == true)
                                           select new { ix.Department}).ToList();
                     ddlDept.DisplayMember = "Department";
                     ddlDept.Text = "";

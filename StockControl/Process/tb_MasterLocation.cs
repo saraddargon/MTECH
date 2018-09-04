@@ -165,7 +165,7 @@ namespace StockControl
 
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                int i = (from ix in db.tb_GroupTypes where ix.GroupCode == code select ix).Count();
+                int i = (from ix in db.mh_GroupTypes where ix.GroupCode == code select ix).Count();
                 if (i > 0)
                     ck = false;
                 else

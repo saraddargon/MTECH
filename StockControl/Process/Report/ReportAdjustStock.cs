@@ -70,7 +70,7 @@ namespace StockControl
             
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var gt = (from ix in db.tb_GroupTypes where ix.GroupActive == true select ix).ToList();
+                    var gt = (from ix in db.mh_GroupTypes where ix.GroupActive == true select ix).ToList();
                 //GridViewComboBoxColumn comboBoxColumn = this.radGridView1.Columns["GroupCode"] as GridViewComboBoxColumn;
                  cboGroupType.DisplayMember = "GroupCode";
                  cboGroupType.ValueMember = "GroupCode";

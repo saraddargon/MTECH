@@ -473,15 +473,15 @@ namespace StockControl
                         if (!rd["UnitCode"].ToString().Equals(""))
                         {
 
-                            var x = (from ix in db.tb_Units where ix.UnitCode.ToLower().Trim() == rd["UnitCode"].ToString().ToLower().Trim() select ix).FirstOrDefault();
+                            var x = (from ix in db.mh_Units where ix.UnitCode.ToLower().Trim() == rd["UnitCode"].ToString().ToLower().Trim() select ix).FirstOrDefault();
 
                             if(x==null)
                             {
-                                tb_Unit ts = new tb_Unit();
+                                mh_Unit ts = new mh_Unit();
                                 ts.UnitCode = Convert.ToString(rd["UnitCode"].ToString());
                                 ts.UnitDetail = Convert.ToString(rd["UnitDetail"].ToString());
                                 ts.UnitActive = Convert.ToBoolean(rd["UnitActive"].ToString());
-                                db.tb_Units.InsertOnSubmit(ts);
+                                db.mh_Units.InsertOnSubmit(ts);
                                 db.SubmitChanges();
                             }
                             else

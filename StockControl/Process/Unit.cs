@@ -81,8 +81,8 @@ namespace StockControl
             int ck = 0;
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
-                radGridView1.DataSource = db.tb_Units.ToList();// dt;
+                //dt = ClassLib.Classlib.LINQToDataTable(db.mh_Units.ToList());
+                radGridView1.DataSource = db.mh_Units.ToList();// dt;
                 foreach(var x in radGridView1.Rows)
                 {
 
@@ -108,7 +108,7 @@ namespace StockControl
 
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                int i = (from ix in db.tb_Units where ix.UnitCode == code select ix).Count();
+                int i = (from ix in db.mh_Units where ix.UnitCode == code select ix).Count();
                 if (i > 0)
                     ck = false;
                 else
@@ -135,13 +135,13 @@ namespace StockControl
                                
                                 if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
                                 {
-                                   // MessageBox.Show("11");
-                                    
-                                    tb_Unit u = new tb_Unit();
+                                    // MessageBox.Show("11");
+
+                                    mh_Unit u = new mh_Unit();
                                     u.UnitCode = Convert.ToString(g.Cells["UnitCode"].Value);
                                     u.UnitActive = Convert.ToBoolean(g.Cells["UnitActive"].Value);
                                     u.UnitDetail= Convert.ToString(g.Cells["UnitDetail"].Value);
-                                    db.tb_Units.InsertOnSubmit(u);
+                                    db.mh_Units.InsertOnSubmit(u);
                                     db.SubmitChanges();
                                     C += 1;
                                     dbClss.AddHistory(this.Name, "เพิ่ม", "Insert Unit Code [" + u.UnitCode+"]","");
@@ -149,7 +149,7 @@ namespace StockControl
                                 else
                                 {
                                    
-                                    var unit1 = (from ix in db.tb_Units
+                                    var unit1 = (from ix in db.mh_Units
                                                  where ix.UnitCode == Convert.ToString(g.Cells["dgvCodeTemp"].Value)
                                                  select ix).First();
                                        unit1.UnitDetail = Convert.ToString(g.Cells["UnitDetail"].Value);
@@ -198,12 +198,12 @@ namespace StockControl
                                 if (!CodeTemp.Equals(""))
                                 {
 
-                                    var unit1 = (from ix in db.tb_Units
+                                    var unit1 = (from ix in db.mh_Units
                                                  where ix.UnitCode == CodeDelete
                                                  select ix).ToList();
                                     foreach (var d in unit1)
                                     {
-                                        db.tb_Units.DeleteOnSubmit(d);
+                                        db.mh_Units.DeleteOnSubmit(d);
                                         dbClss.AddHistory(this.Name, "ลบ Unit", "Delete Unit Code ["+d.UnitCode+"]","");
                                     }
                                     C += 1;
@@ -453,15 +453,15 @@ namespace StockControl
                         if (!rd["UnitCode"].ToString().Equals(""))
                         {
 
-                            var x = (from ix in db.tb_Units where ix.UnitCode.ToLower().Trim() == rd["UnitCode"].ToString().ToLower().Trim() select ix).FirstOrDefault();
+                            var x = (from ix in db.mh_Units where ix.UnitCode.ToLower().Trim() == rd["UnitCode"].ToString().ToLower().Trim() select ix).FirstOrDefault();
 
                             if(x==null)
                             {
-                                tb_Unit ts = new tb_Unit();
+                                mh_Unit ts = new mh_Unit();
                                 ts.UnitCode = Convert.ToString(rd["UnitCode"].ToString());
                                 ts.UnitDetail = Convert.ToString(rd["UnitDetail"].ToString());
                                 ts.UnitActive = Convert.ToBoolean(rd["UnitActive"].ToString());
-                                db.tb_Units.InsertOnSubmit(ts);
+                                db.mh_Units.InsertOnSubmit(ts);
                                 db.SubmitChanges();
                             }
                             else

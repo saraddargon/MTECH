@@ -83,7 +83,7 @@ namespace StockControl
 
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var gt = (from ix in db.tb_GroupTypes where ix.GroupActive == true select ix).ToList();
+                    var gt = (from ix in db.mh_GroupTypes where ix.GroupActive == true select ix).ToList();
                     GridViewComboBoxColumn comboBoxColumn = this.radGridView1.Columns["GroupCode"] as GridViewComboBoxColumn;
                     comboBoxColumn.DisplayMember = "GroupCode";
                     comboBoxColumn.ValueMember = "GroupCode";
@@ -112,7 +112,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
-                radGridView1.DataSource = db.tb_Types.ToList();
+                radGridView1.DataSource = db.mh_Types.ToList();
                 int ck = 0;
                 foreach(var x in radGridView1.Rows)
                 {
@@ -145,7 +145,7 @@ namespace StockControl
 
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                int i = (from ix in db.tb_Types where ix.GroupCode == code && ix.TypeCode==Typecode select ix).Count();
+                int i = (from ix in db.mh_Types where ix.GroupCode == code && ix.TypeCode==Typecode select ix).Count();
                 if (i > 0)
                     ck = false;
                 else
@@ -219,12 +219,12 @@ namespace StockControl
                                     // MessageBox.Show("11");
 
 
-                                    tb_Type gy = new tb_Type();
+                                    mh_Type gy = new mh_Type();
                                     gy.GroupCode = Convert.ToString(g.Cells["GroupCode"].Value);
                                     gy.TypeCode= Convert.ToString(g.Cells["TypeCode"].Value);
                                     gy.TypeActive = Convert.ToBoolean(g.Cells["TypeActive"].Value);
                                     gy.TypeDetail= Convert.ToString(g.Cells["TypeDetail"].Value);
-                                    db.tb_Types.InsertOnSubmit(gy);
+                                    db.mh_Types.InsertOnSubmit(gy);
                                     db.SubmitChanges();
                                     C += 1;
                                     dbClss.AddHistory(this.Name, "เพิ่มประเภท", "Insert Type Code [" + gy.TypeCode+ "]","");
@@ -232,7 +232,7 @@ namespace StockControl
                                 else
                                 {
                                    
-                                    var unit1 = (from ix in db.tb_Types
+                                    var unit1 = (from ix in db.mh_Types
                                                  where ix.GroupCode == Convert.ToString(g.Cells["dgvCodeTemp"].Value)
                                                  && ix.TypeCode == Convert.ToString(g.Cells["dgvCodeTemp2"].Value)
                                                  select ix).First();
@@ -284,13 +284,13 @@ namespace StockControl
                                 if (!CodeTemp.Equals("") && !CodeTemp2.Equals(""))
                                 {
 
-                                    var unit1 = (from ix in db.tb_Types
+                                    var unit1 = (from ix in db.mh_Types
                                                  where ix.GroupCode == CodeDelete
                                                  && ix.TypeCode == CodeDelete2
                                                  select ix).ToList();
                                     foreach (var d in unit1)
                                     {
-                                        db.tb_Types.DeleteOnSubmit(d);
+                                        db.mh_Types.DeleteOnSubmit(d);
                                         dbClss.AddHistory(this.Name, "ลบประเภท", "Delete Type Code ["+d.TypeCode+"]","");
                                     }
                                     C += 1;
@@ -537,7 +537,7 @@ namespace StockControl
                         if (!rd["GroupCode"].ToString().Equals("") && !rd["TypeCode"].ToString().Equals(""))
                         {
 
-                            var x = (from ix in db.tb_Types
+                            var x = (from ix in db.mh_Types
                                      where ix.GroupCode.ToLower().Trim() == rd["GroupCode"].ToString().ToLower().Trim()
                                      && ix.TypeCode.ToLower().Trim() == rd["TypeCode"].ToString().ToLower().Trim()
                                      select ix).FirstOrDefault();
@@ -545,12 +545,12 @@ namespace StockControl
                             if(x==null)
                             {
 
-                                tb_Type ts = new tb_Type();
+                                mh_Type ts = new mh_Type();
                                 ts.GroupCode= Convert.ToString(rd["GroupCode"].ToString());
                                 ts.TypeCode = Convert.ToString(rd["TypeCode"].ToString());
                                 ts.TypeDetail= Convert.ToString(rd["TypeDetail"].ToString());
                                 ts.TypeActive = Convert.ToBoolean(rd["TypeActive"].ToString());
-                                db.tb_Types.InsertOnSubmit(ts);
+                                db.mh_Types.InsertOnSubmit(ts);
                                 db.SubmitChanges();
                             }
                             else

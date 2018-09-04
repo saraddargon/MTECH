@@ -302,26 +302,26 @@ namespace StockControl
 
                 cboPurchaseUOM.DisplayMember = "UnitCode";
                 cboPurchaseUOM.ValueMember = "UnitCode";
-                cboPurchaseUOM.DataSource = db.tb_Units.Where(s => s.UnitActive == true).ToList();
+                cboPurchaseUOM.DataSource = db.mh_Units.Where(s => s.UnitActive == true).ToList();
 
                 cboSalseUOM.DataSource = null;
                 cboSalseUOM.DisplayMember = "UnitCode";
                 cboSalseUOM.ValueMember = "UnitCode";
-                cboSalseUOM.DataSource = db.tb_Units.Where(w => w.UnitActive == true).ToList();
+                cboSalseUOM.DataSource = db.mh_Units.Where(w => w.UnitActive == true).ToList();
 
                 cboConsumptionUOM.DataSource = null;
                 cboConsumptionUOM.DisplayMember = "UnitCode";
                 cboConsumptionUOM.ValueMember = "UnitCode";
-                cboConsumptionUOM.DataSource = db.tb_Units.Where(w => w.UnitActive == true).ToList();
+                cboConsumptionUOM.DataSource = db.mh_Units.Where(w => w.UnitActive == true).ToList();
 
                 cboBaseUOM.DataSource = null;
                 cboBaseUOM.DisplayMember = "UnitCode";
                 cboBaseUOM.ValueMember = "UnitCode";
-                cboBaseUOM.DataSource = db.tb_Units.Where(w => w.UnitActive == true).ToList();
+                cboBaseUOM.DataSource = db.mh_Units.Where(w => w.UnitActive == true).ToList();
 
                 cboGroupType.DisplayMember = "GroupCode";
                 cboGroupType.ValueMember = "GroupCode";
-                cboGroupType.DataSource = db.tb_GroupTypes.Where(s => s.GroupActive == true).ToList();
+                cboGroupType.DataSource = db.mh_GroupTypes.Where(s => s.GroupActive == true).ToList();
                 cboGroupType.BestFitColumns();
                 try
                 {
@@ -363,7 +363,7 @@ namespace StockControl
                     cboTypeCode.DataSource = null;
                     cboTypeCode.DisplayMember = "TypeCode";
                     cboTypeCode.ValueMember = "TypeCode";
-                    cboTypeCode.DataSource = db.tb_Types.Where(t => t.TypeActive == true && t.GroupCode.Equals(cboGroupType.Text)).ToList();
+                    cboTypeCode.DataSource = db.mh_Types.Where(t => t.TypeActive == true && t.GroupCode.Equals(cboGroupType.Text)).ToList();
                     
                     //cboTypeCode.SelectedIndex = 0;
                 }
@@ -449,7 +449,7 @@ namespace StockControl
 
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                int i = (from ix in db.tb_GroupTypes where ix.GroupCode == code select ix).Count();
+                int i = (from ix in db.mh_GroupTypes where ix.GroupCode == code select ix).Count();
                 if (i > 0)
                     ck = false;
                 else
@@ -847,7 +847,7 @@ namespace StockControl
                             using (DataClasses1DataContext db = new DataClasses1DataContext())
                             {
                                 string Temp_Running = "";
-                                var I = (from ix in db.tb_GroupTypes select ix).Where(a => a.GroupCode == cboGroupType.Text).ToList();
+                                var I = (from ix in db.mh_GroupTypes select ix).Where(a => a.GroupCode == cboGroupType.Text).ToList();
                                 if (I.Count > 0)
                                     Temp_Running = I.FirstOrDefault().Running;
 
@@ -1990,7 +1990,7 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     string Temp_Running = "";
-                    var I = (from ix in db.tb_GroupTypes select ix).Where(a => a.GroupCode == cboGroupType.Text).ToList();
+                    var I = (from ix in db.mh_GroupTypes select ix).Where(a => a.GroupCode == cboGroupType.Text).ToList();
                     if (I.Count > 0)
                         Temp_Running = I.FirstOrDefault().Running;
 
@@ -2033,7 +2033,7 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     string Temp_Running = "";
-                    var I = (from ix in db.tb_GroupTypes select ix).Where(a => a.GroupCode == GroupCode).ToList();
+                    var I = (from ix in db.mh_GroupTypes select ix).Where(a => a.GroupCode == GroupCode).ToList();
                     if (I.Count > 0)
                         Temp_Running = I.FirstOrDefault().Running;
 

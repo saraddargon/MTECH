@@ -52,7 +52,7 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
-                    var gt = (from ix in db.tb_Histories group ix.ScreenName by ix.ScreenName into g select new { ScreenName = g.Key }).ToList();
+                    var gt = (from ix in db.mh_Histories group ix.ScreenName by ix.ScreenName into g select new { ScreenName = g.Key }).ToList();
                             
                     //MessageBox.Show(gt.Count.ToString());
                     radGridView1.DataSource = gt;
@@ -77,7 +77,7 @@ namespace StockControl
 
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                int i = (from ix in db.tb_Units where ix.UnitCode == code select ix).Count();
+                int i = (from ix in db.mh_Units where ix.UnitCode == code select ix).Count();
                 if (i > 0)
                     ck = false;
                 else

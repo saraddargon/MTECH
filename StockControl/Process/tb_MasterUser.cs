@@ -79,7 +79,7 @@ namespace StockControl
                     GridViewComboBoxColumn comboColumn = (GridViewComboBoxColumn)dgvData.Columns["Department"];
                     List<string> aaa = new List<string>();
 
-                    var G = (from ix in db.tb_Departments
+                    var G = (from ix in db.mh_Departments
                              where ix.Status == true
                              select ix).ToList();
                     if (G.Count() > 0)
@@ -188,7 +188,7 @@ namespace StockControl
 
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                int i = (from ix in db.tb_GroupTypes where ix.GroupCode == code select ix).Count();
+                int i = (from ix in db.mh_GroupTypes where ix.GroupCode == code select ix).Count();
                 if (i > 0)
                     ck = false;
                 else

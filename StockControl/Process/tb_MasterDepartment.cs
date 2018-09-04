@@ -143,7 +143,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                
-                var g = (from ix in db.tb_Departments select ix).ToList();
+                var g = (from ix in db.mh_Departments select ix).ToList();
                // DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 dgvData.DataSource = g;
                 SetRowNo1(dgvData);
@@ -165,7 +165,7 @@ namespace StockControl
 
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                int i = (from ix in db.tb_GroupTypes where ix.GroupCode == code select ix).Count();
+                int i = (from ix in db.mh_GroupTypes where ix.GroupCode == code select ix).Count();
                 if (i > 0)
                     ck = false;
                 else
@@ -192,7 +192,7 @@ namespace StockControl
 
                             if (Convert.ToInt16(rowInfo.Cells["id"].Value) <= 0)
                             {
-                                var a = (from ix in db.tb_Departments
+                                var a = (from ix in db.mh_Departments
                                          where ix.Department == Convert.ToString(rowInfo.Cells["Department"].Value).Trim().ToUpper()
                                          select ix).ToList();
                                 if (a.Count() > 0)
@@ -240,7 +240,7 @@ namespace StockControl
                     {
                         if (g.IsVisible.Equals(false))
                         {
-                            var dd = (from ix in db.tb_Departments
+                            var dd = (from ix in db.mh_Departments
                                       where ix.id == Convert.ToInt16(g.Cells["id"].Value)
                                       select ix).ToList();
                             if (dd.Count > 0)
@@ -248,7 +248,7 @@ namespace StockControl
 
                                 dbClss.AddHistory(this.Name, "ลบ", "ลบแผนก [" + dd.FirstOrDefault().Department + "]", "");
 
-                                db.tb_Departments.DeleteAllOnSubmit(dd);
+                                db.mh_Departments.DeleteAllOnSubmit(dd);
                                 db.SubmitChanges();
                                 C += 1;
                             }
@@ -263,18 +263,18 @@ namespace StockControl
                                
                                 if (Convert.ToInt16(g.Cells["id"].Value)<=0)
                                 {
-                                    var a = (from ix in db.tb_Departments
+                                    var a = (from ix in db.mh_Departments
                                              where ix.Department.ToUpper() == Convert.ToString(g.Cells["Department"].Value).Trim().ToUpper()
                                              select ix).ToList();
                                     if (a.Count() <= 0)
                                     {
-                                        tb_Department gy = new tb_Department();
+                                        mh_Department gy = new mh_Department();
                                         gy.Department = Convert.ToString(g.Cells["Department"].Value).Trim();
                                         gy.CreateDate = DateTime.Now;
                                         gy.CreateBy = ClassLib.Classlib.User;
                                         gy.Status = Convert.ToBoolean(g.Cells["Status"].Value);
 
-                                        db.tb_Departments.InsertOnSubmit(gy);
+                                        db.mh_Departments.InsertOnSubmit(gy);
                                         db.SubmitChanges();
                                         dbClss.AddHistory(this.Name, "เพิ่มแผนก", "เพิ่มแผนก [" + gy.Department + " Status : " + gy.Status.ToString() + "]", "");
                                         C += 1;
@@ -282,12 +282,12 @@ namespace StockControl
                                 }
                                 else
                                 {
-                                    var a = (from ix in db.tb_Departments
-                                                 where ix.id == Convert.ToInt16(g.Cells["id"].Value)
+                                    var a = (from ix in db.mh_Departments
+                                             where ix.id == Convert.ToInt16(g.Cells["id"].Value)
                                                  select ix).ToList();
                                     if (a.Count > 0)
                                     {
-                                        var unit1 = (from ix in db.tb_Departments
+                                        var unit1 = (from ix in db.mh_Departments
                                                      where ix.id == Convert.ToInt16(g.Cells["id"].Value)
                                                      select ix).First();
                                         unit1.Department = Convert.ToString(g.Cells["Department"].Value).Trim();

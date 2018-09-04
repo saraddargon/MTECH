@@ -99,7 +99,7 @@ namespace StockControl
 
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                int i = (from ix in db.tb_Units where ix.UnitCode == code select ix).Count();
+                int i = (from ix in db.mh_Units where ix.UnitCode == code select ix).Count();
                 if (i > 0)
                     ck = false;
                 else
