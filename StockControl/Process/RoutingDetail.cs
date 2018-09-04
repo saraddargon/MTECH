@@ -151,9 +151,9 @@ namespace StockControl
                     cbbUOM.ValueMember = "id";
                     cbbUOM.DataSource = unit;
 
-                    var t = db.mh_RoutingTypes.ToList();
+                    var t = db.mh_WorkCenters.Where(x => x.Active).ToList();
                     var com = dgvData.Columns["RoutingType"] as GridViewComboBoxColumn;
-                    com.DisplayMember = "Name";
+                    com.DisplayMember = "WorkCenterName";
                     com.ValueMember = "id";
                     com.DataSource = t;
                 }

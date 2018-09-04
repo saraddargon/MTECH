@@ -52,8 +52,9 @@ namespace StockControl
             txtUser.Text = "";//ConnectDB.ConnectDB.user;
             ddlDatabase.Text = ConnectDB.dbname;
             ddlServer.Text = ConnectDB.server;
-            //txtUser.Text = "admin";
-            //txtPassword.Text = "1234";
+            txtUser.Text = "admin";
+            txtPassword.Text = "1234";
+            
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -70,6 +71,7 @@ namespace StockControl
         private void btnConnect_Click(object sender, EventArgs e)
         {
             //Check Data Version
+
             try
             {
                 SetConfig();

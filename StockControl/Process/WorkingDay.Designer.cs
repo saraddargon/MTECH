@@ -38,6 +38,7 @@
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn1 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
             Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn2 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
+            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn2 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
@@ -432,6 +433,11 @@
             gridViewMaskBoxColumn2.MaskType = Telerik.WinControls.UI.MaskType.Standard;
             gridViewMaskBoxColumn2.Name = "EndTime";
             gridViewMaskBoxColumn2.Width = 79;
+            gridViewComboBoxColumn2.EnableExpressionEditor = false;
+            gridViewComboBoxColumn2.FieldName = "ShiftCode";
+            gridViewComboBoxColumn2.HeaderText = "กะทำงาน";
+            gridViewComboBoxColumn2.Name = "ShiftCode";
+            gridViewComboBoxColumn2.Width = 131;
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
@@ -440,7 +446,8 @@
             gridViewComboBoxColumn1,
             gridViewDecimalColumn1,
             gridViewMaskBoxColumn1,
-            gridViewMaskBoxColumn2});
+            gridViewMaskBoxColumn2,
+            gridViewComboBoxColumn2});
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.radGridView1.Name = "radGridView1";

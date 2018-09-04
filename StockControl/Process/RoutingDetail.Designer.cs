@@ -446,7 +446,7 @@
             gridViewTextBoxColumn5.Width = 41;
             gridViewComboBoxColumn1.EnableExpressionEditor = false;
             gridViewComboBoxColumn1.FieldName = "RoutingType";
-            gridViewComboBoxColumn1.HeaderText = "Type";
+            gridViewComboBoxColumn1.HeaderText = "Work Center";
             gridViewComboBoxColumn1.Name = "RoutingType";
             gridViewComboBoxColumn1.Width = 110;
             gridViewTextBoxColumn6.EnableExpressionEditor = false;

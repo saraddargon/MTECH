@@ -117,7 +117,7 @@
             this.radMenuSeparatorItem1,
             this.radMenuItem2});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Holiday (รายละเอียดวันทำงานในวันหยุด)";
+            this.radRibbonBar1.Text = "Holiday (รายละเอียดวันหยุด)";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
             // 
@@ -350,7 +350,7 @@
             // 
             this.radLabelElement1.Name = "radLabelElement1";
             this.radStatusStrip1.SetSpring(this.radLabelElement1, false);
-            this.radLabelElement1.Text = "Status : รายละเอียดวันทำงานในวันหยุด";
+            this.radLabelElement1.Text = "Status : รายละเอียดวันหยุด";
             this.radLabelElement1.TextWrap = true;
             // 
             // panel1
@@ -556,7 +556,7 @@
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Holiday (รายละเอียดวันทำงานในวันหยุด)";
+            this.Text = "Holiday (รายละเอียดวันหยุด)";
             this.Load += new System.EventHandler(this.Unit_Load);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Unit_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();

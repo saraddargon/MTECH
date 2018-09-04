@@ -162,6 +162,12 @@
     <Compile Include="Process\Calculate_Movement.Designer.cs">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\MasterShift.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\MasterShift.Designer.cs">
+      <DependentUpon>MasterShift.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\RoutingDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -816,6 +822,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Calculate_Movement.resx">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\MasterShift.resx">
+      <DependentUpon>MasterShift.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\RoutingDetail.resx">
       <DependentUpon>RoutingDetail.cs</DependentUpon>

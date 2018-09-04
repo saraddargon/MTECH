@@ -216,7 +216,7 @@ namespace StockControl
                             {
                                 var t = new mh_Calendar();
                                 t.Description = g.Cells["Description"].Value.ToSt();
-
+                                t.Active = true;
                                 dbClss.AddHistory(this.Name, "เพิ่มปฏิทิน", $"เพิ่มปฏิทิน [{t.Description}]", "");
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
                                 db.mh_Calendars.InsertOnSubmit(t);
@@ -226,7 +226,7 @@ namespace StockControl
                             else
                             {
                                 var t = db.mh_Calendars.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
-                                t.Description = t.Description;
+                                t.Description = g.Cells["Description"].Value.ToSt();
 
                                 C += 1;
                                 db.SubmitChanges();

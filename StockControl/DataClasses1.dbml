@@ -1269,17 +1269,6 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_WorkingDay" Member="mh_WorkingDays">
-    <Type Name="mh_WorkingDay">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Day" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="NoOfWorkHours" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="StartingTime" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
-      <Column Name="EndingTime" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
-      <Column Name="idCalendar" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.mh_CapacityAbsence" Member="mh_CapacityAbsences">
     <Type Name="mh_CapacityAbsence">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -1365,6 +1354,25 @@
       <Column Name="GroupCode" Type="System.String" DbType="NVarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="TypeDetail" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
       <Column Name="TypeActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_Shift" Member="mh_Shifts">
+    <Type Name="mh_Shift">
+      <Column Name="Code" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_WorkingDay" Member="mh_WorkingDays">
+    <Type Name="mh_WorkingDay">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Day" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NoOfWorkHours" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="StartingTime" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="EndingTime" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="idCalendar" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ShiftCode" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">

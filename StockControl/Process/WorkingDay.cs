@@ -153,6 +153,12 @@ namespace StockControl
                     com.DisplayMember = "Value";
                     com.ValueMember = "Key";
                     com.DataSource = DayOfWeek;
+
+                    var m = db.mh_Shifts.Where(x => x.Active).ToList();
+                    var com2 = radGridView1.Columns["ShiftCode"] as GridViewComboBoxColumn;
+                    com2.DisplayMember = "Description";
+                    com2.ValueMember = "Code";
+                    com2.DataSource = m;
                 }
             }
             catch (Exception ex)
@@ -222,7 +228,9 @@ namespace StockControl
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
                                 //t.ShiftCode = g.Cells["ShiftCode"].Value.ToSt();
                                 t.StartingTime = g.Cells["StartTime"].Value.ToSt();
+                                t.ShiftCode = g.Cells["ShiftCode"].Value.ToInt();
                                 t.idCalendar = idCalendar;
+                                t.Active = true;
 
                                 dbClss.AddHistory(this.Name, "เพิ่มวันทำงาน", "เพิ่มวันทำงาน [" + t.Day + "]", "");
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
@@ -238,6 +246,7 @@ namespace StockControl
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
                                 //t.ShiftCode = g.Cells["ShiftCode"].Value.ToSt();
                                 t.StartingTime = g.Cells["StartTime"].Value.ToSt();
+                                t.ShiftCode = g.Cells["ShiftCode"].Value.ToInt();
                                 t.idCalendar = idCalendar;
 
                                 C += 1;

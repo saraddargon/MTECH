@@ -223,6 +223,7 @@ namespace StockControl
                                 t.StartTime = g.Cells["StartTime"].Value.ToSt();
                                 t.EndingTime = g.Cells["EndTime"].Value.ToSt();
                                 t.Description = g.Cells["Description"].Value.ToSt();
+                                t.Active = true;
                                 t.idCalendar = idCalendar;
 
                                 dbClss.AddHistory(this.Name, "เพิ่มวันทำงานในวันหยุด", $"เพิ่มวันทำงานในวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", "");
@@ -240,6 +241,7 @@ namespace StockControl
                                 t.EndingTime = g.Cells["EndTime"].Value.ToSt();
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
                                 t.Description = g.Cells["Description"].Value.ToSt();
+                                t.Active = true;
                                 t.idCalendar = idCalendar;
 
                                 C += 1;

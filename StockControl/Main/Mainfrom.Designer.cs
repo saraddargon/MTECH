@@ -79,8 +79,14 @@
             this.radMenuItem17 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem18 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem23 = new Telerik.WinControls.UI.RadMenuItem();
+            this.btnMasterShift = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem20 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem24 = new Telerik.WinControls.UI.RadMenuItem();
+            this.btnVat = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem26 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem27 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem28 = new Telerik.WinControls.UI.RadMenuItem();
+            this.btnCurrency = new Telerik.WinControls.UI.RadMenuItem();
             this.btnRouting = new Telerik.WinControls.UI.RadMenuItem();
             this.btnPermisstion = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem4 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
@@ -93,6 +99,7 @@
             this.radMenuItem11 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem2 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem12 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem29 = new Telerik.WinControls.UI.RadMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -104,12 +111,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
-            this.btnVat = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenuItem26 = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenuItem27 = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenuItem28 = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenuItem29 = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnCurrency = new Telerik.WinControls.UI.RadMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
@@ -343,11 +344,12 @@
             this.radMenuItem17,
             this.radMenuItem18,
             this.radMenuItem23,
+            this.btnMasterShift,
             this.radMenuItem20,
             this.radMenuItem24,
+            this.btnRouting,
             this.btnVat,
             this.btnCurrency,
-            this.btnRouting,
             this.btnPermisstion,
             this.radMenuSeparatorItem4,
             this.radMenuItem21,
@@ -432,6 +434,13 @@
             this.radMenuItem23.Text = "Master Customer";
             this.radMenuItem23.Click += new System.EventHandler(this.radMenuItem23_Click);
             // 
+            // btnMasterShift
+            // 
+            this.btnMasterShift.Image = ((System.Drawing.Image)(resources.GetObject("btnMasterShift.Image")));
+            this.btnMasterShift.Name = "btnMasterShift";
+            this.btnMasterShift.Text = "Master Shift";
+            this.btnMasterShift.Click += new System.EventHandler(this.btnMasterShift_Click);
+            // 
             // radMenuItem20
             // 
             this.radMenuItem20.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem20.Image")));
@@ -445,6 +454,41 @@
             this.radMenuItem24.Name = "radMenuItem24";
             this.radMenuItem24.Text = "Work Centers";
             this.radMenuItem24.Click += new System.EventHandler(this.btnWorkCenters_Click);
+            // 
+            // btnVat
+            // 
+            this.btnVat.Image = ((System.Drawing.Image)(resources.GetObject("btnVat.Image")));
+            this.btnVat.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radMenuItem26,
+            this.radMenuItem27,
+            this.radMenuItem28});
+            this.btnVat.Name = "btnVat";
+            this.btnVat.Text = "Vat";
+            // 
+            // radMenuItem26
+            // 
+            this.radMenuItem26.Name = "radMenuItem26";
+            this.radMenuItem26.Text = "Vat Group";
+            this.radMenuItem26.Click += new System.EventHandler(this.radMenuItem26_Click);
+            // 
+            // radMenuItem27
+            // 
+            this.radMenuItem27.Name = "radMenuItem27";
+            this.radMenuItem27.Text = "Vat Type";
+            this.radMenuItem27.Click += new System.EventHandler(this.radMenuItem27_Click);
+            // 
+            // radMenuItem28
+            // 
+            this.radMenuItem28.Name = "radMenuItem28";
+            this.radMenuItem28.Text = "Vat Setup";
+            this.radMenuItem28.Click += new System.EventHandler(this.radMenuItem28_Click);
+            // 
+            // btnCurrency
+            // 
+            this.btnCurrency.Image = ((System.Drawing.Image)(resources.GetObject("btnCurrency.Image")));
+            this.btnCurrency.Name = "btnCurrency";
+            this.btnCurrency.Text = "Currency";
+            this.btnCurrency.Click += new System.EventHandler(this.radMenuItem25_Click);
             // 
             // btnRouting
             // 
@@ -532,6 +576,12 @@
             this.radMenuItem12.Name = "radMenuItem12";
             this.radMenuItem12.Text = "About Warehouse Control";
             this.radMenuItem12.Click += new System.EventHandler(this.radMenuItem12_Click);
+            // 
+            // radMenuItem29
+            // 
+            this.radMenuItem29.Name = "radMenuItem29";
+            this.radMenuItem29.Text = "Change Password";
+            this.radMenuItem29.Click += new System.EventHandler(this.radMenuItem34_Click);
             // 
             // panel1
             // 
@@ -712,47 +762,6 @@
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(4)))), ((int)(((byte)(129)))));
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ClipDrawing = false;
             // 
-            // btnVat
-            // 
-            this.btnVat.Image = ((System.Drawing.Image)(resources.GetObject("btnVat.Image")));
-            this.btnVat.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radMenuItem26,
-            this.radMenuItem27,
-            this.radMenuItem28});
-            this.btnVat.Name = "btnVat";
-            this.btnVat.Text = "Vat";
-            // 
-            // radMenuItem26
-            // 
-            this.radMenuItem26.Name = "radMenuItem26";
-            this.radMenuItem26.Text = "Vat Group";
-            this.radMenuItem26.Click += new System.EventHandler(this.radMenuItem26_Click);
-            // 
-            // radMenuItem27
-            // 
-            this.radMenuItem27.Name = "radMenuItem27";
-            this.radMenuItem27.Text = "Vat Type";
-            this.radMenuItem27.Click += new System.EventHandler(this.radMenuItem27_Click);
-            // 
-            // radMenuItem28
-            // 
-            this.radMenuItem28.Name = "radMenuItem28";
-            this.radMenuItem28.Text = "Vat Setup";
-            this.radMenuItem28.Click += new System.EventHandler(this.radMenuItem28_Click);
-            // 
-            // radMenuItem29
-            // 
-            this.radMenuItem29.Name = "radMenuItem29";
-            this.radMenuItem29.Text = "Change Password";
-            this.radMenuItem29.Click += new System.EventHandler(this.radMenuItem34_Click);
-            // 
-            // btnCurrency
-            // 
-            this.btnCurrency.Image = ((System.Drawing.Image)(resources.GetObject("btnCurrency.Image")));
-            this.btnCurrency.Name = "btnCurrency";
-            this.btnCurrency.Text = "Currency";
-            this.btnCurrency.Click += new System.EventHandler(this.radMenuItem25_Click);
-            // 
             // Mainfrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -866,5 +875,6 @@
         private Telerik.WinControls.UI.RadMenuItem radMenuItem28;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem29;
         private Telerik.WinControls.UI.RadMenuItem btnCurrency;
+        private Telerik.WinControls.UI.RadMenuItem btnMasterShift;
     }
 }

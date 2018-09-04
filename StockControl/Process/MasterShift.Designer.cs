@@ -1,6 +1,6 @@
 ﻿namespace StockControl
 {
-    partial class WorkCenters
+    partial class MasterShift
     {
         /// <summary>
         /// Required designer variable.
@@ -29,17 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorkCenters));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MasterShift));
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn8 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn9 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn10 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn11 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn12 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn3 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn3 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn4 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn4 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition2 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
@@ -62,7 +58,8 @@
             this.btnUnfilter1 = new Telerik.WinControls.UI.RadButtonElement();
             this.ribbonBarGroupSeparator1 = new Telerik.WinControls.UI.RibbonBarGroupSeparator();
             this.radRibbonBarGroup6 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.btnAbsence = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnWorkingDays = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnHolidays = new Telerik.WinControls.UI.RadButtonElement();
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
@@ -110,14 +107,14 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(817, 160);
+            this.radRibbonBar1.Size = new System.Drawing.Size(636, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
             this.radMenuSeparatorItem1,
             this.radMenuItem2});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Work Centers";
+            this.radRibbonBar1.Text = "Routing";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
             // 
@@ -172,7 +169,6 @@
             // 
             // btnView
             // 
-            this.btnView.Enabled = false;
             this.btnView.Image = ((System.Drawing.Image)(resources.GetObject("btnView.Image")));
             this.btnView.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnView.Name = "btnView";
@@ -302,19 +298,29 @@
             // radRibbonBarGroup6
             // 
             this.radRibbonBarGroup6.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnAbsence});
+            this.btnWorkingDays,
+            this.btnHolidays});
             this.radRibbonBarGroup6.Name = "radRibbonBarGroup6";
             this.radRibbonBarGroup6.Text = "Working day";
+            this.radRibbonBarGroup6.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
-            // btnAbsence
+            // btnWorkingDays
             // 
-            this.btnAbsence.Enabled = false;
-            this.btnAbsence.Image = ((System.Drawing.Image)(resources.GetObject("btnAbsence.Image")));
-            this.btnAbsence.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnAbsence.Name = "btnAbsence";
-            this.btnAbsence.Text = "Absence";
-            this.btnAbsence.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnAbsence.Click += new System.EventHandler(this.btnHolidays_Click);
+            this.btnWorkingDays.Enabled = false;
+            this.btnWorkingDays.Image = ((System.Drawing.Image)(resources.GetObject("btnWorkingDays.Image")));
+            this.btnWorkingDays.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnWorkingDays.Name = "btnWorkingDays";
+            this.btnWorkingDays.Text = "Working Days";
+            this.btnWorkingDays.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnHolidays
+            // 
+            this.btnHolidays.Enabled = false;
+            this.btnHolidays.Image = ((System.Drawing.Image)(resources.GetObject("btnHolidays.Image")));
+            this.btnHolidays.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnHolidays.Name = "btnHolidays";
+            this.btnHolidays.Text = "Holidays";
+            this.btnHolidays.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // radMenuItem1
             // 
@@ -340,9 +346,9 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 537);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 491);
             this.radStatusStrip1.Name = "radStatusStrip1";
-            this.radStatusStrip1.Size = new System.Drawing.Size(817, 26);
+            this.radStatusStrip1.Size = new System.Drawing.Size(636, 26);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
             // 
@@ -350,7 +356,7 @@
             // 
             this.radLabelElement1.Name = "radLabelElement1";
             this.radStatusStrip1.SetSpring(this.radLabelElement1, false);
-            this.radLabelElement1.Text = "Status : รายละเอียด Work Centers";
+            this.radLabelElement1.Text = "Status : รายละเอียด Routing";
             this.radLabelElement1.TextWrap = true;
             // 
             // panel1
@@ -360,7 +366,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(817, 377);
+            this.panel1.Size = new System.Drawing.Size(636, 331);
             this.panel1.TabIndex = 2;
             // 
             // radGridView1
@@ -409,53 +415,30 @@
             gridViewTextBoxColumn10.IsVisible = false;
             gridViewTextBoxColumn10.Name = "dgvCodetemp2";
             gridViewTextBoxColumn11.EnableExpressionEditor = false;
-            gridViewTextBoxColumn11.FieldName = "WorkCenterNo";
-            gridViewTextBoxColumn11.HeaderText = "หมายเลข";
-            gridViewTextBoxColumn11.Name = "No";
+            gridViewTextBoxColumn11.FieldName = "Code";
+            gridViewTextBoxColumn11.HeaderText = "Code";
+            gridViewTextBoxColumn11.Name = "Code";
             gridViewTextBoxColumn11.ReadOnly = true;
-            gridViewTextBoxColumn11.Width = 72;
+            gridViewTextBoxColumn11.Width = 87;
             gridViewTextBoxColumn12.EnableExpressionEditor = false;
-            gridViewTextBoxColumn12.FieldName = "WorkCenterName";
-            gridViewTextBoxColumn12.HeaderText = "ชื่อ";
-            gridViewTextBoxColumn12.Name = "Name";
-            gridViewTextBoxColumn12.Width = 167;
-            gridViewComboBoxColumn3.EnableExpressionEditor = false;
-            gridViewComboBoxColumn3.FieldName = "UOM";
-            gridViewComboBoxColumn3.HeaderText = "หน่วย";
-            gridViewComboBoxColumn3.Name = "UOM";
-            gridViewComboBoxColumn3.Width = 83;
-            gridViewDecimalColumn3.EnableExpressionEditor = false;
-            gridViewDecimalColumn3.FieldName = "CostPerUOM";
-            gridViewDecimalColumn3.HeaderText = "ต้นทุน/หน่วย";
-            gridViewDecimalColumn3.Name = "CostPer";
-            gridViewDecimalColumn3.Width = 104;
-            gridViewDecimalColumn4.EnableExpressionEditor = false;
-            gridViewDecimalColumn4.HeaderText = "Capacity";
-            gridViewDecimalColumn4.Name = "Capacity";
-            gridViewDecimalColumn4.Width = 78;
-            gridViewComboBoxColumn4.EnableExpressionEditor = false;
-            gridViewComboBoxColumn4.FieldName = "Calendar";
-            gridViewComboBoxColumn4.HeaderText = "ปฏิทินงาน";
-            gridViewComboBoxColumn4.Name = "Calendar";
-            gridViewComboBoxColumn4.Width = 183;
+            gridViewTextBoxColumn12.FieldName = "Description";
+            gridViewTextBoxColumn12.HeaderText = "Description";
+            gridViewTextBoxColumn12.Name = "Description";
+            gridViewTextBoxColumn12.Width = 295;
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn7,
             gridViewTextBoxColumn8,
             gridViewTextBoxColumn9,
             gridViewTextBoxColumn10,
             gridViewTextBoxColumn11,
-            gridViewTextBoxColumn12,
-            gridViewComboBoxColumn3,
-            gridViewDecimalColumn3,
-            gridViewDecimalColumn4,
-            gridViewComboBoxColumn4});
+            gridViewTextBoxColumn12});
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition2;
             this.radGridView1.Name = "radGridView1";
             this.radContextMenuManager1.SetRadContextMenu(this.radGridView1, this.radContextMenu1);
             this.radGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.radGridView1.ShowGroupPanel = false;
-            this.radGridView1.Size = new System.Drawing.Size(817, 377);
+            this.radGridView1.Size = new System.Drawing.Size(636, 331);
             this.radGridView1.TabIndex = 0;
             this.radGridView1.ThemeName = "Office2010Blue";
             this.radGridView1.RowFormatting += new Telerik.WinControls.UI.RowFormattingEventHandler(this.MasterTemplate_RowFormatting);
@@ -528,23 +511,23 @@
             this.RMenu6.Name = "RMenu6";
             this.RMenu6.Text = "ลบรายการ";
             // 
-            // WorkCenters
+            // MasterShift
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(817, 563);
+            this.ClientSize = new System.Drawing.Size(636, 517);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "WorkCenters";
+            this.Name = "MasterShift";
             // 
             // 
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Work Centers";
+            this.Text = "Routing";
             this.Load += new System.EventHandler(this.Unit_Load);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Unit_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
@@ -598,6 +581,7 @@
         private Telerik.WinControls.UI.RadMenuItem RMenu6;
         private Telerik.WinControls.UI.RadContextMenuManager radContextMenuManager1;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup6;
-        private Telerik.WinControls.UI.RadButtonElement btnAbsence;
+        private Telerik.WinControls.UI.RadButtonElement btnWorkingDays;
+        private Telerik.WinControls.UI.RadButtonElement btnHolidays;
     }
 }

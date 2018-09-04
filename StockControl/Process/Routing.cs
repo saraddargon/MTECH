@@ -203,8 +203,9 @@ namespace StockControl
                             {
                                 var t = new mh_Calendar();
                                 t.Description = g.Cells["Description"].Value.ToSt();
+                                t.Active = true;
 
-                                dbClss.AddHistory(this.Name, "เพิ่มปฏิทิน", $"เพิ่มปฏิทิน [{t.Description}]", "");
+                                dbClss.AddHistory(this.Name, "เพิ่ม Routing", $"เพิ่ม Routing [{t.Description}]", "");
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
                                 db.mh_Calendars.InsertOnSubmit(t);
                                 db.SubmitChanges();
@@ -213,11 +214,11 @@ namespace StockControl
                             else
                             {
                                 var t = db.mh_Calendars.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
-                                t.Description = t.Description;
+                                t.Description = g.Cells["Description"].Value.ToSt();
 
                                 C += 1;
                                 db.SubmitChanges();
-                                dbClss.AddHistory(this.Name, "แก้ไขปฏิทิน", $"แก้ไขปฏิทิน [{t.Description}]", "");
+                                dbClss.AddHistory(this.Name, "แก้ไข Routing", $"แก้ไข Routing [{t.Description}]", "");
 
                             }
                         }
@@ -227,7 +228,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("เพิ่มปฏิทิน", ex.Message, this.Name);
+                dbClss.AddError("เพิ่ม Routing", ex.Message, this.Name);
             }
 
             if (C > 0)
