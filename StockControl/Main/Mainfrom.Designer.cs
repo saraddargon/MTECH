@@ -82,12 +82,13 @@
             this.btnMasterShift = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem20 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem24 = new Telerik.WinControls.UI.RadMenuItem();
+            this.btnRouting = new Telerik.WinControls.UI.RadMenuItem();
+            this.btnLocation = new Telerik.WinControls.UI.RadMenuItem();
             this.btnVat = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem26 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem27 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem28 = new Telerik.WinControls.UI.RadMenuItem();
             this.btnCurrency = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnRouting = new Telerik.WinControls.UI.RadMenuItem();
             this.btnPermisstion = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem4 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem21 = new Telerik.WinControls.UI.RadMenuItem();
@@ -348,6 +349,7 @@
             this.radMenuItem20,
             this.radMenuItem24,
             this.btnRouting,
+            this.btnLocation,
             this.btnVat,
             this.btnCurrency,
             this.btnPermisstion,
@@ -455,6 +457,20 @@
             this.radMenuItem24.Text = "Work Centers";
             this.radMenuItem24.Click += new System.EventHandler(this.btnWorkCenters_Click);
             // 
+            // btnRouting
+            // 
+            this.btnRouting.Image = ((System.Drawing.Image)(resources.GetObject("btnRouting.Image")));
+            this.btnRouting.Name = "btnRouting";
+            this.btnRouting.Text = "Routings";
+            this.btnRouting.Click += new System.EventHandler(this.btnRoutings_Click);
+            // 
+            // btnLocation
+            // 
+            this.btnLocation.Image = ((System.Drawing.Image)(resources.GetObject("btnLocation.Image")));
+            this.btnLocation.Name = "btnLocation";
+            this.btnLocation.Text = "Master Location";
+            this.btnLocation.Click += new System.EventHandler(this.btnLocation_Click);
+            // 
             // btnVat
             // 
             this.btnVat.Image = ((System.Drawing.Image)(resources.GetObject("btnVat.Image")));
@@ -489,13 +505,6 @@
             this.btnCurrency.Name = "btnCurrency";
             this.btnCurrency.Text = "Currency";
             this.btnCurrency.Click += new System.EventHandler(this.radMenuItem25_Click);
-            // 
-            // btnRouting
-            // 
-            this.btnRouting.Image = ((System.Drawing.Image)(resources.GetObject("btnRouting.Image")));
-            this.btnRouting.Name = "btnRouting";
-            this.btnRouting.Text = "Routings";
-            this.btnRouting.Click += new System.EventHandler(this.btnRoutings_Click);
             // 
             // btnPermisstion
             // 
@@ -876,5 +885,6 @@
         private Telerik.WinControls.UI.RadMenuItem radMenuItem29;
         private Telerik.WinControls.UI.RadMenuItem btnCurrency;
         private Telerik.WinControls.UI.RadMenuItem btnMasterShift;
+        private Telerik.WinControls.UI.RadMenuItem btnLocation;
     }
 }
