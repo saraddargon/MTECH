@@ -120,6 +120,15 @@ namespace StockControl
             return Question(Mssg, "ลบ");
         }
 
+        public static string ToMoney(this object val)
+        {
+            try
+            {
+                return val.ToDecimal().ToString("#,0.00");
+            }
+            catch { return "0.00"; }
+        }
+
         public static T ToEnum<T>(this object val)
         {
             return (T)Enum.Parse(typeof(T), val.ToSt(), true);
@@ -139,4 +148,12 @@ namespace StockControl
         View
     }
     
+
+    public enum CustomerPO_SS
+    {
+        Waiting,
+        Process,
+        Completed
+    }
+
 }

@@ -415,6 +415,7 @@
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "NoOfWorkHours";
             gridViewDecimalColumn1.HeaderText = "จำนวนน ชม.";
+            gridViewDecimalColumn1.IsVisible = false;
             gridViewDecimalColumn1.Name = "WorkHours";
             gridViewDecimalColumn1.Width = 89;
             gridViewMaskBoxColumn1.EnableExpressionEditor = false;
@@ -437,7 +438,7 @@
             gridViewComboBoxColumn2.FieldName = "ShiftCode";
             gridViewComboBoxColumn2.HeaderText = "กะทำงาน";
             gridViewComboBoxColumn2.Name = "ShiftCode";
-            gridViewComboBoxColumn2.Width = 131;
+            gridViewComboBoxColumn2.Width = 175;
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,

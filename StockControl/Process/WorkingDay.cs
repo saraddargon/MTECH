@@ -392,8 +392,8 @@ namespace StockControl
                     {
                         if (Convert.ToString(g.Cells["Day"].Value).Equals(""))
                             err += "- “วัน:” เป็นค่าว่างไม่ได้ \n";
-                        if (Convert.ToString(g.Cells["WorkHours"].Value).Equals(""))
-                            err += "- “จำนวนชม.:” เป็นค่าว่างไม่ได้ \n";
+                        //if (Convert.ToString(g.Cells["WorkHours"].Value).Equals(""))
+                        //    err += "- “จำนวนชม.:” เป็นค่าว่างไม่ได้ \n";
                         //if (Convert.ToString(g.Cells["ShiftCode"].Value).Equals(""))
                         //    err += "- “กะทำงาน:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["StartTime"].Value).Equals(""))

@@ -381,8 +381,8 @@ namespace StockControl
                 {
                     if (g.IsVisible)
                     {
-                        if (Convert.ToString(g.Cells["WorkHours"].Value).Equals(""))
-                            err += "- “จำนวนชม.:” เป็นค่าว่างไม่ได้ \n";
+                        //if (Convert.ToString(g.Cells["WorkHours"].Value).Equals(""))
+                        //    err += "- “จำนวนชม.:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["StartDate"].Value).Equals(""))
                             err += "- “วันที่เริ่ม:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["EndDate"].Value).Equals(""))

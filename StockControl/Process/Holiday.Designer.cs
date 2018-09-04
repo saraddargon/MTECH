@@ -443,6 +443,7 @@
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "NoOfWorkHours";
             gridViewDecimalColumn1.HeaderText = "จำนวนน ชม.";
+            gridViewDecimalColumn1.IsVisible = false;
             gridViewDecimalColumn1.Name = "WorkHours";
             gridViewDecimalColumn1.Width = 89;
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
