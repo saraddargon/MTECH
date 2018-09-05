@@ -967,7 +967,7 @@ namespace StockControl
             try
             {
                 dgvData.EndEdit();
-                 if (e.RowIndex >= -1)
+                if (e.RowIndex >= -1)
                 {
 
                     if (dgvData.Columns["dgvQty"].Index == e.ColumnIndex
@@ -978,27 +978,28 @@ namespace StockControl
                         decimal StandardCost = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["dgvUnitCost"].Value), out StandardCost);
                         e.Row.Cells["dgvCost"].Value = OrderQty * StandardCost;
                     }
-                }
-                else if (dgvData.Columns["dgvUnit"].Index == e.ColumnIndex)
-                {
-                    string dgvUOM = dbClss.TSt(e.Row.Cells["dgvUnit"].Value);
-                    string CodeNo = dbClss.TSt(e.Row.Cells["dgvComponent"].Value);
-                    decimal PCSUOM = dbClss.Con_UOM(CodeNo, dgvUOM);
-                    e.Row.Cells["dgvPCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
-                    //using (DataClasses1DataContext db = new DataClasses1DataContext())
-                    //{
-                    //    var g = (from ix in db.mh_Items select ix)
-                    //        .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
-                    //    if (g.Count > 0)
-                    //    {
-                    //        if (dgvUOM == dbClss.TSt(g.FirstOrDefault().PurchaseUOM))
-                    //        {
-                    //            e.Row.Cells["dgvPCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
-                    //            //e.Row.Cells["dgvPCSUnit"].ReadOnly = true;
-                    //        }                           
-                    //    }
 
-                    //}
+                    else if (dgvData.Columns["dgvUnit"].Index == e.ColumnIndex)
+                    {
+                        string dgvUOM = dbClss.TSt(e.Row.Cells["dgvUnit"].Value);
+                        string CodeNo = dbClss.TSt(e.Row.Cells["dgvComponent"].Value);
+                        decimal PCSUOM = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        e.Row.Cells["dgvPCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        //using (DataClasses1DataContext db = new DataClasses1DataContext())
+                        //{
+                        //    var g = (from ix in db.mh_Items select ix)
+                        //        .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
+                        //    if (g.Count > 0)
+                        //    {
+                        //        if (dgvUOM == dbClss.TSt(g.FirstOrDefault().PurchaseUOM))
+                        //        {
+                        //            e.Row.Cells["dgvPCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        //            //e.Row.Cells["dgvPCSUnit"].ReadOnly = true;
+                        //        }                           
+                        //    }
+
+                        //}
+                    }
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
