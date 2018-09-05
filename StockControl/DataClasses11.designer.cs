@@ -81,9 +81,6 @@ namespace StockControl
     partial void Inserttb_BomHD(tb_BomHD instance);
     partial void Updatetb_BomHD(tb_BomHD instance);
     partial void Deletetb_BomHD(tb_BomHD instance);
-    partial void Inserttb_BomDT(tb_BomDT instance);
-    partial void Updatetb_BomDT(tb_BomDT instance);
-    partial void Deletetb_BomDT(tb_BomDT instance);
     partial void Inserttb_User(tb_User instance);
     partial void Updatetb_User(tb_User instance);
     partial void Deletetb_User(tb_User instance);
@@ -267,6 +264,9 @@ namespace StockControl
     partial void Insertmh_CustomerPO(mh_CustomerPO instance);
     partial void Updatemh_CustomerPO(mh_CustomerPO instance);
     partial void Deletemh_CustomerPO(mh_CustomerPO instance);
+    partial void Inserttb_BomDT(tb_BomDT instance);
+    partial void Updatetb_BomDT(tb_BomDT instance);
+    partial void Deletetb_BomDT(tb_BomDT instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -456,14 +456,6 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<tb_BomHD>();
-			}
-		}
-		
-		public System.Data.Linq.Table<tb_BomDT> tb_BomDTs
-		{
-			get
-			{
-				return this.GetTable<tb_BomDT>();
 			}
 		}
 		
@@ -963,6 +955,14 @@ namespace StockControl
 			}
 		}
 		
+		public System.Data.Linq.Table<tb_BomDT> tb_BomDTs
+		{
+			get
+			{
+				return this.GetTable<tb_BomDT>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Sp_ADM03_OpenFormSelect")]
 		public ISingleResult<Sp_ADM03_OpenFormSelectResult> Sp_ADM03_OpenFormSelect()
 		{
@@ -1284,13 +1284,6 @@ namespace StockControl
 		public int sp_019_Bom_DT_Del([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="BomNo", DbType="VarChar(50)")] string bomNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PartNo", DbType="VarChar(100)")] string partNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Component", DbType="VarChar(100)")] string component, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, bomNo, partNo, component, createBy);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_020_Bom_DT_ADD")]
-		public int sp_020_Bom_DT_ADD([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PartNo", DbType="VarChar(100)")] string partNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="BomNo", DbType="VarChar(50)")] string bomNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Year_", DbType="VarChar(4)")] string year_, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Month_", DbType="VarChar(2)")] string month_, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Line", DbType="Int")] System.Nullable<int> line, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Component", DbType="VarChar(100)")] string component, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Qty", DbType="Decimal(18,2)")] System.Nullable<decimal> qty, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Unit", DbType="VarChar(50)")] string unit, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitCost", DbType="Decimal(18,2)")] System.Nullable<decimal> unitCost, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Cost", DbType="Decimal(18,2)")] System.Nullable<decimal> cost, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, partNo, bomNo, year_, month_, line, component, qty, unit, unitCost, cost, createBy);
 			return ((int)(result.ReturnValue));
 		}
 		
@@ -1741,6 +1734,13 @@ namespace StockControl
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, refUserid);
 			return ((ISingleResult<sp_050_Permission_selectResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_020_Bom_DT_ADD")]
+		public int sp_020_Bom_DT_ADD([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PartNo", DbType="VarChar(100)")] string partNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="BomNo", DbType="VarChar(50)")] string bomNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Year_", DbType="VarChar(4)")] string year_, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Month_", DbType="VarChar(2)")] string month_, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Line", DbType="Int")] System.Nullable<int> line, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Component", DbType="VarChar(100)")] string component, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Qty", DbType="Decimal(18,2)")] System.Nullable<decimal> qty, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Unit", DbType="VarChar(50)")] string unit, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitCost", DbType="Decimal(18,2)")] System.Nullable<decimal> unitCost, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Cost", DbType="Decimal(18,2)")] System.Nullable<decimal> cost, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PCSUnit", DbType="Decimal(18,2)")] System.Nullable<decimal> pCSUnit, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, partNo, bomNo, year_, month_, line, component, qty, unit, unitCost, cost, pCSUnit, createBy);
+			return ((int)(result.ReturnValue));
 		}
 	}
 	
@@ -7912,308 +7912,6 @@ namespace StockControl
 					this._ModifyDate = value;
 					this.SendPropertyChanged("ModifyDate");
 					this.OnModifyDateChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tb_BomDT")]
-	public partial class tb_BomDT : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _PartNo;
-		
-		private string _BomNo;
-		
-		private string _Year_;
-		
-		private string _Month_;
-		
-		private int _Line;
-		
-		private string _Component;
-		
-		private decimal _Qty;
-		
-		private string _Unit;
-		
-		private decimal _UnitCost;
-		
-		private decimal _Cost;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnPartNoChanging(string value);
-    partial void OnPartNoChanged();
-    partial void OnBomNoChanging(string value);
-    partial void OnBomNoChanged();
-    partial void OnYear_Changing(string value);
-    partial void OnYear_Changed();
-    partial void OnMonth_Changing(string value);
-    partial void OnMonth_Changed();
-    partial void OnLineChanging(int value);
-    partial void OnLineChanged();
-    partial void OnComponentChanging(string value);
-    partial void OnComponentChanged();
-    partial void OnQtyChanging(decimal value);
-    partial void OnQtyChanged();
-    partial void OnUnitChanging(string value);
-    partial void OnUnitChanged();
-    partial void OnUnitCostChanging(decimal value);
-    partial void OnUnitCostChanged();
-    partial void OnCostChanging(decimal value);
-    partial void OnCostChanged();
-    #endregion
-		
-		public tb_BomDT()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartNo", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string PartNo
-		{
-			get
-			{
-				return this._PartNo;
-			}
-			set
-			{
-				if ((this._PartNo != value))
-				{
-					this.OnPartNoChanging(value);
-					this.SendPropertyChanging();
-					this._PartNo = value;
-					this.SendPropertyChanged("PartNo");
-					this.OnPartNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BomNo", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string BomNo
-		{
-			get
-			{
-				return this._BomNo;
-			}
-			set
-			{
-				if ((this._BomNo != value))
-				{
-					this.OnBomNoChanging(value);
-					this.SendPropertyChanging();
-					this._BomNo = value;
-					this.SendPropertyChanged("BomNo");
-					this.OnBomNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Year_", DbType="VarChar(4)")]
-		public string Year_
-		{
-			get
-			{
-				return this._Year_;
-			}
-			set
-			{
-				if ((this._Year_ != value))
-				{
-					this.OnYear_Changing(value);
-					this.SendPropertyChanging();
-					this._Year_ = value;
-					this.SendPropertyChanged("Year_");
-					this.OnYear_Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Month_", DbType="VarChar(2)")]
-		public string Month_
-		{
-			get
-			{
-				return this._Month_;
-			}
-			set
-			{
-				if ((this._Month_ != value))
-				{
-					this.OnMonth_Changing(value);
-					this.SendPropertyChanging();
-					this._Month_ = value;
-					this.SendPropertyChanged("Month_");
-					this.OnMonth_Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Line", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Line
-		{
-			get
-			{
-				return this._Line;
-			}
-			set
-			{
-				if ((this._Line != value))
-				{
-					this.OnLineChanging(value);
-					this.SendPropertyChanging();
-					this._Line = value;
-					this.SendPropertyChanged("Line");
-					this.OnLineChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Component", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string Component
-		{
-			get
-			{
-				return this._Component;
-			}
-			set
-			{
-				if ((this._Component != value))
-				{
-					this.OnComponentChanging(value);
-					this.SendPropertyChanging();
-					this._Component = value;
-					this.SendPropertyChanged("Component");
-					this.OnComponentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Qty
-		{
-			get
-			{
-				return this._Qty;
-			}
-			set
-			{
-				if ((this._Qty != value))
-				{
-					this.OnQtyChanging(value);
-					this.SendPropertyChanging();
-					this._Qty = value;
-					this.SendPropertyChanged("Qty");
-					this.OnQtyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Unit
-		{
-			get
-			{
-				return this._Unit;
-			}
-			set
-			{
-				if ((this._Unit != value))
-				{
-					this.OnUnitChanging(value);
-					this.SendPropertyChanging();
-					this._Unit = value;
-					this.SendPropertyChanged("Unit");
-					this.OnUnitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitCost", DbType="Decimal(18,2) NOT NULL")]
-		public decimal UnitCost
-		{
-			get
-			{
-				return this._UnitCost;
-			}
-			set
-			{
-				if ((this._UnitCost != value))
-				{
-					this.OnUnitCostChanging(value);
-					this.SendPropertyChanging();
-					this._UnitCost = value;
-					this.SendPropertyChanged("UnitCost");
-					this.OnUnitCostChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Cost
-		{
-			get
-			{
-				return this._Cost;
-			}
-			set
-			{
-				if ((this._Cost != value))
-				{
-					this.OnCostChanging(value);
-					this.SendPropertyChanging();
-					this._Cost = value;
-					this.SendPropertyChanged("Cost");
-					this.OnCostChanged();
 				}
 			}
 		}
@@ -33785,6 +33483,332 @@ namespace StockControl
 					this._UpdateDate = value;
 					this.SendPropertyChanged("UpdateDate");
 					this.OnUpdateDateChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tb_BomDT")]
+	public partial class tb_BomDT : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _PartNo;
+		
+		private string _BomNo;
+		
+		private string _Year_;
+		
+		private string _Month_;
+		
+		private int _Line;
+		
+		private string _Component;
+		
+		private decimal _Qty;
+		
+		private string _Unit;
+		
+		private System.Nullable<decimal> _PCSUnit;
+		
+		private decimal _UnitCost;
+		
+		private decimal _Cost;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnPartNoChanging(string value);
+    partial void OnPartNoChanged();
+    partial void OnBomNoChanging(string value);
+    partial void OnBomNoChanged();
+    partial void OnYear_Changing(string value);
+    partial void OnYear_Changed();
+    partial void OnMonth_Changing(string value);
+    partial void OnMonth_Changed();
+    partial void OnLineChanging(int value);
+    partial void OnLineChanged();
+    partial void OnComponentChanging(string value);
+    partial void OnComponentChanged();
+    partial void OnQtyChanging(decimal value);
+    partial void OnQtyChanged();
+    partial void OnUnitChanging(string value);
+    partial void OnUnitChanged();
+    partial void OnPCSUnitChanging(System.Nullable<decimal> value);
+    partial void OnPCSUnitChanged();
+    partial void OnUnitCostChanging(decimal value);
+    partial void OnUnitCostChanged();
+    partial void OnCostChanging(decimal value);
+    partial void OnCostChanged();
+    #endregion
+		
+		public tb_BomDT()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartNo", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string PartNo
+		{
+			get
+			{
+				return this._PartNo;
+			}
+			set
+			{
+				if ((this._PartNo != value))
+				{
+					this.OnPartNoChanging(value);
+					this.SendPropertyChanging();
+					this._PartNo = value;
+					this.SendPropertyChanged("PartNo");
+					this.OnPartNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BomNo", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string BomNo
+		{
+			get
+			{
+				return this._BomNo;
+			}
+			set
+			{
+				if ((this._BomNo != value))
+				{
+					this.OnBomNoChanging(value);
+					this.SendPropertyChanging();
+					this._BomNo = value;
+					this.SendPropertyChanged("BomNo");
+					this.OnBomNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Year_", DbType="VarChar(4)")]
+		public string Year_
+		{
+			get
+			{
+				return this._Year_;
+			}
+			set
+			{
+				if ((this._Year_ != value))
+				{
+					this.OnYear_Changing(value);
+					this.SendPropertyChanging();
+					this._Year_ = value;
+					this.SendPropertyChanged("Year_");
+					this.OnYear_Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Month_", DbType="VarChar(2)")]
+		public string Month_
+		{
+			get
+			{
+				return this._Month_;
+			}
+			set
+			{
+				if ((this._Month_ != value))
+				{
+					this.OnMonth_Changing(value);
+					this.SendPropertyChanging();
+					this._Month_ = value;
+					this.SendPropertyChanged("Month_");
+					this.OnMonth_Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Line", DbType="Int NOT NULL")]
+		public int Line
+		{
+			get
+			{
+				return this._Line;
+			}
+			set
+			{
+				if ((this._Line != value))
+				{
+					this.OnLineChanging(value);
+					this.SendPropertyChanging();
+					this._Line = value;
+					this.SendPropertyChanged("Line");
+					this.OnLineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Component", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Component
+		{
+			get
+			{
+				return this._Component;
+			}
+			set
+			{
+				if ((this._Component != value))
+				{
+					this.OnComponentChanging(value);
+					this.SendPropertyChanging();
+					this._Component = value;
+					this.SendPropertyChanged("Component");
+					this.OnComponentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Qty
+		{
+			get
+			{
+				return this._Qty;
+			}
+			set
+			{
+				if ((this._Qty != value))
+				{
+					this.OnQtyChanging(value);
+					this.SendPropertyChanging();
+					this._Qty = value;
+					this.SendPropertyChanged("Qty");
+					this.OnQtyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Unit
+		{
+			get
+			{
+				return this._Unit;
+			}
+			set
+			{
+				if ((this._Unit != value))
+				{
+					this.OnUnitChanging(value);
+					this.SendPropertyChanging();
+					this._Unit = value;
+					this.SendPropertyChanged("Unit");
+					this.OnUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> PCSUnit
+		{
+			get
+			{
+				return this._PCSUnit;
+			}
+			set
+			{
+				if ((this._PCSUnit != value))
+				{
+					this.OnPCSUnitChanging(value);
+					this.SendPropertyChanging();
+					this._PCSUnit = value;
+					this.SendPropertyChanged("PCSUnit");
+					this.OnPCSUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitCost", DbType="Decimal(18,2) NOT NULL")]
+		public decimal UnitCost
+		{
+			get
+			{
+				return this._UnitCost;
+			}
+			set
+			{
+				if ((this._UnitCost != value))
+				{
+					this.OnUnitCostChanging(value);
+					this.SendPropertyChanging();
+					this._UnitCost = value;
+					this.SendPropertyChanged("UnitCost");
+					this.OnUnitCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Cost
+		{
+			get
+			{
+				return this._Cost;
+			}
+			set
+			{
+				if ((this._Cost != value))
+				{
+					this.OnCostChanging(value);
+					this.SendPropertyChanging();
+					this._Cost = value;
+					this.SendPropertyChanged("Cost");
+					this.OnCostChanged();
 				}
 			}
 		}

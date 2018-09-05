@@ -87,7 +87,8 @@ namespace StockControl
                     DateTime dTo = (cbChkDate.Checked) ? dtTo.Value.Date.AddDays(1).AddMinutes(1) : DateTime.MaxValue;
 
                     var t = db.mh_CustomerPOs.Where(x =>
-                                (x.CustomerPONo.Contains(pono))
+                                x.Active
+                                && (x.CustomerPONo.Contains(pono))
                                 && (x.CustomerNo == cstmno || cstmno == "")
                                 && (x.ItemNo == item || item == "")
                                 && (x.OrderDate >= dFrom && x.OrderDate <= dTo)).ToList();
@@ -168,12 +169,21 @@ namespace StockControl
         }
         void selRow()
         {
-            if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0 && sType == 2)
+            if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
                 var rowe = dgvData.CurrentCell.RowInfo;
                 PONo = rowe.Cells["PONo"].Value.ToSt();
                 CstmNo = rowe.Cells["CustomerNo"].Value.ToSt();
-                this.Close();
+
+                if (sType == 1)
+                {
+                    var p = new CustomerPO(PONo, CstmNo);
+                    p.ShowDialog();
+                    PONo = "";
+                    CstmNo = "";
+                }
+                else
+                    this.Close();
             }
         }
 

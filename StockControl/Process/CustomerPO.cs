@@ -74,17 +74,18 @@ namespace StockControl
 
                 }
 
-                if (txtPONo.Text.Trim() != "")
+                ClearData();
+                btnNew_Click(null, null);
+
+                if (t_PONo != "" && t_CustomerNo != "")
                     DataLoad();
 
 
-                ClearData();
-                btnNew_Click(null, null);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
-        private void DataLoad()
+        private void DataLoad(bool warningMssg = true)
         {
             try
             {
@@ -117,7 +118,7 @@ namespace StockControl
 
                         btnView_Click(null, null);
                     }
-                    else
+                    else if(warningMssg)
                         baseClass.Warning("P/O not found.!!");
                 }
             }
@@ -230,45 +231,74 @@ namespace StockControl
             Enable_Status(true, "Edit");
             lblStatus.Text = "Edit";
             Ac = "Edit";
-            
+
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
             try
             {
-                if(row >= 0)
+                string poNo = txtPONo.Text.Trim();
+                string cstmNo = txtCSTMNo.Text.Trim();
+                if (poNo != "" && cstmNo != "")
                 {
-                    string itemNo = dgvData.Rows[row].Cells["Item"].Value.ToSt();
-                    if (baseClass.IsDel($"Do you want to Delete item ({itemNo}) ?"))
+                    if (baseClass.IsDel($"Do you want to Delete Customer P/O {poNo} ?"))
                     {
-                        var rowe = dgvData.Rows[row];
-                        if (rowe.Cells["id"].Value.ToInt() <= 0)
-                            dgvData.Rows.Remove(rowe);
-                        else
+                        using (var db = new DataClasses1DataContext())
                         {
-                            using (var db = new DataClasses1DataContext())
+                            var p = db.mh_CustomerPOs.Where(x => x.CustomerNo == cstmNo && x.CustomerPONo == poNo && x.Active).ToList();
+                            if (p.Where(x => x.Status > 0).Count() < 1)
                             {
-                                int id = rowe.Cells["id"].Value.ToInt();
-                                var m = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
-                                if (m != null)
+                                foreach (var pp in p)
                                 {
-                                    m.Active = false;
-                                    m.UpdateDate = DateTime.Now;
-                                    m.UpdateBy = Classlib.User;
-                                    db.SubmitChanges();
-                                    dgvData.Rows.Remove(rowe);
+                                    pp.Active = false;
+                                    pp.UpdateBy = Classlib.User;
+                                    pp.UpdateDate = DateTime.Now;
                                 }
-                            }
-                        }
 
-                        SetRowNo1(dgvData);
-                        CallTotal();
-                        if (dgvData.CurrentRow != null)
-                            row = dgvData.CurrentRow.Index;
-                        else
-                            row = -1;
+                                db.SubmitChanges();
+
+                                baseClass.Info("Delete P/O complete.");
+                                ClearData();
+                                btnNew_Click(null, null);
+                            }
+                            else
+                                baseClass.Warning("P/O Status cannot Delete.");
+                        }
                     }
                 }
+                //if(row >= 0)
+                //{
+                //    string itemNo = dgvData.Rows[row].Cells["Item"].Value.ToSt();
+                //    if (baseClass.IsDel($"Do you want to Delete item ({itemNo}) ?"))
+                //    {
+                //        var rowe = dgvData.Rows[row];
+                //        if (rowe.Cells["id"].Value.ToInt() <= 0)
+                //            dgvData.Rows.Remove(rowe);
+                //        else
+                //        {
+                //            using (var db = new DataClasses1DataContext())
+                //            {
+                //                int id = rowe.Cells["id"].Value.ToInt();
+                //                var m = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
+                //                if (m != null)
+                //                {
+                //                    m.Active = false;
+                //                    m.UpdateDate = DateTime.Now;
+                //                    m.UpdateBy = Classlib.User;
+                //                    db.SubmitChanges();
+                //                    dgvData.Rows.Remove(rowe);
+                //                }
+                //            }
+                //        }
+
+                //        SetRowNo1(dgvData);
+                //        CallTotal();
+                //        if (dgvData.CurrentRow != null)
+                //            row = dgvData.CurrentRow.Index;
+                //        else
+                //            row = -1;
+                //    }
+                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -327,7 +357,7 @@ namespace StockControl
                 {
                     if (Check_Save())
                         return;
-                    else if(baseClass.IsSave())
+                    else if (baseClass.IsSave())
                         SaveE();
                 }
                 else
@@ -389,6 +419,8 @@ namespace StockControl
                         t.UOM = item.Cells["Unit"].Value.ToSt();
                     }
 
+                    t_PONo = pono;
+                    t_CustomerNo = cstmNo;
                     db.SubmitChanges();
                 }
 
@@ -663,7 +695,7 @@ namespace StockControl
                 var pol = new CustomerPO_List(2);
                 this.Cursor = Cursors.Default;
                 pol.ShowDialog();
-                if(pol.PONo != "" && pol.CstmNo != "")
+                if (pol.PONo != "" && pol.CstmNo != "")
                 {
                     t_PONo = pol.PONo;
                     t_CustomerNo = pol.CstmNo;
@@ -953,12 +985,12 @@ namespace StockControl
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if(txtPONo.Text.Trim() == "")
+                if (txtPONo.Text.Trim() == "")
                 {
                     baseClass.Warning("Please enter P/O no.");
                     return;
                 }
-                if(txtCSTMNo.Text.Trim() == "")
+                if (txtCSTMNo.Text.Trim() == "")
                 {
                     baseClass.Warning("Please enter Customer no.");
                     return;
