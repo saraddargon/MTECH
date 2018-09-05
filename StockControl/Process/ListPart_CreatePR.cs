@@ -25,7 +25,7 @@ namespace StockControl
         {
             InitializeComponent();
             this.RetDT = RetDT;
-            txtVenderNo.Text = VendorNo;
+            //txtVenderName.Text = VendorNo;
 
         }
         public ListPart_CreatePR()
@@ -68,19 +68,14 @@ namespace StockControl
                     //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
                     //radGridView1.DataSource = db.tb_Histories.Where(s => s.ScreenName == ScreenSearch).OrderBy(o => o.CreateDate).ToList();
                     int c = 0;
-                   
-                    //var g = (from ix in db.tb_Items select ix).Where(a => a.Status == "Active" 
-                    //    && a.CodeNo.Contains(txtCodeNo.Text)
-                    //    && a.ItemNo.Contains(txtPartName.Text)
-                    //    && a.ItemDescription.Contains(txtDescription.Text)
-                    //    && a.VendorNo.Contains(txtVenderNo.Text)
-                        
-                    //).ToList();
 
-                    var g = (from ix in db.sp_014_Select_PartList(txtCodeNo.Text, txtPartName.Text
-                             , txtDescription.Text, txtVenderNo.Text,"",ddlTypePart.Text,"Active","") select ix).ToList();
-                   
-                        if (g.Count > 0)
+                    var g = (from ix in db.mh_Items select ix).Where(a => a.Active == true
+                        && a.InternalNo.Contains(txtCodeNo.Text)
+                        && a.InternalName.Contains(txtPartName.Text)
+                        && a.InventoryGroup.Contains(ddlTypePart.Text)
+                        && a.VendorName.Contains(txtVendorName.Text)
+
+                    ).ToList();
                     {
 
                         radGridView1.DataSource = g;

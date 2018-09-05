@@ -264,14 +264,7 @@ namespace StockControl
         {
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                this.cboGroupType.AutoFilter = true;
-                this.cboGroupType.DisplayMember = "GroupCode";
-                FilterDescriptor filter = new FilterDescriptor();
-                filter.PropertyName = this.cboGroupType.DisplayMember;
-                filter.Operator = FilterOperator.Contains;
-                this.cboGroupType.AutoCompleteMode = AutoCompleteMode.Append;
-                this.cboGroupType.EditorControl.MasterTemplate.FilterDescriptors.Add(filter);
-                this.cboGroupType.BestFitColumns();
+               
 
                 this.cboVendorName.AutoFilter = true;
                 this.cboVendorName.AutoCompleteMode = AutoCompleteMode.Append;
@@ -319,6 +312,13 @@ namespace StockControl
                 cboBaseUOM.ValueMember = "UnitCode";
                 cboBaseUOM.DataSource = db.mh_Units.Where(w => w.UnitActive == true).ToList();
 
+                this.cboGroupType.AutoFilter = true;
+                FilterDescriptor filter = new FilterDescriptor();
+                filter.PropertyName = this.cboGroupType.DisplayMember;
+                filter.Operator = FilterOperator.Contains;
+                this.cboGroupType.AutoCompleteMode = AutoCompleteMode.Append;
+                this.cboGroupType.EditorControl.MasterTemplate.FilterDescriptors.Add(filter);
+                this.cboGroupType.BestFitColumns();
                 cboGroupType.DisplayMember = "GroupCode";
                 cboGroupType.ValueMember = "GroupCode";
                 cboGroupType.DataSource = db.mh_GroupTypes.Where(s => s.GroupActive == true).ToList();

@@ -10,6 +10,8 @@ using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
 using System.Globalization;
 using Microsoft.VisualBasic;
+using Telerik.WinControls.Data;
+
 namespace StockControl
 {
     public partial class CreatePO : Telerik.WinControls.UI.RadRibbonForm
@@ -119,7 +121,7 @@ namespace StockControl
                 //dgvData.ReadOnly = true;
                 dgvData.AutoGenerateColumns = false;
                 GETDTRow();
-                LoadRunningPO();
+                //LoadRunningPO();
                 LoadCurrency();
                 LoadVendor();
                
@@ -155,37 +157,102 @@ namespace StockControl
         {
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                cboVendorName.AutoCompleteMode = AutoCompleteMode.Append;
-                cboVendorName.DisplayMember = "VendorName";
-                cboVendorName.ValueMember = "VendorNo";
-                cboVendorName.DataSource = (from ix in db.tb_Vendors.Where(s => s.Active == true)
-                                        select new { ix.VendorNo,ix.VendorName,ix.CRRNCY }).ToList();
-                cboVendorName.SelectedIndex = 0;
 
+                this.cboVendorName.AutoFilter = true;
+                this.cboVendorName.AutoCompleteMode = AutoCompleteMode.Append;
+                FilterDescriptor fi = new FilterDescriptor();
+                fi.PropertyName = this.cboVendorName.ValueMember;
+                fi.Operator = FilterOperator.StartsWith;
+                this.cboVendorName.EditorControl.MasterTemplate.FilterDescriptors.Add(fi);
+                cboVendorName.DisplayMember = "Name";
+                cboVendorName.ValueMember = "No";
+                //cboVendorName.MultiColumnComboBoxElement.DropDownWidth = 200;
+                //cboVendorName.MultiColumnComboBoxElement.EditorControl.Columns["No"].Width = 80;
+                //cboVendorName.MultiColumnComboBoxElement.EditorControl.Columns["Name"].Width = 100;
+                //cboVendorName.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
+                //cboVendorName.DropDownMinSize = new Size(200, 200);                
+                cboVendorName.DataSource = db.mh_Vendors.Where(s => s.Active == true).ToList();
+                cboVendorName.SelectedIndex = -1;
+                cboVendorName.Text = "";
+
+                //this.cboVendorName.AutoFilter = true;
+                //this.cboVendorName.AutoCompleteMode = AutoCompleteMode.Append;
+                //FilterDescriptor fi = new FilterDescriptor();
+                //fi.PropertyName = this.cboVendorName.ValueMember;
+                //fi.Operator = FilterOperator.StartsWith;
+                //this.cboVendorName.EditorControl.MasterTemplate.FilterDescriptors.Add(fi);
+
+                //cboVendorName.AutoCompleteMode = AutoCompleteMode.Append;
+                //cboVendorName.DisplayMember = "VendorName";
+                //cboVendorName.ValueMember = "VendorNo";              
+
+                //var g = (from ix in db.mh_Vendors
+                //         //join i in db.mh_CRRNCies on ix.DefaultCurrency equals i.id
+                //         where ix.Active == true
+
+                //         select new
+                //         {                           
+                //             VendorNo = ix.No,
+                //             VendorName = ix.Name  
+                //             //,Currency = i.Crrncy 
+                //             //,Rate = i.Rate                        
+                //         }
+                //            ).ToList();
+                //cboVendorName.DataSource = g;
+                //cboVendorName.SelectedIndex = -1;
+                //cboVendorName.Text = "";
+
+                this.cboVatGroup.AutoFilter = true;
+                this.cboVatGroup.AutoCompleteMode = AutoCompleteMode.Append;
+                FilterDescriptor fg = new FilterDescriptor();
+                fg.PropertyName = this.cboVatGroup.ValueMember;
+                fg.Operator = FilterOperator.StartsWith;
+                this.cboVatGroup.EditorControl.MasterTemplate.FilterDescriptors.Add(fg);
+
+                cboVatGroup.AutoCompleteMode = AutoCompleteMode.Append;
+                cboVatGroup.DisplayMember = "VatGroup";
+                cboVatGroup.ValueMember = "id";
+               
+                var vg = (from ix in db.mh_VATSetups
+                         where ix.Active == true
+                         select new
+                         {
+                             VatGroup = ix.VatGroup,
+                             VatType = ix.VatType
+                             ,
+                             Rate = ix.Vat_   
+                             ,id = ix.id                        
+                         }
+                            ).ToList();
+                cboVatGroup.DataSource = vg;
+                cboVatGroup.SelectedIndex = 0;
+                cboVatGroup.Text = "";
 
                 try
                 {
 
-                    
+                    ddlCurrency.DataSource = (from ix in db.mh_CRRNCies.Where(s => s.Active == true)
+                                          select new { ix.Crrncy }).ToList();
+                    ddlCurrency.DisplayMember = "Crrncy";
+                    ddlCurrency.Text = "";
 
-                    //GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)radGridView1.Columns["CodeNo"];
-                    //col.DataSource = (from ix in db.tb_Items.Where(s => s.Status.Equals("Active")) select new { ix.CodeNo, ix.ItemDescription }).ToList();
+                    ////GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)radGridView1.Columns["CodeNo"];
+                    ////col.DataSource = (from ix in db.mh_CRRNCies.Where(s => s.Active.Equals(true))
+                    ////                  select new { ix.CodeNo, ix.ItemDescription }).ToList();
                     //col.DisplayMember = "CodeNo";
                     //col.ValueMember = "CodeNo";
 
                     //col.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
                     //col.FilteringMode = GridViewFilteringMode.DisplayMember;
-
-                    // col.AutoSizeMode = BestFitColumnMode.DisplayedDataCells;
+                    //col.AutoSizeMode = BestFitColumnMode.DisplayedDataCells;
                 }
-                catch (Exception ex){ dbClss.AddError("CRRNCY", ex.Message, this.Name); }
+                catch (Exception ex) { dbClss.AddError("CRRNCY", ex.Message, this.Name); }
 
                 //col.TextAlignment = ContentAlignment.MiddleCenter;
                 //col.Name = "CodeNo";
                 //this.radGridView1.Columns.Add(col);
 
                 //this.radGridView1.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
-
                 //this.radGridView1.CellEditorInitialized += radGridView1_CellEditorInitialized;
             }
         }
@@ -208,26 +275,26 @@ namespace StockControl
                 dbClss.AddError("CRRNCY", ex.Message, this.Name);
             }
         }
-        private void LoadRunningPO()
-        {
-            try
-            {
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    var G = (from ix in db.sp_048_Running_PO() select ix).ToList();
-                    ddlFactory.DataSource = G;
-                    ddlFactory.DisplayMember = "Location";
-                    ddlFactory.Text = "";
+        //private void LoadRunningPO()
+        //{
+        //    try
+        //    {
+        //        using (DataClasses1DataContext db = new DataClasses1DataContext())
+        //        {
+        //            var G = (from ix in db.sp_048_Running_PO() select ix).ToList();
+        //            ddlFactory.DataSource = G;
+        //            ddlFactory.DisplayMember = "Location";
+        //            ddlFactory.Text = "";
 
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                dbClss.AddError("CRRNCY", ex.Message, this.Name);
-            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //        dbClss.AddError("CRRNCY", ex.Message, this.Name);
+        //    }
 
-        }
+        //}
         private void DataLoad()
         {
             try
@@ -238,7 +305,7 @@ namespace StockControl
                 int ck = 0;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var g = (from ix in db.tb_PurchaseOrders select ix)
+                    var g = (from ix in db.mh_PurchaseOrders select ix)
                         .Where(a => a.TempPNo == txtTempNo.Text.Trim()
                          && (a.Status != "Cancel")
                          ).ToList();
@@ -246,7 +313,7 @@ namespace StockControl
                     {
 
                         DateTime ? temp_date = null;
-                        ddlFactory.Text = dbClss.TSt(g.FirstOrDefault().LocationRunning);
+                        //ddlFactory.Text = dbClss.TSt(g.FirstOrDefault().LocationRunning);
                         txtPONo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().PONo);
                         //txtTempNo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TEMPNo);
                         txtVendorNo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().VendorNo);
@@ -286,7 +353,7 @@ namespace StockControl
                         dt_POHD = StockControl.dbClss.LINQToDataTable(g);
 
                         //Detail
-                        var d = (from ix in db.tb_PurchaseOrderDetails select ix)
+                        var d = (from ix in db.mh_PurchaseOrderDetails select ix)
                             .Where(a => a.TempPNo == txtTempNo.Text.Trim() && a.SS == 1 ).ToList();
                         if (d.Count() > 0)
                         {
@@ -383,7 +450,7 @@ namespace StockControl
                         //lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
                         if (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Cancel"))
                         {
-                            ddlFactory.Enabled = false;
+                            //ddlFactory.Enabled = false;
                             btnNew.Enabled = true;
                             btnSave.Enabled = false;
                             btnDelete.Enabled = false;
@@ -401,7 +468,7 @@ namespace StockControl
                             || StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Process")
                             )
                         {
-                            ddlFactory.Enabled = false;
+                            //ddlFactory.Enabled = false;
                             btnSave.Enabled = false;
                             btnDelete.Enabled = false;
                             btnView.Enabled = false;
@@ -422,7 +489,7 @@ namespace StockControl
                         }
                         else
                         {
-                            ddlFactory.Enabled = false;
+                            //ddlFactory.Enabled = false;
                             btnNew.Enabled = true;
                             btnSave.Enabled = true;
                             btnDelete.Enabled = true;
@@ -473,7 +540,7 @@ namespace StockControl
         {
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                var g = (from ix in db.tb_PurchaseOrders
+                var g = (from ix in db.mh_PurchaseOrders
                          where ix.TempPNo.Trim() == txtTempNo.Text.Trim() 
                          && ix.Status != "Cancel" 
                          //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
@@ -483,7 +550,7 @@ namespace StockControl
                     foreach (DataRow row in dt_POHD.Rows)
                     {
 
-                        var gg = (from ix in db.tb_PurchaseOrders
+                        var gg = (from ix in db.mh_PurchaseOrders
                                   where ix.TempPNo.Trim() == txtTempNo.Text.Trim() && ix.Status != "Cancel"
                                   //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
                                   select ix).First();
@@ -636,9 +703,9 @@ namespace StockControl
                     //if(!txtPONo.Text.Equals(""))
                     //    barcode = StockControl.dbClss.SaveQRCode2D(txtPONo.Text.Trim());
                     //DateTime? UpdateDate = null;
-               
-                    tb_PurchaseOrder gg = new tb_PurchaseOrder();
-                    gg.LocationRunning = ddlFactory.Text;
+
+                    mh_PurchaseOrder gg = new mh_PurchaseOrder();
+                    //gg.LocationRunning = ddlFactory.Text;
                     gg.ModifyBy = ClassLib.Classlib.User;
                     gg.ModifyDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     gg.CreateBy = ClassLib.Classlib.User;
@@ -679,7 +746,7 @@ namespace StockControl
                     gg.Status = "Waiting";
                     gg.CHStatus = "Waiting";
 
-                    db.tb_PurchaseOrders.InsertOnSubmit(gg);
+                    db.mh_PurchaseOrders.InsertOnSubmit(gg);
                     db.SubmitChanges();
                     
                     dbClss.AddHistory(this.Name, "เพิ่ม CreatePO", "สร้าง PONo [" + txtPONo.Text.Trim() + ",เลขที่อ้างอิง :"+txtTempNo.Text+ "]", txtPONo.Text);
@@ -739,7 +806,7 @@ namespace StockControl
 
             //                u.DeliveryDate = DeliveryDate;
             //                u.SS = 1;
-            //                db.tb_PurchaseOrderDetails.InsertOnSubmit(u);
+            //                db.mh_PurchaseOrderDetails.InsertOnSubmit(u);
             //                db.SubmitChanges();
             //                //C += 1;
             //                dbClss.AddHistory(this.Name, "เพิ่ม Item PO", "เพิ่มรายการ Create PO [" + u.CodeNo + "]", txtPONo.Text);
@@ -757,7 +824,7 @@ namespace StockControl
             //                    {
             //                        if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) == StockControl.dbClss.TInt(row["id"]))
             //                        {
-            //                            var u = (from ix in db.tb_PurchaseOrderDetails
+            //                            var u = (from ix in db.mh_PurchaseOrderDetails
             //                                     where ix.TempPNo == txtTempNo.Text.Trim()
             //                                     // && ix.TempNo == txtTempNo.Text                                             
             //                                     && ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
@@ -885,7 +952,7 @@ namespace StockControl
             //        {
             //            if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) > 0)
             //            {
-            //                var u = (from ix in db.tb_PurchaseOrderDetails
+            //                var u = (from ix in db.mh_PurchaseOrderDetails
             //                         where //ix.PRNo == txtPONo.Text.Trim() 
             //                               //&& ix.TempNo == txtTempNo.Text 
             //                          ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
@@ -1028,7 +1095,7 @@ namespace StockControl
        
         private void ClearData()
         {
-            ddlFactory.Text = "";
+            //ddlFactory.Text = "";
             txtPONo.Text = "";
             cboVendorName.Text = "";
             txtTempNo.Text = "";
@@ -1054,8 +1121,10 @@ namespace StockControl
             txtAfterDiscount.Text = "";
             txtVat.Text = "";
             lbTotalOrder.Text = "0.00";
-            cbvat.Checked = true;
+            cbvat.Checked = false;
             txtVattax.Text = "7";
+            cboVatType.Text = "";
+            cboVatGroup.Text = "";
             cbvatDetail.Checked = false;
             txtQuotation.Text = "";
 
@@ -1064,7 +1133,7 @@ namespace StockControl
         }
         private void btnNew_Click(object sender, EventArgs e)
         {
-            ddlFactory.Enabled = true;
+            //ddlFactory.Enabled = true;
             btnView.Enabled = true;
             btnEdit.Enabled = true;
             btnNew.Enabled = false;
@@ -1160,21 +1229,21 @@ namespace StockControl
                         {
                             this.Cursor = Cursors.WaitCursor;
 
-                            var g = (from ix in db.tb_PurchaseOrders
+                            var g = (from ix in db.mh_PurchaseOrders
                                      where ix.TempPNo.Trim() == txtTempNo.Text.Trim()
                                      && ix.Status != "Cancel" && ix.Status != "Completed" && ix.Status != "Process"
                                      //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
                                      select ix).ToList();
                             if (g.Count > 0)  //มีรายการในระบบ
                             {
-                                var gg = (from ix in db.tb_PurchaseOrders
+                                var gg = (from ix in db.mh_PurchaseOrders
                                           where ix.TempPNo.Trim() == txtTempNo.Text.Trim()
                                           //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
                                           select ix).First();
 
                                 try
                                 {
-                                    var s = (from ix in db.tb_PurchaseOrderDetails
+                                    var s = (from ix in db.mh_PurchaseOrderDetails
                                              where ix.TempPNo.Trim() == txtTempNo.Text.Trim()
                                              && ix.SS == 1
                                              select ix).ToList();
@@ -1274,8 +1343,8 @@ namespace StockControl
                 //    err += " “รหัสพาร์ท:” เป็นค่าว่าง \n";
                 //if (txtPRNo.Text.Equals(""))
                 //    err += " “เลขที่ใบขอสั่งซื้อ:” เป็นค่าว่าง \n";
-                if (ddlFactory.Text.Equals(""))
-                    err += "- “ประเภทใบสั่งซื้อ:” เป็นค่าว่าง \n";
+                //if (ddlFactory.Text.Equals(""))
+                //    err += "- “ประเภทใบสั่งซื้อ:” เป็นค่าว่าง \n";
                 if (cboVendorName.Text.Equals(""))
                     err += "- “เลือกผู้ขาย:” เป็นค่าว่าง \n";
                 if (txtVendorNo.Text.Equals(""))
@@ -1352,7 +1421,7 @@ namespace StockControl
                                     if (!txtPONo.Text.Equals(""))
                                     {
 
-                                        var p = (from ix in db.tb_PurchaseOrders
+                                        var p = (from ix in db.mh_PurchaseOrders
                                                  where ix.PONo.ToUpper().Trim() == txtPONo.Text.Trim() 
                                                  && ix.Status != "Cancel"
                                                  //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
@@ -1364,22 +1433,15 @@ namespace StockControl
                                         }
                                     }
                                     else
-                                    {
-                                        if(ddlFactory.Text== "Factory 1")
-                                            txtPONo.Text = StockControl.dbClss.GetNo(11, 2);
-                                        else if(ddlFactory.Text=="Factory 2")
-                                            txtPONo.Text = StockControl.dbClss.GetNo(21, 2);
-                                    }
-
-                                    if (ddlFactory.Text == "Factory 1")
+                                  
+                                            txtPONo.Text = StockControl.dbClss.GetNo(11, 2);                                   
                                         txtTempNo.Text = StockControl.dbClss.GetNo(10, 2);
-                                    else if(ddlFactory.Text == "Factory 2")
-                                        txtTempNo.Text = StockControl.dbClss.GetNo(20, 2);
+                               
 
                                 }
 
 
-                                var ggg = (from ix in db.tb_PurchaseOrders
+                                var ggg = (from ix in db.mh_PurchaseOrders
                                            where ix.TempPNo.Trim() == txtTempNo.Text.Trim() //&& ix.Status != "Cancel"
                                            //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
                                            select ix).ToList();
@@ -1448,8 +1510,8 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                   
-                    var g = (from ix in db.tb_PurchaseOrderDetails
-                                 join h in db.tb_PurchaseOrders on ix.TempPNo equals h.TempPNo
+                    var g = (from ix in db.mh_PurchaseOrderDetails
+                                 join h in db.mh_PurchaseOrders on ix.TempPNo equals h.TempPNo
                              where ix.TempPNo.Trim() == txtTempNo.Text.Trim() 
                                 && ix.SS == 1 && h.Status != "Cancel"
 
@@ -1877,11 +1939,11 @@ namespace StockControl
         {
             try
             {
-                if (!txtVendorNo.Text.Equals("") && ddlFactory.Text !="")
+                if (!txtVendorNo.Text.Equals("") )
                 {
                     List<GridViewRowInfo> dgvRow_List = new List<GridViewRowInfo>();
                     //dgvRow_List.Clear();
-                    CreatePR_List_2 MS = new CreatePR_List_2(dgvRow_List, txtVendorNo.Text,"CreatePO",ddlFactory.Text);
+                    CreatePR_List_2 MS = new CreatePR_List_2(dgvRow_List, txtVendorNo.Text,"CreatePO");
                     MS.ShowDialog();
                     if (dgvRow_List.Count > 0)
                     {
@@ -1915,7 +1977,7 @@ namespace StockControl
                             Refid = StockControl.dbClss.TInt(ee.Cells["id"].Value);
                             //DeliveryDate = Convert.ToDateTime(ee.Cells["dgvDeliveryDate"].Value);
 
-                            Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty, PCSUnit, Unit, Cost, PRNO, DeliveryDate, Status, Refid, id);
+                            Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty, PCSUnit, Unit, Cost, PRNO, DeliveryDate, Status, Refid, id,true);
                            
                         }
                        
@@ -2038,30 +2100,59 @@ namespace StockControl
                 {
                     if (!cboVendorName.Text.Equals(""))
                     {
-                        var I = (from ix in db.tb_Vendors select ix).Where(a => a.Active == true && a.VendorName.Equals(cboVendorName.Text)).ToList();
+                        var I = (from ix in db.mh_Vendors select ix)
+                            .Where(a => a.Active == true && a.Name.Equals(cboVendorName.Text)).ToList();
                         if (I.Count > 0)
                         {
                             //StockControl.dbClss.TBo(a.Active).Equals(true)
-                            ddlCurrency.Text = I.FirstOrDefault().CRRNCY;
+                            //ddlCurrency.Text = I.FirstOrDefault().CRRNCY;
                             txtAddress.Text = I.FirstOrDefault().Address;
-                            txtVendorNo.Text = I.FirstOrDefault().VendorNo;
-                            var g = (from ix in db.tb_VendorContacts select ix).Where(a => a.VendorNo.Equals(txtVendorNo.Text)).OrderByDescending(b => b.DefaultNo).ToList();
-                            if (g.Count > 0)
+                            txtVendorNo.Text = I.FirstOrDefault().No;
+                            //var g = (from ix in db.tb_VendorContacts select ix).Where(a => a.VendorNo.Equals(txtVendorNo.Text)).OrderByDescending(b => b.DefaultNo).ToList();
+                            //if (g.Count > 0)
+                            //{
+                                txtContactName.Text =  I.FirstOrDefault().ContactName;
+                                txtTel.Text = I.FirstOrDefault().PhoneNo;
+                                txtFax.Text = I.FirstOrDefault().FaxNo;
+                                txtEmail.Text = I.FirstOrDefault().Email;
+
+                            var v = (from ix in db.mh_VatGroups select ix)
+                            .Where(a => a.Active == true && a.id.Equals(dbClss.TInt(I.FirstOrDefault().VatGroup))).ToList();
+                            if (v.Count > 0)
                             {
-                                txtContactName.Text = g.FirstOrDefault().ContactName;
-                                txtTel.Text = g.FirstOrDefault().Tel;
-                                txtFax.Text = g.FirstOrDefault().Fax;
-                                txtEmail.Text = g.FirstOrDefault().Email;
+                                cboVatGroup.Text = dbClss.TSt(v.FirstOrDefault().Value);                               
+                            }
+
+                            //}
+                            //else
+                            //{
+                            //    txtContactName.Text = "";
+                            //    txtTel.Text = "";
+                            //    txtFax.Text = "";
+                            //    txtEmail.Text = "";
+                            //}
+                            int id_cr = dbClss.TInt(I.FirstOrDefault().DefaultCurrency);
+                            if (id_cr > 0)
+                            {
+                                var cr = (from ix in db.mh_CRRNCies select ix)
+                                    .Where(a => a.id.Equals(id_cr)).ToList();
+                                if (cr.Count > 0)
+                                {
+                                    ddlCurrency.Text = dbClss.TSt(cr.FirstOrDefault().Crrncy);
+                                    ddlCurrency_SelectedIndexChanged(null, null);
+                                }
+                                else
+                                {
+                                    ddlCurrency.Text = "";
+                                    txtRate.Text = "0";
+                                }
                             }
                             else
                             {
-                                txtContactName.Text = "";
-                                txtTel.Text = "";
-                                txtFax.Text = "";
-                                txtEmail.Text = "";
+                                ddlCurrency.Text = "";
+                                txtRate.Text = "0";
                             }
 
-                            ddlCurrency_SelectedIndexChanged(null, null);
                             txtVendorNo.ReadOnly = true;
                             ddlCurrency.Enabled = false;
                             ddlCurrency.BackColor = Color.WhiteSmoke;
@@ -2076,6 +2167,8 @@ namespace StockControl
                             txtContactName.Text = "";
                             txtTel.Text = "";
                             txtFax.Text = "";
+                            cboVatType.Text = "";
+                            cboVatGroup.Text = "";
 
                             txtVendorNo.ReadOnly = false;
                             ddlCurrency.Enabled = true;
@@ -2287,7 +2380,7 @@ namespace StockControl
                     int Refid = 0;
                     int id = 0;
                     DateTime? dgvDeliveryDate = null;
-                    Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty, PCSUnit, Unit, Cost,PRNO, dgvDeliveryDate, Status,Refid,id);
+                    Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty, PCSUnit, Unit, Cost,PRNO, dgvDeliveryDate, Status,Refid,id,false);
                     
                 }
                 else
@@ -2297,7 +2390,7 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
         }
         private void Add_Item(int Row, string CodeNo, string ItemNo, string ItemDescription, string GroupCode, decimal OrderQty, decimal PCSUnit
-           , string UnitBuy, decimal StandardCost,string PRNo,DateTime? DeliveryDate, string Status,int Refid,int id)
+           , string UnitBuy, decimal StandardCost,string PRNo,DateTime? DeliveryDate, string Status,int Refid,int id,bool Sys)
         {
             //dgvData.Rows.Add(Row.ToString(), CodeNo,
             //        ItemNo
@@ -2400,8 +2493,8 @@ namespace StockControl
                 {
                     if (ddlCurrency.Text != "")
                     {
-                        var g = (from ix in db.tb_CRRNCies select ix)
-                            .Where(a => a.CRRNCY == ddlCurrency.Text.Trim()
+                        var g = (from ix in db.mh_CRRNCies select ix)
+                            .Where(a => a.Crrncy == ddlCurrency.Text.Trim()
 
                             ).ToList();
                         if (g.Count() > 0)
@@ -2460,36 +2553,19 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 int Row = 0; Row = dgvData.Rows.Count() + 1;
-                var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo.Contains(CodeNo)).ToList();
+                var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo.Contains(CodeNo)).ToList();
                 if (g.Count > 0)
                 {
-                    //dgvData.Rows.Add(Row.ToString(), CodeNo,
-                    //    StockControl.dbClss.TSt(g.FirstOrDefault().ItemNo)
-                    //    , StockControl.dbClss.TSt(g.FirstOrDefault().ItemDescription)
-                    //    , StockControl.dbClss.TSt(g.FirstOrDefault().GroupCode)
-                    //    , OrderQty
-                    //    , StockControl.dbClss.TDe(g.FirstOrDefault().PCSUnit)
-                    //    , StockControl.dbClss.TSt(g.FirstOrDefault().UnitBuy)
-                    //    , StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
-                    //    , 1 * StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
-                    //    , ""
-                    //    , "" //Lotno
-                    //    , "" //SerialNo
-                    //    , "" //MCName
-                    //    , "" //LineName
-                    //    , DateTime.Now
-                    //    ,0.0 // RemainQty
-                    //    ,0
-                    //    );   
+                  
 
                     //string CodeNo = "";
-                    string ItemNo = StockControl.dbClss.TSt(g.FirstOrDefault().ItemNo);
-                    string ItemDescription = StockControl.dbClss.TSt(g.FirstOrDefault().ItemDescription);
-                    string GroupCode = StockControl.dbClss.TSt(g.FirstOrDefault().GroupCode);
+                    string ItemNo = StockControl.dbClss.TSt(g.FirstOrDefault().InternalName);
+                    string ItemDescription = StockControl.dbClss.TSt(g.FirstOrDefault().InternalName);
+                    string GroupCode = StockControl.dbClss.TSt(g.FirstOrDefault().GroupType);
                     //int OrderQty = 0;
-                    decimal PCSUnit = StockControl.dbClss.TDe(g.FirstOrDefault().PCSUnit);
-                    string UnitBuy = StockControl.dbClss.TSt(g.FirstOrDefault().UnitBuy);
-                    decimal StandardCost = StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost);
+                    decimal PCSUnit = dbClss.Con_UOM(CodeNo, StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM));                    
+                    string UnitBuy = StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM);
+                    decimal StandardCost = 0;//StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost);
                     
                     string Status = "Adding";
                     string PRNO = "";
@@ -2498,7 +2574,7 @@ namespace StockControl
                     DateTime? dgvDeliveryDate = null;
                     
                     Add_Item(Row, CodeNo, ItemNo, ItemDescription, GroupCode, OrderQty
-                        , PCSUnit, UnitBuy, StandardCost, PRNO, dgvDeliveryDate,Status, Refid, id);
+                        , PCSUnit, UnitBuy, StandardCost, PRNO, dgvDeliveryDate,Status, Refid, id,true);
 
                 }
             }
@@ -2752,7 +2828,7 @@ namespace StockControl
                                         {
                                             if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) == StockControl.dbClss.TInt(row["id"]))
                                             {
-                                                var u = (from ix in db.tb_PurchaseOrderDetails
+                                                var u = (from ix in db.mh_PurchaseOrderDetails
                                                          where ix.TempPNo == txtTempNo.Text.Trim()
                                                          // && ix.TempNo == txtTempNo.Text                                             
                                                          && ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
@@ -3187,10 +3263,83 @@ namespace StockControl
 
         private void ddlFactory_SelectedIndexChanged(object sender, Telerik.WinControls.UI.Data.PositionChangedEventArgs e)
         {
-            if (ddlFactory.Text == "Factory 1")
-                txtTempNo.Text = StockControl.dbClss.GetNo(10, 0);
-            else if (ddlFactory.Text == "Factory 2")
-                txtTempNo.Text = StockControl.dbClss.GetNo(20, 0);
+                txtTempNo.Text = StockControl.dbClss.GetNo(10, 0);            
+        }
+
+        private void cboVatGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    if (!cboVatGroup.Text.Equals(""))
+                    {
+                        this.cboVatType.AutoFilter = true;
+                        this.cboVatType.AutoCompleteMode = AutoCompleteMode.Append;
+                        FilterDescriptor fi = new FilterDescriptor();
+                        fi.PropertyName = this.cboVatType.ValueMember;
+                        fi.Operator = FilterOperator.StartsWith;
+                        this.cboVatType.EditorControl.MasterTemplate.FilterDescriptors.Add(fi);
+                        
+                        cboVatType.DataSource = null;                       
+                        cboVatType.AutoCompleteMode = AutoCompleteMode.Append;
+                        cboVatType.DisplayMember = "VatType";
+                        cboVatType.ValueMember = "VatType";
+
+                        var vg = (from ix in db.mh_VATSetups
+                                  where ix.Active == true
+                                  && ix.VatGroup == cboVatGroup.Text
+                                  select new
+                                  {
+                                      VatType = ix.VatType,
+                                      Rate = ix.Vat_                   
+                                  }
+                                    ).ToList();
+                        cboVatType.DataSource = vg;
+                        cboVatType.SelectedIndex = -1;
+                        cboVatType.Text = "";                        
+                    }
+                }
+            }catch(Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void cboVatGroup_Leave(object sender, EventArgs e)
+        {
+            cboVatGroup_SelectedIndexChanged(null, null);
+        }
+
+        private void cboVatType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    if (!cboVatGroup.Text.Equals("") && cboVatType.Text != "")
+                    {
+                        var I = (from ix in db.mh_VATSetups select ix)
+                            .Where(a => a.Active == true 
+                            && a.VatGroup==cboVatGroup.Text
+                            && a.VatType==cboVatType.Text
+                            ).ToList();
+                        if (I.Count > 0)
+                        {                          
+                            txtVattax.Text = dbClss.TDe(I.FirstOrDefault().Vat_).ToString();
+                            cbvat.Checked = true;
+                        }
+                    }
+                    else
+                    {
+                        txtVattax.Text = "0";
+                        cbvat.Checked = false;
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void cboVatType_Leave(object sender, EventArgs e)
+        {
+            cboVatType_SelectedIndexChanged(null, null);
         }
     }
 }
