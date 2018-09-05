@@ -42,6 +42,7 @@
             System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Job Management");
             System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Report");
             System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Manufacturing");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("CustomerPO");
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
@@ -687,6 +688,8 @@
             treeNode11.Text = "Report";
             treeNode12.Name = "Manufacturing";
             treeNode12.Text = "Manufacturing";
+            treeNode13.Name = "CustomerPO";
+            treeNode13.Text = "CustomerPO";
             this.TreeManu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
@@ -699,7 +702,8 @@
             treeNode9,
             treeNode10,
             treeNode11,
-            treeNode12});
+            treeNode12,
+            treeNode13});
             this.TreeManu.SelectedImageIndex = 4;
             this.TreeManu.ShowNodeToolTips = true;
             this.TreeManu.Size = new System.Drawing.Size(212, 486);

@@ -484,10 +484,12 @@ namespace StockControl
                 if (radGridView1.Rows[e.RowIndex].Cells["dgvCodeTemp"].Value.ToInt() > 0)
                 {
                     btnAbsence.Enabled = true;
+                    //btnCalculate.Enabled = true;
                 }
                 else
                 {
                     btnAbsence.Enabled = false;
+                    //btnCalculate.Enabled = false;
                 }
             }
         }
@@ -732,7 +734,16 @@ namespace StockControl
             }
         }
 
+        private void btnCalculate_Click(object sender, EventArgs e)
+        {
+            WorkCenters_Cal cal = new WorkCenters_Cal();
+            cal.ShowDialog();
+        }
 
-
+        private void btnCalendar_Click(object sender, EventArgs e)
+        {
+            var capa = new WorkCenters_Capa();
+            capa.ShowDialog();
+        }
     }
 }

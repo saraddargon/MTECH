@@ -63,6 +63,9 @@
             this.ribbonBarGroupSeparator1 = new Telerik.WinControls.UI.RibbonBarGroupSeparator();
             this.radRibbonBarGroup6 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnAbsence = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnCalculate = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnCalendar = new Telerik.WinControls.UI.RadButtonElement();
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
@@ -110,7 +113,7 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(817, 160);
+            this.radRibbonBar1.Size = new System.Drawing.Size(970, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
@@ -130,7 +133,8 @@
             this.radRibbonBarGroup4,
             this.radRibbonBarGroup3,
             this.radRibbonBarGroup5,
-            this.radRibbonBarGroup6});
+            this.radRibbonBarGroup6,
+            this.radRibbonBarGroup7});
             this.ribbonTab1.Name = "ribbonTab1";
             this.ribbonTab1.Text = "Action";
             this.ribbonTab1.UseMnemonic = false;
@@ -316,6 +320,32 @@
             this.btnAbsence.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnAbsence.Click += new System.EventHandler(this.btnHolidays_Click);
             // 
+            // radRibbonBarGroup7
+            // 
+            this.radRibbonBarGroup7.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnCalculate,
+            this.btnCalendar});
+            this.radRibbonBarGroup7.Name = "radRibbonBarGroup7";
+            this.radRibbonBarGroup7.Text = "";
+            // 
+            // btnCalculate
+            // 
+            this.btnCalculate.Image = ((System.Drawing.Image)(resources.GetObject("btnCalculate.Image")));
+            this.btnCalculate.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnCalculate.Name = "btnCalculate";
+            this.btnCalculate.Text = "<html><p>Calculate</p><p>Work Center</p></html>";
+            this.btnCalculate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
+            // 
+            // btnCalendar
+            // 
+            this.btnCalendar.Image = ((System.Drawing.Image)(resources.GetObject("btnCalendar.Image")));
+            this.btnCalendar.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnCalendar.Name = "btnCalendar";
+            this.btnCalendar.Text = "Capacity\r\nAvailable";
+            this.btnCalendar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCalendar.Click += new System.EventHandler(this.btnCalendar_Click);
+            // 
             // radMenuItem1
             // 
             this.radMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem1.Image")));
@@ -340,9 +370,9 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 537);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 597);
             this.radStatusStrip1.Name = "radStatusStrip1";
-            this.radStatusStrip1.Size = new System.Drawing.Size(817, 26);
+            this.radStatusStrip1.Size = new System.Drawing.Size(970, 26);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
             // 
@@ -360,7 +390,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(817, 377);
+            this.panel1.Size = new System.Drawing.Size(970, 437);
             this.panel1.TabIndex = 2;
             // 
             // radGridView1
@@ -430,6 +460,7 @@
             gridViewDecimalColumn1.Name = "CostPer";
             gridViewDecimalColumn1.Width = 104;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
+            gridViewDecimalColumn2.FieldName = "Capacity";
             gridViewDecimalColumn2.HeaderText = "Capacity";
             gridViewDecimalColumn2.Name = "Capacity";
             gridViewDecimalColumn2.Width = 78;
@@ -455,7 +486,7 @@
             this.radContextMenuManager1.SetRadContextMenu(this.radGridView1, this.radContextMenu1);
             this.radGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.radGridView1.ShowGroupPanel = false;
-            this.radGridView1.Size = new System.Drawing.Size(817, 377);
+            this.radGridView1.Size = new System.Drawing.Size(970, 437);
             this.radGridView1.TabIndex = 0;
             this.radGridView1.ThemeName = "Office2010Blue";
             this.radGridView1.RowFormatting += new Telerik.WinControls.UI.RowFormattingEventHandler(this.MasterTemplate_RowFormatting);
@@ -532,7 +563,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(817, 563);
+            this.ClientSize = new System.Drawing.Size(970, 623);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);
@@ -599,5 +630,8 @@
         private Telerik.WinControls.UI.RadContextMenuManager radContextMenuManager1;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup6;
         private Telerik.WinControls.UI.RadButtonElement btnAbsence;
+        private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup7;
+        private Telerik.WinControls.UI.RadButtonElement btnCalculate;
+        private Telerik.WinControls.UI.RadButtonElement btnCalendar;
     }
 }
