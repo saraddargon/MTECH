@@ -258,6 +258,9 @@ namespace StockControl
     partial void Insertmh_PurchaseRequestLine(mh_PurchaseRequestLine instance);
     partial void Updatemh_PurchaseRequestLine(mh_PurchaseRequestLine instance);
     partial void Deletemh_PurchaseRequestLine(mh_PurchaseRequestLine instance);
+    partial void Insertmh_CapacityAvailable(mh_CapacityAvailable instance);
+    partial void Updatemh_CapacityAvailable(mh_CapacityAvailable instance);
+    partial void Deletemh_CapacityAvailable(mh_CapacityAvailable instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -927,6 +930,14 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<mh_PurchaseRequestLine>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_CapacityAvailable> mh_CapacityAvailables
+		{
+			get
+			{
+				return this.GetTable<mh_CapacityAvailable>();
 			}
 		}
 		
@@ -30878,6 +30889,140 @@ namespace StockControl
 					this._Status = value;
 					this.SendPropertyChanged("Status");
 					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CapacityAvailable")]
+	public partial class mh_CapacityAvailable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _WorkCenterID;
+		
+		private System.DateTime _Date;
+		
+		private System.Nullable<decimal> _Capacity;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnWorkCenterIDChanging(int value);
+    partial void OnWorkCenterIDChanged();
+    partial void OnDateChanging(System.DateTime value);
+    partial void OnDateChanged();
+    partial void OnCapacityChanging(System.Nullable<decimal> value);
+    partial void OnCapacityChanged();
+    #endregion
+		
+		public mh_CapacityAvailable()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkCenterID", DbType="Int NOT NULL")]
+		public int WorkCenterID
+		{
+			get
+			{
+				return this._WorkCenterID;
+			}
+			set
+			{
+				if ((this._WorkCenterID != value))
+				{
+					this.OnWorkCenterIDChanging(value);
+					this.SendPropertyChanging();
+					this._WorkCenterID = value;
+					this.SendPropertyChanged("WorkCenterID");
+					this.OnWorkCenterIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Capacity", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Capacity
+		{
+			get
+			{
+				return this._Capacity;
+			}
+			set
+			{
+				if ((this._Capacity != value))
+				{
+					this.OnCapacityChanging(value);
+					this.SendPropertyChanging();
+					this._Capacity = value;
+					this.SendPropertyChanged("Capacity");
+					this.OnCapacityChanged();
 				}
 			}
 		}
