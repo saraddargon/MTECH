@@ -412,33 +412,34 @@
             gridViewDateTimeColumn1.FieldName = "Date";
             gridViewDateTimeColumn1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             gridViewDateTimeColumn1.FormatString = "{0:dd/MM/yyyy}";
-            gridViewDateTimeColumn1.HeaderText = "วันที่";
+            gridViewDateTimeColumn1.HeaderText = "Date";
             gridViewDateTimeColumn1.Name = "Date";
             gridViewDateTimeColumn1.Width = 117;
             gridViewMaskBoxColumn1.EnableExpressionEditor = false;
             gridViewMaskBoxColumn1.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
             gridViewMaskBoxColumn1.FieldName = "StartingTime";
-            gridViewMaskBoxColumn1.HeaderText = "เวลาเริ่ม";
+            gridViewMaskBoxColumn1.HeaderText = "Starting Time";
             gridViewMaskBoxColumn1.Mask = "00:00";
             gridViewMaskBoxColumn1.MaskType = Telerik.WinControls.UI.MaskType.Standard;
             gridViewMaskBoxColumn1.Name = "StartTime";
-            gridViewMaskBoxColumn1.Width = 76;
+            gridViewMaskBoxColumn1.Width = 85;
             gridViewMaskBoxColumn2.EnableExpressionEditor = false;
             gridViewMaskBoxColumn2.FieldName = "EndingTime";
-            gridViewMaskBoxColumn2.HeaderText = "เวลาสิ้นสุด";
+            gridViewMaskBoxColumn2.HeaderText = "Ending Time";
             gridViewMaskBoxColumn2.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
             gridViewMaskBoxColumn2.Name = "EndTime";
-            gridViewMaskBoxColumn2.Width = 72;
+            gridViewMaskBoxColumn2.Width = 83;
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "WorkHours";
             gridViewDecimalColumn1.HeaderText = "จำนวน ชม.";
+            gridViewDecimalColumn1.IsVisible = false;
             gridViewDecimalColumn1.Name = "WorkHours";
             gridViewDecimalColumn1.Width = 65;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "Capacity";
             gridViewDecimalColumn2.HeaderText = "Capacity";
             gridViewDecimalColumn2.Name = "Capacity";
-            gridViewDecimalColumn2.Width = 74;
+            gridViewDecimalColumn2.Width = 84;
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,

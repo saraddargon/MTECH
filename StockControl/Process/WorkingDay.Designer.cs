@@ -409,18 +409,19 @@
             gridViewTextBoxColumn4.Name = "dgvCodetemp2";
             gridViewComboBoxColumn1.EnableExpressionEditor = false;
             gridViewComboBoxColumn1.FieldName = "Day";
-            gridViewComboBoxColumn1.HeaderText = "วัน";
+            gridViewComboBoxColumn1.HeaderText = "Day";
             gridViewComboBoxColumn1.Name = "Day";
             gridViewComboBoxColumn1.Width = 102;
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "NoOfWorkHours";
             gridViewDecimalColumn1.HeaderText = "จำนวนน ชม.";
+            gridViewDecimalColumn1.IsVisible = false;
             gridViewDecimalColumn1.Name = "WorkHours";
             gridViewDecimalColumn1.Width = 89;
             gridViewMaskBoxColumn1.EnableExpressionEditor = false;
             gridViewMaskBoxColumn1.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
             gridViewMaskBoxColumn1.FieldName = "StartingTime";
-            gridViewMaskBoxColumn1.HeaderText = "เวลาเริ่ม";
+            gridViewMaskBoxColumn1.HeaderText = "Starting Time";
             gridViewMaskBoxColumn1.Mask = "00:00";
             gridViewMaskBoxColumn1.MaskType = Telerik.WinControls.UI.MaskType.Standard;
             gridViewMaskBoxColumn1.Name = "StartTime";
@@ -428,16 +429,16 @@
             gridViewMaskBoxColumn2.EnableExpressionEditor = false;
             gridViewMaskBoxColumn2.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
             gridViewMaskBoxColumn2.FieldName = "EndingTime";
-            gridViewMaskBoxColumn2.HeaderText = "เวลาสิ้นสุด";
+            gridViewMaskBoxColumn2.HeaderText = "Ending Time";
             gridViewMaskBoxColumn2.Mask = "00:00";
             gridViewMaskBoxColumn2.MaskType = Telerik.WinControls.UI.MaskType.Standard;
             gridViewMaskBoxColumn2.Name = "EndTime";
             gridViewMaskBoxColumn2.Width = 79;
             gridViewComboBoxColumn2.EnableExpressionEditor = false;
             gridViewComboBoxColumn2.FieldName = "ShiftCode";
-            gridViewComboBoxColumn2.HeaderText = "กะทำงาน";
+            gridViewComboBoxColumn2.HeaderText = "Shift";
             gridViewComboBoxColumn2.Name = "ShiftCode";
-            gridViewComboBoxColumn2.Width = 131;
+            gridViewComboBoxColumn2.Width = 175;
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,

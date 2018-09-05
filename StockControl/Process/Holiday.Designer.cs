@@ -413,7 +413,7 @@
             gridViewDateTimeColumn1.FieldName = "StartingDate";
             gridViewDateTimeColumn1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             gridViewDateTimeColumn1.FormatString = "{0:dd/MM/yyyy}";
-            gridViewDateTimeColumn1.HeaderText = "วันที่เริ่ม";
+            gridViewDateTimeColumn1.HeaderText = "Starting Date";
             gridViewDateTimeColumn1.Name = "StartDate";
             gridViewDateTimeColumn1.Width = 103;
             gridViewDateTimeColumn2.CustomFormat = "dd/MM/yyyy";
@@ -421,13 +421,13 @@
             gridViewDateTimeColumn2.FieldName = "EndingDate";
             gridViewDateTimeColumn2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             gridViewDateTimeColumn2.FormatString = "{0:dd/MM/yyyy}";
-            gridViewDateTimeColumn2.HeaderText = "วันที่สิ้นสุด";
+            gridViewDateTimeColumn2.HeaderText = "Ending Date";
             gridViewDateTimeColumn2.Name = "EndDate";
             gridViewDateTimeColumn2.Width = 98;
             gridViewMaskBoxColumn1.EnableExpressionEditor = false;
             gridViewMaskBoxColumn1.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
             gridViewMaskBoxColumn1.FieldName = "StartTime";
-            gridViewMaskBoxColumn1.HeaderText = "เวลาเริ่ม";
+            gridViewMaskBoxColumn1.HeaderText = "Stating Time";
             gridViewMaskBoxColumn1.Mask = "00:00";
             gridViewMaskBoxColumn1.MaskType = Telerik.WinControls.UI.MaskType.Standard;
             gridViewMaskBoxColumn1.Name = "StartTime";
@@ -435,7 +435,7 @@
             gridViewMaskBoxColumn2.EnableExpressionEditor = false;
             gridViewMaskBoxColumn2.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
             gridViewMaskBoxColumn2.FieldName = "EndingTime";
-            gridViewMaskBoxColumn2.HeaderText = "เวลาสิ้นสุด";
+            gridViewMaskBoxColumn2.HeaderText = "Ending Time";
             gridViewMaskBoxColumn2.Mask = "00:00";
             gridViewMaskBoxColumn2.MaskType = Telerik.WinControls.UI.MaskType.Standard;
             gridViewMaskBoxColumn2.Name = "EndTime";
@@ -443,11 +443,12 @@
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "NoOfWorkHours";
             gridViewDecimalColumn1.HeaderText = "จำนวนน ชม.";
+            gridViewDecimalColumn1.IsVisible = false;
             gridViewDecimalColumn1.Name = "WorkHours";
             gridViewDecimalColumn1.Width = 89;
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
             gridViewTextBoxColumn5.FieldName = "Description";
-            gridViewTextBoxColumn5.HeaderText = "หมายเหตุ";
+            gridViewTextBoxColumn5.HeaderText = "Description";
             gridViewTextBoxColumn5.Name = "Description";
             gridViewTextBoxColumn5.Width = 175;
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {

@@ -30,17 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainfrom));
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Part Setting");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Create Job Card");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Bill of Material (Bom)");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Purchase Request");
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Purchase Order");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Receive Part");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Shipping Part");
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Finished good (FG)");
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Stock Balance");
-            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Job Management");
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Report");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Part Setting");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Create Job Card");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Bill of Material (Bom)");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Purchase Request");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Purchase Order");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Receive Part");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Shipping Part");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Finished good (FG)");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Stock Balance");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Job Management");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Report");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Manufacturing");
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
@@ -112,7 +113,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
-            this.radMenuItem25 = new Telerik.WinControls.UI.RadMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
@@ -356,8 +356,7 @@
             this.btnPermisstion,
             this.radMenuSeparatorItem4,
             this.radMenuItem21,
-            this.radMenuItem22,
-            this.radMenuItem25});
+            this.radMenuItem22});
             this.radMenuItem2.Name = "radMenuItem2";
             this.radMenuItem2.Text = "&Administrator";
             // 
@@ -664,40 +663,43 @@
             this.TreeManu.ImageList = this.ImageList;
             this.TreeManu.Location = new System.Drawing.Point(0, 40);
             this.TreeManu.Name = "TreeManu";
-            treeNode12.Name = "PartSetting";
-            treeNode12.Text = "Part Setting";
-            treeNode13.Name = "CreateJob";
-            treeNode13.Text = "Create Job Card";
-            treeNode14.Name = "Bom";
-            treeNode14.Text = "Bill of Material (Bom)";
-            treeNode15.Name = "PurchaseReq";
-            treeNode15.Text = "Purchase Request";
-            treeNode16.Name = "PurchaseOrder";
-            treeNode16.Text = "Purchase Order";
-            treeNode17.Name = "Receive";
-            treeNode17.Text = "Receive Part";
-            treeNode18.Name = "Shipping";
-            treeNode18.Text = "Shipping Part";
-            treeNode19.Name = "FG";
-            treeNode19.Text = "Finished good (FG)";
-            treeNode20.Name = "Stock";
-            treeNode20.Text = "Stock Balance";
-            treeNode21.Name = "JobManagement";
-            treeNode21.Text = "Job Management";
-            treeNode22.Name = "Report";
-            treeNode22.Text = "Report";
+            treeNode1.Name = "PartSetting";
+            treeNode1.Text = "Part Setting";
+            treeNode2.Name = "CreateJob";
+            treeNode2.Text = "Create Job Card";
+            treeNode3.Name = "Bom";
+            treeNode3.Text = "Bill of Material (Bom)";
+            treeNode4.Name = "PurchaseReq";
+            treeNode4.Text = "Purchase Request";
+            treeNode5.Name = "PurchaseOrder";
+            treeNode5.Text = "Purchase Order";
+            treeNode6.Name = "Receive";
+            treeNode6.Text = "Receive Part";
+            treeNode7.Name = "Shipping";
+            treeNode7.Text = "Shipping Part";
+            treeNode8.Name = "FG";
+            treeNode8.Text = "Finished good (FG)";
+            treeNode9.Name = "Stock";
+            treeNode9.Text = "Stock Balance";
+            treeNode10.Name = "JobManagement";
+            treeNode10.Text = "Job Management";
+            treeNode11.Name = "Report";
+            treeNode11.Text = "Report";
+            treeNode12.Name = "Manufacturing";
+            treeNode12.Text = "Manufacturing";
             this.TreeManu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode12,
-            treeNode13,
-            treeNode14,
-            treeNode15,
-            treeNode16,
-            treeNode17,
-            treeNode18,
-            treeNode19,
-            treeNode20,
-            treeNode21,
-            treeNode22});
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6,
+            treeNode7,
+            treeNode8,
+            treeNode9,
+            treeNode10,
+            treeNode11,
+            treeNode12});
             this.TreeManu.SelectedImageIndex = 4;
             this.TreeManu.ShowNodeToolTips = true;
             this.TreeManu.Size = new System.Drawing.Size(212, 486);
@@ -772,12 +774,6 @@
             ((Telerik.WinControls.UI.RadMenuElement)(this.radMenu1.GetChildAt(0))).BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(4)))), ((int)(((byte)(129)))));
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ClipDrawing = false;
-            // 
-            // radMenuItem25
-            // 
-            this.radMenuItem25.Name = "radMenuItem25";
-            this.radMenuItem25.Text = "Item UOMs";
-            this.radMenuItem25.Click += new System.EventHandler(this.radMenuItem25_Click_1);
             // 
             // Mainfrom
             // 
@@ -894,6 +890,5 @@
         private Telerik.WinControls.UI.RadMenuItem btnCurrency;
         private Telerik.WinControls.UI.RadMenuItem btnMasterShift;
         private Telerik.WinControls.UI.RadMenuItem btnLocation;
-        private Telerik.WinControls.UI.RadMenuItem radMenuItem25;
     }
 }
