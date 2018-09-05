@@ -698,5 +698,24 @@ namespace StockControl
                 dbClss.WarningIT("No Permisstion.");
             }
         }
+
+        private void radMenuItem25_Click_1(object sender, EventArgs e)
+        {
+            if (StockControl.dbClss.Permisstion("", "tb_Master_ItemUOM", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
+            {
+                this.Cursor = Cursors.WaitCursor;
+                var sc = new tb_Master_ItemUOM();
+                this.Cursor = Cursors.Default;
+                sc.ShowDialog();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+                ClassLib.Memory.Heap();
+            }
+            else
+            {
+                dbClss.WarningIT("No Permisstion.");
+            }
+        }
     }
 }

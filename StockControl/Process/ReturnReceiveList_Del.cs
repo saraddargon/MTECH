@@ -114,111 +114,111 @@ namespace StockControl
         }
         private void Load_WaitingReceive()  //รอรับเข้า (รอ Receive)
         {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                string VendorNo_ss = "";
-                if (!cboVendorName.Text.Equals(""))
-                    VendorNo_ss = txtVendorNo.Text;
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    string VendorNo_ss = "";
+            //    if (!cboVendorName.Text.Equals(""))
+            //        VendorNo_ss = txtVendorNo.Text;
 
-                int dgvNo = 0;
-                bool S = false; 
-                //string RCNo = "";
-                //string PRNo = "";
-                //string CodeNo = "";
-                //string ItemName = "";
-                //string ItemNo = "";
-                //string ItemDescription = "";
-                //DateTime? DeliveryDate = null;
-                //decimal QTY = 0;
-                //decimal BackOrder = 0;
-                //decimal RemainQty = 0;
-                //string Unit = "";
-                //decimal PCSUnit = 0;
-                //decimal Leadtime = 0;
-                //decimal MaxStock = 0;
-                //decimal MinStock = 0;
-                //string VendorNo = "";
-                //string VendorName = "";
-                //DateTime? CreateDate = null;
-                //string CreateBy = "";
-                //string Status = "รอรับเข้า";
+            //    int dgvNo = 0;
+            //    bool S = false; 
+            //    //string RCNo = "";
+            //    //string PRNo = "";
+            //    //string CodeNo = "";
+            //    //string ItemName = "";
+            //    //string ItemNo = "";
+            //    //string ItemDescription = "";
+            //    //DateTime? DeliveryDate = null;
+            //    //decimal QTY = 0;
+            //    //decimal BackOrder = 0;
+            //    //decimal RemainQty = 0;
+            //    //string Unit = "";
+            //    //decimal PCSUnit = 0;
+            //    //decimal Leadtime = 0;
+            //    //decimal MaxStock = 0;
+            //    //decimal MinStock = 0;
+            //    //string VendorNo = "";
+            //    //string VendorName = "";
+            //    //DateTime? CreateDate = null;
+            //    //string CreateBy = "";
+            //    //string Status = "รอรับเข้า";
 
 
-                //var g = (from ix in db.tb_PurchaseRequests select ix).Where(a => a.VendorNo.Contains(VendorNo_ss)
-                //    //&& a.Status != "Cancel"
-                //    && a.Status == "Waiting"
-                //    )
-                //    .ToList();
-                //if (g.Count() > 0)
-                //{
+            //    //var g = (from ix in db.tb_PurchaseRequests select ix).Where(a => a.VendorNo.Contains(VendorNo_ss)
+            //    //    //&& a.Status != "Cancel"
+            //    //    && a.Status == "Waiting"
+            //    //    )
+            //    //    .ToList();
+            //    //if (g.Count() > 0)
+            //    //{
 
-                    var r = (from h in db.tb_PurchaseRequests
-                             join d in db.tb_PurchaseRequestLines on h.PRNo equals d.PRNo
-                             join i in db.tb_Items on d.CodeNo equals i.CodeNo
+            //        var r = (from h in db.tb_PurchaseRequests
+            //                 join d in db.tb_PurchaseRequestLines on h.PRNo equals d.PRNo
+            //                 join i in db.tb_Items on d.CodeNo equals i.CodeNo
 
-                             where //h.Status == "Waiting" //&& d.verticalID == VerticalID
-                                Convert.ToDecimal(d.OrderQty ) == Convert.ToDecimal(d.RemainQty)
-                                && h.VendorNo.Contains(VendorNo_ss)
-                                && d.SS == 1
-                             select new
-                             {
-                                 CodeNo = d.CodeNo,
-                                 S = false,
-                                 ItemNo = d.ItemName,
-                                 ItemDescription = d.ItemDesc,
-                                 RCNo = "",
-                                 PRNo = d.PRNo,
-                                 DeliveryDate = d.DeliveryDate,
-                                 QTY = d.OrderQty,
-                                 BackOrder = d.RemainQty,
-                                 RemainQty = d.RemainQty,
-                                 Unit = d.UnitCode,
-                                 PCSUnit = d.PCSUnit,
-                                 MaxStock = i.MaximumStock,
-                                 MinStock = i.MinimumStock,
-                                 VendorNo = h.VendorNo,
-                                 VendorName = h.VendorName,
-                                 CreateBy = h.CreateBy,
-                                 CreateDate = h.CreateDate,
-                                 Status = "รอรับเข้า"
-                             }
-               ).ToList();
-                    if (r.Count > 0)
-                    {
-                        dgvNo = dgvData.Rows.Count() + 1;
+            //                 where //h.Status == "Waiting" //&& d.verticalID == VerticalID
+            //                    Convert.ToDecimal(d.OrderQty ) == Convert.ToDecimal(d.RemainQty)
+            //                    && h.VendorNo.Contains(VendorNo_ss)
+            //                    && d.SS == 1
+            //                 select new
+            //                 {
+            //                     CodeNo = d.CodeNo,
+            //                     S = false,
+            //                     ItemNo = d.ItemName,
+            //                     ItemDescription = d.ItemDesc,
+            //                     RCNo = "",
+            //                     PRNo = d.PRNo,
+            //                     DeliveryDate = d.DeliveryDate,
+            //                     QTY = d.OrderQty,
+            //                     BackOrder = d.RemainQty,
+            //                     RemainQty = d.RemainQty,
+            //                     Unit = d.UnitCode,
+            //                     PCSUnit = d.PCSUnit,
+            //                     MaxStock = i.MaximumStock,
+            //                     MinStock = i.MinimumStock,
+            //                     VendorNo = h.VendorNo,
+            //                     VendorName = h.VendorName,
+            //                     CreateBy = h.CreateBy,
+            //                     CreateDate = h.CreateDate,
+            //                     Status = "รอรับเข้า"
+            //                 }
+            //   ).ToList();
+            //        if (r.Count > 0)
+            //        {
+            //            dgvNo = dgvData.Rows.Count() + 1;
 
-                        foreach (var vv in r)
-                        {
-                            dgvData.Rows.Add(dgvNo.ToString(), S, vv.RCNo, vv.PRNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
-                                        , vv.DeliveryDate, vv.QTY, vv.BackOrder, vv.RemainQty, vv.Unit, vv.PCSUnit, vv.MaxStock,
-                                        vv.MinStock, vv.VendorNo, vv.VendorName, vv.CreateBy, vv.CreateDate, vv.Status
-                                        );
-                        }
+            //            foreach (var vv in r)
+            //            {
+            //                dgvData.Rows.Add(dgvNo.ToString(), S, vv.RCNo, vv.PRNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
+            //                            , vv.DeliveryDate, vv.QTY, vv.BackOrder, vv.RemainQty, vv.Unit, vv.PCSUnit, vv.MaxStock,
+            //                            vv.MinStock, vv.VendorNo, vv.VendorName, vv.CreateBy, vv.CreateDate, vv.Status
+            //                            );
+            //            }
 
-                    }
-                    //var gg = (from ix in db.tb_PurchaseRequestLines select ix)
-                    //    .Where(a => a.SS.Equals(true) && (a.PRNo==(StockControl.dbClss.TSt(g.FirstOrDefault().PRNo)))
-                    //   && a.OrderQty == a.RemainQty
-                    //   && a.OrderQty >0
-                    //).ToList();
-                    //if (gg.Count() > 0)
-                    //{
-                    //    foreach (var vv in gg)
-                    //    {
-                    //        if (!StockControl.dbClss.TSt(vv.DeliveryDate).Equals(""))
-                    //            DeliveryDate = Convert.ToDateTime(vv.DeliveryDate);
+            //        }
+            //        //var gg = (from ix in db.tb_PurchaseRequestLines select ix)
+            //        //    .Where(a => a.SS.Equals(true) && (a.PRNo==(StockControl.dbClss.TSt(g.FirstOrDefault().PRNo)))
+            //        //   && a.OrderQty == a.RemainQty
+            //        //   && a.OrderQty >0
+            //        //).ToList();
+            //        //if (gg.Count() > 0)
+            //        //{
+            //        //    foreach (var vv in gg)
+            //        //    {
+            //        //        if (!StockControl.dbClss.TSt(vv.DeliveryDate).Equals(""))
+            //        //            DeliveryDate = Convert.ToDateTime(vv.DeliveryDate);
 
-                    //        decimal.TryParse(StockControl.dbClss.TSt(vv.OrderQty), out QTY);
-                    //        decimal.TryParse(StockControl.dbClss.TSt(vv.RemainQty), out BackOrder);
-                    //        decimal.TryParse(StockControl.dbClss.TSt(vv.RemainQty), out RemainQty);
+            //        //        decimal.TryParse(StockControl.dbClss.TSt(vv.OrderQty), out QTY);
+            //        //        decimal.TryParse(StockControl.dbClss.TSt(vv.RemainQty), out BackOrder);
+            //        //        decimal.TryParse(StockControl.dbClss.TSt(vv.RemainQty), out RemainQty);
 
-                    //        dgvNo = dgvData.Rows.Count() + 1;
-                    //        dgvData.Rows.Add(dgvNo.ToString(), S, RCNo,vv.PRNo,vv.CodeNo,vv.ItemName,vv.ItemDesc
-                    //            , DeliveryDate, QTY, BackOrder, RemainQty);
-                    //    }
-                    //}
-                //}
-            }
+            //        //        dgvNo = dgvData.Rows.Count() + 1;
+            //        //        dgvData.Rows.Add(dgvNo.ToString(), S, RCNo,vv.PRNo,vv.CodeNo,vv.ItemName,vv.ItemDesc
+            //        //            , DeliveryDate, QTY, BackOrder, RemainQty);
+            //        //    }
+            //        //}
+            //    //}
+            //}
         }
         private void Load_Data()
         {
