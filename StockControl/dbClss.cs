@@ -368,7 +368,7 @@ namespace StockControl
             {
                 var pcuom = (from ix in db.mh_ItemUOMs select ix)
                     .Where(a => a.ItemNo.Trim().ToUpper().Equals(CodeNo.Trim().ToUpper())
-                    && a.ItemNo.ToUpper().Trim().Equals(CodeNo.Trim().ToUpper())
+                    && a.UOMCode.ToUpper().Trim().Equals(UOM.Trim().ToUpper())
                     
                     ).ToList();
                 if (pcuom.Count > 0)

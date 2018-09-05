@@ -295,39 +295,6 @@
       <Column Name="Corner" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tb_BomHD" Member="tb_BomHDs">
-    <Type Name="tb_BomHD">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="PartNo" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="BomNo" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Year_" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
-      <Column Name="Month_" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="ModifyBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="ModifyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.tb_BomDT" Member="tb_BomDTs">
-    <Type Name="tb_BomDT">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="PartNo" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="BomNo" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Year_" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
-      <Column Name="Month_" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
-      <Column Name="Line" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Component" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Unit" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="UnitCost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.tb_CRRNCY" Member="tb_CRRNCies">
     <Type Name="tb_CRRNCY">
       <Column Name="CRRNCY" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
@@ -1545,6 +1512,40 @@
       <Column Name="UpdateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.tb_BomHD" Member="tb_BomHDs">
+    <Type Name="tb_BomHD">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PartNo" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BomNo" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Year_" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+      <Column Name="Month_" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifyBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ModifyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tb_BomDT" Member="tb_BomDTs">
+    <Type Name="tb_BomDT">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PartNo" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BomNo" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Year_" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+      <Column Name="Month_" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
+      <Column Name="Line" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Component" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Unit" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="UnitCost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">
     <ElementType Name="Sp_ADM03_OpenFormSelectResult">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -2151,72 +2152,6 @@
       <Column Name="MinimumStock" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="[Plan]" Member="Plan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
-  </Function>
-  <Function Name="dbo.sp_017_Select_BomHD" Method="sp_017_Select_BomHD">
-    <Parameter Name="BomNo" Parameter="bomNo" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="ItemNo" Parameter="itemNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="ItemDescription" Parameter="itemDescription" Type="System.String" DbType="VarChar(256)" />
-    <Parameter Name="VendorNo" Parameter="vendorNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="VendorName" Parameter="vendorName" Type="System.String" DbType="VarChar(256)" />
-    <Parameter Name="TypePart" Parameter="typePart" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="dt1" Type="System.String" DbType="VarChar(8)" />
-    <Parameter Name="dt2" Type="System.String" DbType="VarChar(8)" />
-    <ElementType Name="sp_017_Select_BomHDResult">
-      <Column Name="PartNo" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="BomNo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="ModifyBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="ModifyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CodeNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemDescription" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
-      <Column Name="GroupCode" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="TypeCode" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="UnitBuy" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="UnitShip" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="VendorNo" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="VendorItemName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="TypePart" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Location" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.sp_018_Bom_Del" Method="sp_018_Bom_Del">
-    <Parameter Name="id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="BomNo" Parameter="bomNo" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="PartNo" Parameter="partNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.sp_019_Bom_DT_Del" Method="sp_019_Bom_DT_Del">
-    <Parameter Name="id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="BomNo" Parameter="bomNo" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="PartNo" Parameter="partNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="Component" Parameter="component" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.sp_020_Bom_DT_ADD" Method="sp_020_Bom_DT_ADD">
-    <Parameter Name="id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="PartNo" Parameter="partNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="BomNo" Parameter="bomNo" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="Year_" Parameter="year_" Type="System.String" DbType="VarChar(4)" />
-    <Parameter Name="Month_" Parameter="month_" Type="System.String" DbType="VarChar(2)" />
-    <Parameter Name="Line" Parameter="line" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Component" Parameter="component" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="Qty" Parameter="qty" Type="System.Decimal" DbType="Decimal(18,2)" />
-    <Parameter Name="Unit" Parameter="unit" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="UnitCost" Parameter="unitCost" Type="System.Decimal" DbType="Decimal(18,2)" />
-    <Parameter Name="Cost" Parameter="cost" Type="System.Decimal" DbType="Decimal(18,2)" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
-    <Return Type="System.Int32" />
   </Function>
   <Function Name="dbo.Sp_GetNameControl_001" Method="Sp_GetNameControl_001">
     <Parameter Name="ControlNo" Parameter="controlNo" Type="System.Int32" DbType="Int" />
@@ -3644,38 +3579,6 @@
       <Column Name="TermsDelivery" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.sp_021_PR_List" Method="sp_021_PR_List">
-    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="TempNo" Parameter="tempNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="PRNo" Parameter="pRNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="VendorNo" Parameter="vendorNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="VendorName" Parameter="vendorName" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="dt1" Type="System.String" DbType="VarChar(8)" />
-    <Parameter Name="dt2" Type="System.String" DbType="VarChar(8)" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="Factory" Parameter="factory" Type="System.String" DbType="VarChar(100)" />
-    <ElementType Name="sp_021_PR_ListResult">
-      <Column Name="TempNo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="PRNo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="CodeNo" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemDesc" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
-      <Column Name="GroupCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="OrderQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="UnitCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="VendorNo" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="VendorName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
-      <Column Name="ClearBill" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="RequestDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="LocationRunning" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.sp_R020_ConsumableBalance" Method="sp_R020_ConsumableBalance">
     <Parameter Name="CodeNoFrom" Parameter="codeNoFrom" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="CodeNoTo" Parameter="codeNoTo" Type="System.String" DbType="VarChar(50)" />
@@ -3721,5 +3624,103 @@
       <Column Name="DialogFlag" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="Version" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.sp_017_Select_BomHD" Method="sp_017_Select_BomHD">
+    <Parameter Name="BomNo" Parameter="bomNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ItemNo" Parameter="itemNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="ItemDescription" Parameter="itemDescription" Type="System.String" DbType="VarChar(256)" />
+    <Parameter Name="VendorNo" Parameter="vendorNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="VendorName" Parameter="vendorName" Type="System.String" DbType="VarChar(256)" />
+    <Parameter Name="TypePart" Parameter="typePart" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="dt1" Type="System.String" DbType="VarChar(8)" />
+    <Parameter Name="dt2" Type="System.String" DbType="VarChar(8)" />
+    <ElementType Name="sp_017_Select_BomHDResult">
+      <Column Name="PartNo" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="BomNo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifyBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ModifyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CodeNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ItemDescription" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="GroupCode" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="UnitBuy" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="UnitShip" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="VendorNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="VendorItemName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="TypePart" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_021_PR_List" Method="sp_021_PR_List">
+    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="TempNo" Parameter="tempNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="PRNo" Parameter="pRNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="VendorNo" Parameter="vendorNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="VendorName" Parameter="vendorName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="dt1" Type="System.String" DbType="VarChar(8)" />
+    <Parameter Name="dt2" Type="System.String" DbType="VarChar(8)" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Factory" Parameter="factory" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="sp_021_PR_ListResult">
+      <Column Name="TempNo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PRNo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="CodeNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
+      <Column Name="ItemDesc" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
+      <Column Name="GroupCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OrderQty" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VendorNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="VendorName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="ClearBill" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="RequestDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="VATType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_018_Bom_Del" Method="sp_018_Bom_Del">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="BomNo" Parameter="bomNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="PartNo" Parameter="partNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_019_Bom_DT_Del" Method="sp_019_Bom_DT_Del">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="BomNo" Parameter="bomNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="PartNo" Parameter="partNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Component" Parameter="component" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_020_Bom_DT_ADD" Method="sp_020_Bom_DT_ADD">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="PartNo" Parameter="partNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="BomNo" Parameter="bomNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Year_" Parameter="year_" Type="System.String" DbType="VarChar(4)" />
+    <Parameter Name="Month_" Parameter="month_" Type="System.String" DbType="VarChar(2)" />
+    <Parameter Name="Line" Parameter="line" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Component" Parameter="component" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Qty" Parameter="qty" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="Unit" Parameter="unit" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="UnitCost" Parameter="unitCost" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="Cost" Parameter="cost" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="PCSUnit" Parameter="pCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>
