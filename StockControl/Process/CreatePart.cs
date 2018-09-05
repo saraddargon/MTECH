@@ -568,7 +568,7 @@ namespace StockControl
                         u.InternalLeadTime = dbClss.TInt(seInternalLeadTime.Value);
                         u.ReorderType = ddlReOrderType.Text;
                         u.ReorderQty = dbClss.TDe(seReOrderQty.Value);
-                        u.ReorderPoint = dbClss.TDe(seReOrderPoint);
+                        u.ReorderPoint = dbClss.TDe(seReOrderPoint.Value);
                         u.MinimumQty = dbClss.TDe(seMinimum.Value);
                         u.MaximumQty = dbClss.TDe(seMaximum.Value);
                         u.SafetyStock = dbClss.TDe(seSafetyStock.Value);

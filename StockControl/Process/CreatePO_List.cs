@@ -57,43 +57,43 @@ namespace StockControl
             //radGridView1.ReadOnly = true;
             radGridView1.AutoGenerateColumns = false;
             DataLoad();
-            LoadRunningPO();
+            //LoadRunningPO();
         }
-        private void LoadRunningPO()
-        {
-            try
-            {
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    //var G = (from ix in db.sp_048_Running_PO() select ix).ToList();
-                    //ddlFactory.DataSource = G;
-                    //ddlFactory.DisplayMember = "Location";
-                    //ddlFactory.Text = "";
+        //private void LoadRunningPO()
+        //{
+        //    try
+        //    {
+        //        using (DataClasses1DataContext db = new DataClasses1DataContext())
+        //        {
+        //            //var G = (from ix in db.sp_048_Running_PO() select ix).ToList();
+        //            //ddlFactory.DataSource = G;
+        //            //ddlFactory.DisplayMember = "Location";
+        //            //ddlFactory.Text = "";
 
 
-                    ddlFactory.DisplayMember = "Location";
-                    ddlFactory.ValueMember = "Location";
-                    var g = (from ix in db.sp_048_Running_PO() select ix).ToList();
+        //            ddlFactory.DisplayMember = "Location";
+        //            ddlFactory.ValueMember = "Location";
+        //            var g = (from ix in db.sp_048_Running_PO() select ix).ToList();
 
-                    List<string> a = new List<string>();
-                    if (g.Count > 0)
-                    {
-                        foreach (var gg in g)
-                            a.Add(gg.Location);
-                    }
-                    a.Add("");
-                    ddlFactory.DataSource = a;
-                    ddlFactory.Text = "";
+        //            List<string> a = new List<string>();
+        //            if (g.Count > 0)
+        //            {
+        //                foreach (var gg in g)
+        //                    a.Add(gg.Location);
+        //            }
+        //            a.Add("");
+        //            ddlFactory.DataSource = a;
+        //            ddlFactory.Text = "";
                 
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                dbClss.AddError(this.Name, ex.Message, this.Name);
-            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //        dbClss.AddError(this.Name, ex.Message, this.Name);
+        //    }
 
-        }
+        //}
         private void DataLoad()
         {
             
@@ -119,7 +119,7 @@ namespace StockControl
                         && a.PONo.Contains(txtPRNo.Text)
                         && a.VendorName.Contains(txtVendorName.Text)
                         && a.Status.Contains(ddlStatus.Text)
-                        && a.LocationRunning.Contains(ddlFactory.Text)
+                        //&& a.LocationRunning.Contains(ddlFactory.Text)
                         && (((a.CreateDate >= inclusiveStart
                                    && a.CreateDate < exclusiveEnd)
                                    && cbDate.Checked == true)

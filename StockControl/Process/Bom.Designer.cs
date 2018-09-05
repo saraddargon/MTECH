@@ -30,18 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Bom));
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn5 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn6 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn3 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn8 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn9 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn10 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn11 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn12 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn5 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn2 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn6 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn7 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn8 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn13 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn14 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition2 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -93,7 +94,6 @@
             this.radLabel8 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel7 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel11 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
@@ -102,7 +102,6 @@
             this.txtTypePart = new Telerik.WinControls.UI.RadTextBox();
             this.txtPartName = new Telerik.WinControls.UI.RadTextBox();
             this.txtBomNo = new Telerik.WinControls.UI.RadTextBox();
-            this.txtDescription = new Telerik.WinControls.UI.RadTextBox();
             this.txtPartNo = new Telerik.WinControls.UI.RadTextBox();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radRibbonBarButtonGroup2 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
@@ -138,7 +137,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
@@ -147,7 +145,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtTypePart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPartName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBomNo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDescription)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPartNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
@@ -174,7 +171,7 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(1008, 161);
+            this.radRibbonBar1.Size = new System.Drawing.Size(1008, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
@@ -198,6 +195,7 @@
             this.radRibbonBarGroup8});
             this.ribbonTab1.Name = "ribbonTab1";
             this.ribbonTab1.Text = "Action";
+            this.ribbonTab1.UseMnemonic = false;
             // 
             // radRibbonBarGroup1
             // 
@@ -403,7 +401,6 @@
             this.radStatusStrip1.Size = new System.Drawing.Size(1008, 26);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
-            this.radStatusStrip1.Text = "radStatusStrip1";
             // 
             // radLabelElement1
             // 
@@ -419,9 +416,9 @@
             this.panel1.Controls.Add(this.radPanel2);
             this.panel1.Controls.Add(this.radPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 161);
+            this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1008, 527);
+            this.panel1.Size = new System.Drawing.Size(1008, 528);
             this.panel1.TabIndex = 2;
             // 
             // dgvData
@@ -447,95 +444,108 @@
             this.dgvData.MasterTemplate.AllowDeleteRow = false;
             this.dgvData.MasterTemplate.AllowDragToGroup = false;
             this.dgvData.MasterTemplate.AutoGenerateColumns = false;
-            gridViewTextBoxColumn1.EnableExpressionEditor = false;
-            gridViewTextBoxColumn1.FieldName = "No";
-            gridViewTextBoxColumn1.HeaderText = "ลำดับ";
-            gridViewTextBoxColumn1.Name = "dgvNo";
-            gridViewTextBoxColumn1.Width = 45;
-            gridViewTextBoxColumn2.EnableExpressionEditor = false;
-            gridViewTextBoxColumn2.FieldName = "PartNo";
-            gridViewTextBoxColumn2.HeaderText = "รหัสทูล";
-            gridViewTextBoxColumn2.IsVisible = false;
-            gridViewTextBoxColumn2.Name = "dgvPartNo";
-            gridViewTextBoxColumn2.ReadOnly = true;
-            gridViewTextBoxColumn2.Width = 108;
-            gridViewTextBoxColumn3.EnableExpressionEditor = false;
-            gridViewTextBoxColumn3.FieldName = "Component";
-            gridViewTextBoxColumn3.HeaderText = "รหัสทูล";
-            gridViewTextBoxColumn3.Name = "dgvComponent";
-            gridViewTextBoxColumn3.ReadOnly = true;
-            gridViewTextBoxColumn3.Width = 157;
-            gridViewTextBoxColumn4.EnableExpressionEditor = false;
-            gridViewTextBoxColumn4.FieldName = "ComponentName";
-            gridViewTextBoxColumn4.HeaderText = "ชื่อทูล";
-            gridViewTextBoxColumn4.Name = "dgvComponentName";
-            gridViewTextBoxColumn4.ReadOnly = true;
-            gridViewTextBoxColumn4.Width = 266;
-            gridViewTextBoxColumn5.EnableExpressionEditor = false;
-            gridViewTextBoxColumn5.FieldName = "Type";
-            gridViewTextBoxColumn5.HeaderText = "ประเภททูล";
-            gridViewTextBoxColumn5.Name = "dgvType";
-            gridViewTextBoxColumn5.ReadOnly = true;
-            gridViewTextBoxColumn5.Width = 86;
-            gridViewDecimalColumn1.EnableExpressionEditor = false;
-            gridViewDecimalColumn1.FieldName = "Qty";
-            gridViewDecimalColumn1.FormatString = "{0:N2}";
-            gridViewDecimalColumn1.HeaderText = "จำนวน";
-            gridViewDecimalColumn1.Name = "dgvQty";
-            gridViewDecimalColumn1.Width = 81;
-            gridViewTextBoxColumn6.EnableExpressionEditor = false;
-            gridViewTextBoxColumn6.FieldName = "Unit";
-            gridViewTextBoxColumn6.HeaderText = "หน่วย";
-            gridViewTextBoxColumn6.Name = "dgvUnit";
-            gridViewTextBoxColumn6.ReadOnly = true;
-            gridViewTextBoxColumn6.Width = 80;
-            gridViewDecimalColumn2.EnableExpressionEditor = false;
-            gridViewDecimalColumn2.FieldName = "UnitCost";
-            gridViewDecimalColumn2.HeaderText = "ราคา/หน่วย";
-            gridViewDecimalColumn2.Name = "dgvUnitCost";
-            gridViewDecimalColumn2.ReadOnly = true;
-            gridViewDecimalColumn2.Width = 81;
-            gridViewDecimalColumn3.EnableExpressionEditor = false;
-            gridViewDecimalColumn3.FieldName = "Cost";
-            gridViewDecimalColumn3.FormatString = "{0:N2}";
-            gridViewDecimalColumn3.HeaderText = "ยอดรวม";
-            gridViewDecimalColumn3.Name = "dgvCost";
-            gridViewDecimalColumn3.ReadOnly = true;
-            gridViewDecimalColumn3.Width = 103;
-            gridViewTextBoxColumn7.EnableExpressionEditor = false;
-            gridViewTextBoxColumn7.FieldName = "id";
-            gridViewTextBoxColumn7.HeaderText = "id";
-            gridViewTextBoxColumn7.IsVisible = false;
-            gridViewTextBoxColumn7.Name = "dgvid";
-            gridViewTextBoxColumn7.ReadOnly = true;
             gridViewTextBoxColumn8.EnableExpressionEditor = false;
-            gridViewTextBoxColumn8.FieldName = "Line";
-            gridViewTextBoxColumn8.HeaderText = "Line";
-            gridViewTextBoxColumn8.IsVisible = false;
-            gridViewTextBoxColumn8.Name = "dgvLine";
-            gridViewTextBoxColumn8.ReadOnly = true;
+            gridViewTextBoxColumn8.FieldName = "No";
+            gridViewTextBoxColumn8.HeaderText = "ลำดับ";
+            gridViewTextBoxColumn8.Name = "dgvNo";
+            gridViewTextBoxColumn8.Width = 45;
+            gridViewTextBoxColumn9.EnableExpressionEditor = false;
+            gridViewTextBoxColumn9.FieldName = "PartNo";
+            gridViewTextBoxColumn9.HeaderText = "รหัสทูล";
+            gridViewTextBoxColumn9.IsVisible = false;
+            gridViewTextBoxColumn9.Name = "dgvPartNo";
+            gridViewTextBoxColumn9.ReadOnly = true;
+            gridViewTextBoxColumn9.Width = 108;
+            gridViewTextBoxColumn10.EnableExpressionEditor = false;
+            gridViewTextBoxColumn10.FieldName = "Component";
+            gridViewTextBoxColumn10.HeaderText = "รหัสทูล";
+            gridViewTextBoxColumn10.Name = "dgvComponent";
+            gridViewTextBoxColumn10.ReadOnly = true;
+            gridViewTextBoxColumn10.Width = 157;
+            gridViewTextBoxColumn11.EnableExpressionEditor = false;
+            gridViewTextBoxColumn11.FieldName = "ComponentName";
+            gridViewTextBoxColumn11.HeaderText = "ชื่อทูล";
+            gridViewTextBoxColumn11.Name = "dgvComponentName";
+            gridViewTextBoxColumn11.ReadOnly = true;
+            gridViewTextBoxColumn11.Width = 266;
+            gridViewTextBoxColumn12.EnableExpressionEditor = false;
+            gridViewTextBoxColumn12.FieldName = "Type";
+            gridViewTextBoxColumn12.HeaderText = "ประเภททูล";
+            gridViewTextBoxColumn12.Name = "dgvType";
+            gridViewTextBoxColumn12.ReadOnly = true;
+            gridViewTextBoxColumn12.Width = 86;
+            gridViewDecimalColumn5.EnableExpressionEditor = false;
+            gridViewDecimalColumn5.FieldName = "Qty";
+            gridViewDecimalColumn5.FormatString = "{0:N2}";
+            gridViewDecimalColumn5.HeaderText = "จำนวน";
+            gridViewDecimalColumn5.Name = "dgvQty";
+            gridViewDecimalColumn5.Width = 81;
+            gridViewMultiComboBoxColumn2.EnableExpressionEditor = false;
+            gridViewMultiComboBoxColumn2.FieldName = "Unit";
+            gridViewMultiComboBoxColumn2.HeaderText = "หน่วย";
+            gridViewMultiComboBoxColumn2.Name = "dgvUnit";
+            gridViewMultiComboBoxColumn2.Width = 88;
+            gridViewDecimalColumn6.EnableExpressionEditor = false;
+            gridViewDecimalColumn6.FieldName = "PCSUnit";
+            gridViewDecimalColumn6.FormatString = "{0:N2}";
+            gridViewDecimalColumn6.HeaderText = "จำนวน/หน่วย";
+            gridViewDecimalColumn6.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            gridViewDecimalColumn6.Name = "dgvPCSUnit";
+            gridViewDecimalColumn6.Width = 99;
+            gridViewDecimalColumn7.EnableExpressionEditor = false;
+            gridViewDecimalColumn7.FieldName = "UnitCost";
+            gridViewDecimalColumn7.HeaderText = "ราคา/หน่วย";
+            gridViewDecimalColumn7.IsVisible = false;
+            gridViewDecimalColumn7.Name = "dgvUnitCost";
+            gridViewDecimalColumn7.ReadOnly = true;
+            gridViewDecimalColumn7.Width = 81;
+            gridViewDecimalColumn8.EnableExpressionEditor = false;
+            gridViewDecimalColumn8.FieldName = "Cost";
+            gridViewDecimalColumn8.FormatString = "{0:N2}";
+            gridViewDecimalColumn8.HeaderText = "ยอดรวม";
+            gridViewDecimalColumn8.IsVisible = false;
+            gridViewDecimalColumn8.Name = "dgvCost";
+            gridViewDecimalColumn8.ReadOnly = true;
+            gridViewDecimalColumn8.Width = 103;
+            gridViewTextBoxColumn13.EnableExpressionEditor = false;
+            gridViewTextBoxColumn13.FieldName = "id";
+            gridViewTextBoxColumn13.HeaderText = "id";
+            gridViewTextBoxColumn13.IsVisible = false;
+            gridViewTextBoxColumn13.Name = "dgvid";
+            gridViewTextBoxColumn13.ReadOnly = true;
+            gridViewTextBoxColumn14.EnableExpressionEditor = false;
+            gridViewTextBoxColumn14.FieldName = "Line";
+            gridViewTextBoxColumn14.HeaderText = "Line";
+            gridViewTextBoxColumn14.IsVisible = false;
+            gridViewTextBoxColumn14.Name = "dgvLine";
+            gridViewTextBoxColumn14.ReadOnly = true;
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
-            gridViewTextBoxColumn1,
-            gridViewTextBoxColumn2,
-            gridViewTextBoxColumn3,
-            gridViewTextBoxColumn4,
-            gridViewTextBoxColumn5,
-            gridViewDecimalColumn1,
-            gridViewTextBoxColumn6,
-            gridViewDecimalColumn2,
-            gridViewDecimalColumn3,
-            gridViewTextBoxColumn7,
-            gridViewTextBoxColumn8});
+            gridViewTextBoxColumn8,
+            gridViewTextBoxColumn9,
+            gridViewTextBoxColumn10,
+            gridViewTextBoxColumn11,
+            gridViewTextBoxColumn12,
+            gridViewDecimalColumn5,
+            gridViewMultiComboBoxColumn2,
+            gridViewDecimalColumn6,
+            gridViewDecimalColumn7,
+            gridViewDecimalColumn8,
+            gridViewTextBoxColumn13,
+            gridViewTextBoxColumn14});
             this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
-            this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
+            this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition2;
             this.dgvData.Name = "dgvData";
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(1008, 355);
+            this.dgvData.Size = new System.Drawing.Size(1008, 356);
             this.dgvData.TabIndex = 12;
             this.dgvData.TabStop = false;
-            this.dgvData.Text = "Grid";
             this.dgvData.ThemeName = "Office2010Blue";
+            this.dgvData.CellBeginEdit += new Telerik.WinControls.UI.GridViewCellCancelEventHandler(this.MasterTemplate_CellBeginEdit);
             this.dgvData.CellEndEdit += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellEndEdit);
             this.dgvData.CellClick += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellClick);
             this.dgvData.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MasterTemplate_KeyDown);
@@ -547,14 +557,14 @@
             this.btnAdd_Item,
             this.btnDel_Item});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(124, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(121, 48);
             // 
             // btnAdd_Item
             // 
             this.btnAdd_Item.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAdd_Item.Enabled = false;
             this.btnAdd_Item.Name = "btnAdd_Item";
-            this.btnAdd_Item.Size = new System.Drawing.Size(123, 22);
+            this.btnAdd_Item.Size = new System.Drawing.Size(120, 22);
             this.btnAdd_Item.Text = "เพิ่ม พาร์ท";
             this.btnAdd_Item.Click += new System.EventHandler(this.เพมพารทToolStripMenuItem_Click);
             // 
@@ -563,7 +573,7 @@
             this.btnDel_Item.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnDel_Item.Enabled = false;
             this.btnDel_Item.Name = "btnDel_Item";
-            this.btnDel_Item.Size = new System.Drawing.Size(123, 22);
+            this.btnDel_Item.Size = new System.Drawing.Size(120, 22);
             this.btnDel_Item.Text = "ลบ พาร์ท";
             this.btnDel_Item.Click += new System.EventHandler(this.ลบพารทToolStripMenuItem_Click);
             // 
@@ -576,7 +586,7 @@
             this.radPanel2.Controls.Add(this.radLabel6);
             this.radPanel2.Controls.Add(this.radLabel12);
             this.radPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.radPanel2.Location = new System.Drawing.Point(0, 461);
+            this.radPanel2.Location = new System.Drawing.Point(0, 462);
             this.radPanel2.Name = "radPanel2";
             this.radPanel2.Size = new System.Drawing.Size(1008, 66);
             this.radPanel2.TabIndex = 1;
@@ -653,7 +663,6 @@
             this.radPanel1.Controls.Add(this.radLabel8);
             this.radPanel1.Controls.Add(this.radLabel7);
             this.radPanel1.Controls.Add(this.radLabel3);
-            this.radPanel1.Controls.Add(this.radLabel1);
             this.radPanel1.Controls.Add(this.radLabel11);
             this.radPanel1.Controls.Add(this.radLabel2);
             this.radPanel1.Controls.Add(this.radLabel4);
@@ -662,7 +671,6 @@
             this.radPanel1.Controls.Add(this.txtTypePart);
             this.radPanel1.Controls.Add(this.txtPartName);
             this.radPanel1.Controls.Add(this.txtBomNo);
-            this.radPanel1.Controls.Add(this.txtDescription);
             this.radPanel1.Controls.Add(this.txtPartNo);
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.radPanel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -736,7 +744,7 @@
             this.dtEnd.CustomFormat = "dd/MMM/yyyy";
             this.dtEnd.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtEnd.Location = new System.Drawing.Point(463, 63);
+            this.dtEnd.Location = new System.Drawing.Point(223, 65);
             this.dtEnd.Name = "dtEnd";
             this.dtEnd.Size = new System.Drawing.Size(98, 19);
             this.dtEnd.TabIndex = 7;
@@ -747,7 +755,7 @@
             // radLabel9
             // 
             this.radLabel9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel9.Location = new System.Drawing.Point(447, 66);
+            this.radLabel9.Location = new System.Drawing.Point(207, 68);
             this.radLabel9.Name = "radLabel9";
             this.radLabel9.Size = new System.Drawing.Size(10, 17);
             this.radLabel9.TabIndex = 8;
@@ -759,7 +767,7 @@
             this.dtBegin.CustomFormat = "dd/MMM/yyyy";
             this.dtBegin.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtBegin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtBegin.Location = new System.Drawing.Point(343, 63);
+            this.dtBegin.Location = new System.Drawing.Point(103, 65);
             this.dtBegin.Name = "dtBegin";
             this.dtBegin.Size = new System.Drawing.Size(98, 19);
             this.dtBegin.TabIndex = 6;
@@ -770,7 +778,7 @@
             // radLabel5
             // 
             this.radLabel5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel5.Location = new System.Drawing.Point(295, 63);
+            this.radLabel5.Location = new System.Drawing.Point(55, 65);
             this.radLabel5.Name = "radLabel5";
             this.radLabel5.Size = new System.Drawing.Size(42, 17);
             this.radLabel5.TabIndex = 8;
@@ -785,7 +793,7 @@
             this.radLabel8.Size = new System.Drawing.Size(25, 17);
             this.radLabel8.TabIndex = 8;
             this.radLabel8.Text = "รอบ";
-            this.radLabel8.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.radLabel8.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.radLabel8.Visible = false;
             // 
             // radLabel7
@@ -796,7 +804,7 @@
             this.radLabel7.Size = new System.Drawing.Size(13, 17);
             this.radLabel7.TabIndex = 8;
             this.radLabel7.Text = "ปี";
-            this.radLabel7.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.radLabel7.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.radLabel7.Visible = false;
             // 
             // radLabel3
@@ -807,22 +815,12 @@
             this.radLabel3.Size = new System.Drawing.Size(46, 17);
             this.radLabel3.TabIndex = 8;
             this.radLabel3.Text = "ชื่อสินค้า";
-            this.radLabel3.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // radLabel1
-            // 
-            this.radLabel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel1.Location = new System.Drawing.Point(281, 43);
-            this.radLabel1.Name = "radLabel1";
-            this.radLabel1.Size = new System.Drawing.Size(59, 17);
-            this.radLabel1.TabIndex = 8;
-            this.radLabel1.Text = "รายละเอียด";
-            this.radLabel1.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.radLabel3.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             // 
             // radLabel11
             // 
             this.radLabel11.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel11.Location = new System.Drawing.Point(29, 63);
+            this.radLabel11.Location = new System.Drawing.Point(269, 41);
             this.radLabel11.Name = "radLabel11";
             this.radLabel11.Size = new System.Drawing.Size(68, 17);
             this.radLabel11.TabIndex = 8;
@@ -874,7 +872,7 @@
             // 
             this.txtTypePart.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtTypePart.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTypePart.Location = new System.Drawing.Point(103, 63);
+            this.txtTypePart.Location = new System.Drawing.Point(343, 41);
             this.txtTypePart.Name = "txtTypePart";
             this.txtTypePart.ReadOnly = true;
             this.txtTypePart.Size = new System.Drawing.Size(138, 19);
@@ -901,14 +899,6 @@
             this.txtBomNo.TabIndex = 2;
             this.txtBomNo.Leave += new System.EventHandler(this.txtBomNo_Leave);
             this.txtBomNo.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtBomNo_PreviewKeyDown);
-            // 
-            // txtDescription
-            // 
-            this.txtDescription.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescription.Location = new System.Drawing.Point(343, 40);
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(218, 19);
-            this.txtDescription.TabIndex = 4;
             // 
             // txtPartNo
             // 
@@ -1027,7 +1017,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
@@ -1036,7 +1025,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtTypePart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPartName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBomNo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDescription)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPartNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
@@ -1086,8 +1074,6 @@
         private Telerik.WinControls.UI.RadLabel radLabel6;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup4;
         private Telerik.WinControls.UI.RadButtonElement btnPrint;
-        private Telerik.WinControls.UI.RadLabel radLabel1;
-        private Telerik.WinControls.UI.RadTextBox txtDescription;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem btnAdd_Item;
         private System.Windows.Forms.ToolStripMenuItem btnDel_Item;

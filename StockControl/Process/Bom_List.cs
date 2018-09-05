@@ -79,22 +79,22 @@ namespace StockControl
             {
                 ddlTypePart.Items.Add("");
                 ddlTypePart.Items.Add("FG");
-                ddlTypePart.Items.Add("WIP");
+                ddlTypePart.Items.Add("SEMI");
                 ddlTypePart.Items.Add("RM");
 
                 ddlTypePart.Text = "";
             }
-            else if (TypePart == "WIP-RM")
+            else if (TypePart == "SEMI-RM")
             {
-                ddlTypePart.Items.Add("WIP");
+                ddlTypePart.Items.Add("SEMI");
                 ddlTypePart.Items.Add("RM");
 
                 ddlTypePart.Text = "RM";
             }
-            else if (TypePart == "FG-WIP")
+            else if (TypePart == "FG-SEMI")
             {
                 ddlTypePart.Items.Add("FG");
-                ddlTypePart.Items.Add("WIP");
+                ddlTypePart.Items.Add("SEMI");
 
                 ddlTypePart.Text = "FG";
             }
@@ -103,10 +103,10 @@ namespace StockControl
                 ddlTypePart.Items.Add("FG");
                 ddlTypePart.Text = "FG";
             }
-            else if (TypePart == "WIP")
+            else if (TypePart == "SEMI")
             {
-                ddlTypePart.Items.Add("WIP");
-                ddlTypePart.Text = "WIP";
+                ddlTypePart.Items.Add("SEMI");
+                ddlTypePart.Text = "SEMI";
             }
             else if (TypePart == "RM")
             {

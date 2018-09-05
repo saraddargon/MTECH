@@ -10,6 +10,8 @@ using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
 using System.Globalization;
 using Microsoft.VisualBasic;
+using Telerik.WinControls;
+
 namespace StockControl
 {
     public partial class Bom : Telerik.WinControls.UI.RadRibbonForm
@@ -126,41 +128,47 @@ namespace StockControl
         }
         private void DefaultItem()
         {
-            //using (DataClasses1DataContext db = new DataClasses1DataContext())
-            //{
-            //    cboVendorName.AutoCompleteMode = AutoCompleteMode.Append;
-            //    cboVendorName.DisplayMember = "VendorName";
-            //    cboVendorName.ValueMember = "VendorNo";
-            //    cboVendorName.DataSource = (from ix in db.tb_Vendors.Where(s => s.Active == true)
-            //                            select new { ix.VendorNo,ix.VendorName,ix.CRRNCY }).ToList();
-            //    cboVendorName.SelectedIndex = 0;
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                GridViewMultiComboBoxColumn Uom = (GridViewMultiComboBoxColumn)dgvData.Columns["dgvUnit"];
+                Uom.DataSource = (from ix in db.mh_Units.Where(s => s.UnitActive == true)
+                                  select new { ix.UnitCode }).ToList();
+                Uom.DisplayMember = "UnitCode";
+                Uom.DropDownStyle = RadDropDownStyle.DropDown;
+
+                //    cboVendorName.AutoCompleteMode = AutoCompleteMode.Append;
+                //    cboVendorName.DisplayMember = "VendorName";
+                //    cboVendorName.ValueMember = "VendorNo";
+                //    cboVendorName.DataSource = (from ix in db.tb_Vendors.Where(s => s.Active == true)
+                //                            select new { ix.VendorNo,ix.VendorName,ix.CRRNCY }).ToList();
+                //    cboVendorName.SelectedIndex = 0;
 
 
-            //    try
-            //    {
+                //    try
+                //    {
 
-                    
 
-            //        //GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)radGridView1.Columns["CodeNo"];
-            //        //col.DataSource = (from ix in db.tb_Items.Where(s => s.Status.Equals("Active")) select new { ix.CodeNo, ix.ItemDescription }).ToList();
-            //        //col.DisplayMember = "CodeNo";
-            //        //col.ValueMember = "CodeNo";
 
-            //        //col.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
-            //        //col.FilteringMode = GridViewFilteringMode.DisplayMember;
+                //        //GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)radGridView1.Columns["CodeNo"];
+                //        //col.DataSource = (from ix in db.tb_Items.Where(s => s.Status.Equals("Active")) select new { ix.CodeNo, ix.ItemDescription }).ToList();
+                //        //col.DisplayMember = "CodeNo";
+                //        //col.ValueMember = "CodeNo";
 
-            //        // col.AutoSizeMode = BestFitColumnMode.DisplayedDataCells;
-            //    }
-            //    catch { }
+                //        //col.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
+                //        //col.FilteringMode = GridViewFilteringMode.DisplayMember;
 
-            //    //col.TextAlignment = ContentAlignment.MiddleCenter;
-            //    //col.Name = "CodeNo";
-            //    //this.radGridView1.Columns.Add(col);
+                //        // col.AutoSizeMode = BestFitColumnMode.DisplayedDataCells;
+                //    }
+                //    catch { }
 
-            //    //this.radGridView1.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
+                //    //col.TextAlignment = ContentAlignment.MiddleCenter;
+                //    //col.Name = "CodeNo";
+                //    //this.radGridView1.Columns.Add(col);
 
-            //    //this.radGridView1.CellEditorInitialized += radGridView1_CellEditorInitialized;
-            //}
+                //    //this.radGridView1.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
+
+                //    //this.radGridView1.CellEditorInitialized += radGridView1_CellEditorInitialized;
+            }
         }
         private void DataLoad()
         {
@@ -173,9 +181,9 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     var g = (from a in db.tb_BomHDs
-                              join b in db.tb_Items on a.PartNo equals b.CodeNo
+                              join b in db.mh_Items on a.PartNo equals b.InternalNo
                               where (a.Status != "Cancel")
-                              && (b.Status == "Active")
+                              && (b.Active == true)
                               && (a.BomNo == (txtBomNo.Text.Trim()))
                               && (a.PartNo == txtPartNo.Text.Trim())
 
@@ -183,8 +191,8 @@ namespace StockControl
                              {
                                  BomNo = a.BomNo,
                                  PartNo = a.PartNo,
-                                 PartName = b.ItemNo,
-                                 TypePart = b.TypePart,
+                                 PartName = b.InternalName,
+                                 TypePart = b.InventoryGroup,
                                  Remark = a.Remark,
                                  Description = a.Description,
                                  Year_ = a.Year_,
@@ -223,7 +231,7 @@ namespace StockControl
                         txtTypePart.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TypePart);
 
                         txtRemarkHD.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Remark);
-                        txtDescription.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Description);
+                        //txtDescription.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Description);
                         txtBomNo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().BomNo).ToUpper();
                         txtYear_.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Year_);
                         txtMonth_.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Month_);
@@ -304,11 +312,11 @@ namespace StockControl
                                 c += 1;
                                 x.Cells["dgvNo"].Value = c;
 
-                                var i2 = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == StockControl.dbClss.TSt(x.Cells["dgvComponent"].Value)).ToList();
+                                var i2 = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == StockControl.dbClss.TSt(x.Cells["dgvComponent"].Value)).ToList();
                                 if (i2.Count() > 0)
                                 {
-                                    x.Cells["dgvComponentName"].Value = StockControl.dbClss.TSt(i2.FirstOrDefault().ItemNo);
-                                    x.Cells["dgvType"].Value = StockControl.dbClss.TSt(i2.FirstOrDefault().TypePart);
+                                    x.Cells["dgvComponentName"].Value = StockControl.dbClss.TSt(i2.FirstOrDefault().InternalName);
+                                    x.Cells["dgvType"].Value = StockControl.dbClss.TSt(i2.FirstOrDefault().InventoryGroup);
                                 }
                             }
                         }
@@ -367,11 +375,11 @@ namespace StockControl
                     }
                     else if(txtPartNo.Text.Trim() != "")
                     {
-                        var i = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == txtPartNo.Text && (a.TypePart =="FG" || a.TypePart =="WIP" )).ToList();
+                        var i = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == txtPartNo.Text && (a.InventoryGroup =="FG" || a.InventoryGroup =="SEMI" )).ToList();
                         if (i.Count() > 0)
                         {
-                            txtPartName.Text = StockControl.dbClss.TSt(i.FirstOrDefault().ItemNo);
-                            txtTypePart.Text = StockControl.dbClss.TSt(i.FirstOrDefault().TypePart);
+                            txtPartName.Text = StockControl.dbClss.TSt(i.FirstOrDefault().InternalName);
+                            txtTypePart.Text = StockControl.dbClss.TSt(i.FirstOrDefault().InventoryGroup);
                         }
                     }
                 }
@@ -437,11 +445,11 @@ namespace StockControl
                         //    gg.Barcode = StockControl.dbClss.SaveQRCode2D(txtPRNo.Text.Trim());
 
                         gg.Status = "Process";
-                        if (!txtDescription.Text.Trim().Equals(row["Description"].ToString()))
-                        {
-                            gg.Description = txtDescription.Text;
-                            dbClss.AddHistory(this.Name, "แก้ไข Bom", "แก้ไขรายละเอียด [" + txtDescription.Text.Trim() + "]", txtBomNo.Text.Trim() + "-" + txtPartNo.Text.Trim());
-                        }
+                        //if (!txtDescription.Text.Trim().Equals(row["Description"].ToString()))
+                        //{
+                        //    gg.Description = txtDescription.Text;
+                        //    dbClss.AddHistory(this.Name, "แก้ไข Bom", "แก้ไขรายละเอียด [" + txtDescription.Text.Trim() + "]", txtBomNo.Text.Trim() + "-" + txtPartNo.Text.Trim());
+                        //}
 
                         if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                         {
@@ -489,7 +497,7 @@ namespace StockControl
                     gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     gg.PartNo = txtPartNo.Text.Trim();
                     gg.BomNo = txtBomNo.Text.Trim().ToUpper();
-                    gg.Description = txtDescription.Text.Trim();
+                    //gg.Description = txtDescription.Text.Trim();
                     gg.Remark = txtRemarkHD.Text.Trim();
                     gg.Status = "Process";
                     if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
@@ -535,8 +543,8 @@ namespace StockControl
                             u.Qty = StockControl.dbClss.TDe(g.Cells["dgvQty"].Value);
                             u.Unit = StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value);
                             u.UnitCost = StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value);
-                            u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);                           
-                            
+                            u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);
+                            u.PCSUnit = dbClss.TDe(g.Cells["dgvPCSUnit"].Value);
                             db.tb_BomDTs.InsertOnSubmit(u);
                             db.SubmitChanges();
                             //C += 1;
@@ -593,7 +601,14 @@ namespace StockControl
                                         //u.UnitCost = StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value);
                                         //u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);
 
-                                        db.sp_020_Bom_DT_ADD(StockControl.dbClss.TInt(g.Cells["dgvid"].Value), txtPartNo.Text.Trim(), txtBomNo.Text.Trim(), null, null, line_t, StockControl.dbClss.TSt(g.Cells["dgvComponent"].Value), Qty, StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value), StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value), StockControl.dbClss.TDe(g.Cells["dgvCost"].Value), ClassLib.Classlib.User);
+                                        db.sp_020_Bom_DT_ADD(StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+                                            , txtPartNo.Text.Trim(), txtBomNo.Text.Trim(), null, null, line_t
+                                            , StockControl.dbClss.TSt(g.Cells["dgvComponent"].Value), Qty
+                                            , StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value)
+                                            , StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value)
+                                            , StockControl.dbClss.TDe(g.Cells["dgvCost"].Value)
+                                            , StockControl.dbClss.TDe(g.Cells["dgvPCSUnit"].Value)
+                                            , ClassLib.Classlib.User);
                                         //db.SubmitChanges();
                                          line_t += 50;
                                         break;
@@ -636,7 +651,7 @@ namespace StockControl
             {
                 txtPartNo.Enabled = ss;
                 txtBomNo.Enabled = ss;
-                txtDescription.Enabled = ss;
+                //txtDescription.Enabled = ss;
                 dtBegin.Enabled = ss;
                 dtEnd.Enabled = ss;
                 dgvData.ReadOnly = false;
@@ -649,7 +664,7 @@ namespace StockControl
             {
                 txtPartNo.Enabled = ss;
                 txtBomNo.Enabled = ss;
-                txtDescription.Enabled = ss;
+                //txtDescription.Enabled = ss;
                 dtBegin.Enabled = ss;
                 dtEnd.Enabled = ss;               
                 dgvData.ReadOnly = !ss;
@@ -661,7 +676,7 @@ namespace StockControl
             {
                 txtPartNo.Enabled = ss;
                 txtBomNo.Enabled = ss;
-                txtDescription.Enabled = ss;
+               // txtDescription.Enabled = ss;
                 dtBegin.Enabled = ss;
                 dtEnd.Enabled = ss;               
                 dgvData.ReadOnly = !ss;
@@ -675,7 +690,7 @@ namespace StockControl
         {
             txtPartNo.Text = "";
             txtBomNo.Text = "";
-            txtDescription.Text = "";
+            //txtDescription.Text = "";
             txtPartName.Text = "";
             txtTypePart.Text = "";
             dtBegin.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
@@ -779,8 +794,8 @@ namespace StockControl
                     err += "- “ประเภททูล:” เป็นค่าว่าง \n";
                 else if (txtTypePart.Text != "")
                 {
-                    if(txtTypePart.Text != "FG" && txtTypePart.Text != "WIP")
-                    err += "- “ประเภททูล:” ต้องเป็น FG หรือ WIP เท่านั่น \n";
+                    if(txtTypePart.Text != "FG" && txtTypePart.Text != "SEMI")
+                    err += "- “ประเภททูล:” ต้องเป็น FG หรือ SEMI เท่านั่น \n";
                 }
                 if (txtBomNo.Text.Equals(""))
                     err += "- “รหัสบอม:” เป็นค่าว่าง \n";
@@ -826,6 +841,8 @@ namespace StockControl
                             err += "- “จำนวน:” น้อยกว่า 0 \n";
                         if (StockControl.dbClss.TSt(rowInfo.Cells["dgvUnit"].Value).Equals(""))
                             err += "- “หน่วย:” เป็นค่าว่าง \n";
+                        if (StockControl.dbClss.TDe(rowInfo.Cells["dgvPCSUnit"].Value) <= 0)
+                            err += "- “จำนวน/หน่วย:” น้อยกว่า 0 \n";
                     }
                 }
 
@@ -962,6 +979,27 @@ namespace StockControl
                         e.Row.Cells["dgvCost"].Value = OrderQty * StandardCost;
                     }
                 }
+                else if (dgvData.Columns["dgvUnit"].Index == e.ColumnIndex)
+                {
+                    string dgvUOM = dbClss.TSt(e.Row.Cells["dgvUnit"].Value);
+                    string CodeNo = dbClss.TSt(e.Row.Cells["dgvComponent"].Value);
+                    decimal PCSUOM = dbClss.Con_UOM(CodeNo, dgvUOM);
+                    e.Row.Cells["dgvPCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                    //using (DataClasses1DataContext db = new DataClasses1DataContext())
+                    //{
+                    //    var g = (from ix in db.mh_Items select ix)
+                    //        .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
+                    //    if (g.Count > 0)
+                    //    {
+                    //        if (dgvUOM == dbClss.TSt(g.FirstOrDefault().PurchaseUOM))
+                    //        {
+                    //            e.Row.Cells["dgvPCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                    //            //e.Row.Cells["dgvPCSUnit"].ReadOnly = true;
+                    //        }                           
+                    //    }
+
+                    //}
+                }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -1066,7 +1104,7 @@ namespace StockControl
                 {
                     List<GridViewRowInfo> dgvRow_List = new List<GridViewRowInfo>();
                     //dgvRow_List.Clear();              
-                    ListPart MS = new ListPart(txtPartNo, "WIP-RM", dgvRow_List);
+                    ListPart MS = new ListPart(txtPartNo, "SEMI-RM", dgvRow_List);
                     //ListPart_CreatePR MS = new ListPart_CreatePR(dgvRow_List, txtVendorNo.Text);
                     MS.ShowDialog();
                     if (dgvRow_List.Count > 0)
@@ -1076,7 +1114,7 @@ namespace StockControl
                         decimal OrderQty = 1;
                         foreach (GridViewRowInfo ee in dgvRow_List)
                         {
-                            CodeNo = Convert.ToString(ee.Cells["CodeNo"].Value).Trim();
+                            CodeNo = Convert.ToString(ee.Cells["InternalNo"].Value).Trim();
                             if (!CodeNo.Equals("") && !check_Duppicate(CodeNo))
                             {
                                 Add_Part(CodeNo, OrderQty);
@@ -1115,19 +1153,21 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 int Row = 0; Row = dgvData.Rows.Count()+1;
-                var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo.Contains(CodeNo)).ToList();
+                var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo.Contains(CodeNo)).ToList();
                 if (g.Count > 0)
                 {
+                    decimal PCSUnit = dbClss.Con_UOM(StockControl.dbClss.TSt(g.FirstOrDefault().InternalNo)
+                            , StockControl.dbClss.TSt(g.FirstOrDefault().ConsumptionUOM));
                     dgvData.Rows.Add(Row.ToString()
-                        ,txtPartNo.Text.Trim()
+                        , txtPartNo.Text.Trim()
                         , CodeNo,
-                         StockControl.dbClss.TSt(g.FirstOrDefault().ItemNo)
-                        , StockControl.dbClss.TSt(g.FirstOrDefault().TypePart)                       
+                         StockControl.dbClss.TSt(g.FirstOrDefault().InternalNo)
+                        , StockControl.dbClss.TSt(g.FirstOrDefault().InventoryGroup)
                         , OrderQty
                         //, StockControl.dbClss.TDe(g.FirstOrDefault().PCSUnit)
-                        , StockControl.dbClss.TSt(g.FirstOrDefault().UnitShip)
-                        , StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
-                        , 1 * StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
+                        , StockControl.dbClss.TSt(g.FirstOrDefault().ConsumptionUOM)
+                        , PCSUnit
+                        , 0//1 * StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
                         ,0
                         ,0
                         );
@@ -1244,7 +1284,7 @@ namespace StockControl
                 
 
                 this.Cursor = Cursors.WaitCursor;
-                Bom_List sc = new Bom_List(txtPartNo, txtBomNo, "FG-WIP");
+                Bom_List sc = new Bom_List(txtPartNo, txtBomNo, "FG-SEMI");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -1328,11 +1368,12 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var ga = (from ix in db.tb_Items select ix).Where(a => a.CodeNo.Contains(txtPartNo.Text.Trim())  && (a.TypePart == "FG" || a.TypePart =="WIP" )).ToList();
+                    var ga = (from ix in db.mh_Items select ix).Where(a => a.InternalNo.Contains(txtPartNo.Text.Trim())  
+                        && (a.InventoryGroup == "FG" || a.InventoryGroup == "SEMI" )).ToList();
                     if (ga.Count > 0)
                     {
-                        txtPartName.Text = StockControl.dbClss.TSt(ga.FirstOrDefault().ItemNo);
-                        txtTypePart.Text = StockControl.dbClss.TSt(ga.FirstOrDefault().TypePart);
+                        txtPartName.Text = StockControl.dbClss.TSt(ga.FirstOrDefault().InternalNo);
+                        txtTypePart.Text = StockControl.dbClss.TSt(ga.FirstOrDefault().InventoryGroup);
                     }
                 }
             }catch(Exception ex) { MessageBox.Show(ex.Message); }
@@ -1461,7 +1502,7 @@ namespace StockControl
                 //Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                ListPart sc = new ListPart(txtPartNo, "FG-WIP","Bom");
+                ListPart sc = new ListPart(txtPartNo, "FG-SEMI","Bom");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
 
@@ -1495,7 +1536,7 @@ namespace StockControl
 
                 this.Cursor = Cursors.WaitCursor;              
 
-                Bom_List sc = new Bom_List(txtPartNo,txtBomNo, "FG-WIP");
+                Bom_List sc = new Bom_List(txtPartNo,txtBomNo, "FG-SEMI");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -1593,5 +1634,52 @@ namespace StockControl
             
 
         }
+
+        private void MasterTemplate_CellBeginEdit(object sender, GridViewCellCancelEventArgs e)
+        {
+            try
+            {
+                if (e.Column.Name.Equals("dgvUnit"))
+                {
+                    /////////////มีการ เคลียร์ การ Add ก่อน แล้วค่อย Add ใหม่////////////////
+                    //Row = e.RowIndex;
+                    RadMultiColumnComboBoxElement Comcol = (RadMultiColumnComboBoxElement)e.ActiveEditor;
+                    Comcol.Columns.Clear();
+
+                    //RadMultiColumnComboBoxElement Comcol = (RadMultiColumnComboBoxElement)e.ActiveEditor;
+                    Comcol.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
+                    Comcol.DropDownWidth = 150;
+                    Comcol.DropDownHeight = 150;
+                    //Comcol.EditorControl.BestFitColumns(BestFitColumnMode.AllCells);
+                    Comcol.EditorControl.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
+                    //ปรับอัตโนมัติ
+                    //Comcol.EditorControl.AutoGenerateColumns = false;
+                    //Comcol.BestFitColumns(true, true);
+                    Comcol.AutoFilter = true;
+
+                    //Comcol.EditorControl.AllowAddNewRow = true;
+                    Comcol.EditorControl.EnableFiltering = true;
+                    Comcol.EditorControl.ReadOnly = false;
+                    Comcol.ClearFilter();
+
+
+                    //Comcol.DisplayMember = "ItemNo";
+                    //Comcol.ValueMember = "ItemNo";
+
+                    // //----------------------------- ปรับโดยกำหนดเอง
+                    Comcol.EditorControl.Columns.Add(new GridViewTextBoxColumn
+                    {
+                        HeaderText = "UOM",
+                        Name = "UnitCode",
+                        FieldName = "UnitCode",
+                        Width = 100,
+                        AllowFiltering = true,
+                        ReadOnly = false
+                    }
+                   );
+                }
+            }catch(Exception ex) { MessageBox.Show(ex.Message); }
+
+            }
     }
 }

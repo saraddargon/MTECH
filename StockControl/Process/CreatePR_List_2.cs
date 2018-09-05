@@ -29,14 +29,7 @@ namespace StockControl
             Screen_st = Screenx;
 
         }
-        public CreatePR_List_2(List<GridViewRowInfo> RetDT, string VendorNo, string Screenx,string FactoryLocationx)
-        {
-            InitializeComponent();
-            this.RetDT = RetDT;
-            txtVenderNo.Text = VendorNo;
-            Screen_st = Screenx;
-            txtFactory.Text = FactoryLocationx;
-        }
+       
         Telerik.WinControls.UI.RadTextBox CodeNo_tt = new Telerik.WinControls.UI.RadTextBox();
         int screen = 0;
         string Screen_st = "";
@@ -102,7 +95,7 @@ namespace StockControl
                     }
 
                     string CreateBy = "";
-                    var g = (from a in db.sp_021_PR_List(txtCodeNo.Text, txtTempNo.Text, txtPRNo.Text, txtVenderNo.Text, txtVendorName.Text, dt1, dt2, CreateBy,txtFactory.Text)select a).ToList();
+                    var g = (from a in db.sp_021_PR_List(txtCodeNo.Text, txtTempNo.Text, txtPRNo.Text, txtVenderNo.Text, txtVendorName.Text, dt1, dt2, CreateBy,"")select a).ToList();
 
                     int c = 0;
                   
