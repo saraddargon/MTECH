@@ -10,14 +10,24 @@ using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
 using System.Globalization;
 using Microsoft.VisualBasic;
+using ClassLib;
 
 namespace StockControl
 {
     public partial class CustomerPO : Telerik.WinControls.UI.RadRibbonForm
     {
+        string t_PONo = "";
+        string t_CustomerNo = "";
+
         public CustomerPO()
         {
             InitializeComponent();
+        }
+        public CustomerPO(string PONo, string CustomerNo)
+        {
+            InitializeComponent();
+            this.t_PONo = PONo;
+            this.t_CustomerNo = CustomerNo;
         }
 
         List<GridViewRowInfo> RetDT;
@@ -64,6 +74,10 @@ namespace StockControl
 
                 }
 
+                if (txtPONo.Text.Trim() != "")
+                    DataLoad();
+
+
                 ClearData();
                 btnNew_Click(null, null);
             }
@@ -78,7 +92,33 @@ namespace StockControl
                 int ck = 0;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
+                    var t = db.mh_CustomerPOs.Where(x => x.Active && x.CustomerPONo == t_PONo && x.CustomerNo == t_CustomerNo).ToList();
+                    if (t.Count > 0)
+                    {
+                        cbbDemandType.SelectedValue = t.First().DemandType;
+                        string CustNo = t.First().CustomerNo;
+                        cbbCSTM.SelectedValue = CustNo;
+                        txtCSTMNo.Text = CustNo;
+                        txtPONo.Text = t_PONo;
+                        dtOrderDate.Value = t.First().OrderDate.Date;
+                        txtRemark.Text = t.First().RemarkHD;
+                        txtTotal.Text = t.Sum(x => x.Amount).ToString("#,0.00");
+                        foreach (var tt in t)
+                        {
+                            var rowe = dgvData.Rows.AddNew();
+                            var ss = baseClass.ToEnum<CustomerPO_SS>(tt.Status);
+                            addRow(rowe.Index, tt.ReqDate.Date, tt.ItemNo, tt.ItemName
+                                , tt.Quantity, tt.UOM, tt.PCSUnit, tt.PricePerUnit, tt.Amount
+                                , tt.OutShip, tt.OutInv, tt.RemarkDT, tt.id, ss);
+                        }
 
+                        SetRowNo1(dgvData);
+                        CallTotal();
+
+                        btnView_Click(null, null);
+                    }
+                    else
+                        baseClass.Warning("P/O not found.!!");
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -99,9 +139,12 @@ namespace StockControl
 
         private void ClearData()
         {
+            cbbDemandType.SelectedIndex = -1;
             cbbCSTM.SelectedIndex = -1;
+            txtCSTMNo.Text = "";
             txtPONo.Text = "";
             dtOrderDate.Value = DateTime.Today;
+            dgvData.Rows.Clear();
             dgvData.DataSource = null;
             txtRemark.Text = "";
             txtTotal.Text = (0).ToMoney();
@@ -118,6 +161,14 @@ namespace StockControl
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
+
+            cbbDemandType.ReadOnly = false;
+            cbbCSTM.Enabled = true;
+            txtPONo.ReadOnly = false;
+            dtOrderDate.ReadOnly = false;
+            txtRemark.ReadOnly = false;
+
+            dgvData.ReadOnly = false;
 
             ClearData();
             Enable_Status(true, "New");
@@ -142,6 +193,14 @@ namespace StockControl
             btnDel_Item.Enabled = false;
             btnAddPart.Enabled = false;
 
+            dgvData.ReadOnly = true;
+
+            cbbDemandType.ReadOnly = true;
+            cbbCSTM.Enabled = false;
+            txtPONo.ReadOnly = true;
+            dtOrderDate.ReadOnly = true;
+            txtRemark.ReadOnly = true;
+
             Enable_Status(false, "View");
             lblStatus.Text = "View";
             Ac = "View";
@@ -157,40 +216,59 @@ namespace StockControl
 
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
+            btnAddPart.Enabled = true;
+
+            cbbDemandType.ReadOnly = false;
+            cbbCSTM.Enabled = true;
+            txtPONo.ReadOnly = false;
+            dtOrderDate.ReadOnly = false;
+            txtRemark.ReadOnly = false;
+
+            dgvData.ReadOnly = false;
 
 
             Enable_Status(true, "Edit");
             lblStatus.Text = "Edit";
             Ac = "Edit";
-
-            int te = 0;
-            foreach (var g in dgvData.Rows)
-            {
-                if ((dbClss.TSt(g.Cells["dgvStatus"].Value) == "Partial")
-                    || (dbClss.TSt(g.Cells["dgvStatus"].Value) == "Full")
-                    || (dbClss.TSt(g.Cells["dgvStatus"].Value) == "Discon")
-                    )
-                {
-                    te = 1;
-                    break;
-                }
-            }
-            if (te == 1)
-            {
-                btnDelete.Enabled = false;
-            }
-
-
+            
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
             try
             {
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                if(row >= 0)
                 {
+                    string itemNo = dgvData.Rows[row].Cells["Item"].Value.ToSt();
+                    if (baseClass.IsDel($"Do you want to Delete item ({itemNo}) ?"))
+                    {
+                        var rowe = dgvData.Rows[row];
+                        if (rowe.Cells["id"].Value.ToInt() <= 0)
+                            dgvData.Rows.Remove(rowe);
+                        else
+                        {
+                            using (var db = new DataClasses1DataContext())
+                            {
+                                int id = rowe.Cells["id"].Value.ToInt();
+                                var m = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
+                                if (m != null)
+                                {
+                                    m.Active = false;
+                                    m.UpdateDate = DateTime.Now;
+                                    m.UpdateBy = Classlib.User;
+                                    db.SubmitChanges();
+                                    dgvData.Rows.Remove(rowe);
+                                }
+                            }
+                        }
 
+                        SetRowNo1(dgvData);
+                        CallTotal();
+                        if (dgvData.CurrentRow != null)
+                            row = dgvData.CurrentRow.Index;
+                        else
+                            row = -1;
+                    }
                 }
-
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -212,7 +290,21 @@ namespace StockControl
                     err += " “P/O No.:” is empty \n";
                 if (dgvData.Rows.Where(x => x.IsVisible).Count() < 1)
                     err += " “Items:” is empty \n";
+                if (err == "")
+                {
+                    foreach (var item in dgvData.Rows.Where(x => x.IsVisible))
+                    {
+                        string itemNo = item.Cells["Item"].Value.ToSt();
+                        if (itemNo == "") continue;
+                        if (item.Cells["ReqDate"].Value == null)
+                            err += " “Request Date.:” is empty \n";
+                        if (item.Cells["Qty"].Value.ToDecimal() <= 0)
+                            err += " “Qty:” is less than 0 \n";
 
+                        if (err != "")
+                            break;
+                    }
+                }
 
                 if (!err.Equals(""))
                     MessageBox.Show(err);
@@ -235,7 +327,7 @@ namespace StockControl
                 {
                     if (Check_Save())
                         return;
-                    else
+                    else if(baseClass.IsSave())
                         SaveE();
                 }
                 else
@@ -249,6 +341,8 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
+                string pono = txtPONo.Text;
+                string cstmNo = txtCSTMNo.Text;
                 using (var db = new DataClasses1DataContext())
                 {
                     foreach (var item in dgvData.Rows)
@@ -260,20 +354,49 @@ namespace StockControl
                             //edit
                             t.Active = item.IsVisible;
                         }
-                        else if (t.Active)
+                        else if (item.IsVisible)
                         {
                             //add
                             t = new mh_CustomerPO();
-                            t.Active = true;
-                            t.Amount = item.Cells["Amount"].Value.ToDecimal();
-                            t.id = 0;
-                            t.CreateBy = "";
-                            t.CreateDate = DateTime.Now;
-                            t.UpdateBy = "";
-                            t.UpdateDate = DateTime.Now;
+                            db.mh_CustomerPOs.InsertOnSubmit(t);
                         }
+                        else
+                            continue;
+
+                        t.Active = true;
+                        t.Amount = item.Cells["Amount"].Value.ToDecimal();
+                        t.id = 0;
+                        t.CreateBy = Classlib.User;
+                        t.CreateDate = DateTime.Now;
+                        t.UpdateBy = Classlib.User;
+                        t.UpdateDate = DateTime.Now;
+                        t.CustomerNo = cstmNo;
+                        t.CustomerPONo = pono;
+                        t.DemandType = cbbDemandType.SelectedValue.ToInt();
+                        t.id = item.Cells["id"].Value.ToInt();
+                        t.ItemName = item.Cells["ItemName"].Value.ToSt();
+                        t.ItemNo = item.Cells["Item"].Value.ToSt();
+                        t.OrderDate = dtOrderDate.Value.Date;
+                        t.OutInv = item.Cells["OutInv"].Value.ToDecimal();
+                        t.OutShip = item.Cells["OutShip"].Value.ToDecimal();
+                        t.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
+                        t.PricePerUnit = item.Cells["PricePerUnit"].Value.ToDecimal();
+                        t.Quantity = item.Cells["Qty"].Value.ToDecimal();
+                        t.RemarkDT = item.Cells["Remark"].Value.ToSt();
+                        t.RemarkHD = txtRemark.Text;
+                        t.ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value.Date;
+                        t.Status = item.Cells["Status"].Value.ToInt();
+                        t.UOM = item.Cells["Unit"].Value.ToSt();
                     }
+
+                    db.SubmitChanges();
                 }
+
+                baseClass.Info("Save complete(s).");
+                ClearData();
+                txtCSTMNo.Text = t_CustomerNo;
+                txtPONo.Text = t_PONo;
+                DataLoad();
             }
             catch (Exception ex)
             {
@@ -282,6 +405,7 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
         }
 
+        string beginItem = "";
         private void radGridView1_CellEndEdit(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             try
@@ -310,16 +434,24 @@ namespace StockControl
                             if (t == null)
                             {
                                 baseClass.Warning($"Item no. ({itemNo}) not found.!!");
+                                e.Row.Cells["Item"].Value = beginItem;
                                 return;
                             }
                             var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == t.InternalNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
                             var pcsunit = (tU != null) ? tU.QuantityPer : 1;
 
                             //set Tool
-                            addRow(e.RowIndex
-                                , DateTime.Now, t.InternalNo, t.InternalName
-                                , 1, t.BaseUOM, pcsunit, 0, 0
-                                , 1, 1, "", 0, CustomerPO_SS.Waiting);
+                            if (beginItem == "")
+                                addRow(e.RowIndex
+                                    , DateTime.Now, t.InternalNo, t.InternalName
+                                    , 1, t.BaseUOM, pcsunit, 0, 0
+                                    , 1, 1, "", 0, CustomerPO_SS.Waiting);
+                            else
+                            {
+                                e.Row.Cells["ItemName"].Value = t.InternalName;
+                                e.Row.Cells["Unit"].Value = t.BaseUOM;
+                                e.Row.Cells["PCSUnit"].Value = pcsunit;
+                            }
 
                             //
                             SetRowNo1(dgvData);
@@ -356,6 +488,10 @@ namespace StockControl
                         c1.DisplayMember = "UOMCode";
                         c1.DataSource = unit;
                     }
+                }
+                else if (e.Column.Name.Equals("Item"))
+                {
+                    beginItem = itemNo;
                 }
             }
         }
@@ -476,12 +612,8 @@ namespace StockControl
 
                         else
                         {
-                            string CodeNo = "";
-                            CodeNo = StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["Item"].Value);
-                            if (MessageBox.Show("ต้องการลบรายการ ( " + CodeNo + " ) ออกจากรายการ หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                            {
-                                dgvData.CurrentRow.IsVisible = false;
-                            }
+                            row = dgvData.CurrentRow.Index;
+                            btnDelete_Click(null, null);
                         }
                         CallTotal();
                         //getTotal();
@@ -528,10 +660,16 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                //CreatePO_List sc = new CreatePO_List(txtTempNo);
+                var pol = new CustomerPO_List(2);
                 this.Cursor = Cursors.Default;
-                //sc.ShowDialog();
-
+                pol.ShowDialog();
+                if(pol.PONo != "" && pol.CstmNo != "")
+                {
+                    t_PONo = pol.PONo;
+                    t_CustomerNo = pol.CstmNo;
+                    //LoadData
+                    DataLoad();
+                }
 
 
                 GC.Collect();
@@ -539,8 +677,6 @@ namespace StockControl
 
                 ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
                 ClassLib.Memory.Heap();
-                //LoadData
-                DataLoad();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError("CreatePart", ex.Message + " : radButtonElement1_Click", this.Name); }
             finally { this.Cursor = Cursors.Default; }
@@ -791,9 +927,9 @@ namespace StockControl
                 {
                     foreach (var item in m)
                     {
-                        var itemNo = item.Cells["ItemNo"].Value.ToSt();
+                        var itemNo = item.Cells["CodeNo"].Value.ToSt();
                         var t = db.mh_Items.Where(x => x.InternalNo == itemNo).FirstOrDefault();
-                        if(t == null)
+                        if (t == null)
                         {
                             baseClass.Warning($"Item ({itemNo} not found.!!!");
                             return;
@@ -807,11 +943,32 @@ namespace StockControl
                             , 1, t.BaseUOM, u, 0, 0, 0, 0
                             , "", 0, CustomerPO_SS.Waiting);
                     }
+                    SetRowNo1(dgvData);
 
                 }
             }
         }
 
+        private void txtPONo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if(txtPONo.Text.Trim() == "")
+                {
+                    baseClass.Warning("Please enter P/O no.");
+                    return;
+                }
+                if(txtCSTMNo.Text.Trim() == "")
+                {
+                    baseClass.Warning("Please enter Customer no.");
+                    return;
+                }
 
+                t_PONo = txtPONo.Text;
+                t_CustomerNo = txtCSTMNo.Text;
+                ClearData();
+                DataLoad();
+            }
+        }
     }
 }
