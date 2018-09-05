@@ -426,7 +426,8 @@
             gridViewMaskBoxColumn2.EnableExpressionEditor = false;
             gridViewMaskBoxColumn2.FieldName = "EndingTime";
             gridViewMaskBoxColumn2.HeaderText = "Ending Time";
-            gridViewMaskBoxColumn2.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            gridViewMaskBoxColumn2.Mask = "00:00";
+            gridViewMaskBoxColumn2.MaskType = Telerik.WinControls.UI.MaskType.Standard;
             gridViewMaskBoxColumn2.Name = "EndTime";
             gridViewMaskBoxColumn2.Width = 83;
             gridViewDecimalColumn1.EnableExpressionEditor = false;

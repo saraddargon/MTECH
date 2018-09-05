@@ -19,6 +19,7 @@ namespace StockControl
             lblUser.Text = ClassLib.Classlib.User;
             lblDomain.Text = Classlib.DomainUser;
             lblresolution.Text = Classlib.ScreenWidth.ToString("#,###") + " x " + Classlib.ScreenHight.ToString("#,###");
+
         }
 
 

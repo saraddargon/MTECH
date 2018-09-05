@@ -224,6 +224,7 @@ namespace StockControl
                                 t.Capacity = g.Cells["Capacity"].Value.ToDecimal();
                                 t.idWorkCenters = idWorkCenters;
                                 t.ShiftId = 0;
+                                t.Active = true;
 
                                 dbClss.AddHistory(this.Name, "เพิ่มวัน", $"เพิ่มวันหยุดงาน [{t.Date.ToDtString()}]", "");
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
@@ -379,8 +380,8 @@ namespace StockControl
                             err += "- “เวลาเริ่ม.:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["EndTime"].Value).Equals(""))
                             err += "- “เวลาสิ้นสุด.:” เป็นค่าว่างไม่ได้ \n";
-                        if (Convert.ToString(g.Cells["WorkHours"].Value).Equals(""))
-                            err += "- “จำนวนชม.:” เป็นค่าว่างไม่ได้ \n";
+                        //if (Convert.ToString(g.Cells["WorkHours"].Value).Equals(""))
+                        //    err += "- “จำนวนชม.:” เป็นค่าว่างไม่ได้ \n";
                         if (g.Cells["StartTime"].Value.ToSt().Replace(":", ".").ToDecimal() > 23.59m)
                             err += "- “เวลาเริ่ม:” กรอกข้อมูลไม่ถูกต้อง \n";
                         if (g.Cells["EndTime"].Value.ToSt().Replace(":", ".").ToDecimal() > 23.59m)
