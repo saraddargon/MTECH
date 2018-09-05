@@ -644,8 +644,8 @@ namespace StockControl
             if (mccbEl != null)
             {
                 mccbEl.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
-                mccbEl.DropDownMinSize = new Size(150, 100);
-                mccbEl.DropDownMaxSize = new Size(150, 100);
+                mccbEl.DropDownMinSize = new Size(400, 200);
+                mccbEl.DropDownMaxSize = new Size(400, 200);
 
                 mccbEl.AutoSizeDropDownToBestFit = false;
                 mccbEl.DropDownAnimationEnabled = false;
@@ -668,8 +668,8 @@ namespace StockControl
 
                     //RadMultiColumnComboBoxElement Comcol = (RadMultiColumnComboBoxElement)e.ActiveEditor;
                     Comcol.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
-                    Comcol.DropDownWidth = 270;
-                    Comcol.DropDownHeight = 150;
+                    Comcol.DropDownWidth = 400;
+                    Comcol.DropDownHeight = 200;
                     //Comcol.EditorControl.BestFitColumns(BestFitColumnMode.AllCells);
                     Comcol.EditorControl.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
                     //ปรับอัตโนมัติ
@@ -692,7 +692,7 @@ namespace StockControl
                         HeaderText = "InternalNo",
                         Name = "InternalNo",
                         FieldName = "InternalNo",
-                        Width = 100,
+                        Width = 150,
                         AllowFiltering = true,
                         ReadOnly = false
                     }
@@ -702,7 +702,7 @@ namespace StockControl
                         HeaderText = "InternalName",
                         Name = "InternalName",
                         FieldName = "InternalName",
-                        Width = 150,
+                        Width = 250,
                         AllowFiltering = true,
                         ReadOnly = false
                     }
@@ -718,7 +718,7 @@ namespace StockControl
                     //RadMultiColumnComboBoxElement Comcol = (RadMultiColumnComboBoxElement)e.ActiveEditor;
                     Comcol.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
                     Comcol.DropDownWidth = 150;
-                    Comcol.DropDownHeight = 150;
+                    Comcol.DropDownHeight = 200;
                     //Comcol.EditorControl.BestFitColumns(BestFitColumnMode.AllCells);
                     Comcol.EditorControl.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
                     //ปรับอัตโนมัติ

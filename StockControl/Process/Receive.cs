@@ -1966,7 +1966,7 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
 
-                    var p = (from ix in db.tb_PurchaseOrderDetails select ix)
+                    var p = (from ix in db.mh_PurchaseOrderDetails select ix)
                                .Where
                                (a => a.PONo == txtDocNo.Text.Trim() && a.SS == 1
                                && (Convert.ToDecimal(a.BackOrder) > Convert.ToDecimal(0.00))
@@ -2008,7 +2008,7 @@ namespace StockControl
                     string ShelfNo = "";
                     string Location = "";
 
-                    var g = (from ix in db.tb_PurchaseOrders select ix)
+                    var g = (from ix in db.mh_PurchaseOrders select ix)
                         .Where(a => a.PONo == txtDocNo.Text.Trim()
                         && a.Status != "Cancel"
                         ).ToList();
@@ -2036,7 +2036,7 @@ namespace StockControl
                         {
 
 
-                            var d = (from ix in db.tb_PurchaseOrderDetails select ix)
+                            var d = (from ix in db.mh_PurchaseOrderDetails select ix)
                                 .Where(a => a.PONo == txtDocNo.Text.Trim() && a.SS == 1
                                 && (Convert.ToDecimal(a.BackOrder) > Convert.ToDecimal(0.00))
                                 )

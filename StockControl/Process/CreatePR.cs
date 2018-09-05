@@ -1004,6 +1004,8 @@ namespace StockControl
                             err += "- “จำนวน:” น้อยกว่า 0 \n";
                         if (StockControl.dbClss.TSt(rowInfo.Cells["dgvUOM"].Value).Trim().Equals(""))
                             err += "- “หน่วย:” เป็นค่าว่าง \n";
+                        if (StockControl.dbClss.TDe(rowInfo.Cells["dgvPCSUOM"].Value) <=0)
+                            err += "- “จำนวน/หน่วย:” น้อยกว่า 0 \n";
                     }
                 }
 
@@ -1104,31 +1106,31 @@ namespace StockControl
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
-        private void Insert_Stock_temp()
-        {
-            //try
-            //{
+        //private void Insert_Stock_temp()
+        //{
+        //    //try
+        //    //{
 
-            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
-            //    {
+        //    //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+        //    //    {
                   
-            //        var g = (from ix in db.tb_PurchaseRequestLines
-            //                     //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
-            //                 where ix.TempNo.Trim() == txtTempNo.Text.Trim() && ix.SS == 1
-            //                 select ix).ToList();
-            //        if (g.Count > 0)
-            //        {
-            //            //insert Stock
-            //            foreach (var vv in g)
-            //            {
-            //                db.sp_010_Update_StockItem(Convert.ToString(vv.CodeNo),"");
-            //                //dbClss.Insert_StockTemp(vv.CodeNo, Convert.ToDecimal(vv.OrderQty), "PR_Temp", "Inv");
-            //            }
-            //        }
-            //    }
-            //}
-            //catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }
+        //    //        var g = (from ix in db.tb_PurchaseRequestLines
+        //    //                     //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
+        //    //                 where ix.TempNo.Trim() == txtTempNo.Text.Trim() && ix.SS == 1
+        //    //                 select ix).ToList();
+        //    //        if (g.Count > 0)
+        //    //        {
+        //    //            //insert Stock
+        //    //            foreach (var vv in g)
+        //    //            {
+        //    //                db.sp_010_Update_StockItem(Convert.ToString(vv.CodeNo),"");
+        //    //                //dbClss.Insert_StockTemp(vv.CodeNo, Convert.ToDecimal(vv.OrderQty), "PR_Temp", "Inv");
+        //    //            }
+        //    //        }
+        //    //    }
+        //    //}
+        //    //catch (Exception ex) { MessageBox.Show(ex.Message); }
+        //}
         private void radGridView1_CellEndEdit(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             try
@@ -1198,6 +1200,7 @@ namespace StockControl
                                     e.Row.Cells["dgvGroupCode"].ReadOnly = true;
                                     e.Row.Cells["dgvItemDesc"].ReadOnly = true;
                                     e.Row.Cells["dgvUOM"].ReadOnly = true;
+                                    e.Row.Cells["dgvPCSUOM"].ReadOnly = true;
                                     e.Row.Cells["dgvVATType"].ReadOnly = true;
 
                                 }
@@ -1256,6 +1259,21 @@ namespace StockControl
                         string dgvUOM = dbClss.TSt(e.Row.Cells["dgvUOM"].Value);
                         string CodeNo = dbClss.TSt(e.Row.Cells["dgvCodeNo"].Value);
                         decimal PCSUOM = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        int c = 0;
+                        using (DataClasses1DataContext db = new DataClasses1DataContext())
+                        {
+                            var g = (from ix in db.mh_Items select ix)
+                                .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
+                            if (g.Count > 0)
+                            {
+                                c = 1;
+                            }
+                        }
+                        if (c == 1)
+                            e.Row.Cells["dgvPCSUOM"].ReadOnly = true;
+                        else
+                            e.Row.Cells["dgvPCSUOM"].ReadOnly = false;
+
                         e.Row.Cells["dgvPCSUOM"].Value = PCSUOM;
                     }
                     //else if (dgvData.Columns["dgvGroupCode"].Index == e.ColumnIndex)
@@ -1610,23 +1628,23 @@ namespace StockControl
 
         private void txtPRNo_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //if (e.KeyChar == 13 && !txtPRNo.Text.Equals(""))
-            //{
-            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
-            //    {
-            //        var g = (from ix in db.tb_PurchaseRequests select ix)
-            //            .Where(a => a.PRNo == txtPRNo.Text.Trim()
-            //            && (a.Status != "Cancel")
-            //            ).ToList();
-            //        if (g.Count() > 0)
-            //        {
-            //            txtTempNo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TEMPNo);
-            //            btnView_Click(null, null);
-            //            DataLoad();
-            //        }
-            //    }
-                
-            //}
+            if (e.KeyChar == 13 && !txtPRNo.Text.Equals(""))
+            {
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    var g = (from ix in db.mh_PurchaseRequests select ix)
+                        .Where(a => a.PRNo == txtPRNo.Text.Trim()
+                        && (a.Status != "Cancel")
+                        ).ToList();
+                    if (g.Count() > 0)
+                    {
+                        txtTempNo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TEMPNo);
+                        btnView_Click(null, null);
+                        DataLoad();
+                    }
+                }
+
+            }
         }
         private void CreatePR_from_WaitingPR()
         {
@@ -1807,7 +1825,7 @@ namespace StockControl
                     ee.Cells["dgvUOM"].ReadOnly = true;
                     ee.Cells["dgvItemDesc"].ReadOnly = true;
                     ee.Cells["dgvGroupCode"].ReadOnly = true;
-                    //ee.Cells["dgvUnitCode"].ReadOnly = true;
+                    ee.Cells["dgvPCSUOM"].ReadOnly = true;
                     //ee.Cells["dgvStandardCost"].ReadOnly = true;
                 }
                 //else

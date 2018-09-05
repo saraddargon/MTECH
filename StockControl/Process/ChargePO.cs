@@ -129,7 +129,7 @@ namespace StockControl
 
                         ////Detail
                         var d = (from i in db.tb_ChargePODs
-                                 join s in db.tb_PurchaseOrderDetails on i.RefidPO equals s.id
+                                 join s in db.mh_PurchaseOrderDetails on i.RefidPO equals s.id
                                  where i.Status != "Cancel"
                                     && i.CHNo.Trim() == txtCHNo.Text.Trim()
                                  select new
@@ -371,14 +371,14 @@ namespace StockControl
                 //
                 foreach (var T in Temp.Distinct())
                 {
-                    var g1 = (from ix in db.tb_PurchaseOrders
+                    var g1 = (from ix in db.mh_PurchaseOrders
                               where ix.PONo == dbClss.TSt(T) //ix.CHNo.Trim() == txtCHNo.Text.Trim() && ix.Status != "Cancel"       //  && ix.CHStatus != "Completed"
                                && (ix.Status != "Cancel")
                               select ix).ToList();
                     if (g1.Count > 0)
                     {
                         //-----------Herder------------------
-                        var gg = (from ix in db.tb_PurchaseOrders
+                        var gg = (from ix in db.mh_PurchaseOrders
                                   where ix.PONo == dbClss.TSt(T) //ix.CHNo.Trim() == txtCHNo.Text.Trim() && ix.Status != "Cancel"
                                    && (ix.Status != "Cancel")
                                   select ix).First();
@@ -426,7 +426,7 @@ namespace StockControl
                             foreach (var T in Temp.Distinct())
                             {
                                 string CodeNo = "";
-                                var g1 = (from ix in db.tb_PurchaseOrderDetails
+                                var g1 = (from ix in db.mh_PurchaseOrderDetails
                                           where ix.PONo == dbClss.TSt(T) //ix.CHNo.Trim() == txtCHNo.Text.Trim() && ix.Status != "Cancel"       //  && ix.CHStatus != "Completed"
                                            && (ix.SS == 1)
                                           select ix).ToList();
@@ -467,7 +467,7 @@ namespace StockControl
                         //    {
                         //        chk = 1;
 
-                        var l = (from ix in db.tb_PurchaseOrderDetails
+                        var l = (from ix in db.mh_PurchaseOrderDetails
                                  where
                                   ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
                                  select ix).ToList();
@@ -475,7 +475,7 @@ namespace StockControl
                         {
                             Temp.Add(l.FirstOrDefault().TempPNo);
 
-                            var u = (from ix in db.tb_PurchaseOrderDetails
+                            var u = (from ix in db.mh_PurchaseOrderDetails
                                      where
                                       ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
                                      select ix).First();
@@ -510,7 +510,7 @@ namespace StockControl
 
                 foreach (var T in Temp.Distinct())
                 {
-                    var g1 = (from ix in db.tb_PurchaseOrders
+                    var g1 = (from ix in db.mh_PurchaseOrders
                               where ix.TempPNo == dbClss.TSt(T) //ix.CHNo.Trim() == txtCHNo.Text.Trim() && ix.Status != "Cancel"
                                                                 //  && ix.CHStatus != "Completed"
                                && (ix.Status != "Cancel")
@@ -518,7 +518,7 @@ namespace StockControl
                     if (g1.Count > 0)
                     {
                         //-----------Herder------------------
-                        var gg = (from ix in db.tb_PurchaseOrders
+                        var gg = (from ix in db.mh_PurchaseOrders
                                   where ix.TempPNo == dbClss.TSt(T) //ix.CHNo.Trim() == txtCHNo.Text.Trim() && ix.Status != "Cancel"
                                   //&& ix.CHStatus != "Completed"
                                    && (ix.Status != "Cancel")
@@ -732,14 +732,14 @@ namespace StockControl
             {
                 foreach (var T in Temp.Distinct())
                 {
-                    var g1 = (from ix in db.tb_PurchaseOrders
+                    var g1 = (from ix in db.mh_PurchaseOrders
                               where ix.PONo == dbClss.TSt(T) //ix.CHNo.Trim() == txtCHNo.Text.Trim() && ix.Status != "Cancel"       //  && ix.CHStatus != "Completed"
                                && (ix.Status != "Cancel")
                               select ix).ToList();
                     if (g1.Count > 0)
                     {
                         //-----------Herder------------------
-                        var gg = (from ix in db.tb_PurchaseOrders
+                        var gg = (from ix in db.mh_PurchaseOrders
                                   where ix.PONo == dbClss.TSt(T) //ix.CHNo.Trim() == txtCHNo.Text.Trim() && ix.Status != "Cancel"
                                    && (ix.Status != "Cancel")
                                   select ix).First();
@@ -1619,7 +1619,7 @@ namespace StockControl
                             TempPNo = StockControl.dbClss.TSt(ee.Cells["TempPNo"].Value);
 
 
-                            var d = (from ix in db.tb_PurchaseOrderDetails select ix)
+                            var d = (from ix in db.mh_PurchaseOrderDetails select ix)
                               .Where(a => a.TempPNo == TempPNo.Trim() && a.SS == 1).ToList();
                             if (d.Count() > 0)
                             {
