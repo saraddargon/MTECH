@@ -361,8 +361,24 @@ namespace StockControl
 
             return re;
         }
-
-        public static  bool Permisstion(string RootNode, string Screen,string UserID)
+        public static decimal Con_UOM(string CodeNo,string UOM)
+        {
+            decimal PCSUOM = 0;
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                var pcuom = (from ix in db.mh_ItemUOMs select ix)
+                    .Where(a => a.ItemNo.Trim().ToUpper().Equals(CodeNo.Trim().ToUpper())
+                    && a.ItemNo.ToUpper().Trim().Equals(CodeNo.Trim().ToUpper())
+                    
+                    ).ToList();
+                if (pcuom.Count > 0)
+                {
+                    PCSUOM = dbClss.TDe(pcuom.FirstOrDefault().QuantityPer);
+                }
+            }
+            return PCSUOM;
+        }
+    public static  bool Permisstion(string RootNode, string Screen,string UserID)
         {
             bool re = false;
             try

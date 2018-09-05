@@ -691,254 +691,254 @@ namespace StockControl
         {
           
             bool ck = false;
-            //int C = 0;
-            //try
+            ////int C = 0;
+            ////try
+            ////{
+
+
+            //    dgvData.EndEdit();
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
             //{
+            //    foreach (var g in dgvData.Rows)
+            //    {
+            //        if (g.IsVisible.Equals(true))
+            //        {
+            //            DateTime? d = null;
+            //            DateTime? DeliveryDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            //            if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) <= 0)  //New ใหม่
+            //            {
+
+            //                tb_PurchaseOrderDetail u = new tb_PurchaseOrderDetail();
+            //                u.PONo = txtPONo.Text;
+            //                u.TempPNo = txtTempNo.Text;
+            //                u.CodeNo = StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value);
+            //                u.ItemName = StockControl.dbClss.TSt(g.Cells["dgvItemName"].Value);
+            //                u.ItemDesc = StockControl.dbClss.TSt(g.Cells["dgvItemDesc"].Value);
+            //                u.GroupCode = StockControl.dbClss.TSt(g.Cells["dgvGroupCode"].Value);
+            //                u.OrderQty = StockControl.dbClss.TDe(g.Cells["dgvOrderQty"].Value);
+            //                u.PCSUnit = StockControl.dbClss.TDe(g.Cells["dgvPCSUnit"].Value);
+            //                u.Unit = StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value);
+            //                u.PRItem = StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value);
+            //                //u.RealCost = StockControl.dbClss.TDe(g.Cells["dgvRealCost"].Value);
+            //                u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);
+            //                //u.Remark = StockControl.dbClss.TSt(g.Cells["dgvRemark"].Value);
+            //                //u.LotNo = StockControl.dbClss.TSt(g.Cells["dgvLotNo"].Value);
+            //                //u.SerialNo = StockControl.dbClss.TSt(g.Cells["dgvSerialNo"].Value);
+            //                //u.MCName = StockControl.dbClss.TSt(g.Cells["dgvMCName"].Value);
+            //                //u.LineName = StockControl.dbClss.TSt(g.Cells["dgvLineName"].Value);
+            //                u.PRNo = StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value);
+            //                u.BackOrder = StockControl.dbClss.TDe(g.Cells["dgvBackOrder"].Value);
+            //                u.Amount = dbClss.TDe(g.Cells["dgvAmount"].Value);
+            //                u.Discount = dbClss.TDe(g.Cells["dgvDiscount"].Value);
+            //                u.DiscountAmount = dbClss.TDe(g.Cells["dgvDiscountAmount"].Value);
+            //                u.ExtendedCost = dbClss.TDe(g.Cells["dgvExtendedCost"].Value);
+            //                u.DF = dbClss.TInt(g.Cells["dgvDF"].Value);
+            //                DeliveryDate = dtDuedate.Value;
+            //                if (!StockControl.dbClss.TSt(g.Cells["dgvDeliveryDate"].Value).Equals(""))
+            //                    DeliveryDate = StockControl.dbClss.TDa(g.Cells["dgvDeliveryDate"].Value);
+
+            //                u.DeliveryDate = DeliveryDate;
+            //                u.SS = 1;
+            //                db.tb_PurchaseOrderDetails.InsertOnSubmit(u);
+            //                db.SubmitChanges();
+            //                //C += 1;
+            //                dbClss.AddHistory(this.Name, "เพิ่ม Item PO", "เพิ่มรายการ Create PO [" + u.CodeNo + "]", txtPONo.Text);
+
+            //            }
+            //            else  // อัพเดต
+            //            {
+
+            //                if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) > 0
+            //                    && StockControl.dbClss.TSt(g.Cells["dgvStatus"].Value) != "Full"
+            //                    && StockControl.dbClss.TSt(g.Cells["dgvStatus"].Value) != "Partial"
+            //                    )
+            //                {
+            //                    foreach (DataRow row in dt_PODT.Rows)
+            //                    {
+            //                        if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) == StockControl.dbClss.TInt(row["id"]))
+            //                        {
+            //                            var u = (from ix in db.tb_PurchaseOrderDetails
+            //                                     where ix.TempPNo == txtTempNo.Text.Trim()
+            //                                     // && ix.TempNo == txtTempNo.Text                                             
+            //                                     && ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+            //                                     select ix).First();
+
+            //                            dbClss.AddHistory(this.Name, "แก้ไขรายการ Item PO", "id :" + StockControl.dbClss.TSt(g.Cells["dgvid"].Value)
+            //                            + " CodeNo :" + StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value)
+            //                            + " แก้ไขโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", txtPONo.Text);
+
+            //                            u.PONo = txtPONo.Text.Trim();
+            //                            u.Amount = dbClss.TDe(g.Cells["dgvAmount"].Value);
+            //                            u.Discount = dbClss.TDe(g.Cells["dgvDiscount"].Value);
+            //                            u.DiscountAmount = dbClss.TDe(g.Cells["dgvDiscountAmount"].Value);
+            //                            u.ExtendedCost = dbClss.TDe(g.Cells["dgvExtendedCost"].Value);
+            //                            u.DF = dbClss.TInt(g.Cells["dgvDF"].Value);
+
+            //                            if (!StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value).Equals(row["CodeNo"].ToString()))
+            //                            {
+            //                                u.CodeNo = StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value);
+            //                                dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขรหัสทูล [" + u.CodeNo + "]", txtPONo.Text);
+            //                            }
+
+            //                            if (!StockControl.dbClss.TSt(g.Cells["dgvItemName"].Value).Equals(row["ItemName"].ToString()))
+            //                            {
+            //                                u.ItemName = StockControl.dbClss.TSt(g.Cells["dgvItemName"].Value);
+            //                                dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขชื่อทูล [" + u.ItemName + "]", txtPONo.Text);
+            //                            }
+            //                            if (!StockControl.dbClss.TSt(g.Cells["dgvItemDesc"].Value).Equals(row["ItemDesc"].ToString()))
+            //                            {
+            //                                u.ItemDesc = StockControl.dbClss.TSt(g.Cells["dgvItemDesc"].Value);
+            //                                dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขรายละเอียดทูล [" + u.ItemDesc + "]", txtPONo.Text);
+            //                            }
+            //                            u.GroupCode = StockControl.dbClss.TSt(g.Cells["dgvGroupCode"].Value);
+
+            //                            if (!StockControl.dbClss.TSt(g.Cells["dgvOrderQty"].Value).Equals(row["OrderQty"].ToString()))
+            //                            {
+            //                                decimal OrderQty = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvOrderQty"].Value), out OrderQty);
+            //                                u.OrderQty = StockControl.dbClss.TDe(g.Cells["dgvOrderQty"].Value);
+            //                                u.BackOrder = OrderQty;
+            //                                dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขจำนวน [" + u.OrderQty.ToString() + "]", txtPONo.Text);
+            //                            }
+
+            //                            //if (!StockControl.dbClss.TSt(g.Cells["dgvBackOrder"].Value).Equals(row["BackOrder"].ToString()))
+            //                            //{
+            //                            //    decimal BackOrder = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvBackOrder"].Value), out BackOrder);
+            //                            //    u.BackOrder = StockControl.dbClss.TDe(g.Cells["dgvBackOrder"].Value);
+            //                            //    dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขจำนวน BackOrder [" + u.BackOrder.ToString() + "]", txtPONo.Text);
+            //                            //}
+            //                            if (!StockControl.dbClss.TSt(g.Cells["dgvPCSUnit"].Value).Equals(row["OrderQty"].ToString()))
+            //                            {
+            //                                u.PCSUnit = StockControl.dbClss.TDe(g.Cells["dgvPCSUnit"].Value);
+            //                                decimal dgvPCSUnit = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvPCSUnit"].Value), out dgvPCSUnit);
+            //                                dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขจำนวน:หน่วย [" + u.PCSUnit.ToString() + "]", txtPONo.Text);
+            //                            }
+
+            //                            if (!StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value).Equals(row["Unit"].ToString()))
+            //                            {
+            //                                u.Unit = StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value);
+            //                                dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขหน่วย [" + u.Unit + "]", txtPONo.Text);
+            //                            }
+
+            //                            if (!StockControl.dbClss.TSt(g.Cells["dgvCost"].Value).Equals(row["Cost"].ToString()))
+            //                            {
+            //                                u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);
+            //                                decimal dgvCost = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvCost"].Value), out dgvCost);
+            //                                dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขราคา [" + u.Cost.ToString() + "]", txtPONo.Text);
+            //                            }
+            //                            if (!StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value).Equals(row["PRNo"].ToString()))
+            //                            {
+            //                                u.PRNo = StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value);
+            //                                u.PRItem = StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value);
+            //                                dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขเลขที่อ้างอิ่ง [" + u.PRNo + "]", txtPONo.Text);
+            //                            }
+            //                            if (!StockControl.dbClss.TSt(txtRate.Text).Equals(row["Rate"].ToString()))
+            //                            {
+            //                                u.Rate = StockControl.dbClss.TDe(txtRate.Text);
+            //                                decimal Rate = 0; decimal.TryParse(StockControl.dbClss.TSt(txtRate.Text), out Rate);
+            //                                dbClss.AddHistory(this.Name, "แก้ไข Item Rate", "แก้ไข Rate [" + u.Rate.ToString() + "]", txtPONo.Text);
+            //                            }
+            //                            //if (!StockControl.dbClss.TSt(g.Cells["dgvPRItem"].Value).Equals(row["PRItem"].ToString()))
+            //                            //{
+            //                            //    u.PRItem = StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value);
+            //                            //    decimal PRItem = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvPRItem"].Value), out PRItem);
+            //                            //    dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไข id เลขอ้างอิ่งอ้างอิ่ง [" + u.PRItem.ToString() + "]", txtPONo.Text);
+            //                            //}
+
+            //                            //if (!StockControl.dbClss.TSt(g.Cells["dgvLotNo"].Value).Equals(row["LotNo"].ToString()))
+            //                            //{
+            //                            //    u.LotNo = StockControl.dbClss.TSt(g.Cells["dgvLotNo"].Value);
+            //                            //    dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไข LotNo [" + u.LotNo + "]", txtPONo.Text);
+            //                            //}
+            //                            //if (!StockControl.dbClss.TSt(g.Cells["dgvSerialNo"].Value).Equals(row["SerialNo"].ToString()))
+            //                            //{
+            //                            //    u.SerialNo = StockControl.dbClss.TSt(g.Cells["dgvSerialNo"].Value);
+            //                            //    dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขซีเรียล [" + u.SerialNo + "]", txtPONo.Text);
+            //                            //}
+            //                            //if (!StockControl.dbClss.TSt(g.Cells["dgvMCName"].Value).Equals(row["MCName"].ToString()))
+            //                            //{
+            //                            //    u.MCName = StockControl.dbClss.TSt(g.Cells["dgvMCName"].Value);
+            //                            //    dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขชื่อ Machine [" + u.MCName + "]", txtPONo.Text);
+            //                            //}
+            //                            //if (!StockControl.dbClss.TSt(g.Cells["dgvLineName"].Value).Equals(row["LineName"].ToString()))
+            //                            //{
+            //                            //    u.LineName = StockControl.dbClss.TSt(g.Cells["dgvLineName"].Value);
+            //                            //    dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขชื่อ Line [" + u.LineName + "]", txtPONo.Text);
+            //                            //}
+
+            //                            if (!StockControl.dbClss.TSt(g.Cells["dgvDeliveryDate"].Value).Equals(""))
+            //                                DeliveryDate = Convert.ToDateTime((g.Cells["dgvDeliveryDate"].Value));
+            //                            else
+            //                                DeliveryDate = dtDuedate.Value;
+            //                            u.DeliveryDate = DeliveryDate;
 
 
-                dgvData.EndEdit();
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                foreach (var g in dgvData.Rows)
-                {
-                    if (g.IsVisible.Equals(true))
-                    {
-                        DateTime? d = null;
-                        DateTime? DeliveryDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-                        if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) <= 0)  //New ใหม่
-                        {
+            //                            u.SS = 1;
+            //                            //C += 1;
+            //                            db.SubmitChanges();
+            //                        }
+            //                    }
+            //                }
+            //            }
 
-                            tb_PurchaseOrderDetail u = new tb_PurchaseOrderDetail();
-                            u.PONo = txtPONo.Text;
-                            u.TempPNo = txtTempNo.Text;
-                            u.CodeNo = StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value);
-                            u.ItemName = StockControl.dbClss.TSt(g.Cells["dgvItemName"].Value);
-                            u.ItemDesc = StockControl.dbClss.TSt(g.Cells["dgvItemDesc"].Value);
-                            u.GroupCode = StockControl.dbClss.TSt(g.Cells["dgvGroupCode"].Value);
-                            u.OrderQty = StockControl.dbClss.TDe(g.Cells["dgvOrderQty"].Value);
-                            u.PCSUnit = StockControl.dbClss.TDe(g.Cells["dgvPCSUnit"].Value);
-                            u.Unit = StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value);
-                            u.PRItem = StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value);
-                            //u.RealCost = StockControl.dbClss.TDe(g.Cells["dgvRealCost"].Value);
-                            u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);
-                            //u.Remark = StockControl.dbClss.TSt(g.Cells["dgvRemark"].Value);
-                            //u.LotNo = StockControl.dbClss.TSt(g.Cells["dgvLotNo"].Value);
-                            //u.SerialNo = StockControl.dbClss.TSt(g.Cells["dgvSerialNo"].Value);
-                            //u.MCName = StockControl.dbClss.TSt(g.Cells["dgvMCName"].Value);
-                            //u.LineName = StockControl.dbClss.TSt(g.Cells["dgvLineName"].Value);
-                            u.PRNo = StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value);
-                            u.BackOrder = StockControl.dbClss.TDe(g.Cells["dgvBackOrder"].Value);
-                            u.Amount = dbClss.TDe(g.Cells["dgvAmount"].Value);
-                            u.Discount = dbClss.TDe(g.Cells["dgvDiscount"].Value);
-                            u.DiscountAmount = dbClss.TDe(g.Cells["dgvDiscountAmount"].Value);
-                            u.ExtendedCost = dbClss.TDe(g.Cells["dgvExtendedCost"].Value);
-                            u.DF = dbClss.TInt(g.Cells["dgvDF"].Value);
-                            DeliveryDate = dtDuedate.Value;
-                            if (!StockControl.dbClss.TSt(g.Cells["dgvDeliveryDate"].Value).Equals(""))
-                                DeliveryDate = StockControl.dbClss.TDa(g.Cells["dgvDeliveryDate"].Value);
+            //        }
+            //        else //Del
+            //        {
+            //            if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) > 0)
+            //            {
+            //                var u = (from ix in db.tb_PurchaseOrderDetails
+            //                         where //ix.PRNo == txtPONo.Text.Trim() 
+            //                               //&& ix.TempNo == txtTempNo.Text 
+            //                          ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+            //                         select ix).First();
+            //                u.SS = 0;
 
-                            u.DeliveryDate = DeliveryDate;
-                            u.SS = 1;
-                            db.tb_PurchaseOrderDetails.InsertOnSubmit(u);
-                            db.SubmitChanges();
-                            //C += 1;
-                            dbClss.AddHistory(this.Name, "เพิ่ม Item PO", "เพิ่มรายการ Create PO [" + u.CodeNo + "]", txtPONo.Text);
+            //                dbClss.AddHistory(this.Name, "ลบ Item PO", "id :" + StockControl.dbClss.TSt(g.Cells["dgvid"].Value)
+            //                    + " CodeNo :" + StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value)
+            //                    + " ลบโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", txtPONo.Text);
 
-                        }
-                        else  // อัพเดต
-                        {
-
-                            if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) > 0
-                                && StockControl.dbClss.TSt(g.Cells["dgvStatus"].Value) != "Full"
-                                && StockControl.dbClss.TSt(g.Cells["dgvStatus"].Value) != "Partial"
-                                )
-                            {
-                                foreach (DataRow row in dt_PODT.Rows)
-                                {
-                                    if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) == StockControl.dbClss.TInt(row["id"]))
-                                    {
-                                        var u = (from ix in db.tb_PurchaseOrderDetails
-                                                 where ix.TempPNo == txtTempNo.Text.Trim()
-                                                 // && ix.TempNo == txtTempNo.Text                                             
-                                                 && ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
-                                                 select ix).First();
-
-                                        dbClss.AddHistory(this.Name, "แก้ไขรายการ Item PO", "id :" + StockControl.dbClss.TSt(g.Cells["dgvid"].Value)
-                                        + " CodeNo :" + StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value)
-                                        + " แก้ไขโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", txtPONo.Text);
-
-                                        u.PONo = txtPONo.Text.Trim();
-                                        u.Amount = dbClss.TDe(g.Cells["dgvAmount"].Value);
-                                        u.Discount = dbClss.TDe(g.Cells["dgvDiscount"].Value);
-                                        u.DiscountAmount = dbClss.TDe(g.Cells["dgvDiscountAmount"].Value);
-                                        u.ExtendedCost = dbClss.TDe(g.Cells["dgvExtendedCost"].Value);
-                                        u.DF = dbClss.TInt(g.Cells["dgvDF"].Value);
-
-                                        if (!StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value).Equals(row["CodeNo"].ToString()))
-                                        {
-                                            u.CodeNo = StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value);
-                                            dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขรหัสทูล [" + u.CodeNo + "]", txtPONo.Text);
-                                        }
-
-                                        if (!StockControl.dbClss.TSt(g.Cells["dgvItemName"].Value).Equals(row["ItemName"].ToString()))
-                                        {
-                                            u.ItemName = StockControl.dbClss.TSt(g.Cells["dgvItemName"].Value);
-                                            dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขชื่อทูล [" + u.ItemName + "]", txtPONo.Text);
-                                        }
-                                        if (!StockControl.dbClss.TSt(g.Cells["dgvItemDesc"].Value).Equals(row["ItemDesc"].ToString()))
-                                        {
-                                            u.ItemDesc = StockControl.dbClss.TSt(g.Cells["dgvItemDesc"].Value);
-                                            dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขรายละเอียดทูล [" + u.ItemDesc + "]", txtPONo.Text);
-                                        }
-                                        u.GroupCode = StockControl.dbClss.TSt(g.Cells["dgvGroupCode"].Value);
-
-                                        if (!StockControl.dbClss.TSt(g.Cells["dgvOrderQty"].Value).Equals(row["OrderQty"].ToString()))
-                                        {
-                                            decimal OrderQty = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvOrderQty"].Value), out OrderQty);
-                                            u.OrderQty = StockControl.dbClss.TDe(g.Cells["dgvOrderQty"].Value);
-                                            u.BackOrder = OrderQty;
-                                            dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขจำนวน [" + u.OrderQty.ToString() + "]", txtPONo.Text);
-                                        }
-
-                                        //if (!StockControl.dbClss.TSt(g.Cells["dgvBackOrder"].Value).Equals(row["BackOrder"].ToString()))
-                                        //{
-                                        //    decimal BackOrder = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvBackOrder"].Value), out BackOrder);
-                                        //    u.BackOrder = StockControl.dbClss.TDe(g.Cells["dgvBackOrder"].Value);
-                                        //    dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขจำนวน BackOrder [" + u.BackOrder.ToString() + "]", txtPONo.Text);
-                                        //}
-                                        if (!StockControl.dbClss.TSt(g.Cells["dgvPCSUnit"].Value).Equals(row["OrderQty"].ToString()))
-                                        {
-                                            u.PCSUnit = StockControl.dbClss.TDe(g.Cells["dgvPCSUnit"].Value);
-                                            decimal dgvPCSUnit = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvPCSUnit"].Value), out dgvPCSUnit);
-                                            dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขจำนวน:หน่วย [" + u.PCSUnit.ToString() + "]", txtPONo.Text);
-                                        }
-
-                                        if (!StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value).Equals(row["Unit"].ToString()))
-                                        {
-                                            u.Unit = StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value);
-                                            dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขหน่วย [" + u.Unit + "]", txtPONo.Text);
-                                        }
-
-                                        if (!StockControl.dbClss.TSt(g.Cells["dgvCost"].Value).Equals(row["Cost"].ToString()))
-                                        {
-                                            u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);
-                                            decimal dgvCost = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvCost"].Value), out dgvCost);
-                                            dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขราคา [" + u.Cost.ToString() + "]", txtPONo.Text);
-                                        }
-                                        if (!StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value).Equals(row["PRNo"].ToString()))
-                                        {
-                                            u.PRNo = StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value);
-                                            u.PRItem = StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value);
-                                            dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขเลขที่อ้างอิ่ง [" + u.PRNo + "]", txtPONo.Text);
-                                        }
-                                        if (!StockControl.dbClss.TSt(txtRate.Text).Equals(row["Rate"].ToString()))
-                                        {
-                                            u.Rate = StockControl.dbClss.TDe(txtRate.Text);
-                                            decimal Rate = 0; decimal.TryParse(StockControl.dbClss.TSt(txtRate.Text), out Rate);
-                                            dbClss.AddHistory(this.Name, "แก้ไข Item Rate", "แก้ไข Rate [" + u.Rate.ToString() + "]", txtPONo.Text);
-                                        }
-                                        //if (!StockControl.dbClss.TSt(g.Cells["dgvPRItem"].Value).Equals(row["PRItem"].ToString()))
-                                        //{
-                                        //    u.PRItem = StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value);
-                                        //    decimal PRItem = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvPRItem"].Value), out PRItem);
-                                        //    dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไข id เลขอ้างอิ่งอ้างอิ่ง [" + u.PRItem.ToString() + "]", txtPONo.Text);
-                                        //}
-
-                                        //if (!StockControl.dbClss.TSt(g.Cells["dgvLotNo"].Value).Equals(row["LotNo"].ToString()))
-                                        //{
-                                        //    u.LotNo = StockControl.dbClss.TSt(g.Cells["dgvLotNo"].Value);
-                                        //    dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไข LotNo [" + u.LotNo + "]", txtPONo.Text);
-                                        //}
-                                        //if (!StockControl.dbClss.TSt(g.Cells["dgvSerialNo"].Value).Equals(row["SerialNo"].ToString()))
-                                        //{
-                                        //    u.SerialNo = StockControl.dbClss.TSt(g.Cells["dgvSerialNo"].Value);
-                                        //    dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขซีเรียล [" + u.SerialNo + "]", txtPONo.Text);
-                                        //}
-                                        //if (!StockControl.dbClss.TSt(g.Cells["dgvMCName"].Value).Equals(row["MCName"].ToString()))
-                                        //{
-                                        //    u.MCName = StockControl.dbClss.TSt(g.Cells["dgvMCName"].Value);
-                                        //    dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขชื่อ Machine [" + u.MCName + "]", txtPONo.Text);
-                                        //}
-                                        //if (!StockControl.dbClss.TSt(g.Cells["dgvLineName"].Value).Equals(row["LineName"].ToString()))
-                                        //{
-                                        //    u.LineName = StockControl.dbClss.TSt(g.Cells["dgvLineName"].Value);
-                                        //    dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขชื่อ Line [" + u.LineName + "]", txtPONo.Text);
-                                        //}
-
-                                        if (!StockControl.dbClss.TSt(g.Cells["dgvDeliveryDate"].Value).Equals(""))
-                                            DeliveryDate = Convert.ToDateTime((g.Cells["dgvDeliveryDate"].Value));
-                                        else
-                                            DeliveryDate = dtDuedate.Value;
-                                        u.DeliveryDate = DeliveryDate;
+            //                db.SubmitChanges();
 
 
-                                        u.SS = 1;
-                                        //C += 1;
-                                        db.SubmitChanges();
-                                    }
-                                }
-                            }
-                        }
+            //                //ปรับสถานะ PR เป็น Waiting
 
-                    }
-                    else //Del
-                    {
-                        if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) > 0)
-                        {
-                            var u = (from ix in db.tb_PurchaseOrderDetails
-                                     where //ix.PRNo == txtPONo.Text.Trim() 
-                                           //&& ix.TempNo == txtTempNo.Text 
-                                      ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
-                                     select ix).First();
-                            u.SS = 0;
-
-                            dbClss.AddHistory(this.Name, "ลบ Item PO", "id :" + StockControl.dbClss.TSt(g.Cells["dgvid"].Value)
-                                + " CodeNo :" + StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value)
-                                + " ลบโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", txtPONo.Text);
-
-                            db.SubmitChanges();
-
-
-                            //ปรับสถานะ PR เป็น Waiting
-
-                            var p = (from ix in db.tb_PurchaseRequestLines
-                                     where ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
-                                      //&& ix.TempNo == txtTempNo.Text 
-                                      && ix.id == StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value)
-                                     select ix).First();
-                            p.Status = "Waiting";
-                            p.RemainQty = p.OrderQty;
-                            p.PoNo = "";
-                            p.RefPOid = 0;
+            //                var p = (from ix in db.tb_PurchaseRequestLines
+            //                         where ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+            //                          //&& ix.TempNo == txtTempNo.Text 
+            //                          && ix.id == StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value)
+            //                         select ix).First();
+            //                p.Status = "Waiting";
+            //                p.RemainQty = p.OrderQty;
+            //                p.PoNo = "";
+            //                p.RefPOid = 0;
 
 
 
-                            dbClss.AddHistory(this.Name, "ปรับสถานะ Item PR", "ลบ PO จาก POid :" + StockControl.dbClss.TSt(g.Cells["dgvid"].Value)
-                                + " PONo :" + txtPONo.Text.Trim()
-                                + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value));
+            //                dbClss.AddHistory(this.Name, "ปรับสถานะ Item PR", "ลบ PO จาก POid :" + StockControl.dbClss.TSt(g.Cells["dgvid"].Value)
+            //                    + " PONo :" + txtPONo.Text.Trim()
+            //                    + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value));
 
-                            db.SubmitChanges();
+            //                db.SubmitChanges();
 
-                            db.sp_023_PRHD_Cal_Status(p.TempNo, p.PRNo);
+            //                db.sp_023_PRHD_Cal_Status(p.TempNo, p.PRNo);
 
-                        }
-                    }
+            //            }
+            //        }
 
 
 
 
 
-                }
-            }
+            //    }
             //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //    dbClss.AddError("CreatePR", ex.Message, this.Name);
-            //}
+            ////}
+            ////catch (Exception ex)
+            ////{
+            ////    MessageBox.Show(ex.Message);
+            ////    dbClss.AddError("CreatePR", ex.Message, this.Name);
+            ////}
 
-            //if (C > 0)
-            //    MessageBox.Show("บันทึกสำเร็จ!");
+            ////if (C > 0)
+            ////    MessageBox.Show("บันทึกสำเร็จ!");
 
             return ck;
         }
@@ -1231,38 +1231,38 @@ namespace StockControl
         }
         private void Del_PO(int id,int PRItem,string PRNo)
         {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                //ปรับสถานะ PR เป็น Waiting
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    //ปรับสถานะ PR เป็น Waiting
 
-                var s = (from ix in db.tb_PurchaseRequestLines
-                         where ix.RefPOid == id && ix.id == PRItem
-                         select ix).ToList();
-                if (s.Count > 0)
-                {
-                    //var p = (from ix in db.tb_PurchaseRequestLines
-                    //     where dbClss.TInt( ix.RefPOid) == id
-                    //      //&& ix.TempNo == txtTempNo.Text 
-                    //      && dbClss.TInt(ix.id) == PRItem
-                    //     select ix).First();
-                    foreach (var p in s)
-                    {
-                        p.Status = "Waiting";
-                        p.RemainQty = p.OrderQty;
-                        p.PoNo = "";
-                        p.RefPOid = 0;
+            //    var s = (from ix in db.tb_PurchaseRequestLines
+            //             where ix.RefPOid == id && ix.id == PRItem
+            //             select ix).ToList();
+            //    if (s.Count > 0)
+            //    {
+            //        //var p = (from ix in db.tb_PurchaseRequestLines
+            //        //     where dbClss.TInt( ix.RefPOid) == id
+            //        //      //&& ix.TempNo == txtTempNo.Text 
+            //        //      && dbClss.TInt(ix.id) == PRItem
+            //        //     select ix).First();
+            //        foreach (var p in s)
+            //        {
+            //            p.Status = "Waiting";
+            //            p.RemainQty = p.OrderQty;
+            //            p.PoNo = "";
+            //            p.RefPOid = 0;
 
-                        dbClss.AddHistory(this.Name, "ปรับสถานะ Item PR", "ลบ PO จาก POid :" + StockControl.dbClss.TSt(id)
-                            + " PONo :" + txtPONo.Text.Trim()
-                            + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", PRNo);
+            //            dbClss.AddHistory(this.Name, "ปรับสถานะ Item PR", "ลบ PO จาก POid :" + StockControl.dbClss.TSt(id)
+            //                + " PONo :" + txtPONo.Text.Trim()
+            //                + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", PRNo);
                         
-                        db.SubmitChanges();
+            //            db.SubmitChanges();
 
-                        //update status pr
-                        db.sp_023_PRHD_Cal_Status(p.TempNo, p.PRNo);
-                    }
-                }
-            }
+            //            //update status pr
+            //            db.sp_023_PRHD_Cal_Status(p.TempNo, p.PRNo);
+            //        }
+            //    }
+            //}
         }
         private bool Check_Save()
         {
@@ -1469,47 +1469,47 @@ namespace StockControl
         }
         private void Chage_status_Pr()
         {
-            //ปรับสถานะ PR เป็น Waiting
+            ////ปรับสถานะ PR เป็น Waiting
 
-            try
-            {
+            //try
+            //{
 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    foreach (var g in dgvData.Rows)
-                    {
-                        if (g.IsVisible.Equals(true))
-                        {
-                            var v = (from ix in db.tb_PurchaseRequestLines
-                                     where //ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
-                                           // ix.TempNo == txtTempNo.Text 
-                                        ix.id == StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value)
-                                     select ix).ToList();
-                            if (v.Count > 0)
-                            {
-                                var p = (from ix in db.tb_PurchaseRequestLines
-                                         where //ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
-                                               // ix.TempNo == txtTempNo.Text 
-                                            ix.id == StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value)
-                                         select ix).First();
-                                p.Status = "Completed";
-                                p.RemainQty = 0;
-                                p.PoNo = txtPONo.Text.Trim();
-                                p.RefPOid = StockControl.dbClss.TInt(g.Cells["dgvid"].Value);
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        foreach (var g in dgvData.Rows)
+            //        {
+            //            if (g.IsVisible.Equals(true))
+            //            {
+            //                var v = (from ix in db.tb_PurchaseRequestLines
+            //                         where //ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+            //                               // ix.TempNo == txtTempNo.Text 
+            //                            ix.id == StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value)
+            //                         select ix).ToList();
+            //                if (v.Count > 0)
+            //                {
+            //                    var p = (from ix in db.tb_PurchaseRequestLines
+            //                             where //ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+            //                                   // ix.TempNo == txtTempNo.Text 
+            //                                ix.id == StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value)
+            //                             select ix).First();
+            //                    p.Status = "Completed";
+            //                    p.RemainQty = 0;
+            //                    p.PoNo = txtPONo.Text.Trim();
+            //                    p.RefPOid = StockControl.dbClss.TInt(g.Cells["dgvid"].Value);
 
-                                dbClss.AddHistory(this.Name, "ปรับสถานะ Item PR", "สร้าง PO จาก PRid :" + StockControl.dbClss.TSt(g.Cells["dgvPRItem"].Value)
-                                    + " PONo :" + txtPONo.Text.Trim()
-                                    + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value));
+            //                    dbClss.AddHistory(this.Name, "ปรับสถานะ Item PR", "สร้าง PO จาก PRid :" + StockControl.dbClss.TSt(g.Cells["dgvPRItem"].Value)
+            //                        + " PONo :" + txtPONo.Text.Trim()
+            //                        + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value));
 
-                                db.SubmitChanges();
+            //                    db.SubmitChanges();
 
-                                db.sp_023_PRHD_Cal_Status(p.TempNo, p.PRNo);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //                    db.sp_023_PRHD_Cal_Status(p.TempNo, p.PRNo);
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
 
             
         }
@@ -2143,23 +2143,23 @@ namespace StockControl
 
         private void txtPRNo_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == 13 && !txtPONo.Text.Equals(""))
-            {
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    var g = (from ix in db.tb_PurchaseRequests select ix)
-                        .Where(a => a.PRNo == txtPONo.Text.Trim()
-                        && (a.Status != "Cancel")
-                        ).ToList();
-                    if (g.Count() > 0)
-                    {
-                        txtTempNo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TEMPNo);
-                        btnView_Click(null, null);
-                        DataLoad();
-                    }
-                }
+            //if (e.KeyChar == 13 && !txtPONo.Text.Equals(""))
+            //{
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        var g = (from ix in db.tb_PurchaseRequests select ix)
+            //            .Where(a => a.PRNo == txtPONo.Text.Trim()
+            //            && (a.Status != "Cancel")
+            //            ).ToList();
+            //        if (g.Count() > 0)
+            //        {
+            //            txtTempNo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TEMPNo);
+            //            btnView_Click(null, null);
+            //            DataLoad();
+            //        }
+            //    }
                 
-            }
+            //}
         }
         private void CreatePR_from_WaitingPR()
         {

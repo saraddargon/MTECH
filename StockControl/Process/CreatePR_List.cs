@@ -95,55 +95,55 @@ namespace StockControl
         }
         private void DataLoad()
         {
-            //dt.Rows.Clear();
-            try
-            {
-                radGridView1.DataSource = null;
-                this.Cursor = Cursors.WaitCursor;
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
-                    //radGridView1.DataSource = db.tb_Histories.Where(s => s.ScreenName == ScreenSearch).OrderBy(o => o.CreateDate).ToList();
-                    int c = 0;
+            ////dt.Rows.Clear();
+            //try
+            //{
+            //    radGridView1.DataSource = null;
+            //    this.Cursor = Cursors.WaitCursor;
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
+            //        //radGridView1.DataSource = db.tb_Histories.Where(s => s.ScreenName == ScreenSearch).OrderBy(o => o.CreateDate).ToList();
+            //        int c = 0;
                   
-                    DateTime inclusiveStart = dtDateFrom.Value.Date;
-                    // Include the *whole* of the day indicated by searchEndDate
-                    DateTime exclusiveEnd = dtDateTo.Value.Date.AddDays(1);
+            //        DateTime inclusiveStart = dtDateFrom.Value.Date;
+            //        // Include the *whole* of the day indicated by searchEndDate
+            //        DateTime exclusiveEnd = dtDateTo.Value.Date.AddDays(1);
 
-                    var g = (from ix in db.tb_PurchaseRequests select ix)
-                        .Where(a => a.VendorNo.Contains(txtVendorNo.Text)
-                        && (a.Status != "Cancel")
-                        && a.TEMPNo.Contains(txtTempNo.Text)
-                        && a.PRNo.Contains(txtPRNo.Text)
-                        && a.VendorName.Contains(txtVendorName.Text)
-                        && a.Status.Contains(ddlStatus.Text)
-                        && a.LocationRunning.Contains(ddlFactory.Text)
+            //        var g = (from ix in db.tb_PurchaseRequests select ix)
+            //            .Where(a => a.VendorNo.Contains(txtVendorNo.Text)
+            //            && (a.Status != "Cancel")
+            //            && a.TEMPNo.Contains(txtTempNo.Text)
+            //            && a.PRNo.Contains(txtPRNo.Text)
+            //            && a.VendorName.Contains(txtVendorName.Text)
+            //            && a.Status.Contains(ddlStatus.Text)
+            //            && a.LocationRunning.Contains(ddlFactory.Text)
 
-                        //&& (a.CreateDate >= inclusiveStart
-                        //        && a.CreateDate < exclusiveEnd)
-                        // )
-                        //.ToList();
-                     && (((a.RequestDate >= inclusiveStart
-                                   && a.RequestDate < exclusiveEnd)
-                                   && cbDate.Checked == true)
-                         || (cbDate.Checked == false)
-                                   )).ToList();
-                    if (g.Count > 0)
-                    {
+            //            //&& (a.CreateDate >= inclusiveStart
+            //            //        && a.CreateDate < exclusiveEnd)
+            //            // )
+            //            //.ToList();
+            //         && (((a.RequestDate >= inclusiveStart
+            //                       && a.RequestDate < exclusiveEnd)
+            //                       && cbDate.Checked == true)
+            //             || (cbDate.Checked == false)
+            //                       )).ToList();
+            //        if (g.Count > 0)
+            //        {
 
-                        radGridView1.DataSource = g;
-                        foreach (var x in radGridView1.Rows)
-                        {
-                            c += 1;
-                            x.Cells["No"].Value = c;
-                        }
-                    }
+            //            radGridView1.DataSource = g;
+            //            foreach (var x in radGridView1.Rows)
+            //            {
+            //                c += 1;
+            //                x.Cells["No"].Value = c;
+            //            }
+            //        }
                     
                        
-                }
-            }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
-            this.Cursor = Cursors.Default;
+            //    }
+            //}
+            //catch(Exception ex) { MessageBox.Show(ex.Message); }
+            //this.Cursor = Cursors.Default;
 
 
             //    radGridView1.DataSource = dt;

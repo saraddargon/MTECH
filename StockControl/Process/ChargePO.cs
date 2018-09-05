@@ -895,7 +895,7 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                   
-                    var g = (from ix in db.tb_PurchaseRequestLines
+                    var g = (from ix in db.mh_PurchaseRequestLines
                                  //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
                              where ix.TempNo.Trim() == txtCHNo.Text.Trim() && ix.SS == 1
                              select ix).ToList();

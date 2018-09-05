@@ -54,92 +54,92 @@ namespace StockControl
 
         private void DataLoad()
         {
-            dgvData.Rows.Clear();
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    int dgvNo = 0;
-                    if (!Type.Equals("") && Type.Equals("Invoice") && !DocNo.Equals(""))
-                    {
-                        //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
-                        dgvData.DataSource = db.tb_Stocks.Where(s => s.CodeNo == DocNo && s.Category == "Invoice"
-                        ).OrderBy(o => o.CreateDate).ToList();
-                    }
-                    else if (!Type.Equals("") && Type.Equals("Temp") && !DocNo.Equals(""))
-                    {
-                        dgvData.DataSource = db.tb_Stocks.Where(s => s.CodeNo == DocNo && s.Category == "Temp"
-                        ).OrderBy(o => o.CreateDate).ToList();
-                    }
-                    else if (!Type.Equals("") && Type.Equals("BackOrder") && !DocNo.Equals(""))
-                    {
-                        //dgvData.DataSource = db.tb_PurchaseRequestLines.Where(s => s.CodeNo == DocNo && s.SS ==1 && s.RemainQty >0
-                        //).ToList();
-                        var r = (from d in db.tb_PurchaseRequestLines
-                                 join p in db.tb_PurchaseRequests on d.PRNo equals p.PRNo
-                                 where d.CodeNo == DocNo && d.SS ==1
-                                      && d.RemainQty > 0
-                                 select new
-                                 {
-                                     CodeNo = d.CodeNo,
-                                     Qty = d.RemainQty,
-                                     AmountCost = d.Amount,
-                                     UnitCost = d.StandardCost,
-                                     CreateDate = p.CreateDate,
-                                     App = "รอสินค้า"//d.Status
-                                     ,
-                                     Type = "-"
-                                      ,
-                                     Category = "BackOrder"
-                                    ,
-                                     DocNo = d.PRNo
-                                    ,
-                                     RefNo = "-"
-                                     ,id = d.id
-                                 }
-                           ).ToList();
-                        //dgvData.DataSource = StockControl.dbClss.LINQToDataTable(r);
-                        if (r.Count > 0)
-                        {
-                             dgvNo = dgvData.Rows.Count() + 1;
+            //dgvData.Rows.Clear();
+            //try
+            //{
+            //    this.Cursor = Cursors.WaitCursor;
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        int dgvNo = 0;
+            //        if (!Type.Equals("") && Type.Equals("Invoice") && !DocNo.Equals(""))
+            //        {
+            //            //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
+            //            dgvData.DataSource = db.tb_Stocks.Where(s => s.CodeNo == DocNo && s.Category == "Invoice"
+            //            ).OrderBy(o => o.CreateDate).ToList();
+            //        }
+            //        else if (!Type.Equals("") && Type.Equals("Temp") && !DocNo.Equals(""))
+            //        {
+            //            dgvData.DataSource = db.tb_Stocks.Where(s => s.CodeNo == DocNo && s.Category == "Temp"
+            //            ).OrderBy(o => o.CreateDate).ToList();
+            //        }
+            //        else if (!Type.Equals("") && Type.Equals("BackOrder") && !DocNo.Equals(""))
+            //        {
+            //            //dgvData.DataSource = db.tb_PurchaseRequestLines.Where(s => s.CodeNo == DocNo && s.SS ==1 && s.RemainQty >0
+            //            //).ToList();
+            //            var r = (from d in db.mh_PurchaseRequestLines
+            //                     join p in db.mh_PurchaseRequests on d.PRNo equals p.PRNo
+            //                     where d.CodeNo == DocNo && d.SS ==1
+            //                          //&& d.RemainQty > 0
+            //                     select new
+            //                     {
+            //                         CodeNo = d.CodeNo,
+            //                         Qty = d.RemainQty,
+            //                         AmountCost = d.Amount,
+            //                         UnitCost = d.StandardCost,
+            //                         CreateDate = p.CreateDate,
+            //                         App = "รอสินค้า"//d.Status
+            //                         ,
+            //                         Type = "-"
+            //                          ,
+            //                         Category = "BackOrder"
+            //                        ,
+            //                         DocNo = d.PRNo
+            //                        ,
+            //                         RefNo = "-"
+            //                         ,id = d.id
+            //                     }
+            //               ).ToList();
+            //            //dgvData.DataSource = StockControl.dbClss.LINQToDataTable(r);
+            //            if (r.Count > 0)
+            //            {
+            //                 dgvNo = dgvData.Rows.Count() + 1;
 
-                            foreach (var vv in r)
-                            {
-                                dgvData.Rows.Add(dgvNo.ToString(), vv.CodeNo, vv.App, vv.Type, vv.Category
-                                    , vv.DocNo, vv.RefNo, vv.Qty, vv.UnitCost, vv.AmountCost, vv.CreateDate,"",0,0,0);
-                            }
+            //                foreach (var vv in r)
+            //                {
+            //                    dgvData.Rows.Add(dgvNo.ToString(), vv.CodeNo, vv.App, vv.Type, vv.Category
+            //                        , vv.DocNo, vv.RefNo, vv.Qty, vv.UnitCost, vv.AmountCost, vv.CreateDate,"",0,0,0);
+            //                }
 
-                        }
+            //            }
 
-                    }
+            //        }
 
-                    int c = 0;
-                    foreach (var x in dgvData.Rows)
-                    {
-                        c += 1;
-                        x.Cells["dgvNo"].Value = c;
+            //        int c = 0;
+            //        foreach (var x in dgvData.Rows)
+            //        {
+            //            c += 1;
+            //            x.Cells["dgvNo"].Value = c;
                         
-                        if(Convert.ToString(x.Cells["App"].Value).Equals("Cancel RC")) //หัวข้อ
-                            x.Cells["App"].Value = "ยกเลิกการรับสินค้า";
-                        else if (Convert.ToString(x.Cells["App"].Value).Equals("Receive")) //หัวข้อ
-                            x.Cells["App"].Value = "รับสินค้า";
-                        else if (Convert.ToString(x.Cells["App"].Value).Equals("Shipping")) //หัวข้อ
-                            x.Cells["App"].Value = "เบิกสินค้า";
-                        else if (Convert.ToString(x.Cells["App"].Value).Equals("Cancel SH")) //หัวข้อ                        
-                            x.Cells["App"].Value = "ยกเลิกเบิกสินค้า";
+            //            if(Convert.ToString(x.Cells["App"].Value).Equals("Cancel RC")) //หัวข้อ
+            //                x.Cells["App"].Value = "ยกเลิกการรับสินค้า";
+            //            else if (Convert.ToString(x.Cells["App"].Value).Equals("Receive")) //หัวข้อ
+            //                x.Cells["App"].Value = "รับสินค้า";
+            //            else if (Convert.ToString(x.Cells["App"].Value).Equals("Shipping")) //หัวข้อ
+            //                x.Cells["App"].Value = "เบิกสินค้า";
+            //            else if (Convert.ToString(x.Cells["App"].Value).Equals("Cancel SH")) //หัวข้อ                        
+            //                x.Cells["App"].Value = "ยกเลิกเบิกสินค้า";
 
-                        //if (Convert.ToString(x.Cells["Type"].Value).Equals("ClearTemp")) //หัวข้อ
-                        //    x.Cells["Type"].Value = "ยกเลิกการรับสินค้า";
-                    }
+            //            //if (Convert.ToString(x.Cells["Type"].Value).Equals("ClearTemp")) //หัวข้อ
+            //            //    x.Cells["Type"].Value = "ยกเลิกการรับสินค้า";
+            //        }
 
-                }
-            }
-            catch { }
-            this.Cursor = Cursors.Default;
+            //    }
+            //}
+            //catch { }
+            //this.Cursor = Cursors.Default;
 
 
-            //    radGridView1.DataSource = dt;
+            ////    radGridView1.DataSource = dt;
         }
         private bool CheckDuplicate(string code)
         {
