@@ -137,6 +137,15 @@ namespace StockControl
         {
             return (T)Enum.Parse(typeof(T), value, true);
         }
+
+        public static decimal StockQty (string ItemNo, string LocationCode)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                var g = db.Cal_QTY_Remain_Location(ItemNo, "", 0, LocationCode).Value.ToDecimal();
+                return g;
+            }
+        }
     }
     
 

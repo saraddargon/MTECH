@@ -33,6 +33,12 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDateTimeColumn gridViewDateTimeColumn1 = new Telerik.WinControls.UI.GridViewDateTimeColumn();
+            Telerik.WinControls.UI.GridViewDateTimeColumn gridViewDateTimeColumn2 = new Telerik.WinControls.UI.GridViewDateTimeColumn();
+            Telerik.WinControls.UI.GridViewDateTimeColumn gridViewDateTimeColumn3 = new Telerik.WinControls.UI.GridViewDateTimeColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn5 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn6 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
@@ -213,7 +219,7 @@
             gridViewTextBoxColumn1.Name = "None";
             gridViewTextBoxColumn1.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Right;
             gridViewTextBoxColumn1.ReadOnly = true;
-            gridViewTextBoxColumn1.Width = 8;
+            gridViewTextBoxColumn1.Width = 7;
             gridViewTextBoxColumn2.EnableExpressionEditor = false;
             gridViewTextBoxColumn2.FieldName = "Item";
             gridViewTextBoxColumn2.HeaderText = "Item";
@@ -224,18 +230,57 @@
             gridViewTextBoxColumn3.FieldName = "ItemName";
             gridViewTextBoxColumn3.HeaderText = "Item Name";
             gridViewTextBoxColumn3.Name = "ItemName";
-            gridViewTextBoxColumn3.Width = 167;
+            gridViewTextBoxColumn3.Width = 192;
             gridViewTextBoxColumn4.EnableExpressionEditor = false;
             gridViewTextBoxColumn4.FieldName = "id";
             gridViewTextBoxColumn4.HeaderText = "id";
             gridViewTextBoxColumn4.IsVisible = false;
             gridViewTextBoxColumn4.Name = "id";
             gridViewTextBoxColumn4.ReadOnly = true;
+            gridViewDateTimeColumn1.EnableExpressionEditor = false;
+            gridViewDateTimeColumn1.FieldName = "DueDate";
+            gridViewDateTimeColumn1.FormatString = "{0:dd/MM/yyyy}";
+            gridViewDateTimeColumn1.HeaderText = "DueDate";
+            gridViewDateTimeColumn1.Name = "DueDate";
+            gridViewDateTimeColumn1.Width = 96;
+            gridViewDateTimeColumn2.EnableExpressionEditor = false;
+            gridViewDateTimeColumn2.FieldName = "StartingDate";
+            gridViewDateTimeColumn2.FormatString = "{0:dd/MM/yyyy HH:mm}";
+            gridViewDateTimeColumn2.HeaderText = "Starting Date";
+            gridViewDateTimeColumn2.Name = "StartingDate";
+            gridViewDateTimeColumn2.Width = 96;
+            gridViewDateTimeColumn3.EnableExpressionEditor = false;
+            gridViewDateTimeColumn3.FieldName = "EndingDate";
+            gridViewDateTimeColumn3.FormatString = "{0:dd/MM/yyyy HH:mm}";
+            gridViewDateTimeColumn3.HeaderText = "Ending Date";
+            gridViewDateTimeColumn3.Name = "EndingDate";
+            gridViewDateTimeColumn3.Width = 89;
+            gridViewDecimalColumn1.EnableExpressionEditor = false;
+            gridViewDecimalColumn1.FieldName = "Quantity";
+            gridViewDecimalColumn1.HeaderText = "Quantity";
+            gridViewDecimalColumn1.Name = "Quantity";
+            gridViewDecimalColumn1.Width = 61;
+            gridViewTextBoxColumn5.EnableExpressionEditor = false;
+            gridViewTextBoxColumn5.FieldName = "PlanningType";
+            gridViewTextBoxColumn5.HeaderText = "Planning Type";
+            gridViewTextBoxColumn5.Name = "PlanningType";
+            gridViewTextBoxColumn5.Width = 124;
+            gridViewTextBoxColumn6.EnableExpressionEditor = false;
+            gridViewTextBoxColumn6.FieldName = "RefOrderType";
+            gridViewTextBoxColumn6.HeaderText = "Ref. Order Type";
+            gridViewTextBoxColumn6.Name = "RefOrderType";
+            gridViewTextBoxColumn6.Width = 97;
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
             gridViewTextBoxColumn3,
-            gridViewTextBoxColumn4});
+            gridViewTextBoxColumn4,
+            gridViewDateTimeColumn1,
+            gridViewDateTimeColumn2,
+            gridViewDateTimeColumn3,
+            gridViewDecimalColumn1,
+            gridViewTextBoxColumn5,
+            gridViewTextBoxColumn6});
             this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.dgvData.Name = "dgvData";
