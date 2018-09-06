@@ -69,13 +69,14 @@ namespace StockControl
                     var ts = db.mh_WorkCenters.Where(x => x.Active && (x.id == id || id == 0)).ToList();
                     foreach (var t in ts)
                     {
+                        
                         set_lbStatus($"Calculating...[{t.WorkCenterNo}]:{t.WorkCenterName}");
                         //UOM : Minute, Hour, Day
                         //minWork*Capacity
                         DateTime dTemp = dtFrom.Value.Date.AddDays(-1);
-                        var cal = db.mh_Calendars.Where(x => x.id == t.id).First(); //Calendar
+                        var cal = db.mh_Calendars.Where(x => x.id == t.Calendar).First(); //Calendar
                         var dow = db.mh_WorkingDays.Where(x => x.idCalendar == cal.id).ToList(); //0:Mon - 6:Sun
-                        var hol = db.mh_Holidays.Where(x => x.idCalendar == cal.id).ToList(); //Holiday
+                        var hol = db.mh_Holidays.Where(x => x.Active && x.idCalendar == cal.id).ToList(); //Holiday
                         var abs = db.mh_CapacityAbsences.Where(x => x.Active && x.idWorkCenters == t.id).ToList(); //Absence
                         do
                         {
