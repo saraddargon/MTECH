@@ -186,7 +186,7 @@ namespace StockControl
                             txtVendorNo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().VendorNo);
                             txtVendorName.Text = StockControl.dbClss.TSt(g.FirstOrDefault().VendorName);
                             txtRemark.Text = StockControl.dbClss.TSt(g.FirstOrDefault().RemarkHD);
-                            ddlTypeReceive.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TypeReceive);
+                            //ddlTypeReceive.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TypeReceive);
 
 
                             if (StockControl.dbClss.TSt(g.FirstOrDefault().Type).Equals("รับด้วยใบ Invoice"))
@@ -342,7 +342,7 @@ namespace StockControl
             txtDLNo.Text = "";
             txtDLNo.Enabled = false;
             txtRCNo.Text = "";
-            ddlTypeReceive.Text = "";
+            //ddlTypeReceive.Text = "";
             dtRequire.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             txtReceiveBy.Text = ClassLib.Classlib.User;
             txtReceiveDate.Text = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy");
@@ -371,7 +371,7 @@ namespace StockControl
                 dgvData.ReadOnly = false;
                 rdoInvoice.Enabled = ss;
                 rdoDL.Enabled = ss;
-                ddlTypeReceive.Enabled = ss;
+                //ddlTypeReceive.Enabled = ss;
 
             }
             else if (Condition.Equals("View"))
@@ -536,11 +536,11 @@ namespace StockControl
                             gg.VendorNo = txtVendorNo.Text.Trim();
                             dbClss.AddHistory(this.Name , "แก้ไข Receive", "แก้ไขรหัสผู้ขาย [" + txtVendorNo.Text.Trim() + " เดิม :" + row["VendorNo"].ToString() + "]", txtRCNo.Text.Trim());
                         }
-                        if (!ddlTypeReceive.Text.Trim().Equals(row["TypeReceive"].ToString()))
-                        {
-                            gg.TypeReceive = ddlTypeReceive.Text.Trim();
-                            dbClss.AddHistory(this.Name, "แก้ไข Receive", "แก้ไขประเภทรับ[" + ddlTypeReceive.Text.Trim() + " เดิม :" + row["TypeReceive"].ToString() + "]", txtRCNo.Text.Trim());
-                        }
+                        //if (!ddlTypeReceive.Text.Trim().Equals(row["TypeReceive"].ToString()))
+                        //{
+                        //    gg.TypeReceive = ddlTypeReceive.Text.Trim();
+                        //    dbClss.AddHistory(this.Name, "แก้ไข Receive", "แก้ไขประเภทรับ[" + ddlTypeReceive.Text.Trim() + " เดิม :" + row["TypeReceive"].ToString() + "]", txtRCNo.Text.Trim());
+                        //}
                         if (!txtInvoiceNo.Text.Trim().Equals(row["InvoiceNo"].ToString()))
                         {
                             gg.InvoiceDate = Convert.ToDateTime(dtInvoiceDate.Value, new CultureInfo("en-US"));
@@ -615,7 +615,7 @@ namespace StockControl
                     gg.VendorName = txtVendorName.Text;
                     gg.VendorNo = txtVendorNo.Text.Trim();
                     gg.RemarkHD = txtRemark.Text;
-                    gg.TypeReceive = ddlTypeReceive.Text;
+                    //gg.TypeReceive = ddlTypeReceive.Text;
                     string Type = "";
                     if (rdoInvoice.IsChecked)
                     {
@@ -843,9 +843,9 @@ namespace StockControl
                             //insert stock
                             InsertStock_new_Receive();
 
-                            if (ddlTypeReceive.Text == "PR")
-                                InsertStock_new_Ship();
-                            else if (ddlTypeReceive.Text == "PO")  // กรณีที่ Item นั่นไม่มีในระบบให้ Ship ออกทันที                            
+                            //if (ddlTypeReceive.Text == "PR")
+                            //    InsertStock_new_Ship();
+                            //else if (ddlTypeReceive.Text == "PO")  // กรณีที่ Item นั่นไม่มีในระบบให้ Ship ออกทันที                            
                                 InsertStock_new_Ship_Other_PO();
                             
 
@@ -1785,15 +1785,15 @@ namespace StockControl
                 {
                     
 
-                    if (ddlTypeReceive.Text =="PR")
-                        Insert_data_PR();
-                    else if(ddlTypeReceive.Text=="PO")
+                    //if (ddlTypeReceive.Text =="PR")
+                    //    Insert_data_PR();
+                    //else if(ddlTypeReceive.Text=="PO")
                         Insert_data_PO();
 
-                    if (dgvData.Rows.Count() > 0)
-                        ddlTypeReceive.Enabled = false;
-                    else
-                        ddlTypeReceive.Enabled = true;
+                    //if (dgvData.Rows.Count() > 0)
+                    //    ddlTypeReceive.Enabled = false;
+                    //else
+                    //    ddlTypeReceive.Enabled = true;
 
                     txtDocNo.Text = "";
                     
@@ -2105,7 +2105,7 @@ namespace StockControl
                                            , ItemDescription, QTY, RemainQty, Unit
                                            , PCSUnit, CostPerUnit, Amount, CRRNCY, LotNo
                                            , SerialNo, ShelfNo, Location, Remark, TempNo, PRNo, RCNo, InvoiceNo
-                                           , ID.ToString(), PRID.ToString(), ddlTypeReceive.Text
+                                           , ID.ToString(), PRID.ToString(), ""//ddlTypeReceive.Text
                                            );
                                     }
                                 }
@@ -2334,10 +2334,10 @@ namespace StockControl
 
         private void ddlTypeReceive_SelectedIndexChanged(object sender, Telerik.WinControls.UI.Data.PositionChangedEventArgs e)
         {
-            if (dgvData.Rows.Count() > 0)
-                ddlTypeReceive.Enabled = false;
-            else
-                ddlTypeReceive.Enabled = true;
+            //if (dgvData.Rows.Count() > 0)
+            //    ddlTypeReceive.Enabled = false;
+            //else
+            //    ddlTypeReceive.Enabled = true;
         }
 
         private void MasterTemplate_CellBeginEdit(object sender, GridViewCellCancelEventArgs e)
@@ -2578,7 +2578,7 @@ namespace StockControl
 
                 string TempNo1 = dbClss.TSt(dgvData.CurrentRow.Cells["TempNo"].Value);
 
-                if (dbClss.TSt(dgvData.CurrentRow.Cells["PRNo"].Value) != "" && ddlTypeReceive.Text =="PR")
+                if (dbClss.TSt(dgvData.CurrentRow.Cells["PRNo"].Value) != "") //&& ddlTypeReceive.Text =="PR")
                 {
                     //string TEmpPR = "";
                     //using (DataClasses1DataContext db = new DataClasses1DataContext())
@@ -2598,7 +2598,7 @@ namespace StockControl
                         op.ShowDialog();
                     }
                 }
-                else if (dbClss.TSt(dgvData.CurrentRow.Cells["PRNo"].Value) != "" && ddlTypeReceive.Text == "PO")
+                else if (dbClss.TSt(dgvData.CurrentRow.Cells["PRNo"].Value) != "")// && ddlTypeReceive.Text == "PO")
                 {
                     //string TEmpPR = "";
                     //using (DataClasses1DataContext db = new DataClasses1DataContext())
