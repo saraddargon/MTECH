@@ -708,11 +708,23 @@
     <Compile Include="Process\WorkCenters_Cal.Designer.cs">
       <DependentUpon>WorkCenters_Cal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\PlanningCal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\PlanningCal.Designer.cs">
+      <DependentUpon>PlanningCal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\WorkCenters_Capa.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Process\WorkCenters_Capa.Designer.cs">
       <DependentUpon>WorkCenters_Capa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\PlanningCal_Filter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\PlanningCal_Filter.Designer.cs">
+      <DependentUpon>PlanningCal_Filter.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\WorkCenters_Filter.cs">
       <SubType>Form</SubType>
@@ -1144,8 +1156,14 @@
     <EmbeddedResource Include="Process\WorkCenters_Cal.resx">
       <DependentUpon>WorkCenters_Cal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\PlanningCal.resx">
+      <DependentUpon>PlanningCal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\WorkCenters_Capa.resx">
       <DependentUpon>WorkCenters_Capa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\PlanningCal_Filter.resx">
+      <DependentUpon>PlanningCal_Filter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\WorkCenters_Filter.resx">
       <DependentUpon>WorkCenters_Filter.cs</DependentUpon>
