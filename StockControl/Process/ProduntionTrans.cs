@@ -14,16 +14,16 @@ using ClassLib;
 
 namespace StockControl
 {
-    public partial class ProductionOrder : Telerik.WinControls.UI.RadRibbonForm
+    public partial class ProduntionTrans : Telerik.WinControls.UI.RadRibbonForm
     {
         string t_PONo = "";
         string t_CustomerNo = "";
 
-        public ProductionOrder()
+        public ProduntionTrans()
         {
             InitializeComponent();
         }
-        public ProductionOrder(string PONo, string CustomerNo)
+        public ProduntionTrans(string PONo, string CustomerNo)
         {
             InitializeComponent();
             this.t_PONo = PONo;
@@ -126,7 +126,7 @@ namespace StockControl
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
-            
+
             dgvData.ReadOnly = false;
 
             ClearData();
@@ -170,7 +170,7 @@ namespace StockControl
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
-
+            
             dgvData.ReadOnly = false;
 
             Enable_Status(true, "Edit");
