@@ -83,6 +83,8 @@
             this.RMenu5 = new Telerik.WinControls.UI.RadMenuItem();
             this.RMenu6 = new Telerik.WinControls.UI.RadMenuItem();
             this.radContextMenuManager1 = new Telerik.WinControls.UI.RadContextMenuManager();
+            this.radRibbonBarGroup8 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnSubWorkCenter = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -133,6 +135,7 @@
             this.radRibbonBarGroup4,
             this.radRibbonBarGroup3,
             this.radRibbonBarGroup5,
+            this.radRibbonBarGroup8,
             this.radRibbonBarGroup6,
             this.radRibbonBarGroup7});
             this.ribbonTab1.Name = "ribbonTab1";
@@ -163,6 +166,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Text = "บันทึกรายการ";
             this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSave.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // radRibbonBarGroup2
@@ -308,7 +312,7 @@
             this.radRibbonBarGroup6.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.btnAbsence});
             this.radRibbonBarGroup6.Name = "radRibbonBarGroup6";
-            this.radRibbonBarGroup6.Text = "Working day";
+            this.radRibbonBarGroup6.Text = "";
             // 
             // btnAbsence
             // 
@@ -484,6 +488,7 @@
             this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.radGridView1.Name = "radGridView1";
             this.radContextMenuManager1.SetRadContextMenu(this.radGridView1, this.radContextMenu1);
+            this.radGridView1.ReadOnly = true;
             this.radGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.radGridView1.ShowGroupPanel = false;
             this.radGridView1.Size = new System.Drawing.Size(970, 437);
@@ -559,6 +564,21 @@
             this.RMenu6.Name = "RMenu6";
             this.RMenu6.Text = "ลบรายการ";
             // 
+            // radRibbonBarGroup8
+            // 
+            this.radRibbonBarGroup8.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnSubWorkCenter});
+            this.radRibbonBarGroup8.Name = "radRibbonBarGroup8";
+            this.radRibbonBarGroup8.Text = "";
+            // 
+            // btnSubWorkCenter
+            // 
+            this.btnSubWorkCenter.Image = ((System.Drawing.Image)(resources.GetObject("btnSubWorkCenter.Image")));
+            this.btnSubWorkCenter.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnSubWorkCenter.Name = "btnSubWorkCenter";
+            this.btnSubWorkCenter.Text = "<html><p>Sub-Work</p><p>Centers</p></html>";
+            this.btnSubWorkCenter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
             // WorkCenters
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -633,5 +653,7 @@
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup7;
         private Telerik.WinControls.UI.RadButtonElement btnCalculate;
         private Telerik.WinControls.UI.RadButtonElement btnCalendar;
+        private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup8;
+        private Telerik.WinControls.UI.RadButtonElement btnSubWorkCenter;
     }
 }

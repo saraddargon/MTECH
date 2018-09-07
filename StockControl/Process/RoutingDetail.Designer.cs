@@ -71,7 +71,6 @@
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dgvData = new Telerik.WinControls.UI.RadGridView();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
             this.cbbUOM = new Telerik.WinControls.UI.RadDropDownList();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
@@ -87,13 +86,13 @@
             this.radContextMenu1 = new Telerik.WinControls.UI.RadContextMenu(this.components);
             this.RMenu4 = new Telerik.WinControls.UI.RadMenuItem();
             this.RMenu5 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuSeparatorItem2 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.RMenu6 = new Telerik.WinControls.UI.RadMenuItem();
             this.radContextMenuManager1 = new Telerik.WinControls.UI.RadContextMenuManager();
+            this.dgvData = new Telerik.WinControls.UI.RadGridView();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvData.MasterTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             this.radPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbbUOM)).BeginInit();
@@ -102,6 +101,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingNo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData.MasterTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -127,7 +128,7 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(817, 160);
+            this.radRibbonBar1.Size = new System.Drawing.Size(845, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
@@ -331,7 +332,7 @@
             this.btnWorkingDays.Image = ((System.Drawing.Image)(resources.GetObject("btnWorkingDays.Image")));
             this.btnWorkingDays.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnWorkingDays.Name = "btnWorkingDays";
-            this.btnWorkingDays.Text = "Working Days";
+            this.btnWorkingDays.Text = "Work Center";
             this.btnWorkingDays.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnWorkingDays.Click += new System.EventHandler(this.radButtonElement1_Click);
             // 
@@ -343,6 +344,7 @@
             this.btnHolidays.Name = "btnHolidays";
             this.btnHolidays.Text = "Holidays";
             this.btnHolidays.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnHolidays.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnHolidays.Click += new System.EventHandler(this.btnHolidays_Click);
             // 
             // radMenuItem1
@@ -369,9 +371,9 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 537);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 609);
             this.radStatusStrip1.Name = "radStatusStrip1";
-            this.radStatusStrip1.Size = new System.Drawing.Size(817, 26);
+            this.radStatusStrip1.Size = new System.Drawing.Size(845, 26);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
             // 
@@ -390,8 +392,139 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(817, 377);
+            this.panel1.Size = new System.Drawing.Size(845, 449);
             this.panel1.TabIndex = 2;
+            // 
+            // radPanel1
+            // 
+            this.radPanel1.Controls.Add(this.cbbUOM);
+            this.radPanel1.Controls.Add(this.radLabel2);
+            this.radPanel1.Controls.Add(this.radLabel3);
+            this.radPanel1.Controls.Add(this.radLabel1);
+            this.radPanel1.Controls.Add(this.txtRoutingName);
+            this.radPanel1.Controls.Add(this.txtRoutingNo);
+            this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.radPanel1.Location = new System.Drawing.Point(0, 0);
+            this.radPanel1.Name = "radPanel1";
+            this.radPanel1.Size = new System.Drawing.Size(845, 105);
+            this.radPanel1.TabIndex = 1;
+            // 
+            // cbbUOM
+            // 
+            this.cbbUOM.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
+            this.cbbUOM.Location = new System.Drawing.Point(555, 28);
+            this.cbbUOM.Name = "cbbUOM";
+            this.cbbUOM.Size = new System.Drawing.Size(125, 20);
+            this.cbbUOM.TabIndex = 2;
+            // 
+            // radLabel2
+            // 
+            this.radLabel2.Location = new System.Drawing.Point(35, 54);
+            this.radLabel2.Name = "radLabel2";
+            this.radLabel2.Size = new System.Drawing.Size(79, 18);
+            this.radLabel2.TabIndex = 1;
+            this.radLabel2.Text = "Routing Name";
+            // 
+            // radLabel3
+            // 
+            this.radLabel3.Location = new System.Drawing.Point(427, 28);
+            this.radLabel3.Name = "radLabel3";
+            this.radLabel3.Size = new System.Drawing.Size(88, 18);
+            this.radLabel3.TabIndex = 1;
+            this.radLabel3.Text = "Unit Of Measure";
+            // 
+            // radLabel1
+            // 
+            this.radLabel1.Location = new System.Drawing.Point(35, 28);
+            this.radLabel1.Name = "radLabel1";
+            this.radLabel1.Size = new System.Drawing.Size(66, 18);
+            this.radLabel1.TabIndex = 1;
+            this.radLabel1.Text = "Routing No.";
+            // 
+            // txtRoutingName
+            // 
+            this.txtRoutingName.Location = new System.Drawing.Point(147, 54);
+            this.txtRoutingName.Name = "txtRoutingName";
+            this.txtRoutingName.Size = new System.Drawing.Size(216, 20);
+            this.txtRoutingName.TabIndex = 0;
+            // 
+            // txtRoutingNo
+            // 
+            this.txtRoutingNo.Location = new System.Drawing.Point(147, 28);
+            this.txtRoutingNo.Name = "txtRoutingNo";
+            this.txtRoutingNo.ReadOnly = true;
+            this.txtRoutingNo.Size = new System.Drawing.Size(124, 20);
+            this.txtRoutingNo.TabIndex = 0;
+            // 
+            // radRibbonBarButtonGroup2
+            // 
+            this.radRibbonBarButtonGroup2.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnFilter,
+            this.Unfilter});
+            this.radRibbonBarButtonGroup2.Name = "radRibbonBarButtonGroup2";
+            this.radRibbonBarButtonGroup2.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.radRibbonBarButtonGroup2.Padding = new System.Windows.Forms.Padding(1);
+            this.radRibbonBarButtonGroup2.ShowBackColor = false;
+            this.radRibbonBarButtonGroup2.Text = "radRibbonBarButtonGroup2";
+            // 
+            // btnFilter
+            // 
+            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Text = "Filter";
+            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // Unfilter
+            // 
+            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
+            this.Unfilter.Name = "Unfilter";
+            this.Unfilter.Text = "Un Filter";
+            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // radRibbonBarButtonGroup5
+            // 
+            this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
+            this.radRibbonBarButtonGroup5.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.radRibbonBarButtonGroup5.Padding = new System.Windows.Forms.Padding(1);
+            this.radRibbonBarButtonGroup5.ShowBackColor = false;
+            this.radRibbonBarButtonGroup5.ShowBorder = false;
+            this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
+            // 
+            // radContextMenu1
+            // 
+            this.radContextMenu1.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.RMenu4,
+            this.RMenu5,
+            this.radMenuSeparatorItem2,
+            this.RMenu6});
+            this.radContextMenu1.ThemeName = "Office2010Blue";
+            // 
+            // RMenu4
+            // 
+            this.RMenu4.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.RMenu4.Image = ((System.Drawing.Image)(resources.GetObject("RMenu4.Image")));
+            this.RMenu4.Name = "RMenu4";
+            this.RMenu4.Text = "Add/Edit Work Center";
+            // 
+            // RMenu5
+            // 
+            this.RMenu5.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.RMenu5.Image = ((System.Drawing.Image)(resources.GetObject("RMenu5.Image")));
+            this.RMenu5.Name = "RMenu5";
+            this.RMenu5.Text = "";
+            // 
+            // radMenuSeparatorItem2
+            // 
+            this.radMenuSeparatorItem2.Name = "radMenuSeparatorItem2";
+            this.radMenuSeparatorItem2.Text = "radMenuSeparatorItem2";
+            this.radMenuSeparatorItem2.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // RMenu6
+            // 
+            this.RMenu6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.RMenu6.Image = ((System.Drawing.Image)(resources.GetObject("RMenu6.Image")));
+            this.RMenu6.Name = "RMenu6";
+            this.RMenu6.Text = "Delete Process";
             // 
             // dgvData
             // 
@@ -445,10 +578,10 @@
             gridViewTextBoxColumn5.ReadOnly = true;
             gridViewTextBoxColumn5.Width = 41;
             gridViewComboBoxColumn1.EnableExpressionEditor = false;
-            gridViewComboBoxColumn1.FieldName = "RoutingType";
+            gridViewComboBoxColumn1.FieldName = "WorkCenter";
             gridViewComboBoxColumn1.HeaderText = "Work Center";
-            gridViewComboBoxColumn1.Name = "RoutingType";
-            gridViewComboBoxColumn1.Width = 110;
+            gridViewComboBoxColumn1.Name = "WorkCenter";
+            gridViewComboBoxColumn1.Width = 139;
             gridViewTextBoxColumn6.EnableExpressionEditor = false;
             gridViewTextBoxColumn6.FieldName = "Description";
             gridViewTextBoxColumn6.HeaderText = "Description";
@@ -458,22 +591,22 @@
             gridViewDecimalColumn1.FieldName = "SetupTime";
             gridViewDecimalColumn1.HeaderText = "Setup Time";
             gridViewDecimalColumn1.Name = "SetupTime";
-            gridViewDecimalColumn1.Width = 71;
+            gridViewDecimalColumn1.Width = 72;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "RunTime";
             gridViewDecimalColumn2.HeaderText = "Run Time";
             gridViewDecimalColumn2.Name = "RunTime";
-            gridViewDecimalColumn2.Width = 59;
+            gridViewDecimalColumn2.Width = 67;
             gridViewDecimalColumn3.EnableExpressionEditor = false;
             gridViewDecimalColumn3.FieldName = "WaitTime";
             gridViewDecimalColumn3.HeaderText = "Wait Time";
             gridViewDecimalColumn3.Name = "WaitTime";
-            gridViewDecimalColumn3.Width = 63;
+            gridViewDecimalColumn3.Width = 67;
             gridViewDecimalColumn4.EnableExpressionEditor = false;
             gridViewDecimalColumn4.FieldName = "UnitCostPer";
-            gridViewDecimalColumn4.HeaderText = "Unit Cost per";
+            gridViewDecimalColumn4.HeaderText = "Cost/Unit";
             gridViewDecimalColumn4.Name = "UnitCostPer";
-            gridViewDecimalColumn4.Width = 95;
+            gridViewDecimalColumn4.Width = 81;
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
@@ -492,145 +625,15 @@
             this.radContextMenuManager1.SetRadContextMenu(this.dgvData, this.radContextMenu1);
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(817, 272);
-            this.dgvData.TabIndex = 0;
+            this.dgvData.Size = new System.Drawing.Size(845, 344);
+            this.dgvData.TabIndex = 2;
             this.dgvData.ThemeName = "Office2010Blue";
-            this.dgvData.RowFormatting += new Telerik.WinControls.UI.RowFormattingEventHandler(this.MasterTemplate_RowFormatting);
-            this.dgvData.CellFormatting += new Telerik.WinControls.UI.CellFormattingEventHandler(this.MasterTemplate_CellFormatting);
-            this.dgvData.CellEndEdit += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellEndEdit);
-            this.dgvData.CellClick += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellClick);
-            this.dgvData.CellValueChanged += new Telerik.WinControls.UI.GridViewCellEventHandler(this.MasterTemplate_CellValueChanged);
-            this.dgvData.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.radGridView1_PreviewKeyDown);
-            // 
-            // radPanel1
-            // 
-            this.radPanel1.Controls.Add(this.cbbUOM);
-            this.radPanel1.Controls.Add(this.radLabel2);
-            this.radPanel1.Controls.Add(this.radLabel3);
-            this.radPanel1.Controls.Add(this.radLabel1);
-            this.radPanel1.Controls.Add(this.txtRoutingName);
-            this.radPanel1.Controls.Add(this.txtRoutingNo);
-            this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.radPanel1.Location = new System.Drawing.Point(0, 0);
-            this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(817, 105);
-            this.radPanel1.TabIndex = 1;
-            // 
-            // cbbUOM
-            // 
-            this.cbbUOM.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            this.cbbUOM.Location = new System.Drawing.Point(609, 28);
-            this.cbbUOM.Name = "cbbUOM";
-            this.cbbUOM.Size = new System.Drawing.Size(125, 20);
-            this.cbbUOM.TabIndex = 2;
-            // 
-            // radLabel2
-            // 
-            this.radLabel2.Location = new System.Drawing.Point(68, 54);
-            this.radLabel2.Name = "radLabel2";
-            this.radLabel2.Size = new System.Drawing.Size(79, 18);
-            this.radLabel2.TabIndex = 1;
-            this.radLabel2.Text = "Routing Name";
-            // 
-            // radLabel3
-            // 
-            this.radLabel3.Location = new System.Drawing.Point(465, 28);
-            this.radLabel3.Name = "radLabel3";
-            this.radLabel3.Size = new System.Drawing.Size(88, 18);
-            this.radLabel3.TabIndex = 1;
-            this.radLabel3.Text = "Unit Of Measure";
-            // 
-            // radLabel1
-            // 
-            this.radLabel1.Location = new System.Drawing.Point(68, 28);
-            this.radLabel1.Name = "radLabel1";
-            this.radLabel1.Size = new System.Drawing.Size(66, 18);
-            this.radLabel1.TabIndex = 1;
-            this.radLabel1.Text = "Routing No.";
-            // 
-            // txtRoutingName
-            // 
-            this.txtRoutingName.Location = new System.Drawing.Point(180, 54);
-            this.txtRoutingName.Name = "txtRoutingName";
-            this.txtRoutingName.Size = new System.Drawing.Size(216, 20);
-            this.txtRoutingName.TabIndex = 0;
-            // 
-            // txtRoutingNo
-            // 
-            this.txtRoutingNo.Location = new System.Drawing.Point(180, 28);
-            this.txtRoutingNo.Name = "txtRoutingNo";
-            this.txtRoutingNo.ReadOnly = true;
-            this.txtRoutingNo.Size = new System.Drawing.Size(124, 20);
-            this.txtRoutingNo.TabIndex = 0;
-            // 
-            // radRibbonBarButtonGroup2
-            // 
-            this.radRibbonBarButtonGroup2.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnFilter,
-            this.Unfilter});
-            this.radRibbonBarButtonGroup2.Name = "radRibbonBarButtonGroup2";
-            this.radRibbonBarButtonGroup2.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.radRibbonBarButtonGroup2.Padding = new System.Windows.Forms.Padding(1);
-            this.radRibbonBarButtonGroup2.ShowBackColor = false;
-            this.radRibbonBarButtonGroup2.Text = "radRibbonBarButtonGroup2";
-            // 
-            // btnFilter
-            // 
-            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
-            this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Text = "Filter";
-            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            // 
-            // Unfilter
-            // 
-            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
-            this.Unfilter.Name = "Unfilter";
-            this.Unfilter.Text = "Un Filter";
-            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            // 
-            // radRibbonBarButtonGroup5
-            // 
-            this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
-            this.radRibbonBarButtonGroup5.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.radRibbonBarButtonGroup5.Padding = new System.Windows.Forms.Padding(1);
-            this.radRibbonBarButtonGroup5.ShowBackColor = false;
-            this.radRibbonBarButtonGroup5.ShowBorder = false;
-            this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
-            // 
-            // radContextMenu1
-            // 
-            this.radContextMenu1.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.RMenu4,
-            this.RMenu5,
-            this.RMenu6});
-            this.radContextMenu1.ThemeName = "Office2010Blue";
-            // 
-            // RMenu4
-            // 
-            this.RMenu4.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.RMenu4.Image = ((System.Drawing.Image)(resources.GetObject("RMenu4.Image")));
-            this.RMenu4.Name = "RMenu4";
-            this.RMenu4.Text = "เพิ่ม";
-            // 
-            // RMenu5
-            // 
-            this.RMenu5.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.RMenu5.Image = ((System.Drawing.Image)(resources.GetObject("RMenu5.Image")));
-            this.RMenu5.Name = "RMenu5";
-            this.RMenu5.Text = "แก้ไข";
-            // 
-            // RMenu6
-            // 
-            this.RMenu6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.RMenu6.Image = ((System.Drawing.Image)(resources.GetObject("RMenu6.Image")));
-            this.RMenu6.Name = "RMenu6";
-            this.RMenu6.Text = "ลบรายการ";
             // 
             // RoutingDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(817, 563);
+            this.ClientSize = new System.Drawing.Size(845, 635);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);
@@ -644,12 +647,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Routing";
             this.Load += new System.EventHandler(this.Unit_Load);
-            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Unit_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).EndInit();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvData.MasterTemplate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
             this.radPanel1.ResumeLayout(false);
             this.radPanel1.PerformLayout();
@@ -659,6 +659,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingNo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData.MasterTemplate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -713,6 +715,7 @@
         private Telerik.WinControls.UI.RadTextBox txtRoutingName;
         private Telerik.WinControls.UI.RadDropDownList cbbUOM;
         private Telerik.WinControls.UI.RadLabel radLabel3;
+        private Telerik.WinControls.UI.RadMenuSeparatorItem radMenuSeparatorItem2;
         private Telerik.WinControls.UI.RadGridView dgvData;
     }
 }

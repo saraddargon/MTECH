@@ -89,48 +89,21 @@ namespace StockControl
 
         private void RMenu6_Click(object sender, EventArgs e)
         {
-            //ลบ
-            //throw new NotImplementedException();
-            btnDelete_Click(sender, e);
+            //Delete Process
+            throw new NotImplementedException();
         }
 
         private void RMenu5_Click(object sender, EventArgs e)
         {
-            btnEdit_Click(sender, e);
+            //not do anything
         }
 
         private void RMenu4_Click(object sender, EventArgs e)
         {
-            ////เพิ่มผู้ขาย
-            //throw new NotImplementedException();
-            btnNew_Click(sender, e);
+            //Add Workcenter to process
+            throw new NotImplementedException();
         }
-
-        private void RMenu3_Click(object sender, EventArgs e)
-        {
-            //เพิ่มผุ้ติดต่อ
-            if (row >= 0)
-            {
-
-
-                this.Cursor = Cursors.WaitCursor;
-                Contact ct = new Contact(Convert.ToString(dgvData.Rows[row].Cells["VendorNo"].Value),
-                    Convert.ToString(dgvData.Rows[row].Cells["VendorName"].Value));
-                this.Cursor = Cursors.Default;
-                ct.ShowDialog();
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
-                ClassLib.Memory.Heap();
-            }
-        }
-
-        private void RadMenuItem3_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("menu");
-            // throw new NotImplementedException();
-        }
+        
 
         void setRowNo()
         {
@@ -196,20 +169,6 @@ namespace StockControl
 
 
             //    radGridView1.DataSource = dt;
-        }
-        private bool CheckDuplicate(string code)
-        {
-            bool ck = false;
-
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                int i = (from ix in db.mh_GroupTypes where ix.GroupCode == code select ix).Count();
-                if (i > 0)
-                    ck = false;
-                else
-                    ck = true;
-            }
-            return ck;
         }
 
         private bool AddUnit()
@@ -299,7 +258,7 @@ namespace StockControl
                 {
                     string CodeTemp = Convert.ToString(dgvData.Rows[row].Cells["dgvCodeTemp"].Value);
                     dgvData.EndEdit();
-                    if (MessageBox.Show("ต้องการลบรายการหรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show("Do you want to Delete Routing ?", "Delete Routing", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
@@ -310,7 +269,7 @@ namespace StockControl
                                 {
                                     //db.mh_Routings.DeleteOnSubmit(d);
                                     d.Active = false;
-                                    dbClss.AddHistory(this.Name, "ลบ Routing", $"Delete Routing [{d.RoutingNo}]", "");
+                                    dbClss.AddHistory(this.Name, "Delete Routing", $"Delete Routing [{d.RoutingNo}]", "");
                                 }
                                 C += 1;
 
@@ -330,13 +289,13 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("ลบ Routing", ex.Message, this.Name);
+                dbClss.AddError("Delete Routing", ex.Message, this.Name);
             }
 
             if (C > 0)
             {
                 row = row - 1;
-                MessageBox.Show("ลบรายการ สำเร็จ!");
+                MessageBox.Show("Delete complete.!");
             }
 
 
@@ -473,33 +432,6 @@ namespace StockControl
             catch (Exception ex) { }
         }
 
-        private void Unit_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            // MessageBox.Show(e.KeyCode.ToString());
-        }
-
-        private void radGridView1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            // MessageBox.Show(e.KeyCode.ToString());
-
-            if (e.KeyData == (Keys.Control | Keys.S))
-            {
-                btnSave_Click(null, null);
-                //if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                //{
-                //    AddUnit();
-                //    DataLoad();
-                //}
-            }
-            else if (e.KeyData == (Keys.Control | Keys.N))
-            {
-                if (MessageBox.Show("ต้องการสร้างใหม่ ?", "สร้างใหม่", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    NewClick();
-                }
-
-            }
-        }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
@@ -686,77 +618,15 @@ namespace StockControl
             this.Close();
         }
 
-        private void MasterTemplate_CellValueChanged(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
-        {
-            //if(radGridView1.Columns["VendorName"].Index==e.ColumnIndex
-            //     || radGridView1.Columns["VendorName"].Index == e.ColumnIndex
-            //     || radGridView1.Columns["Address"].Index == e.ColumnIndex
-            //     || radGridView1.Columns["CRRNCY"].Index == e.ColumnIndex
-            //     || radGridView1.Columns["Remark"].Index == e.ColumnIndex
-            //     )
-            // {
-
-            // }
-            if (e.Column.Name == "DefaultCrrncy")
-            {
-                var ee = e.Value;
-            }
-            else if (e.Column.Name == "VendorGroup")
-            {
-                var ee = e.Value;
-                var eee = e.Value.ToInt();
-            }
-        }
-
-        private void MasterTemplate_RowFormatting(object sender, RowFormattingEventArgs e)
-        {
-            //if (e.RowElement.RowInfo.Cells["VendorNo"].Value == null)
-            //{
-            //    e.RowElement.ResetValue(LightVisualElement.BackColorProperty, ValueResetFlags.Local);
-            //    e.RowElement.ResetValue(LightVisualElement.GradientStyleProperty, ValueResetFlags.Local);
-            //    e.RowElement.ResetValue(LightVisualElement.DrawFillProperty, ValueResetFlags.Local);
-            //}
-            //else if(!e.RowElement.RowInfo.Cells["VendorNo"].Value.Equals(""))
-            //{ 
-            //    e.RowElement.DrawFill = true;
-            //    // e.RowElement.GradientStyle = GradientStyles.Solid;
-            //    e.RowElement.BackColor = Color.WhiteSmoke;
-
-            //}
-            //else
-            //{
-            //    e.RowElement.ResetValue(LightVisualElement.BackColorProperty, ValueResetFlags.Local);
-            //    e.RowElement.ResetValue(LightVisualElement.GradientStyleProperty, ValueResetFlags.Local);
-            //    e.RowElement.ResetValue(LightVisualElement.DrawFillProperty, ValueResetFlags.Local);
-            //}
-        }
-
-        private void MasterTemplate_CellFormatting(object sender, CellFormattingEventArgs e)
-        {
-            if (e.CellElement.ColumnInfo.Name == "Code")
-            {
-                e.CellElement.DrawFill = true;
-                // e.CellElement.ForeColor = Color.Blue;
-                e.CellElement.NumberOfColors = 1;
-                e.CellElement.BackColor = Color.WhiteSmoke;
-            }
-            else
-            {
-                e.CellElement.ResetValue(LightVisualElement.DrawFillProperty, ValueResetFlags.Local);
-                e.CellElement.ResetValue(LightVisualElement.ForeColorProperty, ValueResetFlags.Local);
-                e.CellElement.ResetValue(LightVisualElement.NumberOfColorsProperty, ValueResetFlags.Local);
-                e.CellElement.ResetValue(LightVisualElement.BackColorProperty, ValueResetFlags.Local);
-            }
-        }
 
         private void radButtonElement1_Click(object sender, EventArgs e)
         {
-
-            if (row >= 0)
+            if (dgvData.CurrentCell != null)
             {
+                throw new NotImplementedException();
+
                 this.Cursor = Cursors.WaitCursor;
-                //Contact ct = new Contact(Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value),
-                //    Convert.ToString(radGridView1.Rows[row].Cells["VendorName"].Value));
+
                 var ct = new WorkingDay(dgvData.Rows[row].Cells["Code"].Value.ToInt());
                 this.Cursor = Cursors.Default;
                 ct.ShowDialog();
