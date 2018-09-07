@@ -266,59 +266,59 @@ namespace StockControl
         }
         private void Save_detail()
         {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                int id = 0;
-                int.TryParse(txtid.Text, out id);
-                if (id > 0)
-                {
-                    var g = (from ix in db.tb_Shippings
-                                 //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
-                             where ix.ShippingNo.Trim() == txtSHNo.Text.Trim() && ix.Status != "Cancel"
-                             && ix.id == Convert.ToInt32(txtid.Text)
-                             select ix).First();
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    int id = 0;
+            //    int.TryParse(txtid.Text, out id);
+            //    if (id > 0)
+            //    {
+            //        var g = (from ix in db.tb_Shippings
+            //                     //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
+            //                 where ix.ShippingNo.Trim() == txtSHNo.Text.Trim() && ix.Status != "Cancel"
+            //                 && ix.id == Convert.ToInt32(txtid.Text)
+            //                 select ix).First();
 
-                    g.Status = "Cancel";
+            //        g.Status = "Cancel";
 
-                    db.SubmitChanges();
+            //        db.SubmitChanges();
 
-                    //insert Stock
-                    DateTime? CalDate = null;
-                    DateTime? AppDate = DateTime.Now;
-                    int Seq = 1;
+            //        //insert Stock
+            //        DateTime? CalDate = null;
+            //        DateTime? AppDate = DateTime.Now;
+            //        int Seq = 1;
 
-                    tb_Stock1 gg = new tb_Stock1();
-                    gg.AppDate = AppDate;
-                    gg.Seq = Seq;
-                    gg.App = "Cancel SH";
-                    gg.Appid = Seq;
-                    gg.CreateBy = ClassLib.Classlib.User;
-                    gg.CreateDate = DateTime.Now;
-                    gg.DocNo = txtCNNo.Text;
-                    gg.RefNo = txtSHNo.Text;
-                    gg.Type = ddlType.Text;
-                    gg.QTY = Convert.ToDecimal(txtQTY.Text);
-                    gg.Inbound = Convert.ToDecimal(txtQTY.Text);
-                    gg.Outbound = 0;
-                    gg.AmountCost = Convert.ToDecimal(txtQTY.Text) * get_cost(g.CodeNo);
-                    gg.UnitCost = get_cost(g.CodeNo);
-                    gg.RemainQty = 0;
-                    gg.RemainUnitCost = 0;
-                    gg.RemainAmount = 0;
-                    gg.CalDate = CalDate;
-                    gg.Status = "Active";
-                    db.tb_Stock1s.InsertOnSubmit(gg);
-                    db.SubmitChanges();
+            //        tb_Stock1 gg = new tb_Stock1();
+            //        gg.AppDate = AppDate;
+            //        gg.Seq = Seq;
+            //        gg.App = "Cancel SH";
+            //        gg.Appid = Seq;
+            //        gg.CreateBy = ClassLib.Classlib.User;
+            //        gg.CreateDate = DateTime.Now;
+            //        gg.DocNo = txtCNNo.Text;
+            //        gg.RefNo = txtSHNo.Text;
+            //        gg.Type = ddlType.Text;
+            //        gg.QTY = Convert.ToDecimal(txtQTY.Text);
+            //        gg.Inbound = Convert.ToDecimal(txtQTY.Text);
+            //        gg.Outbound = 0;
+            //        gg.AmountCost = Convert.ToDecimal(txtQTY.Text) * get_cost(g.CodeNo);
+            //        gg.UnitCost = get_cost(g.CodeNo);
+            //        gg.RemainQty = 0;
+            //        gg.RemainUnitCost = 0;
+            //        gg.RemainAmount = 0;
+            //        gg.CalDate = CalDate;
+            //        gg.Status = "Active";
+            //        db.tb_Stock1s.InsertOnSubmit(gg);
+            //        db.SubmitChanges();
 
-                    dbClss.AddHistory(this.Name, "เพิ่ม Stock", "Cancel รายการ Shipping [" + txtSHNo.Text.Trim() + " id : " + g.id.ToString() + "]", "");
+            //        dbClss.AddHistory(this.Name, "เพิ่ม Stock", "Cancel รายการ Shipping [" + txtSHNo.Text.Trim() + " id : " + g.id.ToString() + "]", "");
 
-                    //update stock item
-                    dbClss.Insert_Stock(g.CodeNo, Convert.ToDecimal(g.QTY), "CNSH", "Inv");
+            //        //update stock item
+            //        dbClss.Insert_Stock(g.CodeNo, Convert.ToDecimal(g.QTY), "CNSH", "Inv");
 
-                    //update Status
-                    db.sp_007_Update_SH_Status(g.ShippingNo, Convert.ToString(g.id));
-                }
-            }
+            //        //update Status
+            //        db.sp_007_Update_SH_Status(g.ShippingNo, Convert.ToString(g.id));
+            //    }
+            //}
         }
         private void Save_detail2()
         {
@@ -521,48 +521,48 @@ namespace StockControl
         }
         private void Save_detail(int seq,int id,string SHNo)
         {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                var g = (from ix in db.tb_Shippings
-                             //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
-                         where ix.ShippingNo.Trim() == SHNo.Trim() && ix.Status != "Cancel"
-                         && ix.id == id
-                         select ix).First();
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    var g = (from ix in db.tb_Shippings
+            //                 //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
+            //             where ix.ShippingNo.Trim() == SHNo.Trim() && ix.Status != "Cancel"
+            //             && ix.id == id
+            //             select ix).First();
 
-                g.Status = "Cancel";
+            //    g.Status = "Cancel";
                 
-                //insert Stock
-                DateTime? CalDate = null;
-                DateTime? AppDate = DateTime.Now;
-                int Seq = seq;
+            //    //insert Stock
+            //    DateTime? CalDate = null;
+            //    DateTime? AppDate = DateTime.Now;
+            //    int Seq = seq;
 
-                tb_Stock1 gg = new tb_Stock1();
-                gg.AppDate = AppDate;
-                gg.Seq = Seq;
-                gg.App = "Cancel SH";
-                gg.Appid = Seq;
-                gg.CreateBy = ClassLib.Classlib.User;
-                gg.CreateDate = DateTime.Now;
-                gg.DocNo = txtCNNo.Text;
-                gg.RefNo = SHNo;
-                gg.Type = ddlType.Text;
-                gg.QTY = Convert.ToDecimal(g.QTY);
-                gg.Inbound = Convert.ToDecimal(g.QTY);
-                gg.Outbound = 0;
-                gg.AmountCost = Convert.ToDecimal(g.QTY) * get_cost(g.CodeNo);
-                gg.UnitCost = get_cost(g.CodeNo);
-                gg.RemainQty = 0;
-                gg.RemainUnitCost = 0;
-                gg.RemainAmount = 0;
-                gg.CalDate = CalDate;
-                gg.Status = "Active";
+            //    tb_Stock1 gg = new tb_Stock1();
+            //    gg.AppDate = AppDate;
+            //    gg.Seq = Seq;
+            //    gg.App = "Cancel SH";
+            //    gg.Appid = Seq;
+            //    gg.CreateBy = ClassLib.Classlib.User;
+            //    gg.CreateDate = DateTime.Now;
+            //    gg.DocNo = txtCNNo.Text;
+            //    gg.RefNo = SHNo;
+            //    gg.Type = ddlType.Text;
+            //    gg.QTY = Convert.ToDecimal(g.QTY);
+            //    gg.Inbound = Convert.ToDecimal(g.QTY);
+            //    gg.Outbound = 0;
+            //    gg.AmountCost = Convert.ToDecimal(g.QTY) * get_cost(g.CodeNo);
+            //    gg.UnitCost = get_cost(g.CodeNo);
+            //    gg.RemainQty = 0;
+            //    gg.RemainUnitCost = 0;
+            //    gg.RemainAmount = 0;
+            //    gg.CalDate = CalDate;
+            //    gg.Status = "Active";
 
-                db.tb_Stock1s.InsertOnSubmit(gg);
-                db.SubmitChanges();
+            //    db.tb_Stock1s.InsertOnSubmit(gg);
+            //    db.SubmitChanges();
 
-                //update stock item
-                dbClss.Insert_Stock(g.CodeNo, Convert.ToDecimal(g.QTY), "CNSH", "Inv");
-            }
+            //    //update stock item
+            //    dbClss.Insert_Stock(g.CodeNo, Convert.ToDecimal(g.QTY), "CNSH", "Inv");
+            //}
         }
         private void Save_detail2_H(int seq, int id, string SHNo,string CodeNo)
         {

@@ -131,11 +131,11 @@ namespace StockControl
                 {
 
                     GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)dgvData.Columns["Location"];
-                    col.DataSource = (from ix in db.tb_Locations.Where(s => Convert.ToBoolean(s.Active.Equals(true)) && s.Status == "Completed")
-                                      select new { ix.Location }).ToList();
+                    col.DataSource = (from ix in db.mh_Locations.Where(s => Convert.ToBoolean(s.Active.Equals(true)) && s.Active == true)
+                                      select new { ix.Code }).ToList();
 
-                    col.DisplayMember = "Location";
-                    col.ValueMember = "Location";
+                    col.DisplayMember = "Code";
+                    col.ValueMember = "Code";
                     col.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
                     col.FilteringMode = GridViewFilteringMode.DisplayMember;
 
@@ -252,7 +252,7 @@ namespace StockControl
                             int dgvNo = 0;
                             //detail
                             var r = (from d in db.tb_StockAdjusts
-                                     join i in db.tb_Items on d.CodeNo equals i.CodeNo
+                                     join i in db.mh_Items on d.CodeNo equals i.InternalNo
                                      where d.AdjustNo == txtADNo.Text
 
                                         && d.Status != "Cancel"
@@ -269,8 +269,8 @@ namespace StockControl
                                          RemainQty = (Convert.ToDecimal(db.Cal_QTY(d.CodeNo, "", 0))),// i.StockInv,
                                          Unit = d.Unit,
                                          PCSUnit = d.PCSUnit,
-                                         MaxStock = i.MaximumStock,
-                                         MinStock = i.MinimumStock,
+                                         MaxStock = i.MaximumQty,
+                                         MinStock = i.MinimumQty,
                                          StandardCost = d.StandardCost,//i.StandardCost,
                                          Amount =d.Amount,
                                          LotNo = d.LotNo,
@@ -741,86 +741,86 @@ namespace StockControl
     
         private void Insert_Stock()
         {
-            try
-            {
+            //try
+            //{
 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    DateTime? CalDate = null;
-                    DateTime? AppDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-                    int Seq = 0;
-
-
-
-                    string CNNo = CNNo = StockControl.dbClss.GetNo(6, 2);
-                    var g = (from ix in db.tb_StockAdjusts
-                                 //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
-                             where ix.AdjustNo.Trim() == txtADNo.Text.Trim() && ix.Status != "Cancel"
-
-                             select ix).ToList();
-                    if (g.Count > 0)
-                    {
-                        //insert Stock
-
-                        foreach (var vv in g)
-                        {
-                            Seq += 1;
-
-                            tb_Stock1 gg = new tb_Stock1();
-                            gg.AppDate = AppDate;
-                            gg.Seq = Seq;
-                            gg.App = "Adjust";
-                            gg.Appid = Seq;
-                            gg.CreateBy = ClassLib.Classlib.User;
-                            gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-                            gg.DocNo = CNNo;
-                            gg.RefNo = txtADNo.Text;
-                            gg.Type = "Adjust";
-                            gg.QTY = Convert.ToDecimal(vv.Qty);
-                            if (Convert.ToDecimal(vv.Qty) < 0)
-                            {
-                                gg.Outbound = Convert.ToDecimal(vv.Qty);
-                                gg.Inbound = 0;
-                            }
-                            else
-                            {
-                                gg.Inbound = Convert.ToDecimal(vv.Qty);
-                                gg.Outbound = 0;
-                            }
-
-                            gg.AmountCost = (Convert.ToDecimal(vv.Qty)) * get_cost(vv.CodeNo);
-                            gg.UnitCost = get_cost(vv.CodeNo);
-                            gg.RemainQty = 0;
-                            gg.RemainUnitCost = 0;
-                            gg.RemainAmount = 0;
-                            gg.CalDate = CalDate;
-                            gg.Status = "Active";
-
-                            db.tb_Stock1s.InsertOnSubmit(gg);
-                            db.SubmitChanges();
-
-                            dbClss.Insert_Stock(vv.CodeNo, (Convert.ToDecimal(vv.Qty)), "Adjust", "Inv");
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        DateTime? CalDate = null;
+            //        DateTime? AppDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            //        int Seq = 0;
 
 
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+            //        string CNNo = CNNo = StockControl.dbClss.GetNo(6, 2);
+            //        var g = (from ix in db.tb_StockAdjusts
+            //                     //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
+            //                 where ix.AdjustNo.Trim() == txtADNo.Text.Trim() && ix.Status != "Cancel"
+
+            //                 select ix).ToList();
+            //        if (g.Count > 0)
+            //        {
+            //            //insert Stock
+
+            //            foreach (var vv in g)
+            //            {
+            //                Seq += 1;
+
+            //                tb_Stock1 gg = new tb_Stock1();
+            //                gg.AppDate = AppDate;
+            //                gg.Seq = Seq;
+            //                gg.App = "Adjust";
+            //                gg.Appid = Seq;
+            //                gg.CreateBy = ClassLib.Classlib.User;
+            //                gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            //                gg.DocNo = CNNo;
+            //                gg.RefNo = txtADNo.Text;
+            //                gg.Type = "Adjust";
+            //                gg.QTY = Convert.ToDecimal(vv.Qty);
+            //                if (Convert.ToDecimal(vv.Qty) < 0)
+            //                {
+            //                    gg.Outbound = Convert.ToDecimal(vv.Qty);
+            //                    gg.Inbound = 0;
+            //                }
+            //                else
+            //                {
+            //                    gg.Inbound = Convert.ToDecimal(vv.Qty);
+            //                    gg.Outbound = 0;
+            //                }
+
+            //                gg.AmountCost = (Convert.ToDecimal(vv.Qty)) * get_cost(vv.CodeNo);
+            //                gg.UnitCost = get_cost(vv.CodeNo);
+            //                gg.RemainQty = 0;
+            //                gg.RemainUnitCost = 0;
+            //                gg.RemainAmount = 0;
+            //                gg.CalDate = CalDate;
+            //                gg.Status = "Active";
+
+            //                db.tb_Stock1s.InsertOnSubmit(gg);
+            //                db.SubmitChanges();
+
+            //                dbClss.Insert_Stock(vv.CodeNo, (Convert.ToDecimal(vv.Qty)), "Adjust", "Inv");
+
+
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
-        private decimal get_cost(string Code)
-        {
-            decimal re = 0;
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                var g = (from ix in db.tb_Items
-                         where ix.CodeNo == Code && ix.Status == "Active"
-                         select ix).First();
-                re = Convert.ToDecimal(g.StandardCost);
+        //private decimal get_cost(string Code)
+        //{
+        //    decimal re = 0;
+        //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+        //    {
+        //        var g = (from ix in db.mh_Items
+        //                 where ix.InternalNo == Code && ix.Active == true
+        //                 select ix).First();
+        //        re = Convert.ToDecimal(g.StandardCost);
 
-            }
-            return re;
-        }
+        //    }
+        //    return re;
+        //}
         private void SaveHerder()
         {
             using (DataClasses1DataContext db = new DataClasses1DataContext())
@@ -1228,48 +1228,29 @@ namespace StockControl
                         int duppicate_CodeNo = 0;
                         //string Status = "Waiting";
 
-                        var d1 = (from ix in db.tb_Items select ix)
-                            .Where(a => a.CodeNo == CodeNo.Trim() && a.Status == "Active"
+                        var d1 = (from ix in db.mh_Items select ix)
+                            .Where(a => a.InternalNo == CodeNo.Trim() && a.Active == true
 
                             ).ToList();
                         if (d1.Count > 0)
                         {
-                            var d = (from ix in db.tb_Items select ix)
-                            .Where(a => a.CodeNo == CodeNo.Trim() && a.Status == "Active"
+                            var d = (from ix in db.mh_Items select ix)
+                            .Where(a => a.InternalNo == CodeNo.Trim() && a.Active == true
 
                             ).First();
 
-                            ItemNo = d.ItemNo;
-                            ItemDescription = d.ItemDescription;
-                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Invoice", 0,Convert.ToString(d.Location))));//Convert.ToDecimal(d.StockInv);
-                            Unit = d.UnitBuy;
-                            PCSUnit = Convert.ToDecimal(d.PCSUnit);
-                            CostPerUnit = Convert.ToDecimal(d.StandardCost); // Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "Avg"));//Convert.ToDecimal(d.StandardCost);
-                            Location = d.Location;
+                            ItemNo = d.InternalName;
+                            ItemDescription = d.InternalName;
+                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Invoice", 0,"Warehouse")));//Convert.ToDecimal(d.StockInv);
+                            Unit = d.PurchaseUOM;
+                            PCSUnit = dbClss.Con_UOM(CodeNo, d.PurchaseUOM);
+                            CostPerUnit = 0; // Convert.ToDecimal(d.StandardCost); // Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "Avg"));//Convert.ToDecimal(d.StandardCost);
+                            //Location = d.Location;
                             No = dgvData.Rows.Count() + 1;
-                            ShelfNo = d.ShelfNo;
+                            //ShelfNo = d.ShelfNo;
                             if (!check_Duppicate(CodeNo))
                             {
-                                //dgvData.Rows.Add(No,
-                                //                    CodeNo,
-                                //                    ItemNo,
-                                //                    ItemDescription,
-                                //                    RemainQty,
-                                //                    QTY,
-                                //                    Unit,
-                                //                    PCSUnit,
-                                //                    CostPerUnit,
-                                //                    Amount,
-                                //                    LotNo,
-                                //                    Remark,
-                                //                    "0"
-                                //                    ,""
-                                //                    , Location
-                                //                    , ""
-                                //                    ,""
-                                //                    ,"0"
-                                //                    );
-
+                              
                                 Add_Item(No, CodeNo, ItemNo, ItemDescription, RemainQty, QTY, Unit, PCSUnit, CostPerUnit, Amount, LotNo, Remark, "0", ShelfNo, Location, "", "", "0");
                             }
                         }

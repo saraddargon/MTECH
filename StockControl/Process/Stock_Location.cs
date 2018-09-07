@@ -93,13 +93,13 @@ namespace StockControl
                 ddlLocation.DisplayMember = "Location";
                 ddlLocation.ValueMember = "Location";
                 // ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
-                var g = (from ix in db.tb_Locations select ix).Where(s => s.Active == true && s.Status == "Completed").ToList();
+                var g = (from ix in db.mh_Locations select ix).Where(s => s.Active == true ).ToList();
 
                 List<string> a = new List<string>();
                 if (g.Count > 0)
                 {
                     foreach (var gg in g)
-                        a.Add(gg.Location);
+                        a.Add(gg.Code);
                 }
                 a.Add("");
                 ddlLocation.DataSource = a;
@@ -127,11 +127,11 @@ namespace StockControl
                 {
 
                     GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)dgvData.Columns["Location"];
-                    col.DataSource = (from ix in db.tb_Locations.Where(s => Convert.ToBoolean(s.Active.Equals(true)) && s.Status == "Completed")
-                                      select new { ix.Location }).ToList();
+                    col.DataSource = (from ix in db.mh_Locations.Where(s => Convert.ToBoolean(s.Active.Equals(true)))
+                                      select new { ix.Code }).ToList();
 
-                    col.DisplayMember = "Location";
-                    col.ValueMember = "Location";
+                    col.DisplayMember = "Code";
+                    col.ValueMember = "Code";
                     col.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
                     col.FilteringMode = GridViewFilteringMode.DisplayMember;
 
@@ -461,162 +461,162 @@ namespace StockControl
         }
         private void Print_Shelftag_datatable()
         {
-            try
-            {
-                dt_ShelfTag.Rows.Clear();
+            //try
+            //{
+            //    dt_ShelfTag.Rows.Clear();
 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == txtCodeNo.Text).ToList();
-                    if (g.Count() > 0)
-                    {
-                        foreach (var gg in g)
-                        {
-                            dt_ShelfTag.Rows.Add(gg.CodeNo, gg.ItemDescription, gg.ShelfNo);
-                        }
-                        //DataTable DT =  StockControl.dbClss.LINQToDataTable(g);
-                        //Reportx1 po = new Reportx1("Report_PurchaseRequest_Content1.rpt", DT, "FromDT");
-                        //po.Show();
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == txtCodeNo.Text).ToList();
+            //        if (g.Count() > 0)
+            //        {
+            //            foreach (var gg in g)
+            //            {
+            //                dt_ShelfTag.Rows.Add(gg.CodeNo, gg.ItemDescription, gg.ShelfNo);
+            //            }
+            //            //DataTable DT =  StockControl.dbClss.LINQToDataTable(g);
+            //            //Reportx1 po = new Reportx1("Report_PurchaseRequest_Content1.rpt", DT, "FromDT");
+            //            //po.Show();
 
-                        Report.Reportx1 op = new Report.Reportx1("002_BoxShelf_Part.rpt", dt_ShelfTag, "FromDL");
-                        op.Show();
-                    }
-                    else
-                        MessageBox.Show("not found.");
-                }
+            //            Report.Reportx1 op = new Report.Reportx1("002_BoxShelf_Part.rpt", dt_ShelfTag, "FromDL");
+            //            op.Show();
+            //        }
+            //        else
+            //            MessageBox.Show("not found.");
+            //    }
 
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void btn_PrintShelfTag_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    //delete ทิ้งก่อน
-                    var deleteItem = (from ii in db.TempPrintShelfs where ii.UserName == ClassLib.Classlib.User select ii);
-                    foreach (var d in deleteItem)
-                    {
-                        db.TempPrintShelfs.DeleteOnSubmit(d);
-                        db.SubmitChanges();
-                    }
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        //delete ทิ้งก่อน
+            //        var deleteItem = (from ii in db.TempPrintShelfs where ii.UserName == ClassLib.Classlib.User select ii);
+            //        foreach (var d in deleteItem)
+            //        {
+            //            db.TempPrintShelfs.DeleteOnSubmit(d);
+            //            db.SubmitChanges();
+            //        }
 
-                    int c = 0;
-                    string CodeNo = "";
-                    dgvData.EndEdit();
-                    //insert
-                    foreach (var Rowinfo in dgvData.Rows)
-                    {
-                        if (StockControl.dbClss.TBo(Rowinfo.Cells["S"].Value).Equals(true))
-                        {
-                            CodeNo = StockControl.dbClss.TSt(Rowinfo.Cells["CodeNo"].Value);
-                            var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == CodeNo).ToList();
-                            if (g.Count() > 0)
-                            {
+            //        int c = 0;
+            //        string CodeNo = "";
+            //        dgvData.EndEdit();
+            //        //insert
+            //        foreach (var Rowinfo in dgvData.Rows)
+            //        {
+            //            if (StockControl.dbClss.TBo(Rowinfo.Cells["S"].Value).Equals(true))
+            //            {
+            //                CodeNo = StockControl.dbClss.TSt(Rowinfo.Cells["CodeNo"].Value);
+            //                var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == CodeNo).ToList();
+            //                if (g.Count() > 0)
+            //                {
                                 
-                                c += 1;
-                                TempPrintShelf ps = new TempPrintShelf();
-                                ps.UserName = ClassLib.Classlib.User;
-                                ps.CodeNo = g.FirstOrDefault().CodeNo;
-                                ps.PartDescription = g.FirstOrDefault().ItemDescription;
-                                ps.PartNo = g.FirstOrDefault().ItemNo;
-                                ps.ShelfNo = g.FirstOrDefault().ShelfNo;
-                                ps.Max = Convert.ToDecimal(g.FirstOrDefault().MaximumStock);
-                                ps.Min = Convert.ToDecimal(g.FirstOrDefault().MinimumStock);
-                                ps.OrderPoint = Convert.ToDecimal(g.FirstOrDefault().ReOrderPoint);
-                                db.TempPrintShelfs.InsertOnSubmit(ps);
-                                db.SubmitChanges();
-                            }
-                        }
+            //                    c += 1;
+            //                    TempPrintShelf ps = new TempPrintShelf();
+            //                    ps.UserName = ClassLib.Classlib.User;
+            //                    ps.CodeNo = g.FirstOrDefault().CodeNo;
+            //                    ps.PartDescription = g.FirstOrDefault().ItemDescription;
+            //                    ps.PartNo = g.FirstOrDefault().ItemNo;
+            //                    ps.ShelfNo = g.FirstOrDefault().ShelfNo;
+            //                    ps.Max = Convert.ToDecimal(g.FirstOrDefault().MaximumStock);
+            //                    ps.Min = Convert.ToDecimal(g.FirstOrDefault().MinimumStock);
+            //                    ps.OrderPoint = Convert.ToDecimal(g.FirstOrDefault().ReOrderPoint);
+            //                    db.TempPrintShelfs.InsertOnSubmit(ps);
+            //                    db.SubmitChanges();
+            //                }
+            //            }
 
-                    }
-                    if (c > 0)
-                    {
-                        Report.Reportx1.Value = new string[2];
-                        Report.Reportx1.Value[0] = ClassLib.Classlib.User;
-                        Report.Reportx1.WReport = "002_BoxShelf_Part";
-                        Report.Reportx1 op = new Report.Reportx1("002_BoxShelf_Part.rpt");
-                        op.Show();
-                    }
-                    else
-                        MessageBox.Show("not found.");
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //        }
+            //        if (c > 0)
+            //        {
+            //            Report.Reportx1.Value = new string[2];
+            //            Report.Reportx1.Value[0] = ClassLib.Classlib.User;
+            //            Report.Reportx1.WReport = "002_BoxShelf_Part";
+            //            Report.Reportx1 op = new Report.Reportx1("002_BoxShelf_Part.rpt");
+            //            op.Show();
+            //        }
+            //        else
+            //            MessageBox.Show("not found.");
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void btn_Print_Barcode_Click(object sender, EventArgs e)
         {
-            try
-            {
-                dt_Kanban.Rows.Clear();
-                this.Cursor = Cursors.WaitCursor;
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
+            //try
+            //{
+            //    dt_Kanban.Rows.Clear();
+            //    this.Cursor = Cursors.WaitCursor;
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
 
                    
-                        // Step 1 delete UserName
-                        var deleteItem = (from ii in db.TempPrintKanbans where ii.UserName == ClassLib.Classlib.User select ii);
-                        foreach (var d in deleteItem)
-                        {
-                            db.TempPrintKanbans.DeleteOnSubmit(d);
-                            db.SubmitChanges();
-                        }
+            //            // Step 1 delete UserName
+            //            var deleteItem = (from ii in db.TempPrintKanbans where ii.UserName == ClassLib.Classlib.User select ii);
+            //            foreach (var d in deleteItem)
+            //            {
+            //                db.TempPrintKanbans.DeleteOnSubmit(d);
+            //                db.SubmitChanges();
+            //            }
 
-                        // Step 2 Insert to Table
+            //            // Step 2 Insert to Table
 
-                        int c = 0;
-                        string CodeNo = "";
-                        dgvData.EndEdit();
-                        //insert
-                        foreach (var Rowinfo in dgvData.Rows)
-                        {
-                            if (StockControl.dbClss.TBo(Rowinfo.Cells["S"].Value).Equals(true))
-                            {
-                                CodeNo = StockControl.dbClss.TSt(Rowinfo.Cells["CodeNo"].Value);
-                                var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == CodeNo).ToList();
-                                if (g.Count() > 0)
-                                {
-                                    c += 1;
-                                    TempPrintKanban tm = new TempPrintKanban();
-                                    tm.UserName = ClassLib.Classlib.User;
-                                    tm.CodeNo = g.FirstOrDefault().CodeNo;
-                                    tm.PartDescription = g.FirstOrDefault().ItemDescription;
-                                    tm.PartNo = g.FirstOrDefault().ItemNo;
-                                    tm.VendorName = g.FirstOrDefault().VendorItemName;
-                                    tm.ShelfNo = g.FirstOrDefault().ShelfNo;
-                                    tm.GroupType = g.FirstOrDefault().GroupCode;
-                                    tm.Max = Convert.ToDecimal(g.FirstOrDefault().MaximumStock);
-                                    tm.Min = Convert.ToDecimal(g.FirstOrDefault().MinimumStock);
-                                    tm.ReOrderPoint = Convert.ToDecimal(g.FirstOrDefault().ReOrderPoint);
-                                    tm.ToolLife = Convert.ToDecimal(g.FirstOrDefault().Toollife);
-                                    byte[] barcode = StockControl.dbClss.SaveQRCode2D(g.FirstOrDefault().CodeNo);
-                                    tm.BarCode = barcode;
-                                    db.TempPrintKanbans.InsertOnSubmit(tm);
-                                    db.SubmitChanges();
-                                    this.Cursor = Cursors.Default;
+            //            int c = 0;
+            //            string CodeNo = "";
+            //            dgvData.EndEdit();
+            //            //insert
+            //            foreach (var Rowinfo in dgvData.Rows)
+            //            {
+            //                if (StockControl.dbClss.TBo(Rowinfo.Cells["S"].Value).Equals(true))
+            //                {
+            //                    CodeNo = StockControl.dbClss.TSt(Rowinfo.Cells["CodeNo"].Value);
+            //                    var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == CodeNo).ToList();
+            //                    if (g.Count() > 0)
+            //                    {
+            //                        c += 1;
+            //                        TempPrintKanban tm = new TempPrintKanban();
+            //                        tm.UserName = ClassLib.Classlib.User;
+            //                        tm.CodeNo = g.FirstOrDefault().CodeNo;
+            //                        tm.PartDescription = g.FirstOrDefault().ItemDescription;
+            //                        tm.PartNo = g.FirstOrDefault().ItemNo;
+            //                        tm.VendorName = g.FirstOrDefault().VendorItemName;
+            //                        tm.ShelfNo = g.FirstOrDefault().ShelfNo;
+            //                        tm.GroupType = g.FirstOrDefault().GroupCode;
+            //                        tm.Max = Convert.ToDecimal(g.FirstOrDefault().MaximumStock);
+            //                        tm.Min = Convert.ToDecimal(g.FirstOrDefault().MinimumStock);
+            //                        tm.ReOrderPoint = Convert.ToDecimal(g.FirstOrDefault().ReOrderPoint);
+            //                        tm.ToolLife = Convert.ToDecimal(g.FirstOrDefault().Toollife);
+            //                        byte[] barcode = StockControl.dbClss.SaveQRCode2D(g.FirstOrDefault().CodeNo);
+            //                        tm.BarCode = barcode;
+            //                        db.TempPrintKanbans.InsertOnSubmit(tm);
+            //                        db.SubmitChanges();
+            //                        this.Cursor = Cursors.Default;
                                   
-                                }
-                            }
-                        }
-                        if (c > 0)
-                        {
-                            Report.Reportx1.Value = new string[2];
-                            Report.Reportx1.Value[0] = ClassLib.Classlib.User;
-                            Report.Reportx1.WReport = "001_Kanban_Part";
-                            Report.Reportx1 op = new Report.Reportx1("001_Kanban_Part.rpt");
-                            op.Show();
-                        }
-                        else
-                            MessageBox.Show("not found.");
+            //                    }
+            //                }
+            //            }
+            //            if (c > 0)
+            //            {
+            //                Report.Reportx1.Value = new string[2];
+            //                Report.Reportx1.Value[0] = ClassLib.Classlib.User;
+            //                Report.Reportx1.WReport = "001_Kanban_Part";
+            //                Report.Reportx1 op = new Report.Reportx1("001_Kanban_Part.rpt");
+            //                op.Show();
+            //            }
+            //            else
+            //                MessageBox.Show("not found.");
                    
-                }
+            //    }
 
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            this.Cursor = Cursors.Default;
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //this.Cursor = Cursors.Default;
         }
 
         private void frezzRowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -723,8 +723,8 @@ namespace StockControl
                     Comcol.EditorControl.Columns.Add(new GridViewTextBoxColumn
                     {
                         HeaderText = "สถานที่เก็บ",
-                        Name = "Location",
-                        FieldName = "Location",
+                        Name = "Code",
+                        FieldName = "Code",
                         Width = 100,
                         AllowFiltering = true,
                         ReadOnly = false

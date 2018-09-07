@@ -91,87 +91,87 @@ namespace StockControl
         }
         private void Load_Adjust()  
         {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
               
-                int dgvNo = 0;
-                bool S = false;
-                DateTime inclusiveStart = dtDate1.Value.Date;
-                // Include the *whole* of the day indicated by searchEndDate
-                DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
+            //    int dgvNo = 0;
+            //    bool S = false;
+            //    DateTime inclusiveStart = dtDate1.Value.Date;
+            //    // Include the *whole* of the day indicated by searchEndDate
+            //    DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
 
 
-                var r = (from h in db.tb_StockAdjusts
-                             join d in db.tb_StockAdjustHs on h.AdjustNo equals d.ADNo
-                             join i in db.tb_Items on h.CodeNo equals i.CodeNo
+            //    var r = (from h in db.tb_StockAdjusts
+            //                 join d in db.tb_StockAdjustHs on h.AdjustNo equals d.ADNo
+            //                 join i in db.tb_Items on h.CodeNo equals i.CodeNo
 
-                             where //h.Status == "Waiting" //&& d.verticalID == VerticalID
+            //                 where //h.Status == "Waiting" //&& d.verticalID == VerticalID
                                
-                                 h.AdjustNo.Contains(txtADNo.Text)
-                                  //  && (h.CreateDate >= inclusiveStart
-                                  //&& h.CreateDate < exclusiveEnd)
-                                  && (((h.CreateDate >= inclusiveStart
-                                   && h.CreateDate < exclusiveEnd)
-                                   && cbDate.Checked == true)
-                                    || (cbDate.Checked == false)
-                                   )
+            //                     h.AdjustNo.Contains(txtADNo.Text)
+            //                      //  && (h.CreateDate >= inclusiveStart
+            //                      //&& h.CreateDate < exclusiveEnd)
+            //                      && (((h.CreateDate >= inclusiveStart
+            //                       && h.CreateDate < exclusiveEnd)
+            //                       && cbDate.Checked == true)
+            //                        || (cbDate.Checked == false)
+            //                       )
 
-                         select new
-                             {
-                                 CodeNo = h.CodeNo,
-                                 S = false,
-                                 ItemNo = h.ItemNo,
-                                 ItemDescription = h.ItemDescription,
+            //             select new
+            //                 {
+            //                     CodeNo = h.CodeNo,
+            //                     S = false,
+            //                     ItemNo = h.ItemNo,
+            //                     ItemDescription = h.ItemDescription,
                                 
-                                 QTY = h.Qty,
-                                 Unit = h.Unit,
-                                 PCSUnit = h.PCSUnit,
-                                 VendorNo = i.VendorNo,
-                                 VendorName = i.VendorItemName,
-                                 CreateBy = h.CreateBy,
-                                 CreateDate = h.CreateDate,
-                                 LotNo =  h.LotNo,
-                                 Reason = h.Reason,
-                                 Status = i.Status,
-                                 ADNo = d.ADNo,
-                                 ShelfNo = h.ShelfNo,
-                                 Location = h.Location
-                             }
-               ).ToList();
-                if (r.Count > 0)
-                {
-                    dgvNo = dgvData.Rows.Count() + 1;
+            //                     QTY = h.Qty,
+            //                     Unit = h.Unit,
+            //                     PCSUnit = h.PCSUnit,
+            //                     VendorNo = i.VendorNo,
+            //                     VendorName = i.VendorItemName,
+            //                     CreateBy = h.CreateBy,
+            //                     CreateDate = h.CreateDate,
+            //                     LotNo =  h.LotNo,
+            //                     Reason = h.Reason,
+            //                     Status = i.Status,
+            //                     ADNo = d.ADNo,
+            //                     ShelfNo = h.ShelfNo,
+            //                     Location = h.Location
+            //                 }
+            //   ).ToList();
+            //    if (r.Count > 0)
+            //    {
+            //        dgvNo = dgvData.Rows.Count() + 1;
 
-                    foreach (var vv in r)
-                    {
-                        //dgvData.Rows.Add(dgvNo.ToString()
-                        //                , false,
-                        //                vv.ADNo,
-                        //                vv.CodeNo,
-                        //                vv.ItemNo,
-                        //                vv.ItemDescription,
-                        //                vv.QTY,
-                        //                vv.Unit,
-                        //                vv.PCSUnit,
-                        //                vv.VendorNo,
-                        //                vv.VendorName,
-                        //                vv.CreateBy,
-                        //                vv.CreateDate,
-                        //                vv.LotNo,
-                        //                vv.ShelfNo,
-                        //                vv.Location,
-                        //                vv.Reason,
-                        //                vv.Status);
+            //        foreach (var vv in r)
+            //        {
+            //            //dgvData.Rows.Add(dgvNo.ToString()
+            //            //                , false,
+            //            //                vv.ADNo,
+            //            //                vv.CodeNo,
+            //            //                vv.ItemNo,
+            //            //                vv.ItemDescription,
+            //            //                vv.QTY,
+            //            //                vv.Unit,
+            //            //                vv.PCSUnit,
+            //            //                vv.VendorNo,
+            //            //                vv.VendorName,
+            //            //                vv.CreateBy,
+            //            //                vv.CreateDate,
+            //            //                vv.LotNo,
+            //            //                vv.ShelfNo,
+            //            //                vv.Location,
+            //            //                vv.Reason,
+            //            //                vv.Status);
 
-                        Add_Item(dgvNo.ToString(), false, vv.ADNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
-                            , dbClss.TDe( vv.QTY), vv.Unit, dbClss.TDe( vv.PCSUnit), vv.VendorNo, vv.VendorName, vv.CreateBy, Convert.ToDateTime( vv.CreateDate)
-                            , vv.LotNo, vv.ShelfNo, vv.Location, vv.Reason, vv.Status);
-                    }
+            //            Add_Item(dgvNo.ToString(), false, vv.ADNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
+            //                , dbClss.TDe( vv.QTY), vv.Unit, dbClss.TDe( vv.PCSUnit), vv.VendorNo, vv.VendorName, vv.CreateBy, Convert.ToDateTime( vv.CreateDate)
+            //                , vv.LotNo, vv.ShelfNo, vv.Location, vv.Reason, vv.Status);
+            //        }
 
 
-                }
+            //    }
                     
-            }
+            //}
         }
 
         private void Add_Item(string Row,bool s,string ADNo, string CodeNo, string ItemNo

@@ -48,29 +48,29 @@ namespace StockControl
             DataLoad();
 
             LoadDefault();
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
 
-                var TypeCode = (from p in db.tb_Items
-                                                select p.TypeCode).Distinct();
+            //    var TypeCode = (from p in db.tb_Items
+            //                                    select p.TypeCode).Distinct();
               
 
-                //var g = (from i in db.tb_Items
-                //         select new  
-                //         {
-                //             Type =  i.TypeCode    
+            //    //var g = (from i in db.tb_Items
+            //    //         select new  
+            //    //         {
+            //    //             Type =  i.TypeCode    
 
-                //         }).ToList();
+            //    //         }).ToList();
                
                  
-                    ddlType.DataSource = TypeCode;
-                    ddlType.DisplayMember = "TypeCode";
-                    ddlType.Text = "";
+            //        ddlType.DataSource = TypeCode;
+            //        ddlType.DisplayMember = "TypeCode";
+            //        ddlType.Text = "";
 
-                   // ddlType.Items.Add("");//การ add ค่าเข้าไปต่อท้าย
+            //       // ddlType.Items.Add("");//การ add ค่าเข้าไปต่อท้าย
               
                    
-            }
+            //}
 
         }
         private void LoadDefault()
@@ -81,13 +81,13 @@ namespace StockControl
                 ddlLocation.DisplayMember = "Location";
                 ddlLocation.ValueMember = "Location";
                 // ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
-                var g = (from ix in db.tb_Locations select ix).Where(s => s.Active == true && s.Status == "Completed").ToList();
+                var g = (from ix in db.mh_Locations select ix).Where(s => s.Active == true && s.Active == true).ToList();
 
                 List<string> a = new List<string>();
                 if (g.Count > 0)
                 {
                     foreach (var gg in g)
-                        a.Add(gg.Location);
+                        a.Add(gg.Code);
                 }
                 a.Add("");
                 ddlLocation.DataSource = a;
@@ -97,92 +97,92 @@ namespace StockControl
 
         private void Load_Item()  
         {
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
+            //try
+            //{
+            //    this.Cursor = Cursors.WaitCursor;
 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
                     
-                    var g = (from i in db.tb_Items
-                             join b in db.tb_Vendors on i.VendorNo equals b.VendorNo
-                             where 
-                                  i.CodeNo.Contains(txtCodeNo.Text.Trim())
-                                 && i.ItemNo.Contains(txtItemNo.Text.Trim())
-                                 && i.ItemDescription.Contains(txtItemDescription.Text.Trim())
-                                 && b.VendorName.Contains(txtVendorName.Text.Trim())
-                                 && i.ShelfNo.Contains(ddlLocation.Text.Trim())
-                                 && i.TypeCode.Contains(ddlType.Text)
+            //        var g = (from i in db.tb_Items
+            //                 join b in db.tb_Vendors on i.VendorNo equals b.VendorNo
+            //                 where 
+            //                      i.CodeNo.Contains(txtCodeNo.Text.Trim())
+            //                     && i.ItemNo.Contains(txtItemNo.Text.Trim())
+            //                     && i.ItemDescription.Contains(txtItemDescription.Text.Trim())
+            //                     && b.VendorName.Contains(txtVendorName.Text.Trim())
+            //                     && i.ShelfNo.Contains(ddlLocation.Text.Trim())
+            //                     && i.TypeCode.Contains(ddlType.Text)
                                  
 
-                             select new
-                             {
+            //                 select new
+            //                 {
 
-                                //x.Cells["StockInv"].Value = (Convert.ToDecimal(db.Cal_QTY(Convert.ToString(x.Cells["CodeNo"].Value), "Invoice", 0)));
-                                //x.Cells["StockDL"].Value = (Convert.ToDecimal(db.Cal_QTY(Convert.ToString(x.Cells["CodeNo"].Value), "Temp", 0)));
-                                //x.Cells["StockBackOrder"].Value = (Convert.ToDecimal(db.Cal_QTY(Convert.ToString(x.Cells["CodeNo"].Value), "BackOrder", 0)));
+            //                    //x.Cells["StockInv"].Value = (Convert.ToDecimal(db.Cal_QTY(Convert.ToString(x.Cells["CodeNo"].Value), "Invoice", 0)));
+            //                    //x.Cells["StockDL"].Value = (Convert.ToDecimal(db.Cal_QTY(Convert.ToString(x.Cells["CodeNo"].Value), "Temp", 0)));
+            //                    //x.Cells["StockBackOrder"].Value = (Convert.ToDecimal(db.Cal_QTY(Convert.ToString(x.Cells["CodeNo"].Value), "BackOrder", 0)));
 
 
-                                 CodeNo = i.CodeNo,
-                                 ItemNo = i.ItemNo,
-                                 ItemDescription = i.ItemDescription,
-                                 StockQty = i.StockInv,//(Convert.ToDecimal(db.Cal_QTY(Convert.ToString(i.CodeNo), "Invoice", 0))), //StockControl.dbClss.TDe(i.StockInv),
-                                 StockTemp = i.StockDL,//(Convert.ToDecimal(db.Cal_QTY(Convert.ToString(i.CodeNo), "Temp", 0))),// StockControl.dbClss.TDe(i.StockDL),
-                                 ShelfNo = i.ShelfNo,
-                                 QTY = 0,//StockControl.dbClss.TDe(s.QTY),
-                                 GroupCode = i.GroupCode,
-                                 TypeCode = i.TypeCode,
-                                 StandardCost = Convert.ToDecimal(i.StandardCost),
-                                 UnitBuy = i.UnitBuy,
-                                 Amount = 0,//StockControl.dbClss.TDe(i.StockInv) * Convert.ToDecimal(i.StandardCost),
-                                 VendorNo = i.VendorNo,
-                                 VendorItemName =b.VendorName,
-                                 Leadtime = i.Leadtime,
-                                 MaximumStock = i.MaximumStock,
-                                 MinimumStock = i.MinimumStock,
-                                 ToolLife = i.Toollife,
-                                 SD = i.SD,
-                                 Status = i.Status,
-                                 StopOrder = i.StopOrder
+            //                     CodeNo = i.CodeNo,
+            //                     ItemNo = i.ItemNo,
+            //                     ItemDescription = i.ItemDescription,
+            //                     StockQty = i.StockInv,//(Convert.ToDecimal(db.Cal_QTY(Convert.ToString(i.CodeNo), "Invoice", 0))), //StockControl.dbClss.TDe(i.StockInv),
+            //                     StockTemp = i.StockDL,//(Convert.ToDecimal(db.Cal_QTY(Convert.ToString(i.CodeNo), "Temp", 0))),// StockControl.dbClss.TDe(i.StockDL),
+            //                     ShelfNo = i.ShelfNo,
+            //                     QTY = 0,//StockControl.dbClss.TDe(s.QTY),
+            //                     GroupCode = i.GroupCode,
+            //                     TypeCode = i.TypeCode,
+            //                     StandardCost = Convert.ToDecimal(i.StandardCost),
+            //                     UnitBuy = i.UnitBuy,
+            //                     Amount = 0,//StockControl.dbClss.TDe(i.StockInv) * Convert.ToDecimal(i.StandardCost),
+            //                     VendorNo = i.VendorNo,
+            //                     VendorItemName =b.VendorName,
+            //                     Leadtime = i.Leadtime,
+            //                     MaximumStock = i.MaximumStock,
+            //                     MinimumStock = i.MinimumStock,
+            //                     ToolLife = i.Toollife,
+            //                     SD = i.SD,
+            //                     Status = i.Status,
+            //                     StopOrder = i.StopOrder
 
-                             }).ToList();
+            //                 }).ToList();
                     
-                    //var g = (from i in db.sp_015_Stock_List()
-                    //dgvData.DataSource = g;
-                    if (g.Count > 0)
-                    {
-                        foreach (var gg in g)
-                        {
-                            dgvData.Rows.Add("",
+            //        //var g = (from i in db.sp_015_Stock_List()
+            //        //dgvData.DataSource = g;
+            //        if (g.Count > 0)
+            //        {
+            //            foreach (var gg in g)
+            //            {
+            //                dgvData.Rows.Add("",
                                    
-                                    gg.CodeNo,
-                                    gg.ItemNo,
-                                    gg.ItemDescription,
-                                    gg.StockQty,
-                                    gg.StockTemp,
-                                    gg.ShelfNo,
-                                    gg.QTY,
-                                    gg.GroupCode,
-                                    gg.TypeCode,
-                                    gg.StandardCost,
-                                    gg.UnitBuy,
-                                    (Convert.ToDecimal(gg.StandardCost) * Convert.ToDecimal(gg.StockQty))
-                                    + (Convert.ToDecimal(gg.StandardCost) * Convert.ToDecimal(gg.StockTemp)), //gg.Amount,
-                                    gg.VendorNo,
-                                    gg.VendorItemName,
-                                    gg.Leadtime,
-                                    gg.MaximumStock,
-                                    gg.MinimumStock,
-                                    gg.ToolLife,
-                                    gg.SD,//      ค่าเบียงเบน
-                                    gg.Status,
-                                    gg.StopOrder);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            this.Cursor = Cursors.Default;
+            //                        gg.CodeNo,
+            //                        gg.ItemNo,
+            //                        gg.ItemDescription,
+            //                        gg.StockQty,
+            //                        gg.StockTemp,
+            //                        gg.ShelfNo,
+            //                        gg.QTY,
+            //                        gg.GroupCode,
+            //                        gg.TypeCode,
+            //                        gg.StandardCost,
+            //                        gg.UnitBuy,
+            //                        (Convert.ToDecimal(gg.StandardCost) * Convert.ToDecimal(gg.StockQty))
+            //                        + (Convert.ToDecimal(gg.StandardCost) * Convert.ToDecimal(gg.StockTemp)), //gg.Amount,
+            //                        gg.VendorNo,
+            //                        gg.VendorItemName,
+            //                        gg.Leadtime,
+            //                        gg.MaximumStock,
+            //                        gg.MinimumStock,
+            //                        gg.ToolLife,
+            //                        gg.SD,//      ค่าเบียงเบน
+            //                        gg.Status,
+            //                        gg.StopOrder);
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //this.Cursor = Cursors.Default;
         }
         private void Load_Item2()
         {
@@ -274,325 +274,325 @@ namespace StockControl
         }
         private void Load_Receive()  //รับสินค้า
         {
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
+            //try
+            //{
+            //    this.Cursor = Cursors.WaitCursor;
 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    var g = (from i in db.tb_Items
-                             join r in db.tb_Receives on i.CodeNo equals r.CodeNo
-                             join s in db.tb_Stock1s on r.RCNo equals s.RefNo
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        var g = (from i in db.tb_Items
+            //                 join r in db.tb_Receives on i.CodeNo equals r.CodeNo
+            //                 join s in db.tb_Stock1s on r.RCNo equals s.RefNo
 
-                             where s.Status == "Active" //&& d.verticalID == VerticalID
-                                    && s.App == "Receive"
-                                 && i.CodeNo.Contains(txtCodeNo.Text.Trim())
-                                 && i.ItemNo.Contains(txtItemNo.Text.Trim())
-                                 && i.ItemDescription.Contains(txtItemDescription.Text.Trim())
-                                 && i.VendorItemName.Contains(txtVendorName.Text.Trim())
-                                 && i.ShelfNo.Contains(ddlLocation.Text.Trim())
+            //                 where s.Status == "Active" //&& d.verticalID == VerticalID
+            //                        && s.App == "Receive"
+            //                     && i.CodeNo.Contains(txtCodeNo.Text.Trim())
+            //                     && i.ItemNo.Contains(txtItemNo.Text.Trim())
+            //                     && i.ItemDescription.Contains(txtItemDescription.Text.Trim())
+            //                     && i.VendorItemName.Contains(txtVendorName.Text.Trim())
+            //                     && i.ShelfNo.Contains(ddlLocation.Text.Trim())
 
-                             select new
-                             {
-                                 GroupCode = s.App,
-                                 TypeCode = s.App,
-                                 CodeNo = i.CodeNo,
-                                 ItemNo = i.ItemNo,
-                                 ItemDescription = i.ItemDescription,
-                                 StockQty = StockControl.dbClss.TDe(i.StockInv),
-                                 StockTemp = StockControl.dbClss.TDe(i.StockDL),
-                                 ShelfNo = i.ShelfNo,
-                                 QTY = StockControl.dbClss.TDe(s.QTY),
-                                 StandardCost = Convert.ToDecimal(i.StandardCost),
-                                 UnitBuy = i.UnitBuy,
-                                 Amount = Convert.ToDecimal(s.QTY) * Convert.ToDecimal(i.StandardCost),
-                                 VendorNo = i.VendorNo,
-                                 VendorItemName = i.VendorItemName,
-                                 Leadtime = i.Leadtime,
-                                 MaximumStock = i.MaximumStock,
-                                 MinimumStock = i.MinimumStock,
-                                 ToolLife = i.Toollife,
-                                 SD = i.SD,
-                                 Status = i.Status,
-                                 StopOrder = i.StopOrder
+            //                 select new
+            //                 {
+            //                     GroupCode = s.App,
+            //                     TypeCode = s.App,
+            //                     CodeNo = i.CodeNo,
+            //                     ItemNo = i.ItemNo,
+            //                     ItemDescription = i.ItemDescription,
+            //                     StockQty = StockControl.dbClss.TDe(i.StockInv),
+            //                     StockTemp = StockControl.dbClss.TDe(i.StockDL),
+            //                     ShelfNo = i.ShelfNo,
+            //                     QTY = StockControl.dbClss.TDe(s.QTY),
+            //                     StandardCost = Convert.ToDecimal(i.StandardCost),
+            //                     UnitBuy = i.UnitBuy,
+            //                     Amount = Convert.ToDecimal(s.QTY) * Convert.ToDecimal(i.StandardCost),
+            //                     VendorNo = i.VendorNo,
+            //                     VendorItemName = i.VendorItemName,
+            //                     Leadtime = i.Leadtime,
+            //                     MaximumStock = i.MaximumStock,
+            //                     MinimumStock = i.MinimumStock,
+            //                     ToolLife = i.Toollife,
+            //                     SD = i.SD,
+            //                     Status = i.Status,
+            //                     StopOrder = i.StopOrder
 
-                             }).ToList();
-                    //dgvData.DataSource = g;
-                    if(g.Count>0)
-                    {
-                        foreach (var gg in g)
-                        {
-                            dgvData.Rows.Add("",
-                                    gg.GroupCode,
-                                    gg.TypeCode,
-                                    gg.CodeNo,
-                                    gg.ItemNo,
-                                    gg.ItemDescription,
-                                    gg.StockQty,
-                                    gg.StockTemp,
-                                    gg.ShelfNo,
-                                    gg.QTY,
-                                     Convert.ToDecimal(gg.StandardCost),
-                                    gg.UnitBuy,
-                                    gg.Amount,
-                                    gg.VendorNo,
-                                    gg.VendorItemName,
-                                    gg.Leadtime,
-                                    gg.MaximumStock,
-                                    gg.MinimumStock,
-                                    gg.ToolLife,
-                                    gg.SD,//      ค่าเบียงเบน
-                                    gg.Status,
-                                    gg.StopOrder);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            this.Cursor = Cursors.Default;
+            //                 }).ToList();
+            //        //dgvData.DataSource = g;
+            //        if(g.Count>0)
+            //        {
+            //            foreach (var gg in g)
+            //            {
+            //                dgvData.Rows.Add("",
+            //                        gg.GroupCode,
+            //                        gg.TypeCode,
+            //                        gg.CodeNo,
+            //                        gg.ItemNo,
+            //                        gg.ItemDescription,
+            //                        gg.StockQty,
+            //                        gg.StockTemp,
+            //                        gg.ShelfNo,
+            //                        gg.QTY,
+            //                         Convert.ToDecimal(gg.StandardCost),
+            //                        gg.UnitBuy,
+            //                        gg.Amount,
+            //                        gg.VendorNo,
+            //                        gg.VendorItemName,
+            //                        gg.Leadtime,
+            //                        gg.MaximumStock,
+            //                        gg.MinimumStock,
+            //                        gg.ToolLife,
+            //                        gg.SD,//      ค่าเบียงเบน
+            //                        gg.Status,
+            //                        gg.StopOrder);
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //this.Cursor = Cursors.Default;
         }
         private void Load_CancelReceive()  //ยกเลิกรับสินค้า
         {
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
+            //try
+            //{
+            //    this.Cursor = Cursors.WaitCursor;
 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
                   
-                    var g = (from i in db.tb_Items
-                             join r in db.tb_Receive_Dels on i.CodeNo equals r.CodeNo
-                             join s in db.tb_Stock1s on r.RCNo equals s.RefNo
+            //        var g = (from i in db.tb_Items
+            //                 join r in db.tb_Receive_Dels on i.CodeNo equals r.CodeNo
+            //                 join s in db.tb_Stock1s on r.RCNo equals s.RefNo
 
-                             where s.Status == "Active" //&& d.verticalID == VerticalID
-                                    && s.App == "Cancel RC"
-                                 && i.CodeNo.Contains(txtCodeNo.Text.Trim())
-                                 && i.ItemNo.Contains(txtItemNo.Text.Trim())
-                                 && i.ItemDescription.Contains(txtItemDescription.Text.Trim())
-                                 && i.VendorItemName.Contains(txtVendorName.Text.Trim())
-                                 && i.ShelfNo.Contains(ddlLocation.Text.Trim())
+            //                 where s.Status == "Active" //&& d.verticalID == VerticalID
+            //                        && s.App == "Cancel RC"
+            //                     && i.CodeNo.Contains(txtCodeNo.Text.Trim())
+            //                     && i.ItemNo.Contains(txtItemNo.Text.Trim())
+            //                     && i.ItemDescription.Contains(txtItemDescription.Text.Trim())
+            //                     && i.VendorItemName.Contains(txtVendorName.Text.Trim())
+            //                     && i.ShelfNo.Contains(ddlLocation.Text.Trim())
 
-                             select new
-                             {
-                                 GroupCode = s.App,
-                                 TypeCode = s.App,
-                                 CodeNo = i.CodeNo,
-                                 ItemNo = i.ItemNo,
-                                 ItemDescription = i.ItemDescription,
-                                 StockQty = StockControl.dbClss.TDe(i.StockInv),
-                                 StockTemp = StockControl.dbClss.TDe(i.StockDL),
-                                 ShelfNo = i.ShelfNo,
-                                 QTY = StockControl.dbClss.TDe(s.QTY),
-                                 StandardCost = Convert.ToDecimal(i.StandardCost),
-                                 UnitBuy = i.UnitBuy,
-                                 Amount = Convert.ToDecimal(s.QTY) * Convert.ToDecimal(i.StandardCost),
-                                 VendorNo = i.VendorNo,
-                                 VendorItemName = i.VendorItemName,
-                                 Leadtime = i.Leadtime,
-                                 MaximumStock = i.MaximumStock,
-                                 MinimumStock = i.MinimumStock,
-                                 ToolLife = i.Toollife,
-                                 SD = i.SD,
-                                 Status = i.Status,
-                                 StopOrder = i.StopOrder
+            //                 select new
+            //                 {
+            //                     GroupCode = s.App,
+            //                     TypeCode = s.App,
+            //                     CodeNo = i.CodeNo,
+            //                     ItemNo = i.ItemNo,
+            //                     ItemDescription = i.ItemDescription,
+            //                     StockQty = StockControl.dbClss.TDe(i.StockInv),
+            //                     StockTemp = StockControl.dbClss.TDe(i.StockDL),
+            //                     ShelfNo = i.ShelfNo,
+            //                     QTY = StockControl.dbClss.TDe(s.QTY),
+            //                     StandardCost = Convert.ToDecimal(i.StandardCost),
+            //                     UnitBuy = i.UnitBuy,
+            //                     Amount = Convert.ToDecimal(s.QTY) * Convert.ToDecimal(i.StandardCost),
+            //                     VendorNo = i.VendorNo,
+            //                     VendorItemName = i.VendorItemName,
+            //                     Leadtime = i.Leadtime,
+            //                     MaximumStock = i.MaximumStock,
+            //                     MinimumStock = i.MinimumStock,
+            //                     ToolLife = i.Toollife,
+            //                     SD = i.SD,
+            //                     Status = i.Status,
+            //                     StopOrder = i.StopOrder
 
-                             }).ToList();
-                    //dgvData.DataSource = g;
-                    if (g.Count > 0)
-                    {
-                        foreach (var gg in g)
-                        {
-                            dgvData.Rows.Add("",
-                                    gg.GroupCode,
-                                    gg.TypeCode,
-                                    gg.CodeNo,
-                                    gg.ItemNo,
-                                    gg.ItemDescription,
-                                    gg.StockQty,
-                                    gg.StockTemp,
-                                    gg.ShelfNo,
-                                    gg.QTY,
-                                    gg.StandardCost,
-                                    gg.UnitBuy,
-                                    gg.Amount,
-                                    gg.VendorNo,
-                                    gg.VendorItemName,
-                                    gg.Leadtime,
-                                    gg.MaximumStock,
-                                    gg.MinimumStock,
-                                    gg.ToolLife,
-                                    gg.SD,//      ค่าเบียงเบน
-                                    gg.Status,
-                                    gg.StopOrder);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            this.Cursor = Cursors.Default;
+            //                 }).ToList();
+            //        //dgvData.DataSource = g;
+            //        if (g.Count > 0)
+            //        {
+            //            foreach (var gg in g)
+            //            {
+            //                dgvData.Rows.Add("",
+            //                        gg.GroupCode,
+            //                        gg.TypeCode,
+            //                        gg.CodeNo,
+            //                        gg.ItemNo,
+            //                        gg.ItemDescription,
+            //                        gg.StockQty,
+            //                        gg.StockTemp,
+            //                        gg.ShelfNo,
+            //                        gg.QTY,
+            //                        gg.StandardCost,
+            //                        gg.UnitBuy,
+            //                        gg.Amount,
+            //                        gg.VendorNo,
+            //                        gg.VendorItemName,
+            //                        gg.Leadtime,
+            //                        gg.MaximumStock,
+            //                        gg.MinimumStock,
+            //                        gg.ToolLife,
+            //                        gg.SD,//      ค่าเบียงเบน
+            //                        gg.Status,
+            //                        gg.StopOrder);
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //this.Cursor = Cursors.Default;
         }
         private void Load_Shipping()  //เบิกสินค้า
         {
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
+            //try
+            //{
+            //    this.Cursor = Cursors.WaitCursor;
 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    var g = (from i in db.tb_Items
-                             join r in db.tb_Shippings on i.CodeNo equals r.CodeNo
-                             join s in db.tb_Stock1s on r.ShippingNo equals s.RefNo
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        var g = (from i in db.tb_Items
+            //                 join r in db.tb_Shippings on i.CodeNo equals r.CodeNo
+            //                 join s in db.tb_Stock1s on r.ShippingNo equals s.RefNo
 
-                             where s.Status == "Active" //&& d.verticalID == VerticalID
-                                    && s.App == "Shipping"
-                                 && i.CodeNo.Contains(txtCodeNo.Text.Trim())
-                                 && i.ItemNo.Contains(txtItemNo.Text.Trim())
-                                 && i.ItemDescription.Contains(txtItemDescription.Text.Trim())
-                                 && i.VendorItemName.Contains(txtVendorName.Text.Trim())
-                                 && i.ShelfNo.Contains(ddlLocation.Text.Trim())
+            //                 where s.Status == "Active" //&& d.verticalID == VerticalID
+            //                        && s.App == "Shipping"
+            //                     && i.CodeNo.Contains(txtCodeNo.Text.Trim())
+            //                     && i.ItemNo.Contains(txtItemNo.Text.Trim())
+            //                     && i.ItemDescription.Contains(txtItemDescription.Text.Trim())
+            //                     && i.VendorItemName.Contains(txtVendorName.Text.Trim())
+            //                     && i.ShelfNo.Contains(ddlLocation.Text.Trim())
 
-                             select new
-                             {
+            //                 select new
+            //                 {
 
-                                 GroupCode = s.App,
-                                 TypeCode = s.App,
-                                 CodeNo = i.CodeNo,
-                                 ItemNo = i.ItemNo,
-                                 ItemDescription = i.ItemDescription,
-                                 StockQty = StockControl.dbClss.TDe(i.StockInv),
-                                 StockTemp = StockControl.dbClss.TDe(i.StockDL),
-                                 ShelfNo = i.ShelfNo,
-                                 QTY = StockControl.dbClss.TDe(s.QTY),
-                                 StandardCost = Convert.ToDecimal(i.StandardCost),
-                                 UnitBuy = i.UnitBuy,
-                                 Amount = Convert.ToDecimal(s.QTY) * Convert.ToDecimal(i.StandardCost),
-                                 VendorNo = i.VendorNo,
-                                 VendorItemName = i.VendorItemName,
-                                 Leadtime = i.Leadtime,
-                                 MaximumStock = i.MaximumStock,
-                                 MinimumStock = i.MinimumStock,
-                                 ToolLife = i.Toollife,
-                                 SD = i.SD,
-                                 Status = i.Status,
-                                 StopOrder = i.StopOrder
+            //                     GroupCode = s.App,
+            //                     TypeCode = s.App,
+            //                     CodeNo = i.CodeNo,
+            //                     ItemNo = i.ItemNo,
+            //                     ItemDescription = i.ItemDescription,
+            //                     StockQty = StockControl.dbClss.TDe(i.StockInv),
+            //                     StockTemp = StockControl.dbClss.TDe(i.StockDL),
+            //                     ShelfNo = i.ShelfNo,
+            //                     QTY = StockControl.dbClss.TDe(s.QTY),
+            //                     StandardCost = Convert.ToDecimal(i.StandardCost),
+            //                     UnitBuy = i.UnitBuy,
+            //                     Amount = Convert.ToDecimal(s.QTY) * Convert.ToDecimal(i.StandardCost),
+            //                     VendorNo = i.VendorNo,
+            //                     VendorItemName = i.VendorItemName,
+            //                     Leadtime = i.Leadtime,
+            //                     MaximumStock = i.MaximumStock,
+            //                     MinimumStock = i.MinimumStock,
+            //                     ToolLife = i.Toollife,
+            //                     SD = i.SD,
+            //                     Status = i.Status,
+            //                     StopOrder = i.StopOrder
 
-                             }).ToList();
-                    //dgvData.DataSource = g;
-                    if (g.Count > 0)
-                    {
-                        foreach (var gg in g)
-                        {
-                            dgvData.Rows.Add("",
-                                    gg.GroupCode,
-                                    gg.TypeCode,
-                                    gg.CodeNo,
-                                    gg.ItemNo,
-                                    gg.ItemDescription,
-                                    gg.StockQty,
-                                    gg.StockTemp,
-                                    gg.ShelfNo,
-                                    gg.QTY,
-                                    gg.StandardCost,
-                                    gg.UnitBuy,
-                                    gg.Amount,
-                                    gg.VendorNo,
-                                    gg.VendorItemName,
-                                    gg.Leadtime,
-                                    gg.MaximumStock,
-                                    gg.MinimumStock,
-                                    gg.ToolLife,
-                                    gg.SD,//      ค่าเบียงเบน
-                                    gg.Status,
-                                    gg.StopOrder);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            this.Cursor = Cursors.Default;
+            //                 }).ToList();
+            //        //dgvData.DataSource = g;
+            //        if (g.Count > 0)
+            //        {
+            //            foreach (var gg in g)
+            //            {
+            //                dgvData.Rows.Add("",
+            //                        gg.GroupCode,
+            //                        gg.TypeCode,
+            //                        gg.CodeNo,
+            //                        gg.ItemNo,
+            //                        gg.ItemDescription,
+            //                        gg.StockQty,
+            //                        gg.StockTemp,
+            //                        gg.ShelfNo,
+            //                        gg.QTY,
+            //                        gg.StandardCost,
+            //                        gg.UnitBuy,
+            //                        gg.Amount,
+            //                        gg.VendorNo,
+            //                        gg.VendorItemName,
+            //                        gg.Leadtime,
+            //                        gg.MaximumStock,
+            //                        gg.MinimumStock,
+            //                        gg.ToolLife,
+            //                        gg.SD,//      ค่าเบียงเบน
+            //                        gg.Status,
+            //                        gg.StopOrder);
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //this.Cursor = Cursors.Default;
         }
         private void Load_CancelShipping()  //ยกเลิกเบิกสินค้า
         {
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
+            //try
+            //{
+            //    this.Cursor = Cursors.WaitCursor;
 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    var g = (from i in db.tb_Items
-                             join r in db.tb_Shippings on i.CodeNo equals r.CodeNo
-                             join s in db.tb_Stock1s on r.ShippingNo equals s.RefNo
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        var g = (from i in db.tb_Items
+            //                 join r in db.tb_Shippings on i.CodeNo equals r.CodeNo
+            //                 join s in db.tb_Stock1s on r.ShippingNo equals s.RefNo
 
-                             where s.Status == "Active" //&& d.verticalID == VerticalID
-                                    && s.App == "Cancel SH"
-                                    && r.Status == "Cancel"
-                                 && i.CodeNo.Contains(txtCodeNo.Text.Trim())
-                                 && i.ItemNo.Contains(txtItemNo.Text.Trim())
-                                 && i.ItemDescription.Contains(txtItemDescription.Text.Trim())
-                                 && i.VendorItemName.Contains(txtVendorName.Text.Trim())
-                                 && i.Location.Contains(ddlLocation.Text.Trim())
+            //                 where s.Status == "Active" //&& d.verticalID == VerticalID
+            //                        && s.App == "Cancel SH"
+            //                        && r.Status == "Cancel"
+            //                     && i.CodeNo.Contains(txtCodeNo.Text.Trim())
+            //                     && i.ItemNo.Contains(txtItemNo.Text.Trim())
+            //                     && i.ItemDescription.Contains(txtItemDescription.Text.Trim())
+            //                     && i.VendorItemName.Contains(txtVendorName.Text.Trim())
+            //                     && i.Location.Contains(ddlLocation.Text.Trim())
 
-                             select new
-                             {
-                                 GroupCode = s.App,
-                                 TypeCode = s.App,
-                                 CodeNo = i.CodeNo,
-                                 ItemNo = i.ItemNo,
-                                 ItemDescription = i.ItemDescription,
-                                 StockQty = StockControl.dbClss.TDe(i.StockInv),
-                                 StockTemp = StockControl.dbClss.TDe(i.StockDL),
-                                 ShelfNo = i.ShelfNo,
-                                 QTY = StockControl.dbClss.TDe(s.QTY),
-                                 StandardCost = Convert.ToDecimal(i.StandardCost),
-                                 UnitBuy = i.UnitBuy,
-                                 Amount = Convert.ToDecimal(s.QTY) * Convert.ToDecimal(i.StandardCost),
-                                 VendorNo = i.VendorNo,
-                                 VendorItemName = i.VendorItemName,
-                                 Leadtime = i.Leadtime,
-                                 MaximumStock = i.MaximumStock,
-                                 MinimumStock = i.MinimumStock,
-                                 ToolLife = i.Toollife,
-                                 SD = i.SD,
-                                 Status = i.Status,
-                                 StopOrder = i.StopOrder,
-                                 TypePart = i.TypePart,
-                                 Location = i.Location
+            //                 select new
+            //                 {
+            //                     GroupCode = s.App,
+            //                     TypeCode = s.App,
+            //                     CodeNo = i.CodeNo,
+            //                     ItemNo = i.ItemNo,
+            //                     ItemDescription = i.ItemDescription,
+            //                     StockQty = StockControl.dbClss.TDe(i.StockInv),
+            //                     StockTemp = StockControl.dbClss.TDe(i.StockDL),
+            //                     ShelfNo = i.ShelfNo,
+            //                     QTY = StockControl.dbClss.TDe(s.QTY),
+            //                     StandardCost = Convert.ToDecimal(i.StandardCost),
+            //                     UnitBuy = i.UnitBuy,
+            //                     Amount = Convert.ToDecimal(s.QTY) * Convert.ToDecimal(i.StandardCost),
+            //                     VendorNo = i.VendorNo,
+            //                     VendorItemName = i.VendorItemName,
+            //                     Leadtime = i.Leadtime,
+            //                     MaximumStock = i.MaximumStock,
+            //                     MinimumStock = i.MinimumStock,
+            //                     ToolLife = i.Toollife,
+            //                     SD = i.SD,
+            //                     Status = i.Status,
+            //                     StopOrder = i.StopOrder,
+            //                     TypePart = i.TypePart,
+            //                     Location = i.Location
 
-                             }).ToList();
-                    //dgvData.DataSource = g;
-                    if (g.Count > 0)
-                    {
-                        foreach (var gg in g)
-                        {
-                            dgvData.Rows.Add("",
-                                    gg.GroupCode,
-                                    gg.TypeCode,
-                                    gg.CodeNo,
-                                    gg.ItemNo,
-                                    gg.ItemDescription,
-                                    gg.StockQty,
-                                    gg.StockTemp,
-                                    gg.ShelfNo,
-                                    gg.QTY,
-                                    gg.StandardCost,
-                                    gg.UnitBuy,
-                                    gg.Amount,
-                                    gg.VendorNo,
-                                    gg.VendorItemName,
-                                    gg.Leadtime,
-                                    gg.MaximumStock,
-                                    gg.MinimumStock,
-                                    gg.ToolLife,
-                                    gg.SD,//      ค่าเบียงเบน
-                                    gg.Status,
-                                    gg.StopOrder
-                                    );
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            this.Cursor = Cursors.Default;
+            //                 }).ToList();
+            //        //dgvData.DataSource = g;
+            //        if (g.Count > 0)
+            //        {
+            //            foreach (var gg in g)
+            //            {
+            //                dgvData.Rows.Add("",
+            //                        gg.GroupCode,
+            //                        gg.TypeCode,
+            //                        gg.CodeNo,
+            //                        gg.ItemNo,
+            //                        gg.ItemDescription,
+            //                        gg.StockQty,
+            //                        gg.StockTemp,
+            //                        gg.ShelfNo,
+            //                        gg.QTY,
+            //                        gg.StandardCost,
+            //                        gg.UnitBuy,
+            //                        gg.Amount,
+            //                        gg.VendorNo,
+            //                        gg.VendorItemName,
+            //                        gg.Leadtime,
+            //                        gg.MaximumStock,
+            //                        gg.MinimumStock,
+            //                        gg.ToolLife,
+            //                        gg.SD,//      ค่าเบียงเบน
+            //                        gg.Status,
+            //                        gg.StopOrder
+            //                        );
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //this.Cursor = Cursors.Default;
         }
         private void DataLoad()
         {

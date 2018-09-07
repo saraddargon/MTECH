@@ -223,153 +223,153 @@ namespace StockControl
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            try
-            {
-                btnCal_Click(null, null);
-                if (Check_Save())
-                    return;
+            //try
+            //{
+            //    btnCal_Click(null, null);
+            //    if (Check_Save())
+            //        return;
 
-                if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    this.Cursor = Cursors.WaitCursor;
-
-
-                    using (DataClasses1DataContext db = new DataClasses1DataContext())
-                    {
-
-                        var g = (from i in db.tb_Claim_FG_Details
-                                 join s in db.tb_Claim_FGs on i.ClaimNo equals s.ClaimNo
-                                 join t in db.tb_Items on i.CodeNo equals t.CodeNo
-
-                                 where i.Status != "Cancel" && s.Status != "Cancel"
-                                    && i.ClaimNo == (txtClaimNo.Text.Trim())
-                                 //&& i.CodeNo == (txtCodeNo.Text.Trim())
-
-                                 select new
-                                 {
-                                     ClaimNo = i.ClaimNo,
-                                     CodeNo = i.CodeNo,
-                                     ItemNo = t.ItemNo,
-                                     ItemDesc = t.ItemDescription,
-                                     id = i.id,
-                                     Qty = i.Qty,
-                                     UnitCost = i.UnitCost,
-                                     DocNo = i.DocNo,
-                                     Unit = t.UnitShip,
-                                     Refid = i.Refid,
-                                     Status = s.Status,
-                                     RefJobCard = i.RefJobCard,
-                                     RefTempJobCard = i.RefTempJobCard,
-                                     Return = i.Return,
-                                     ReturnBy = i.ReturnBy,
-                                     ReturnDate = i.ReturnDate,
-                                     RefDocNo = s.RefDocNo,
-                                     Amount = i.Amount,
-                                     Remark = i.Remark,
-                                     ClaimBy = s.ClaimBy,
-                                     ClaimDate = s.ClaimDate
-
-                                 }
-                           ).ToList();
-                        if (g.Count > 0)
-                        {
-                            MessageBox.Show("เลขที่ใบเคลม(Return FG) ถูกใช้แล้ว กรุณากดสร้างรายการใหม่.");
-                            return;
-                        }
-                        else
-                        {
-
-                            if (Ac.Equals("New"))
-                            {
-                                txtClaimNo.Text = StockControl.dbClss.GetNo(18, 2);
-
-                                //Cal Cost ใหม่ก่อนค่อยบันทึก
-
-                                if (txtJobCard_New.Text != "")
-                                {
-                                    Save(1); // Save จากเลข Refer ที่ผู้ใช้สร้างเอง
-                                    //Create List Jobcard Refer
-                                    db.sp_038_tb_Claim_FG_ReferJobCard_ADD(txtClaimNo.Text, txtCodeNo.Text, txtDocNo.Text);
-
-                                }
-                                             //else
-                                             //    Save(2);//ระบบสร้างให้ Auto
+            //    if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            //    {
+            //        this.Cursor = Cursors.WaitCursor;
 
 
+            //        using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //        {
 
-                                int id = 0;
-                                var s1 = (from ix in db.tb_Claim_FG_Details
-                                              //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
-                                          where ix.ClaimNo.Trim() == txtClaimNo.Text.Trim()
-                                          && ix.CodeNo.Trim() == txtCodeNo.Text.Trim()
-                                          && ix.Status != "Cancel"
-                                          select ix).ToList();
-                                if (s1.Count > 0)
-                                {
-                                    id = dbClss.TInt(s1.FirstOrDefault().id);
-                                }
-                                if (id > 0)
-                                {
+            //            var g = (from i in db.tb_Claim_FG_Details
+            //                     join s in db.tb_Claim_FGs on i.ClaimNo equals s.ClaimNo
+            //                     join t in db.tb_Items on i.CodeNo equals t.CodeNo
+
+            //                     where i.Status != "Cancel" && s.Status != "Cancel"
+            //                        && i.ClaimNo == (txtClaimNo.Text.Trim())
+            //                     //&& i.CodeNo == (txtCodeNo.Text.Trim())
+
+            //                     select new
+            //                     {
+            //                         ClaimNo = i.ClaimNo,
+            //                         CodeNo = i.CodeNo,
+            //                         ItemNo = t.ItemNo,
+            //                         ItemDesc = t.ItemDescription,
+            //                         id = i.id,
+            //                         Qty = i.Qty,
+            //                         UnitCost = i.UnitCost,
+            //                         DocNo = i.DocNo,
+            //                         Unit = t.UnitShip,
+            //                         Refid = i.Refid,
+            //                         Status = s.Status,
+            //                         RefJobCard = i.RefJobCard,
+            //                         RefTempJobCard = i.RefTempJobCard,
+            //                         Return = i.Return,
+            //                         ReturnBy = i.ReturnBy,
+            //                         ReturnDate = i.ReturnDate,
+            //                         RefDocNo = s.RefDocNo,
+            //                         Amount = i.Amount,
+            //                         Remark = i.Remark,
+            //                         ClaimBy = s.ClaimBy,
+            //                         ClaimDate = s.ClaimDate
+
+            //                     }
+            //               ).ToList();
+            //            if (g.Count > 0)
+            //            {
+            //                MessageBox.Show("เลขที่ใบเคลม(Return FG) ถูกใช้แล้ว กรุณากดสร้างรายการใหม่.");
+            //                return;
+            //            }
+            //            else
+            //            {
+
+            //                if (Ac.Equals("New"))
+            //                {
+            //                    txtClaimNo.Text = StockControl.dbClss.GetNo(18, 2);
+
+            //                    //Cal Cost ใหม่ก่อนค่อยบันทึก
+
+            //                    if (txtJobCard_New.Text != "")
+            //                    {
+            //                        Save(1); // Save จากเลข Refer ที่ผู้ใช้สร้างเอง
+            //                        //Create List Jobcard Refer
+            //                        db.sp_038_tb_Claim_FG_ReferJobCard_ADD(txtClaimNo.Text, txtCodeNo.Text, txtDocNo.Text);
+
+            //                    }
+            //                                 //else
+            //                                 //    Save(2);//ระบบสร้างให้ Auto
 
 
-                                    //----------บันทึก Refer Claim---------
-                                    var f = (from i in db.tb_Sell_FG_Details
-                                                 //join s in db.tb_Sell_FGs on i.DocNo equals s.DocNo
-                                                 // join t in db.tb_Items on i.CodeNo equals t.CodeNo
 
-                                             where i.Status != "Cancel"
-                                                 && i.DocNo == (txtDocNo.Text.Trim())
-                                                 && i.CodeNo == (txtCodeNo.Text.Trim())
-                                                 && i.id == dbClss.TInt(txtReftid.Text)
-                                             select new
-                                             {
-                                                 id = i.id,
-                                                 RefidClaim = i.RefidClaim,
-                                                 RefidClaim2 = i.RefidClaim_2,
-                                                 RefidClaim3 = i.RefidClaim_3,
-                                                 RefidClaim4 = i.RefidClaim_4,
-                                                 RefidClaim5 = i.RefidClaim_5
-                                             }
-                                ).ToList();
-                                    if (f.Count > 0)
-                                    {
-                                        var ff = (from ix in db.tb_Sell_FG_Details
-                                                  where ix.Status != "Cancel"
-                                                 && ix.DocNo == (txtDocNo.Text.Trim())
-                                                 && ix.CodeNo == (txtCodeNo.Text.Trim())
-                                                 && ix.id == dbClss.TInt(txtReftid.Text)
-                                                  select ix).First();
-
-                                        if (ff.RefidClaim == null || ff.RefidClaim == 0)
-                                            ff.RefidClaim = id;
-                                        else if (ff.RefidClaim_2 == null || ff.RefidClaim_2 == 0)
-                                            ff.RefidClaim_2 = id;
-                                        else if (ff.RefidClaim_3 == null || ff.RefidClaim_3 == 0)
-                                            ff.RefidClaim_3 = id;
-                                        else if (ff.RefidClaim_4 == null || ff.RefidClaim_4 == 0)
-                                            ff.RefidClaim_4 = id;
-                                        else if (ff.RefidClaim_5 == null || ff.RefidClaim_5 == 0)
-                                            ff.RefidClaim_5 = id;
+            //                    int id = 0;
+            //                    var s1 = (from ix in db.tb_Claim_FG_Details
+            //                                  //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
+            //                              where ix.ClaimNo.Trim() == txtClaimNo.Text.Trim()
+            //                              && ix.CodeNo.Trim() == txtCodeNo.Text.Trim()
+            //                              && ix.Status != "Cancel"
+            //                              select ix).ToList();
+            //                    if (s1.Count > 0)
+            //                    {
+            //                        id = dbClss.TInt(s1.FirstOrDefault().id);
+            //                    }
+            //                    if (id > 0)
+            //                    {
 
 
-                                        dbClss.AddHistory(this.Name, "แก้ไขใบร้องขอการผลิต", "รับงานคืน เลขที่ Refer [" + txtJobCard_New.Text.Trim() + " TempJobCard : " + txtTempJobCard_New.Text + " จำนวนเคลม : " + txtQtyClaim.Text + "]", txtDocNo.Text);
-                                        dbClss.AddHistory(this.Name, "แก้ไขใบร้องขอการผลิต", "สร้าง เคลมสินค้า เลขที่ใบขาย [" + txtDocNo.Text.Trim() + " CodeNo : " + txtCodeNo.Text + " จำนวนเคลม : " + txtQtyClaim.Text + "]", txtClaimNo.Text);
+            //                        //----------บันทึก Refer Claim---------
+            //                        var f = (from i in db.tb_Sell_FG_Details
+            //                                     //join s in db.tb_Sell_FGs on i.DocNo equals s.DocNo
+            //                                     // join t in db.tb_Items on i.CodeNo equals t.CodeNo
 
-                                        db.SubmitChanges();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    btnRefresh_Click(null, null);
-                    MessageBox.Show("บันทึกสำเร็จ!");
-                    btnSave.Enabled = false;
-                    btnNew.Enabled = true;
-                    //btnDelete.Enabled = true;
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-            finally { this.Cursor = Cursors.Default; }
+            //                                 where i.Status != "Cancel"
+            //                                     && i.DocNo == (txtDocNo.Text.Trim())
+            //                                     && i.CodeNo == (txtCodeNo.Text.Trim())
+            //                                     && i.id == dbClss.TInt(txtReftid.Text)
+            //                                 select new
+            //                                 {
+            //                                     id = i.id,
+            //                                     RefidClaim = i.RefidClaim,
+            //                                     RefidClaim2 = i.RefidClaim_2,
+            //                                     RefidClaim3 = i.RefidClaim_3,
+            //                                     RefidClaim4 = i.RefidClaim_4,
+            //                                     RefidClaim5 = i.RefidClaim_5
+            //                                 }
+            //                    ).ToList();
+            //                        if (f.Count > 0)
+            //                        {
+            //                            var ff = (from ix in db.tb_Sell_FG_Details
+            //                                      where ix.Status != "Cancel"
+            //                                     && ix.DocNo == (txtDocNo.Text.Trim())
+            //                                     && ix.CodeNo == (txtCodeNo.Text.Trim())
+            //                                     && ix.id == dbClss.TInt(txtReftid.Text)
+            //                                      select ix).First();
+
+            //                            if (ff.RefidClaim == null || ff.RefidClaim == 0)
+            //                                ff.RefidClaim = id;
+            //                            else if (ff.RefidClaim_2 == null || ff.RefidClaim_2 == 0)
+            //                                ff.RefidClaim_2 = id;
+            //                            else if (ff.RefidClaim_3 == null || ff.RefidClaim_3 == 0)
+            //                                ff.RefidClaim_3 = id;
+            //                            else if (ff.RefidClaim_4 == null || ff.RefidClaim_4 == 0)
+            //                                ff.RefidClaim_4 = id;
+            //                            else if (ff.RefidClaim_5 == null || ff.RefidClaim_5 == 0)
+            //                                ff.RefidClaim_5 = id;
+
+
+            //                            dbClss.AddHistory(this.Name, "แก้ไขใบร้องขอการผลิต", "รับงานคืน เลขที่ Refer [" + txtJobCard_New.Text.Trim() + " TempJobCard : " + txtTempJobCard_New.Text + " จำนวนเคลม : " + txtQtyClaim.Text + "]", txtDocNo.Text);
+            //                            dbClss.AddHistory(this.Name, "แก้ไขใบร้องขอการผลิต", "สร้าง เคลมสินค้า เลขที่ใบขาย [" + txtDocNo.Text.Trim() + " CodeNo : " + txtCodeNo.Text + " จำนวนเคลม : " + txtQtyClaim.Text + "]", txtClaimNo.Text);
+
+            //                            db.SubmitChanges();
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        btnRefresh_Click(null, null);
+            //        MessageBox.Show("บันทึกสำเร็จ!");
+            //        btnSave.Enabled = false;
+            //        btnNew.Enabled = true;
+            //        //btnDelete.Enabled = true;
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //finally { this.Cursor = Cursors.Default; }
         }
         private void Save(int c)
         {
@@ -420,14 +420,14 @@ namespace StockControl
         private decimal get_cost(string Code)
         {
             decimal re = 0;
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                var g = (from ix in db.tb_Items
-                         where ix.CodeNo == Code && ix.Status == "Active"
-                         select ix).First();
-                re = Convert.ToDecimal(g.StandardCost);
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    var g = (from ix in db.tb_Items
+            //             where ix.CodeNo == Code && ix.Status == "Active"
+            //             select ix).First();
+            //    re = Convert.ToDecimal(g.StandardCost);
 
-            }
+            //}
             return re;
         }
 
@@ -1179,168 +1179,168 @@ namespace StockControl
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            try
-            {
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    var g = (from i in db.tb_Claim_FG_Details
-                             join s in db.tb_Claim_FGs on i.ClaimNo equals s.ClaimNo
-                             join t in db.tb_Items on i.CodeNo equals t.CodeNo
+            //try
+            //{
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        var g = (from i in db.tb_Claim_FG_Details
+            //                 join s in db.tb_Claim_FGs on i.ClaimNo equals s.ClaimNo
+            //                 join t in db.tb_Items on i.CodeNo equals t.CodeNo
                             
-                             where i.Status != "Cancel" && s.Status != "Cancel"
-                                && i.ClaimNo == (txtClaimNo.Text.Trim())
-                             //&& i.CodeNo == (txtCodeNo.Text.Trim())
+            //                 where i.Status != "Cancel" && s.Status != "Cancel"
+            //                    && i.ClaimNo == (txtClaimNo.Text.Trim())
+            //                 //&& i.CodeNo == (txtCodeNo.Text.Trim())
 
-                             select new
-                             {
-                                 ClaimNo = i.ClaimNo,
-                                 CodeNo = i.CodeNo,
-                                 ItemNo = t.ItemNo,
-                                 ItemDesc = t.ItemDescription,
-                                 id = i.id,
-                                 Qty = i.Qty,
-                                 UnitCost = i.UnitCost,
+            //                 select new
+            //                 {
+            //                     ClaimNo = i.ClaimNo,
+            //                     CodeNo = i.CodeNo,
+            //                     ItemNo = t.ItemNo,
+            //                     ItemDesc = t.ItemDescription,
+            //                     id = i.id,
+            //                     Qty = i.Qty,
+            //                     UnitCost = i.UnitCost,
 
-                                 DocNo = i.DocNo,
-                                 Unit = t.UnitShip,
-                                 Refid = i.Refid,
-                                 Status = s.Status,
-                                 RefJobCard = i.RefJobCard,
-                                 RefTempJobCard = i.RefTempJobCard,
-                                 Return = i.Return,
-                                 ReturnBy = i.ReturnBy,
-                                 ReturnDate = i.ReturnDate,
-                                 RefDocNo = s.RefDocNo,
-                                 Amount = i.Amount,
-                                 Remark = i.Remark,
-                                 ClaimBy = s.ClaimBy,
-                                 ClaimDate = s.ClaimDate,
-                                 Cal_UnitCost_New = i.UnitCost_New,
-                                 Cal_Amount_New = i.Amount_New
+            //                     DocNo = i.DocNo,
+            //                     Unit = t.UnitShip,
+            //                     Refid = i.Refid,
+            //                     Status = s.Status,
+            //                     RefJobCard = i.RefJobCard,
+            //                     RefTempJobCard = i.RefTempJobCard,
+            //                     Return = i.Return,
+            //                     ReturnBy = i.ReturnBy,
+            //                     ReturnDate = i.ReturnDate,
+            //                     RefDocNo = s.RefDocNo,
+            //                     Amount = i.Amount,
+            //                     Remark = i.Remark,
+            //                     ClaimBy = s.ClaimBy,
+            //                     ClaimDate = s.ClaimDate,
+            //                     Cal_UnitCost_New = i.UnitCost_New,
+            //                     Cal_Amount_New = i.Amount_New
 
                                  
 
-                             }
-                              ).ToList();
-                    if (g.Count > 0)
-                    {
-                        txtQtyClaim.Text = dbClss.TDe(g.FirstOrDefault().Qty).ToString("N2");
-                        //txtUnitCost_New.Text = dbClss.TDe(g.FirstOrDefault().UnitCost).ToString("N2");
-                        txtUnitCost.Text = dbClss.TDe(g.FirstOrDefault().UnitCost).ToString("N2");
+            //                 }
+            //                  ).ToList();
+            //        if (g.Count > 0)
+            //        {
+            //            txtQtyClaim.Text = dbClss.TDe(g.FirstOrDefault().Qty).ToString("N2");
+            //            //txtUnitCost_New.Text = dbClss.TDe(g.FirstOrDefault().UnitCost).ToString("N2");
+            //            txtUnitCost.Text = dbClss.TDe(g.FirstOrDefault().UnitCost).ToString("N2");
 
-                        txtCal_UnitCost_New.Text = dbClss.TDe(g.FirstOrDefault().Cal_UnitCost_New).ToString("N2");
-                        txtCal_Amount_New.Text = dbClss.TDe(g.FirstOrDefault().Cal_Amount_New).ToString("N2");
-                        //txtid_New.Text = dbClss.TSt(g.FirstOrDefault().Refid);
+            //            txtCal_UnitCost_New.Text = dbClss.TDe(g.FirstOrDefault().Cal_UnitCost_New).ToString("N2");
+            //            txtCal_Amount_New.Text = dbClss.TDe(g.FirstOrDefault().Cal_Amount_New).ToString("N2");
+            //            //txtid_New.Text = dbClss.TSt(g.FirstOrDefault().Refid);
 
-                        txtClaimNo.Text = dbClss.TSt(g.FirstOrDefault().ClaimNo);
-                        txtDocNo.Text = dbClss.TSt(g.FirstOrDefault().RefDocNo);
-                        txtCodeNo.Text = dbClss.TSt(g.FirstOrDefault().CodeNo);
-                        txtReftid.Text = dbClss.TSt(g.FirstOrDefault().Refid);
-                        txtJobCard_New.Text = dbClss.TSt(g.FirstOrDefault().RefJobCard);
-                        txtTempJobCard_New.Text = dbClss.TSt(g.FirstOrDefault().RefTempJobCard);
-                        txtItemDescription.Text = dbClss.TSt(g.FirstOrDefault().ItemDesc);
-                        txtItemNo.Text = dbClss.TSt(g.FirstOrDefault().ItemNo);
-                        txtUnit.Text = dbClss.TSt(g.FirstOrDefault().Unit);
-                        txtUnitClaim.Text = dbClss.TSt(g.FirstOrDefault().Unit);
+            //            txtClaimNo.Text = dbClss.TSt(g.FirstOrDefault().ClaimNo);
+            //            txtDocNo.Text = dbClss.TSt(g.FirstOrDefault().RefDocNo);
+            //            txtCodeNo.Text = dbClss.TSt(g.FirstOrDefault().CodeNo);
+            //            txtReftid.Text = dbClss.TSt(g.FirstOrDefault().Refid);
+            //            txtJobCard_New.Text = dbClss.TSt(g.FirstOrDefault().RefJobCard);
+            //            txtTempJobCard_New.Text = dbClss.TSt(g.FirstOrDefault().RefTempJobCard);
+            //            txtItemDescription.Text = dbClss.TSt(g.FirstOrDefault().ItemDesc);
+            //            txtItemNo.Text = dbClss.TSt(g.FirstOrDefault().ItemNo);
+            //            txtUnit.Text = dbClss.TSt(g.FirstOrDefault().Unit);
+            //            txtUnitClaim.Text = dbClss.TSt(g.FirstOrDefault().Unit);
 
-                        decimal temp = 0;
-                        var r = (from ix in db.tb_Claim_FG_ReferJobCards select ix).Where(a => a.Status != "Cancel" && a.ClaimNo.Trim().ToUpper() == txtClaimNo.Text.Trim().ToUpper()) .ToList();
-                        if (r.Count > 0)
-                        {
-                            foreach(var rr in r)
-                            {
-                                temp += dbClss.TDe(rr.UnitCost);
-                            }
-                            txtUnitCost_New.Text = temp.ToString("N2");
-                        }
+            //            decimal temp = 0;
+            //            var r = (from ix in db.tb_Claim_FG_ReferJobCards select ix).Where(a => a.Status != "Cancel" && a.ClaimNo.Trim().ToUpper() == txtClaimNo.Text.Trim().ToUpper()) .ToList();
+            //            if (r.Count > 0)
+            //            {
+            //                foreach(var rr in r)
+            //                {
+            //                    temp += dbClss.TDe(rr.UnitCost);
+            //                }
+            //                txtUnitCost_New.Text = temp.ToString("N2");
+            //            }
 
-                            lblStatus.Text = dbClss.TSt(g.FirstOrDefault().Status);
-                        //Enable_Status(true, "New");
-                        if (lblStatus.Text =="Completed")
-                        {
-                            btnSave.Enabled = false;
-                            btnNew.Enabled = true;
-                            btnReturntoCustomer.Enabled = false;
+            //                lblStatus.Text = dbClss.TSt(g.FirstOrDefault().Status);
+            //            //Enable_Status(true, "New");
+            //            if (lblStatus.Text =="Completed")
+            //            {
+            //                btnSave.Enabled = false;
+            //                btnNew.Enabled = true;
+            //                btnReturntoCustomer.Enabled = false;
 
-                            txtCodeNo.Enabled = false;
-                            btnJobCard_Old.Enabled = false;
-                            btnJobCard_New.Enabled = false;
-                            txtQtyClaim.ReadOnly = true;
-                            txtClaimName.Enabled = false;
-                            dtClaimDate.Enabled = false;
-                            btnCal.Enabled = false;
-                            btnDelete.Enabled = false;
-                        }
-                        else if (lblStatus.Text == "Process")
-                        {
-                            btnSave.Enabled = false;
-                            btnNew.Enabled = true;
-                            btnReturntoCustomer.Enabled = true;
+            //                txtCodeNo.Enabled = false;
+            //                btnJobCard_Old.Enabled = false;
+            //                btnJobCard_New.Enabled = false;
+            //                txtQtyClaim.ReadOnly = true;
+            //                txtClaimName.Enabled = false;
+            //                dtClaimDate.Enabled = false;
+            //                btnCal.Enabled = false;
+            //                btnDelete.Enabled = false;
+            //            }
+            //            else if (lblStatus.Text == "Process")
+            //            {
+            //                btnSave.Enabled = false;
+            //                btnNew.Enabled = true;
+            //                btnReturntoCustomer.Enabled = true;
 
-                            txtCodeNo.Enabled = false;
-                            btnJobCard_Old.Enabled = false;
-                            btnJobCard_New.Enabled = false;
-                            txtQtyClaim.ReadOnly = true;
-                            txtClaimName.Enabled = false;
-                            dtClaimDate.Enabled = false;
-                            btnCal.Enabled = true;
-                            btnDelete.Enabled = true;
-                        }
-                        else
-                        {
-                            btnSave.Enabled = false;
-                            btnNew.Enabled = true;
-                            btnReturntoCustomer.Enabled = true;
+            //                txtCodeNo.Enabled = false;
+            //                btnJobCard_Old.Enabled = false;
+            //                btnJobCard_New.Enabled = false;
+            //                txtQtyClaim.ReadOnly = true;
+            //                txtClaimName.Enabled = false;
+            //                dtClaimDate.Enabled = false;
+            //                btnCal.Enabled = true;
+            //                btnDelete.Enabled = true;
+            //            }
+            //            else
+            //            {
+            //                btnSave.Enabled = false;
+            //                btnNew.Enabled = true;
+            //                btnReturntoCustomer.Enabled = true;
 
-                            txtCodeNo.Enabled = false;
-                            btnJobCard_Old.Enabled = false;
-                            btnJobCard_New.Enabled = false;
-                            txtQtyClaim.ReadOnly = true;
-                            txtClaimName.Enabled = false;
-                            dtClaimDate.Enabled = false;
-                            btnCal.Enabled = true;
-                            btnDelete.Enabled = true;
-                        }
+            //                txtCodeNo.Enabled = false;
+            //                btnJobCard_Old.Enabled = false;
+            //                btnJobCard_New.Enabled = false;
+            //                txtQtyClaim.ReadOnly = true;
+            //                txtClaimName.Enabled = false;
+            //                dtClaimDate.Enabled = false;
+            //                btnCal.Enabled = true;
+            //                btnDelete.Enabled = true;
+            //            }
 
-                            var gg = (from i in db.tb_Sell_FG_Details
-                                 join s in db.tb_Sell_FGs on i.DocNo equals s.DocNo
-                                 //join t in db.tb_Items on i.CodeNo equals t.CodeNo
+            //                var gg = (from i in db.tb_Sell_FG_Details
+            //                     join s in db.tb_Sell_FGs on i.DocNo equals s.DocNo
+            //                     //join t in db.tb_Items on i.CodeNo equals t.CodeNo
 
-                                 where i.Status != "Cancel"
-                                     && i.DocNo.Contains(txtDocNo.Text.Trim())
-                                     && i.CodeNo.Contains(txtCodeNo.Text.Trim())
-                                     && i.id == dbClss.TInt(txtReftid.Text)
-                                 select new
-                                 {
-                                     DocNo = i.DocNo,
-                                     CodeNo = i.CodeNo,
-                                     //ItemNo = t.ItemNo,
-                                     //ItemDesc = t.ItemDescription,
-                                     id = i.id,
-                                     CSTM_Name = s.CSTM_Name,
-                                     CSTM_Address = s.CSTM_Address,
-                                     Qty = i.Qty,
-                                     //Unit = t.UnitShip,
-                                     Remark = i.Remark,
-                                     Status = i.Status,
-                                     DocBy = s.DocBy,
-                                     DocNoDate = s.DocNoDate,
-                                     UnitCost = i.UnitCost,
-                                     Amount = i.Amount
+            //                     where i.Status != "Cancel"
+            //                         && i.DocNo.Contains(txtDocNo.Text.Trim())
+            //                         && i.CodeNo.Contains(txtCodeNo.Text.Trim())
+            //                         && i.id == dbClss.TInt(txtReftid.Text)
+            //                     select new
+            //                     {
+            //                         DocNo = i.DocNo,
+            //                         CodeNo = i.CodeNo,
+            //                         //ItemNo = t.ItemNo,
+            //                         //ItemDesc = t.ItemDescription,
+            //                         id = i.id,
+            //                         CSTM_Name = s.CSTM_Name,
+            //                         CSTM_Address = s.CSTM_Address,
+            //                         Qty = i.Qty,
+            //                         //Unit = t.UnitShip,
+            //                         Remark = i.Remark,
+            //                         Status = i.Status,
+            //                         DocBy = s.DocBy,
+            //                         DocNoDate = s.DocNoDate,
+            //                         UnitCost = i.UnitCost,
+            //                         Amount = i.Amount
 
-                                 }
-                           ).ToList();
-                        if(gg.Count>0)
-                        {
-                            txtQty.Text = dbClss.TDe(gg.FirstOrDefault().Qty).ToString("N2");
-                            txtUnitCost.Text = dbClss.TDe(gg.FirstOrDefault().UnitCost).ToString("N2");
+            //                     }
+            //               ).ToList();
+            //            if(gg.Count>0)
+            //            {
+            //                txtQty.Text = dbClss.TDe(gg.FirstOrDefault().Qty).ToString("N2");
+            //                txtUnitCost.Text = dbClss.TDe(gg.FirstOrDefault().UnitCost).ToString("N2");
 
-                        }
+            //            }
 
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError(this.Name, ex.Message + " : btnRefresh_Click", this.Name); }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError(this.Name, ex.Message + " : btnRefresh_Click", this.Name); }
 
         }
 

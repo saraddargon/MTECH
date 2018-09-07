@@ -146,75 +146,75 @@ namespace StockControl
         }
         private void DataLoad()
         {
-            //dt.Rows.Clear();
+            ////dt.Rows.Clear();
             
-            try
-            {
+            //try
+            //{
 
-                this.Cursor = Cursors.WaitCursor;
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
-                    try
-                    {
-                        // int year1 = 2017;
+            //    this.Cursor = Cursors.WaitCursor;
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
+            //        try
+            //        {
+            //            // int year1 = 2017;
 
-                        //var gd = (from ix in db.tb_ForcastCalculates
-                        //          where ix.MMM == dbClss.getMonth(cboMonth.Text) && ix.YYYY == year1
-                        //          select new { ix.YYYY, ix.MMM, Month = dbClss.getMonthRevest(ix.MMM)
-                        //          , ix.CodeNo
-                        //          , ItemDescription =db.tb_Items.Where(s => s.CodeNo == ix.CodeNo).Select(o => o.ItemDescription).FirstOrDefault()
-                        //          ,ix.ForeCastQty,ix.Toolife_spc,ix.SumQty,ix.ExtendQty,ix.UsePerDay,ix.LeadTime,ix.KeepStock,ix.AddErrQty,ix.OrderQty}).ToList();
-                        var gd = (from a in db.tb_Items
+            //            //var gd = (from ix in db.tb_ForcastCalculates
+            //            //          where ix.MMM == dbClss.getMonth(cboMonth.Text) && ix.YYYY == year1
+            //            //          select new { ix.YYYY, ix.MMM, Month = dbClss.getMonthRevest(ix.MMM)
+            //            //          , ix.CodeNo
+            //            //          , ItemDescription =db.tb_Items.Where(s => s.CodeNo == ix.CodeNo).Select(o => o.ItemDescription).FirstOrDefault()
+            //            //          ,ix.ForeCastQty,ix.Toolife_spc,ix.SumQty,ix.ExtendQty,ix.UsePerDay,ix.LeadTime,ix.KeepStock,ix.AddErrQty,ix.OrderQty}).ToList();
+            //            var gd = (from a in db.tb_Items
 
-                                  select new {
-                                      CodeNo = a.CodeNo,
-                                      ItemDescription = a.ItemDescription,
-                                      Order = 10,
-                                      StockQty = 0,
-                                      BackOrder = 0,
-                                      UnitBuy = "PCS",
-                                      PCSUnit = 1,
-                                      LeadTime = a.Leadtime,
-                                      MaxStock = a.MaximumStock,
-                                      MinStock = a.MinimumStock,
-                                      VendorNo = "V0001",
-                                      VendorName = "HHL Interade Co.,LTD.",
-                                      CreateDate = DateTime.Now,
-                                      CreateBy = "Administrator",
-                                      Status = "รับเข้าแล้ว",
-                                      ItemName = a.ItemNo,
-                                      Delivery = DateTime.Now,
-                                      PRNo="PR201705-0001",
-                                      ReceiveNo="RC201705-001",
-                                      Cost=1000
+            //                      select new {
+            //                          CodeNo = a.CodeNo,
+            //                          ItemDescription = a.ItemDescription,
+            //                          Order = 10,
+            //                          StockQty = 0,
+            //                          BackOrder = 0,
+            //                          UnitBuy = "PCS",
+            //                          PCSUnit = 1,
+            //                          LeadTime = a.Leadtime,
+            //                          MaxStock = a.MaximumStock,
+            //                          MinStock = a.MinimumStock,
+            //                          VendorNo = "V0001",
+            //                          VendorName = "HHL Interade Co.,LTD.",
+            //                          CreateDate = DateTime.Now,
+            //                          CreateBy = "Administrator",
+            //                          Status = "รับเข้าแล้ว",
+            //                          ItemName = a.ItemNo,
+            //                          Delivery = DateTime.Now,
+            //                          PRNo="PR201705-0001",
+            //                          ReceiveNo="RC201705-001",
+            //                          Cost=1000
                                    
-                                  }).ToList();
-                        //radGridView1.DataSource = gd;
+            //                      }).ToList();
+            //            //radGridView1.DataSource = gd;
 
-                        //int rowcount = 0;
-                        //foreach (var x in radGridView1.Rows)
-                        //{
-                        //    rowcount += 1;
-                        //    x.Cells["dgvNo"].Value = rowcount;
-                        //    x.Cells["dgvCodeTemp"].Value = x.Cells["CodeNo"].Value.ToString();
-                        //    x.Cells["dgvCodeTemp2"].Value = x.Cells["VendorNo"].Value.ToString();
-                        //    //x.Cells["dgvCodeTemp3"].Value = x.Cells["MMM"].Value.ToString();
-                        //    //  MessageBox.Show("ss");
-                        //    // x.Cells["ModelName"].ReadOnly = true;
-                        //    //x.Cells["YYYY"].ReadOnly = true;
-                        //    //x.Cells["MMM"].ReadOnly = true;
-                        //}
-                    }
-                    catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //            //int rowcount = 0;
+            //            //foreach (var x in radGridView1.Rows)
+            //            //{
+            //            //    rowcount += 1;
+            //            //    x.Cells["dgvNo"].Value = rowcount;
+            //            //    x.Cells["dgvCodeTemp"].Value = x.Cells["CodeNo"].Value.ToString();
+            //            //    x.Cells["dgvCodeTemp2"].Value = x.Cells["VendorNo"].Value.ToString();
+            //            //    //x.Cells["dgvCodeTemp3"].Value = x.Cells["MMM"].Value.ToString();
+            //            //    //  MessageBox.Show("ss");
+            //            //    // x.Cells["ModelName"].ReadOnly = true;
+            //            //    //x.Cells["YYYY"].ReadOnly = true;
+            //            //    //x.Cells["MMM"].ReadOnly = true;
+            //            //}
+            //        }
+            //        catch (Exception ex) { MessageBox.Show(ex.Message); }
 
-                }
-            }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
-            this.Cursor = Cursors.Default;
+            //    }
+            //}
+            //catch(Exception ex) { MessageBox.Show(ex.Message); }
+            //this.Cursor = Cursors.Default;
 
 
-            //    radGridView1.DataSource = dt;
+            ////    radGridView1.DataSource = dt;
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -487,40 +487,40 @@ namespace StockControl
 
         private void btnCal_Click(object sender, EventArgs e)
         {
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    progressBar1.Visible = true;
-                    progressBar1.Minimum = 0;
-                    progressBar1.Maximum = 1;
-                    int value = 0;
-                    db.sp_012_Del_ReportAccount(dtDate1.Value, dtDate2.Value);
-                    var g = (from ix in db.tb_Items select ix).ToList();
-                    if (g.Count > 0)
-                    {
-                        progressBar1.Maximum = g.Count;
+            //try
+            //{
+            //    this.Cursor = Cursors.WaitCursor;
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        progressBar1.Visible = true;
+            //        progressBar1.Minimum = 0;
+            //        progressBar1.Maximum = 1;
+            //        int value = 0;
+            //        db.sp_012_Del_ReportAccount(dtDate1.Value, dtDate2.Value);
+            //        var g = (from ix in db.tb_Items select ix).ToList();
+            //        if (g.Count > 0)
+            //        {
+            //            progressBar1.Maximum = g.Count;
                         
-                        foreach (var gg in g)
-                        {
-                            value += 1;
-                            progressBar1.Value = value;
-                            progressBar1.PerformStep();
+            //            foreach (var gg in g)
+            //            {
+            //                value += 1;
+            //                progressBar1.Value = value;
+            //                progressBar1.PerformStep();
 
-                            db.sp_011_update_ReportAccount(Convert.ToString(gg.CodeNo), "", dtDate1.Value, dtDate2.Value);
-                        }
-                    }
-                    progressBar1.Visible = false;
+            //                db.sp_011_update_ReportAccount(Convert.ToString(gg.CodeNo), "", dtDate1.Value, dtDate2.Value);
+            //            }
+            //        }
+            //        progressBar1.Visible = false;
 
-                    MessageBox.Show("Completed");
+            //        MessageBox.Show("Completed");
 
-                    btnFind_Click(null, null);
-                }
+            //        btnFind_Click(null, null);
+            //    }
 
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError("ReportAccount", ex.Message, this.Name); }
-            finally { this.Cursor = Cursors.Default; }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError("ReportAccount", ex.Message, this.Name); }
+            //finally { this.Cursor = Cursors.Default; }
         }
 
         private void radButtonElement1_Click(object sender, EventArgs e)

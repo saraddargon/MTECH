@@ -346,7 +346,6 @@ namespace StockControl
                         txtAddress.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Address);
                         txtRemarkHD.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Remark);
                         cbClearBill.Checked = StockControl.dbClss.TBo(g.FirstOrDefault().ClearBill);
-
                         txtVattax.Text = StockControl.dbClss.TInt(g.FirstOrDefault().VatTax).ToString("##,###,##0.00");
                         lbTotalOrder.Text = StockControl.dbClss.TDe(g.FirstOrDefault().GrandTotal).ToString("##,###,##0.00");
                         txtLessPoDiscountAmount.Text = StockControl.dbClss.TDe(g.FirstOrDefault().Discount).ToString("##,###,##0.00");
@@ -367,7 +366,7 @@ namespace StockControl
                         else
                             dtDuedate.Value = Convert.ToDateTime(temp_date);
 
-                      
+                       
 
                         
                         dt_POHD = StockControl.dbClss.LINQToDataTable(g);
@@ -405,10 +404,8 @@ namespace StockControl
                                     CallSumDiscountLast(false);
                                 }
                             }
-                            CalTAX1();
-                            CallTotal();
-                            if(cbvatDetail.Checked)
-                                getTotal();
+                           
+                           
 
 
                             foreach (var x in dgvData.Rows)
@@ -430,6 +427,8 @@ namespace StockControl
                                         x.Cells["dgvItemDesc"].ReadOnly = true;
                                         x.Cells["dgvUnit"].ReadOnly = true;
                                         x.Cells["dgvCost"].ReadOnly = true;
+                                        x.Cells["dgvPCSUnit"].ReadOnly = true;
+                                        x.Cells["dgvGroupCode"].ReadOnly = true;                                        
                                     }
                                 }
                                 else if (dbClss.TDe(x.Cells["dgvBackOrder"].Value) <= dbClss.TDe(x.Cells["dgvOrderQty"].Value)
@@ -466,7 +465,13 @@ namespace StockControl
                                 }
                             }
                         }
-                        
+
+                        CalTAX1();
+                        CallTotal();
+                        btnCal_Click(null, null);                        
+                        if (cbvatDetail.Checked)
+                            getTotal();                        
+
                         //lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
                         if (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Cancel"))
                         {
@@ -622,6 +627,9 @@ namespace StockControl
                         if (!ddlCurrency.Text.Trim().Equals(row["CRRNCY"].ToString()))
                         {
                             gg.CRRNCY = ddlCurrency.Text.Trim();
+                            decimal Rate = dbClss.TDe(txtRate.Text);
+                            if (Rate <= 0) Rate = 1;
+                            gg.Rate = Rate;
                             dbClss.AddHistory(this.Name , "แก้ไข CreatePO", "แก้ไขสกุลเงิน [" + ddlCurrency.Text.Trim() + "]", txtPONo.Text);
                         }
                         if (!txtContactName.Text.Trim().Equals(row["ContactName"].ToString()))
@@ -756,7 +764,9 @@ namespace StockControl
                     gg.TempPNo = txtTempNo.Text;
                     gg.Quotation = txtQuotation.Text.Trim();
                     gg.ClearBill = cbClearBill.Checked;
-
+                    decimal Rate = dbClss.TDe(txtRate.Text);
+                    if (Rate <= 0) Rate = 1;
+                    gg.Rate = Rate;
                     gg.vat = StockControl.dbClss.TDe(txtVat.Text);
                     gg.VatDetail = StockControl.dbClss.TBo(cbvatDetail.Checked);
                     gg.Total = StockControl.dbClss.TDe(lbOrderSubtotal.Text);
@@ -837,6 +847,10 @@ namespace StockControl
                             DeliveryDate = dtDuedate.Value;
                             if (!StockControl.dbClss.TSt(g.Cells["dgvDeliveryDate"].Value).Equals(""))
                                 DeliveryDate = StockControl.dbClss.TDa(g.Cells["dgvDeliveryDate"].Value);
+                            decimal Rate = 0; decimal.TryParse(StockControl.dbClss.TSt(txtRate.Text), out Rate);
+                            if (Rate >= 0)
+                                Rate = 1;
+                            u.Rate = Rate;
 
                             u.DeliveryDate = DeliveryDate;
                             u.SS = 1;
@@ -934,8 +948,11 @@ namespace StockControl
                                         }
                                         if (!StockControl.dbClss.TSt(txtRate.Text).Equals(row["Rate"].ToString()))
                                         {
-                                            u.Rate = StockControl.dbClss.TDe(txtRate.Text);
                                             decimal Rate = 0; decimal.TryParse(StockControl.dbClss.TSt(txtRate.Text), out Rate);
+                                            if (Rate >= 0)
+                                                Rate = 1;
+                                            u.Rate = Rate;
+                                           
                                             dbClss.AddHistory(this.Name, "แก้ไข Item Rate", "แก้ไข Rate [" + u.Rate.ToString() + "]", txtPONo.Text);
                                         }
                                         //if (!StockControl.dbClss.TSt(g.Cells["dgvPRItem"].Value).Equals(row["PRItem"].ToString()))
@@ -1060,6 +1077,8 @@ namespace StockControl
                 dtDuedate.Enabled = ss;
                 dgvData.ReadOnly = false;
                 txtRemarkHD.Enabled = ss;
+                cboVatGroup.Enabled = ss;
+                cboVatType.Enabled = ss;
                 //txtCurrency.Enabled = ss;
                 btnAdd_Item.Enabled = ss;
                 btnAdd_Part.Enabled = ss;
@@ -1085,6 +1104,8 @@ namespace StockControl
                 dtDuedate.Enabled = ss;
                 dgvData.ReadOnly = !ss;
                 txtRemarkHD.Enabled = ss;
+                cboVatGroup.Enabled = ss;
+                cboVatType.Enabled = ss;
                 //txtCurrency.Enabled = ss;
                 btnAdd_Item.Enabled = ss;
                 btnAdd_Part.Enabled = ss;
@@ -1110,6 +1131,8 @@ namespace StockControl
                 dtDuedate.Enabled = ss;
                 dgvData.ReadOnly = !ss;
                 txtRemarkHD.Enabled = ss;
+                cboVatGroup.Enabled = ss;
+                cboVatType.Enabled = ss;
                 //txtCurrency.Enabled = ss;
                 //txtVendorNo.Enabled = ss;
                 btnAdd_Item.Enabled = ss;
@@ -1402,8 +1425,8 @@ namespace StockControl
                     {
                        if(StockControl.dbClss.TSt(rowInfo.Cells["dgvCodeNo"].Value).Equals(""))
                            err += "- “รหัสทูล:” เป็นค่าว่าง \n";
-                        //if (StockControl.dbClss.TSt(rowInfo.Cells["dgvItemName"].Value).Equals(""))
-                        //    err += "- “ชื่อทูล:” เป็นค่าว่าง \n";
+                        if (StockControl.dbClss.TSt(rowInfo.Cells["dgvItemName"].Value).Equals(""))
+                            err += "- “ชื่อทูล:” เป็นค่าว่าง \n";
                         if (StockControl.dbClss.TSt(rowInfo.Cells["dgvItemDesc"].Value).Equals(""))
                             err += "- “รายละเอียดทูล:” เป็นค่าว่าง \n";
                         if (StockControl.dbClss.TSt(rowInfo.Cells["dgvGroupCode"].Value).Equals(""))
@@ -1727,7 +1750,7 @@ namespace StockControl
                     {
                         string dgvUOM = dbClss.TSt(e.Row.Cells["dgvUnit"].Value);
                         string CodeNo = dbClss.TSt(e.Row.Cells["dgvCodeNo"].Value);
-                        decimal PCSUOM = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        //decimal PCSUOM = dbClss.Con_UOM(CodeNo, dgvUOM);
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
                             var g = (from ix in db.mh_Items select ix)
@@ -2029,7 +2052,7 @@ namespace StockControl
                         foreach (GridViewRowInfo ee in dgvRow_List)
                         {
                             CodeNo = Convert.ToString(ee.Cells["CodeNo"].Value).Trim();
-                            ItemName = Convert.ToString(ee.Cells["ItemNo"].Value).Trim();
+                            ItemName = Convert.ToString(ee.Cells["ItemName"].Value).Trim();
                             ItemDescription = Convert.ToString(ee.Cells["ItemDesc"].Value).Trim();
                             GroupCode = Convert.ToString(ee.Cells["GroupCode"].Value).Trim();
                             OrderQty = StockControl.dbClss.TDe(ee.Cells["OrderQty"].Value);
@@ -2040,7 +2063,8 @@ namespace StockControl
                             Refid = StockControl.dbClss.TInt(ee.Cells["id"].Value);
                             //DeliveryDate = Convert.ToDateTime(ee.Cells["dgvDeliveryDate"].Value);
 
-                            Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty, PCSUnit, Unit, Cost, PRNO, DeliveryDate, Status, Refid, id,true);
+                            Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty
+                                , PCSUnit, Unit, Cost, PRNO, DeliveryDate, Status, Refid, id,true);
                            
                         }
                        
@@ -2074,7 +2098,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 int Row = 0; Row = dgvData.Rows.Count()+1;
-                var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo.Contains(CodeNo)).ToList();
+                var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo.Contains(CodeNo)).ToList();
                 if (g.Count > 0)
                 {
                     //dgvData.Rows.Add(Row.ToString(), CodeNo,
@@ -2433,7 +2457,7 @@ namespace StockControl
                     string CodeNo = "";
                     string ItemName = "";
                     string ItemDescription = "";
-                    string GroupCode = "Other";
+                    string GroupCode = "";
                     decimal OrderQty = 0;
                     decimal PCSUnit = 1;
                     string Unit = "PCS";
@@ -2592,7 +2616,7 @@ namespace StockControl
 
                     //string CodeNo = "";
                     string ItemNo = StockControl.dbClss.TSt(g.FirstOrDefault().InternalName);
-                    string ItemDescription = StockControl.dbClss.TSt(g.FirstOrDefault().InternalName);
+                    string ItemDescription = StockControl.dbClss.TSt(g.FirstOrDefault().InternalDescription);
                     string GroupCode = StockControl.dbClss.TSt(g.FirstOrDefault().GroupType);
                     //int OrderQty = 0;
                     decimal PCSUnit = dbClss.Con_UOM(CodeNo, StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM));                    
@@ -3318,19 +3342,20 @@ namespace StockControl
                         cboVatType.AutoCompleteMode = AutoCompleteMode.Append;
                         cboVatType.DisplayMember = "VatType";
                         cboVatType.ValueMember = "VatType";
-
+                        string Temp = "";
                         var vg = (from ix in db.mh_VATSetups
                                   where ix.Active == true
                                   && ix.VatGroup == cboVatGroup.Text
                                   select new
                                   {
                                       VatType = ix.VatType,
-                                      Rate = ix.Vat_                   
+                                      Rate = ix.Vat_                                                         
                                   }
                                     ).ToList();
                         cboVatType.DataSource = vg;
-                        cboVatType.SelectedIndex = -1;
-                        cboVatType.Text = "";                        
+                        cboVatType.SelectedIndex = 0;
+                        //cboVatType.Text = "";        
+                                        
                     }
                 }
             }catch(Exception ex) { MessageBox.Show(ex.Message); }
@@ -3357,7 +3382,7 @@ namespace StockControl
                         if (I.Count > 0)
                         {                          
                             txtVattax.Text = dbClss.TDe(I.FirstOrDefault().Vat_).ToString();
-                            cbvat.Checked = true;
+                            cbvat.Checked = true;                           
                         }
                     }
                     else

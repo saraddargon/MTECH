@@ -730,8 +730,8 @@ namespace StockControl
                         bb.TLCost = Math.Abs(Amount);
 
                         //ต้องไม่ใช่ Item ที่มีในระบบ
-                        var c = (from ix in db.tb_Items
-                                 where ix.CodeNo.Trim().ToUpper() == CodeNo.Trim().ToUpper() && ix.Status != "Cancel"
+                        var c = (from ix in db.mh_Items
+                                 where ix.InternalNo.Trim().ToUpper() == CodeNo.Trim().ToUpper() && ix.Active==true
                                  select ix).ToList();
                         if (c.Count <= 0)
                         {
@@ -928,8 +928,8 @@ namespace StockControl
                         tt.ShipQty = Math.Abs(Convert.ToDecimal(vv.ShipQty));
                         tt.TLCost = vv.TLCost;
                         //ต้องไม่ใช่ Item ที่มีในระบบ
-                        var c = (from ix in db.tb_Items
-                                 where ix.CodeNo.Trim().ToUpper() == vv.CodeNo.Trim().ToUpper() && ix.Status != "Cancel"
+                        var c = (from ix in db.mh_Items
+                                 where ix.InternalNo.Trim().ToUpper() == vv.CodeNo.Trim().ToUpper() && ix.Active==true
                                  select ix).ToList();
                         if (c.Count <= 0)
                         {
@@ -950,19 +950,19 @@ namespace StockControl
             }
         }
 
-        private decimal get_cost(string Code)
-        {
-            decimal re = 0;
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                var g = (from ix in db.tb_Items
-                         where ix.CodeNo == Code && ix.Status == "Active"
-                         select ix).First();
-                re = Convert.ToDecimal(g.StandardCost);
+        //private decimal get_cost(string Code)
+        //{
+        //    decimal re = 0;
+        //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+        //    {
+        //        var g = (from ix in db.tb_Items
+        //                 where ix.CodeNo == Code && ix.Status == "Active"
+        //                 select ix).First();
+        //        re = Convert.ToDecimal(g.StandardCost);
 
-            }
-            return re;
-        }
+        //    }
+        //    return re;
+        //}
         private void btnSave_Click(object sender, EventArgs e)
         {
             try
@@ -1002,80 +1002,80 @@ namespace StockControl
         }
         private void Insert_Stock1()
         {
-            try
-            {
+            //try
+            //{
                 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    DateTime? CalDate = null;
-                    DateTime? AppDate = DateTime.Now;
-                    int Seq = 0;
-                    string Type = "";
-                    if (rdoInvoice.IsChecked)
-                        Type = "รับด้วยใบ Invoice";
-                    else
-                        Type = "ใบส่งของชั่วคราว";
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        DateTime? CalDate = null;
+            //        DateTime? AppDate = DateTime.Now;
+            //        int Seq = 0;
+            //        string Type = "";
+            //        if (rdoInvoice.IsChecked)
+            //            Type = "รับด้วยใบ Invoice";
+            //        else
+            //            Type = "ใบส่งของชั่วคราว";
 
-                    decimal Cost = 0;
+            //        decimal Cost = 0;
 
 
-                    string CNNo = CNNo = StockControl.dbClss.GetNo(6, 2);
-                    var g = (from ix in db.tb_Receives
-                                 //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
-                             where ix.RCNo.Trim() == txtRCNo.Text.Trim() && ix.Status != "Cancel"
+            //        string CNNo = CNNo = StockControl.dbClss.GetNo(6, 2);
+            //        var g = (from ix in db.tb_Receives
+            //                     //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
+            //                 where ix.RCNo.Trim() == txtRCNo.Text.Trim() && ix.Status != "Cancel"
                              
-                             select ix).ToList();
-                    if (g.Count > 0)
-                    {
-                        //insert Stock
+            //                 select ix).ToList();
+            //        if (g.Count > 0)
+            //        {
+            //            //insert Stock
 
-                        foreach (var vv in g)
-                        {
-                            Seq += 1;
+            //            foreach (var vv in g)
+            //            {
+            //                Seq += 1;
 
-                            tb_Stock1 gg = new tb_Stock1();
-                            gg.AppDate = AppDate;
-                            gg.Seq = Seq;
-                            gg.App = "Receive";
-                            gg.Appid = Seq;
-                            gg.CreateBy = ClassLib.Classlib.User;
-                            gg.CreateDate = DateTime.Now;
-                            gg.DocNo = CNNo;
-                            gg.RefNo = txtRCNo.Text;
-                            gg.Type = Type;
-                            gg.QTY = Convert.ToDecimal(vv.QTY);
-                            gg.Inbound = Convert.ToDecimal(vv.QTY);
-                            gg.Outbound = 0;
+            //                tb_Stock1 gg = new tb_Stock1();
+            //                gg.AppDate = AppDate;
+            //                gg.Seq = Seq;
+            //                gg.App = "Receive";
+            //                gg.Appid = Seq;
+            //                gg.CreateBy = ClassLib.Classlib.User;
+            //                gg.CreateDate = DateTime.Now;
+            //                gg.DocNo = CNNo;
+            //                gg.RefNo = txtRCNo.Text;
+            //                gg.Type = Type;
+            //                gg.QTY = Convert.ToDecimal(vv.QTY);
+            //                gg.Inbound = Convert.ToDecimal(vv.QTY);
+            //                gg.Outbound = 0;
 
-                            if(rdoDL.IsChecked)
-                            {
-                                gg.UnitCost = 0;
-                                gg.AmountCost = 0;
-                            }
-                            else
-                            {
-                                gg.AmountCost = Convert.ToDecimal(vv.QTY) * Convert.ToDecimal(vv.CostPerUnit);
-                                gg.UnitCost = Convert.ToDecimal(vv.CostPerUnit);
-                            }
-                            gg.RemainQty = 0;
-                            gg.RemainUnitCost = 0;
-                            gg.RemainAmount = 0;
-                            gg.CalDate = CalDate;
-                            gg.Status = "Active";
+            //                if(rdoDL.IsChecked)
+            //                {
+            //                    gg.UnitCost = 0;
+            //                    gg.AmountCost = 0;
+            //                }
+            //                else
+            //                {
+            //                    gg.AmountCost = Convert.ToDecimal(vv.QTY) * Convert.ToDecimal(vv.CostPerUnit);
+            //                    gg.UnitCost = Convert.ToDecimal(vv.CostPerUnit);
+            //                }
+            //                gg.RemainQty = 0;
+            //                gg.RemainUnitCost = 0;
+            //                gg.RemainAmount = 0;
+            //                gg.CalDate = CalDate;
+            //                gg.Status = "Active";
 
                            
-                            db.tb_Stock1s.InsertOnSubmit(gg);
-                            db.SubmitChanges();
+            //                db.tb_Stock1s.InsertOnSubmit(gg);
+            //                db.SubmitChanges();
 
-                            //tb_Items inv,DL
-                            dbClss.Insert_Stock(vv.CodeNo, Convert.ToDecimal(vv.QTY), "Receive", "Inv");
-                            //tb_Items temp
-                            dbClss.Insert_StockTemp(vv.CodeNo, (Convert.ToDecimal(vv.QTY)), "RC_Temp", "Inv");
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //                //tb_Items inv,DL
+            //                dbClss.Insert_Stock(vv.CodeNo, Convert.ToDecimal(vv.QTY), "Receive", "Inv");
+            //                //tb_Items temp
+            //                dbClss.Insert_StockTemp(vv.CodeNo, (Convert.ToDecimal(vv.QTY)), "RC_Temp", "Inv");
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void InsertStock_new()
         {

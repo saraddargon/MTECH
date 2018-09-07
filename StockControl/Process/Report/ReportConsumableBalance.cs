@@ -79,9 +79,9 @@ namespace StockControl
                 //cboGroupType.DataSource = gt;
                 //cboGroupType.SelectedIndex = -1;
 
-                ddlLocation.DisplayMember = "Location";
-                ddlLocation.ValueMember = "Location";
-                ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
+                ddlLocation.DisplayMember = "Code";
+                ddlLocation.ValueMember = "Code";
+                ddlLocation.DataSource = db.mh_Locations.Where(s => s.Active == true).ToList();
 
 
                 ddlYear.DataSource = null;
