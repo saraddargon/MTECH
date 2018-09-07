@@ -1098,18 +1098,6 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_WorkCenter" Member="mh_WorkCenters">
-    <Type Name="mh_WorkCenter">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="WorkCenterNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="WorkCenterName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Calendar" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.mh_Holiday" Member="mh_Holidays">
     <Type Name="mh_Holiday">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -1569,6 +1557,39 @@
       <Column Name="Tel" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
       <Column Name="Fax" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
       <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_WorkCenterType" Member="mh_WorkCenterTypes">
+    <Type Name="mh_WorkCenterType">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WorkType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_WorkCenter" Member="mh_WorkCenters">
+    <Type Name="mh_WorkCenter">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WorkCenterNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="WorkCenterName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Decription" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Calendar" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_WorkCenterSub" Member="mh_WorkCenterSubs">
+    <Type Name="mh_WorkCenterSub">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idWorkCenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SubWorkNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SubWorkName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="WType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>

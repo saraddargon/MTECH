@@ -71,6 +71,7 @@
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dgvData = new Telerik.WinControls.UI.RadGridView();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
             this.cbbUOM = new Telerik.WinControls.UI.RadDropDownList();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
@@ -89,10 +90,11 @@
             this.radMenuSeparatorItem2 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.RMenu6 = new Telerik.WinControls.UI.RadMenuItem();
             this.radContextMenuManager1 = new Telerik.WinControls.UI.RadContextMenuManager();
-            this.dgvData = new Telerik.WinControls.UI.RadGridView();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData.MasterTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             this.radPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbbUOM)).BeginInit();
@@ -101,8 +103,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingNo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvData.MasterTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -395,6 +395,109 @@
             this.panel1.Size = new System.Drawing.Size(845, 449);
             this.panel1.TabIndex = 2;
             // 
+            // dgvData
+            // 
+            this.dgvData.BackColor = System.Drawing.Color.White;
+            this.dgvData.ColumnChooserSortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending;
+            this.dgvData.Cursor = System.Windows.Forms.Cursors.Default;
+            this.dgvData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvData.EnterKeyMode = Telerik.WinControls.UI.RadGridViewEnterKeyMode.EnterMovesToNextCell;
+            this.dgvData.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.dgvData.ForeColor = System.Drawing.Color.Black;
+            this.dgvData.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.dgvData.Location = new System.Drawing.Point(0, 105);
+            // 
+            // 
+            // 
+            this.dgvData.MasterTemplate.AddNewRowPosition = Telerik.WinControls.UI.SystemRowPosition.Bottom;
+            this.dgvData.MasterTemplate.AllowAddNewRow = false;
+            this.dgvData.MasterTemplate.AllowCellContextMenu = false;
+            this.dgvData.MasterTemplate.AllowColumnHeaderContextMenu = false;
+            this.dgvData.MasterTemplate.AllowDeleteRow = false;
+            this.dgvData.MasterTemplate.AllowDragToGroup = false;
+            this.dgvData.MasterTemplate.AllowRowResize = false;
+            this.dgvData.MasterTemplate.AutoGenerateColumns = false;
+            gridViewTextBoxColumn1.EnableExpressionEditor = false;
+            gridViewTextBoxColumn1.HeaderText = "column1";
+            gridViewTextBoxColumn1.IsVisible = false;
+            gridViewTextBoxColumn1.Name = "dgvC";
+            gridViewTextBoxColumn1.ReadOnly = true;
+            gridViewTextBoxColumn1.Width = 41;
+            gridViewTextBoxColumn2.EnableExpressionEditor = false;
+            gridViewTextBoxColumn2.FieldName = "None";
+            gridViewTextBoxColumn2.IsPinned = true;
+            gridViewTextBoxColumn2.Name = "None";
+            gridViewTextBoxColumn2.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Right;
+            gridViewTextBoxColumn2.ReadOnly = true;
+            gridViewTextBoxColumn2.Width = 10;
+            gridViewTextBoxColumn3.EnableExpressionEditor = false;
+            gridViewTextBoxColumn3.FieldName = "id";
+            gridViewTextBoxColumn3.HeaderText = "Code";
+            gridViewTextBoxColumn3.IsVisible = false;
+            gridViewTextBoxColumn3.Name = "dgvCodetemp";
+            gridViewTextBoxColumn3.Width = 44;
+            gridViewTextBoxColumn4.EnableExpressionEditor = false;
+            gridViewTextBoxColumn4.HeaderText = "dgvCodetemp2";
+            gridViewTextBoxColumn4.IsVisible = false;
+            gridViewTextBoxColumn4.Name = "dgvCodetemp2";
+            gridViewTextBoxColumn5.EnableExpressionEditor = false;
+            gridViewTextBoxColumn5.FieldName = "RNo";
+            gridViewTextBoxColumn5.HeaderText = "No";
+            gridViewTextBoxColumn5.Name = "No";
+            gridViewTextBoxColumn5.ReadOnly = true;
+            gridViewTextBoxColumn5.Width = 41;
+            gridViewComboBoxColumn1.EnableExpressionEditor = false;
+            gridViewComboBoxColumn1.FieldName = "WorkCenter";
+            gridViewComboBoxColumn1.HeaderText = "Work Center";
+            gridViewComboBoxColumn1.Name = "WorkCenter";
+            gridViewComboBoxColumn1.Width = 139;
+            gridViewTextBoxColumn6.EnableExpressionEditor = false;
+            gridViewTextBoxColumn6.FieldName = "Description";
+            gridViewTextBoxColumn6.HeaderText = "Description";
+            gridViewTextBoxColumn6.Name = "Description";
+            gridViewTextBoxColumn6.Width = 211;
+            gridViewDecimalColumn1.EnableExpressionEditor = false;
+            gridViewDecimalColumn1.FieldName = "SetupTime";
+            gridViewDecimalColumn1.HeaderText = "Setup Time";
+            gridViewDecimalColumn1.Name = "SetupTime";
+            gridViewDecimalColumn1.Width = 72;
+            gridViewDecimalColumn2.EnableExpressionEditor = false;
+            gridViewDecimalColumn2.FieldName = "RunTime";
+            gridViewDecimalColumn2.HeaderText = "Run Time";
+            gridViewDecimalColumn2.Name = "RunTime";
+            gridViewDecimalColumn2.Width = 67;
+            gridViewDecimalColumn3.EnableExpressionEditor = false;
+            gridViewDecimalColumn3.FieldName = "WaitTime";
+            gridViewDecimalColumn3.HeaderText = "Wait Time";
+            gridViewDecimalColumn3.Name = "WaitTime";
+            gridViewDecimalColumn3.Width = 67;
+            gridViewDecimalColumn4.EnableExpressionEditor = false;
+            gridViewDecimalColumn4.FieldName = "UnitCostPer";
+            gridViewDecimalColumn4.HeaderText = "Cost/Unit";
+            gridViewDecimalColumn4.Name = "UnitCostPer";
+            gridViewDecimalColumn4.Width = 81;
+            this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
+            gridViewTextBoxColumn1,
+            gridViewTextBoxColumn2,
+            gridViewTextBoxColumn3,
+            gridViewTextBoxColumn4,
+            gridViewTextBoxColumn5,
+            gridViewComboBoxColumn1,
+            gridViewTextBoxColumn6,
+            gridViewDecimalColumn1,
+            gridViewDecimalColumn2,
+            gridViewDecimalColumn3,
+            gridViewDecimalColumn4});
+            this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
+            this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
+            this.dgvData.Name = "dgvData";
+            this.radContextMenuManager1.SetRadContextMenu(this.dgvData, this.radContextMenu1);
+            this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dgvData.ShowGroupPanel = false;
+            this.dgvData.Size = new System.Drawing.Size(845, 344);
+            this.dgvData.TabIndex = 2;
+            this.dgvData.ThemeName = "Office2010Blue";
+            // 
             // radPanel1
             // 
             this.radPanel1.Controls.Add(this.cbbUOM);
@@ -504,7 +607,7 @@
             this.RMenu4.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.RMenu4.Image = ((System.Drawing.Image)(resources.GetObject("RMenu4.Image")));
             this.RMenu4.Name = "RMenu4";
-            this.RMenu4.Text = "Add/Edit Work Center";
+            this.RMenu4.Text = "Add Row";
             // 
             // RMenu5
             // 
@@ -524,110 +627,7 @@
             this.RMenu6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.RMenu6.Image = ((System.Drawing.Image)(resources.GetObject("RMenu6.Image")));
             this.RMenu6.Name = "RMenu6";
-            this.RMenu6.Text = "Delete Process";
-            // 
-            // dgvData
-            // 
-            this.dgvData.BackColor = System.Drawing.Color.White;
-            this.dgvData.ColumnChooserSortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending;
-            this.dgvData.Cursor = System.Windows.Forms.Cursors.Default;
-            this.dgvData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvData.EnterKeyMode = Telerik.WinControls.UI.RadGridViewEnterKeyMode.EnterMovesToNextCell;
-            this.dgvData.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.dgvData.ForeColor = System.Drawing.Color.Black;
-            this.dgvData.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dgvData.Location = new System.Drawing.Point(0, 105);
-            // 
-            // 
-            // 
-            this.dgvData.MasterTemplate.AddNewRowPosition = Telerik.WinControls.UI.SystemRowPosition.Bottom;
-            this.dgvData.MasterTemplate.AllowAddNewRow = false;
-            this.dgvData.MasterTemplate.AllowCellContextMenu = false;
-            this.dgvData.MasterTemplate.AllowColumnHeaderContextMenu = false;
-            this.dgvData.MasterTemplate.AllowDeleteRow = false;
-            this.dgvData.MasterTemplate.AllowDragToGroup = false;
-            this.dgvData.MasterTemplate.AllowRowResize = false;
-            this.dgvData.MasterTemplate.AutoGenerateColumns = false;
-            gridViewTextBoxColumn1.EnableExpressionEditor = false;
-            gridViewTextBoxColumn1.HeaderText = "column1";
-            gridViewTextBoxColumn1.IsVisible = false;
-            gridViewTextBoxColumn1.Name = "dgvC";
-            gridViewTextBoxColumn1.ReadOnly = true;
-            gridViewTextBoxColumn1.Width = 41;
-            gridViewTextBoxColumn2.EnableExpressionEditor = false;
-            gridViewTextBoxColumn2.FieldName = "None";
-            gridViewTextBoxColumn2.IsPinned = true;
-            gridViewTextBoxColumn2.Name = "None";
-            gridViewTextBoxColumn2.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Right;
-            gridViewTextBoxColumn2.ReadOnly = true;
-            gridViewTextBoxColumn2.Width = 10;
-            gridViewTextBoxColumn3.EnableExpressionEditor = false;
-            gridViewTextBoxColumn3.FieldName = "id";
-            gridViewTextBoxColumn3.HeaderText = "Code";
-            gridViewTextBoxColumn3.IsVisible = false;
-            gridViewTextBoxColumn3.Name = "dgvCodetemp";
-            gridViewTextBoxColumn3.Width = 44;
-            gridViewTextBoxColumn4.EnableExpressionEditor = false;
-            gridViewTextBoxColumn4.HeaderText = "dgvCodetemp2";
-            gridViewTextBoxColumn4.IsVisible = false;
-            gridViewTextBoxColumn4.Name = "dgvCodetemp2";
-            gridViewTextBoxColumn5.EnableExpressionEditor = false;
-            gridViewTextBoxColumn5.FieldName = "RNo";
-            gridViewTextBoxColumn5.HeaderText = "No";
-            gridViewTextBoxColumn5.Name = "No";
-            gridViewTextBoxColumn5.ReadOnly = true;
-            gridViewTextBoxColumn5.Width = 41;
-            gridViewComboBoxColumn1.EnableExpressionEditor = false;
-            gridViewComboBoxColumn1.FieldName = "WorkCenter";
-            gridViewComboBoxColumn1.HeaderText = "Work Center";
-            gridViewComboBoxColumn1.Name = "WorkCenter";
-            gridViewComboBoxColumn1.Width = 139;
-            gridViewTextBoxColumn6.EnableExpressionEditor = false;
-            gridViewTextBoxColumn6.FieldName = "Description";
-            gridViewTextBoxColumn6.HeaderText = "Description";
-            gridViewTextBoxColumn6.Name = "Description";
-            gridViewTextBoxColumn6.Width = 211;
-            gridViewDecimalColumn1.EnableExpressionEditor = false;
-            gridViewDecimalColumn1.FieldName = "SetupTime";
-            gridViewDecimalColumn1.HeaderText = "Setup Time";
-            gridViewDecimalColumn1.Name = "SetupTime";
-            gridViewDecimalColumn1.Width = 72;
-            gridViewDecimalColumn2.EnableExpressionEditor = false;
-            gridViewDecimalColumn2.FieldName = "RunTime";
-            gridViewDecimalColumn2.HeaderText = "Run Time";
-            gridViewDecimalColumn2.Name = "RunTime";
-            gridViewDecimalColumn2.Width = 67;
-            gridViewDecimalColumn3.EnableExpressionEditor = false;
-            gridViewDecimalColumn3.FieldName = "WaitTime";
-            gridViewDecimalColumn3.HeaderText = "Wait Time";
-            gridViewDecimalColumn3.Name = "WaitTime";
-            gridViewDecimalColumn3.Width = 67;
-            gridViewDecimalColumn4.EnableExpressionEditor = false;
-            gridViewDecimalColumn4.FieldName = "UnitCostPer";
-            gridViewDecimalColumn4.HeaderText = "Cost/Unit";
-            gridViewDecimalColumn4.Name = "UnitCostPer";
-            gridViewDecimalColumn4.Width = 81;
-            this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
-            gridViewTextBoxColumn1,
-            gridViewTextBoxColumn2,
-            gridViewTextBoxColumn3,
-            gridViewTextBoxColumn4,
-            gridViewTextBoxColumn5,
-            gridViewComboBoxColumn1,
-            gridViewTextBoxColumn6,
-            gridViewDecimalColumn1,
-            gridViewDecimalColumn2,
-            gridViewDecimalColumn3,
-            gridViewDecimalColumn4});
-            this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
-            this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
-            this.dgvData.Name = "dgvData";
-            this.radContextMenuManager1.SetRadContextMenu(this.dgvData, this.radContextMenu1);
-            this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(845, 344);
-            this.dgvData.TabIndex = 2;
-            this.dgvData.ThemeName = "Office2010Blue";
+            this.RMenu6.Text = "Delete Row";
             // 
             // RoutingDetail
             // 
@@ -650,6 +650,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData.MasterTemplate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
             this.radPanel1.ResumeLayout(false);
             this.radPanel1.PerformLayout();
@@ -659,8 +661,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingNo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvData.MasterTemplate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

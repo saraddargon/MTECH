@@ -327,26 +327,43 @@ namespace StockControl
         }
         private void NewClick()
         {
-            radGridView1.ReadOnly = false;
-            radGridView1.AllowAddNewRow = false;
-            btnEdit.Enabled = false;
-            btnView.Enabled = true;
-            radGridView1.Rows.AddNew();
+            //radGridView1.ReadOnly = false;
+            //radGridView1.AllowAddNewRow = false;
+            //btnEdit.Enabled = false;
+            //btnView.Enabled = true;
+            //radGridView1.Rows.AddNew();
+            var w = new WorkCentersDetail(0, TypeAction.Add);
+            w.ShowDialog();
+            DataLoad();
         }
         private void EditClick()
         {
-            radGridView1.ReadOnly = false;
-            btnEdit.Enabled = false;
-            btnView.Enabled = true;
-            radGridView1.AllowAddNewRow = false;
+            //radGridView1.ReadOnly = false;
+            //btnEdit.Enabled = false;
+            //btnView.Enabled = true;
+            //radGridView1.AllowAddNewRow = false;
+            if(radGridView1.CurrentCell != null)
+            {
+                var workno = radGridView1.CurrentCell.RowInfo.Cells["No"].Value.ToInt();
+                var w = new WorkCentersDetail(workno, TypeAction.Edit);
+                w.ShowDialog();
+                DataLoad();
+            }
         }
         private void ViewClick()
         {
-            radGridView1.ReadOnly = true;
-            btnView.Enabled = false;
-            btnEdit.Enabled = true;
-            radGridView1.AllowAddNewRow = false;
-            DataLoad();
+            //radGridView1.ReadOnly = true;
+            //btnView.Enabled = false;
+            //btnEdit.Enabled = true;
+            //radGridView1.AllowAddNewRow = false;
+            //DataLoad();
+            if (radGridView1.CurrentCell != null)
+            {
+                var workno = radGridView1.CurrentCell.RowInfo.Cells["No"].Value.ToInt();
+                var w = new WorkCentersDetail(workno, TypeAction.View);
+                w.ShowDialog();
+                DataLoad();
+            }
         }
         private void btnNew_Click(object sender, EventArgs e)
         {
