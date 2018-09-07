@@ -12,14 +12,17 @@ using Telerik.WinControls;
 
 namespace StockControl
 {
-    public partial class RoutingDetail : Telerik.WinControls.UI.RadRibbonForm
+    public partial class VendorContacts : Telerik.WinControls.UI.RadRibbonForm
     {
-        string RoutingNo = "";
         TypeAction tAction = TypeAction.Add;
-        public RoutingDetail(string RoutingNo, TypeAction tAction)
+        public VendorContacts()
         {
             InitializeComponent();
-            this.RoutingNo = RoutingNo;
+        }
+        public VendorContacts(string CustomerNo, TypeAction tAction)
+        {
+            InitializeComponent();
+            txtNo.Text = CustomerNo;
             this.tAction = tAction;
         }
 
@@ -40,6 +43,16 @@ namespace StockControl
         }
         private void GETDTRow()
         {
+            //dt.Columns.Add(new DataColumn("VendorNo", typeof(string)));
+            //dt.Columns.Add(new DataColumn("VendorName", typeof(string)));
+            //dt.Columns.Add(new DataColumn("Address", typeof(string)));
+            //dt.Columns.Add(new DataColumn("CRRNCY", typeof(string)));
+            //dt.Columns.Add(new DataColumn("Remark", typeof(string)));
+            //dt.Columns.Add(new DataColumn("Active", typeof(bool)));
+            //dt.Columns.Add(new DataColumn("ContactName", typeof(string)));
+            //dt.Columns.Add(new DataColumn("Tel", typeof(string)));
+            //dt.Columns.Add(new DataColumn("Fax", typeof(string)));
+            //dt.Columns.Add(new DataColumn("email", typeof(string)));
             dt.Columns.Add("No", typeof(string));
             dt.Columns.Add("Name", typeof(string));
             dt.Columns.Add("Address", typeof(string));
@@ -48,128 +61,124 @@ namespace StockControl
             dt.Columns.Add("FaxNo", typeof(string));
             dt.Columns.Add("Email", typeof(string));
             dt.Columns.Add("ContactName", typeof(string));
-            dt.Columns.Add("VendorGroup", typeof(int));
+            dt.Columns.Add("CreditLimit", typeof(decimal));
+            dt.Columns.Add("CustomerGroup", typeof(int));
             dt.Columns.Add("VatGroup", typeof(int));
             dt.Columns.Add("DefaultCurrency", typeof(int));
             dt.Columns.Add("ShippingTime", typeof(int));
             dt.Columns.Add("PriceIncludeingVat", typeof(bool));
-            dt.Columns.Add("ReceiveAddress", typeof(string));
+            dt.Columns.Add("ShippingAddress", typeof(string));
             dt.Columns.Add("AttachFile", typeof(string));
 
         }
-        System.Drawing.Font MyFont;
+
         private void Unit_Load(object sender, EventArgs e)
         {
-            RMenu4.Click += RMenu4_Click;
-            RMenu5.Click += RMenu5_Click;
-            RMenu6.Click += RMenu6_Click;
             dgvData.ReadOnly = true;
             dgvData.AutoGenerateColumns = false;
             GETDTRow();
 
-            if (tAction != TypeAction.Add)
+            DataLoad();
+            if (tAction == TypeAction.View)
             {
-                DataLoad();
-            }
-
-            LoadDefualt();
-            MyFont = new System.Drawing.Font(
-                        "Tahoma", 9,
-                        FontStyle.Italic,    // + obviously doesn't work, but what am I meant to do?
-                        GraphicsUnit.Pixel);
-
-
-            if (tAction == TypeAction.Add)
-                NewClick();
-            else if (tAction == TypeAction.Edit)
-                EditClick();
-            else if (tAction == TypeAction.View)
                 ViewClick();
-        }
-
-        private void RMenu6_Click(object sender, EventArgs e)
-        {
-            //Delete Process
-            //throw new NotImplementedException();
-            btnDelete_Click(null, null);
-        }
-
-        private void RMenu5_Click(object sender, EventArgs e)
-        {
-            //not do anything
-        }
-
-        private void RMenu4_Click(object sender, EventArgs e)
-        {
-            //Add Workcenter to process
-            NewClick();
-        }
-        
-
-        void setRowNo()
-        {
-            dgvData.Rows.ToList().ForEach(x =>
+            }
+            else if (tAction == TypeAction.Edit)
             {
-                x.Cells["No"].Value = x.Index + 1;
-            });
+                EditClick();
+            }
+            else
+            {
+                setEdit(true);
+            }
+            LoadDefualt();
         }
-
         private void LoadDefualt()
         {
             try
             {
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var unit = db.mh_UnitTimes.ToList();
-                    cbbUOM.DisplayMember = "Name";
-                    cbbUOM.ValueMember = "id";
-                    cbbUOM.DataSource = unit;
+                    var gt = (from ix in db.mh_CRRNCies select ix).ToList();
+                    var comboBoxColumn = cbbCurrency;
+                    comboBoxColumn.DisplayMember = "CRRNCY";
+                    comboBoxColumn.ValueMember = "id";
+                    comboBoxColumn.DataSource = gt;
 
-                    var t = db.mh_WorkCenters.Where(x => x.Active).ToList();
-                    var com = dgvData.Columns["RoutingType"] as GridViewComboBoxColumn;
-                    com.DisplayMember = "WorkCenterName";
-                    com.ValueMember = "id";
-                    com.DataSource = t;
+
+                    var com1 = cbbCustomerGroup;
+                    com1.DisplayMember = "Value";
+                    com1.ValueMember = "id";
+                    com1.DataSource = db.mh_VendorGroups.ToList();
+
+                    var com2 = cbbVatGroup;
+                    com2.DisplayMember = "Value";
+                    com2.ValueMember = "id";
+                    com2.DataSource = db.mh_VatGroups.ToList();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("Default", ex.Message, this.Name);
+                dbClss.AddError("CRRNCY", ex.Message, this.Name);
             }
         }
+
         private void DataLoad()
         {
             //dt.Rows.Clear();
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-
-                var g = db.mh_Routings.Where(x => x.RoutingNo == RoutingNo && x.Active).OrderBy(x => x.RNo).ToList();
-                DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
-                dgvData.DataSource = null;
-                dgvData.DataSource = dt2;
-                int ck = 0;
-                foreach (var x in dgvData.Rows)
+                if (txtNo.Text != "" && tAction != TypeAction.Add)
                 {
-                    if (row >= 0 && row == ck)
-                    {
-                        x.ViewInfo.CurrentRow = x;
-                    }
-                    ck += 1;
-                }
+                    string cstmNo = txtNo.Text;
+                    var g = db.mh_Vendors.Where(x => x.No == cstmNo).FirstOrDefault();
+                    txtBranchCode.Text = g.BranchCode;
+                    txtName.Text = g.Name;
+                    txtAddress.Text = g.Address;
+                    txtShippingAddress.Text = g.ReceivingAddress;
+                    cbbCustomerGroup.SelectedValue = g.VendorGroup;
+                    txtShippingTime.Value = g.ShippingTime;
+                    txtAttachFile.Value = g.AttachFile;
+                    cbbVatGroup.SelectedValue = g.VatGroup;
+                    cbbCurrency.SelectedValue = g.DefaultCurrency;
+                    cbVatRegis.Checked = g.VATRegistration;
+                    cbPriceIncVat.Checked = g.PriceIncludeingVat;
+                    cbActive.Checked = g.Active;
+                    var m = db.mh_VendorContacts.Where(w => w.VendorNo == cstmNo && w.Active).ToList();
+                    dgvData.AutoGenerateColumns = false;
+                    dgvData.DataSource = null;
+                    dgvData.DataSource = m;
 
-                if (g.Count > 0)
-                {
-                    txtRoutingNo.Text = g.First().RoutingNo;
-                    txtRoutingName.Text = g.First().RoutingName;
-                    cbbUOM.SelectedValue = g.First().RoutingUOM;
+                    if (tAction == TypeAction.View)
+                        setEdit(false);
+                    else
+                        setEdit(true);
                 }
+                else
+                    setEdit(true);
             }
-
-            setRowNo();
 
 
             //    radGridView1.DataSource = dt;
+        }
+
+        void setEdit(bool ss)
+        {
+            txtBranchCode.ReadOnly = !ss;
+            txtName.ReadOnly = !ss;
+            txtAddress.ReadOnly = !ss;
+            txtShippingTime.ReadOnly = !ss;
+            txtAttachFile.ReadOnly = !ss;
+            btnDel.Enabled = ss;
+            cbVatRegis.ReadOnly = !ss;
+            cbPriceIncVat.ReadOnly = !ss;
+            txtShippingAddress.ReadOnly = !ss;
+            cbbCustomerGroup.ReadOnly = !ss;
+            cbbVatGroup.ReadOnly = !ss;
+            cbbCurrency.ReadOnly = !ss;
+            cbActive.ReadOnly = !ss;
+            dgvData.ReadOnly = !ss;
         }
 
         private bool AddUnit()
@@ -178,72 +187,77 @@ namespace StockControl
             int C = 0;
             try
             {
-
-                string RoutingNo = txtRoutingNo.Text.Trim();
-                string RoutingName = txtRoutingName.Text.Trim();
-                int UOM = cbbUOM.SelectedValue.ToInt();
-                if (RoutingNo == "")
-                    RoutingNo = dbClss.GetNo(26, 2);
-                txtRoutingNo.Text = RoutingNo;
-                this.RoutingNo = RoutingNo;
-
                 dgvData.EndEdit();
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    foreach (var g in dgvData.Rows)
+                    string cstmno = txtNo.Text.Trim();
+                    var cstm = new mh_Vendor();
+                    if (tAction == TypeAction.Add)
+                        cstmno = dbClss.GetNo(1, 2);
+                    else
+                        cstm = db.mh_Vendors.Where(x => x.No == cstmno).FirstOrDefault();
+                    txtNo.Text = cstmno;
+                    cstm.BranchCode = txtBranchCode.Text;
+                    cstm.No = cstmno;
+                    cstm.Name = txtName.Text.Trim();
+                    cstm.Address = txtAddress.Text.Trim();
+                    cstm.ShippingTime = txtShippingTime.Value.ToInt();
+                    cstm.AttachFile = txtAttachFile.Value.ToSt();
+                    cstm.VATRegistration = cbVatRegis.Checked;
+                    cstm.PriceIncludeingVat = cbPriceIncVat.Checked;
+                    cstm.ReceivingAddress = txtShippingAddress.Text.Trim();
+                    cstm.VendorGroup = cbbCustomerGroup.SelectedValue.ToInt();
+                    cstm.VatGroup = cbbVatGroup.SelectedValue.ToInt();
+                    cstm.DefaultCurrency = cbbCurrency.SelectedValue.ToInt();
+                    cstm.Active = cbActive.Checked;
+                    if (tAction == TypeAction.Add)
+                        db.mh_Vendors.InsertOnSubmit(cstm);
+                    db.SubmitChanges();
+
+                    foreach (var c in dgvData.Rows)
                     {
-                        if (Convert.ToString(g.Cells["dgvC"].Value).Equals("T"))
-                        {
-                            if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
-                            {
-                                var t = new mh_Routing();
-                                t.RoutingNo = RoutingNo;
-                                t.RoutingName = RoutingName;
-                                t.RoutingUOM = UOM;
-                                t.RoutingType = g.Cells["RoutingType"].Value.ToInt();
-                                t.Description = g.Cells["Description"].Value.ToSt();
-                                t.SetupTime = g.Cells["SetupTime"].Value.ToDecimal();
-                                t.RunTime = g.Cells["RunTime"].Value.ToDecimal();
-                                t.WaitTime = g.Cells["WaitTime"].Value.ToDecimal();
-                                t.UnitCostPer = g.Cells["UnitCostPer"].Value.ToDecimal();
-                                t.RNo = g.Cells["No"].Value.ToInt();
+                        if (c.Cells["dgvC"].Value.ToSt() == "")
+                            continue;
 
-                                dbClss.AddHistory(this.Name, "เพิ่ม Routing", $"เพิ่ม Routing [{t.RoutingNo}]", "");
-                                //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
-                                db.mh_Routings.InsertOnSubmit(t);
-                                db.SubmitChanges();
-                                C += 1;
-                            }
-                            else
-                            {
-                                var t = db.mh_Routings.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
-                                t.RoutingName = RoutingName;
-                                t.RoutingUOM = UOM;
-                                t.RoutingType = g.Cells["RoutingType"].Value.ToInt();
-                                t.Description = g.Cells["Description"].Value.ToSt();
-                                t.SetupTime = g.Cells["SetupTime"].Value.ToDecimal();
-                                t.RunTime = g.Cells["RunTime"].Value.ToDecimal();
-                                t.WaitTime = g.Cells["WaitTime"].Value.ToDecimal();
-                                t.UnitCostPer = g.Cells["UnitCostPer"].Value.ToDecimal();
-                                t.RNo = g.Cells["No"].Value.ToInt();
+                        int id = c.Cells["id"].Value.ToInt();
+                        var con = db.mh_VendorContacts.Where(x => x.id == id).FirstOrDefault();
+                        if (con == null)
+                            con = new mh_VendorContact();
+                        con.Def = c.Cells["Def"].Value.ToBool();
+                        con.VendorNo = cstmno;
+                        con.ContactName = c.Cells["ContactName"].Value.ToSt();
+                        con.Tel = c.Cells["Tel"].Value.ToSt();
+                        con.Fax = c.Cells["Fax"].Value.ToSt();
+                        con.Email = c.Cells["Email"].Value.ToSt();
+                        con.Active = true;
+                        if (id <= 0)
+                            db.mh_VendorContacts.InsertOnSubmit(con);
+                        db.SubmitChanges();
+                    }
 
-                                C += 1;
-                                db.SubmitChanges();
-                                dbClss.AddHistory(this.Name, "แก้ไข Routing", $"แก้ไข Routing [{t.RoutingNo}]", "");
+                    tAction = TypeAction.Edit;
+                    DataLoad();
 
-                            }
-                        }
+                    if (dgvData.Rows.Count == 1)
+                    {
+                        int id = dgvData.Rows[0].Cells["id"].Value.ToInt();
+                        dgvData.Rows[0].Cells["Def"].Value = true;
+                        var m = db.mh_VendorContacts.Where(x => x.id == id).FirstOrDefault();
+                        m.Def = true;
+                        db.SubmitChanges();
                     }
                 }
+
+                baseClass.Info("Save complete.");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("เพิ่ม Routing", ex.Message, this.Name);
+                dbClss.AddError("Add Vendor Contact", ex.Message, this.Name);
             }
 
-            if (C > 0)
-                MessageBox.Show("บันทึกสำเร็จ!");
+            //if (C > 0)
+            //    MessageBox.Show("บันทึกสำเร็จ!");
 
             return ck;
         }
@@ -257,31 +271,20 @@ namespace StockControl
 
                 if (row >= 0)
                 {
-                    string CodeTemp = Convert.ToString(dgvData.Rows[row].Cells["dgvCodeTemp"].Value);
+                    int id = dgvData.CurrentCell.RowInfo.Cells["id"].Value.ToInt();
+                    string name = dgvData.CurrentCell.RowInfo.Cells["ContactName"].Value.ToSt();
                     dgvData.EndEdit();
-                    if (MessageBox.Show("Do you want to Delete Routing ?", "Delete Routing", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show("Do you want to Delete ( " + name + " ) ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            if (!CodeTemp.Equals(""))
+                            var m = db.mh_VendorContacts.Where(x => x.id == id).FirstOrDefault();
+                            if (m != null)
                             {
-                                var t = db.mh_Routings.Where(x => x.id == CodeTemp.ToInt()).ToList();
-                                foreach (var d in t)
-                                {
-                                    //db.mh_Routings.DeleteOnSubmit(d);
-                                    d.Active = false;
-                                    dbClss.AddHistory(this.Name, "Delete Routing", $"Delete Routing [{d.RoutingNo}]", "");
-                                }
-                                C += 1;
-
+                                m.Active = false;
                                 db.SubmitChanges();
-                                dgvData.Rows.Remove(dgvData.Rows[row]);
+                                C++;
                             }
-                            else
-                            {
-                                dgvData.Rows.Remove(dgvData.Rows[row]);
-                            }
-
                         }
                     }
                 }
@@ -290,13 +293,13 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("Delete Routing", ex.Message, this.Name);
+                dbClss.AddError("Delete Vendor Contact", ex.Message, this.Name);
             }
 
             if (C > 0)
             {
                 row = row - 1;
-                MessageBox.Show("Delete complete.!");
+                MessageBox.Show("Delete complete.");
             }
 
 
@@ -304,43 +307,49 @@ namespace StockControl
 
             return ck;
         }
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DataLoad();
         }
         private void NewClick()
         {
-            dgvData.ReadOnly = false;
-            dgvData.AllowAddNewRow = false;
-            btnEdit.Enabled = false;
-            btnView.Enabled = true;
-            var rowe = dgvData.Rows.AddNew();
-            rowe.Cells["No"].Value = rowe.Index + 1;
-
+            if (tAction != TypeAction.View)
+            {
+                dgvData.ReadOnly = false;
+                dgvData.AllowAddNewRow = false;
+                btnEdit.Enabled = false;
+                btnView.Enabled = true;
+                btnSave.Enabled = true;
+                setEdit(true);
+                if (txtNo.Text != "")
+                    lblStatus.Text = "Edit";
+                else
+                    lblStatus.Text = "New";
+                dgvData.Rows.AddNew();
+            }
         }
         private void EditClick()
         {
             dgvData.ReadOnly = false;
             btnEdit.Enabled = false;
             btnView.Enabled = true;
+            btnSave.Enabled = true;
             dgvData.AllowAddNewRow = false;
-
-            txtRoutingName.ReadOnly = false;
-            cbbUOM.ReadOnly = false;
+            setEdit(true);
+            lblStatus.Text = "Edit";
+            tAction = TypeAction.Edit;
         }
         private void ViewClick()
         {
             dgvData.ReadOnly = true;
             btnView.Enabled = false;
             btnEdit.Enabled = true;
+            btnSave.Enabled = false;
             dgvData.AllowAddNewRow = false;
-
-            txtRoutingName.ReadOnly = true;
-            cbbUOM.ReadOnly = true;
-            cbbUOM.SelectedIndex = -1;
-
-            DataLoad();
+            setEdit(false);
+            lblStatus.Text = "View";
+            tAction = TypeAction.View;
+            //DataLoad();
         }
         private void btnNew_Click(object sender, EventArgs e)
         {
@@ -362,26 +371,25 @@ namespace StockControl
             string err = "";
             try
             {
-
                 dgvData.EndEdit();
-                if (dgvData.Rows.Count <= 0)
-                    err += "- “รายการ:” เป็นค่าว่าง \n";
+                //if (dgvData.Rows.Count <= 0)
+                //    err += "- “รายการ:” เป็นค่าว่าง \n";
                 // int c = 0;
-                if (txtRoutingName.Text.Trim() == "")
-                    err += "- “Routing Name.:” เป็นค่าว่างไม่ได้ \n";
-                if (cbbUOM.SelectedValue.ToInt() == 0)
-                    err += "- “Unit of Measure.:” เป็นค่าว่างไม่ได้ \n";
 
-                foreach (var g in dgvData.Rows)
-                {
-                    if (g.IsVisible)
-                    {
-                        if (Convert.ToString(g.Cells["RoutingType"].Value).Equals(""))
-                            err += "- “Type.:” เป็นค่าว่างไม่ได้ \n";
-                    }
-
-
-                }
+                if (txtName.Text.Trim().Equals(""))
+                    err += "- Vendor name is empty.\n";
+                if (txtBranchCode.Text.Trim().Equals(""))
+                    err += "- Branch code is empty.\n";
+                if (txtAddress.Text.Trim().Equals(""))
+                    err += "- Address is empty.\n";
+                if (txtShippingAddress.Text.Trim().Equals(""))
+                    err += "- Receive Address is empty.\n";
+                if (cbbCustomerGroup.SelectedValue.ToInt() == 0)
+                    err += "- Vendor Group is empty.\n";
+                if (cbbVatGroup.SelectedValue.ToInt() == 0)
+                    err += "- Vat Group is empty.\n";
+                if (cbbCurrency.SelectedValue.ToInt() == 0)
+                    err += "- Currency is empty.\n";
 
 
                 if (!err.Equals(""))
@@ -405,6 +413,7 @@ namespace StockControl
             if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 AddUnit();
+                EditClick();
                 DataLoad();
             }
         }
@@ -433,13 +442,17 @@ namespace StockControl
             catch (Exception ex) { }
         }
 
+        private void Unit_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            // MessageBox.Show(e.KeyCode.ToString());
+        }
+
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
 
             DeleteUnit();
-            setRowNo();
-            //DataLoad();
+            DataLoad();
 
         }
 
@@ -447,19 +460,6 @@ namespace StockControl
         private void radGridView1_CellClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             row = e.RowIndex;
-            if (e.RowIndex >= 0)
-            {
-                if (dgvData.Rows[e.RowIndex].Cells["dgvCodeTemp"].Value.ToInt() > 0)
-                {
-                    btnHolidays.Enabled = true;
-                    btnWorkingDays.Enabled = true;
-                }
-                else
-                {
-                    btnHolidays.Enabled = false;
-                    btnWorkingDays.Enabled = false;
-                }
-            }
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -619,35 +619,43 @@ namespace StockControl
             this.Close();
         }
 
-
-        private void radButtonElement1_Click(object sender, EventArgs e)
+        private void MasterTemplate_CellValueChanged(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
-            if (dgvData.CurrentCell != null)
-            {
-                throw new NotImplementedException();
-
-                this.Cursor = Cursors.WaitCursor;
-
-                var ct = new WorkingDay(dgvData.Rows[row].Cells["Code"].Value.ToInt());
-                this.Cursor = Cursors.Default;
-                ct.ShowDialog();
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
-                ClassLib.Memory.Heap();
-            }
         }
 
-        private void btnHolidays_Click(object sender, EventArgs e)
+        private void MasterTemplate_RowFormatting(object sender, RowFormattingEventArgs e)
+        {
+            //if (e.RowElement.RowInfo.Cells["VendorNo"].Value == null)
+            //{
+            //    e.RowElement.ResetValue(LightVisualElement.BackColorProperty, ValueResetFlags.Local);
+            //    e.RowElement.ResetValue(LightVisualElement.GradientStyleProperty, ValueResetFlags.Local);
+            //    e.RowElement.ResetValue(LightVisualElement.DrawFillProperty, ValueResetFlags.Local);
+            //}
+            //else if(!e.RowElement.RowInfo.Cells["VendorNo"].Value.Equals(""))
+            //{ 
+            //    e.RowElement.DrawFill = true;
+            //    // e.RowElement.GradientStyle = GradientStyles.Solid;
+            //    e.RowElement.BackColor = Color.WhiteSmoke;
+
+            //}
+            //else
+            //{
+            //    e.RowElement.ResetValue(LightVisualElement.BackColorProperty, ValueResetFlags.Local);
+            //    e.RowElement.ResetValue(LightVisualElement.GradientStyleProperty, ValueResetFlags.Local);
+            //    e.RowElement.ResetValue(LightVisualElement.DrawFillProperty, ValueResetFlags.Local);
+            //}
+        }
+
+        private void radButtonElement1_Click(object sender, EventArgs e)
         {
 
             if (row >= 0)
             {
+
+
                 this.Cursor = Cursors.WaitCursor;
-                //Contact ct = new Contact(Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value),
-                //    Convert.ToString(radGridView1.Rows[row].Cells["VendorName"].Value));
-                var ct = new Holiday(dgvData.Rows[row].Cells["Code"].Value.ToInt());
+                Contact ct = new Contact(Convert.ToString(dgvData.Rows[row].Cells["VendorNo"].Value),
+                    Convert.ToString(dgvData.Rows[row].Cells["VendorName"].Value));
                 this.Cursor = Cursors.Default;
                 ct.ShowDialog();
                 GC.Collect();
@@ -658,6 +666,29 @@ namespace StockControl
             }
         }
 
+        private void radGridView1_CellDoubleClick(object sender, GridViewCellEventArgs e)
+        {
+            //EditClick();
+        }
+
+        private void dgvData_CellBeginEdit(object sender, GridViewCellCancelEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                if (e.Column.Name.Equals("Def"))
+                {
+                    if (!e.Row.Cells["Def"].Value.ToBool())
+                    {
+                        dgvData.Rows.Where(x => x.Index != e.RowIndex).ToList().ForEach(x =>
+                          {
+                              x.Cells["Def"].Value = false;
+                              x.Cells["dgvC"].Value = "T";
+                          });
+                    }
+
+                }
+            }
+        }
 
 
     }

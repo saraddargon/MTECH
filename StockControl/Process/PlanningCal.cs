@@ -20,6 +20,11 @@ namespace StockControl
             InitializeComponent();
             this.openFilter = openFilter;
         }
+        public PlanningCal()
+        {
+            InitializeComponent();
+            openFilter = false;
+        }
 
         private void radMenuItem1_Click(object sender, EventArgs e)
         {
@@ -118,96 +123,40 @@ namespace StockControl
 
         private void btnRecal_Click(object sender, EventArgs e)
         {
-            var cal = new WorkCenters_Cal();
-            cal.ShowDialog();
-        }
-
-        private void btnFil_Click(object sender, EventArgs e)
-        {
-            var ft = new WorkCenters_Filter();
+            var ft = new PlanningCal_Filter();
             ft.ShowDialog();
             if (ft.okFilter)
             {
                 radLabelElement1.Text = $"Filter date : {ft.dateFrom.ToDtString()}-{ft.dateTo.ToDtString()}";
-                LoadData(ft.dateFrom, ft.dateTo, ft.workId);
+                LoadData(true, ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
             }
         }
-        void LoadData(DateTime dtFrom, DateTime dtTo, int workId)
+
+        private void btnFil_Click(object sender, EventArgs e)
+        {
+            var ft = new PlanningCal_Filter();
+            ft.ShowDialog();
+            if (ft.okFilter)
+            {
+                radLabelElement1.Text = $"Filter date : {ft.dateFrom.ToDtString()}-{ft.dateTo.ToDtString()}";
+                LoadData(false, ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
+            }
+        }
+        void LoadData(bool reCal, DateTime dtFrom, DateTime dtTo, bool MRP, bool MPS, string ItemNo, string LocationItem)
         {
             this.Cursor = Cursors.WaitCursor;
             try
             {
+                t_dtFrom = dtFrom;
+                t_dtTo = dtTo;
+                t_MRP = MRP;
+                t_MPS = MPS;
+                t_ItemNo = ItemNo;
+                t_LocationItem = LocationItem;
                 using (var db = new DataClasses1DataContext())
                 {
                     dgvData.Rows.Clear();
-                    var colS = dgvData.Columns.Where(x => x.Name.StartsWith("d_")).ToList();
-                    colS.ForEach(x =>
-                    {
-                        dgvData.Columns.Remove(x);
-                    });
-
-                    var c = db.mh_CapacityAvailables
-                        .Where(x => x.Date >= dtFrom && x.Date <= dtTo && (workId == 0 || x.WorkCenterID == workId)).ToList();
-                    var dTemp = dtFrom;
-
-                    do
-                    {
-                        string colName = $"d_{dTemp.ToString("yyyyMMdd")}";
-                        var col = new GridViewDecimalColumn(colName);
-                        col.HeaderText = dTemp.ToDtString();
-                        col.DecimalPlaces = 2;
-                        col.FormatString = "{0:N2}";
-                        col.Width = 80;
-                        dgvData.Columns.Add(col);
-                        decimal? capa = null;
-                        var wlist = new List<mh_WorkCenter>();
-
-                        foreach (var e in c.Where(x => x.Date == dTemp))
-                        {
-                            //find Row
-                            var rowE = dgvData.Rows.Where(x => x.Tag.ToInt() == e.WorkCenterID).FirstOrDefault();
-                            //find Work
-                            var w = wlist.Where(x => x.id == e.WorkCenterID).FirstOrDefault();
-                            if (w == null)
-                            {
-                                w = db.mh_WorkCenters.Where(x => x.id == e.WorkCenterID).FirstOrDefault();
-                                wlist.Add(w);
-                            }
-
-                            if (w == null)
-                                continue;
-
-                            //set row
-                            if (rowE == null)
-                            {
-                                rowE = dgvData.Rows.NewRow();
-                                rowE.Cells["id"].Value = e.WorkCenterID;
-                                rowE.Tag = e.WorkCenterID.ToInt();
-
-                                rowE.Cells["No"].Value = w.WorkCenterNo;
-                                rowE.Cells["Name"].Value = w.WorkCenterName;
-                                dgvData.Rows.Add(rowE);
-                            }
-                            
-                            //set capa
-                            if (e.Capacity != null)
-                            {
-                                ////UOM : Min(0), Hour(1), Day(2)
-                                //if (w.UOM == 0)
-                                //    capa = e.Capacity;
-                                //else if (w.UOM == 1) //Hour
-                                //    capa = Math.Round(e.Capacity.ToDouble() / 60, 2).ToDecimal();
-                                //else if (w.UOM == 2) //Day
-                                //    capa = Math.Round(e.Capacity.ToDouble() / (60 * 24), 2).ToDecimal();
-                                capa = e.Capacity;
-                            }
-
-
-                            rowE.Cells[colName].Value = capa;
-                        }
-
-                        dTemp = dTemp.AddDays(1);
-                    } while (dTemp <= dtTo);
+                    if (reCal) Recalculate();
                 }
 
             }
@@ -218,5 +167,379 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
         }
 
+        DateTime t_dtFrom = DateTime.Now;
+        DateTime t_dtTo = DateTime.Now;
+        bool t_MPS = false;
+        bool t_MRP = false;
+        string t_ItemNo = "";
+        string t_LocationItem = "";
+        DateTime t_ReqDate = DateTime.Now;
+        DateTime minDate
+        {
+            get {
+                if (DateTime.Now.Date > t_dtFrom.Date)
+                    return DateTime.Now.Date;
+                else
+                    return t_dtFrom.Date;
+            }
+        }
+        void Recalculate()
+        {
+            try
+            {
+                itemDatas = new List<ItemData>();
+                planDatas = new List<PlanData>();
+                using (var db = new DataClasses1DataContext())
+                {
+                    int comp = CustomerPO_SS.Completed.ToInt();
+                    var cpo = db.mh_CustomerPOs.Where(x => x.Active && x.Quantity > 0 && x.Status != comp
+                                    && x.ReqDate >= t_dtFrom && x.ReqDate <= t_dtTo
+                                    && x.ItemNo.Contains(t_ItemNo)).ToList();
+                    //t_ReqDate = cpo.Min(x => x.ReqDate).Date;
+                    //var tlist = cpo.GroupBy(x => x.ItemNo).Select(x => new
+                    //{
+                    //    x.First().ItemNo,
+                    //    ReqQty = x.Sum(q => q.Quantity * q.PCSUnit)
+                    //}).ToList();
+
+                    //foreach (var t in tlist)
+                    //    DrillItem(t.ItemNo, t.ReqQty);
+
+                    //foreach (var item in itemDatas)
+                    //    CalItem(item);
+
+                    var idPOs = new List<int>();
+                    int rNo = 1;
+                    foreach (var po in cpo.OrderBy(x => x.ReqDate).ToList())
+                    {
+                        if (idPOs.Contains(po.id))
+                            continue;
+
+                        var t = db.mh_Items.Where(x => x.InternalNo == po.ItemNo).FirstOrDefault();
+                        var tt = new ItemData(t.InternalNo, t.InternalName);
+                        tt.rNo = rNo++;
+                        tt.ReqQty = Math.Round(po.Quantity * po.PCSUnit, 2);
+                        tt.ReorderType = getReorderType(t.ReorderType);
+                        tt.ReorderPoint = t.ReorderPoint.ToDecimal();
+                        tt.ReorderQty = t.ReorderQty;
+                        tt.MinQty = t.MinimumQty;
+                        tt.MaxQty = t.MaximumQty;
+                        tt.SafetyStock = t.SafetyStock;
+                        tt.TimeBuket = t.Timebucket.ToInt();
+                        tt.LeadTime = t.InternalLeadTime;
+                        tt.repType = getRepType(t.ReplenishmentType);
+                        tt.invGroup = getInvGroup(t.InventoryGroup);
+                        tt.ReqDate = po.ReqDate.AddDays(-1);
+
+                        idPOs.Add(po.id);
+                        //find all P/O With bucket Time
+                        var other_pos = cpo.Where(x => !idPOs.Contains(x.id) && x.ItemNo == po.ItemNo && x.ReqDate >= po.ReqDate && x.ReqDate <= po.ReqDate.AddDays(tt.TimeBuket)).ToList();
+                        foreach (var item in other_pos)
+                        {
+                            idPOs.Add(item.id);
+                            tt.ReqQty += Math.Round(item.Quantity * item.PCSUnit, 2);
+                        }
+                        itemDatas.Add(tt);
+
+                        //find SEMI, RM
+                        DrillItem2(tt.ItemNo, tt.ReqQty, tt.rNo, tt.ReqDate);
+
+                    }
+                    //cal
+                    foreach (var item in itemDatas)
+                        CalItem2(item);
+                }
+            }
+            catch (Exception e)
+            {
+                baseClass.Error(e.Message);
+            }
+        }
+
+        List<ItemData> itemDatas = new List<ItemData>();
+        List<PlanData> planDatas = new List<PlanData>();
+        //Drill และรวม Item Qty
+        public void DrillItem(string ItemNo, decimal ReqQty)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                var item = itemDatas.Where(x => x.ItemNo == ItemNo).FirstOrDefault();
+                if (item == null)
+                {
+                    var t = db.mh_Items.Where(x => x.InternalNo == ItemNo).FirstOrDefault();
+                    var tt = new ItemData(t.InternalNo, t.InternalName);
+                    tt.ReqQty = ReqQty;
+                    tt.ReorderType = getReorderType(t.ReorderType);
+                    tt.ReorderPoint = t.ReorderPoint.ToDecimal();
+                    tt.ReorderQty = t.ReorderQty;
+                    tt.MinQty = t.MinimumQty;
+                    tt.MaxQty = t.MaximumQty;
+                    tt.SafetyStock = t.SafetyStock;
+                    tt.TimeBuket = t.Timebucket.ToInt();
+                    tt.LeadTime = t.InternalLeadTime;
+                    tt.repType = getRepType(t.ReplenishmentType);
+                    tt.invGroup = getInvGroup(t.InventoryGroup);
+                    itemDatas.Add(tt);
+                    item = tt;
+                }
+                else
+                {
+                    item.ReqQty += ReqQty;
+                }
+
+                //BOMs
+                var boms = (from x in db.tb_BomHDs join y in db.tb_BomDTs on x.PartNo equals y.PartNo where x.PartNo == ItemNo select y).ToList();
+                foreach (var b in boms)
+                {
+                    var rQty = Math.Round(ReqQty * b.Qty * b.PCSUnit.ToDecimal(), 2);
+                    DrillItem(b.Component, rQty);
+                }
+            }
+        }
+        public void CalItem(ItemData item)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                //find data
+                if (t_MRP && item.repType == ReplenishmentType.Purchase) //Purchase
+                {
+                    //1. Reorder from Reorder Type
+                    //2. Order from Calculate Qty
+                    //3. After Shipment check Stock Qty for Order from Reorder Type
+                    if (item.ReorderType == ReorderType.Fixed && item.StockQty < item.ReorderPoint)
+                    {
+                        //must reorder
+                        var p = new PlanData(item.ItemNo, item.ItemName);
+                        while (p.Qty + item.ReorderQty <= item.MaxQty
+                            && p.Qty + item.ReorderQty <= item.ReorderPoint)
+                        {
+                            p.Qty += item.ReorderQty;
+                        }
+                        p.StartingDate = setStandardTime(t_dtFrom, true);
+                        p.EndingDate = setStandardTime(t_dtTo.AddDays(item.TimeBuket), false);
+
+                    }
+                    else if (item.ReorderType == ReorderType.MinMax)
+                    { }
+                }
+                else if (t_MPS && item.repType == ReplenishmentType.Production) //Production
+                {
+
+                }
+            }
+        }
+
+        //Drill งานแบบ Bucket Time
+        public void DrillItem2(string ItemNo, decimal ReqQty, int ref_rNo, DateTime ReqDate)
+
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                //BOMs
+                var boms = (from x in db.tb_BomHDs join y in db.tb_BomDTs on x.PartNo equals y.PartNo where x.PartNo == ItemNo select y).ToList();
+                int rNo = 1;
+                foreach (var b in boms)
+                {
+                    //Components
+                    var rQty = Math.Round(ReqQty * b.Qty * b.PCSUnit.ToDecimal(), 2);
+
+                    var item = itemDatas.Where(x => x.ItemNo == b.Component && x.ref_rNo == ref_rNo).FirstOrDefault();
+                    if (item == null)
+                    {
+                        var t = db.mh_Items.Where(x => x.InternalNo == b.Component).FirstOrDefault();
+                        var tt = new ItemData(t.InternalNo, t.InternalName);
+                        tt.rNo = rNo++;
+                        tt.ref_rNo = ref_rNo;
+                        tt.ReqQty = rQty;
+                        tt.ReorderType = getReorderType(t.ReorderType);
+                        tt.ReorderPoint = t.ReorderPoint.ToDecimal();
+                        tt.ReorderQty = t.ReorderQty;
+                        tt.MinQty = t.MinimumQty;
+                        tt.MaxQty = t.MaximumQty;
+                        tt.SafetyStock = t.SafetyStock;
+                        tt.TimeBuket = t.Timebucket.ToInt();
+                        tt.LeadTime = t.InternalLeadTime;
+                        tt.repType = getRepType(t.ReplenishmentType);
+                        tt.invGroup = getInvGroup(t.InventoryGroup);
+                        tt.ReqDate = ReqDate;
+                        itemDatas.Add(tt);
+                        item = tt;
+                    }
+                    else
+                    {
+                        item.ReqQty += rQty;
+                    }
+
+                    DrillItem2(item.ItemNo, item.ReqQty, item.rNo, item.ReqDate);
+                }
+            }
+        }
+        public void CalItem2(ItemData item)
+
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                //find data
+                if (t_MRP && item.repType == ReplenishmentType.Purchase) //Purchase
+                {
+                    //1. Reorder from Reorder Type
+                    //2. Order from Calculate Qty
+                    //3. After Shipment check Stock Qty for Order from Reorder Type
+                    if (item.ReorderType == ReorderType.Fixed && item.StockQty < item.ReorderPoint)
+                    {
+                        //must reorder
+                        var p = new PlanData(item.ItemNo, item.ItemName);
+                        while (p.Qty + item.ReorderQty <= item.MaxQty
+                            && p.Qty + item.ReorderQty <= item.ReorderPoint)
+                        {
+                            p.Qty += item.ReorderQty;
+                        }
+
+                        p.StartingDate = setStandardTime(minDate, true);
+                        p.EndingDate = setStandardTime(minDate, false);
+                        p.DueDate = p.EndingDate.AddDays(item.LeadTime);
+                    }
+                    else if (item.ReorderType == ReorderType.MinMax)
+                    { }
+                }
+                else if (t_MPS && item.repType == ReplenishmentType.Production) //Production
+                {
+
+                }
+            }
+        }
+
+
+        private InventoryGroup getInvGroup(string inventoryGroup)
+        {
+            switch (inventoryGroup)
+            {
+                case "RM": return InventoryGroup.RM;
+                case "SEMI": return InventoryGroup.Semi;
+                case "FG": return InventoryGroup.FG;
+                default: return InventoryGroup.RM;
+            }
+        }
+        public ReorderType getReorderType(string reName)
+        {
+            switch (reName)
+            {
+                case "Fixed Reorder Qty": return ReorderType.Fixed;
+                case "Minimum & Maximum Qty": return ReorderType.MinMax;
+                case "By Order": return ReorderType.ByOrder;
+                default: return ReorderType.Fixed;
+            }
+        }
+        public ReplenishmentType getRepType(string reName)
+        {
+            switch (reName)
+            {
+                case "Purchase": return ReplenishmentType.Purchase;
+                case "Production": return ReplenishmentType.Production;
+                default: return ReplenishmentType.Purchase;
+            }
+        }
+        public DateTime setStandardTime(DateTime dt, bool TimeStart)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                var g = db.mh_ManufacturingSetups.FirstOrDefault();
+                if (TimeStart)
+                    dt = dt.AddHours(g.StandardStartingTime.Hours).AddMinutes(g.StandardStartingTime.Minutes);
+                else
+                    dt = dt.AddHours(g.StandardEndingTime.Hours).AddMinutes(g.StandardEndingTime.Minutes);
+                return dt;
+            }
+        }
+
+
+
+    }
+
+    public class ItemData
+    {
+        public int rNo { get; set; } = 0;
+        public int ref_rNo { get; set; } = 0;
+        public string ItemNo { get; set; }
+        public string ItemName { get; set; }
+        public decimal ReqQty { get; set; }
+        public ReorderType ReorderType { get; set; }
+        public decimal QtyOnHand { get; set; }
+        public decimal SafetyStock { get; set; }
+        public decimal ReorderPoint { get; set; }
+        public decimal ReorderQty { get; set; }
+        public decimal MinQty { get; set; }
+        public decimal MaxQty { get; set; }
+        public int TimeBuket { get; set; }
+        public int LeadTime { get; set; }
+        public ReplenishmentType repType { get; set; }
+        public InventoryGroup invGroup { get; set; }
+
+        public decimal StockQty
+        {
+            get {
+                return baseClass.StockQty(ItemNo, "Warehouse");
+            }
+        }
+        public DateTime ReqDate { get; set; }
+
+        public ItemData(string ItemNo, string ItemName)
+        {
+            this.ItemNo = ItemNo;
+            this.ItemName = ItemName;
+
+        }
+
+    }
+    public class PlanData
+    {
+        public string ItemNo { get; set; }
+        public string ItemName { get; set; }
+        public DateTime DueDate { get; set; }
+        public DateTime StartingDate { get; set; }
+        public DateTime EndingDate { get; set; }
+        public decimal Qty { get; set; }
+        public ReplenishmentType repType { get; set; }
+        public string PlanningType
+        {
+            get {
+                if (repType == ReplenishmentType.Production)
+                    return "MPS";
+                else
+                    return "MRP";
+            }
+        }
+        public string RefOrderType
+        {
+            get {
+                return repType.ToSt();
+            }
+        }
+
+        public PlanData(string ItemNo, string ItemName)
+        {
+            this.ItemNo = ItemNo;
+            this.ItemName = ItemName;
+        }
+    }
+
+
+
+    public enum ReplenishmentType
+    {
+        Purchase, //MRP
+        Production //MPS
+    }
+    public enum ReorderType
+    {
+        Fixed,
+        MinMax,
+        ByOrder
+    }
+    public enum InventoryGroup
+    {
+        RM,
+        Semi,
+        FG
     }
 }

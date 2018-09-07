@@ -327,26 +327,30 @@ namespace StockControl
         }
         private void NewClick()
         {
-            radGridView1.ReadOnly = false;
-            radGridView1.AllowAddNewRow = false;
-            btnEdit.Enabled = false;
-            btnView.Enabled = true;
-            radGridView1.Rows.AddNew();
+            var w = new WorkCentersSub(0, TypeAction.Add);
+            w.ShowDialog();
+            DataLoad();
         }
         private void EditClick()
         {
-            radGridView1.ReadOnly = false;
-            btnEdit.Enabled = false;
-            btnView.Enabled = true;
-            radGridView1.AllowAddNewRow = false;
+            if(radGridView1.CurrentCell != null)
+            {
+                //var w = new WorkCentersDetail(radGridView1.CurrentCell.RowInfo.Cells["dgvCodetemp"].Value.ToInt(), TypeAction.Edit);
+                //w.ShowDialog();
+                //DataLoad();
+                var w = new WorkCentersSub(radGridView1.CurrentCell.RowInfo.Cells["dgvCodetemp"].Value.ToInt(), TypeAction.Edit);
+                w.ShowDialog();
+                DataLoad();
+            }
         }
         private void ViewClick()
         {
-            radGridView1.ReadOnly = true;
-            btnView.Enabled = false;
-            btnEdit.Enabled = true;
-            radGridView1.AllowAddNewRow = false;
-            DataLoad();
+            if (radGridView1.CurrentCell != null)
+            {
+                var w = new WorkCentersSub(radGridView1.CurrentCell.RowInfo.Cells["dgvCodetemp"].Value.ToInt(), TypeAction.View);
+                w.ShowDialog();
+                DataLoad();
+            }
         }
         private void btnNew_Click(object sender, EventArgs e)
         {
@@ -745,5 +749,21 @@ namespace StockControl
             var capa = new WorkCenters_Capa();
             capa.ShowDialog();
         }
+
+        private void btnSubWorkCenter_Click(object sender, EventArgs e)
+        {
+            if (radGridView1.CurrentCell != null)
+            {
+                var v = radGridView1.CurrentCell;
+                if (v.RowInfo.Cells["dgvCodetemp"].Value.ToInt() > 0)
+                {
+                    var workid = radGridView1.CurrentCell.RowInfo.Cells["dgvCodetemp"].Value.ToInt();
+                    var w = new WorkCentersSub(workid, TypeAction.Edit);
+                    w.ShowDialog();
+                }
+            }
+        }
+
+
     }
 }
