@@ -162,6 +162,12 @@
     <Compile Include="Process\Calculate_Movement.Designer.cs">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\VendorContacts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\VendorContacts.Designer.cs">
+      <DependentUpon>VendorContacts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\CustomerContacts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -900,6 +906,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Calculate_Movement.resx">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\VendorContacts.resx">
+      <DependentUpon>VendorContacts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CustomerContacts.resx">
       <DependentUpon>CustomerContacts.cs</DependentUpon>

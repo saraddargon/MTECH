@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Vendor));
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject1 = new Telerik.WinControls.UI.ConditionalFormattingObject();
@@ -86,11 +85,6 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.radContextMenu1 = new Telerik.WinControls.UI.RadContextMenu(this.components);
-            this.RMenu4 = new Telerik.WinControls.UI.RadMenuItem();
-            this.RMenu5 = new Telerik.WinControls.UI.RadMenuItem();
-            this.RMenu6 = new Telerik.WinControls.UI.RadMenuItem();
-            this.radContextMenuManager1 = new Telerik.WinControls.UI.RadContextMenuManager();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -170,6 +164,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Text = "บันทึกรายการ";
             this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSave.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // radRibbonBarGroup2
@@ -412,19 +407,19 @@
             gridViewTextBoxColumn1.ConditionalFormattingObjectList.Add(conditionalFormattingObject1);
             gridViewTextBoxColumn1.EnableExpressionEditor = false;
             gridViewTextBoxColumn1.FieldName = "No";
-            gridViewTextBoxColumn1.HeaderText = "รหัสผู้ขาย";
+            gridViewTextBoxColumn1.HeaderText = "Vendor No";
             gridViewTextBoxColumn1.Name = "VendorNo";
             gridViewTextBoxColumn1.ReadOnly = true;
             gridViewTextBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewTextBoxColumn1.Width = 60;
             gridViewTextBoxColumn2.EnableExpressionEditor = false;
             gridViewTextBoxColumn2.FieldName = "Name";
-            gridViewTextBoxColumn2.HeaderText = "ชื่อผู้ขายสินค้า";
+            gridViewTextBoxColumn2.HeaderText = "Vendor Name";
             gridViewTextBoxColumn2.Name = "VendorName";
             gridViewTextBoxColumn2.Width = 150;
             gridViewTextBoxColumn3.EnableExpressionEditor = false;
             gridViewTextBoxColumn3.FieldName = "Address";
-            gridViewTextBoxColumn3.HeaderText = "ที่อยู่";
+            gridViewTextBoxColumn3.HeaderText = "Address";
             gridViewTextBoxColumn3.Name = "Address";
             gridViewTextBoxColumn3.Width = 200;
             gridViewTextBoxColumn4.EnableExpressionEditor = false;
@@ -451,64 +446,64 @@
             gridViewTextBoxColumn7.Name = "dgvCodetemp2";
             gridViewCheckBoxColumn1.EnableExpressionEditor = false;
             gridViewCheckBoxColumn1.FieldName = "VATRegistration";
-            gridViewCheckBoxColumn1.HeaderText = "ลงทะเบียนภาษี";
+            gridViewCheckBoxColumn1.HeaderText = "Vat Regis.";
             gridViewCheckBoxColumn1.MinWidth = 20;
             gridViewCheckBoxColumn1.Name = "VatRegis";
             gridViewCheckBoxColumn1.Width = 87;
             gridViewTextBoxColumn8.EnableExpressionEditor = false;
             gridViewTextBoxColumn8.FieldName = "PhoneNo";
-            gridViewTextBoxColumn8.HeaderText = "เบอร์โทร";
+            gridViewTextBoxColumn8.HeaderText = "Phone No";
             gridViewTextBoxColumn8.Name = "PhoneNo";
             gridViewTextBoxColumn8.Width = 96;
             gridViewTextBoxColumn9.EnableExpressionEditor = false;
             gridViewTextBoxColumn9.FieldName = "FaxNo";
-            gridViewTextBoxColumn9.HeaderText = "เบอร์แฟกซ์";
+            gridViewTextBoxColumn9.HeaderText = "Fax No";
             gridViewTextBoxColumn9.Name = "FaxNo";
             gridViewTextBoxColumn9.Width = 89;
             gridViewTextBoxColumn10.EnableExpressionEditor = false;
             gridViewTextBoxColumn10.FieldName = "Email";
-            gridViewTextBoxColumn10.HeaderText = "อีเมล์";
+            gridViewTextBoxColumn10.HeaderText = "Email";
             gridViewTextBoxColumn10.Name = "Email";
             gridViewTextBoxColumn10.Width = 143;
             gridViewTextBoxColumn11.EnableExpressionEditor = false;
             gridViewTextBoxColumn11.FieldName = "ContactName";
-            gridViewTextBoxColumn11.HeaderText = "ผู้ติดต่อ";
+            gridViewTextBoxColumn11.HeaderText = "Contact Name";
             gridViewTextBoxColumn11.Name = "ContactName";
             gridViewTextBoxColumn11.Width = 135;
             gridViewComboBoxColumn1.EnableExpressionEditor = false;
             gridViewComboBoxColumn1.FieldName = "VendorGroup";
-            gridViewComboBoxColumn1.HeaderText = "กลุ่มผู้ขาย";
+            gridViewComboBoxColumn1.HeaderText = "Vendor Group";
             gridViewComboBoxColumn1.Name = "VendorGroup";
             gridViewComboBoxColumn1.Width = 101;
             gridViewComboBoxColumn2.EnableExpressionEditor = false;
             gridViewComboBoxColumn2.FieldName = "VatGroup";
-            gridViewComboBoxColumn2.HeaderText = "กลุ่มภาษี";
+            gridViewComboBoxColumn2.HeaderText = "Vat Group";
             gridViewComboBoxColumn2.Name = "VatGroup";
             gridViewComboBoxColumn2.Width = 80;
             gridViewComboBoxColumn3.EnableExpressionEditor = false;
             gridViewComboBoxColumn3.FieldName = "DefaultCurrency";
-            gridViewComboBoxColumn3.HeaderText = "ค่าเงิน";
+            gridViewComboBoxColumn3.HeaderText = "Currency";
             gridViewComboBoxColumn3.Name = "DefaultCrrncy";
             gridViewComboBoxColumn3.Width = 82;
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "ShippingTime";
-            gridViewDecimalColumn1.HeaderText = "ระยะเวลาขนส่ง";
+            gridViewDecimalColumn1.HeaderText = "Shipping Time";
             gridViewDecimalColumn1.Name = "ShippingTime";
             gridViewDecimalColumn1.Width = 84;
             gridViewCheckBoxColumn2.EnableExpressionEditor = false;
             gridViewCheckBoxColumn2.FieldName = "PriceIncludeVat";
-            gridViewCheckBoxColumn2.HeaderText = "ราคารวมภาษี";
+            gridViewCheckBoxColumn2.HeaderText = "Price Inc. Vat";
             gridViewCheckBoxColumn2.MinWidth = 20;
             gridViewCheckBoxColumn2.Name = "PriceIncludeVat";
             gridViewCheckBoxColumn2.Width = 93;
             gridViewTextBoxColumn12.EnableExpressionEditor = false;
             gridViewTextBoxColumn12.FieldName = "ReceiveAddress";
-            gridViewTextBoxColumn12.HeaderText = "ที่อยู่รับสินค้า";
+            gridViewTextBoxColumn12.HeaderText = "Receive Address";
             gridViewTextBoxColumn12.Name = "ReceiveAddress";
             gridViewTextBoxColumn12.Width = 162;
             gridViewBrowseColumn1.EnableExpressionEditor = false;
             gridViewBrowseColumn1.FieldName = "AttachFile";
-            gridViewBrowseColumn1.HeaderText = "แนบไฟล์";
+            gridViewBrowseColumn1.HeaderText = "Attach File";
             gridViewBrowseColumn1.Name = "AttachFile";
             gridViewBrowseColumn1.Width = 154;
             gridViewCheckBoxColumn3.EnableExpressionEditor = false;
@@ -540,7 +535,6 @@
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.radGridView1.Name = "radGridView1";
-            this.radContextMenuManager1.SetRadContextMenu(this.radGridView1, this.radContextMenu1);
             this.radGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.radGridView1.ShowGroupPanel = false;
             this.radGridView1.Size = new System.Drawing.Size(895, 448);
@@ -586,35 +580,6 @@
             this.radRibbonBarButtonGroup5.ShowBackColor = false;
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
-            // 
-            // radContextMenu1
-            // 
-            this.radContextMenu1.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.RMenu4,
-            this.RMenu5,
-            this.RMenu6});
-            this.radContextMenu1.ThemeName = "Office2010Blue";
-            // 
-            // RMenu4
-            // 
-            this.RMenu4.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.RMenu4.Image = ((System.Drawing.Image)(resources.GetObject("RMenu4.Image")));
-            this.RMenu4.Name = "RMenu4";
-            this.RMenu4.Text = "เพิ่ม";
-            // 
-            // RMenu5
-            // 
-            this.RMenu5.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.RMenu5.Image = ((System.Drawing.Image)(resources.GetObject("RMenu5.Image")));
-            this.RMenu5.Name = "RMenu5";
-            this.RMenu5.Text = "แก้ไข";
-            // 
-            // RMenu6
-            // 
-            this.RMenu6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.RMenu6.Image = ((System.Drawing.Image)(resources.GetObject("RMenu6.Image")));
-            this.RMenu6.Name = "RMenu6";
-            this.RMenu6.Text = "ลบรายการ";
             // 
             // Vendor
             // 
@@ -680,11 +645,6 @@
         private Telerik.WinControls.UI.RadButtonElement Unfilter;
         private Telerik.WinControls.UI.RadRibbonBarButtonGroup radRibbonBarButtonGroup5;
         private Telerik.WinControls.UI.RibbonBarGroupSeparator ribbonBarGroupSeparator1;
-        private Telerik.WinControls.UI.RadContextMenu radContextMenu1;
-        private Telerik.WinControls.UI.RadMenuItem RMenu4;
-        private Telerik.WinControls.UI.RadMenuItem RMenu5;
-        private Telerik.WinControls.UI.RadMenuItem RMenu6;
-        private Telerik.WinControls.UI.RadContextMenuManager radContextMenuManager1;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup6;
         private Telerik.WinControls.UI.RadButtonElement radButtonElement1;
     }

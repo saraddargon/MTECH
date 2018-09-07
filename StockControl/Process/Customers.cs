@@ -67,9 +67,6 @@ namespace StockControl
         System.Drawing.Font MyFont;
         private void Unit_Load(object sender, EventArgs e)
         {
-            RMenu4.Click += RMenu4_Click;
-            RMenu5.Click += RMenu5_Click;
-            RMenu6.Click += RMenu6_Click;
             radGridView1.ReadOnly = true;
             radGridView1.AutoGenerateColumns = false;
             GETDTRow();
@@ -173,7 +170,7 @@ namespace StockControl
             //dt.Rows.Clear();
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                
+
 
                 var g = db.mh_Customers.ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
@@ -182,8 +179,8 @@ namespace StockControl
                 foreach (var x in radGridView1.Rows)
                 {
                     string cstmNo = x.Cells["VendorNo"].Value.ToSt();
-                    var m = db.mh_CustomerContacts.Where(w => w.CustomerNo == cstmNo && w.Active).ToList();
-                    if(m.Count() > 0)
+                    var m = db.mh_CustomerContacts.Where(w => w.CustomerNo == cstmNo && w.Def && w.Active).ToList();
+                    if (m.Count() > 0)
                     {
                         var mm = m.First();
                         x.Cells["ContactName"].Value = mm.ContactName;
@@ -348,33 +345,16 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-
-                            if (!CodeDelete.Equals(""))
+                            var unit1 = db.mh_Customers.Where(x => x.No == CodeDelete).ToList();
+                            foreach (var d in unit1)
                             {
-                                if (!CodeTemp.Equals(""))
-                                {
-
-                                    //var unit1 = (from ix in db.tb_Vendors
-                                    //             where ix.VendorNo == CodeDelete
-                                    //             select ix).ToList();
-                                    //foreach (var d in unit1)
-                                    //{
-                                    //    db.tb_Vendors.DeleteOnSubmit(d);
-                                    //    dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.VendorName + "]", "");
-                                    //}
-                                    var unit1 = db.mh_Customers.Where(x => x.No == CodeDelete).ToList();
-                                    foreach (var d in unit1)
-                                    {
-                                        db.mh_Customers.DeleteOnSubmit(d);
-                                        dbClss.AddHistory(this.Name, "ลบผู้ซื้อ", "Delete Customer [" + d.Name + "]", "");
-                                    }
-                                    C += 1;
-
-
-
-                                    db.SubmitChanges();
-                                }
+                                d.Active = false;
+                                db.mh_Customers.DeleteOnSubmit(d);
+                                dbClss.AddHistory(this.Name, "Delete Customers", "Delete Customer [" + d.Name + "]", "");
                             }
+                            C += 1;
+
+                            db.SubmitChanges();
 
                         }
                     }
@@ -409,6 +389,9 @@ namespace StockControl
             //btnEdit.Enabled = false;
             //btnView.Enabled = true;
             //radGridView1.Rows.AddNew();
+            var c = new CustomerContacts("", TypeAction.Add);
+            c.ShowDialog();
+            DataLoad();
         }
         private void EditClick()
         {
@@ -416,6 +399,13 @@ namespace StockControl
             //btnEdit.Enabled = false;
             //btnView.Enabled = true;
             //radGridView1.AllowAddNewRow = false;
+            if (radGridView1.CurrentCell != null)
+            {
+                string cstm = radGridView1.CurrentCell.RowInfo.Cells["VendorNo"].Value.ToSt();
+                var c = new CustomerContacts(cstm, TypeAction.Edit);
+                c.ShowDialog();
+                DataLoad();
+            }
         }
         private void ViewClick()
         {
@@ -424,6 +414,13 @@ namespace StockControl
             //btnEdit.Enabled = true;
             //radGridView1.AllowAddNewRow = false;
             //DataLoad();
+            if (radGridView1.CurrentCell != null)
+            {
+                string cstm = radGridView1.CurrentCell.RowInfo.Cells["VendorNo"].Value.ToSt();
+                var c = new CustomerContacts(cstm, TypeAction.View);
+                c.ShowDialog();
+                DataLoad();
+            }
         }
         private void btnNew_Click(object sender, EventArgs e)
         {
@@ -729,11 +726,11 @@ namespace StockControl
             // {
 
             // }
-            if(e.Column.Name == "DefaultCrrncy")
+            if (e.Column.Name == "DefaultCrrncy")
             {
                 var ee = e.Value;
             }
-            else if(e.Column.Name == "VendorGroup")
+            else if (e.Column.Name == "VendorGroup")
             {
                 var ee = e.Value;
                 var eee = e.Value.ToInt();

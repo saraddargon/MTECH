@@ -12,14 +12,14 @@ using Telerik.WinControls;
 
 namespace StockControl
 {
-    public partial class CustomerContacts : Telerik.WinControls.UI.RadRibbonForm
+    public partial class VendorContacts : Telerik.WinControls.UI.RadRibbonForm
     {
         TypeAction tAction = TypeAction.Add;
-        public CustomerContacts()
+        public VendorContacts()
         {
             InitializeComponent();
         }
-        public CustomerContacts(string CustomerNo, TypeAction tAction)
+        public VendorContacts(string CustomerNo, TypeAction tAction)
         {
             InitializeComponent();
             txtNo.Text = CustomerNo;
@@ -109,7 +109,7 @@ namespace StockControl
                     var com1 = cbbCustomerGroup;
                     com1.DisplayMember = "Value";
                     com1.ValueMember = "id";
-                    com1.DataSource = db.mh_CustomerGroups.ToList();
+                    com1.DataSource = db.mh_VendorGroups.ToList();
 
                     var com2 = cbbVatGroup;
                     com2.DisplayMember = "Value";
@@ -132,13 +132,12 @@ namespace StockControl
                 if (txtNo.Text != "" && tAction != TypeAction.Add)
                 {
                     string cstmNo = txtNo.Text;
-                    var g = db.mh_Customers.Where(x => x.No == cstmNo).FirstOrDefault();
-                    txtBranchCOde.Text = g.BranchCode;
+                    var g = db.mh_Vendors.Where(x => x.No == cstmNo).FirstOrDefault();
+                    txtBranchCode.Text = g.BranchCode;
                     txtName.Text = g.Name;
                     txtAddress.Text = g.Address;
-                    txtShippingAddress.Text = g.ShippingAddress;
-                    txtCreditLimit.Value = g.CreditLimit;
-                    cbbCustomerGroup.SelectedValue = g.CustomerGroup;
+                    txtShippingAddress.Text = g.ReceivingAddress;
+                    cbbCustomerGroup.SelectedValue = g.VendorGroup;
                     txtShippingTime.Value = g.ShippingTime;
                     txtAttachFile.Value = g.AttachFile;
                     cbbVatGroup.SelectedValue = g.VatGroup;
@@ -146,7 +145,7 @@ namespace StockControl
                     cbVatRegis.Checked = g.VATRegistration;
                     cbPriceIncVat.Checked = g.PriceIncludeingVat;
                     cbActive.Checked = g.Active;
-                    var m = db.mh_CustomerContacts.Where(w => w.CustomerNo == cstmNo && w.Active).ToList();
+                    var m = db.mh_VendorContacts.Where(w => w.VendorNo == cstmNo && w.Active).ToList();
                     dgvData.AutoGenerateColumns = false;
                     dgvData.DataSource = null;
                     dgvData.DataSource = m;
@@ -163,27 +162,12 @@ namespace StockControl
 
             //    radGridView1.DataSource = dt;
         }
-        private bool CheckDuplicate(string code)
-        {
-            bool ck = false;
-
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                int i = (from ix in db.mh_GroupTypes where ix.GroupCode == code select ix).Count();
-                if (i > 0)
-                    ck = false;
-                else
-                    ck = true;
-            }
-            return ck;
-        }
 
         void setEdit(bool ss)
         {
-            txtBranchCOde.ReadOnly = !ss;
+            txtBranchCode.ReadOnly = !ss;
             txtName.ReadOnly = !ss;
             txtAddress.ReadOnly = !ss;
-            txtCreditLimit.ReadOnly = !ss;
             txtShippingTime.ReadOnly = !ss;
             txtAttachFile.ReadOnly = !ss;
             btnDel.Enabled = ss;
@@ -207,28 +191,27 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     string cstmno = txtNo.Text.Trim();
-                    var cstm = new mh_Customer();
+                    var cstm = new mh_Vendor();
                     if (tAction == TypeAction.Add)
-                        cstmno = dbClss.GetNo(24, 2);
+                        cstmno = dbClss.GetNo(1, 2);
                     else
-                        cstm = db.mh_Customers.Where(x => x.No == cstmno).FirstOrDefault();
+                        cstm = db.mh_Vendors.Where(x => x.No == cstmno).FirstOrDefault();
                     txtNo.Text = cstmno;
-                    cstm.BranchCode = txtBranchCOde.Text;
+                    cstm.BranchCode = txtBranchCode.Text;
                     cstm.No = cstmno;
                     cstm.Name = txtName.Text.Trim();
                     cstm.Address = txtAddress.Text.Trim();
-                    cstm.CreditLimit = txtCreditLimit.Value.ToDecimal();
                     cstm.ShippingTime = txtShippingTime.Value.ToInt();
                     cstm.AttachFile = txtAttachFile.Value.ToSt();
                     cstm.VATRegistration = cbVatRegis.Checked;
                     cstm.PriceIncludeingVat = cbPriceIncVat.Checked;
-                    cstm.ShippingAddress = txtShippingAddress.Text.Trim();
-                    cstm.CustomerGroup = cbbCustomerGroup.SelectedValue.ToInt();
+                    cstm.ReceivingAddress = txtShippingAddress.Text.Trim();
+                    cstm.VendorGroup = cbbCustomerGroup.SelectedValue.ToInt();
                     cstm.VatGroup = cbbVatGroup.SelectedValue.ToInt();
                     cstm.DefaultCurrency = cbbCurrency.SelectedValue.ToInt();
                     cstm.Active = cbActive.Checked;
                     if (tAction == TypeAction.Add)
-                        db.mh_Customers.InsertOnSubmit(cstm);
+                        db.mh_Vendors.InsertOnSubmit(cstm);
                     db.SubmitChanges();
 
                     foreach (var c in dgvData.Rows)
@@ -237,18 +220,18 @@ namespace StockControl
                             continue;
 
                         int id = c.Cells["id"].Value.ToInt();
-                        var con = db.mh_CustomerContacts.Where(x => x.id == id).FirstOrDefault();
+                        var con = db.mh_VendorContacts.Where(x => x.id == id).FirstOrDefault();
                         if (con == null)
-                            con = new mh_CustomerContact();
+                            con = new mh_VendorContact();
                         con.Def = c.Cells["Def"].Value.ToBool();
-                        con.CustomerNo = cstmno;
+                        con.VendorNo = cstmno;
                         con.ContactName = c.Cells["ContactName"].Value.ToSt();
                         con.Tel = c.Cells["Tel"].Value.ToSt();
                         con.Fax = c.Cells["Fax"].Value.ToSt();
                         con.Email = c.Cells["Email"].Value.ToSt();
                         con.Active = true;
                         if (id <= 0)
-                            db.mh_CustomerContacts.InsertOnSubmit(con);
+                            db.mh_VendorContacts.InsertOnSubmit(con);
                         db.SubmitChanges();
                     }
 
@@ -259,7 +242,7 @@ namespace StockControl
                     {
                         int id = dgvData.Rows[0].Cells["id"].Value.ToInt();
                         dgvData.Rows[0].Cells["Def"].Value = true;
-                        var m = db.mh_CustomerContacts.Where(x => x.id == id).FirstOrDefault();
+                        var m = db.mh_VendorContacts.Where(x => x.id == id).FirstOrDefault();
                         m.Def = true;
                         db.SubmitChanges();
                     }
@@ -270,7 +253,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("เพิ่มผู้ซื้อ", ex.Message, this.Name);
+                dbClss.AddError("Add Vendor Contact", ex.Message, this.Name);
             }
 
             //if (C > 0)
@@ -295,7 +278,7 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            var m = db.mh_CustomerContacts.Where(x => x.id == id).FirstOrDefault();
+                            var m = db.mh_VendorContacts.Where(x => x.id == id).FirstOrDefault();
                             if (m != null)
                             {
                                 m.Active = false;
@@ -310,7 +293,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("Delete Cusomter Contact", ex.Message, this.Name);
+                dbClss.AddError("Delete Vendor Contact", ex.Message, this.Name);
             }
 
             if (C > 0)
@@ -394,15 +377,15 @@ namespace StockControl
                 // int c = 0;
 
                 if (txtName.Text.Trim().Equals(""))
-                    err += "- Customer name is empty.\n";
-                if (txtBranchCOde.Text.Trim().Equals(""))
+                    err += "- Vendor name is empty.\n";
+                if (txtBranchCode.Text.Trim().Equals(""))
                     err += "- Branch code is empty.\n";
                 if (txtAddress.Text.Trim().Equals(""))
                     err += "- Address is empty.\n";
                 if (txtShippingAddress.Text.Trim().Equals(""))
-                    err += "- Shipping Address is empty.\n";
+                    err += "- Receive Address is empty.\n";
                 if (cbbCustomerGroup.SelectedValue.ToInt() == 0)
-                    err += "- Customer Group is empty.\n";
+                    err += "- Vendor Group is empty.\n";
                 if (cbbVatGroup.SelectedValue.ToInt() == 0)
                     err += "- Vat Group is empty.\n";
                 if (cbbCurrency.SelectedValue.ToInt() == 0)
