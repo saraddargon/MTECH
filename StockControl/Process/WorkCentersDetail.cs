@@ -39,53 +39,30 @@ namespace StockControl
 
         }
 
-        private void GETDTRow()
-        {
-            dt.Columns.Add("No", typeof(string));
-            dt.Columns.Add("Name", typeof(string));
-            dt.Columns.Add("Address", typeof(string));
-            dt.Columns.Add("VATRegistration", typeof(bool));
-            dt.Columns.Add("PhoneNo", typeof(string));
-            dt.Columns.Add("FaxNo", typeof(string));
-            dt.Columns.Add("Email", typeof(string));
-            dt.Columns.Add("ContactName", typeof(string));
-            dt.Columns.Add("VendorGroup", typeof(int));
-            dt.Columns.Add("VatGroup", typeof(int));
-            dt.Columns.Add("DefaultCurrency", typeof(int));
-            dt.Columns.Add("ShippingTime", typeof(int));
-            dt.Columns.Add("PriceIncludeingVat", typeof(bool));
-            dt.Columns.Add("ReceiveAddress", typeof(string));
-            dt.Columns.Add("AttachFile", typeof(string));
-
-        }
         private void Unit_Load(object sender, EventArgs e)
         {
             RMenu4.Click += RMenu4_Click;
             RMenu5.Click += RMenu5_Click;
             RMenu6.Click += RMenu6_Click;
-            dgvData.ReadOnly = true;
-            dgvData.AutoGenerateColumns = false;
-            GETDTRow();
+            LoadDefualt();
 
             if (tAction != TypeAction.Add)
             {
                 DataLoad();
             }
 
-            LoadDefualt();
-
-            if (tAction == TypeAction.Add)
-                NewClick();
-            else if (tAction == TypeAction.Edit)
+            if (tAction == TypeAction.Edit || tAction == TypeAction.Add)
                 EditClick();
             else if (tAction == TypeAction.View)
                 ViewClick();
+
         }
 
         private void RMenu6_Click(object sender, EventArgs e)
         {
             //Delete Process
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            DeleteRow();
         }
 
         private void RMenu5_Click(object sender, EventArgs e)
@@ -96,17 +73,14 @@ namespace StockControl
         private void RMenu4_Click(object sender, EventArgs e)
         {
             //Add Workcenter to process
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            btnNew_Click(null, null);
         }
-        
-
-        void setRowNo()
+        void DeleteRow()
         {
-            dgvData.Rows.ToList().ForEach(x =>
-            {
-                x.Cells["No"].Value = x.Index + 1;
-            });
+
         }
+
 
         private void LoadDefualt()
         {
@@ -119,11 +93,11 @@ namespace StockControl
                     cbbUOM.ValueMember = "id";
                     cbbUOM.DataSource = unit;
 
-                    var t = db.mh_WorkCenterTypes.ToList();
-                    var com = dgvData.Columns["WType"] as GridViewComboBoxColumn;
-                    com.DisplayMember = "WorkType";
-                    com.ValueMember = "id";
-                    com.DataSource = t;
+                    cbbCalendar.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    var cal = db.mh_Calendars.Where(x => x.Active).ToList();
+                    cbbCalendar.DisplayMember = "Description";
+                    cbbCalendar.ValueMember = "id";
+                    cbbCalendar.DataSource = cal;
                 }
             }
             catch (Exception ex)
@@ -138,15 +112,14 @@ namespace StockControl
             {
                 var w = db.mh_WorkCenters.Where(x => x.id == WorkId).First();
                 txtWorkId.Text = WorkId.ToSt();
+                txtWorkNo.Text = w.WorkCenterNo;
                 txtWorkName.Text = w.WorkCenterName.ToSt();
-
-                var ws = db.mh_WorkCenterSubs.Where(x => x.idWorkCenter == WorkId && x.Active).ToList();
-                dgvData.AutoGenerateColumns = false;
-                dgvData.DataSource = null;
-                dgvData.DataSource = ws;
+                cbbUOM.SelectedValue = w.UOM;
+                txtCostPer.Value = w.CostPerUOM;
+                txtCapa.Value = w.Capacity;
+                cbbCalendar.SelectedValue = w.Calendar;
+                txtDescription.Text = w.Decription;
             }
-
-            setRowNo();
         }
 
         private bool AddUnit()
@@ -155,50 +128,50 @@ namespace StockControl
             int C = 0;
             try
             {
-                dgvData.EndEdit();
+
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    int UOM = cbbUOM.SelectedValue.ToInt();
                     int idWork = txtWorkId.Text.ToInt();
-                    foreach (var item in dgvData.Rows)
+                    string workNo = txtWorkNo.Text;
+                    string workName = txtWorkName.Text.Trim();
+                    int UOM = cbbUOM.SelectedValue.ToInt();
+                    decimal costPer = txtCostPer.Value.ToDecimal();
+                    decimal capa = txtCapa.Value.ToDecimal();
+                    int cal = cbbCalendar.SelectedValue.ToInt();
+                    string desc = txtDescription.Text;
+
+                    var w = db.mh_WorkCenters.Where(x => x.id == idWork).FirstOrDefault();
+                    if(w == null)
                     {
-                        if (item.Cells["dgvC"].Value.ToSt() == "") continue;
-
-                        int id = item.Cells["id"].Value.ToInt();
-                        string SubWorkNo = item.Cells["SubWorkNo"].Value.ToSt();
-                        if (SubWorkNo == "")
-                            SubWorkNo = dbClss.GetNo(27, 2);
-                        string SubWorkName = item.Cells["SubWorkName"].Value.ToSt();
-                        decimal CostPerUOM = item.Cells["CostPerUOM"].Value.ToDecimal();
-                        decimal Capacity = item.Cells["Capacity"].Value.ToDecimal();
-                        int WType = item.Cells["WType"].Value.ToInt();
-                        bool active = true;
-
-                        var ws = db.mh_WorkCenterSubs.Where(x => x.id == id).FirstOrDefault();
-                        if (ws == null)
-                            ws = new mh_WorkCenterSub();
-                        ws.idWorkCenter = idWork;
-                        ws.SubWorkName = SubWorkName;
-                        ws.SubWorkNo = SubWorkNo;
-                        ws.UOM = UOM;
-                        ws.WType = WType;
-                        ws.Active = active;
-
-                        if (id == 0)
-                            db.mh_WorkCenterSubs.InsertOnSubmit(ws);
-                        db.SubmitChanges();
-                        C++;
+                        w = new mh_WorkCenter();
+                        workNo = dbClss.GetNo(25, 2);
                     }
+                    w.WorkCenterNo = workNo;
+                    w.WorkCenterName = workName;
+                    w.UOM = UOM;
+                    w.CostPerUOM = costPer;
+                    w.Capacity = capa;
+                    w.Calendar = cal;
+                    w.Decription = desc;
+
+                    db.SubmitChanges();
+
+                    WorkId = w.id;
+                    C++;
+                    
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("Add Sub-Work center", ex.Message, this.Name);
+                dbClss.AddError("Add Work center", ex.Message, this.Name);
             }
 
             if (C > 0)
+            {
                 MessageBox.Show("Save complete.!");
+                DataLoad();
+            }
 
             return ck;
         }
@@ -209,35 +182,19 @@ namespace StockControl
             int C = 0;
             try
             {
-
-                if (row >= 0)
+                int idw = txtWorkId.Text.ToInt();
+                if (idw <= 0) return false;
+                if (MessageBox.Show("Do you want to Delete Work Center ?", "Delete Sub-Work", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    string CodeTemp = Convert.ToString(dgvData.Rows[row].Cells["dgvCodeTemp"].Value);
-                    dgvData.EndEdit();
-                    if (MessageBox.Show("Do you want to Delete Routing ?", "Delete Routing", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        using (DataClasses1DataContext db = new DataClasses1DataContext())
+                    using (DataClasses1DataContext db = new DataClasses1DataContext())
+                    {                        
+                        var t = db.mh_WorkCenters.Where(x => x.id == idw).ToList();
+                        foreach(var tt in t)
                         {
-                            if (!CodeTemp.Equals(""))
-                            {
-                                var t = db.mh_Routings.Where(x => x.id == CodeTemp.ToInt()).ToList();
-                                foreach (var d in t)
-                                {
-                                    //db.mh_Routings.DeleteOnSubmit(d);
-                                    d.Active = false;
-                                    dbClss.AddHistory(this.Name, "Delete Routing", $"Delete Routing [{d.RoutingNo}]", "");
-                                }
-                                C += 1;
-
-                                db.SubmitChanges();
-                                dgvData.Rows.Remove(dgvData.Rows[row]);
-                            }
-                            else
-                            {
-                                dgvData.Rows.Remove(dgvData.Rows[row]);
-                            }
-
+                            tt.Active = false;
+                            C++;
                         }
+                        db.SubmitChanges();
                     }
                 }
             }
@@ -245,13 +202,14 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("Delete Routing", ex.Message, this.Name);
+                dbClss.AddError("Delete Work", ex.Message, this.Name);
             }
 
             if (C > 0)
             {
                 row = row - 1;
                 MessageBox.Show("Delete complete.!");
+                DataLoad();
             }
 
 
@@ -266,35 +224,32 @@ namespace StockControl
         }
         private void NewClick()
         {
-            dgvData.ReadOnly = false;
-            dgvData.AllowAddNewRow = false;
-            btnEdit.Enabled = false;
-            btnView.Enabled = true;
-            var rowe = dgvData.Rows.AddNew();
-            rowe.Cells["No"].Value = rowe.Index + 1;
+            //btnEdit.Enabled = true;
+            //btnView.Enabled = true;
         }
         private void EditClick()
         {
-            dgvData.ReadOnly = false;
             btnEdit.Enabled = false;
             btnView.Enabled = true;
-            dgvData.AllowAddNewRow = false;
 
             txtWorkName.ReadOnly = false;
             cbbUOM.ReadOnly = false;
+            txtCostPer.ReadOnly = false;
+            txtCapa.ReadOnly = false;
+            cbbCalendar.ReadOnly = false;
+            txtDescription.ReadOnly = false;
         }
         private void ViewClick()
         {
-            dgvData.ReadOnly = true;
-            btnView.Enabled = false;
             btnEdit.Enabled = true;
-            dgvData.AllowAddNewRow = false;
+            btnView.Enabled = false;
 
             txtWorkName.ReadOnly = true;
             cbbUOM.ReadOnly = true;
-            cbbUOM.SelectedIndex = -1;
-
-            DataLoad();
+            txtCostPer.ReadOnly = true;
+            txtCapa.ReadOnly = true;
+            cbbCalendar.ReadOnly = true;
+            txtDescription.ReadOnly = true;
         }
         private void btnNew_Click(object sender, EventArgs e)
         {
@@ -316,23 +271,14 @@ namespace StockControl
             string err = "";
             try
             {
-
-                dgvData.EndEdit();
-                foreach (var e in dgvData.Rows)
-                {
-                    if (e.Cells["SubWorkNo"].Value.ToSt().Trim() == "")
-                        err += "- Sub-Work Name is empty.\n";
-                    if (e.Cells["WType"].Value.ToInt() == 0)
-                        err += "- Work Type is empty.\n";
-                    if (e.Cells["Capacity"].Value.ToDecimal() <= 0)
-                        err += "- Capacity is empty.\n";
-
-                    if (err != "")
-                        break;
-                }
-
+                if (txtWorkName.Text.Trim() == "")
+                    err += "- Work Name is empty.\n";
                 if (cbbUOM.SelectedValue.ToInt() <= 0)
                     err += "- Unit of Measure is empty.\n";
+                if (txtCapa.Value.ToDecimal() <= 0)
+                    err += "- Capacity is empty.\n";
+                if (cbbCalendar.SelectedValue.ToInt() == 0)
+                    err += "- Calendar is empty.\n";
 
                 if (!err.Equals(""))
                     MessageBox.Show(err);
@@ -352,35 +298,11 @@ namespace StockControl
             if (Check_Save())
                 return;
 
-            if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Do you want to Save ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 AddUnit();
                 DataLoad();
             }
-        }
-
-        private void radGridView1_CellEndEdit(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
-        {
-            try
-            {
-                dgvData.Rows[e.RowIndex].Cells["dgvC"].Value = "T";
-                //string check1 = Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["VendorName"].Value);
-                //string TM= Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["dgvCodeTemp2"].Value);
-                //if (!check1.Trim().Equals("") && TM.Equals(""))
-                //{
-
-                //    if (!CheckDuplicate(check1.Trim()))
-                //    {
-                //        MessageBox.Show("ชื้อผู้ขายซ้ำ ซ้ำ");
-                //        radGridView1.Rows[e.RowIndex].Cells["GroupCode"].Value = "";
-                //        radGridView1.Rows[e.RowIndex].Cells["GroupCode"].IsSelected = true;
-
-                //    }
-                //}
-
-
-            }
-            catch (Exception ex) { }
         }
 
 
@@ -388,34 +310,15 @@ namespace StockControl
         {
 
             DeleteUnit();
-            setRowNo();
             //DataLoad();
 
         }
 
         int row = -1;
-        private void radGridView1_CellClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
-        {
-            row = e.RowIndex;
-            if (e.RowIndex >= 0)
-            {
-                if (dgvData.Rows[e.RowIndex].Cells["dgvCodeTemp"].Value.ToInt() > 0)
-                {
-                    btnHolidays.Enabled = true;
-                    btnWorkingDays.Enabled = true;
-                }
-                else
-                {
-                    btnHolidays.Enabled = false;
-                    btnWorkingDays.Enabled = false;
-                }
-            }
-        }
 
         private void btnExport_Click(object sender, EventArgs e)
         {
             //dbClss.ExportGridCSV(radGridView1);
-            dbClss.ExportGridXlSX(dgvData);
         }
 
         private void btnImport_Click(object sender, EventArgs e)
@@ -556,58 +459,16 @@ namespace StockControl
 
         private void btnFilter1_Click(object sender, EventArgs e)
         {
-            dgvData.EnableFiltering = true;
         }
 
         private void btnUnfilter1_Click(object sender, EventArgs e)
         {
-            dgvData.EnableFiltering = false;
         }
 
         private void radMenuItem1_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
-
-        private void radButtonElement1_Click(object sender, EventArgs e)
-        {
-            if (dgvData.CurrentCell != null)
-            {
-                throw new NotImplementedException();
-
-                this.Cursor = Cursors.WaitCursor;
-
-                var ct = new WorkingDay(dgvData.Rows[row].Cells["Code"].Value.ToInt());
-                this.Cursor = Cursors.Default;
-                ct.ShowDialog();
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
-                ClassLib.Memory.Heap();
-            }
-        }
-
-        private void btnHolidays_Click(object sender, EventArgs e)
-        {
-
-            if (row >= 0)
-            {
-                this.Cursor = Cursors.WaitCursor;
-                //Contact ct = new Contact(Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value),
-                //    Convert.ToString(radGridView1.Rows[row].Cells["VendorName"].Value));
-                var ct = new Holiday(dgvData.Rows[row].Cells["Code"].Value.ToInt());
-                this.Cursor = Cursors.Default;
-                ct.ShowDialog();
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
-                ClassLib.Memory.Heap();
-            }
-        }
-
 
 
     }

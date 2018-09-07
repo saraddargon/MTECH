@@ -168,6 +168,12 @@
     <Compile Include="Process\WorkCentersDetail.Designer.cs">
       <DependentUpon>WorkCentersDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\WorkCentersSub.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\WorkCentersSub.Designer.cs">
+      <DependentUpon>WorkCentersSub.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\VendorContacts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -915,6 +921,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\WorkCentersDetail.resx">
       <DependentUpon>WorkCentersDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\WorkCentersSub.resx">
+      <DependentUpon>WorkCentersSub.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\VendorContacts.resx">
       <DependentUpon>VendorContacts.cs</DependentUpon>
