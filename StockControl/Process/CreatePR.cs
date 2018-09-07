@@ -283,7 +283,7 @@ namespace StockControl
                                     x.Cells["dgvCodeNo"].ReadOnly = true;
                                     x.Cells["dgvItemDesc"].ReadOnly = true;
                                     x.Cells["dgvItemName"].ReadOnly = true;
-
+                                    x.Cells["dgvPCSUOM"].ReadOnly = true;
                                     x.Cells["dgvUOM"].ReadOnly = true;
                                     x.Cells["dgvVendorNo"].ReadOnly = true;
                                     x.Cells["dgvCost"].ReadOnly = true;
@@ -303,9 +303,9 @@ namespace StockControl
                                     {
                                         x.Cells["dgvCodeNo"].ReadOnly = true;
                                         x.Cells["dgvItemDesc"].ReadOnly = true;
-                                        x.Cells["dgvUOM"].ReadOnly = true;
+                                        //x.Cells["dgvUOM"].ReadOnly = true;
                                         x.Cells["dgvItemName"].ReadOnly = true;
-                                        x.Cells["dgvCost"].ReadOnly = true;
+                                        //x.Cells["dgvCost"].ReadOnly = true;
                                         x.Cells["dgvGroupCode"].ReadOnly = true;
                                         x.Cells["dgvVATType"].ReadOnly = true;
                                         //x.Cells["dgvRemark"].ReadOnly = true;
@@ -1267,33 +1267,34 @@ namespace StockControl
                         string dgvUOM = dbClss.TSt(e.Row.Cells["dgvUOM"].Value);
                         string CodeNo = dbClss.TSt(e.Row.Cells["dgvCodeNo"].Value);
                         //decimal PCSUOM = dbClss.Con_UOM(CodeNo, dgvUOM);
-                        
-                        using (DataClasses1DataContext db = new DataClasses1DataContext())
-                        {
-                            var g = (from ix in db.mh_Items select ix)
-                                .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
-                            if (g.Count > 0)
-                            {
-                                if (dgvUOM == dbClss.TSt(g.FirstOrDefault().PurchaseUOM))
-                                {
-                                    e.Row.Cells["dgvPCSUOM"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
-                                    //e.Row.Cells["dgvPCSUOM"].ReadOnly = true;
-                                }
-                                else
-                                {
-                                    e.Row.Cells["dgvPCSUOM"].ReadOnly = false;
-                                    e.Row.Cells["dgvPCSUOM"].Value = 0;
-                                }
-                            }
-                            else
-                            {
-                                e.Row.Cells["dgvPCSUOM"].ReadOnly = false;
-                                e.Row.Cells["dgvPCSUOM"].Value = 0;
-                            }
-                        }
-                       
+                        e.Row.Cells["dgvPCSUOM"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        e.Row.Cells["dgvPCSUOM"].ReadOnly = false;
+                        //using (DataClasses1DataContext db = new DataClasses1DataContext())
+                        //{
+                        //    var g = (from ix in db.mh_Items select ix)
+                        //        .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
+                        //    if (g.Count > 0)
+                        //    {
+                        //        if (dgvUOM == dbClss.TSt(g.FirstOrDefault().PurchaseUOM))
+                        //        {
+                        //            e.Row.Cells["dgvPCSUOM"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        //            //e.Row.Cells["dgvPCSUOM"].ReadOnly = true;
+                        //        }
+                        //        //else
+                        //        //{
+                        //        //    e.Row.Cells["dgvPCSUOM"].ReadOnly = false;
+                        //        //    e.Row.Cells["dgvPCSUOM"].Value = 0;
+                        //        //}
+                        //    }
+                        //    else
+                        //    {
+                        //        e.Row.Cells["dgvPCSUOM"].ReadOnly = false;
+                        //        e.Row.Cells["dgvPCSUOM"].Value = 0;
+                        //    }
+                        //}
 
-                        
+
+
                     }
                     //else if (dgvData.Columns["dgvGroupCode"].Index == e.ColumnIndex)
                     //{

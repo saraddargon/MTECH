@@ -97,8 +97,8 @@ namespace StockControl
                     //ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
                     //ddlLocation.Text = "";
                     ddlLocation.DataSource = null;
-                    ddlLocation.DisplayMember = "Location";
-                    ddlLocation.ValueMember = "Location";
+                    ddlLocation.DisplayMember = "Code";
+                    ddlLocation.ValueMember = "Code";
                     // ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
                     var g = (from ix in db.mh_Locations select ix).Where(s => s.Active == true && s.Active == true).ToList();
 

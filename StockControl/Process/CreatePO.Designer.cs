@@ -923,6 +923,7 @@
             // 
             // btnCal
             // 
+            this.btnCal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCal.Image = ((System.Drawing.Image)(resources.GetObject("btnCal.Image")));
             this.btnCal.Location = new System.Drawing.Point(714, 28);
@@ -937,6 +938,7 @@
             // 
             // cbvat
             // 
+            this.cbvat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbvat.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbvat.Location = new System.Drawing.Point(706, 72);
             this.cbvat.Name = "cbvat";
@@ -948,6 +950,7 @@
             // 
             // cbUsefixunit
             // 
+            this.cbUsefixunit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbUsefixunit.Location = new System.Drawing.Point(533, 25);
             this.cbUsefixunit.Name = "cbUsefixunit";
             this.cbUsefixunit.Size = new System.Drawing.Size(76, 18);
@@ -958,6 +961,7 @@
             // 
             // cbvatDetail
             // 
+            this.cbvatDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbvatDetail.Location = new System.Drawing.Point(533, 75);
             this.cbvatDetail.Name = "cbvatDetail";
             this.cbvatDetail.Size = new System.Drawing.Size(15, 15);
@@ -985,6 +989,7 @@
             // 
             // radLabel18
             // 
+            this.radLabel18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radLabel18.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel18.Location = new System.Drawing.Point(769, 30);
             this.radLabel18.Name = "radLabel18";
@@ -995,6 +1000,7 @@
             // 
             // radLabel19
             // 
+            this.radLabel19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radLabel19.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel19.Location = new System.Drawing.Point(714, 53);
             this.radLabel19.Name = "radLabel19";
@@ -1005,6 +1011,7 @@
             // 
             // radLabel21
             // 
+            this.radLabel21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radLabel21.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel21.Location = new System.Drawing.Point(756, 97);
             this.radLabel21.Name = "radLabel21";
@@ -1015,6 +1022,7 @@
             // 
             // radLabel17
             // 
+            this.radLabel17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radLabel17.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel17.Location = new System.Drawing.Point(769, 8);
             this.radLabel17.Name = "radLabel17";
@@ -1025,6 +1033,7 @@
             // 
             // txtVattax
             // 
+            this.txtVattax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtVattax.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtVattax.Location = new System.Drawing.Point(769, 74);
             this.txtVattax.Name = "txtVattax";
@@ -1038,6 +1047,7 @@
             // 
             // radLabel16
             // 
+            this.radLabel16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radLabel16.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel16.Location = new System.Drawing.Point(554, 73);
             this.radLabel16.Name = "radLabel16";
@@ -1048,6 +1058,7 @@
             // 
             // txtPlusExcededTax
             // 
+            this.txtPlusExcededTax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPlusExcededTax.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPlusExcededTax.Location = new System.Drawing.Point(584, 96);
             this.txtPlusExcededTax.Name = "txtPlusExcededTax";
@@ -1061,6 +1072,7 @@
             // 
             // txtTotalsumDiscount
             // 
+            this.txtTotalsumDiscount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTotalsumDiscount.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTotalsumDiscount.Location = new System.Drawing.Point(664, 96);
             this.txtTotalsumDiscount.Name = "txtTotalsumDiscount";
@@ -1074,6 +1086,7 @@
             // 
             // txtVat
             // 
+            this.txtVat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtVat.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtVat.Location = new System.Drawing.Point(812, 74);
             this.txtVat.Name = "txtVat";
@@ -1086,6 +1099,7 @@
             // 
             // txtLessPoDiscountAmountPersen
             // 
+            this.txtLessPoDiscountAmountPersen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtLessPoDiscountAmountPersen.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLessPoDiscountAmountPersen.Location = new System.Drawing.Point(814, 30);
             this.txtLessPoDiscountAmountPersen.Name = "txtLessPoDiscountAmountPersen";
@@ -1099,6 +1113,7 @@
             // 
             // txtLessPoDiscountAmount
             // 
+            this.txtLessPoDiscountAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtLessPoDiscountAmount.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLessPoDiscountAmount.Location = new System.Drawing.Point(868, 30);
             this.txtLessPoDiscountAmount.Name = "txtLessPoDiscountAmount";
@@ -1113,6 +1128,7 @@
             // 
             // txtAfterDiscount
             // 
+            this.txtAfterDiscount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAfterDiscount.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAfterDiscount.Location = new System.Drawing.Point(812, 52);
             this.txtAfterDiscount.Name = "txtAfterDiscount";
@@ -1125,6 +1141,7 @@
             // 
             // lbTotalOrder
             // 
+            this.lbTotalOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbTotalOrder.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbTotalOrder.Location = new System.Drawing.Point(812, 96);
             this.lbTotalOrder.Name = "lbTotalOrder";
@@ -1138,6 +1155,7 @@
             // lbOrderSubtotal
             // 
             this.lbOrderSubtotal.AcceptsReturn = true;
+            this.lbOrderSubtotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbOrderSubtotal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbOrderSubtotal.Location = new System.Drawing.Point(812, 8);
             this.lbOrderSubtotal.Name = "lbOrderSubtotal";

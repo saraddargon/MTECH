@@ -157,7 +157,7 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(1008, 161);
+            this.radRibbonBar1.Size = new System.Drawing.Size(1008, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
@@ -181,6 +181,7 @@
             this.radRibbonBarGroup8});
             this.ribbonTab1.Name = "ribbonTab1";
             this.ribbonTab1.Text = "Action";
+            this.ribbonTab1.UseMnemonic = false;
             // 
             // radRibbonBarGroup1
             // 
@@ -382,12 +383,11 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 769);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 757);
             this.radStatusStrip1.Name = "radStatusStrip1";
             this.radStatusStrip1.Size = new System.Drawing.Size(1008, 26);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
-            this.radStatusStrip1.Text = "radStatusStrip1";
             // 
             // radLabelElement1
             // 
@@ -403,9 +403,9 @@
             this.panel1.Controls.Add(this.radPanel2);
             this.panel1.Controls.Add(this.radPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 161);
+            this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1008, 608);
+            this.panel1.Size = new System.Drawing.Size(1008, 597);
             this.panel1.TabIndex = 2;
             // 
             // dgvData
@@ -598,9 +598,8 @@
             this.dgvData.Name = "dgvData";
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(1008, 411);
+            this.dgvData.Size = new System.Drawing.Size(1008, 400);
             this.dgvData.TabIndex = 12;
-            this.dgvData.Text = "Grid";
             this.dgvData.ThemeName = "Office2010Blue";
             this.dgvData.CellEndEdit += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellEndEdit);
             this.dgvData.CellClick += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellClick);
@@ -617,14 +616,14 @@
             this.toolStripSeparator1,
             this.btnDel_Item});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(156, 98);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(151, 98);
             // 
             // btnAdd_Part
             // 
             this.btnAdd_Part.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAdd_Part.Enabled = false;
             this.btnAdd_Part.Name = "btnAdd_Part";
-            this.btnAdd_Part.Size = new System.Drawing.Size(155, 22);
+            this.btnAdd_Part.Size = new System.Drawing.Size(150, 22);
             this.btnAdd_Part.Text = "เพิ่ม พาร์ท";
             this.btnAdd_Part.Visible = false;
             this.btnAdd_Part.Click += new System.EventHandler(this.btnAdd_Part_Click);
@@ -634,7 +633,7 @@
             this.btnAdd_Item.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAdd_Item.Enabled = false;
             this.btnAdd_Item.Name = "btnAdd_Item";
-            this.btnAdd_Item.Size = new System.Drawing.Size(155, 22);
+            this.btnAdd_Item.Size = new System.Drawing.Size(150, 22);
             this.btnAdd_Item.Text = "เพิ่ม รายการ P/R";
             this.btnAdd_Item.Visible = false;
             this.btnAdd_Item.Click += new System.EventHandler(this.เพมพารทToolStripMenuItem_Click);
@@ -644,7 +643,7 @@
             this.btnAdd_Row.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAdd_Row.Enabled = false;
             this.btnAdd_Row.Name = "btnAdd_Row";
-            this.btnAdd_Row.Size = new System.Drawing.Size(155, 22);
+            this.btnAdd_Row.Size = new System.Drawing.Size(150, 22);
             this.btnAdd_Row.Text = "เพิ่ม รายการใหม่";
             this.btnAdd_Row.Visible = false;
             this.btnAdd_Row.Click += new System.EventHandler(this.btnAdd_Row_Click);
@@ -652,7 +651,7 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
             this.toolStripSeparator1.Visible = false;
             // 
             // btnDel_Item
@@ -660,7 +659,7 @@
             this.btnDel_Item.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnDel_Item.Enabled = false;
             this.btnDel_Item.Name = "btnDel_Item";
-            this.btnDel_Item.Size = new System.Drawing.Size(155, 22);
+            this.btnDel_Item.Size = new System.Drawing.Size(150, 22);
             this.btnDel_Item.Text = "ลบ ใบสั่งซื้อ";
             this.btnDel_Item.Click += new System.EventHandler(this.ลบพารทToolStripMenuItem_Click);
             // 
@@ -669,7 +668,7 @@
             this.radPanel2.Controls.Add(this.txtRemarkHD);
             this.radPanel2.Controls.Add(this.radLabel6);
             this.radPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.radPanel2.Location = new System.Drawing.Point(0, 526);
+            this.radPanel2.Location = new System.Drawing.Point(0, 515);
             this.radPanel2.Name = "radPanel2";
             this.radPanel2.Size = new System.Drawing.Size(1008, 82);
             this.radPanel2.TabIndex = 1;
@@ -734,7 +733,7 @@
             this.radLabel2.Size = new System.Drawing.Size(183, 17);
             this.radLabel2.TabIndex = 18;
             this.radLabel2.Text = "(Freigth + Charge + Dute + Other)";
-            this.radLabel2.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.radLabel2.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
             // 
             // radGroupBox1
             // 
@@ -879,7 +878,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 795);
+            this.ClientSize = new System.Drawing.Size(1008, 783);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);

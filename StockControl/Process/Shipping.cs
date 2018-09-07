@@ -1400,83 +1400,92 @@ namespace StockControl
         }
         private void Insert_data_New_Location()
         {
-            //if (ddlLocation.Text.Trim() == "")
-            //{
-            //    MessageBox.Show("เลือกสถานที่เก็บสินค้า !");
-            //    return;
-            //}
-            //if (!txtCodeNo.Text.Equals("") && !Duppicate(txtCodeNo.Text))
-            //{
-            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
-            //    {
-            //        //int No = 0;
-            //        //string CodeNo = "";
-            //        //string ItemNo = "";
-            //        //string ItemDescription = "";
-            //        //decimal QTY = 0;
-            //        //decimal RemainQty = 0;
-            //        //string UnitShip = "";
-            //        //decimal PCSUnit = 0;
-            //        //decimal StandardCost = 0;
-            //        //decimal Amount = 0;
-            //        ////string CRRNCY = "";
-            //        //string LotNo = "";
-            //        //string SerialNo = "";
-            //        //string Remark = "";
-            //        //string MachineName = "";
-            //        // string Status = "Waiting";
-            //        //int id = 0;
-            //        int dgvNo = 0;
-            //        var r = (from i in db.tb_Items
-            //                     join s in db.tb_Stocks on i.CodeNo equals s.CodeNo
-            //                 where i.Status == "Active" //&& d.verticalID == VerticalID
-            //                    && i.CodeNo == txtCodeNo.Text
-            //                    && s.TLQty >0
-            //                    && s.Location == ddlLocation.Text
-            //                 //&& h.VendorNo.Contains(VendorNo_ss)
-            //                 select new
-            //                 {
-            //                     CodeNo = i.CodeNo,
-            //                     ItemNo = i.ItemNo,
-            //                     ItemDescription = i.ItemDescription,
-            //                     RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(i.CodeNo, "Invoice", 0, ddlLocation.Text))),  //(Convert.ToDecimal(db.Cal_QTY(i.CodeNo, "", 0))),
-            //                     UnitShip = i.UnitShip,
-            //                     PCSUnit = i.PCSUnit,
-            //                     StandardCodt = i.StandardCost,//Convert.ToDecimal(dbClss.Get_Stock(i.CodeNo, "", "", "Avg")),//i.StandardCost
-            //                     Amount = 0,
-            //                     QTY = 0,
-            //                     LotNo = "",
-            //                     SerialNo = "",
-            //                     MachineName = "",
-            //                     LineName = "",
-            //                     Remark = "",
-            //                     id = 0,
-            //                     Location = s.Location
+            if (ddlLocation.Text.Trim() == "")
+            {
+                MessageBox.Show("เลือกสถานที่เก็บสินค้า !");
+                return;
+            }
+            if (!txtCodeNo.Text.Equals("") && !Duppicate(txtCodeNo.Text))
+            {
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    //int No = 0;
+                    //string CodeNo = "";
+                    //string ItemNo = "";
+                    //string ItemDescription = "";
+                    //decimal QTY = 0;
+                    //decimal RemainQty = 0;
+                    //string UnitShip = "";
+                    //decimal PCSUnit = 0;
+                    //decimal StandardCost = 0;
+                    //decimal Amount = 0;
+                    ////string CRRNCY = "";
+                    //string LotNo = "";
+                    //string SerialNo = "";
+                    //string Remark = "";
+                    //string MachineName = "";
+                    // string Status = "Waiting";
+                    //int id = 0;
+                    int dgvNo = 0;
+                    string Location = ddlLocation.Text;
+                    var r = (from i in db.mh_Items
+                             join s in db.tb_Stocks on i.InternalNo equals s.CodeNo
+                             where i.Active == true //&& d.verticalID == VerticalID
+                                && i.InternalNo.Trim().ToUpper() == txtCodeNo.Text.Trim().ToUpper()
+                                && s.TLQty > 0
+                             && s.Location == ddlLocation.Text
+                             //&& h.VendorNo.Contains(VendorNo_ss)
+                             select new
+                             {
+                                 CodeNo = i.InternalNo,
+                                 ItemNo = i.InternalName,
+                                 ItemDescription = i.InternalDescription,
+                                 RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(i.InternalNo, "Invoice", 0, Location))),  //(Convert.ToDecimal(db.Cal_QTY(i.CodeNo, "", 0))),
+                                 UnitShip = i.ConsumptionUOM,
+                                 PCSUnit = dbClss.Con_UOM(i.InternalNo, i.ConsumptionUOM),
+                                 BaseUOM = i.BaseUOM,
+                                 StandardCodt = 0,// i.StandardCost,//Convert.ToDecimal(dbClss.Get_Stock(i.CodeNo, "", "", "Avg")),//i.StandardCost
+                                 Amount = 0,
+                                 QTY = 0,
+                                 LotNo = "",
+                                 SerialNo = "",
+                                 MachineName = "",
+                                 LineName = "",
+                                 Remark = "",
+                                 id = 0,
+                                 Location = s.Location
+                                 ,
 
-            //                 }
-            //        ).ToList();
-            //        if (r.Count > 0)
-            //        {
-            //            dgvNo = dgvData.Rows.Count() + 1;
+                             }
+                    ).ToList();
+                    if (r.Count > 0)
+                    {
+                        dgvNo = dgvData.Rows.Count() + 1;
 
-            //            foreach (var vv in r)
-            //            {
-            //                //dgvData.Rows.Add(dgvNo.ToString(), vv.CodeNo, vv.ItemNo, vv.ItemDescription
-            //                //            , vv.RemainQty, vv.QTY, vv.UnitShip, vv.PCSUnit, vv.StandardCodt, vv.Amount,
-            //                //            vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, vv.id
-            //                //            );
+                        decimal PCSBaseUOM = 1;
+                        decimal AC_PCSUnit = 1;
+                        foreach (var vv in r)
+                        {
+                            //dgvData.Rows.Add(dgvNo.ToString(), vv.CodeNo, vv.ItemNo, vv.ItemDescription
+                            //            , vv.RemainQty, vv.QTY, vv.UnitShip, vv.PCSUnit, vv.StandardCodt, vv.Amount,
+                            //            vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, vv.id
+                            //            );
 
-            //                Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
-            //                            , vv.RemainQty, vv.QTY, vv.UnitShip, dbClss.TDe(vv.PCSUnit), dbClss.TDe(vv.StandardCodt)
-            //                            , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, vv.id
-            //                            , vv.Location);
+                            PCSBaseUOM = dbClss.Con_UOM(vv.CodeNo, vv.BaseUOM);
+                            if (PCSBaseUOM <= 0)
+                                PCSBaseUOM = 1;
+                            AC_PCSUnit = dbClss.TDe(vv.PCSUnit) * PCSBaseUOM;
+                            Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
+                                        , vv.RemainQty, vv.QTY, vv.UnitShip, dbClss.TDe(AC_PCSUnit), dbClss.TDe(vv.StandardCodt)
+                                        , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, vv.id
+                                        , vv.Location);
 
-            //            }
-            //        }
-            //        Cal_Amount();
+                        }
+                    }
+                    Cal_Amount();
 
-            //    }
-            //}
+                }
+            }
         }
         private void Add_Item(int Row, string CodeNo, string ItemNo
             , string ItemDescription,decimal RemainQty, decimal QTY,string UnitShip, decimal PCSUnit

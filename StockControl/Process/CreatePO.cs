@@ -1751,29 +1751,31 @@ namespace StockControl
                         string dgvUOM = dbClss.TSt(e.Row.Cells["dgvUnit"].Value);
                         string CodeNo = dbClss.TSt(e.Row.Cells["dgvCodeNo"].Value);
                         //decimal PCSUOM = dbClss.Con_UOM(CodeNo, dgvUOM);
-                        using (DataClasses1DataContext db = new DataClasses1DataContext())
-                        {
-                            var g = (from ix in db.mh_Items select ix)
-                                .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
-                            if (g.Count > 0)
-                            {
-                                if (dgvUOM == dbClss.TSt(g.FirstOrDefault().PurchaseUOM))
-                                {
-                                    e.Row.Cells["dgvPCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
-                                    //e.Row.Cells["dgvPCSUnit"].ReadOnly = true;
-                                }
-                                else
-                                {
-                                    e.Row.Cells["dgvPCSUnit"].ReadOnly = false;
-                                    e.Row.Cells["dgvPCSUnit"].Value = 0;
-                                }
-                            }
-                            else
-                            {
-                                e.Row.Cells["dgvPCSUnit"].ReadOnly = false;
-                                e.Row.Cells["dgvPCSUnit"].Value = 0;
-                            }
-                        }
+                        e.Row.Cells["dgvPCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        e.Row.Cells["dgvPCSUnit"].ReadOnly = false;
+                        //using (DataClasses1DataContext db = new DataClasses1DataContext())
+                        //{
+                        //    var g = (from ix in db.mh_Items select ix)
+                        //        .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
+                        //    if (g.Count > 0)
+                        //    {
+                        //        if (dgvUOM == dbClss.TSt(g.FirstOrDefault().PurchaseUOM))
+                        //        {
+                        //            e.Row.Cells["dgvPCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        //            //e.Row.Cells["dgvPCSUnit"].ReadOnly = true;
+                        //        }
+                        //        else
+                        //        {
+                        //            e.Row.Cells["dgvPCSUnit"].ReadOnly = false;
+                        //            e.Row.Cells["dgvPCSUnit"].Value = 0;
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //e.Row.Cells["dgvPCSUnit"].ReadOnly = false;
+                        //        e.Row.Cells["dgvPCSUnit"].Value = 0;
+                        //    }
+                        //}
                     }
                     else if (dgvData.Columns["dgvDiscount"].Index == e.ColumnIndex)
                     {

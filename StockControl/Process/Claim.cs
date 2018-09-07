@@ -676,7 +676,7 @@ namespace StockControl
                                                 dbClss.AddHistory(this.Name, "แก้ไขรายการClaim", "แก้ไขหมายเหตุ [" + rr.Remark + "]", txtClaimNo.Text);
                                             }
                                             //rr.Remark = StockControl.dbClss.TSt(g.Cells["Remark"].Value);
-                                            if (!StockControl.dbClss.TDe(g.Cells["QTY"].Value).Equals(row["Qty"].ToString()))
+                                            if (! Math.Round(( StockControl.dbClss.TDe(g.Cells["QTY"].Value)),2).ToString().Equals( Math.Round((dbClss.TDe(row["Qty"])),2).ToString()))
                                             {
                                                 rr.Qty = StockControl.dbClss.TDe(g.Cells["QTY"].Value);
                                                 dbClss.AddHistory(this.Name, "แก้ไขรายการClaim", "แก้ไขจำนวน[" + rr.Qty.ToString() + "]", txtClaimNo.Text);
@@ -1108,31 +1108,34 @@ namespace StockControl
                     {
                         string dgvUOM = dbClss.TSt(e.Row.Cells["Unit"].Value);
                         string CodeNo = dbClss.TSt(e.Row.Cells["CodeNo"].Value);
-                        //decimal PCSUOM = dbClss.Con_UOM(CodeNo, dgvUOM);
-
-                        using (DataClasses1DataContext db = new DataClasses1DataContext())
-                        {
-                            var g = (from ix in db.mh_Items select ix)
-                                .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
-                            if (g.Count > 0)
-                            {
-                                if (dgvUOM == dbClss.TSt(g.FirstOrDefault().BaseUOM))
-                                {
-                                    e.Row.Cells["PCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
-                                    //e.Row.Cells["dgvPCSUOM"].ReadOnly = true;
-                                }
-                                else
-                                {
-                                    e.Row.Cells["PCSUnit"].ReadOnly = false;
-                                    e.Row.Cells["PCSUnit"].Value = 1;
-                                }
-                            }
-                            else
-                            {
-                                e.Row.Cells["PCSUnit"].ReadOnly = false;
-                                e.Row.Cells["PCSUnit"].Value = 1;
-                            }
-                        }
+                        decimal PCSUOM = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        if (PCSUOM <= 0)
+                            PCSUOM = 1;
+                        e.Row.Cells["PCSUnit"].Value = PCSUOM;
+                        e.Row.Cells["PCSUnit"].ReadOnly = false;
+                        //using (DataClasses1DataContext db = new DataClasses1DataContext())
+                        //{
+                        //    var g = (from ix in db.mh_Items select ix)
+                        //        .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
+                        //    if (g.Count > 0)
+                        //    {
+                        //        if (dgvUOM == dbClss.TSt(g.FirstOrDefault().BaseUOM))
+                        //        {
+                        //            e.Row.Cells["PCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        //            //e.Row.Cells["dgvPCSUOM"].ReadOnly = true;
+                        //        }
+                        //        else
+                        //        {
+                        //            e.Row.Cells["PCSUnit"].ReadOnly = false;
+                        //            e.Row.Cells["PCSUnit"].Value = 1;
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //        e.Row.Cells["PCSUnit"].ReadOnly = false;
+                        //        e.Row.Cells["PCSUnit"].Value = 1;
+                        //    }
+                        //}
 
 
 
@@ -1648,7 +1651,7 @@ namespace StockControl
             {
 
                 this.Cursor = Cursors.WaitCursor;
-                ListPart sc = new ListPart(txtCodeNo, "SEMI-RM-Other", "Claim");
+                ListPart sc = new ListPart(txtCodeNo, "SEMI-RM", "Claim");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
