@@ -500,5 +500,11 @@
         <elementListCompartment Id="62ed9756-124c-45c5-9674-ff70dbac7724" absoluteBounds="7.1400000000000006, 14.96, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="ffc3c384-bbd3-4c15-a4ab-bb86110cc847" isExpanded="false" absoluteBounds="4.875, 15.5, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/mh_CustomerContact" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f9c98db6-352d-4fd7-b684-f877efd8879b" absoluteBounds="4.89, 15.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
