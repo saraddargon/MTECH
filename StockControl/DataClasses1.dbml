@@ -1082,22 +1082,6 @@
       <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_Routing" Member="mh_Routings">
-    <Type Name="mh_Routing">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="RoutingNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="RoutingName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="RoutingUOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="RoutingType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="SetupTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="RunTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="WaitTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="UnitCostPer" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="RNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.mh_Holiday" Member="mh_Holidays">
     <Type Name="mh_Holiday">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -1590,6 +1574,22 @@
       <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
       <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
       <Column Name="WType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_Routing" Member="mh_Routings">
+    <Type Name="mh_Routing">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoutingNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RoutingName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="RoutingUOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idWorkCenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="SetupTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="RunTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="WaitTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitCostPer" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="RNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
