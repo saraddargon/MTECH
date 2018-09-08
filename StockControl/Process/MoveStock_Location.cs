@@ -69,9 +69,9 @@ namespace StockControl
             ////DefaultItem();
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                cboLocation.DisplayMember = "Location";
-                cboLocation.ValueMember = "Location";
-                cboLocation.DataSource = db.tb_Locations.Where(s => s.Active == true).ToList();
+                cboLocation.DisplayMember = "Code";
+                cboLocation.ValueMember = "Code";
+                cboLocation.DataSource = db.mh_Locations.Where(s => s.Active == true).ToList();
             }
         }
         private void DefaultItem()
@@ -755,49 +755,49 @@ namespace StockControl
 
         private void Insert_Stock(int seq, int id, string RCNo,string CNNo)
         {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                var g = (from ix in db.tb_Receives
-                             //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
-                         where ix.RCNo.Trim() == RCNo.Trim() && ix.Status != "Cancel"
-                         && ix.ID == id
-                         select ix).First();
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    var g = (from ix in db.tb_Receives
+            //                 //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
+            //             where ix.RCNo.Trim() == RCNo.Trim() && ix.Status != "Cancel"
+            //             && ix.ID == id
+            //             select ix).First();
                 
-                //insert Stock
-                DateTime? CalDate = null;
-                DateTime? AppDate = DateTime.Now;
-                int Seq = seq;
+            //    //insert Stock
+            //    DateTime? CalDate = null;
+            //    DateTime? AppDate = DateTime.Now;
+            //    int Seq = seq;
 
-                //tb_Stock1 gg = new tb_Stock1();
-                //gg.AppDate = AppDate;
-                //gg.Seq = Seq;
-                //gg.App = "Cancel RC";
-                //gg.Appid = Seq;
-                //gg.CreateBy = ClassLib.Classlib.User;
-                //gg.CreateDate = DateTime.Now;
-                //gg.DocNo = CNNo;
-                //gg.RefNo = RCNo;
-                //gg.Type = "Inv/DL";
-                //gg.QTY = -Convert.ToDecimal(g.QTY);
-                //gg.Inbound = 0;
-                //gg.Outbound = -Convert.ToDecimal(g.QTY);
-                //gg.AmountCost = -Convert.ToDecimal(g.QTY) * Convert.ToDecimal(g.CostPerUnit);
-                //gg.UnitCost = Convert.ToDecimal(g.CostPerUnit);
-                //gg.RemainQty = 0;
-                //gg.RemainUnitCost = 0;
-                //gg.RemainAmount = 0;
-                //gg.CalDate = CalDate;
-                //gg.Status = "Active";
+            //    //tb_Stock1 gg = new tb_Stock1();
+            //    //gg.AppDate = AppDate;
+            //    //gg.Seq = Seq;
+            //    //gg.App = "Cancel RC";
+            //    //gg.Appid = Seq;
+            //    //gg.CreateBy = ClassLib.Classlib.User;
+            //    //gg.CreateDate = DateTime.Now;
+            //    //gg.DocNo = CNNo;
+            //    //gg.RefNo = RCNo;
+            //    //gg.Type = "Inv/DL";
+            //    //gg.QTY = -Convert.ToDecimal(g.QTY);
+            //    //gg.Inbound = 0;
+            //    //gg.Outbound = -Convert.ToDecimal(g.QTY);
+            //    //gg.AmountCost = -Convert.ToDecimal(g.QTY) * Convert.ToDecimal(g.CostPerUnit);
+            //    //gg.UnitCost = Convert.ToDecimal(g.CostPerUnit);
+            //    //gg.RemainQty = 0;
+            //    //gg.RemainUnitCost = 0;
+            //    //gg.RemainAmount = 0;
+            //    //gg.CalDate = CalDate;
+            //    //gg.Status = "Active";
 
-                //db.tb_Stock1s.InsertOnSubmit(gg);
-                //db.SubmitChanges();
+            //    //db.tb_Stock1s.InsertOnSubmit(gg);
+            //    //db.SubmitChanges();
 
-                //udpate Stock Item StockInv,StockDL
-                //dbClss.Insert_Stock(g.CodeNo, (-Convert.ToDecimal(g.QTY)), "CNRC", "Inv");
+            //    //udpate Stock Item StockInv,StockDL
+            //    //dbClss.Insert_Stock(g.CodeNo, (-Convert.ToDecimal(g.QTY)), "CNRC", "Inv");
 
-                //update stock StockBackOrder item
-                dbClss.Insert_StockTemp(g.CodeNo, Convert.ToDecimal(g.QTY), "CNRC_Temp", "Inv");
-            }
+            //    //update stock StockBackOrder item
+            //    dbClss.Insert_StockTemp(g.CodeNo, Convert.ToDecimal(g.QTY), "CNRC_Temp", "Inv");
+            //}
         }
         private bool Check_QTY()
         {

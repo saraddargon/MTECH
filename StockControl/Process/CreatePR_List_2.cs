@@ -338,35 +338,36 @@ namespace StockControl
             dt_Kanban.Columns.Add(new DataColumn("BarCode", typeof(Image)));
 
         }
-       
+
         private void btn_Print_Barcode_Click(object sender, EventArgs e)
         {
-            try
+            //try
+            //{
+            //    dt_Kanban.Rows.Clear();
+
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                dt_Kanban.Rows.Clear();
+                //        var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == txtVenderNo.Text).ToList();
+                //        if (g.Count() > 0)
+                //        {
+                //            foreach (var gg in g)
+                //            {
+                //                dt_Kanban.Rows.Add(gg.CodeNo, gg.ItemNo, gg.ItemDescription, gg.ShelfNo, gg.Leadtime, gg.VendorItemName, gg.GroupCode, gg.Toollife, gg.MaximumStock, gg.MinimumStock, gg.ReOrderPoint, gg.BarCode);
+                //            }
+                //            //DataTable DT =  StockControl.dbClss.LINQToDataTable(g);
+                //            //Reportx1 po = new Reportx1("Report_PurchaseRequest_Content1.rpt", DT, "FromDT");
+                //            //po.Show();
 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == txtVenderNo.Text).ToList();
-                    if (g.Count() > 0)
-                    {
-                        foreach (var gg in g)
-                        {
-                            dt_Kanban.Rows.Add(gg.CodeNo, gg.ItemNo, gg.ItemDescription, gg.ShelfNo, gg.Leadtime, gg.VendorItemName, gg.GroupCode, gg.Toollife, gg.MaximumStock, gg.MinimumStock, gg.ReOrderPoint, gg.BarCode);
-                        }
-                        //DataTable DT =  StockControl.dbClss.LINQToDataTable(g);
-                        //Reportx1 po = new Reportx1("Report_PurchaseRequest_Content1.rpt", DT, "FromDT");
-                        //po.Show();
+                //            Report.Reportx1 op = new Report.Reportx1("001_Kanban_Part.rpt", dt_Kanban, "FromDL");
+                //            op.Show();
+                //        }
+                //        else
+                //            MessageBox.Show("not found.");
+                //    }
 
-                        Report.Reportx1 op = new Report.Reportx1("001_Kanban_Part.rpt", dt_Kanban, "FromDL");
-                        op.Show();
-                    }
-                    else
-                        MessageBox.Show("not found.");
-                }
-
+                //}
+                //catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void btn_PrintPR_Click(object sender, EventArgs e)

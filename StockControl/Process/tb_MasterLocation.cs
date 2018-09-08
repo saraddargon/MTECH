@@ -139,24 +139,24 @@ namespace StockControl
         }
         private void DataLoad()
         {
-            //dt.Rows.Clear();
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
+            ////dt.Rows.Clear();
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
                
-                var g = (from ix in db.tb_Locations select ix).ToList();
-               // DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
-                dgvData.DataSource = g;
-                SetRowNo1(dgvData);
-                //int ck = 1;
-                //foreach (var x in dgvData.Rows)
-                //{
+            //    var g = (from ix in db.tb_Locations select ix).ToList();
+            //   // DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
+            //    dgvData.DataSource = g;
+            //    SetRowNo1(dgvData);
+            //    //int ck = 1;
+            //    //foreach (var x in dgvData.Rows)
+            //    //{
                     
-                //    x.Cells["dgvNo"].Value = ck;
+            //    //    x.Cells["dgvNo"].Value = ck;
                    
-                //    ck += 1;
-                //}
+            //    //    ck += 1;
+            //    //}
 
-            }
+            //}
             
         }
         private bool CheckDuplicate(string code)
@@ -176,163 +176,163 @@ namespace StockControl
         private bool Check_Save()
         {
             bool re = true;
-            string err = "";
-            try
-            {
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    if (dgvData.Rows.Count <= 0)
-                        err += "- “รายการ:” เป็นค่าว่าง \n";
-                    foreach (GridViewRowInfo rowInfo in dgvData.Rows)
-                    {
-                        if (rowInfo.IsVisible)
-                        {
-                            if (StockControl.dbClss.TSt(rowInfo.Cells["Location"].Value).Trim().Equals(""))
-                                err += "- “สังกัด/แผนก:” เป็นค่าว่าง \n";
+            //string err = "";
+            //try
+            //{
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        if (dgvData.Rows.Count <= 0)
+            //            err += "- “รายการ:” เป็นค่าว่าง \n";
+            //        foreach (GridViewRowInfo rowInfo in dgvData.Rows)
+            //        {
+            //            if (rowInfo.IsVisible)
+            //            {
+            //                if (StockControl.dbClss.TSt(rowInfo.Cells["Location"].Value).Trim().Equals(""))
+            //                    err += "- “สังกัด/แผนก:” เป็นค่าว่าง \n";
 
-                            if (Convert.ToInt16(rowInfo.Cells["id"].Value) <= 0)
-                            {
-                                var a = (from ix in db.tb_Locations
-                                         where ix.Location == Convert.ToString(rowInfo.Cells["Location"].Value).Trim().ToUpper()
-                                         select ix).ToList();
-                                if (a.Count() > 0)
-                                {
-                                    err += "- “สถานที่เก็บ : "+ Convert.ToString(rowInfo.Cells["Location"].Value)  +  " ซ้ำ ” เป็นค่าว่าง \n";
-                                }
-                            }
+            //                if (Convert.ToInt16(rowInfo.Cells["id"].Value) <= 0)
+            //                {
+            //                    var a = (from ix in db.tb_Locations
+            //                             where ix.Location == Convert.ToString(rowInfo.Cells["Location"].Value).Trim().ToUpper()
+            //                             select ix).ToList();
+            //                    if (a.Count() > 0)
+            //                    {
+            //                        err += "- “สถานที่เก็บ : "+ Convert.ToString(rowInfo.Cells["Location"].Value)  +  " ซ้ำ ” เป็นค่าว่าง \n";
+            //                    }
+            //                }
 
-                            if (err != "")
-                                break;
-                        }
+            //                if (err != "")
+            //                    break;
+            //            }
 
-                    }
-                }
+            //        }
+            //    }
 
-                if (!err.Equals(""))
-                    MessageBox.Show(err);
-                else
-                    re = false;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                dbClss.AddError(this.Name, ex.Message, this.Name);
-            }
+            //    if (!err.Equals(""))
+            //        MessageBox.Show(err);
+            //    else
+            //        re = false;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //    dbClss.AddError(this.Name, ex.Message, this.Name);
+            //}
 
             return re;
         }
         private void AddUnit()
         {
           
-            int C = 0;
+            //int C = 0;
 
-            if (Check_Save())
-                return;
-            try
-            {
+            //if (Check_Save())
+            //    return;
+            //try
+            //{
 
                 
 
-                dgvData.EndEdit();
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    foreach (var g in dgvData.Rows)
-                    {
-                        if (g.IsVisible.Equals(false))
-                        {
-                            var dd = (from ix in db.tb_Locations
-                                      where ix.id == Convert.ToInt16(g.Cells["id"].Value)
-                                      select ix).ToList();
-                            if (dd.Count > 0)
-                            {
+            //    dgvData.EndEdit();
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        foreach (var g in dgvData.Rows)
+            //        {
+            //            if (g.IsVisible.Equals(false))
+            //            {
+            //                var dd = (from ix in db.tb_Locations
+            //                          where ix.id == Convert.ToInt16(g.Cells["id"].Value)
+            //                          select ix).ToList();
+            //                if (dd.Count > 0)
+            //                {
 
-                                dbClss.AddHistory(this.Name, "ลบ", "ลบสถานที่เก็บ [" + dd.FirstOrDefault().Location + "]", "");
+            //                    dbClss.AddHistory(this.Name, "ลบ", "ลบสถานที่เก็บ [" + dd.FirstOrDefault().Location + "]", "");
 
-                                db.tb_Locations.DeleteAllOnSubmit(dd);
-                                db.SubmitChanges();
-                                C += 1;
-                            }
-                        }
-                    }
-                            foreach (var g in dgvData.Rows)
-                    {
-                        if(g.IsVisible)
-                        { 
-                            if (Convert.ToBoolean(g.Cells["dgvC"].Value))
-                            {
+            //                    db.tb_Locations.DeleteAllOnSubmit(dd);
+            //                    db.SubmitChanges();
+            //                    C += 1;
+            //                }
+            //            }
+            //        }
+            //                foreach (var g in dgvData.Rows)
+            //        {
+            //            if(g.IsVisible)
+            //            { 
+            //                if (Convert.ToBoolean(g.Cells["dgvC"].Value))
+            //                {
                                
-                                if (Convert.ToInt16(g.Cells["id"].Value)<=0)
-                                {
-                                    var a = (from ix in db.tb_Locations
-                                             where ix.Location.ToUpper() == Convert.ToString(g.Cells["Location"].Value).Trim().ToUpper()
-                                             select ix).ToList();
-                                    if (a.Count() <= 0)
-                                    {
-                                        tb_Location gy = new tb_Location();
-                                        gy.Location = Convert.ToString(g.Cells["Location"].Value).Trim();
-                                        gy.CreateDate = DateTime.Now;
-                                        gy.CreateBy = ClassLib.Classlib.User;
-                                        gy.Active = Convert.ToBoolean(g.Cells["Active"].Value);
-                                        gy.Status = "Completed";
+            //                    if (Convert.ToInt16(g.Cells["id"].Value)<=0)
+            //                    {
+            //                        var a = (from ix in db.tb_Locations
+            //                                 where ix.Location.ToUpper() == Convert.ToString(g.Cells["Location"].Value).Trim().ToUpper()
+            //                                 select ix).ToList();
+            //                        if (a.Count() <= 0)
+            //                        {
+            //                            tb_Location gy = new tb_Location();
+            //                            gy.Location = Convert.ToString(g.Cells["Location"].Value).Trim();
+            //                            gy.CreateDate = DateTime.Now;
+            //                            gy.CreateBy = ClassLib.Classlib.User;
+            //                            gy.Active = Convert.ToBoolean(g.Cells["Active"].Value);
+            //                            gy.Status = "Completed";
 
-                                        db.tb_Locations.InsertOnSubmit(gy);
-                                        db.SubmitChanges();
-                                        dbClss.AddHistory(this.Name, "เพิ่มสถานที่เก็บ", "เพิ่มสถานที่เก็บ [" + gy.Location + " Status : " + gy.Active.ToString() + "]", "");
-                                        C += 1;
-                                    }
-                                }
-                                else
-                                {
-                                    var a = (from ix in db.tb_Locations
-                                             where ix.id == Convert.ToInt16(g.Cells["id"].Value)
-                                                 select ix).ToList();
-                                    if (a.Count > 0)
-                                    {
-                                        var unit1 = (from ix in db.tb_Locations
-                                                     where ix.id == Convert.ToInt16(g.Cells["id"].Value)
-                                                     select ix).First();
-                                        unit1.Location = Convert.ToString(g.Cells["Location"].Value).Trim();
-                                        unit1.Active = Convert.ToBoolean(g.Cells["Active"].Value);
-                                        unit1.CreateDate = DateTime.Now;
-                                        unit1.CreateBy = ClassLib.Classlib.User;
+            //                            db.tb_Locations.InsertOnSubmit(gy);
+            //                            db.SubmitChanges();
+            //                            dbClss.AddHistory(this.Name, "เพิ่มสถานที่เก็บ", "เพิ่มสถานที่เก็บ [" + gy.Location + " Status : " + gy.Active.ToString() + "]", "");
+            //                            C += 1;
+            //                        }
+            //                    }
+            //                    else
+            //                    {
+            //                        var a = (from ix in db.tb_Locations
+            //                                 where ix.id == Convert.ToInt16(g.Cells["id"].Value)
+            //                                     select ix).ToList();
+            //                        if (a.Count > 0)
+            //                        {
+            //                            var unit1 = (from ix in db.tb_Locations
+            //                                         where ix.id == Convert.ToInt16(g.Cells["id"].Value)
+            //                                         select ix).First();
+            //                            unit1.Location = Convert.ToString(g.Cells["Location"].Value).Trim();
+            //                            unit1.Active = Convert.ToBoolean(g.Cells["Active"].Value);
+            //                            unit1.CreateDate = DateTime.Now;
+            //                            unit1.CreateBy = ClassLib.Classlib.User;
 
-                                        C += 1;
+            //                            C += 1;
 
-                                        db.SubmitChanges();
-                                        dbClss.AddHistory(this.Name, "แก้ไข", "แก้ไขสถานที่เก็บ [" + unit1.Location +" Status : "+ unit1.Active.ToString() + "]", "");
-                                    }
-                                }
-                            }
-                        }
-                        //else //Delete
-                        //{
+            //                            db.SubmitChanges();
+            //                            dbClss.AddHistory(this.Name, "แก้ไข", "แก้ไขสถานที่เก็บ [" + unit1.Location +" Status : "+ unit1.Active.ToString() + "]", "");
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //            //else //Delete
+            //            //{
 
-                        //    var dd = (from ix in db.tb_Departments
-                        //             where ix.id == Convert.ToInt16(g.Cells["id"].Value)
-                        //             select ix).ToList();
-                        //    if (dd.Count > 0)
-                        //    {
+            //            //    var dd = (from ix in db.tb_Departments
+            //            //             where ix.id == Convert.ToInt16(g.Cells["id"].Value)
+            //            //             select ix).ToList();
+            //            //    if (dd.Count > 0)
+            //            //    {
 
-                        //        dbClss.AddHistory(this.Name, "ลบ", "ลบแผนก [" + dd.FirstOrDefault().Department + "]", "");
+            //            //        dbClss.AddHistory(this.Name, "ลบ", "ลบแผนก [" + dd.FirstOrDefault().Department + "]", "");
 
-                        //        db.tb_Departments.DeleteAllOnSubmit(dd);
-                        //        db.SubmitChanges();
-                        //    }
-                        //}
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message);
-                dbClss.AddError(this.Name, ex.Message, this.Name);
-            }
+            //            //        db.tb_Departments.DeleteAllOnSubmit(dd);
+            //            //        db.SubmitChanges();
+            //            //    }
+            //            //}
+            //        }
+            //    }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message);
+            //    dbClss.AddError(this.Name, ex.Message, this.Name);
+            //}
 
-            if (C > 0)
-            {
-                MessageBox.Show("บันทึกสำเร็จ!");
+            //if (C > 0)
+            //{
+            //    MessageBox.Show("บันทึกสำเร็จ!");
 
-                DataLoad();
-                ViewClick();
-            }
+            //    DataLoad();
+            //    ViewClick();
+            //}
         }
         private bool DeleteUnit()
         {

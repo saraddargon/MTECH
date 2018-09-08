@@ -99,90 +99,90 @@ namespace StockControl
         }
         private void DataLoad()
         {
-            dgvData.Rows.Clear();
+            //dgvData.Rows.Clear();
             
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
-                    try
-                    {
-                        string Vendorno = "";
-                        //if (!cboVendor.Text.Equals(""))
-                        Vendorno = txtVendorNo.Text;
+            //try
+            //{
+            //    this.Cursor = Cursors.WaitCursor;
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
+            //        try
+            //        {
+            //            string Vendorno = "";
+            //            //if (!cboVendor.Text.Equals(""))
+            //            Vendorno = txtVendorNo.Text;
                         
 
-                        var gd = (from a in db.tb_Items
-                                  join b in db.tb_Vendors on a.VendorNo equals b.VendorNo
-                                  where a.Status == "Active" 
-                                  && a.StopOrder == false
-                                  && (a.VendorNo.Contains(Vendorno))
-                                  && (b.VendorName.Contains(cboVendor.Text))
-                                  && (a.TypePart.Contains(ddlTypePart.Text))
-                                  && ((a.StockInv + a.StockDL//+a.StockBackOrder
-                                        + Convert.ToDecimal(db.Cal_QTY(a.CodeNo.Trim(), "BackOrder", 0))
+            //            var gd = (from a in db.tb_Items
+            //                      join b in db.tb_Vendors on a.VendorNo equals b.VendorNo
+            //                      where a.Status == "Active" 
+            //                      && a.StopOrder == false
+            //                      && (a.VendorNo.Contains(Vendorno))
+            //                      && (b.VendorName.Contains(cboVendor.Text))
+            //                      && (a.TypePart.Contains(ddlTypePart.Text))
+            //                      && ((a.StockInv + a.StockDL//+a.StockBackOrder
+            //                            + Convert.ToDecimal(db.Cal_QTY(a.CodeNo.Trim(), "BackOrder", 0))
 
-                                    // (Convert.ToDecimal(db.Cal_QTY(a.CodeNo, "Invoice", 0)))
-                                    //+ (Convert.ToDecimal(db.Cal_QTY(a.CodeNo, "Temp", 0)))
-                                    //+ (Convert.ToDecimal(db.Cal_QTY(a.CodeNo, "BackOrder", 0)))
+            //                        // (Convert.ToDecimal(db.Cal_QTY(a.CodeNo, "Invoice", 0)))
+            //                        //+ (Convert.ToDecimal(db.Cal_QTY(a.CodeNo, "Temp", 0)))
+            //                        //+ (Convert.ToDecimal(db.Cal_QTY(a.CodeNo, "BackOrder", 0)))
 
-                                    ) <= Convert.ToDecimal(a.MinimumStock))
+            //                        ) <= Convert.ToDecimal(a.MinimumStock))
 
-                                  select new {
-                                      CodeNo = a.CodeNo,
-                                      ItemDescription = a.ItemDescription,
-                                      Order = Convert.ToDecimal(a.MaximumStock),
+            //                      select new {
+            //                          CodeNo = a.CodeNo,
+            //                          ItemDescription = a.ItemDescription,
+            //                          Order = Convert.ToDecimal(a.MaximumStock),
 
-                                      //StockQty = (Convert.ToDecimal(db.Cal_QTY(a.CodeNo, "Invoice", 0)))
-                                      //            + (Convert.ToDecimal(db.Cal_QTY(a.CodeNo, "Temp", 0))) ,
-                                      StockQty = Convert.ToDecimal(a.StockInv) + Convert.ToDecimal(a.StockDL), 
-                                      BackOrder = Convert.ToDecimal(db.Cal_QTY(a.CodeNo.Trim(), "BackOrder", 0)),
+            //                          //StockQty = (Convert.ToDecimal(db.Cal_QTY(a.CodeNo, "Invoice", 0)))
+            //                          //            + (Convert.ToDecimal(db.Cal_QTY(a.CodeNo, "Temp", 0))) ,
+            //                          StockQty = Convert.ToDecimal(a.StockInv) + Convert.ToDecimal(a.StockDL), 
+            //                          BackOrder = Convert.ToDecimal(db.Cal_QTY(a.CodeNo.Trim(), "BackOrder", 0)),
 
 
-                                      UnitBuy = a.UnitBuy,
-                                      PCSUnit = StockControl.dbClss.TSt(a.PCSUnit),
-                                      LeadTime = StockControl.dbClss.TSt(a.Leadtime),
-                                      MaxStock = StockControl.dbClss.TSt(a.MaximumStock),
-                                      MinStock = StockControl.dbClss.TSt(a.MinimumStock),
-                                      VendorNo = a.VendorNo,
-                                      VendorName = b.VendorName,
+            //                          UnitBuy = a.UnitBuy,
+            //                          PCSUnit = StockControl.dbClss.TSt(a.PCSUnit),
+            //                          LeadTime = StockControl.dbClss.TSt(a.Leadtime),
+            //                          MaxStock = StockControl.dbClss.TSt(a.MaximumStock),
+            //                          MinStock = StockControl.dbClss.TSt(a.MinimumStock),
+            //                          VendorNo = a.VendorNo,
+            //                          VendorName = b.VendorName,
                                       
-                                  })//.Where(ab => ab.VendorNo.Contains(Vendorno))
-                                  .ToList();
-                        //dgvData.DataSource = gd;
-                        if (gd.Count > 0)
-                        {
-                            foreach(var gg in gd)
-                            {
-                                dgvData.Rows.Add(false, "", gg.CodeNo,
-                                                gg.ItemDescription,
-                                                gg.Order,
-                                                gg.StockQty,
-                                                gg.BackOrder,
-                                                gg.UnitBuy,
-                                                gg.PCSUnit,
-                                                gg.LeadTime,
-                                                gg.MaxStock,
-                                                gg.MinStock,
-                                                gg.VendorNo,
-                                                gg.VendorName);
-                            }
-                        }
-                        int rowcount = 0;
-                        foreach (var x in dgvData.Rows)
-                        {
-                            rowcount += 1;
-                            x.Cells["dgvNo"].Value = rowcount;
-                        }
-                    }
-                    catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //                      })//.Where(ab => ab.VendorNo.Contains(Vendorno))
+            //                      .ToList();
+            //            //dgvData.DataSource = gd;
+            //            if (gd.Count > 0)
+            //            {
+            //                foreach(var gg in gd)
+            //                {
+            //                    dgvData.Rows.Add(false, "", gg.CodeNo,
+            //                                    gg.ItemDescription,
+            //                                    gg.Order,
+            //                                    gg.StockQty,
+            //                                    gg.BackOrder,
+            //                                    gg.UnitBuy,
+            //                                    gg.PCSUnit,
+            //                                    gg.LeadTime,
+            //                                    gg.MaxStock,
+            //                                    gg.MinStock,
+            //                                    gg.VendorNo,
+            //                                    gg.VendorName);
+            //                }
+            //            }
+            //            int rowcount = 0;
+            //            foreach (var x in dgvData.Rows)
+            //            {
+            //                rowcount += 1;
+            //                x.Cells["dgvNo"].Value = rowcount;
+            //            }
+            //        }
+            //        catch (Exception ex) { MessageBox.Show(ex.Message); }
 
-                }
-            }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
-            this.Cursor = Cursors.Default;
+            //    }
+            //}
+            //catch(Exception ex) { MessageBox.Show(ex.Message); }
+            //this.Cursor = Cursors.Default;
 
 
             //    radGridView1.DataSource = dt;

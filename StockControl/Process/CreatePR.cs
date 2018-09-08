@@ -78,7 +78,7 @@ namespace StockControl
             dt_PRD.Columns.Add(new DataColumn("TempNo", typeof(string)));
             dt_PRD.Columns.Add(new DataColumn("PRNo", typeof(string)));
             dt_PRD.Columns.Add(new DataColumn("CodeNo", typeof(string)));
-            //dt_PRD.Columns.Add(new DataColumn("ItemName", typeof(string)));
+            dt_PRD.Columns.Add(new DataColumn("ItemName", typeof(string)));
             dt_PRD.Columns.Add(new DataColumn("ItemDesc", typeof(string)));
             dt_PRD.Columns.Add(new DataColumn("GroupCode", typeof(string)));
             dt_PRD.Columns.Add(new DataColumn("OrderQty", typeof(decimal)));
@@ -282,6 +282,8 @@ namespace StockControl
                                 {
                                     x.Cells["dgvCodeNo"].ReadOnly = true;
                                     x.Cells["dgvItemDesc"].ReadOnly = true;
+                                    x.Cells["dgvItemName"].ReadOnly = true;
+                                    x.Cells["dgvPCSUOM"].ReadOnly = true;
                                     x.Cells["dgvUOM"].ReadOnly = true;
                                     x.Cells["dgvVendorNo"].ReadOnly = true;
                                     x.Cells["dgvCost"].ReadOnly = true;
@@ -301,9 +303,9 @@ namespace StockControl
                                     {
                                         x.Cells["dgvCodeNo"].ReadOnly = true;
                                         x.Cells["dgvItemDesc"].ReadOnly = true;
-                                        x.Cells["dgvUOM"].ReadOnly = true;
-                                        //x.Cells["dgvVendorNo"].ReadOnly = true;
-                                        x.Cells["dgvCost"].ReadOnly = true;
+                                        //x.Cells["dgvUOM"].ReadOnly = true;
+                                        x.Cells["dgvItemName"].ReadOnly = true;
+                                        //x.Cells["dgvCost"].ReadOnly = true;
                                         x.Cells["dgvGroupCode"].ReadOnly = true;
                                         x.Cells["dgvVATType"].ReadOnly = true;
                                         //x.Cells["dgvRemark"].ReadOnly = true;
@@ -314,7 +316,7 @@ namespace StockControl
                                         x.Cells["dgvCodeNo"].ReadOnly = false;
                                         x.Cells["dgvItemDesc"].ReadOnly = false;
                                         x.Cells["dgvUOM"].ReadOnly = false;
-                                        //x.Cells["dgvVendorNo"].ReadOnly = false;
+                                        x.Cells["dgvItemName"].ReadOnly = false;
                                         x.Cells["dgvCost"].ReadOnly = false;
                                         x.Cells["dgvGroupCode"].ReadOnly = false;
                                         x.Cells["dgvVATType"].ReadOnly = false;
@@ -567,6 +569,7 @@ namespace StockControl
                             u.PRNo = txtPRNo.Text;
                             u.TempNo = txtTempNo.Text;
                             u.CodeNo = StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value);
+                            u.ItemName = StockControl.dbClss.TSt(g.Cells["dgvItemName"].Value);
                             u.ItemDesc = StockControl.dbClss.TSt(g.Cells["dgvItemDesc"].Value);
                             u.GroupCode = StockControl.dbClss.TSt(g.Cells["dgvGroupCode"].Value);
                             u.OrderQty = StockControl.dbClss.TDe(g.Cells["dgvOrderQty"].Value);
@@ -637,7 +640,7 @@ namespace StockControl
                                                 dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขรหัสพาร์ท [" + u.CodeNo + "]", txtPRNo.Text);
                                             }
 
-                                           
+                                            u.ItemName = StockControl.dbClss.TSt(g.Cells["dgvItemName"].Value);
                                             u.ItemDesc = StockControl.dbClss.TSt(g.Cells["dgvItemDesc"].Value);
                                             if (!StockControl.dbClss.TSt(g.Cells["dgvVATType"].Value).Equals(row["VATType"].ToString()))
                                             {
@@ -999,6 +1002,8 @@ namespace StockControl
                     {
                         if (StockControl.dbClss.TSt(rowInfo.Cells["dgvCodeNo"].Value).Trim().Equals(""))
                             err += "- “รหัสทูล:” เป็นค่าว่าง \n";
+                        if (StockControl.dbClss.TSt(rowInfo.Cells["dgvItemName"].Value).Trim().Equals(""))
+                            err += "- “ชื่อทูล:” เป็นค่าว่าง \n";
                         if (StockControl.dbClss.TSt(rowInfo.Cells["dgvItemDesc"].Value).Trim().Equals(""))
                             err += "- “รายละเอียดทูล:” เป็นค่าว่าง \n";
                         if (StockControl.dbClss.TSt(rowInfo.Cells["dgvGroupCode"].Value).Trim().Equals(""))
@@ -1262,33 +1267,34 @@ namespace StockControl
                         string dgvUOM = dbClss.TSt(e.Row.Cells["dgvUOM"].Value);
                         string CodeNo = dbClss.TSt(e.Row.Cells["dgvCodeNo"].Value);
                         //decimal PCSUOM = dbClss.Con_UOM(CodeNo, dgvUOM);
-                        
-                        using (DataClasses1DataContext db = new DataClasses1DataContext())
-                        {
-                            var g = (from ix in db.mh_Items select ix)
-                                .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
-                            if (g.Count > 0)
-                            {
-                                if (dgvUOM == dbClss.TSt(g.FirstOrDefault().PurchaseUOM))
-                                {
-                                    e.Row.Cells["dgvPCSUOM"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
-                                    //e.Row.Cells["dgvPCSUOM"].ReadOnly = true;
-                                }
-                                else
-                                {
-                                    e.Row.Cells["dgvPCSUOM"].ReadOnly = false;
-                                    e.Row.Cells["dgvPCSUOM"].Value = 0;
-                                }
-                            }
-                            else
-                            {
-                                e.Row.Cells["dgvPCSUOM"].ReadOnly = false;
-                                e.Row.Cells["dgvPCSUOM"].Value = 0;
-                            }
-                        }
-                       
+                        e.Row.Cells["dgvPCSUOM"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        e.Row.Cells["dgvPCSUOM"].ReadOnly = false;
+                        //using (DataClasses1DataContext db = new DataClasses1DataContext())
+                        //{
+                        //    var g = (from ix in db.mh_Items select ix)
+                        //        .Where(a => a.InternalNo.ToUpper().Trim().Equals(CodeNo.ToUpper().Trim())).ToList();
+                        //    if (g.Count > 0)
+                        //    {
+                        //        if (dgvUOM == dbClss.TSt(g.FirstOrDefault().PurchaseUOM))
+                        //        {
+                        //            e.Row.Cells["dgvPCSUOM"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        //            //e.Row.Cells["dgvPCSUOM"].ReadOnly = true;
+                        //        }
+                        //        //else
+                        //        //{
+                        //        //    e.Row.Cells["dgvPCSUOM"].ReadOnly = false;
+                        //        //    e.Row.Cells["dgvPCSUOM"].Value = 0;
+                        //        //}
+                        //    }
+                        //    else
+                        //    {
+                        //        e.Row.Cells["dgvPCSUOM"].ReadOnly = false;
+                        //        e.Row.Cells["dgvPCSUOM"].Value = 0;
+                        //    }
+                        //}
 
-                        
+
+
                     }
                     //else if (dgvData.Columns["dgvGroupCode"].Index == e.ColumnIndex)
                     //{
@@ -1459,7 +1465,8 @@ namespace StockControl
                 {
 
                     //string CodeNo = StockControl.dbClss.TSt(g.FirstOrDefault().ItemNo);
-                    string ItemDesc = StockControl.dbClss.TSt(g.FirstOrDefault().InternalName);
+                    string ItemName = dbClss.TSt(g.FirstOrDefault().InternalName);
+                    string ItemDesc = StockControl.dbClss.TSt(g.FirstOrDefault().InternalDescription);
                     string UOM = StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM);
                     string GroupCode = StockControl.dbClss.TSt(g.FirstOrDefault().GroupType);
                     //decimal OrderQty = 0;
@@ -1474,7 +1481,7 @@ namespace StockControl
                     int id = 0;
                     string Status = "Adding";
                     string VatType = dbClss.TSt(g.FirstOrDefault().VatType);
-                    Add_Item(Row, CodeNo, ItemDesc, GroupCode
+                    Add_Item(Row, CodeNo, ItemName, ItemDesc, GroupCode
                       , OrderQty, UOM, PCSUOM, Cost, Amount, VendorNo, VendorName, Remark, VatType, id, Status, Sys);
                 }
             }
@@ -1774,6 +1781,7 @@ namespace StockControl
 
                 int Row = 0; Row = dgvData.Rows.Count() + 1;
                 string CodeNo = "";
+                string ItemName = "";
                 string ItemDesc = "";
                 string UOM = "PCS";
                 string GroupCode = "";
@@ -1787,7 +1795,7 @@ namespace StockControl
                 int id = 0;
                 string Status = "Adding";
                 string VatType = "";
-                Add_Item(Row, CodeNo, ItemDesc, GroupCode
+                Add_Item(Row, CodeNo, ItemName,ItemDesc, GroupCode
                     , OrderQty, UOM, PCSUOM, Cost, Amount, VendorNo, VendorName, Remark, VatType, id, Status,false);
 
 
@@ -1795,7 +1803,7 @@ namespace StockControl
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
-        private void Add_Item(int Row,string CodeNo,string ItemDesc
+        private void Add_Item(int Row,string CodeNo,string ItemName, string ItemDesc
             , string GroupCode, decimal OrderQty, string UOM, decimal PCSUOM,decimal Cost,decimal Amount
             ,string VendorNo, string VendorName,string Remark,string VatType, int id, string Status,bool Sys)
         {
@@ -1813,7 +1821,8 @@ namespace StockControl
 
                               
                 ee.Cells["dgvNo"].Value =Row.ToString();             
-                ee.Cells["dgvCodeNo"].Value = CodeNo;  
+                ee.Cells["dgvCodeNo"].Value = CodeNo;
+                ee.Cells["dgvItemName"].Value = ItemName;
                 ee.Cells["dgvItemDesc"].Value = ItemDesc;                          
                 ee.Cells["dgvGroupCode"].Value = GroupCode;
                 ee.Cells["dgvOrderQty"].Value = OrderQty;
@@ -1836,6 +1845,7 @@ namespace StockControl
                 if (Sys)
                 {
                     ee.Cells["dgvCodeNo"].ReadOnly = true;
+                    ee.Cells["dgvItemName"].ReadOnly = true;
                     //ee.Cells["dgvUOM"].ReadOnly = true;
                     ee.Cells["dgvItemDesc"].ReadOnly = true;
                     ee.Cells["dgvGroupCode"].ReadOnly = true;

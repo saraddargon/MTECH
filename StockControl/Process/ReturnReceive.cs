@@ -453,236 +453,237 @@ namespace StockControl
         }
         private void Save_Return2()
         {
-            //try
-            //{
+            try
+            {
 
-            //    if (txtInvoiceNo.Text.Equals(""))
-            //    {
-            //        MessageBox.Show("กรุณาเลือก Invoice No");
-            //        return;
-            //    }
-            //    this.Cursor = Cursors.WaitCursor;
-            //    if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            //    {
-            //        int seq = 0;
-            //        string CRNo = StockControl.dbClss.GetNo(8, 2);
-            //        using (DataClasses1DataContext db = new DataClasses1DataContext())
-            //        {
-            //            var g = (from ix in db.tb_ReceiveHs
-            //                     where ix.InvoiceNo.Trim() == txtInvoiceNo.Text.Trim() && ix.Status != "Cancel"
-            //                     //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
-            //                     select ix).ToList();
-            //            if (g.Count > 0)  //มีรายการในระบบ
-            //            {
-            //                //Herder 
-            //                string RCNo = StockControl.dbClss.TSt(g.FirstOrDefault().RCNo);
+                if (txtInvoiceNo.Text.Equals(""))
+                {
+                    MessageBox.Show("กรุณาเลือก Invoice No");
+                    return;
+                }
+                this.Cursor = Cursors.WaitCursor;
+                if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    int seq = 0;
+                    string CRNo = StockControl.dbClss.GetNo(8, 2);
+                    using (DataClasses1DataContext db = new DataClasses1DataContext())
+                    {
+                        var g = (from ix in db.tb_ReceiveHs
+                                 where ix.InvoiceNo.Trim() == txtInvoiceNo.Text.Trim() && ix.Status != "Cancel"
+                                 //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
+                                 select ix).ToList();
+                        if (g.Count > 0)  //มีรายการในระบบ
+                        {
+                            //Herder 
+                            string RCNo = StockControl.dbClss.TSt(g.FirstOrDefault().RCNo);
 
-            //                //insert tb_ReceiveH เข้า tb_ReceiveH_Del
-            //                tb_ReceiveH_Del gg = new tb_ReceiveH_Del();
-            //                gg.RCNo = g.FirstOrDefault().RCNo;
-            //                gg.RCDate = g.FirstOrDefault().RCDate;
-            //                gg.UpdateBy = g.FirstOrDefault().UpdateBy;
-            //                gg.UpdateDate = g.FirstOrDefault().UpdateDate;
-            //                gg.CreateBy = g.FirstOrDefault().CreateBy;
-            //                gg.CreateDate = g.FirstOrDefault().CreateDate;
-            //                gg.VendorName = g.FirstOrDefault().VendorName;
-            //                gg.VendorNo = g.FirstOrDefault().VendorNo;
-            //                gg.RemarkHD = g.FirstOrDefault().RemarkHD;
-            //                gg.Type = g.FirstOrDefault().Type;
-            //                gg.InvoiceNo = g.FirstOrDefault().InvoiceNo;
-            //                gg.Barcode = g.FirstOrDefault().Barcode;
-            //                gg.Status = g.FirstOrDefault().Status;
-            //                gg.TempNo = g.FirstOrDefault().TempNo;
-            //                gg.id = g.FirstOrDefault().id;
-            //                gg.TypeReceive = g.FirstOrDefault().TypeReceive;
-            //                gg.InvoiceDate = g.FirstOrDefault().InvoiceDate;
-
-            //                db.tb_ReceiveH_Dels.InsertOnSubmit(gg);
-            //                db.SubmitChanges();
-
-
-            //                //string invno = "";
-            //                //string TempNo = "";
-            //                string Type = "";
-            //                Type = StockControl.dbClss.TSt(g.FirstOrDefault().Type);
-            //                //if (StockControl.dbClss.TSt(g.FirstOrDefault().Type).Equals("รับด้วยใบ Invoice"))
-            //                //{
-            //                //    invno = StockControl.dbClss.TSt(g.FirstOrDefault().InvoiceNo);
-            //                //}
-            //                //else
-            //                //    TempNo = StockControl.dbClss.TSt(g.FirstOrDefault().TempNo);
+                            //insert tb_ReceiveH เข้า tb_ReceiveH_Del
+                            tb_ReceiveH_Del gg = new tb_ReceiveH_Del();
+                            gg.RCNo = g.FirstOrDefault().RCNo;
+                            gg.RCDate = g.FirstOrDefault().RCDate;
+                            gg.UpdateBy = g.FirstOrDefault().UpdateBy;
+                            gg.UpdateDate = g.FirstOrDefault().UpdateDate;
+                            gg.CreateBy = g.FirstOrDefault().CreateBy;
+                            gg.CreateDate = g.FirstOrDefault().CreateDate;
+                            gg.VendorName = g.FirstOrDefault().VendorName;
+                            gg.VendorNo = g.FirstOrDefault().VendorNo;
+                            gg.RemarkHD = g.FirstOrDefault().RemarkHD;
+                            gg.Type = g.FirstOrDefault().Type;
+                            gg.InvoiceNo = g.FirstOrDefault().InvoiceNo;
+                            gg.Barcode = g.FirstOrDefault().Barcode;
+                            gg.Status = g.FirstOrDefault().Status;
+                            gg.TempNo = g.FirstOrDefault().TempNo;
+                            gg.id = g.FirstOrDefault().id;
+                            gg.TypeReceive = g.FirstOrDefault().TypeReceive;
+                            gg.InvoiceDate = g.FirstOrDefault().InvoiceDate;
+                            
+                            db.tb_ReceiveH_Dels.InsertOnSubmit(gg);
+                            db.SubmitChanges();
 
 
-            //                //detail
-            //                var vv = (from ix in db.tb_Receives
-            //                          where ix.InvoiceNo.Trim() == txtInvoiceNo.Text.Trim() && ix.Status != "Cancel"
-            //                          //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
-            //                          select ix).ToList();
-            //                if (vv.Count > 0)
-            //                {
-
-            //                    foreach (var vvd in vv)
-            //                    {
-            //                        //vvd.Status = "Cancel";
-
-            //                        int PRID = 0;
-            //                        string DocNo = vvd.PRNo;
-            //                        PRID = Convert.ToInt32(vvd.PRID);
-            //                        if (vvd.TypeReceive == "PR")
-            //                        {
-            //                            var pp = (from ix in db.tb_PurchaseRequestLines
-            //                                      where ix.id == PRID
-            //                                            && ix.SS != 0
-            //                                      select ix).ToList();
-
-            //                            if (pp.Count > 0)
-            //                            {
-            //                                dt_PRID.Rows.Add(Convert.ToInt32(vvd.PRID), Convert.ToString(vvd.PRNo)
-            //                                    , vvd.QTY
-            //                                    , vvd.TypeReceive
-            //                                    , vvd.TempNo
-            //                                    );
-
-            //                                foreach (var ppd in pp)
-            //                                {
-            //                                    dbClss.AddHistory(this.Name, "คืนการรับ Receive", " คืนการรับเลขที่ : " + txtInvoiceNo.Text
-            //                                        + " PRID : " + vvd.PRID.ToString() + " CodeNo : " + vvd.CodeNo
-            //                                        + " โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", DocNo);
-            //                                }
-            //                            }
-            //                        }
-            //                        else //PO
-            //                        {
-            //                            var pp = (from ix in db.tb_PurchaseOrderDetails
-            //                                      where ix.id == PRID
-            //                                            && ix.SS != 0
-            //                                      select ix).ToList();
-
-            //                            if (pp.Count > 0)
-            //                            {
-            //                                dt_PRID.Rows.Add(Convert.ToInt32(vvd.PRID), Convert.ToString(vvd.PRNo)
-            //                                    , vvd.QTY
-            //                                    , vvd.TypeReceive
-            //                                    , vvd.TempNo
-            //                                    );
-
-            //                                foreach (var ppd in pp)
-            //                                {
-            //                                    dbClss.AddHistory(this.Name, "คืนการรับ Receive", " คืนการรับเลขที่ : " + txtInvoiceNo.Text
-            //                                        + " PRID : " + vvd.PRID.ToString() + " CodeNo : " + vvd.CodeNo
-            //                                        + " โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", DocNo);
-            //                                }
-            //                            }
-            //                        }
-
-            //                        //insert tb_Receives เข้า tb_receive_Del
-            //                        tb_Receive_Del u = new tb_Receive_Del();
-            //                        u.PRNo = StockControl.dbClss.TSt(vvd.PRNo);
-            //                        u.TempNo = StockControl.dbClss.TSt(vvd.TempNo);
-            //                        u.CodeNo = StockControl.dbClss.TSt(vvd.CodeNo);
-            //                        u.ItemNo = StockControl.dbClss.TSt(vvd.ItemNo);
-            //                        u.ItemDescription = StockControl.dbClss.TSt(vvd.ItemDescription);
-            //                        u.RemainQty = vvd.RemainQty;
-
-            //                        u.QTY = vvd.QTY;
-            //                        u.TypeReceive = vvd.TypeReceive;
-            //                        u.PCSUnit = vvd.PCSUnit;
-            //                        u.Unit = vvd.Unit;
-            //                        u.CostPerUnit = vvd.CostPerUnit;
-            //                        u.Amount = vvd.Amount;
-            //                        u.Remark = vvd.Remark;
-            //                        u.LotNo = vvd.LotNo;
-            //                        u.SerialNo = vvd.SerialNo;
-            //                        u.CRRNCY = vvd.CRRNCY;
-            //                        u.RCNo = vvd.RCNo;
-            //                        u.InvoiceNo = vvd.InvoiceNo;
-            //                        u.PRID = vvd.PRID;
-            //                        u.ShelfNo = vvd.ShelfNo;
-            //                        u.TempInvNo = vvd.TempInvNo;
-            //                        u.RCDate = vvd.RCDate;
-            //                        u.Seq = vvd.Seq;
-            //                        u.Status = vvd.Status;
-            //                        u.ClearFlag = vvd.ClearFlag;
-            //                        u.ClearDate = vvd.ClearDate;
-            //                        u.CreateDate = vvd.CreateDate;
-            //                        u.CreateBy = vvd.CreateBy;
-            //                        u.UpdateDate = vvd.UpdateDate;
-            //                        u.UpdateBy = vvd.UpdateBy;
-            //                        u.Calbit = vvd.Calbit;
-            //                        u.TempQty = vvd.TempQty;
-            //                        u.TempRemain = vvd.TempRemain;
-            //                        u.TempShip = vvd.TempShip;
-            //                        u.Location = vvd.Location;
-
-            //                        db.tb_Receive_Dels.InsertOnSubmit(u);
-
-            //                        seq += 1;
+                            //string invno = "";
+                            //string TempNo = "";
+                            string Type = "";
+                            Type = StockControl.dbClss.TSt(g.FirstOrDefault().Type);
+                            //if (StockControl.dbClss.TSt(g.FirstOrDefault().Type).Equals("รับด้วยใบ Invoice"))
+                            //{
+                            //    invno = StockControl.dbClss.TSt(g.FirstOrDefault().InvoiceNo);
+                            //}
+                            //else
+                            //    TempNo = StockControl.dbClss.TSt(g.FirstOrDefault().TempNo);
 
 
+                            //detail
+                            var vv = (from ix in db.tb_Receives
+                                      where ix.InvoiceNo.Trim() == txtInvoiceNo.Text.Trim() && ix.Status != "Cancel"
+                                      //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
+                                      select ix).ToList();
+                            if (vv.Count > 0)
+                            {
 
-            //                        //New Stock
-            //                        InsertStock_new_2(seq, Convert.ToInt32(vvd.ID), vvd.RCNo, CRNo, vvd.InvoiceNo, Type,vvd.Location,vvd.ShelfNo);
+                                foreach (var vvd in vv)
+                                {
+                                    //vvd.Status = "Cancel";
 
+                                    int PRID = 0;
+                                    string DocNo = vvd.PRNo;
+                                    PRID = Convert.ToInt32(vvd.PRID);
+                                    //if (vvd.TypeReceive == "PR")
+                                    //{
+                                    //    var pp = (from ix in db.mp_PurchaseRequestLines
+                                    //              where ix.id == PRID
+                                    //                    && ix.SS != 0
+                                    //              select ix).ToList();
 
-            //                        //var aa = (from ix in db.tb_ReceiveHs
-            //                        //         where ix.InvoiceNo.Trim() == txtInvoiceNo.Text.Trim() && ix.Status != "Cancel"
-            //                        //         //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
-            //                        //         select ix).ToList();
-            //                        //if (aa.Count > 0)  //มีรายการในระบบ
-            //                        //{
+                                    //    if (pp.Count > 0)
+                                    //    {
+                                    //        dt_PRID.Rows.Add(Convert.ToInt32(vvd.PRID), Convert.ToString(vvd.PRNo)
+                                    //            , vvd.QTY
+                                    //            , vvd.TypeReceive
+                                    //            , vvd.TempNo
+                                    //            );
 
-            //                        var bb = (from ix in db.tb_Stocks
-            //                                  where ix.Status != "Cancel"
-            //                                  && ix.App == "Receive"
-            //                                  && ix.DocNo == RCNo//StockControl.dbClss.TSt(aa.FirstOrDefault().RCNo)
-            //                                  && ix.CodeNo == dbClss.TSt(vv.FirstOrDefault().CodeNo)
+                                    //        foreach (var ppd in pp)
+                                    //        {
+                                    //            dbClss.AddHistory(this.Name, "คืนการรับ Receive", " คืนการรับเลขที่ : " + txtInvoiceNo.Text
+                                    //                + " PRID : " + vvd.PRID.ToString() + " CodeNo : " + vvd.CodeNo
+                                    //                + " โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", DocNo);
+                                    //        }
+                                    //    }
+                                    //}
+                                    //else //PO
+                                    {
+                                        var pp = (from ix in db.mh_PurchaseOrderDetails
+                                                  where ix.id == PRID
+                                                        && ix.SS != 0
+                                                  select ix).ToList();
 
-            //                                  select ix).ToList();
-            //                        if (bb.Count > 0)
-            //                        {
-            //                            var cc = (from ix in db.tb_Stocks
-            //                                      where ix.Status != "Cancel"
-            //                                      && ix.App == "Receive"
-            //                                      && ix.DocNo == RCNo//StockControl.dbClss.TSt(aa.FirstOrDefault().RCNo)
-            //                                      && ix.CodeNo == dbClss.TSt(vv.FirstOrDefault().CodeNo)
-            //                                      select ix).First();
-            //                            cc.TLQty = 0;//cc.TLQty - vvd.QTY;
-            //                            cc.ShipQty = vvd.QTY;
-            //                            db.SubmitChanges();
-            //                        }
-            //                        //}
+                                        if (pp.Count > 0)
+                                        {
+                                            dt_PRID.Rows.Add(Convert.ToInt32(vvd.PRID), Convert.ToString(vvd.PRNo)
+                                                , vvd.QTY
+                                                , vvd.TypeReceive
+                                                , vvd.TempNo
+                                                );
 
-            //                    }
+                                            foreach (var ppd in pp)
+                                            {
+                                                dbClss.AddHistory(this.Name, "คืนการรับ Receive", " คืนการรับเลขที่ : " + txtInvoiceNo.Text
+                                                    + " PRID : " + vvd.PRID.ToString() + " CodeNo : " + vvd.CodeNo
+                                                    + " โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", DocNo);
+                                            }
+                                        }
+                                    }
 
+                                    //insert tb_Receives เข้า tb_receive_Del
+                                    tb_Receive_Del u = new tb_Receive_Del();
+                                    u.PRNo = StockControl.dbClss.TSt(vvd.PRNo);
+                                    u.TempNo = StockControl.dbClss.TSt(vvd.TempNo);
+                                    u.CodeNo = StockControl.dbClss.TSt(vvd.CodeNo);
+                                    u.ItemNo = StockControl.dbClss.TSt(vvd.ItemNo);
+                                    u.ItemDescription = StockControl.dbClss.TSt(vvd.ItemDescription);
+                                    u.RemainQty = vvd.RemainQty;
 
-            //                    //delete tb_receive
-            //                    db.tb_Receives.DeleteAllOnSubmit(vv);
-            //                    db.SubmitChanges();
-            //                }
+                                    u.QTY = vvd.QTY;
+                                    u.TypeReceive = vvd.TypeReceive;
+                                    u.PCSUnit = vvd.PCSUnit;
+                                    u.PCSUnit_Base = vvd.PCSUnit_Base;
+                                    u.Unit = vvd.Unit;
+                                    u.CostPerUnit = vvd.CostPerUnit;
+                                    u.Amount = vvd.Amount;
+                                    u.Remark = vvd.Remark;
+                                    u.LotNo = vvd.LotNo;
+                                    u.SerialNo = vvd.SerialNo;
+                                    u.CRRNCY = vvd.CRRNCY;
+                                    u.RCNo = vvd.RCNo;
+                                    u.InvoiceNo = vvd.InvoiceNo;
+                                    u.PRID = vvd.PRID;
+                                    u.ShelfNo = vvd.ShelfNo;
+                                    u.TempInvNo = vvd.TempInvNo;
+                                    u.RCDate = vvd.RCDate;
+                                    u.Seq = vvd.Seq;
+                                    u.Status = vvd.Status;
+                                    u.ClearFlag = vvd.ClearFlag;
+                                    u.ClearDate = vvd.ClearDate;
+                                    u.CreateDate = vvd.CreateDate;
+                                    u.CreateBy = vvd.CreateBy;
+                                    u.UpdateDate = vvd.UpdateDate;
+                                    u.UpdateBy = vvd.UpdateBy;
+                                    u.Calbit = vvd.Calbit;
+                                    u.TempQty = vvd.TempQty;
+                                    u.TempRemain = vvd.TempRemain;
+                                    u.TempShip = vvd.TempShip;
+                                    u.Location = vvd.Location;
 
-            //                db.tb_ReceiveHs.DeleteAllOnSubmit(g);
-            //                db.SubmitChanges();
+                                    db.tb_Receive_Dels.InsertOnSubmit(u);
 
-            //                //update remain tb_receive ที่เหลือ
-            //                if (dt_PRID.Rows.Count > 0)
-            //                {
-            //                    update_RemainQty();
-            //                }
+                                    seq += 1;
 
 
 
-            //                dbClss.AddHistory(this.Name, "คืนการรับ Receive", " โดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", txtInvoiceNo.Text.Trim());
-            //                dbClss.AddHistory(this.Name, "คืนการรับ Receive", " โดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", RCNo);
-            //                dbClss.AddHistory(this.Name, "คืนการรับ Receive", " คืนการรับเลขที่ : " + txtInvoiceNo.Text + " โดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", txtInvoiceNo.Text);
+                                    //New Stock
+                                    InsertStock_new_2(seq, Convert.ToInt32(vvd.ID), vvd.RCNo, CRNo, vvd.InvoiceNo, Type, vvd.Location, vvd.ShelfNo);
 
-            //            }
-            //        }
-            //        MessageBox.Show("บันทึกสำเร็จ!");
-            //        txtInvoiceNo.Text = "";
-            //    }
-            //}
-            //catch (Exception ex) { MessageBox.Show(ex.Message); }
-            //finally { this.Cursor = Cursors.Default; }
+
+                                    //var aa = (from ix in db.tb_ReceiveHs
+                                    //         where ix.InvoiceNo.Trim() == txtInvoiceNo.Text.Trim() && ix.Status != "Cancel"
+                                    //         //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
+                                    //         select ix).ToList();
+                                    //if (aa.Count > 0)  //มีรายการในระบบ
+                                    //{
+
+                                    var bb = (from ix in db.tb_Stocks
+                                              where ix.Status != "Cancel"
+                                              && ix.App == "Receive"
+                                              && ix.DocNo == RCNo//StockControl.dbClss.TSt(aa.FirstOrDefault().RCNo)
+                                              && ix.CodeNo == dbClss.TSt(vv.FirstOrDefault().CodeNo)
+
+                                              select ix).ToList();
+                                    if (bb.Count > 0)
+                                    {
+                                        var cc = (from ix in db.tb_Stocks
+                                                  where ix.Status != "Cancel"
+                                                  && ix.App == "Receive"
+                                                  && ix.DocNo == RCNo//StockControl.dbClss.TSt(aa.FirstOrDefault().RCNo)
+                                                  && ix.CodeNo == dbClss.TSt(vv.FirstOrDefault().CodeNo)
+                                                  select ix).First();
+                                        cc.TLQty = 0;//cc.TLQty - vvd.QTY;
+                                        cc.ShipQty = vvd.QTY;
+                                        db.SubmitChanges();
+                                    }
+                                    //}
+
+                                }
+
+
+                                //delete tb_receive
+                                db.tb_Receives.DeleteAllOnSubmit(vv);
+                                db.SubmitChanges();
+                            }
+
+                            db.tb_ReceiveHs.DeleteAllOnSubmit(g);
+                            db.SubmitChanges();
+
+                            //update remain tb_receive ที่เหลือ
+                            if (dt_PRID.Rows.Count > 0)
+                            {
+                                update_RemainQty();
+                            }
+
+
+
+                            dbClss.AddHistory(this.Name, "คืนการรับ Receive", " โดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", txtInvoiceNo.Text.Trim());
+                            dbClss.AddHistory(this.Name, "คืนการรับ Receive", " โดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", RCNo);
+                            dbClss.AddHistory(this.Name, "คืนการรับ Receive", " คืนการรับเลขที่ : " + txtInvoiceNo.Text + " โดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", txtInvoiceNo.Text);
+
+                        }
+                    }
+                    MessageBox.Show("บันทึกสำเร็จ!");
+                    txtInvoiceNo.Text = "";
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { this.Cursor = Cursors.Default; }
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -696,49 +697,49 @@ namespace StockControl
 
         private void Insert_Stock(int seq, int id, string RCNo,string CNNo)
         {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                var g = (from ix in db.tb_Receives
-                             //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
-                         where ix.RCNo.Trim() == RCNo.Trim() && ix.Status != "Cancel"
-                         && ix.ID == id
-                         select ix).First();
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    var g = (from ix in db.tb_Receives
+            //                 //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
+            //             where ix.RCNo.Trim() == RCNo.Trim() && ix.Status != "Cancel"
+            //             && ix.ID == id
+            //             select ix).First();
                 
-                //insert Stock
-                DateTime? CalDate = null;
-                DateTime? AppDate = DateTime.Now;
-                int Seq = seq;
+            //    //insert Stock
+            //    DateTime? CalDate = null;
+            //    DateTime? AppDate = DateTime.Now;
+            //    int Seq = seq;
 
-                //tb_Stock1 gg = new tb_Stock1();
-                //gg.AppDate = AppDate;
-                //gg.Seq = Seq;
-                //gg.App = "Cancel RC";
-                //gg.Appid = Seq;
-                //gg.CreateBy = ClassLib.Classlib.User;
-                //gg.CreateDate = DateTime.Now;
-                //gg.DocNo = CNNo;
-                //gg.RefNo = RCNo;
-                //gg.Type = "Inv/DL";
-                //gg.QTY = -Convert.ToDecimal(g.QTY);
-                //gg.Inbound = 0;
-                //gg.Outbound = -Convert.ToDecimal(g.QTY);
-                //gg.AmountCost = -Convert.ToDecimal(g.QTY) * Convert.ToDecimal(g.CostPerUnit);
-                //gg.UnitCost = Convert.ToDecimal(g.CostPerUnit);
-                //gg.RemainQty = 0;
-                //gg.RemainUnitCost = 0;
-                //gg.RemainAmount = 0;
-                //gg.CalDate = CalDate;
-                //gg.Status = "Active";
+            //    //tb_Stock1 gg = new tb_Stock1();
+            //    //gg.AppDate = AppDate;
+            //    //gg.Seq = Seq;
+            //    //gg.App = "Cancel RC";
+            //    //gg.Appid = Seq;
+            //    //gg.CreateBy = ClassLib.Classlib.User;
+            //    //gg.CreateDate = DateTime.Now;
+            //    //gg.DocNo = CNNo;
+            //    //gg.RefNo = RCNo;
+            //    //gg.Type = "Inv/DL";
+            //    //gg.QTY = -Convert.ToDecimal(g.QTY);
+            //    //gg.Inbound = 0;
+            //    //gg.Outbound = -Convert.ToDecimal(g.QTY);
+            //    //gg.AmountCost = -Convert.ToDecimal(g.QTY) * Convert.ToDecimal(g.CostPerUnit);
+            //    //gg.UnitCost = Convert.ToDecimal(g.CostPerUnit);
+            //    //gg.RemainQty = 0;
+            //    //gg.RemainUnitCost = 0;
+            //    //gg.RemainAmount = 0;
+            //    //gg.CalDate = CalDate;
+            //    //gg.Status = "Active";
 
-                //db.tb_Stock1s.InsertOnSubmit(gg);
-                //db.SubmitChanges();
+            //    //db.tb_Stock1s.InsertOnSubmit(gg);
+            //    //db.SubmitChanges();
 
-                //udpate Stock Item StockInv,StockDL
-                //dbClss.Insert_Stock(g.CodeNo, (-Convert.ToDecimal(g.QTY)), "CNRC", "Inv");
+            //    //udpate Stock Item StockInv,StockDL
+            //    //dbClss.Insert_Stock(g.CodeNo, (-Convert.ToDecimal(g.QTY)), "CNRC", "Inv");
 
-                //update stock StockBackOrder item
-                dbClss.Insert_StockTemp(g.CodeNo, Convert.ToDecimal(g.QTY), "CNRC_Temp", "Inv");
-            }
+            //    //update stock StockBackOrder item
+            //    dbClss.Insert_StockTemp(g.CodeNo, Convert.ToDecimal(g.QTY), "CNRC_Temp", "Inv");
+            //}
         }
         private bool Check_QTY()
         {
@@ -1263,7 +1264,7 @@ namespace StockControl
                     decimal sum_Qty = 0;
                     int Flag_ClearTemp = 0;
                     string Category = "";
-                   
+                    decimal BasePCSUnit = 1;
                     if (Type == "รับด้วยใบ Invoice")
                     {
                         Category = "Invoice";
@@ -1290,6 +1291,8 @@ namespace StockControl
                         //insert Stock
                         foreach (var vv in g)
                         {
+                            BasePCSUnit = dbClss.TDe(vv.PCSUnit_Base);
+
                             Seq += 1;
                             Qty_Remain = 0;
                             ID = vv.ID;
@@ -1302,8 +1305,8 @@ namespace StockControl
 
                                 if (Qty_Cancel <= Qty_Remain)
                                 {
-                                    
-                                    UnitCost = Convert.ToDecimal(vv.CostPerUnit);// Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "Avg"));
+                                    UnitCost = Math.Abs( Math.Round((Amount / (Convert.ToDecimal(vv.QTY) * Convert.ToDecimal(vv.PCSUnit) * BasePCSUnit)), 2));
+                                    //UnitCost = Convert.ToDecimal(vv.CostPerUnit);// Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "Avg"));
                                     Amount = (-Qty_Cancel) * UnitCost;
 
                                     //แบบที่ 1 จะไป sum ใหม่
@@ -1313,7 +1316,7 @@ namespace StockControl
                                     sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
                                         + Amount;
 
-                                    sum_Qty = RemainQty + (-Qty_Cancel);
+                                    sum_Qty = RemainQty + Math.Round(((-Qty_Cancel * dbClss.TDe(vv.PCSUnit) * BasePCSUnit)), 2); //(-Qty_Cancel);
                                     Avg = UnitCost;//sum_Remain / sum_Qty;
                                     RemainAmount = sum_Remain;
                                     if (sum_Qty <= 0)
@@ -1333,9 +1336,9 @@ namespace StockControl
                                     gg.RefNo = RCNo;
                                     gg.CodeNo = vv.CodeNo;
                                     gg.Type = Type;
-                                    gg.QTY = -Qty_Cancel;
+                                    gg.QTY = Math.Round(((-Qty_Cancel * dbClss.TDe(vv.PCSUnit) * BasePCSUnit)), 2);
                                     gg.Inbound = 0;
-                                    gg.Outbound = -Qty_Cancel;
+                                    gg.Outbound = Math.Round(((-Qty_Cancel * dbClss.TDe(vv.PCSUnit) * BasePCSUnit)), 2);
                                     gg.Type_i = 2;  //Receive = 1,Cancel Receive 2,Shipping = 3,Cancel Shipping = 4,Adjust stock = 5,ClearTemp = 6
                                     gg.Category = Category;
                                     gg.Refid = ID;
@@ -1351,7 +1354,7 @@ namespace StockControl
                                     gg.Avg = Avg;
                                     gg.TLCost = Math.Abs(Amount);
                                     gg.TLQty = 0;
-                                    gg.ShipQty = Math.Abs(Qty_Cancel);
+                                    gg.ShipQty = Math.Abs(Math.Round(((-Qty_Cancel * dbClss.TDe(vv.PCSUnit) * BasePCSUnit)), 2));
                                     gg.RefShipid = 0;
                                     gg.Location = Location;
                                     gg.ShelfNo = ShelfNo;

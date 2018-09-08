@@ -398,10 +398,10 @@
             gridViewTextBoxColumn4.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewTextBoxColumn4.Width = 93;
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
-            gridViewTextBoxColumn5.FieldName = "ItemNo";
+            gridViewTextBoxColumn5.FieldName = "ItemName";
             gridViewTextBoxColumn5.FormatString = "{0:N2}";
             gridViewTextBoxColumn5.HeaderText = "ชื่อสินค้า";
-            gridViewTextBoxColumn5.Name = "ItemNo";
+            gridViewTextBoxColumn5.Name = "ItemName";
             gridViewTextBoxColumn5.ReadOnly = true;
             gridViewTextBoxColumn5.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewTextBoxColumn5.Width = 134;

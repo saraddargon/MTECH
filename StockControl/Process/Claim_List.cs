@@ -115,7 +115,7 @@ namespace StockControl
         private void DataLoad()
         {
             dgvData.Rows.Clear();
-            
+
             try
             {
                 DateTime inclusiveStart = dtDate1.Value.Date;
@@ -128,8 +128,8 @@ namespace StockControl
 
                     int dgvNo = 0;
                     var r = (from h in db.tb_Claims
-                             //join d in db.tb_Receives on h.RefReceiveID equals d.ID
-                             join i in db.tb_Items on h.CodeNo equals i.CodeNo
+                                 //join d in db.tb_Receives on h.RefReceiveID equals d.ID
+                             join i in db.mh_Items on h.CodeNo equals i.InternalNo
                              where //h.Status == "Waiting" //&& d.verticalID == VerticalID
 
                                  h.ClaimNo.Contains(txtClaimNo.Text)
@@ -138,16 +138,16 @@ namespace StockControl
                               && cbDate.Checked == true)
                                || (cbDate.Checked == false)
                               )
-                             
+
                              select new
                              {
                                  CodeNo = h.CodeNo,
                                  ClaimNo = h.ClaimNo,
-                                 ItemNo = i.ItemNo,
-                                 ItemDescription = i.ItemDescription,
+                                 ItemNo = i.InternalName,
+                                 ItemDescription = i.InternalDescription,
                                  QTY = h.Qty,
                                  Unit = h.Unit,
-                                 PCSUnit = i.PCSUnit,
+                                 PCSUnit = h.PCSUnit,
                                  UnitCost = h.UnitCost,
                                  CreateBy = h.CreateBy,
                                  CreateDate = h.CreateDate,
@@ -165,7 +165,7 @@ namespace StockControl
                     {
                         dgvData.DataSource = r;
                     }
-                    
+
 
                     int rowcount = 0;
                     foreach (var x in dgvData.Rows)
@@ -175,13 +175,13 @@ namespace StockControl
                     }
                 }
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
             this.Cursor = Cursors.Default;
 
 
-            //    radGridView1.DataSource = dt;
+            ////    radGridView1.DataSource = dt;
         }
-      
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
           

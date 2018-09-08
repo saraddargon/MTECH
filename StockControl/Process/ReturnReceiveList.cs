@@ -154,15 +154,13 @@ namespace StockControl
                                         && a.RCDate < exclusiveEnd)
                                         && cbDate.Checked == true)
                                         || (cbDate.Checked == false))
-                                    && a.TypeReceive.Contains(ddlTypeReceive.Text)
-
+                                    //&& a.TypeReceive.Contains(ddlTypeReceive.Text)
                                     )
                                     .ToList();
                         if (d.Count() > 0)
                         {
                             
                             dgvData.DataSource = d;
-
                             int rowcount = 0;
                             foreach (var x in dgvData.Rows)
                             {

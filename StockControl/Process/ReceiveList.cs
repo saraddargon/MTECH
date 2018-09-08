@@ -223,338 +223,338 @@ namespace StockControl
         }
         private void Load_PratitalReceive() //รับเข้าบางส่วน
         {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                string VendorNo_ss = "";
-                if (!cboVendorName.Text.Equals(""))
-                    VendorNo_ss = txtVendorNo.Text;
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    string VendorNo_ss = "";
+            //    if (!cboVendorName.Text.Equals(""))
+            //        VendorNo_ss = txtVendorNo.Text;
 
-                int dgvNo = 0;
-                bool S = false;
-                //string RCNo = "";
-                DateTime? DeliveryDate = null;
+            //    int dgvNo = 0;
+            //    bool S = false;
+            //    //string RCNo = "";
+            //    DateTime? DeliveryDate = null;
 
-                string status = cboStatus.Text;
-                if (status == "ทั้งหมด")
-                    status = "";
-                else if (status == "รับเข้าบางส่วน")
-                    status = "Partial";
-                else if (status == "รับเข้าแล้ว")
-                    status = "Completed";
-                else
-                    status = "";
+            //    string status = cboStatus.Text;
+            //    if (status == "ทั้งหมด")
+            //        status = "";
+            //    else if (status == "รับเข้าบางส่วน")
+            //        status = "Partial";
+            //    else if (status == "รับเข้าแล้ว")
+            //        status = "Completed";
+            //    else
+            //        status = "";
 
-                DateTime inclusiveStart = dtDate1.Value.Date;
-                // Include the *whole* of the day indicated by searchEndDate
-                DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
+            //    DateTime inclusiveStart = dtDate1.Value.Date;
+            //    // Include the *whole* of the day indicated by searchEndDate
+            //    DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
 
-                var r = (from d in db.tb_Receives
-                         join c in db.tb_ReceiveHs on d.RCNo equals c.RCNo
-                         join i in db.tb_Items on d.CodeNo equals i.CodeNo
+            //    var r = (from d in db.tb_Receives
+            //             join c in db.tb_ReceiveHs on d.RCNo equals c.RCNo
+            //             join i in db.tb_Items on d.CodeNo equals i.CodeNo
 
-                         where c.VendorNo.Contains(VendorNo_ss)
-                             && (((c.RCDate >= inclusiveStart
-                                   && c.RCDate < exclusiveEnd)
-                                   && cbDate.Checked == true)
-                         || (cbDate.Checked == false))
-                             //&& (c.RCDate >= inclusiveStart
-                             //           && c.RCDate < exclusiveEnd)
-                             && d.Status.Contains(status)
-                             //&& p.SS == 1
-                             && d.PRNo.Trim().ToUpper().Contains(txtPR_PO.Text.Trim().ToUpper())
-                             && d.TypeReceive.Trim().ToUpper().Contains(ddlTypeReceive.Text)
+            //             where c.VendorNo.Contains(VendorNo_ss)
+            //                 && (((c.RCDate >= inclusiveStart
+            //                       && c.RCDate < exclusiveEnd)
+            //                       && cbDate.Checked == true)
+            //             || (cbDate.Checked == false))
+            //                 //&& (c.RCDate >= inclusiveStart
+            //                 //           && c.RCDate < exclusiveEnd)
+            //                 && d.Status.Contains(status)
+            //                 //&& p.SS == 1
+            //                 && d.PRNo.Trim().ToUpper().Contains(txtPR_PO.Text.Trim().ToUpper())
+            //                 && d.TypeReceive.Trim().ToUpper().Contains(ddlTypeReceive.Text)
 
-                         select new
-                         {
-                             CodeNo = d.CodeNo,
-                             S = false,
-                             ItemNo = d.ItemNo,
-                             ItemDescription = d.ItemDescription,
-                             RCNo = d.RCNo,
-                             PRNo = d.PRNo,
-                             DeliveryDate = DeliveryDate,
-                             QTY = d.QTY,
-                             BackOrder = d.RemainQty,
-                             RemainQty = d.RemainQty,
-                             Unit = d.Unit,
-                             PCSUnit = d.PCSUnit,
-                             MaxStock = i.MaximumStock
-                             ,MinStock = i.MinimumStock
-                            , VendorNo = c.VendorNo
-                            ,VendorName = c.VendorName
-                            ,CreateBy = d.CreateBy
-                            ,CreateDate = d.RCDate
-                            ,Status = d.Status
-                            ,InvNo = c.InvoiceNo
-                            ,SerialNo =  d.SerialNo
-                            ,LotNo = d.LotNo
-                            ,ShelfNo = d.ShelfNo
-                             , TypeReceive = d.TypeReceive
-                         }
-                ).ToList();
-                //dgvData.DataSource = StockControl.dbClss.LINQToDataTable(r);
-                if(r.Count > 0)
-                {
-                    dgvNo = dgvData.Rows.Count() + 1;
-                    string status_temp = "";
-                    foreach (var vv in r)
-                    {
-                        status_temp = vv.Status;
-                        if (vv.Status == "Partial")
-                            status_temp = "รับเข้าบางส่วน";
-                        else
-                            status_temp = "รับเข้าแล้ว";
+            //             select new
+            //             {
+            //                 CodeNo = d.CodeNo,
+            //                 S = false,
+            //                 ItemNo = d.ItemNo,
+            //                 ItemDescription = d.ItemDescription,
+            //                 RCNo = d.RCNo,
+            //                 PRNo = d.PRNo,
+            //                 DeliveryDate = DeliveryDate,
+            //                 QTY = d.QTY,
+            //                 BackOrder = d.RemainQty,
+            //                 RemainQty = d.RemainQty,
+            //                 Unit = d.Unit,
+            //                 PCSUnit = d.PCSUnit,
+            //                 MaxStock = i.MaximumStock
+            //                 ,MinStock = i.MinimumStock
+            //                , VendorNo = c.VendorNo
+            //                ,VendorName = c.VendorName
+            //                ,CreateBy = d.CreateBy
+            //                ,CreateDate = d.RCDate
+            //                ,Status = d.Status
+            //                ,InvNo = c.InvoiceNo
+            //                ,SerialNo =  d.SerialNo
+            //                ,LotNo = d.LotNo
+            //                ,ShelfNo = d.ShelfNo
+            //                 , TypeReceive = d.TypeReceive
+            //             }
+            //    ).ToList();
+            //    //dgvData.DataSource = StockControl.dbClss.LINQToDataTable(r);
+            //    if(r.Count > 0)
+            //    {
+            //        dgvNo = dgvData.Rows.Count() + 1;
+            //        string status_temp = "";
+            //        foreach (var vv in r)
+            //        {
+            //            status_temp = vv.Status;
+            //            if (vv.Status == "Partial")
+            //                status_temp = "รับเข้าบางส่วน";
+            //            else
+            //                status_temp = "รับเข้าแล้ว";
 
-                        dgvData.Rows.Add(dgvNo.ToString(), S, vv.RCNo, vv.PRNo, vv.InvNo ,vv.CodeNo, vv.ItemNo, vv.ItemDescription
-                                    , vv.DeliveryDate, vv.QTY, vv.BackOrder, vv.RemainQty,vv.Unit,vv.PCSUnit,vv.MaxStock,
-                                    vv.MinStock,vv.VendorNo,vv.VendorName,vv.LotNo,vv.SerialNo,vv.ShelfNo,vv.CreateBy,vv.CreateDate, status_temp, vv.TypeReceive
-                                    );
-                    }
+            //            dgvData.Rows.Add(dgvNo.ToString(), S, vv.RCNo, vv.PRNo, vv.InvNo ,vv.CodeNo, vv.ItemNo, vv.ItemDescription
+            //                        , vv.DeliveryDate, vv.QTY, vv.BackOrder, vv.RemainQty,vv.Unit,vv.PCSUnit,vv.MaxStock,
+            //                        vv.MinStock,vv.VendorNo,vv.VendorName,vv.LotNo,vv.SerialNo,vv.ShelfNo,vv.CreateBy,vv.CreateDate, status_temp, vv.TypeReceive
+            //                        );
+            //        }
 
-                }
+            //    }
 
-                //int rowcount = 0;
-                //foreach (var x in dgvData.Rows)
-                //{
-                //    rowcount += 1;
-                //    x.Cells["dgvNo"].Value = rowcount;
-                //}
+            //    //int rowcount = 0;
+            //    //foreach (var x in dgvData.Rows)
+            //    //{
+            //    //    rowcount += 1;
+            //    //    x.Cells["dgvNo"].Value = rowcount;
+            //    //}
 
 
-            }
+            //}
         }
         private void Load_CompletedReceive()//รับเข้าแล้ว
         {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                string VendorNo_ss = "";
-                if (!cboVendorName.Text.Equals(""))
-                    VendorNo_ss = txtVendorNo.Text;
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    string VendorNo_ss = "";
+            //    if (!cboVendorName.Text.Equals(""))
+            //        VendorNo_ss = txtVendorNo.Text;
 
-                int dgvNo = 0;
-                bool S = false;
-                string RCNo = "";
-                //string PRNo = "";
-                //string CodeNo = "";
-                //string ItemName = "";
-                //string ItemNo = "";
-                //string ItemDescription = "";
-                DateTime? DeliveryDate = null;
-                //decimal QTY = 0;
-                //decimal BackOrder = 0;
-                //decimal RemainQty = 0;
-                //string Unit = "";
-                //decimal PCSUnit = 0;
-                //decimal Leadtime = 0;
-                //decimal MaxStock = 0;
-                //decimal MinStock = 0;
-                //string VendorNo = "";
-                //string VendorName = "";
-                //DateTime? CreateDate = null;
-                //string CreateBy = "";
-                //string Status = "รับเข้าแล้ว";
-                DateTime inclusiveStart = dtDate1.Value.Date;
-                // Include the *whole* of the day indicated by searchEndDate
-                DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
+            //    int dgvNo = 0;
+            //    bool S = false;
+            //    string RCNo = "";
+            //    //string PRNo = "";
+            //    //string CodeNo = "";
+            //    //string ItemName = "";
+            //    //string ItemNo = "";
+            //    //string ItemDescription = "";
+            //    DateTime? DeliveryDate = null;
+            //    //decimal QTY = 0;
+            //    //decimal BackOrder = 0;
+            //    //decimal RemainQty = 0;
+            //    //string Unit = "";
+            //    //decimal PCSUnit = 0;
+            //    //decimal Leadtime = 0;
+            //    //decimal MaxStock = 0;
+            //    //decimal MinStock = 0;
+            //    //string VendorNo = "";
+            //    //string VendorName = "";
+            //    //DateTime? CreateDate = null;
+            //    //string CreateBy = "";
+            //    //string Status = "รับเข้าแล้ว";
+            //    DateTime inclusiveStart = dtDate1.Value.Date;
+            //    // Include the *whole* of the day indicated by searchEndDate
+            //    DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
 
-                var r = (from d in db.tb_Receives
-                         join c in db.tb_ReceiveHs on d.RCNo equals c.RCNo
-                         //join p in db.tb_PurchaseRequestLines on d.PRID equals p.id
-                         //join p in db.tb_PurchaseOrderDetails on d.PRID equals p.id
-                         join i in db.tb_Items on d.CodeNo equals i.CodeNo
+            //    var r = (from d in db.tb_Receives
+            //             join c in db.tb_ReceiveHs on d.RCNo equals c.RCNo
+            //             //join p in db.tb_PurchaseRequestLines on d.PRID equals p.id
+            //             //join p in db.tb_PurchaseOrderDetails on d.PRID equals p.id
+            //             join i in db.tb_Items on d.CodeNo equals i.CodeNo
 
-                         where d.Status == "Completed" && c.VendorNo.Contains(VendorNo_ss)
-                              //&& p.SS == 1
-                              //&& p.PRNo.Trim().ToUpper().Contains(txtPR_PO.Text.Trim().ToUpper())
-                              && d.PRNo.Trim().ToUpper().Contains(txtPR_PO.Text.Trim().ToUpper())
+            //             where d.Status == "Completed" && c.VendorNo.Contains(VendorNo_ss)
+            //                  //&& p.SS == 1
+            //                  //&& p.PRNo.Trim().ToUpper().Contains(txtPR_PO.Text.Trim().ToUpper())
+            //                  && d.PRNo.Trim().ToUpper().Contains(txtPR_PO.Text.Trim().ToUpper())
 
-                               //&& (c.RCDate >= inclusiveStart
-                               //         && c.RCDate < exclusiveEnd)
+            //                   //&& (c.RCDate >= inclusiveStart
+            //                   //         && c.RCDate < exclusiveEnd)
 
-                               && (((c.RCDate >= inclusiveStart
-                                   && c.RCDate < exclusiveEnd)
-                                   && cbDate.Checked == true)
-                                || (cbDate.Checked == false))
-                            && d.TypeReceive.Trim().ToUpper().Contains(ddlTypeReceive.Text)
+            //                   && (((c.RCDate >= inclusiveStart
+            //                       && c.RCDate < exclusiveEnd)
+            //                       && cbDate.Checked == true)
+            //                    || (cbDate.Checked == false))
+            //                && d.TypeReceive.Trim().ToUpper().Contains(ddlTypeReceive.Text)
 
-                         select new
-                         {
-                             CodeNo = d.CodeNo,
-                             S = false,
-                             ItemNo = d.ItemNo,
-                             ItemDescription = d.ItemDescription,
-                             RCNo = d.RCNo,
-                             PRNo = d.PRNo,
-                             DeliveryDate = DeliveryDate, //p.DeliveryDate
-                             QTY = d.QTY,
-                             BackOrder = d.RemainQty,
-                             RemainQty = d.RemainQty,
-                             Unit = d.Unit,
-                             PCSUnit = d.PCSUnit,
-                             MaxStock = i.MaximumStock
-                             ,
-                             MinStock = i.MinimumStock
-                            ,
-                             VendorNo = c.VendorNo
-                            ,
-                             VendorName = c.VendorName
-                            ,
-                             CreateBy = d.CreateBy
-                            ,
-                             CreateDate = d.RCDate
-                            ,
-                             Status = "รับเข้าแล้ว"//d.Status
-                             ,
-                             InvNo = c.InvoiceNo
-                              ,
-                             SerialNo = d.SerialNo
-                            ,
-                             LotNo = d.LotNo
-                            ,
-                             ShelfNo = d.ShelfNo
-                              ,
-                             TypeReceive = d.TypeReceive
-                         }
-                ).ToList();
-                //dgvData.DataSource = StockControl.dbClss.LINQToDataTable(r);
-                if (r.Count > 0)
-                {
-                    dgvNo = dgvData.Rows.Count() + 1;
+            //             select new
+            //             {
+            //                 CodeNo = d.CodeNo,
+            //                 S = false,
+            //                 ItemNo = d.ItemNo,
+            //                 ItemDescription = d.ItemDescription,
+            //                 RCNo = d.RCNo,
+            //                 PRNo = d.PRNo,
+            //                 DeliveryDate = DeliveryDate, //p.DeliveryDate
+            //                 QTY = d.QTY,
+            //                 BackOrder = d.RemainQty,
+            //                 RemainQty = d.RemainQty,
+            //                 Unit = d.Unit,
+            //                 PCSUnit = d.PCSUnit,
+            //                 MaxStock = i.MaximumStock
+            //                 ,
+            //                 MinStock = i.MinimumStock
+            //                ,
+            //                 VendorNo = c.VendorNo
+            //                ,
+            //                 VendorName = c.VendorName
+            //                ,
+            //                 CreateBy = d.CreateBy
+            //                ,
+            //                 CreateDate = d.RCDate
+            //                ,
+            //                 Status = "รับเข้าแล้ว"//d.Status
+            //                 ,
+            //                 InvNo = c.InvoiceNo
+            //                  ,
+            //                 SerialNo = d.SerialNo
+            //                ,
+            //                 LotNo = d.LotNo
+            //                ,
+            //                 ShelfNo = d.ShelfNo
+            //                  ,
+            //                 TypeReceive = d.TypeReceive
+            //             }
+            //    ).ToList();
+            //    //dgvData.DataSource = StockControl.dbClss.LINQToDataTable(r);
+            //    if (r.Count > 0)
+            //    {
+            //        dgvNo = dgvData.Rows.Count() + 1;
 
-                    foreach (var vv in r)
-                    {
-                        dgvData.Rows.Add(dgvNo.ToString(), S, vv.RCNo, vv.PRNo,vv.InvNo ,vv.CodeNo, vv.ItemNo, vv.ItemDescription
-                                    , vv.DeliveryDate, vv.QTY, vv.BackOrder, vv.RemainQty, vv.Unit, vv.PCSUnit, vv.MaxStock,
-                                    vv.MinStock, vv.VendorNo, vv.VendorName, vv.LotNo, vv.SerialNo, vv.ShelfNo,vv.CreateBy, vv.CreateDate, vv.Status, vv.TypeReceive
-                                    );
-                    }
+            //        foreach (var vv in r)
+            //        {
+            //            dgvData.Rows.Add(dgvNo.ToString(), S, vv.RCNo, vv.PRNo,vv.InvNo ,vv.CodeNo, vv.ItemNo, vv.ItemDescription
+            //                        , vv.DeliveryDate, vv.QTY, vv.BackOrder, vv.RemainQty, vv.Unit, vv.PCSUnit, vv.MaxStock,
+            //                        vv.MinStock, vv.VendorNo, vv.VendorName, vv.LotNo, vv.SerialNo, vv.ShelfNo,vv.CreateBy, vv.CreateDate, vv.Status, vv.TypeReceive
+            //                        );
+            //        }
 
-                }
+            //    }
 
-                //int rowcount = 0;
-                //foreach (var x in dgvData.Rows)
-                //{
-                //    rowcount += 1;
-                //    x.Cells["dgvNo"].Value = rowcount;
-                //}
+            //    //int rowcount = 0;
+            //    //foreach (var x in dgvData.Rows)
+            //    //{
+            //    //    rowcount += 1;
+            //    //    x.Cells["dgvNo"].Value = rowcount;
+            //    //}
 
-            }
+            //}
         }
         private void Load_PratitalReceive_PR() //รับเข้าบางส่วน
         {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                string VendorNo_ss = "";
-                if (!cboVendorName.Text.Trim().Equals(""))
-                    VendorNo_ss = txtVendorNo.Text.Trim();
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    string VendorNo_ss = "";
+            //    if (!cboVendorName.Text.Trim().Equals(""))
+            //        VendorNo_ss = txtVendorNo.Text.Trim();
 
-                int dgvNo = 0;
-                bool S = false;
-                //string RCNo = "";
-                DateTime? DeliveryDate = null;
+            //    int dgvNo = 0;
+            //    bool S = false;
+            //    //string RCNo = "";
+            //    DateTime? DeliveryDate = null;
               
-                DateTime inclusiveStart = dtDate1.Value.Date;
-                // Include the *whole* of the day indicated by searchEndDate
-                DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
+            //    DateTime inclusiveStart = dtDate1.Value.Date;
+            //    // Include the *whole* of the day indicated by searchEndDate
+            //    DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
 
-                string status = cboStatus.Text;
-                if (status == "ทั้งหมด")
-                    status = "";
-                else if (status == "รับเข้าบางส่วน")
-                    status = "Partial";
-                else if (status == "รับเข้าแล้ว")
-                    status = "Completed";
-                else
-                    status = "";
+            //    string status = cboStatus.Text;
+            //    if (status == "ทั้งหมด")
+            //        status = "";
+            //    else if (status == "รับเข้าบางส่วน")
+            //        status = "Partial";
+            //    else if (status == "รับเข้าแล้ว")
+            //        status = "Completed";
+            //    else
+            //        status = "";
 
-                var rr = (from r1 in db.tb_Receives
-                         join r2 in db.tb_ReceiveHs on r1.RCNo equals r2.RCNo
-                         //join p in db.tb_PurchaseRequestLines on d.PRID equals p.id
-                         //join p in db.tb_PurchaseOrderDetails on d.PRID equals p.id
-                         join r3 in db.tb_Items on r1.CodeNo equals r3.CodeNo
-                         //where //d.Status.Contains(status) && 
-                         ////c.VendorNo.Trim().Contains(VendorNo_ss)
-                         //   // //&& p.SS == 1
-                         //   // //&& p.PRNo.Trim().ToUpper().Contains(txtPR_PO.Text.Trim().ToUpper())
-                         //   // && d.PRNo.Trim().ToUpper().Contains(txtPR_PO.Text.Trim().ToUpper())
+            //    var rr = (from r1 in db.tb_Receives
+            //             join r2 in db.tb_ReceiveHs on r1.RCNo equals r2.RCNo
+            //             //join p in db.tb_PurchaseRequestLines on d.PRID equals p.id
+            //             //join p in db.tb_PurchaseOrderDetails on d.PRID equals p.id
+            //             join r3 in db.tb_Items on r1.CodeNo equals r3.CodeNo
+            //             //where //d.Status.Contains(status) && 
+            //             ////c.VendorNo.Trim().Contains(VendorNo_ss)
+            //             //   // //&& p.SS == 1
+            //             //   // //&& p.PRNo.Trim().ToUpper().Contains(txtPR_PO.Text.Trim().ToUpper())
+            //             //   // && d.PRNo.Trim().ToUpper().Contains(txtPR_PO.Text.Trim().ToUpper())
 
-                         //   // //&& (c.RCDate >= inclusiveStart
-                         //   // //           && c.RCDate < exclusiveEnd)
-                         //   // && (((c.RCDate >= inclusiveStart
-                         //   //       && c.RCDate < exclusiveEnd)
-                         //   //       && cbDate.Checked == true)
-                         //   //    || (cbDate.Checked == false))
-                         //   //&& 
-                         //   d.TypeReceive.Trim().ToUpper().Contains(ddlTypeReceive.Text.ToUpper())
-                         select new
-                         {
-                             CodeNo = r1.CodeNo,
-                             S = false,
-                             ItemNo = r1.ItemNo,
-                             ItemDescription = r1.ItemDescription,
-                             RCNo = r1.RCNo,
-                             PRNo = r1.PRNo,
-                             DeliveryDate = DeliveryDate,//p.DeliveryDate,
-                             QTY = r1.QTY,
-                             BackOrder = r1.RemainQty,
-                             RemainQty = r1.RemainQty,
-                             Unit = r1.Unit,
-                             PCSUnit = r1.PCSUnit,
-                             MaxStock = r3.MaximumStock
-                             ,
-                             MinStock = r3.MinimumStock
-                            ,
-                             VendorNo = r2.VendorNo
-                            ,
-                             VendorName = r2.VendorName
-                            ,
-                             CreateBy = r2.CreateBy
-                            ,
-                             CreateDate = r2.RCDate
-                            ,
-                             Status = r1.Status
-                            ,
-                             InvNo = r2.InvoiceNo
-                            ,
-                             SerialNo = r1.SerialNo
-                            ,
-                             LotNo = r1.LotNo
-                            ,
-                             ShelfNo = r1.ShelfNo
-                              ,
-                             TypeReceive = r1.TypeReceive
-                         }
-                ).ToList();
-                //dgvData.DataSource = StockControl.dbClss.LINQToDataTable(r);
-                if (rr.Count > 0)
-                {
-                    dgvNo = dgvData.Rows.Count() + 1;
-                    string status_temp = "";
-                    foreach (var vv in rr)
-                    {
-                        status_temp = vv.Status;
-                        if (vv.Status == "Partial")
-                            status_temp = "รับเข้าบางส่วน";
-                        else
-                            status_temp = "รับเข้าแล้ว";
+            //             //   // //&& (c.RCDate >= inclusiveStart
+            //             //   // //           && c.RCDate < exclusiveEnd)
+            //             //   // && (((c.RCDate >= inclusiveStart
+            //             //   //       && c.RCDate < exclusiveEnd)
+            //             //   //       && cbDate.Checked == true)
+            //             //   //    || (cbDate.Checked == false))
+            //             //   //&& 
+            //             //   d.TypeReceive.Trim().ToUpper().Contains(ddlTypeReceive.Text.ToUpper())
+            //             select new
+            //             {
+            //                 CodeNo = r1.CodeNo,
+            //                 S = false,
+            //                 ItemNo = r1.ItemNo,
+            //                 ItemDescription = r1.ItemDescription,
+            //                 RCNo = r1.RCNo,
+            //                 PRNo = r1.PRNo,
+            //                 DeliveryDate = DeliveryDate,//p.DeliveryDate,
+            //                 QTY = r1.QTY,
+            //                 BackOrder = r1.RemainQty,
+            //                 RemainQty = r1.RemainQty,
+            //                 Unit = r1.Unit,
+            //                 PCSUnit = r1.PCSUnit,
+            //                 MaxStock = r3.MaximumStock
+            //                 ,
+            //                 MinStock = r3.MinimumStock
+            //                ,
+            //                 VendorNo = r2.VendorNo
+            //                ,
+            //                 VendorName = r2.VendorName
+            //                ,
+            //                 CreateBy = r2.CreateBy
+            //                ,
+            //                 CreateDate = r2.RCDate
+            //                ,
+            //                 Status = r1.Status
+            //                ,
+            //                 InvNo = r2.InvoiceNo
+            //                ,
+            //                 SerialNo = r1.SerialNo
+            //                ,
+            //                 LotNo = r1.LotNo
+            //                ,
+            //                 ShelfNo = r1.ShelfNo
+            //                  ,
+            //                 TypeReceive = r1.TypeReceive
+            //             }
+            //    ).ToList();
+            //    //dgvData.DataSource = StockControl.dbClss.LINQToDataTable(r);
+            //    if (rr.Count > 0)
+            //    {
+            //        dgvNo = dgvData.Rows.Count() + 1;
+            //        string status_temp = "";
+            //        foreach (var vv in rr)
+            //        {
+            //            status_temp = vv.Status;
+            //            if (vv.Status == "Partial")
+            //                status_temp = "รับเข้าบางส่วน";
+            //            else
+            //                status_temp = "รับเข้าแล้ว";
 
-                        dgvData.Rows.Add(dgvNo.ToString(), S, vv.RCNo, vv.PRNo, vv.InvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
-                                    , vv.DeliveryDate, vv.QTY, vv.BackOrder, vv.RemainQty, vv.Unit, vv.PCSUnit, vv.MaxStock,
-                                    vv.MinStock, vv.VendorNo, vv.VendorName, vv.LotNo, vv.SerialNo, vv.ShelfNo, vv.CreateBy, vv.CreateDate, status_temp, vv.TypeReceive
-                                    );
-                    }
+            //            dgvData.Rows.Add(dgvNo.ToString(), S, vv.RCNo, vv.PRNo, vv.InvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
+            //                        , vv.DeliveryDate, vv.QTY, vv.BackOrder, vv.RemainQty, vv.Unit, vv.PCSUnit, vv.MaxStock,
+            //                        vv.MinStock, vv.VendorNo, vv.VendorName, vv.LotNo, vv.SerialNo, vv.ShelfNo, vv.CreateBy, vv.CreateDate, status_temp, vv.TypeReceive
+            //                        );
+            //        }
 
-                }
+            //    }
 
-                //int rowcount = 0;
-                //foreach (var x in dgvData.Rows)
-                //{
-                //    rowcount += 1;
-                //    x.Cells["dgvNo"].Value = rowcount;
-                //}
+            //    //int rowcount = 0;
+            //    //foreach (var x in dgvData.Rows)
+            //    //{
+            //    //    rowcount += 1;
+            //    //    x.Cells["dgvNo"].Value = rowcount;
+            //    //}
 
 
-            }
+            //}
         }
         private void Load_CompletedReceive_PR()//รับเข้าแล้ว
         {
@@ -715,7 +715,7 @@ namespace StockControl
                             dt2 = Convert.ToDateTime(dtDate2.Value).ToString("yyyyMMdd");
                         }
                         dgvData.DataSource = null;
-                        var g = (from ix in db.sp_027_tb_Receive_List(VendorNo_ss, "", txtPR_PO.Text.Trim(), status, ddlTypeReceive.Text, dt1, dt2) select ix).ToList();
+                        var g = (from ix in db.sp_027_tb_Receive_List(VendorNo_ss, "", txtPR_PO.Text.Trim(), status, "", dt1, dt2) select ix).ToList();
                         if(g.Count>0)
                         {
                             dgvData.DataSource = g;

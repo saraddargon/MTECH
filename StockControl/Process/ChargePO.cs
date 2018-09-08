@@ -1521,51 +1521,51 @@ namespace StockControl
         }
         private void Add_Part(string CodeNo, decimal OrderQty)
         {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                int Row = 0; Row = dgvData.Rows.Count() + 1;
-                var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo.Contains(CodeNo)).ToList();
-                if (g.Count > 0)
-                {
-                    //dgvData.Rows.Add(Row.ToString(), CodeNo,
-                    //    StockControl.dbClss.TSt(g.FirstOrDefault().ItemNo)
-                    //    , StockControl.dbClss.TSt(g.FirstOrDefault().ItemDescription)
-                    //    , StockControl.dbClss.TSt(g.FirstOrDefault().GroupCode)
-                    //    , OrderQty
-                    //    , StockControl.dbClss.TDe(g.FirstOrDefault().PCSUnit)
-                    //    , StockControl.dbClss.TSt(g.FirstOrDefault().UnitBuy)
-                    //    , StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
-                    //    , 1 * StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
-                    //    , ""
-                    //    , "" //Lotno
-                    //    , "" //SerialNo
-                    //    , "" //MCName
-                    //    , "" //LineName
-                    //    , DateTime.Now
-                    //    ,0.0 // RemainQty
-                    //    ,0
-                    //    );   
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    int Row = 0; Row = dgvData.Rows.Count() + 1;
+            //    var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo.Contains(CodeNo)).ToList();
+            //    if (g.Count > 0)
+            //    {
+            //        //dgvData.Rows.Add(Row.ToString(), CodeNo,
+            //        //    StockControl.dbClss.TSt(g.FirstOrDefault().ItemNo)
+            //        //    , StockControl.dbClss.TSt(g.FirstOrDefault().ItemDescription)
+            //        //    , StockControl.dbClss.TSt(g.FirstOrDefault().GroupCode)
+            //        //    , OrderQty
+            //        //    , StockControl.dbClss.TDe(g.FirstOrDefault().PCSUnit)
+            //        //    , StockControl.dbClss.TSt(g.FirstOrDefault().UnitBuy)
+            //        //    , StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
+            //        //    , 1 * StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
+            //        //    , ""
+            //        //    , "" //Lotno
+            //        //    , "" //SerialNo
+            //        //    , "" //MCName
+            //        //    , "" //LineName
+            //        //    , DateTime.Now
+            //        //    ,0.0 // RemainQty
+            //        //    ,0
+            //        //    );   
 
-                    //string CodeNo = "";
-                    string ItemNo = StockControl.dbClss.TSt(g.FirstOrDefault().ItemNo);
-                    string ItemDescription = StockControl.dbClss.TSt(g.FirstOrDefault().ItemDescription);
-                    string GroupCode = StockControl.dbClss.TSt(g.FirstOrDefault().GroupCode);
-                    //int OrderQty = 0;
-                    decimal PCSUnit = StockControl.dbClss.TDe(g.FirstOrDefault().PCSUnit);
-                    string UnitBuy = StockControl.dbClss.TSt(g.FirstOrDefault().UnitBuy);
-                    decimal StandardCost = StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost);
+            //        //string CodeNo = "";
+            //        string ItemNo = StockControl.dbClss.TSt(g.FirstOrDefault().ItemNo);
+            //        string ItemDescription = StockControl.dbClss.TSt(g.FirstOrDefault().ItemDescription);
+            //        string GroupCode = StockControl.dbClss.TSt(g.FirstOrDefault().GroupCode);
+            //        //int OrderQty = 0;
+            //        decimal PCSUnit = StockControl.dbClss.TDe(g.FirstOrDefault().PCSUnit);
+            //        string UnitBuy = StockControl.dbClss.TSt(g.FirstOrDefault().UnitBuy);
+            //        decimal StandardCost = StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost);
                     
-                    string Status = "Adding";
-                    string PRNO = "";
-                    int Refid = 0;
-                    int id = 0;
+            //        string Status = "Adding";
+            //        string PRNO = "";
+            //        int Refid = 0;
+            //        int id = 0;
                     
 
-                    Add_Item(Row, CodeNo, ItemNo, ItemDescription, GroupCode, OrderQty
-                        , PCSUnit, UnitBuy, StandardCost, PRNO, Status, Refid, id);
+            //        Add_Item(Row, CodeNo, ItemNo, ItemDescription, GroupCode, OrderQty
+            //            , PCSUnit, UnitBuy, StandardCost, PRNO, Status, Refid, id);
 
-                }
-            }
+            //    }
+            //}
         }
 
         private void txtCost_KeyPress(object sender, KeyPressEventArgs e)
