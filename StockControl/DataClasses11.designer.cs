@@ -156,9 +156,6 @@ namespace StockControl
     partial void Insertmh_RoutingType(mh_RoutingType instance);
     partial void Updatemh_RoutingType(mh_RoutingType instance);
     partial void Deletemh_RoutingType(mh_RoutingType instance);
-    partial void Insertmh_Routing(mh_Routing instance);
-    partial void Updatemh_Routing(mh_Routing instance);
-    partial void Deletemh_Routing(mh_Routing instance);
     partial void Insertmh_Holiday(mh_Holiday instance);
     partial void Updatemh_Holiday(mh_Holiday instance);
     partial void Deletemh_Holiday(mh_Holiday instance);
@@ -276,6 +273,9 @@ namespace StockControl
     partial void Insertmh_Item(mh_Item instance);
     partial void Updatemh_Item(mh_Item instance);
     partial void Deletemh_Item(mh_Item instance);
+    partial void Insertmh_Routing(mh_Routing instance);
+    partial void Updatemh_Routing(mh_Routing instance);
+    partial void Deletemh_Routing(mh_Routing instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -676,14 +676,6 @@ namespace StockControl
 			}
 		}
 		
-		public System.Data.Linq.Table<mh_Routing> mh_Routings
-		{
-			get
-			{
-				return this.GetTable<mh_Routing>();
-			}
-		}
-		
 		public System.Data.Linq.Table<mh_Holiday> mh_Holidays
 		{
 			get
@@ -993,6 +985,14 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<mh_Item>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_Routing> mh_Routings
+		{
+			get
+			{
+				return this.GetTable<mh_Routing>();
 			}
 		}
 		
@@ -17341,332 +17341,6 @@ namespace StockControl
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_Routing")]
-	public partial class mh_Routing : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _RoutingNo;
-		
-		private string _RoutingName;
-		
-		private int _RoutingUOM;
-		
-		private int _RoutingType;
-		
-		private string _Description;
-		
-		private decimal _SetupTime;
-		
-		private decimal _RunTime;
-		
-		private decimal _WaitTime;
-		
-		private decimal _UnitCostPer;
-		
-		private int _RNo;
-		
-		private bool _Active;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnRoutingNoChanging(string value);
-    partial void OnRoutingNoChanged();
-    partial void OnRoutingNameChanging(string value);
-    partial void OnRoutingNameChanged();
-    partial void OnRoutingUOMChanging(int value);
-    partial void OnRoutingUOMChanged();
-    partial void OnRoutingTypeChanging(int value);
-    partial void OnRoutingTypeChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnSetupTimeChanging(decimal value);
-    partial void OnSetupTimeChanged();
-    partial void OnRunTimeChanging(decimal value);
-    partial void OnRunTimeChanged();
-    partial void OnWaitTimeChanging(decimal value);
-    partial void OnWaitTimeChanged();
-    partial void OnUnitCostPerChanging(decimal value);
-    partial void OnUnitCostPerChanged();
-    partial void OnRNoChanging(int value);
-    partial void OnRNoChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    #endregion
-		
-		public mh_Routing()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoutingNo", DbType="NVarChar(50)")]
-		public string RoutingNo
-		{
-			get
-			{
-				return this._RoutingNo;
-			}
-			set
-			{
-				if ((this._RoutingNo != value))
-				{
-					this.OnRoutingNoChanging(value);
-					this.SendPropertyChanging();
-					this._RoutingNo = value;
-					this.SendPropertyChanged("RoutingNo");
-					this.OnRoutingNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoutingName", DbType="NVarChar(100)")]
-		public string RoutingName
-		{
-			get
-			{
-				return this._RoutingName;
-			}
-			set
-			{
-				if ((this._RoutingName != value))
-				{
-					this.OnRoutingNameChanging(value);
-					this.SendPropertyChanging();
-					this._RoutingName = value;
-					this.SendPropertyChanged("RoutingName");
-					this.OnRoutingNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoutingUOM", DbType="Int NOT NULL")]
-		public int RoutingUOM
-		{
-			get
-			{
-				return this._RoutingUOM;
-			}
-			set
-			{
-				if ((this._RoutingUOM != value))
-				{
-					this.OnRoutingUOMChanging(value);
-					this.SendPropertyChanging();
-					this._RoutingUOM = value;
-					this.SendPropertyChanged("RoutingUOM");
-					this.OnRoutingUOMChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoutingType", DbType="Int NOT NULL")]
-		public int RoutingType
-		{
-			get
-			{
-				return this._RoutingType;
-			}
-			set
-			{
-				if ((this._RoutingType != value))
-				{
-					this.OnRoutingTypeChanging(value);
-					this.SendPropertyChanging();
-					this._RoutingType = value;
-					this.SendPropertyChanged("RoutingType");
-					this.OnRoutingTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(200)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SetupTime", DbType="Decimal(18,2) NOT NULL")]
-		public decimal SetupTime
-		{
-			get
-			{
-				return this._SetupTime;
-			}
-			set
-			{
-				if ((this._SetupTime != value))
-				{
-					this.OnSetupTimeChanging(value);
-					this.SendPropertyChanging();
-					this._SetupTime = value;
-					this.SendPropertyChanged("SetupTime");
-					this.OnSetupTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RunTime", DbType="Decimal(18,2) NOT NULL")]
-		public decimal RunTime
-		{
-			get
-			{
-				return this._RunTime;
-			}
-			set
-			{
-				if ((this._RunTime != value))
-				{
-					this.OnRunTimeChanging(value);
-					this.SendPropertyChanging();
-					this._RunTime = value;
-					this.SendPropertyChanged("RunTime");
-					this.OnRunTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WaitTime", DbType="Decimal(18,2) NOT NULL")]
-		public decimal WaitTime
-		{
-			get
-			{
-				return this._WaitTime;
-			}
-			set
-			{
-				if ((this._WaitTime != value))
-				{
-					this.OnWaitTimeChanging(value);
-					this.SendPropertyChanging();
-					this._WaitTime = value;
-					this.SendPropertyChanged("WaitTime");
-					this.OnWaitTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitCostPer", DbType="Decimal(18,2) NOT NULL")]
-		public decimal UnitCostPer
-		{
-			get
-			{
-				return this._UnitCostPer;
-			}
-			set
-			{
-				if ((this._UnitCostPer != value))
-				{
-					this.OnUnitCostPerChanging(value);
-					this.SendPropertyChanging();
-					this._UnitCostPer = value;
-					this.SendPropertyChanged("UnitCostPer");
-					this.OnUnitCostPerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RNo", DbType="Int NOT NULL")]
-		public int RNo
-		{
-			get
-			{
-				return this._RNo;
-			}
-			set
-			{
-				if ((this._RNo != value))
-				{
-					this.OnRNoChanging(value);
-					this.SendPropertyChanging();
-					this._RNo = value;
-					this.SendPropertyChanged("RNo");
-					this.OnRNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_Holiday")]
 	public partial class mh_Holiday : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -32876,6 +32550,332 @@ namespace StockControl
 					this._Location = value;
 					this.SendPropertyChanged("Location");
 					this.OnLocationChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_Routing")]
+	public partial class mh_Routing : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _RoutingNo;
+		
+		private string _RoutingName;
+		
+		private int _RoutingUOM;
+		
+		private int _idWorkCenter;
+		
+		private string _Description;
+		
+		private decimal _SetupTime;
+		
+		private decimal _RunTime;
+		
+		private decimal _WaitTime;
+		
+		private decimal _UnitCostPer;
+		
+		private int _RNo;
+		
+		private bool _Active;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnRoutingNoChanging(string value);
+    partial void OnRoutingNoChanged();
+    partial void OnRoutingNameChanging(string value);
+    partial void OnRoutingNameChanged();
+    partial void OnRoutingUOMChanging(int value);
+    partial void OnRoutingUOMChanged();
+    partial void OnidWorkCenterChanging(int value);
+    partial void OnidWorkCenterChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnSetupTimeChanging(decimal value);
+    partial void OnSetupTimeChanged();
+    partial void OnRunTimeChanging(decimal value);
+    partial void OnRunTimeChanged();
+    partial void OnWaitTimeChanging(decimal value);
+    partial void OnWaitTimeChanged();
+    partial void OnUnitCostPerChanging(decimal value);
+    partial void OnUnitCostPerChanged();
+    partial void OnRNoChanging(int value);
+    partial void OnRNoChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public mh_Routing()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoutingNo", DbType="NVarChar(50)")]
+		public string RoutingNo
+		{
+			get
+			{
+				return this._RoutingNo;
+			}
+			set
+			{
+				if ((this._RoutingNo != value))
+				{
+					this.OnRoutingNoChanging(value);
+					this.SendPropertyChanging();
+					this._RoutingNo = value;
+					this.SendPropertyChanged("RoutingNo");
+					this.OnRoutingNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoutingName", DbType="NVarChar(100)")]
+		public string RoutingName
+		{
+			get
+			{
+				return this._RoutingName;
+			}
+			set
+			{
+				if ((this._RoutingName != value))
+				{
+					this.OnRoutingNameChanging(value);
+					this.SendPropertyChanging();
+					this._RoutingName = value;
+					this.SendPropertyChanged("RoutingName");
+					this.OnRoutingNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoutingUOM", DbType="Int NOT NULL")]
+		public int RoutingUOM
+		{
+			get
+			{
+				return this._RoutingUOM;
+			}
+			set
+			{
+				if ((this._RoutingUOM != value))
+				{
+					this.OnRoutingUOMChanging(value);
+					this.SendPropertyChanging();
+					this._RoutingUOM = value;
+					this.SendPropertyChanged("RoutingUOM");
+					this.OnRoutingUOMChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idWorkCenter", DbType="Int NOT NULL")]
+		public int idWorkCenter
+		{
+			get
+			{
+				return this._idWorkCenter;
+			}
+			set
+			{
+				if ((this._idWorkCenter != value))
+				{
+					this.OnidWorkCenterChanging(value);
+					this.SendPropertyChanging();
+					this._idWorkCenter = value;
+					this.SendPropertyChanged("idWorkCenter");
+					this.OnidWorkCenterChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(200)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SetupTime", DbType="Decimal(18,2) NOT NULL")]
+		public decimal SetupTime
+		{
+			get
+			{
+				return this._SetupTime;
+			}
+			set
+			{
+				if ((this._SetupTime != value))
+				{
+					this.OnSetupTimeChanging(value);
+					this.SendPropertyChanging();
+					this._SetupTime = value;
+					this.SendPropertyChanged("SetupTime");
+					this.OnSetupTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RunTime", DbType="Decimal(18,2) NOT NULL")]
+		public decimal RunTime
+		{
+			get
+			{
+				return this._RunTime;
+			}
+			set
+			{
+				if ((this._RunTime != value))
+				{
+					this.OnRunTimeChanging(value);
+					this.SendPropertyChanging();
+					this._RunTime = value;
+					this.SendPropertyChanged("RunTime");
+					this.OnRunTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WaitTime", DbType="Decimal(18,2) NOT NULL")]
+		public decimal WaitTime
+		{
+			get
+			{
+				return this._WaitTime;
+			}
+			set
+			{
+				if ((this._WaitTime != value))
+				{
+					this.OnWaitTimeChanging(value);
+					this.SendPropertyChanging();
+					this._WaitTime = value;
+					this.SendPropertyChanged("WaitTime");
+					this.OnWaitTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitCostPer", DbType="Decimal(18,2) NOT NULL")]
+		public decimal UnitCostPer
+		{
+			get
+			{
+				return this._UnitCostPer;
+			}
+			set
+			{
+				if ((this._UnitCostPer != value))
+				{
+					this.OnUnitCostPerChanging(value);
+					this.SendPropertyChanging();
+					this._UnitCostPer = value;
+					this.SendPropertyChanged("UnitCostPer");
+					this.OnUnitCostPerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RNo", DbType="Int NOT NULL")]
+		public int RNo
+		{
+			get
+			{
+				return this._RNo;
+			}
+			set
+			{
+				if ((this._RNo != value))
+				{
+					this.OnRNoChanging(value);
+					this.SendPropertyChanging();
+					this._RNo = value;
+					this.SendPropertyChanged("RNo");
+					this.OnRNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
 				}
 			}
 		}
