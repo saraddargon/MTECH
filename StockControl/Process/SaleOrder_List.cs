@@ -9,7 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 namespace StockControl
 {
-    public partial class CustomerPO_List : Telerik.WinControls.UI.RadRibbonForm
+    public partial class SaleOrder_List : Telerik.WinControls.UI.RadRibbonForm
     {
         public string PONo { get; private set; } = "";
         public string CstmNo { get; private set; } = "";
@@ -17,12 +17,12 @@ namespace StockControl
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
 
-        public CustomerPO_List(int sType = 1)
+        public SaleOrder_List(int sType = 1)
         {
             InitializeComponent();
             this.sType = sType;
         }
-        public CustomerPO_List()
+        public SaleOrder_List()
         {
             InitializeComponent();
         }
@@ -69,12 +69,6 @@ namespace StockControl
 
             dgvData.AutoGenerateColumns = false;
             DataLoad();
-
-            dgvData.Columns.ToList().ForEach(x =>
-            {
-                if (x.Name != "S")
-                    x.ReadOnly = true;
-            });
         }
         private void DataLoad()
         {
@@ -92,12 +86,12 @@ namespace StockControl
                     DateTime dFrom = (cbChkDate.Checked) ? dtFrom.Value.Date : new DateTime(1999, 1, 1);
                     DateTime dTo = (cbChkDate.Checked) ? dtTo.Value.Date.AddDays(1).AddMinutes(1) : DateTime.MaxValue;
 
-                    var t = db.mh_CustomerPOs.Where(x =>
-                                x.Active && x.DemandType == 0
-                                && (x.CustomerPONo.Contains(pono))
+                    var t = db.mh_SaleOrders.Where(x =>
+                                x.Active
+                                && (x.SONo.Contains(pono))
                                 && (x.CustomerNo == cstmno || cstmno == "")
                                 && (x.ItemNo == item || item == "")
-                                && (x.OrderDate >= dFrom && x.OrderDate <= dTo)).ToList();
+                                && (x.SODate >= dFrom && x.SODate <= dTo)).ToList();
                     dgvData.DataSource = null;
                     dgvData.AutoGenerateColumns = false;
                     dgvData.DataSource = t;
@@ -155,7 +149,7 @@ namespace StockControl
             //select Item
             if (sType == 1)
             {
-                var t = new CustomerPO();
+                var t = new SaleOrder();
                 t.ShowDialog();
             }
             else
@@ -178,12 +172,12 @@ namespace StockControl
             if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
                 var rowe = dgvData.CurrentCell.RowInfo;
-                PONo = rowe.Cells["PONo"].Value.ToSt();
+                PONo = rowe.Cells["SONo"].Value.ToSt();
                 CstmNo = rowe.Cells["CustomerNo"].Value.ToSt();
 
                 if (sType == 1)
                 {
-                    var p = new CustomerPO(PONo, CstmNo);
+                    var p = new SaleOrder(PONo, CstmNo);
                     p.ShowDialog();
                     DataLoad();
                     PONo = "";
@@ -272,60 +266,13 @@ namespace StockControl
 
         private void btnCreateSaleOrder_Click(object sender, EventArgs e)
         {
-            CreateSaleOrder();
+
         }
         void CreateSaleOrder()
         {
-            dgvData.EndEdit();
-            try
-            {
-                if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
-                {
-                    var rowS = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
-                    if (rowS.Select(x => x.Cells["CustomerNo"].Value.ToSt()).Count() > 1)
-                    {
-                        baseClass.Warning("Sale order have only 1 Customer.");
-                        return;
-                    }
 
-                    var idList = new List<int>();
-                    foreach (var item in rowS)
-                    {
-                        int id = item.Cells["id"].Value.ToInt();
-                        if (item.Cells["Status"].Value.ToSt() != "Waiting")
-                        {
-                            baseClass.Warning("Status P/O Cannot create Sale Order.\n");
-                            return;
-                        }
-                        idList.Add(id);
-                    }
-
-                    var so = new SaleOrder(idList);
-                    so.ShowDialog();
-                    DataLoad();
-                }
-                else
-                {
-                    baseClass.Warning("Please select data.");
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                baseClass.Warning(ex.Message);
-            }
         }
     }
 
-
-    public class CustomerCombo
-    {
-        public string No { get; set; }
-        public string Name { get; set; }
-    }
-    public class ItemCombo
-    {
-        public string Item { get; set; }
-        public string ItemName { get; set; }
-    }
+    
 }

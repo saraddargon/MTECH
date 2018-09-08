@@ -14,16 +14,16 @@ using ClassLib;
 
 namespace StockControl
 {
-    public partial class ProductionOrder : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Forcast : Telerik.WinControls.UI.RadRibbonForm
     {
         string t_PONo = "";
         string t_CustomerNo = "";
 
-        public ProductionOrder()
+        public Forcast()
         {
             InitializeComponent();
         }
-        public ProductionOrder(string PONo, string CustomerNo)
+        public Forcast(string PONo, string CustomerNo)
         {
             InitializeComponent();
             this.t_PONo = PONo;
@@ -62,7 +62,12 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
 
-
+                    var cus = db.mh_Customers.Where(x => x.Active).Select(x => new { x.No, x.Name }).ToList();
+                    cbbCSTM.MultiColumnComboBoxElement.AutoSizeDropDownToBestFit = true;
+                    cbbCSTM.DisplayMember = "Name";
+                    cbbCSTM.ValueMember = "No";
+                    cbbCSTM.MultiColumnComboBoxElement.DataSource = cus;
+                    cbbCSTM.SelectedIndex = -1;
                 }
 
                 ClearData();
@@ -84,14 +89,31 @@ namespace StockControl
                 int ck = 0;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var t = db.mh_CustomerPOs.Where(x => x.Active && x.CustomerPONo == t_PONo && x.CustomerNo == t_CustomerNo).ToList();
+                    var t = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1 && x.CustomerPONo == t_PONo && x.CustomerNo == t_CustomerNo).ToList();
                     if (t.Count > 0)
                     {
+                        string CustNo = t.First().CustomerNo;
+                        cbbCSTM.SelectedValue = CustNo;
+                        txtCSTMNo.Text = CustNo;
+                        txtPONo.Text = t_PONo;
+                        dtOrderDate.Value = t.First().OrderDate.Date;
+                        txtRemark.Text = t.First().RemarkHD;
+                        txtTotal.Text = t.Sum(x => x.Amount).ToString("#,0.00");
+                        foreach (var tt in t)
+                        {
+                            var rowe = dgvData.Rows.AddNew();
+                            addRow(rowe.Index, tt.ReqDate.Date, tt.ItemNo, tt.ItemName
+                                , tt.Quantity, tt.UOM, tt.PCSUnit, tt.PricePerUnit, tt.Amount
+                                , tt.OutSO, tt.RemarkDT, tt.id, tt.Status, tt.ForcastType);
+                        }
+
+                        SetRowNo1(dgvData);
+                        CallTotal();
 
                         btnView_Click(null, null);
                     }
-                    else if(warningMssg)
-                        baseClass.Warning("P/O not found.!!");
+                    else if (warningMssg)
+                        baseClass.Warning("Forcast not found.!!");
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -112,7 +134,14 @@ namespace StockControl
 
         private void ClearData()
         {
-
+            cbbCSTM.SelectedIndex = -1;
+            txtCSTMNo.Text = "";
+            txtPONo.Text = "";
+            dtOrderDate.Value = DateTime.Today;
+            dgvData.Rows.Clear();
+            dgvData.DataSource = null;
+            txtRemark.Text = "";
+            txtTotal.Text = (0).ToMoney();
         }
         private void btnNew_Click(object sender, EventArgs e)
         {
@@ -121,12 +150,16 @@ namespace StockControl
             btnNew.Enabled = false;
             btnSave.Enabled = true;
             btnDelete.Enabled = true;
-            btnDiscon.Enabled = false;
 
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
-            
+
+            cbbCSTM.Enabled = true;
+            txtPONo.ReadOnly = false;
+            dtOrderDate.ReadOnly = false;
+            txtRemark.ReadOnly = false;
+
             dgvData.ReadOnly = false;
 
             ClearData();
@@ -154,6 +187,11 @@ namespace StockControl
 
             dgvData.ReadOnly = true;
 
+            cbbCSTM.Enabled = false;
+            txtPONo.ReadOnly = true;
+            dtOrderDate.ReadOnly = true;
+            txtRemark.ReadOnly = true;
+
             Enable_Status(false, "View");
             lblStatus.Text = "View";
             Ac = "View";
@@ -171,7 +209,13 @@ namespace StockControl
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
 
+            cbbCSTM.Enabled = true;
+            txtPONo.ReadOnly = false;
+            dtOrderDate.ReadOnly = false;
+            txtRemark.ReadOnly = false;
+
             dgvData.ReadOnly = false;
+
 
             Enable_Status(true, "Edit");
             lblStatus.Text = "Edit";
@@ -182,7 +226,68 @@ namespace StockControl
         {
             try
             {
+                string poNo = txtPONo.Text.Trim();
+                string cstmNo = txtCSTMNo.Text.Trim();
+                if (poNo != "" && cstmNo != "")
+                {
+                    if (baseClass.IsDel($"Do you want to Delete Forcast {poNo} ?"))
+                    {
+                        using (var db = new DataClasses1DataContext())
+                        {
+                            var p = db.mh_CustomerPOs.Where(x => x.DemandType == 1 && x.CustomerNo == cstmNo && x.CustomerPONo == poNo && x.Active).ToList();
+                            if (p.Where(x => x.Status != "Waiting").Count() < 1)
+                            {
+                                foreach (var pp in p)
+                                {
+                                    pp.Active = false;
+                                    pp.UpdateBy = Classlib.User;
+                                    pp.UpdateDate = DateTime.Now;
+                                }
 
+                                db.SubmitChanges();
+
+                                baseClass.Info("Delete Forcast complete.");
+                                ClearData();
+                                btnNew_Click(null, null);
+                            }
+                            else
+                                baseClass.Warning("Forcast Status cannot Delete.");
+                        }
+                    }
+                }
+                //if(row >= 0)
+                //{
+                //    string itemNo = dgvData.Rows[row].Cells["Item"].Value.ToSt();
+                //    if (baseClass.IsDel($"Do you want to Delete item ({itemNo}) ?"))
+                //    {
+                //        var rowe = dgvData.Rows[row];
+                //        if (rowe.Cells["id"].Value.ToInt() <= 0)
+                //            dgvData.Rows.Remove(rowe);
+                //        else
+                //        {
+                //            using (var db = new DataClasses1DataContext())
+                //            {
+                //                int id = rowe.Cells["id"].Value.ToInt();
+                //                var m = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
+                //                if (m != null)
+                //                {
+                //                    m.Active = false;
+                //                    m.UpdateDate = DateTime.Now;
+                //                    m.UpdateBy = Classlib.User;
+                //                    db.SubmitChanges();
+                //                    dgvData.Rows.Remove(rowe);
+                //                }
+                //            }
+                //        }
+
+                //        SetRowNo1(dgvData);
+                //        CallTotal();
+                //        if (dgvData.CurrentRow != null)
+                //            row = dgvData.CurrentRow.Index;
+                //        else
+                //            row = -1;
+                //    }
+                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -194,8 +299,27 @@ namespace StockControl
             string err = "";
             try
             {
-                //if (txtCodeNo.Text.Equals(""))
-                //    err += " “รหัสพาร์ท:” เป็นค่าว่าง \n";
+                if (cbbCSTM.SelectedValue.ToSt() == "" || txtCSTMNo.Text == "")
+                    err += " “Customer:” is empty \n";
+                if (txtPONo.Text.Trim() == "")
+                    err += " “Forcast no.:” is empty \n";
+                if (dgvData.Rows.Where(x => x.IsVisible).Count() < 1)
+                    err += " “Items:” is empty \n";
+                if (err == "")
+                {
+                    foreach (var item in dgvData.Rows.Where(x => x.IsVisible))
+                    {
+                        string itemNo = item.Cells["Item"].Value.ToSt();
+                        if (itemNo == "") continue;
+                        if (item.Cells["ReqDate"].Value == null)
+                            err += " “Request Date.:” is empty \n";
+                        if (item.Cells["Qty"].Value.ToDecimal() <= 0)
+                            err += " “Qty:” is less than 0 \n";
+
+                        if (err != "")
+                            break;
+                    }
+                }
 
                 if (!err.Equals(""))
                     MessageBox.Show(err);
@@ -232,13 +356,64 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
+                string pono = txtPONo.Text;
+                string cstmNo = txtCSTMNo.Text;
                 using (var db = new DataClasses1DataContext())
                 {
+                    foreach (var item in dgvData.Rows)
+                    {
+                        int id = item.Cells["id"].Value.ToInt();
+                        var t = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
+                        if (t != null)
+                        {
+                            //edit
+                            t.Active = item.IsVisible;
+                        }
+                        else if (item.IsVisible)
+                        {
+                            //add
+                            t = new mh_CustomerPO();
+                            t.Active = true;
+                            db.mh_CustomerPOs.InsertOnSubmit(t);
+                        }
+                        else
+                            continue;
 
+                        t.DemandType = 1; //Forcast
+                        t.Amount = item.Cells["Amount"].Value.ToDecimal();
+                        t.id = 0;
+                        t.CreateBy = Classlib.User;
+                        t.CreateDate = DateTime.Now;
+                        t.UpdateBy = Classlib.User;
+                        t.UpdateDate = DateTime.Now;
+                        t.CustomerNo = cstmNo;
+                        t.CustomerPONo = pono;
+                        t.id = item.Cells["id"].Value.ToInt();
+                        t.ItemName = item.Cells["ItemName"].Value.ToSt();
+                        t.ItemNo = item.Cells["Item"].Value.ToSt();
+                        t.OrderDate = dtOrderDate.Value.Date;
+                        t.OutSO = item.Cells["OutSO"].Value.ToDecimal();
+                        t.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
+                        t.PricePerUnit = item.Cells["PricePerUnit"].Value.ToDecimal();
+                        t.Quantity = item.Cells["Qty"].Value.ToDecimal();
+                        t.RemarkDT = item.Cells["Remark"].Value.ToSt();
+                        t.RemarkHD = txtRemark.Text;
+                        t.ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value.Date;
+                        t.Status = item.Cells["Status"].Value.ToSt();
+                        t.UOM = item.Cells["Unit"].Value.ToSt();
+                        t.ForcastType = item.Cells["ForcastType"].Value.ToSt();
+                        //t.ReqReceiveDate = item.Cells["ReqReceiveDate"].Value.ToDateTime();
+                    }
+
+                    t_PONo = pono;
+                    t_CustomerNo = cstmNo;
+                    db.SubmitChanges();
                 }
 
                 baseClass.Info("Save complete(s).");
                 ClearData();
+                txtCSTMNo.Text = t_CustomerNo;
+                txtPONo.Text = t_PONo;
                 DataLoad();
             }
             catch (Exception ex)
@@ -267,6 +442,7 @@ namespace StockControl
                         else
                             dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = 0;
 
+                        CallTotal();
                     }
                     else if (e.Column.Name.Equals("Item"))
                     {
@@ -284,10 +460,12 @@ namespace StockControl
 
                             //set Tool
                             if (beginItem == "")
+                            {
                                 addRow(e.RowIndex
                                     , DateTime.Now, t.InternalNo, t.InternalName
                                     , 1, t.BaseUOM, pcsunit, 0, 0
-                                    , 1, 1, "", 0, "Waiting");
+                                    , 1, "", 0, "Waiting", t.ReplenishmentType);
+                            }
                             else
                             {
                                 e.Row.Cells["ItemName"].Value = t.InternalName;
@@ -339,7 +517,7 @@ namespace StockControl
         }
         void addRow(int rowIndex, DateTime ReqDate, string ItemNo, string ItemName, decimal Qty
             , string UOM, decimal PCSUnit, decimal PricePerUnit, decimal Amount
-            , decimal OutShip, decimal OutInv, string RemarkDT, int id, string Status)
+            , decimal OutSO, string RemarkDT, int id, string Status, string forcastType)
         {
             var rowE = dgvData.Rows[rowIndex];
             try
@@ -352,20 +530,19 @@ namespace StockControl
                 rowE.Cells["PCSUnit"].Value = PCSUnit;
                 rowE.Cells["PricePerUnit"].Value = PricePerUnit;
                 rowE.Cells["Amount"].Value = Amount;
-                rowE.Cells["OutShip"].Value = OutShip;
-                rowE.Cells["OutInv"].Value = OutInv;
+                rowE.Cells["OutSO"].Value = OutSO;
                 rowE.Cells["Remark"].Value = RemarkDT;
                 rowE.Cells["id"].Value = id;
-                rowE.Cells["Status"].Value = Status.ToInt();
+                rowE.Cells["Status"].Value = Status;
+                rowE.Cells["ForcastType"].Value = forcastType;
+
+                SetRowNo1(dgvData);
             }
             catch (Exception ex)
             {
                 baseClass.Error(ex.Message);
             }
         }
-
-
-
 
         private void radGridView1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
@@ -407,6 +584,29 @@ namespace StockControl
         }
 
 
+        private void เพมพารทToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { this.Cursor = Cursors.Default; }
+        }
+        private bool check_Duppicate(string CodeNo)
+        {
+            bool re = false;
+            foreach (var rd1 in dgvData.Rows)
+            {
+                if (rd1.IsVisible.Equals(true))
+                {
+                    if (StockControl.dbClss.TSt(rd1.Cells["dgvCodeNo"].Value).Equals(CodeNo))
+                        re = true;
+                }
+            }
+
+            return re;
+
+        }
         private void ลบพารทToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -432,18 +632,29 @@ namespace StockControl
                         else
                         {
                             row = dgvData.CurrentRow.Index;
-                            btnDelete_Click(null, null);
+                            //btnDelete_Click(null, null);
+                            using (var db = new DataClasses1DataContext())
+                            {
+                                var m = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
+                                if(m != null)
+                                {
+                                    m.Active = false;
+                                    m.UpdateDate = DateTime.Now;
+                                    m.UpdateBy = Classlib.User;
+                                    db.SubmitChanges();
+                                }
+                            }
                         }
                         CallTotal();
                         //getTotal();
                         SetRowNo1(dgvData);
                     }
                     else
-                        MessageBox.Show("ไม่สามารถทำการลบรายการได้ สถานะไม่ถูกต้อง");
+                        MessageBox.Show("Forcast Status cannot Delete.");
                 }
                 else
                 {
-                    MessageBox.Show("ไม่สามารถทำการลบรายการได้");
+                    MessageBox.Show("Forcast Cannot Delete");
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -479,7 +690,7 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                var pol = new CustomerPO_List(2);
+                var pol = new Forcast_List(2);
                 this.Cursor = Cursors.Default;
                 pol.ShowDialog();
                 if (pol.PONo != "" && pol.CstmNo != "")
@@ -509,7 +720,6 @@ namespace StockControl
             btnEdit.Enabled = true;
             btnView.Enabled = false;
             btnNew.Enabled = true;
-            btnDiscon.Enabled = false;
             ClearData();
             Enable_Status(false, "View");
             DataLoad();
@@ -622,6 +832,88 @@ namespace StockControl
         }
 
 
+        private void CallDiscontLast(bool am)
+        {
+            //try
+            //{
+            //    decimal TaxBase = 0;
+            //    decimal Amount = 0;
+            //    decimal DisP = 0;
+            //    decimal DisA = 0;
+
+            //    decimal.TryParse(lbOrderSubtotal.Text, out TaxBase);
+            //    decimal.TryParse(txtLessPoDiscountAmount.Text, out DisA);
+            //    decimal.TryParse(txtLessPoDiscountAmountPersen.Text, out DisP);
+            //    //decimal SumDis = 0;
+            //    dgvData.EndEdit();
+            //    foreach (var r2 in dgvData.Rows)
+            //    {
+            //        Amount = 0;
+            //        decimal.TryParse(Convert.ToString(r2.Cells["dgvAmount"].Value), out Amount);
+            //        if (!am) // Persent
+            //        {
+            //            //r2.Cells["dgvdiscount"].Value = (Amount*DisP) / 100;
+            //            r2.Cells["dgvDF"].Value = 4;
+            //            r2.Cells["dgvDiscountAmount"].Value = ((Amount * DisP) / 100);
+            //            r2.Cells["dgvDiscountExt"].Value = ((Amount * DisP) / 100);
+            //            r2.Cells["dgvDiscount"].Value = (((Amount * DisP) / 100) / Amount) * 100;
+            //            // SumDis += ((Amount * DisP) / 100);
+            //        }
+            //        else // Amount
+            //        {
+            //            // MessageBox.Show("xx" + TaxBase+","+Amount);
+
+            //            r2.Cells["dgvDF"].Value = 5;
+            //            r2.Cells["dgvDiscountAmount"].Value = ((Amount * DisA) / TaxBase);
+            //            r2.Cells["dgvDiscountExt"].Value = ((Amount * DisA) / TaxBase);
+            //            r2.Cells["dgvDiscount"].Value = (((Amount * DisA) / TaxBase) / Amount) * 100;
+            //        }
+            //    }
+
+            //}
+            //catch { }
+        }
+
+        private void CallSumDiscountLast(bool am)
+        {
+            //try
+            //{
+            //    decimal UnitCost = 0;
+            //    decimal ExtendedCost = 0;
+            //    decimal Qty = 0;
+            //    decimal PA = 0;
+            //    decimal PR = 0;
+            //    decimal SumP = 0;
+            //    decimal SumA = 0;
+            //    dgvData.EndEdit();
+            //    foreach (var r2 in dgvData.Rows)
+            //    {
+            //        UnitCost = 0;
+            //        Qty = 0;
+            //        PA = 0;
+            //        PR = 0;
+
+            //        decimal.TryParse(Convert.ToString(r2.Cells["dgvOrderQty"].Value), out Qty);
+            //        decimal.TryParse(Convert.ToString(r2.Cells["dgvCost"].Value), out UnitCost);
+            //        decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscountAmount"].Value), out PA);
+            //        decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscount"].Value), out PR);
+            //        decimal.TryParse(Convert.ToString(r2.Cells["dgvAmount"].Value), out ExtendedCost);
+
+            //        SumP += ExtendedCost;
+            //        SumA += PA;
+            //    }
+            //    if (am)
+            //    {
+            //        txtLessPoDiscountAmountPersen.Text = ((SumA / SumP) * 100).ToString("##0.00");
+            //    }
+            //    else
+            //    {
+
+            //        txtLessPoDiscountAmount.Text = (SumA).ToString("###,###,##0.00");
+            //    }
+            //}
+            //catch { }
+        }
         private void CallTotal()
         {
             try
@@ -631,11 +923,23 @@ namespace StockControl
                 {
                     amnt += item.Cells["Amount"].Value.ToDecimal();
                 }
-
+                txtTotal.Text = amnt.ToString("#,0.00");
             }
             catch (Exception ex) { MessageBox.Show("err2: " + ex.Message); }
         }
 
+        private void cbbCSTM_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                txtCSTMNo.Text = cbbCSTM.SelectedValue.ToSt();
+            }
+            catch
+            {
+
+                txtCSTMNo.Text = "";
+            }
+        }
 
         private void btnAddPart_Click(object sender, EventArgs e)
         {
@@ -665,8 +969,8 @@ namespace StockControl
 
                         var rowE = dgvData.Rows.AddNew();
                         addRow(rowE.Index, DateTime.Now, itemNo, t.InternalName
-                            , 1, t.BaseUOM, u, 0, 0, 0, 0
-                            , "", 0, "Waiting");
+                            , 1, t.BaseUOM, u, 0, 0, 0
+                            , "", 0, "Waiting", t.ReplenishmentType);
                     }
                     SetRowNo1(dgvData);
 
@@ -674,5 +978,26 @@ namespace StockControl
             }
         }
 
+        private void txtPONo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (txtPONo.Text.Trim() == "")
+                {
+                    baseClass.Warning("Please enter Forcast no.");
+                    return;
+                }
+                if (txtCSTMNo.Text.Trim() == "")
+                {
+                    baseClass.Warning("Please enter Customer no.");
+                    return;
+                }
+
+                t_PONo = txtPONo.Text;
+                t_CustomerNo = txtCSTMNo.Text;
+                ClearData();
+                DataLoad();
+            }
+        }
     }
 }

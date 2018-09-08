@@ -1,6 +1,6 @@
 ﻿namespace StockControl
 {
-    partial class CustomerPO
+    partial class Forcast
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerPO));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Forcast));
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewDateTimeColumn gridViewDateTimeColumn1 = new Telerik.WinControls.UI.GridViewDateTimeColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
@@ -173,7 +173,7 @@
             this.radMenuSeparatorItem1,
             this.radMenuItem2});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Create Customer P/O";
+            this.radRibbonBar1.Text = "Forcast";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
             // 
@@ -383,7 +383,7 @@
             // 
             this.radLabelElement1.Name = "radLabelElement1";
             this.radStatusStrip1.SetSpring(this.radLabelElement1, false);
-            this.radLabelElement1.Text = "Status : สร้างรายการ Customer P/O";
+            this.radLabelElement1.Text = "Status : Forcast";
             this.radLabelElement1.TextWrap = true;
             // 
             // panel1
@@ -495,7 +495,7 @@
             gridViewTextBoxColumn6.FieldName = "Status";
             gridViewTextBoxColumn6.HeaderText = "Status";
             gridViewTextBoxColumn6.Name = "Status";
-            gridViewTextBoxColumn6.Width = 74;
+            gridViewTextBoxColumn6.Width = 80;
             gridViewTextBoxColumn7.EnableExpressionEditor = false;
             gridViewTextBoxColumn7.FieldName = "ForcastType";
             gridViewTextBoxColumn7.HeaderText = "ForcastType";
@@ -766,11 +766,11 @@
             // 
             // radLabel5
             // 
-            this.radLabel5.Location = new System.Drawing.Point(58, 73);
+            this.radLabel5.Location = new System.Drawing.Point(34, 73);
             this.radLabel5.Name = "radLabel5";
-            this.radLabel5.Size = new System.Drawing.Size(46, 18);
+            this.radLabel5.Size = new System.Drawing.Size(63, 18);
             this.radLabel5.TabIndex = 0;
-            this.radLabel5.Text = "P/O No.";
+            this.radLabel5.Text = "Forcast No.";
             // 
             // radLabel3
             // 
@@ -881,7 +881,7 @@
             this.radButtonElement2.Text = "รายการ";
             this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // CustomerPO
+            // Forcast
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -891,13 +891,13 @@
             this.Controls.Add(this.radRibbonBar1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "CustomerPO";
+            this.Name = "Forcast";
             // 
             // 
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Create Customer P/O";
+            this.Text = "Forcast";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Unit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
