@@ -92,7 +92,7 @@ namespace StockControl
                         int workId = txtWorkId.Text.ToInt();
                         if(WorkId > 0)
                         {
-                            var ww = db.mh_WorkCenterSubs.Where(x => x.idWorkCenter == workId).ToList();
+                            var ww = db.mh_WorkCenterSubs.Where(x => x.idWorkCenter == workId && x.Active).ToList();
                             foreach (var item in ww)
                             {
                                 sumCost += item.CostPerUOM;

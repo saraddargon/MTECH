@@ -9,7 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 namespace StockControl
 {
-    public partial class CustomerPO_List : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Forcast_List : Telerik.WinControls.UI.RadRibbonForm
     {
         public string PONo { get; private set; } = "";
         public string CstmNo { get; private set; } = "";
@@ -17,12 +17,12 @@ namespace StockControl
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
 
-        public CustomerPO_List(int sType = 1)
+        public Forcast_List(int sType = 1)
         {
             InitializeComponent();
             this.sType = sType;
         }
-        public CustomerPO_List()
+        public Forcast_List()
         {
             InitializeComponent();
         }
@@ -87,7 +87,7 @@ namespace StockControl
                     DateTime dTo = (cbChkDate.Checked) ? dtTo.Value.Date.AddDays(1).AddMinutes(1) : DateTime.MaxValue;
 
                     var t = db.mh_CustomerPOs.Where(x =>
-                                x.Active && x.DemandType == 0
+                                x.Active && x.DemandType == 1
                                 && (x.CustomerPONo.Contains(pono))
                                 && (x.CustomerNo == cstmno || cstmno == "")
                                 && (x.ItemNo == item || item == "")
@@ -149,7 +149,7 @@ namespace StockControl
             //select Item
             if (sType == 1)
             {
-                var t = new CustomerPO();
+                var t = new Forcast();
                 t.ShowDialog();
             }
             else
@@ -177,7 +177,7 @@ namespace StockControl
 
                 if (sType == 1)
                 {
-                    var p = new CustomerPO(PONo, CstmNo);
+                    var p = new Forcast(PONo, CstmNo);
                     p.ShowDialog();
                     PONo = "";
                     CstmNo = "";
@@ -273,15 +273,5 @@ namespace StockControl
         }
     }
 
-
-    public class CustomerCombo
-    {
-        public string No { get; set; }
-        public string Name { get; set; }
-    }
-    public class ItemCombo
-    {
-        public string Item { get; set; }
-        public string ItemName { get; set; }
-    }
+    
 }

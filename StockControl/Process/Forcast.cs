@@ -14,16 +14,16 @@ using ClassLib;
 
 namespace StockControl
 {
-    public partial class CustomerPO : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Forcast : Telerik.WinControls.UI.RadRibbonForm
     {
         string t_PONo = "";
         string t_CustomerNo = "";
 
-        public CustomerPO()
+        public Forcast()
         {
             InitializeComponent();
         }
-        public CustomerPO(string PONo, string CustomerNo)
+        public Forcast(string PONo, string CustomerNo)
         {
             InitializeComponent();
             this.t_PONo = PONo;
@@ -89,7 +89,7 @@ namespace StockControl
                 int ck = 0;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var t = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 0 && x.CustomerPONo == t_PONo && x.CustomerNo == t_CustomerNo).ToList();
+                    var t = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1 && x.CustomerPONo == t_PONo && x.CustomerNo == t_CustomerNo).ToList();
                     if (t.Count > 0)
                     {
                         string CustNo = t.First().CustomerNo;
@@ -114,7 +114,7 @@ namespace StockControl
                         btnView_Click(null, null);
                     }
                     else if(warningMssg)
-                        baseClass.Warning("P/O not found.!!");
+                        baseClass.Warning("Forcast not found.!!");
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -231,11 +231,11 @@ namespace StockControl
                 string cstmNo = txtCSTMNo.Text.Trim();
                 if (poNo != "" && cstmNo != "")
                 {
-                    if (baseClass.IsDel($"Do you want to Delete Customer P/O {poNo} ?"))
+                    if (baseClass.IsDel($"Do you want to Delete Forcast {poNo} ?"))
                     {
                         using (var db = new DataClasses1DataContext())
                         {
-                            var p = db.mh_CustomerPOs.Where(x => x.CustomerNo == cstmNo && x.DemandType == 0 && x.CustomerPONo == poNo && x.Active).ToList();
+                            var p = db.mh_CustomerPOs.Where(x => x.DemandType == 1 && x.CustomerNo == cstmNo && x.CustomerPONo == poNo && x.Active).ToList();
                             if (p.Where(x => x.Status > 0).Count() < 1)
                             {
                                 foreach (var pp in p)
@@ -247,12 +247,12 @@ namespace StockControl
 
                                 db.SubmitChanges();
 
-                                baseClass.Info("Delete P/O complete.");
+                                baseClass.Info("Delete Forcast complete.");
                                 ClearData();
                                 btnNew_Click(null, null);
                             }
                             else
-                                baseClass.Warning("P/O Status cannot Delete.");
+                                baseClass.Warning("Forcast Status cannot Delete.");
                         }
                     }
                 }
@@ -303,7 +303,7 @@ namespace StockControl
                 if (cbbCSTM.SelectedValue.ToSt() == "" || txtCSTMNo.Text == "")
                     err += " “Customer:” is empty \n";
                 if (txtPONo.Text.Trim() == "")
-                    err += " “P/O No.:” is empty \n";
+                    err += " “Forcast no.:” is empty \n";
                 if (dgvData.Rows.Where(x => x.IsVisible).Count() < 1)
                     err += " “Items:” is empty \n";
                 if (err == "")
@@ -378,7 +378,8 @@ namespace StockControl
                         }
                         else
                             continue;
-                        t.DemandType = 0;//Customer P/O
+
+                        t.DemandType = 1; //Forcast
                         t.Active = true;
                         t.Amount = item.Cells["Amount"].Value.ToDecimal();
                         t.id = 0;
@@ -679,7 +680,7 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                var pol = new CustomerPO_List(2);
+                var pol = new Forcast_List(2);
                 this.Cursor = Cursors.Default;
                 pol.ShowDialog();
                 if (pol.PONo != "" && pol.CstmNo != "")
@@ -973,7 +974,7 @@ namespace StockControl
             {
                 if (txtPONo.Text.Trim() == "")
                 {
-                    baseClass.Warning("Please enter P/O no.");
+                    baseClass.Warning("Please enter Forcast no.");
                     return;
                 }
                 if (txtCSTMNo.Text.Trim() == "")

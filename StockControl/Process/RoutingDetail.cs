@@ -117,6 +117,8 @@ namespace StockControl
                 dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
 
                 baseClass.Info("Delete complete.");
+
+
             }
 
             setRowNo();

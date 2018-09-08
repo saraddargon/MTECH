@@ -1,6 +1,6 @@
 ﻿namespace StockControl
 {
-    partial class CustomerPO_List
+    partial class Forcast_List
     {
         /// <summary>
         /// Required designer variable.
