@@ -191,7 +191,8 @@ namespace StockControl
                              {
                                  BomNo = a.BomNo,
                                  PartNo = a.PartNo,
-                                 PartName = b.InternalName,
+                                 PartName = a.PartName,
+                                 PartDesc = a.PartDescription,
                                  TypePart = b.InventoryGroup,
                                  Remark = a.Remark,
                                  Description = a.Description,
@@ -227,6 +228,7 @@ namespace StockControl
                         //    txtPartName.Text = StockControl.dbClss.TSt(i.FirstOrDefault().ItemNo);
                         //    txtTypePart.Text = StockControl.dbClss.TSt(i.FirstOrDefault().TypePart);
                         //}
+                        txtDescription.Text = dbClss.TSt(g.FirstOrDefault().PartDesc);
                         txtPartName.Text = StockControl.dbClss.TSt(g.FirstOrDefault().PartName);
                         txtTypePart.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TypePart);
 
@@ -315,7 +317,7 @@ namespace StockControl
                                 var i2 = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == StockControl.dbClss.TSt(x.Cells["dgvComponent"].Value)).ToList();
                                 if (i2.Count() > 0)
                                 {
-                                    x.Cells["dgvComponentName"].Value = StockControl.dbClss.TSt(i2.FirstOrDefault().InternalName);
+                                   // x.Cells["dgvComponentName"].Value = StockControl.dbClss.TSt(i2.FirstOrDefault().InternalName);
                                     x.Cells["dgvType"].Value = StockControl.dbClss.TSt(i2.FirstOrDefault().InventoryGroup);
                                 }
                             }
@@ -380,6 +382,7 @@ namespace StockControl
                         {
                             txtPartName.Text = StockControl.dbClss.TSt(i.FirstOrDefault().InternalName);
                             txtTypePart.Text = StockControl.dbClss.TSt(i.FirstOrDefault().InventoryGroup);
+                            txtDescription.Text = dbClss.TSt(i.FirstOrDefault().InternalDescription);
                         }
                     }
                 }
@@ -434,13 +437,12 @@ namespace StockControl
 
                         dbClss.AddHistory(this.Name, "แก้ไข Bom", "แก้ไข Bom โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US")) + "]", txtBomNo.Text.Trim() + "-"+txtPartNo.Text.Trim());
 
-                        //if (!txtPRNo.Text.Trim().Equals(row["PRNo"].ToString()))
-                        //{
-                        //    gg.PRNo = txtPRNo.Text;
-
-                        //    dbClss.AddHistory(this.Name, "แก้ไข CreatePR", "แก้ไขเลขที่ใบสั่งซื้อ [" + txtPRNo.Text.Trim() + "]", txtPRNo.Text);
-                        //}
-
+                        var i = (from ix in db.mh_Items select ix).Where(a => a.InternalNo.Equals(txtPartNo.Text.Trim().ToUpper())).ToList();
+                        if (i.Count > 0)
+                        {
+                            gg.PartDescription = dbClss.TSt(i.FirstOrDefault().InternalDescription);//txtDescription.Text;
+                            gg.PartName = dbClss.TSt(i.FirstOrDefault().InternalName); //txtPartName.Text;
+                        }
                         //if (StockControl.dbClss.TSt(gg.Barcode).Equals(""))
                         //    gg.Barcode = StockControl.dbClss.SaveQRCode2D(txtPRNo.Text.Trim());
 
@@ -497,7 +499,8 @@ namespace StockControl
                     gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     gg.PartNo = txtPartNo.Text.Trim();
                     gg.BomNo = txtBomNo.Text.Trim().ToUpper();
-                    //gg.Description = txtDescription.Text.Trim();
+                    gg.PartDescription = txtDescription.Text.Trim();
+                    gg.PartName = txtPartName.Text.Trim();
                     gg.Remark = txtRemarkHD.Text.Trim();
                     gg.Status = "Process";
                     if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
@@ -526,20 +529,33 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 int line_t = 50;
+                string ComponentName = "";
+                string ComponentDescription = "";
                 foreach (var g in dgvData.Rows)
                 {
                     if (g.IsVisible.Equals(true))
                     {
                        // line_t += 50;
-                        DateTime? d = null;                        
+                        DateTime? d = null;
+                        var i = (from ix in db.mh_Items select ix).Where(a => a.InternalNo.Contains(StockControl.dbClss.TSt(g.Cells["dgvComponent"].Value))).ToList();
+                        if (i.Count > 0)
+                        {
+                            ComponentName = dbClss.TSt(i.FirstOrDefault().InternalName);
+                            ComponentDescription = dbClss.TSt(i.FirstOrDefault().InternalDescription);
+
+                        }
+
                         if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) <= 0)  //New ใหม่
                         {
-
-                            tb_BomDT u = new tb_BomDT();
+                            
+                                tb_BomDT u = new tb_BomDT();
                             u.PartNo = txtPartNo.Text.Trim();
                             u.BomNo = txtBomNo.Text.Trim().ToUpper();
+                            
                             u.Line = line_t;
                             u.Component = StockControl.dbClss.TSt(g.Cells["dgvComponent"].Value);
+                            u.ComponentDescription = StockControl.dbClss.TSt(g.Cells["dgvComponentDescription"].Value);
+                            u.ComponentName = StockControl.dbClss.TSt(g.Cells["dgvComponentName"].Value);
                             u.Qty = StockControl.dbClss.TDe(g.Cells["dgvQty"].Value);
                             u.Unit = StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value);
                             u.UnitCost = StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value);
@@ -603,12 +619,17 @@ namespace StockControl
 
                                         db.sp_020_Bom_DT_ADD(StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
                                             , txtPartNo.Text.Trim(), txtBomNo.Text.Trim(), null, null, line_t
-                                            , StockControl.dbClss.TSt(g.Cells["dgvComponent"].Value), Qty
+                                            , StockControl.dbClss.TSt(g.Cells["dgvComponent"].Value)
+                                            , ComponentName//StockControl.dbClss.TSt(g.Cells["dgvComponentName"].Value)
+                                            , ComponentDescription// StockControl.dbClss.TSt(g.Cells["dgvComponentDescription"].Value)
+                                            , Qty
                                             , StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value)
                                             , StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value)
                                             , StockControl.dbClss.TDe(g.Cells["dgvCost"].Value)
                                             , StockControl.dbClss.TDe(g.Cells["dgvPCSUnit"].Value)
-                                            , ClassLib.Classlib.User);
+                                            , ClassLib.Classlib.User
+                                            
+                                            );
                                         //db.SubmitChanges();
                                          line_t += 50;
                                         break;
@@ -690,7 +711,7 @@ namespace StockControl
         {
             txtPartNo.Text = "";
             txtBomNo.Text = "";
-            //txtDescription.Text = "";
+            txtDescription.Text = "";
             txtPartName.Text = "";
             txtTypePart.Text = "";
             dtBegin.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
@@ -1159,18 +1180,21 @@ namespace StockControl
                 {
                     decimal PCSUnit = dbClss.Con_UOM(StockControl.dbClss.TSt(g.FirstOrDefault().InternalNo)
                             , StockControl.dbClss.TSt(g.FirstOrDefault().ConsumptionUOM));
+
                     dgvData.Rows.Add(Row.ToString()
                         , txtPartNo.Text.Trim()
-                        , CodeNo,
-                         StockControl.dbClss.TSt(g.FirstOrDefault().InternalNo)
+                        , CodeNo
+                         //StockControl.dbClss.TSt(g.FirstOrDefault().InternalNo)
+                         , dbClss.TSt(g.FirstOrDefault().InternalName)
+                         , dbClss.TSt(g.FirstOrDefault().InternalDescription)
                         , StockControl.dbClss.TSt(g.FirstOrDefault().InventoryGroup)
                         , OrderQty
                         //, StockControl.dbClss.TDe(g.FirstOrDefault().PCSUnit)
                         , StockControl.dbClss.TSt(g.FirstOrDefault().ConsumptionUOM)
                         , PCSUnit
                         , 0//1 * StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
-                        ,0
-                        ,0
+                        , 0
+                        , 0
                         );
                 }
             }
@@ -1373,7 +1397,8 @@ namespace StockControl
                         && (a.InventoryGroup == "FG" || a.InventoryGroup == "SEMI" )).ToList();
                     if (ga.Count > 0)
                     {
-                        txtPartName.Text = StockControl.dbClss.TSt(ga.FirstOrDefault().InternalNo);
+                        txtDescription.Text = dbClss.TSt(ga.FirstOrDefault().InternalDescription);
+                        txtPartName.Text = StockControl.dbClss.TSt(ga.FirstOrDefault().InternalName);
                         txtTypePart.Text = StockControl.dbClss.TSt(ga.FirstOrDefault().InventoryGroup);
                     }
                 }
