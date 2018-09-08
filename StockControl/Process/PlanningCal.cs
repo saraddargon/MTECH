@@ -185,75 +185,7 @@ namespace StockControl
         }
         void Recalculate()
         {
-            try
-            {
-                itemDatas = new List<ItemData>();
-                planDatas = new List<PlanData>();
-                using (var db = new DataClasses1DataContext())
-                {
-                    int comp = CustomerPO_SS.Completed.ToInt();
-                    var cpo = db.mh_CustomerPOs.Where(x => x.Active && x.Quantity > 0 && x.Status != comp
-                                    && x.ReqDate >= t_dtFrom && x.ReqDate <= t_dtTo
-                                    && x.ItemNo.Contains(t_ItemNo)).ToList();
-                    //t_ReqDate = cpo.Min(x => x.ReqDate).Date;
-                    //var tlist = cpo.GroupBy(x => x.ItemNo).Select(x => new
-                    //{
-                    //    x.First().ItemNo,
-                    //    ReqQty = x.Sum(q => q.Quantity * q.PCSUnit)
-                    //}).ToList();
 
-                    //foreach (var t in tlist)
-                    //    DrillItem(t.ItemNo, t.ReqQty);
-
-                    //foreach (var item in itemDatas)
-                    //    CalItem(item);
-
-                    var idPOs = new List<int>();
-                    int rNo = 1;
-                    foreach (var po in cpo.OrderBy(x => x.ReqDate).ToList())
-                    {
-                        if (idPOs.Contains(po.id))
-                            continue;
-
-                        var t = db.mh_Items.Where(x => x.InternalNo == po.ItemNo).FirstOrDefault();
-                        var tt = new ItemData(t.InternalNo, t.InternalName);
-                        tt.rNo = rNo++;
-                        tt.ReqQty = Math.Round(po.Quantity * po.PCSUnit, 2);
-                        tt.ReorderType = getReorderType(t.ReorderType);
-                        tt.ReorderPoint = t.ReorderPoint.ToDecimal();
-                        tt.ReorderQty = t.ReorderQty;
-                        tt.MinQty = t.MinimumQty;
-                        tt.MaxQty = t.MaximumQty;
-                        tt.SafetyStock = t.SafetyStock;
-                        tt.TimeBuket = t.Timebucket.ToInt();
-                        tt.LeadTime = t.InternalLeadTime;
-                        tt.repType = getRepType(t.ReplenishmentType);
-                        tt.invGroup = getInvGroup(t.InventoryGroup);
-                        tt.ReqDate = po.ReqDate.AddDays(-1);
-
-                        idPOs.Add(po.id);
-                        //find all P/O With bucket Time
-                        var other_pos = cpo.Where(x => !idPOs.Contains(x.id) && x.ItemNo == po.ItemNo && x.ReqDate >= po.ReqDate && x.ReqDate <= po.ReqDate.AddDays(tt.TimeBuket)).ToList();
-                        foreach (var item in other_pos)
-                        {
-                            idPOs.Add(item.id);
-                            tt.ReqQty += Math.Round(item.Quantity * item.PCSUnit, 2);
-                        }
-                        itemDatas.Add(tt);
-
-                        //find SEMI, RM
-                        DrillItem2(tt.ItemNo, tt.ReqQty, tt.rNo, tt.ReqDate);
-
-                    }
-                    //cal
-                    foreach (var item in itemDatas)
-                        CalItem2(item);
-                }
-            }
-            catch (Exception e)
-            {
-                baseClass.Error(e.Message);
-            }
         }
 
         List<ItemData> itemDatas = new List<ItemData>();

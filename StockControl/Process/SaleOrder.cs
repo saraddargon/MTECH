@@ -18,6 +18,8 @@ namespace StockControl
     {
         string t_SONo = "";
         string t_CustomerNo = "";
+        //Customer P/O to SaleORder
+        List<int> idList = new List<int>();
 
         public SaleOrder()
         {
@@ -29,6 +31,11 @@ namespace StockControl
             this.t_SONo = PONo;
             this.t_CustomerNo = CustomerNo;
         }
+        public SaleOrder(List<int> idList)
+        {
+            InitializeComponent();
+            this.idList = idList;
+        }
         private void Unit_Load(object sender, EventArgs e)
         {
             try
@@ -37,55 +44,61 @@ namespace StockControl
                 //dgvData.ReadOnly = true;
                 dgvData.AutoGenerateColumns = false;
                 GETDTRow();
-
-                using (var db = new DataClasses1DataContext())
-                {
-                    var cus = db.mh_Customers.Where(x => x.Active).Select(x => new { x.No, x.Name }).ToList();
-                    cbbCSTM.MultiColumnComboBoxElement.AutoSizeDropDownToBestFit = true;
-                    cbbCSTM.DisplayMember = "Name";
-                    cbbCSTM.ValueMember = "No";
-                    cbbCSTM.MultiColumnComboBoxElement.DataSource = cus;
-                    cbbCSTM.SelectedIndex = -1;
-
-                    var lo = db.mh_Locations.Where(x => x.Active).ToList();
-                    var com = dgvData.Columns["Location"] as GridViewComboBoxColumn;
-                    com.DisplayMember = "Name";
-                    com.ValueMember = "Code";
-                    com.DataSource = lo;
-
-                    var vg = db.mh_VatGroups.Where(x => x.Active.Value).ToList();
-                    //id, Value
-                    var com2 = dgvData.Columns["VatGroup"] as GridViewComboBoxColumn;
-                    com2.DisplayMember = "Value";
-                    com2.ValueMember = "id";
-                    com2.DataSource = vg;
-
-                    var vt = db.mh_VATTypes.Where(x => x.Active.Value).ToList();
-                    // VatType
-                    var com3 = dgvData.Columns["VatType"] as GridViewComboBoxColumn;
-                    com3.DisplayMember = "VatType";
-                    com3.ValueMember = "VatType";
-                    com3.DataSource = vt;
-
-                    var uom = db.mh_Units.Where(x => x.UnitActive.Value).ToList();
-                    //UnitCode UnitDetail
-                    var com4 = dgvData.Columns["Unit"] as GridViewComboBoxColumn;
-                    com4.DisplayMember = "UnitDetail";
-                    com4.ValueMember = "UnitCode";
-                    com4.DataSource = uom;
-                }
+                ListDefualt();
 
                 ClearData();
                 btnNew_Click(null, null);
 
                 if (t_SONo != "" && t_CustomerNo != "")
                     DataLoad();
-
+                else if (idList.Count > 0)
+                    LoadFromId();
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
+
+        private void ListDefualt()
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                var cus = db.mh_Customers.Where(x => x.Active).Select(x => new { x.No, x.Name }).ToList();
+                cbbCSTM.MultiColumnComboBoxElement.AutoSizeDropDownToBestFit = true;
+                cbbCSTM.DisplayMember = "Name";
+                cbbCSTM.ValueMember = "No";
+                cbbCSTM.MultiColumnComboBoxElement.DataSource = cus;
+                cbbCSTM.SelectedIndex = -1;
+
+                var lo = db.mh_Locations.Where(x => x.Active).ToList();
+                var com = dgvData.Columns["Location"] as GridViewComboBoxColumn;
+                com.DisplayMember = "Name";
+                com.ValueMember = "Code";
+                com.DataSource = lo;
+
+                var vg = db.mh_VatGroups.Where(x => x.Active.Value).ToList();
+                //id, Value
+                var com2 = dgvData.Columns["VatGroup"] as GridViewComboBoxColumn;
+                com2.DisplayMember = "Value";
+                com2.ValueMember = "id";
+                com2.DataSource = vg;
+
+                var vt = db.mh_VATTypes.Where(x => x.Active.Value).ToList();
+                // VatType
+                var com3 = dgvData.Columns["VatType"] as GridViewComboBoxColumn;
+                com3.DisplayMember = "VatType";
+                com3.ValueMember = "VatType";
+                com3.DataSource = vt;
+
+                var uom = db.mh_Units.Where(x => x.UnitActive.Value).ToList();
+                //UnitCode UnitDetail
+                var com4 = dgvData.Columns["Unit"] as GridViewComboBoxColumn;
+                com4.DisplayMember = "UnitDetail";
+                com4.ValueMember = "UnitCode";
+                com4.DataSource = uom;
+            }
+        }
+
         //
         private void DataLoad(bool warningMssg = true)
         {
@@ -126,6 +139,44 @@ namespace StockControl
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
+        }
+        private void LoadFromId()
+        {
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    bool fRow = true;
+                    foreach (var id in idList)
+                    {
+                        var c = db.mh_CustomerPOs.Where(x => x.id == id).First();
+                        if (fRow)
+                        {
+                            txtCSTMNo.Text = c.CustomerNo;
+                            cbbCSTM.SelectedValue = c.CustomerNo;
+                            dtSODate.Value = DateTime.Now;
+                            cbbCSTM_SelectedIndexChanged(null, null);
+                            txtRemark.Text = c.RemarkHD;
+                            fRow = false;
+                        }
+                        //detail
+                        var rowe = dgvData.Rows.AddNew();
+                        var t = db.mh_Items.Where(x => x.InternalNo == c.ItemNo).First();
+                        var cstm = db.mh_Customers.Where(x => x.No == c.CustomerNo).First();
+                        addRow(rowe.Index, c.ReqDate, c.ItemNo, c.ItemName, "", t.Location
+                            , c.OutSO, c.UOM, c.PCSUnit, c.PricePerUnit, c.Amount, false, c.OutSO
+                            , 0, "Waiting", cstm.VatGroup, t.VatType, c.CustomerPONo, c.id, t.ReplenishmentType
+                            , "T");
+
+                    }
+                    SetRowNo1(dgvData);
+                    CallTotal();
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
         }
         //
         List<GridViewRowInfo> RetDT;
@@ -271,6 +322,8 @@ namespace StockControl
 
                                 db.SubmitChanges();
 
+                                updateOutSO();
+
                                 baseClass.Info("Delete Sale Order complete.");
                                 ClearData();
                                 btnNew_Click(null, null);
@@ -307,6 +360,21 @@ namespace StockControl
                             err += " “Request Date.:” is empty \n";
                         if (item.Cells["Qty"].Value.ToDecimal() <= 0)
                             err += " “Qty:” is less than 0 \n";
+                        int idPO = item.Cells["RefId"].Value.ToInt();
+                        if (idPO > 0)
+                        {
+                            var Qty = item.Cells["Qty"].Value.ToDecimal();
+                            using (var db = new DataClasses1DataContext())
+                            {
+                                var qtyPO = db.mh_CustomerPOs.Where(x => x.id == idPO).First().Quantity;
+                                int idSO = item.Cells["id"].Value.ToInt();
+                                var qtySO = db.mh_SaleOrders.Where(x => x.Active && x.RefId == idPO && x.id != idSO).ToList();
+                                if (qtySO.Sum(x => x.Qty * x.PCSUnit) + Qty > qtyPO)
+                                {
+                                    err += " “Qty:” is more than Customer P/O Qty.\n";
+                                }
+                            }
+                        }
 
                         if (err != "")
                             break;
@@ -330,6 +398,7 @@ namespace StockControl
         {
             try
             {
+                dgvData.EndInit();
                 if (Ac.Equals("New") || Ac.Equals("Edit"))
                 {
                     if (Check_Save())
@@ -417,7 +486,10 @@ namespace StockControl
                     t_SONo = sono;
                     t_CustomerNo = cstmNo;
                     db.SubmitChanges();
+
+                    updateOutSO();
                 }
+
 
                 baseClass.Info("Save complete(s).");
                 ClearData();
@@ -430,6 +502,29 @@ namespace StockControl
                 baseClass.Error(ex.Message);
             }
             finally { this.Cursor = Cursors.Default; }
+        }
+
+        private void updateOutSO()
+        {
+            using (var db = new DataClasses1DataContext())
+            {//Update Customer P/O (Out Sale Order Q'ty)
+                foreach (var idPO in dgvData.Rows.Select(x => x.Cells["RefId"].Value.ToInt()))
+                {
+                    var c = db.mh_CustomerPOs.Where(x => x.id == idPO).First();
+                    var m = db.mh_SaleOrders.Where(x => x.Active && x.RefId == idPO).ToList();
+                    decimal qq = 0.00m;
+                    if (m.Count > 0)
+                        qq = m.Sum(x => x.Qty * x.PCSUnit);
+                    c.OutSO = (c.Quantity * c.PCSUnit) - qq;
+                    if (c.OutSO == c.Quantity)
+                        c.Status = "Waiting";
+                    else if (c.OutSO <= 0)
+                        c.Status = "Completed";
+                    else
+                        c.Status = "Proeces";
+                    db.SubmitChanges();
+                }
+            }
         }
 
         string beginItem = "";
@@ -455,7 +550,7 @@ namespace StockControl
                     }
                     else if (e.Column.Name.Equals("ItemNo"))
                     {
-                        if(txtCSTMNo.Text == "")
+                        if (txtCSTMNo.Text == "")
                         {
                             baseClass.Warning("Please select Customer first.\n");
                             return;
@@ -633,18 +728,15 @@ namespace StockControl
                             using (var db = new DataClasses1DataContext())
                             {
                                 var m = db.mh_SaleOrders.Where(x => x.id == id).FirstOrDefault();
-                                if(m != null)
+                                if (m != null)
                                 {
                                     m.Active = false;
                                     m.UpdateDate = DateTime.Now;
                                     m.UpdateBy = ClassLib.Classlib.User;
                                     db.SubmitChanges();
-                                    dgvData.Rows.Remove(dgvData.CurrentRow);
 
-                                    if (dgvData.Rows.Count < 1)
-                                    {
-                                        DataLoad(false);
-                                    }
+                                    updateOutSO();
+                                    dgvData.Rows.Remove(dgvData.CurrentRow);
                                 }
                             }
                         }

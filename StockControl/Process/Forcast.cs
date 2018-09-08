@@ -102,10 +102,9 @@ namespace StockControl
                         foreach (var tt in t)
                         {
                             var rowe = dgvData.Rows.AddNew();
-                            var ss = baseClass.ToEnum<CustomerPO_SS>(tt.Status);
                             addRow(rowe.Index, tt.ReqDate.Date, tt.ItemNo, tt.ItemName
                                 , tt.Quantity, tt.UOM, tt.PCSUnit, tt.PricePerUnit, tt.Amount
-                                , tt.OutSO, tt.RemarkDT, tt.id, ss, tt.ForcastType);
+                                , tt.OutSO, tt.RemarkDT, tt.id, tt.Status, tt.ForcastType);
                         }
 
                         SetRowNo1(dgvData);
@@ -236,7 +235,7 @@ namespace StockControl
                         using (var db = new DataClasses1DataContext())
                         {
                             var p = db.mh_CustomerPOs.Where(x => x.DemandType == 1 && x.CustomerNo == cstmNo && x.CustomerPONo == poNo && x.Active).ToList();
-                            if (p.Where(x => x.Status > 0).Count() < 1)
+                            if (p.Where(x => x.Status != "Waiting").Count() < 1)
                             {
                                 foreach (var pp in p)
                                 {
@@ -400,7 +399,7 @@ namespace StockControl
                         t.RemarkDT = item.Cells["Remark"].Value.ToSt();
                         t.RemarkHD = txtRemark.Text;
                         t.ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value.Date;
-                        t.Status = item.Cells["Status"].Value.ToInt();
+                        t.Status = item.Cells["Status"].Value.ToSt();
                         t.UOM = item.Cells["Unit"].Value.ToSt();
                         t.ForcastType = item.Cells["ForcastType"].Value.ToSt();
                         //t.ReqReceiveDate = item.Cells["ReqReceiveDate"].Value.ToDateTime();
@@ -465,7 +464,7 @@ namespace StockControl
                                 addRow(e.RowIndex
                                     , DateTime.Now, t.InternalNo, t.InternalName
                                     , 1, t.BaseUOM, pcsunit, 0, 0
-                                    , 1, "", 0, CustomerPO_SS.Waiting, t.ReplenishmentType);
+                                    , 1, "", 0, "Waiting", t.ReplenishmentType);
                             }
                             else
                             {
@@ -518,7 +517,7 @@ namespace StockControl
         }
         void addRow(int rowIndex, DateTime ReqDate, string ItemNo, string ItemName, decimal Qty
             , string UOM, decimal PCSUnit, decimal PricePerUnit, decimal Amount
-            , decimal OutSO, string RemarkDT, int id, CustomerPO_SS Status, string forcastType)
+            , decimal OutSO, string RemarkDT, int id, string Status, string forcastType)
         {
             var rowE = dgvData.Rows[rowIndex];
             try
@@ -534,7 +533,7 @@ namespace StockControl
                 rowE.Cells["OutSO"].Value = OutSO;
                 rowE.Cells["Remark"].Value = RemarkDT;
                 rowE.Cells["id"].Value = id;
-                rowE.Cells["Status"].Value = Status.ToInt();
+                rowE.Cells["Status"].Value = Status;
                 rowE.Cells["ForcastType"].Value = forcastType;
 
                 SetRowNo1(dgvData);
@@ -622,7 +621,7 @@ namespace StockControl
                     this.Cursor = Cursors.WaitCursor;
 
 
-                    if (dgvData.CurrentRow.Cells["Status"].Value.ToInt() == CustomerPO_SS.Waiting.ToInt())
+                    if (dgvData.CurrentRow.Cells["Status"].Value.ToSt() == "Waiting")
                     {
 
                         int id = 0;
@@ -633,18 +632,29 @@ namespace StockControl
                         else
                         {
                             row = dgvData.CurrentRow.Index;
-                            btnDelete_Click(null, null);
+                            //btnDelete_Click(null, null);
+                            using (var db = new DataClasses1DataContext())
+                            {
+                                var m = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
+                                if(m != null)
+                                {
+                                    m.Active = false;
+                                    m.UpdateDate = DateTime.Now;
+                                    m.UpdateBy = Classlib.User;
+                                    db.SubmitChanges();
+                                }
+                            }
                         }
                         CallTotal();
                         //getTotal();
                         SetRowNo1(dgvData);
                     }
                     else
-                        MessageBox.Show("ไม่สามารถทำการลบรายการได้ สถานะไม่ถูกต้อง");
+                        MessageBox.Show("Forcast Status cannot Delete.");
                 }
                 else
                 {
-                    MessageBox.Show("ไม่สามารถทำการลบรายการได้");
+                    MessageBox.Show("Forcast Cannot Delete");
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -960,7 +970,7 @@ namespace StockControl
                         var rowE = dgvData.Rows.AddNew();
                         addRow(rowE.Index, DateTime.Now, itemNo, t.InternalName
                             , 1, t.BaseUOM, u, 0, 0, 0
-                            , "", 0, CustomerPO_SS.Waiting, t.ReplenishmentType);
+                            , "", 0, "Waiting", t.ReplenishmentType);
                     }
                     SetRowNo1(dgvData);
 

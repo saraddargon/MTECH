@@ -69,6 +69,12 @@ namespace StockControl
 
             dgvData.AutoGenerateColumns = false;
             DataLoad();
+
+            dgvData.Columns.ToList().ForEach(x =>
+            {
+                if (x.Name != "S")
+                    x.ReadOnly = true;
+            });
         }
         private void DataLoad()
         {
@@ -179,6 +185,7 @@ namespace StockControl
                 {
                     var p = new CustomerPO(PONo, CstmNo);
                     p.ShowDialog();
+                    DataLoad();
                     PONo = "";
                     CstmNo = "";
                 }
@@ -265,11 +272,48 @@ namespace StockControl
 
         private void btnCreateSaleOrder_Click(object sender, EventArgs e)
         {
-
+            CreateSaleOrder();
         }
         void CreateSaleOrder()
         {
+            dgvData.EndEdit();
+            try
+            {
+                if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
+                {
+                    var rowS = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
+                    if (rowS.Select(x => x.Cells["CustomerNo"].Value.ToSt()).Count() > 1)
+                    {
+                        baseClass.Warning("Sale order have only 1 Customer.");
+                        return;
+                    }
 
+                    var idList = new List<int>();
+                    foreach (var item in rowS)
+                    {
+                        int id = item.Cells["id"].Value.ToInt();
+                        if (item.Cells["Status"].Value.ToSt() != "Waiting")
+                        {
+                            baseClass.Warning("Status P/O Cannot create Sale Order.\n");
+                            return;
+                        }
+                        idList.Add(id);
+                    }
+
+                    var so = new SaleOrder(idList);
+                    so.ShowDialog();
+                    DataLoad();
+                }
+                else
+                {
+                    baseClass.Warning("Please select data.");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Warning(ex.Message);
+            }
         }
     }
 

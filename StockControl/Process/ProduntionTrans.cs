@@ -287,7 +287,7 @@ namespace StockControl
                                 addRow(e.RowIndex
                                     , DateTime.Now, t.InternalNo, t.InternalName
                                     , 1, t.BaseUOM, pcsunit, 0, 0
-                                    , 1, 1, "", 0, CustomerPO_SS.Waiting);
+                                    , 1, 1, "", 0, "Waiting");
                             else
                             {
                                 e.Row.Cells["ItemName"].Value = t.InternalName;
@@ -339,7 +339,7 @@ namespace StockControl
         }
         void addRow(int rowIndex, DateTime ReqDate, string ItemNo, string ItemName, decimal Qty
             , string UOM, decimal PCSUnit, decimal PricePerUnit, decimal Amount
-            , decimal OutShip, decimal OutInv, string RemarkDT, int id, CustomerPO_SS Status)
+            , decimal OutShip, decimal OutInv, string RemarkDT, int id, string Status)
         {
             var rowE = dgvData.Rows[rowIndex];
             try
@@ -356,7 +356,7 @@ namespace StockControl
                 rowE.Cells["OutInv"].Value = OutInv;
                 rowE.Cells["Remark"].Value = RemarkDT;
                 rowE.Cells["id"].Value = id;
-                rowE.Cells["Status"].Value = Status.ToInt();
+                rowE.Cells["Status"].Value = Status;
             }
             catch (Exception ex)
             {
@@ -421,7 +421,7 @@ namespace StockControl
                     this.Cursor = Cursors.WaitCursor;
 
 
-                    if (dgvData.CurrentRow.Cells["Status"].Value.ToInt() == CustomerPO_SS.Waiting.ToInt())
+                    if (dgvData.CurrentRow.Cells["Status"].Value.ToSt() == "Waiting")
                     {
 
                         int id = 0;
@@ -666,7 +666,7 @@ namespace StockControl
                         var rowE = dgvData.Rows.AddNew();
                         addRow(rowE.Index, DateTime.Now, itemNo, t.InternalName
                             , 1, t.BaseUOM, u, 0, 0, 0, 0
-                            , "", 0, CustomerPO_SS.Waiting);
+                            , "", 0, "Waiting");
                     }
                     SetRowNo1(dgvData);
 

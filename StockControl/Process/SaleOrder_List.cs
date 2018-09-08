@@ -179,6 +179,7 @@ namespace StockControl
                 {
                     var p = new SaleOrder(PONo, CstmNo);
                     p.ShowDialog();
+                    DataLoad();
                     PONo = "";
                     CstmNo = "";
                 }
