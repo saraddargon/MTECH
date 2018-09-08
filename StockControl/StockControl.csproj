@@ -162,6 +162,18 @@
     <Compile Include="Process\Calculate_Movement.Designer.cs">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\SaleOrder_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\SaleOrder_List.Designer.cs">
+      <DependentUpon>SaleOrder_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\SaleOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\SaleOrder.Designer.cs">
+      <DependentUpon>SaleOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Forcast_List.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -930,6 +942,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Calculate_Movement.resx">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\SaleOrder_List.resx">
+      <DependentUpon>SaleOrder_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\SaleOrder.resx">
+      <DependentUpon>SaleOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Forcast_List.resx">
       <DependentUpon>Forcast_List.cs</DependentUpon>

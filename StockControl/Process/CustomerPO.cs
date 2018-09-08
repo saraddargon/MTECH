@@ -374,12 +374,12 @@ namespace StockControl
                         {
                             //add
                             t = new mh_CustomerPO();
+                        t.Active = true;
                             db.mh_CustomerPOs.InsertOnSubmit(t);
                         }
                         else
                             continue;
                         t.DemandType = 0;//Customer P/O
-                        t.Active = true;
                         t.Amount = item.Cells["Amount"].Value.ToDecimal();
                         t.id = 0;
                         t.CreateBy = Classlib.User;
