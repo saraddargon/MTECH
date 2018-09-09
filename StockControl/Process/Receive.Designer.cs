@@ -516,6 +516,7 @@
             gridViewDecimalColumn6.FieldName = "Rate";
             gridViewDecimalColumn6.FormatString = "{0:N2}";
             gridViewDecimalColumn6.HeaderText = "ค่าเงิน (Rate)";
+            gridViewDecimalColumn6.IsVisible = false;
             gridViewDecimalColumn6.Minimum = new decimal(new int[] {
             1,
             0,
@@ -527,9 +528,8 @@
             gridViewTextBoxColumn7.EnableExpressionEditor = false;
             gridViewTextBoxColumn7.FieldName = "LotNo";
             gridViewTextBoxColumn7.HeaderText = "เลข LotNo";
-            gridViewTextBoxColumn7.IsVisible = false;
             gridViewTextBoxColumn7.Name = "LotNo";
-            gridViewTextBoxColumn7.Width = 90;
+            gridViewTextBoxColumn7.Width = 125;
             gridViewTextBoxColumn8.EnableExpressionEditor = false;
             gridViewTextBoxColumn8.FieldName = "SerialNo";
             gridViewTextBoxColumn8.HeaderText = "ซีเรียล";
@@ -561,7 +561,7 @@
             gridViewTextBoxColumn10.Width = 108;
             gridViewTextBoxColumn11.EnableExpressionEditor = false;
             gridViewTextBoxColumn11.FieldName = "PRNo";
-            gridViewTextBoxColumn11.HeaderText = "เลขที่ P/R หรือ P/O";
+            gridViewTextBoxColumn11.HeaderText = "เลขที่  P/O";
             gridViewTextBoxColumn11.Name = "PRNo";
             gridViewTextBoxColumn11.ReadOnly = true;
             gridViewTextBoxColumn11.Width = 120;
