@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
 using Telerik.WinControls;
+using System.Threading;
 
 namespace StockControl
 {
@@ -156,7 +157,10 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     dgvData.Rows.Clear();
-                    if (reCal) Recalculate();
+                    if (reCal)
+                    {
+                        Recalculate();
+                    }
                 }
 
             }
@@ -185,7 +189,8 @@ namespace StockControl
         }
         void Recalculate()
         {
-
+            var pc = new PlanningCal_Status();
+            pc.ShowDialog();
         }
 
         List<ItemData> itemDatas = new List<ItemData>();
@@ -388,90 +393,4 @@ namespace StockControl
 
     }
 
-    public class ItemData
-    {
-        public int rNo { get; set; } = 0;
-        public int ref_rNo { get; set; } = 0;
-        public string ItemNo { get; set; }
-        public string ItemName { get; set; }
-        public decimal ReqQty { get; set; }
-        public ReorderType ReorderType { get; set; }
-        public decimal QtyOnHand { get; set; }
-        public decimal SafetyStock { get; set; }
-        public decimal ReorderPoint { get; set; }
-        public decimal ReorderQty { get; set; }
-        public decimal MinQty { get; set; }
-        public decimal MaxQty { get; set; }
-        public int TimeBuket { get; set; }
-        public int LeadTime { get; set; }
-        public ReplenishmentType repType { get; set; }
-        public InventoryGroup invGroup { get; set; }
-
-        public decimal StockQty
-        {
-            get {
-                return baseClass.StockQty(ItemNo, "Warehouse");
-            }
-        }
-        public DateTime ReqDate { get; set; }
-
-        public ItemData(string ItemNo, string ItemName)
-        {
-            this.ItemNo = ItemNo;
-            this.ItemName = ItemName;
-
-        }
-
-    }
-    public class PlanData
-    {
-        public string ItemNo { get; set; }
-        public string ItemName { get; set; }
-        public DateTime DueDate { get; set; }
-        public DateTime StartingDate { get; set; }
-        public DateTime EndingDate { get; set; }
-        public decimal Qty { get; set; }
-        public ReplenishmentType repType { get; set; }
-        public string PlanningType
-        {
-            get {
-                if (repType == ReplenishmentType.Production)
-                    return "MPS";
-                else
-                    return "MRP";
-            }
-        }
-        public string RefOrderType
-        {
-            get {
-                return repType.ToSt();
-            }
-        }
-
-        public PlanData(string ItemNo, string ItemName)
-        {
-            this.ItemNo = ItemNo;
-            this.ItemName = ItemName;
-        }
-    }
-
-
-
-    public enum ReplenishmentType
-    {
-        Purchase, //MRP
-        Production //MPS
-    }
-    public enum ReorderType
-    {
-        Fixed,
-        MinMax,
-        ByOrder
-    }
-    public enum InventoryGroup
-    {
-        RM,
-        Semi,
-        FG
-    }
 }

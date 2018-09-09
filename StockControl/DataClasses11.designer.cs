@@ -32398,6 +32398,10 @@ namespace StockControl
 		
 		private string _RepType;
 		
+		private decimal _OutPlan;
+		
+		private string _PlanStatus;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -32472,6 +32476,10 @@ namespace StockControl
     partial void OnUpdateByChanged();
     partial void OnRepTypeChanging(string value);
     partial void OnRepTypeChanged();
+    partial void OnOutPlanChanging(decimal value);
+    partial void OnOutPlanChanged();
+    partial void OnPlanStatusChanging(string value);
+    partial void OnPlanStatusChanged();
     #endregion
 		
 		public mh_SaleOrder()
@@ -33179,6 +33187,46 @@ namespace StockControl
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutPlan", DbType="Decimal(18,2) NOT NULL")]
+		public decimal OutPlan
+		{
+			get
+			{
+				return this._OutPlan;
+			}
+			set
+			{
+				if ((this._OutPlan != value))
+				{
+					this.OnOutPlanChanging(value);
+					this.SendPropertyChanging();
+					this._OutPlan = value;
+					this.SendPropertyChanged("OutPlan");
+					this.OnOutPlanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanStatus", DbType="NVarChar(50)")]
+		public string PlanStatus
+		{
+			get
+			{
+				return this._PlanStatus;
+			}
+			set
+			{
+				if ((this._PlanStatus != value))
+				{
+					this.OnPlanStatusChanging(value);
+					this.SendPropertyChanging();
+					this._PlanStatus = value;
+					this.SendPropertyChanged("PlanStatus");
+					this.OnPlanStatusChanged();
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -33254,6 +33302,10 @@ namespace StockControl
 		
 		private System.DateTime _UpdateDate;
 		
+		private decimal _OutPlan;
+		
+		private string _PlanStatus;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -33306,6 +33358,10 @@ namespace StockControl
     partial void OnUpdateByChanged();
     partial void OnUpdateDateChanging(System.DateTime value);
     partial void OnUpdateDateChanged();
+    partial void OnOutPlanChanging(decimal value);
+    partial void OnOutPlanChanged();
+    partial void OnPlanStatusChanging(string value);
+    partial void OnPlanStatusChanged();
     #endregion
 		
 		public mh_CustomerPO()
@@ -33789,6 +33845,46 @@ namespace StockControl
 					this._UpdateDate = value;
 					this.SendPropertyChanged("UpdateDate");
 					this.OnUpdateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutPlan", DbType="Decimal(18,2) NOT NULL")]
+		public decimal OutPlan
+		{
+			get
+			{
+				return this._OutPlan;
+			}
+			set
+			{
+				if ((this._OutPlan != value))
+				{
+					this.OnOutPlanChanging(value);
+					this.SendPropertyChanging();
+					this._OutPlan = value;
+					this.SendPropertyChanged("OutPlan");
+					this.OnOutPlanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanStatus", DbType="NVarChar(50)")]
+		public string PlanStatus
+		{
+			get
+			{
+				return this._PlanStatus;
+			}
+			set
+			{
+				if ((this._PlanStatus != value))
+				{
+					this.OnPlanStatusChanging(value);
+					this.SendPropertyChanging();
+					this._PlanStatus = value;
+					this.SendPropertyChanged("PlanStatus");
+					this.OnPlanStatusChanged();
 				}
 			}
 		}

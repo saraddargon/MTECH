@@ -162,6 +162,12 @@
     <Compile Include="Process\Calculate_Movement.Designer.cs">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\PlanningCal_Status.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\PlanningCal_Status.Designer.cs">
+      <DependentUpon>PlanningCal_Status.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\SaleOrder_List.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -942,6 +948,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Calculate_Movement.resx">
       <DependentUpon>Calculate_Movement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\PlanningCal_Status.resx">
+      <DependentUpon>PlanningCal_Status.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\SaleOrder_List.resx">
       <DependentUpon>SaleOrder_List.cs</DependentUpon>
