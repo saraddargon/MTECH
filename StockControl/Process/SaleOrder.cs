@@ -37,6 +37,14 @@ namespace StockControl
             InitializeComponent();
             this.idList = idList;
         }
+
+        bool demo = false;
+        public SaleOrder(bool demo)
+        {
+            InitializeComponent();
+            this.demo = demo;
+        }
+
         private void Unit_Load(object sender, EventArgs e)
         {
             try
@@ -45,7 +53,7 @@ namespace StockControl
                 //dgvData.ReadOnly = true;
                 dgvData.AutoGenerateColumns = false;
                 GETDTRow();
-                ListDefualt();
+                LoadDefault();
 
                 var a = new List<int>();
                 foreach (var item in idList)
@@ -66,12 +74,15 @@ namespace StockControl
                 else if (idList.Count > 0)
                     LoadFromId();
 
+                if (demo)
+                    DemoLoad();
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
 
-        private void ListDefualt()
+        private void LoadDefault()
         {
             using (var db = new DataClasses1DataContext())
             {
@@ -109,6 +120,25 @@ namespace StockControl
                 com4.ValueMember = "UnitCode";
                 com4.DataSource = uom;
             }
+        }
+
+        void DemoLoad()
+        {
+            demoAdd(1, new DateTime(2018, 09, 19), "I0001", "Item A", "", 10, "PCS", 100, "CSTM001");
+        }
+        void demoAdd(int rno, DateTime reqDate, string ItemNO, string ItemName, string Description, decimal Qty, string Unit, decimal UnitPrice, string RefDocNo)
+        {
+            var rowe = dgvData.Rows.AddNew();
+            rowe.Cells["RNo"].Value = rno;
+            rowe.Cells["ReqDate"].Value = reqDate;
+            rowe.Cells["ItemNo"].Value = ItemNO;
+            rowe.Cells["ItemName"].Value = ItemName;
+            rowe.Cells["Description"].Value = Description;
+            rowe.Cells["Qty"].Value = Qty;
+            rowe.Cells["Unit"].Value = Unit;
+            rowe.Cells["UnitPrice"].Value = UnitPrice;
+            rowe.Cells["Amount"].Value = Qty * UnitPrice;
+            rowe.Cells["RefDocNo"].Value = RefDocNo;
         }
 
         //

@@ -41,8 +41,8 @@
             System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Stock Balance");
             System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Job Management");
             System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Report");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Manufacturing");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("CustomerPO");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("CustomerPO");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Production Plan");
             System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Planning");
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
@@ -687,10 +687,10 @@
             treeNode10.Text = "Job Management";
             treeNode11.Name = "Report";
             treeNode11.Text = "Report";
-            treeNode12.Name = "Manufacturing";
-            treeNode12.Text = "Manufacturing";
-            treeNode13.Name = "CustomerPO";
-            treeNode13.Text = "CustomerPO";
+            treeNode12.Name = "CustomerPO";
+            treeNode12.Text = "CustomerPO";
+            treeNode13.Name = "ProductionPlan";
+            treeNode13.Text = "Production Plan";
             treeNode14.Name = "Planning";
             treeNode14.Text = "Planning";
             this.TreeManu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {

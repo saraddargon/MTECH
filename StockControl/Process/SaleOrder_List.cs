@@ -67,6 +67,14 @@ namespace StockControl
                 cbbItem.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
 
+            dgvData.Columns.ToList().ForEach(x =>
+            {
+                if (x.Name == "S")
+                    x.ReadOnly = false;
+                else
+                    x.ReadOnly = true;
+            });
+
             dgvData.AutoGenerateColumns = false;
             DataLoad();
         }
@@ -106,13 +114,46 @@ namespace StockControl
                             x.Cells["CustomerName"].Value = c.Name;
                     });
                 }
+
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             this.Cursor = Cursors.Default;
 
 
-            //    radGridView1.DataSource = dt;
+            demo();
         }
+
+        void demo()
+        {
+            dgvData.DataSource = null;
+            dgvData.Rows.Clear();
+
+            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C00001", "Customer A", "CSTM001", "");
+            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C00001", "Customer A", "CSTM001", "");
+            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C00001", "Customer A", "CSTM001", "PD1809-001");
+            demorow("Waiting", "SO1809-004", "I0001", "Item D", 50, 100, 0, "PCS", "C00001", "Customer A", "CSTM002", "PD1809-002");
+            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C00001", "Customer A", "CSTM003", "PD1809-003");
+
+        }
+        void demorow(string SS, string SONo, string ItemNo, string ItemName, decimal Stock, decimal Qty, decimal ShipQty
+            , string Unit, string CustomerNo, string CustomerName, string RefDocNo, string ProductionNo)
+        {
+            var rowe = dgvData.Rows.AddNew();
+            rowe.Cells["SS"].Value = SS;
+            rowe.Cells["SONo"].Value = SONo;
+            rowe.Cells["ItemNo"].Value = ItemNo;
+            rowe.Cells["ItemName"].Value = ItemName;
+            rowe.Cells["Stock"].Value = Stock;
+            rowe.Cells["Qty"].Value = Qty;
+            rowe.Cells["ShipQty"].Value = ShipQty;
+            rowe.Cells["Unit"].Value = Unit;
+            rowe.Cells["CustomerNo"].Value = CustomerNo;
+            rowe.Cells["CustomerName"].Value = CustomerName;
+            rowe.Cells["RefDocNo"].Value = RefDocNo;
+            rowe.Cells["ProductionNo"].Value = ProductionNo;
+        }
+        //
 
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -158,13 +199,15 @@ namespace StockControl
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            DataLoad();
+            //DataLoad();
+            demo();
         }
 
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
-            //select Item from Double click
-            selRow();
+            ////select Item from Double click
+            //selRow();
+            demo();
 
         }
         void selRow()
@@ -191,7 +234,7 @@ namespace StockControl
         private void btn_PrintPR_Click(object sender, EventArgs e)
         {
             //select Item for Print
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
 
@@ -274,5 +317,5 @@ namespace StockControl
         }
     }
 
-    
+
 }
