@@ -144,6 +144,12 @@
     <Compile Include="Process\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Return_RM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Return_RM.Designer.cs">
+      <DependentUpon>Return_RM.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\AdjustStock_Taking.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +191,12 @@
     </Compile>
     <Compile Include="Process\Forcast.Designer.cs">
       <DependentUpon>Forcast.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Shipping_RM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Shipping_RM.Designer.cs">
+      <DependentUpon>Shipping_RM.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\WorkCentersDetail.cs">
       <SubType>Form</SubType>
@@ -934,6 +946,9 @@
     <EmbeddedResource Include="Process\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Return_RM.resx">
+      <DependentUpon>Return_RM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\AdjustStock_Taking.resx">
       <DependentUpon>AdjustStock_Taking.cs</DependentUpon>
     </EmbeddedResource>
@@ -954,6 +969,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Forcast.resx">
       <DependentUpon>Forcast.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Shipping_RM.resx">
+      <DependentUpon>Shipping_RM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\WorkCentersDetail.resx">
       <DependentUpon>WorkCentersDetail.cs</DependentUpon>

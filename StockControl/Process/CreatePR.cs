@@ -886,7 +886,8 @@ namespace StockControl
                              where ix.TempNo.Trim() == txtTempNo.Text.Trim()
                              && ix.Status != "Cancel"
                              && ix.SS == 1
-                             
+                             && (ix.Status== "Completed" || ix.Status == "Process")
+
                              select ix).ToList();
                     if (p.Count > 0)
                     {

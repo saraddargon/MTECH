@@ -107,7 +107,9 @@ namespace StockControl
                     Insert_data_PR();
                     txtDocNo.Text = "";
                 }
-                    
+
+                //Test
+                txtDocNo.Text = "SMT1-20180009";
                 
             }catch(Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -2544,8 +2546,8 @@ namespace StockControl
             if (mccbEl != null)
             {
                 mccbEl.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
-                mccbEl.DropDownMinSize = new Size(200, 150);
-                mccbEl.DropDownMaxSize = new Size(200, 150);
+                mccbEl.DropDownMinSize = new Size(300, 200);
+                mccbEl.DropDownMaxSize = new Size(300, 200);
 
                 mccbEl.AutoSizeDropDownToBestFit = false;
                 mccbEl.DropDownAnimationEnabled = false;

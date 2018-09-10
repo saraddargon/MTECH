@@ -114,7 +114,7 @@ namespace StockControl
                                  join i in db.mh_PurchaseRequests on ix.TempNo equals i.TEMPNo
                              where// ix.TempNo.Trim() == txtTempNo.Text.Trim() 
                               ix.SS == 1
-                             && i.Status.Contains(ddlStatus.Text)
+                             && ix.Status.Contains(ddlStatus.Text)
                              && i.Status != "Cancel"
                              && ix.VendorNo.ToUpper().Trim().Contains(txtVendorNo.Text.ToUpper().Trim())
                              && ix.TempNo.ToUpper().Trim().Contains(txtTempNo.Text.ToUpper().Trim())
@@ -132,7 +132,7 @@ namespace StockControl
                                 TempNo = ix.TempNo,
                                 RefDocument = i.RefDocument,
                                 PRNo = ix.PRNo,
-                                Status = i.Status,
+                                Status = ix.Status,
                                 VendorNo = ix.VendorNo,
                                 VendorName = ix.VendorName,
                                 GroupCode = ix.GroupCode,

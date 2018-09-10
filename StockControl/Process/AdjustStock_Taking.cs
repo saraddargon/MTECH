@@ -136,7 +136,7 @@ namespace StockControl
 
                     GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)dgvData.Columns["Location"];
                     col.DataSource = (from ix in db.mh_Locations.Where(s => Convert.ToBoolean(s.Active.Equals(true)) )
-                                      select new { ix.Code }).ToList();
+                                      select new { ix.Code, ix.Name }).ToList();
 
                     col.DisplayMember = "Code";
                     col.ValueMember = "Code";
@@ -1612,8 +1612,8 @@ namespace StockControl
 
                     //RadMultiColumnComboBoxElement Comcol = (RadMultiColumnComboBoxElement)e.ActiveEditor;
                     Comcol.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
-                    Comcol.DropDownWidth = 100;
-                    Comcol.DropDownHeight = 80;
+                    Comcol.DropDownWidth = 350;
+                    Comcol.DropDownHeight = 150;
                     //Comcol.EditorControl.BestFitColumns(BestFitColumnMode.AllCells);
                     Comcol.EditorControl.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
                     //ปรับอัตโนมัติ
@@ -1702,8 +1702,8 @@ namespace StockControl
             if (mccbEl != null)
             {
                 mccbEl.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
-                mccbEl.DropDownMinSize = new Size(150, 100);
-                mccbEl.DropDownMaxSize = new Size(150, 100);
+                mccbEl.DropDownMinSize = new Size(300, 200);
+                mccbEl.DropDownMaxSize = new Size(300, 200);
 
                 mccbEl.AutoSizeDropDownToBestFit = false;
                 mccbEl.DropDownAnimationEnabled = false;
