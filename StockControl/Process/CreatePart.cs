@@ -87,8 +87,9 @@ namespace StockControl
             dt_Part.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
             dt_Part.Columns.Add(new DataColumn("ModifyBy", typeof(string)));
             dt_Part.Columns.Add(new DataColumn("ModifyDate", typeof(DateTime)));
-            dt_Part.Columns.Add(new DataColumn("Inspection", typeof(bool)));            
-
+            dt_Part.Columns.Add(new DataColumn("Inspection", typeof(bool)));
+            dt_Part.Columns.Add(new DataColumn("Location", typeof(string)));
+            dt_Part.Columns.Add(new DataColumn("Taking", typeof(bool)));
 
             //dt_Import
             dt_Import = new DataTable();
@@ -131,8 +132,8 @@ namespace StockControl
             dt_Import.Columns.Add(new DataColumn("ModifyBy", typeof(string)));
             dt_Import.Columns.Add(new DataColumn("ModifyDate", typeof(DateTime)));
             dt_Import.Columns.Add(new DataColumn("Inspection", typeof(bool)));
-
-
+            dt_Import.Columns.Add(new DataColumn("Location", typeof(string)));
+            dt_Import.Columns.Add(new DataColumn("Taking", typeof(bool)));
         }
         private void Unit_Load(object sender, EventArgs e)
         {
@@ -198,6 +199,8 @@ namespace StockControl
                 txtDrawing.Enabled = ss;
                 seMaximumInventory.Enabled = ss;
                 cbInspaction.Enabled = ss;
+                cboLocation.Enabled = ss;
+                cbTakingLot.Enabled = ss;
 
                 btnAddDWG.Enabled = ss;
                 btnDeleteDWG.Enabled = ss;
@@ -232,6 +235,8 @@ namespace StockControl
                 txtDrawing.Enabled = ss;
                 seMaximumInventory.Enabled = ss;
                 cbInspaction.Enabled = ss;
+                cboLocation.Enabled = ss;
+                cbTakingLot.Enabled = ss;
 
                 btnAddDWG.Enabled = ss;
                 btnDeleteDWG.Enabled = ss;
@@ -266,6 +271,8 @@ namespace StockControl
                 txtDrawing.Enabled = ss;
                 seMaximumInventory.Enabled = ss;
                 cbInspaction.Enabled = ss;
+                cboLocation.Enabled = ss;
+                cbTakingLot.Enabled = ss;
 
                 btnAddDWG.Enabled = ss;
                 btnDeleteDWG.Enabled = ss;
@@ -291,6 +298,19 @@ namespace StockControl
                 cboVendorName.DataSource = db.mh_Vendors.Where(s => s.Active == true).ToList();
                 cboVendorName.SelectedIndex = -1;
                 cboVendorName.Text = "";
+
+                this.cboLocation.AutoFilter = true;
+                this.cboLocation.AutoCompleteMode = AutoCompleteMode.Append;
+                FilterDescriptor lo = new FilterDescriptor();
+                lo.PropertyName = this.cboLocation.ValueMember;
+                lo.Operator = FilterOperator.StartsWith;
+                this.cboLocation.EditorControl.MasterTemplate.FilterDescriptors.Add(lo);
+
+                cboLocation.DisplayMember = "Code";
+                cboLocation.ValueMember = "Name";
+                cboLocation.DataSource = db.mh_Locations.Where(s => s.Active == true).ToList();
+                cboLocation.SelectedIndex = -1;
+                cboLocation.Text = "";
 
 
                 this.cboVatType.AutoFilter = true;
@@ -601,6 +621,8 @@ namespace StockControl
                         u.chkDrawing = chkDWG.Checked;
                         u.Drawing = txtDrawing.Text;
                         u.Inspection = dbClss.TBo(cbInspaction.Checked);
+                        u.TakingLot = dbClss.TBo(cbTakingLot.Checked);
+                        u.Location = cboLocation.Text;
 
                         ///Save Drawing
                         if (chkDWG.Checked)
@@ -730,6 +752,17 @@ namespace StockControl
                                     gg.InternalLeadTime = InternalLeadTime;
                                     dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขระยะเวลาเคลื่อนย้าย [ เดิม : " + row["InternalLeadTime"].ToString() + " ใหม่ : " + InternalLeadTime.ToString() + "]", txtInternalNo.Text);
                                 }
+                                
+                                if (!cbTakingLot.Checked.Equals(row["TakingLot"].ToString()))
+                                {
+                                    gg.TakingLot = dbClss.TBo(cbTakingLot.Checked);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข TakingLot [ เดิม : " + row["TakingLot"].ToString() + " ใหม่ : " + cbTakingLot.Checked.ToString() + "]", txtInternalNo.Text);
+                                }
+                                if (!cboLocation.Text.Equals(row["Location"].ToString()))
+                                {
+                                    gg.Location = cboLocation.Text;
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข Location [ เดิม : " + row["Location"].ToString() + " ใหม่ : " + cboLocation.Text + "]", txtInternalNo.Text);
+                                }
                                 if (!cbInspaction.Checked.ToString().Equals(row["Inspection"].ToString()))
                                 {
                                     gg.Inspection = dbClss.TBo(cbInspaction.Checked);
@@ -854,6 +887,9 @@ namespace StockControl
                     err += "- “ประเภทภาษี:” เป็นค่าว่าง \n";
                 if (ddlReplenishmentType.Text.Equals(""))
                     err += "- “ทดแทนด้วย:” เป็นค่าว่าง \n";
+
+                if (cboLocation.Text.Equals(""))
+                    err += "- “Default Location:” เป็นค่าว่าง \n";
 
                 if (ddlReOrderType.Text == "Minimum & Maximum Qty")
                 {
@@ -1028,6 +1064,8 @@ namespace StockControl
             seMaximumInventory.Value = 0;
             txtInternalDesc.Text = "";
             cbInspaction.Checked = false;
+            cbTakingLot.Checked = false;
+            cboLocation.Text = "";
 
             txtCreateby.Text = ClassLib.Classlib.User;
             txtCreateDate.Text = Convert.ToDateTime( DateTime.Now,new CultureInfo("en-US")).ToString("dd/MMM/yyyy");
