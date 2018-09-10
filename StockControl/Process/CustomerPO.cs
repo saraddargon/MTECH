@@ -409,15 +409,15 @@ namespace StockControl
                 if (e.RowIndex >= -1)
                 {
                     var itemNo = e.Row.Cells["Item"].Value.ToSt();
-                    if (e.Column.Name.Equals("Amount") || e.Column.Name.Equals("Qty"))
+                    if (e.Column.Name.Equals("PricePerUnit") || e.Column.Name.Equals("Qty"))
                     {
                         if (e.Row.Cells["Qty"].Value.ToDecimal() > 0)
                         {
-                            var m = Math.Round(e.Row.Cells["Amount"].Value.ToDecimal() / e.Row.Cells["Qty"].Value.ToDecimal(), 2);
-                            dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = m;
+                            var m = Math.Round(e.Row.Cells["PricePerUnit"].Value.ToDecimal() * e.Row.Cells["Qty"].Value.ToDecimal(), 2);
+                            e.Row.Cells["Amount"].Value = m;
                         }
                         else
-                            dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = 0;
+                            dgvData.Rows[e.RowIndex].Cells["Amount"].Value = 0;
 
                         e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         e.Row.Cells["OutPlan"].Value = e.Row.Cells["OutPlan"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();

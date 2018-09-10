@@ -425,10 +425,10 @@
             gridViewDecimalColumn2.IsVisible = false;
             gridViewDecimalColumn2.Name = "PCSUnit";
             gridViewDecimalColumn3.EnableExpressionEditor = false;
-            gridViewDecimalColumn3.FieldName = "PricePerUnit";
+            gridViewDecimalColumn3.FieldName = "UnitPrice";
             gridViewDecimalColumn3.FormatString = "{0:N2}";
             gridViewDecimalColumn3.HeaderText = "Price/Unit";
-            gridViewDecimalColumn3.Name = "PricePerUnit";
+            gridViewDecimalColumn3.Name = "UnitPrice";
             gridViewDecimalColumn3.Width = 69;
             gridViewDecimalColumn4.EnableExpressionEditor = false;
             gridViewDecimalColumn4.FieldName = "Amount";

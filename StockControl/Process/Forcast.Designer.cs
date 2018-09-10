@@ -468,13 +468,13 @@
             gridViewDecimalColumn3.FormatString = "{0:N2}";
             gridViewDecimalColumn3.HeaderText = "Price/Unit";
             gridViewDecimalColumn3.Name = "PricePerUnit";
-            gridViewDecimalColumn3.ReadOnly = true;
             gridViewDecimalColumn3.Width = 99;
             gridViewDecimalColumn4.EnableExpressionEditor = false;
             gridViewDecimalColumn4.FieldName = "Amount";
             gridViewDecimalColumn4.FormatString = "{0:N2}";
             gridViewDecimalColumn4.HeaderText = "Amount";
             gridViewDecimalColumn4.Name = "Amount";
+            gridViewDecimalColumn4.ReadOnly = true;
             gridViewDecimalColumn4.Width = 98;
             gridViewDecimalColumn5.EnableExpressionEditor = false;
             gridViewDecimalColumn5.FieldName = "OutSO";

@@ -40,36 +40,63 @@ namespace StockControl
                 startCal = false;
             }
         }
+
+
         void calE()
         {
             try
             {
-                //1.Get Customer P/O (OutPlan) and SaleOrder (OutPlan) [Only not customer P/O]
                 using (var db = new DataClasses1DataContext())
                 {
+                    //1.Get Customer P/O (OutPlan) and SaleOrder (OutPlan) [Only not customer P/O]
                     var cstmPOs = db.mh_CustomerPOs.Where(x => x.Active
-                                && x.OutPlan > 0 && x.Status != "Completed"
+                                && x.OutPlan > 0 && x.PlanStatus != "Completed"
                                 && x.ReqDate >= dtFrom && x.ReqDate <= dtTo
                                 && x.ItemNo.Contains(ItemNo) /*Location*/
                             ).ToList();
                     var saleOrders = db.mh_SaleOrders.Where(x => x.Active
                                 && x.RefId == 0 && x.OutPlan > 0
-                                && x.Status != "Completed" //not Refer with Customer P/O
+                                && x.PlanStatus != "Completed" //not Refer with Customer P/O
                                 && x.ReqDeliveryDate >= dtFrom && x.ReqDeliveryDate <= dtTo
                                 && x.ItemNo.Contains(ItemNo)
                             ).ToList();
+                    // หา PD กับ PO
+                    foreach (var item in cstmPOs)
+                    {
+                        var t = db.mh_Items.Where(x => x.InternalNo == item.ItemNo).FirstOrDefault();
+                        calPart(item.ItemNo, item.OutPlan, item.ReqDate, item.CustomerPONo, item.id, item.ForcastType);
+                    }
+                    foreach (var item in saleOrders)
+                    {
+                        var t = db.mh_Items.Where(x => x.InternalNo == item.ItemNo).FirstOrDefault();
+                        calPart(item.ItemNo, item.OutPlan, item.ReqDeliveryDate, item.SONo, item.id, item.RepType);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                baseClass.Error(ex.Message);
+                baseClass.Warning("CalE : " + ex.Message);
             }
             finally
             {
                 startCal = false;
             }
         }
+        void calPart(string itemNo, decimal reqQty, DateTime reqDate, string DocNo, int DocId, string RepType)
+        {
+            try
+            {
+                //RepType == Production, Purchase
+                using (var db = new DataClasses1DataContext())
+                {
 
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Warning("Cal Part : " + ex.Message);
+            }
+        }
         void changeLabel(string lb)
         {
             this.Invoke(new MethodInvoker(() =>
@@ -81,14 +108,37 @@ namespace StockControl
 
     }
 
+    public class PDPlan
+    {
+        public ItemData Item { get; set; }
+        public string CstmNo { get; set; }
+        public string RefDocNo { get; set; }
+        public int RefId { get; set; }
+        public DateTime ReqDate { get; set; }
+        public decimal ReqQty { get; set; }
 
+    }
+    public class POPlan
+    {
+        public ItemData Item { get; set; }
+        public List<DocPlan> DocRef { get; set; }
+        public decimal ReqQty { get; set; }
+
+    }
+    public class DocPlan
+    {
+        public string DocNo { get; set; }
+        public int DocId { get; set; }
+        public decimal ReqQty { get; set; }
+    }
+
+    
     public class ItemData
     {
         public int rNo { get; set; } = 0;
         public int ref_rNo { get; set; } = 0;
         public string ItemNo { get; set; }
         public string ItemName { get; set; }
-        public decimal ReqQty { get; set; }
         public ReorderType ReorderType { get; set; }
         public decimal QtyOnHand { get; set; }
         public decimal SafetyStock { get; set; }
@@ -151,6 +201,9 @@ namespace StockControl
             this.ItemName = ItemName;
         }
     }
+
+    //1 Job --> 1 Customer P/O or 1 Sale Order, 1 FG
+    //RM รวมกันได้
 
 
 

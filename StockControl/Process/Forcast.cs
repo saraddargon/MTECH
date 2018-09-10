@@ -261,39 +261,6 @@ namespace StockControl
                         }
                     }
                 }
-                //if(row >= 0)
-                //{
-                //    string itemNo = dgvData.Rows[row].Cells["Item"].Value.ToSt();
-                //    if (baseClass.IsDel($"Do you want to Delete item ({itemNo}) ?"))
-                //    {
-                //        var rowe = dgvData.Rows[row];
-                //        if (rowe.Cells["id"].Value.ToInt() <= 0)
-                //            dgvData.Rows.Remove(rowe);
-                //        else
-                //        {
-                //            using (var db = new DataClasses1DataContext())
-                //            {
-                //                int id = rowe.Cells["id"].Value.ToInt();
-                //                var m = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
-                //                if (m != null)
-                //                {
-                //                    m.Active = false;
-                //                    m.UpdateDate = DateTime.Now;
-                //                    m.UpdateBy = Classlib.User;
-                //                    db.SubmitChanges();
-                //                    dgvData.Rows.Remove(rowe);
-                //                }
-                //            }
-                //        }
-
-                //        SetRowNo1(dgvData);
-                //        CallTotal();
-                //        if (dgvData.CurrentRow != null)
-                //            row = dgvData.CurrentRow.Index;
-                //        else
-                //            row = -1;
-                //    }
-                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -440,12 +407,12 @@ namespace StockControl
                 if (e.RowIndex >= -1)
                 {
                     var itemNo = e.Row.Cells["Item"].Value.ToSt();
-                    if (e.Column.Name.Equals("Amount") || e.Column.Name.Equals("Qty"))
+                    if (e.Column.Name.Equals("PricePerUnit") || e.Column.Name.Equals("Qty"))
                     {
                         if (e.Row.Cells["Qty"].Value.ToDecimal() > 0)
                         {
-                            var m = Math.Round(e.Row.Cells["Amount"].Value.ToDecimal() / e.Row.Cells["Qty"].Value.ToDecimal(), 2);
-                            dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = m;
+                            var m = Math.Round(e.Row.Cells["PricePerUnit"].Value.ToDecimal() * e.Row.Cells["Qty"].Value.ToDecimal(), 2);
+                            dgvData.Rows[e.RowIndex].Cells["Amount"].Value = m;
                         }
                         else
                             dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = 0;

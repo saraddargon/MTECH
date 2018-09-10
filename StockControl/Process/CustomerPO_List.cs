@@ -110,6 +110,11 @@ namespace StockControl
                         var c = db.mh_Customers.Where(q => q.No == cNo).FirstOrDefault();
                         if (c != null)
                             x.Cells["CustomerName"].Value = c.Name;
+
+                        if (DateTime.Now <= x.Cells["ReqDate"].Value.ToDateTime().Value)
+                            x.Cells["SS"].Value = 1;
+                        else
+                            x.Cells["SS"].Value = 2;
                     });
                 }
             }
@@ -292,7 +297,7 @@ namespace StockControl
                     foreach (var item in rowS)
                     {
                         int id = item.Cells["id"].Value.ToInt();
-                        if (item.Cells["Status"].Value.ToSt() != "Waiting")
+                        if (item.Cells["OutSO"].Value.ToDecimal() <= 0)
                         {
                             baseClass.Warning("Status P/O Cannot create Sale Order.\n");
                             return;
