@@ -131,9 +131,25 @@ namespace StockControl
 
             demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
             demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
-            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "PD1809-001");
-            demorow("Waiting", "SO1809-004", "I0001", "Item D", 50, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "PD1809-002");
-            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "PD1809-003");
+            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
+            demorow("Waiting", "SO1809-004", "I0001", "Item D", 50, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002");
+            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
+            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
+            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
+            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
+            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
+            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
+            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
+            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
+            demorow("Waiting", "SO1809-004", "I0001", "Item D", 50, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002");
+            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
+            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
+            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
+            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
+            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
+            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
+            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
+            demorow("Waiting", "SO1809-004", "I0001", "Item D", 50, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002");
 
         }
         void demorow(string SS, string SONo, string ItemNo, string ItemName, decimal Stock, decimal Qty, decimal ShipQty
@@ -141,7 +157,7 @@ namespace StockControl
         {
             var rowe = dgvData.Rows.AddNew();
             rowe.Cells["SS"].Value = SS;
-            rowe.Cells["SONo"].Value = SONo;
+            rowe.Cells["SONo"].Value = "SO1809-" + (rowe.Index + 1).ToString("000");
             rowe.Cells["ItemNo"].Value = ItemNo;
             rowe.Cells["ItemName"].Value = ItemName;
             rowe.Cells["Stock"].Value = Stock;

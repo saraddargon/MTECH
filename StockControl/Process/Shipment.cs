@@ -74,8 +74,8 @@ namespace StockControl
                 else if (idList.Count > 0)
                     LoadFromId();
 
-                if (demo)
-                    DemoLoad();
+
+                DemoLoad();
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -99,9 +99,12 @@ namespace StockControl
         void DemoLoad()
         {
             demoAdd(1, new DateTime(2018, 09, 19), "I0001", "Item A", 100, "PCS", 100, "SO1809-001");
-            demoAdd(2, new DateTime(2018, 09, 19), "I0001", "Item B", 100, "PCS", 100, "SO1809-002");
+            demoAdd(2, new DateTime(2018, 09, 20), "I0001", "Item B", 100, "PCS", 100, "SO1809-002");
+            demoAdd(2, new DateTime(2018, 09, 22), "I0001", "Item C", 50, "PCS", 100, "SO1809-003");
             txtCSTMNo.Text = "C0001";
             radTextBox1.Text = "TT FUJI TOOL SUPPORT CO.,LTD";
+            txtSONo.Text = "SP1809-001";
+            CallTotal();
         }
         void demoAdd(int rno, DateTime reqDate, string ItemNO, string ItemName, decimal Qty, string Unit, decimal UnitPrice, string RefDocNo)
         {

@@ -56,11 +56,37 @@ namespace StockControl
         {
             dgvData.DataSource = null;
             dgvData.Rows.Clear();
-
-            //addrow("Delay", "PD1809-002", "I0002", "Item FG 2", new DateTime(2018, 9, 5), "CSTMPO1809-002", "SO1809-002", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            
             addrow("On Plan", "PO1809-001", "I0008", "RM 1", 10, new DateTime(2018, 9, 12));
             addrow("Delay", "PO1809-002", "I0009", "RM 2", 10, new DateTime(2018, 9, 10));
             addrow("On Plan", "SEMI", "I0010", "WIP 1", 10, new DateTime(2018, 9, 15));
+            addrow("On Plan", "PO1809-003", "I0008", "RM 1", 10, new DateTime(2018, 9, 12));
+            //addrow("Delay", "PO1809-004", "I0009", "RM 2", 10, new DateTime(2018, 9, 10));
+            //addrow("On Plan", "SEMI 2", "I0010", "WIP 1", 10, new DateTime(2018, 9, 15));
+            //addrow("On Plan", "PO1809-005", "I0008", "RM 1", 10, new DateTime(2018, 9, 12));
+            //addrow("Delay", "PO1809-006", "I0009", "RM 2", 10, new DateTime(2018, 9, 10));
+            //addrow("On Plan", "SEMI 3", "I0010", "WIP 1", 10, new DateTime(2018, 9, 15));
+            //addrow("On Plan", "PO1809-007", "I0008", "RM 1", 10, new DateTime(2018, 9, 12));
+            //addrow("Delay", "PO1809-008", "I0009", "RM 2", 10, new DateTime(2018, 9, 10));
+            //addrow("Delay", "SEMI 4", "I0010", "WIP 1", 10, new DateTime(2018, 9, 15));
+            //addrow("Delay", "PO1809-009", "I0008", "RM 1", 10, new DateTime(2018, 9, 12));
+            //addrow("Delay", "PO1809-010", "I0009", "RM 2", 10, new DateTime(2018, 9, 10));
+            //addrow("On Plan", "SEMI", "I0010", "WIP 1", 10, new DateTime(2018, 9, 15));
+            //addrow("On Plan", "PO1809-011", "I0008", "RM 1", 10, new DateTime(2018, 9, 12));
+            //addrow("On Plan", "PO1809-012", "I0009", "RM 2", 10, new DateTime(2018, 9, 10));
+            //addrow("On Plan", "SEMI", "I0010", "WIP 1", 10, new DateTime(2018, 9, 15));
+            //addrow("On Plan", "PO1809-013", "I0008", "RM 1", 10, new DateTime(2018, 9, 12));
+            //addrow("Delay", "PO1809-014", "I0009", "RM 2", 10, new DateTime(2018, 9, 10));
+            //addrow("On Plan", "SEMI", "I0010", "WIP 1", 10, new DateTime(2018, 9, 15));
+            //addrow("On Plan", "PO1809-015", "I0008", "RM 1", 10, new DateTime(2018, 9, 12));
+            //addrow("Delay", "PO1809-016", "I0009", "RM 2", 10, new DateTime(2018, 9, 10));
+            //addrow("Delay", "SEMI", "I0010", "WIP 1", 10, new DateTime(2018, 9, 15));
+            //addrow("On Plan", "PO1809-017", "I0008", "RM 1", 10, new DateTime(2018, 9, 12));
+            //addrow("On Plan", "PO1809-018", "I0009", "RM 2", 10, new DateTime(2018, 9, 10));
+            //addrow("On Plan", "SEMI", "I0010", "WIP 1", 10, new DateTime(2018, 9, 15));
+            //addrow("On Plan", "PO1809-019", "I0008", "RM 1", 10, new DateTime(2018, 9, 12));
+            //addrow("Delay", "PO1809-020", "I0009", "RM 2", 10, new DateTime(2018, 9, 10));
+            //addrow("On Plan", "SEMI", "I0010", "WIP 1", 10, new DateTime(2018, 9, 15));
         }
         void addrow(string SS, string Document, string Item, string ItemName, decimal Qty, DateTime DueDate)
         {

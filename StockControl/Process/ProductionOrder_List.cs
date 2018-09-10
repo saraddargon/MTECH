@@ -95,9 +95,24 @@ namespace StockControl
                 dgvData.DataSource = null;
                 dgvData.Rows.Clear();
 
-                demoadd("On Plan", "PD1809-001", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-001");
-                demoadd("Delay", "PD1809-002", new DateTime(2018, 9, 8), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-002");
-                demoadd("On Plan", "PD1809-003", new DateTime(2018, 9, 30), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-003");
+                demoadd("On Plan", "JOB1809-001", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-001");
+                demoadd("Delay", "JOB1809-002", new DateTime(2018, 9, 8), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-002");
+                demoadd("On Plan", "JOB1809-003", new DateTime(2018, 9, 30), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-003");
+                demoadd("On Plan", "JOB1809-004", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-004");
+                demoadd("On Plan", "JOB1809-005", new DateTime(2018, 9, 30), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-005");
+                demoadd("Delay", "JOB1809-006", new DateTime(2018, 9, 8), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-006");
+                demoadd("On Plan", "JOB1809-001", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-001");
+                demoadd("Delay", "JOB1809-002", new DateTime(2018, 9, 8), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-002");
+                demoadd("On Plan", "JOB1809-003", new DateTime(2018, 9, 30), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-003");
+                demoadd("On Plan", "JOB1809-004", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-004");
+                demoadd("On Plan", "JOB1809-005", new DateTime(2018, 9, 30), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-005");
+                demoadd("Delay", "JOB1809-006", new DateTime(2018, 9, 8), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-006");
+                demoadd("Delay", "JOB1809-001", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-001");
+                demoadd("Delay", "JOB1809-002", new DateTime(2018, 9, 8), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-002");
+                demoadd("On Plan", "JOB1809-003", new DateTime(2018, 9, 30), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-003");
+                demoadd("On Plan", "JOB1809-004", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-004");
+                demoadd("On Plan", "JOB1809-005", new DateTime(2018, 9, 30), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-005");
+                demoadd("Delay", "JOB1809-006", new DateTime(2018, 9, 8), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-006");
 
             }
             catch (Exception ex)
@@ -110,7 +125,7 @@ namespace StockControl
         {
             var row = dgvData.Rows.AddNew();
             row.Cells["SS"].Value = SS;
-            row.Cells["ProductionNo"].Value = ProductionNo;
+            row.Cells["ProductionNo"].Value = "JOB1809-" + (row.Index + 1).ToString("000");
             row.Cells["DueDate"].Value = DueDate;
             row.Cells["Item"].Value = ItemNo;
             row.Cells["ItemName"].Value = ItemName;

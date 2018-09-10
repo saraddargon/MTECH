@@ -74,8 +74,8 @@ namespace StockControl
                 else if (idList.Count > 0)
                     LoadFromId();
 
-                if (demo)
-                    DemoLoad();
+
+                DemoLoad();
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -107,9 +107,19 @@ namespace StockControl
 
         void DemoLoad()
         {
+            dgvData.DataSource = null;
+            dgvData.Rows.Clear();
+
             demoAdd(1, "I0001", "Item A", 100, "PCS", 100, "SP1809-001");
-            demoAdd(2, "I0001", "Item B", 100, "PCS", 80, "SP1809-002");
+            demoAdd(2, "I0002", "Item B", 100, "PCS", 80, "SP1809-002");
+            demoAdd(3, "I0003", "Item C", 50, "PCS", 200, "SP1809-003");
+            demoAdd(4, "I0004", "Item D", 200, "PCS", 30, "SP1809-004");
+
             cbbCSTM.SelectedIndex = 0;
+            txtReferNo.Text = "CSTMPO1809-001";
+            txtInvNo.Text = "IV1809-0010";
+            txtVatA.Value = 7;
+            cbVat.Checked = true;
 
             CallTotal();
         }
@@ -139,7 +149,7 @@ namespace StockControl
                     if (t.Count > 0)
                     {
                         string CustNo = t.First().CustomerNo;
-                        txtSONo.Text = t_SONo;
+                        txtInvNo.Text = t_SONo;
                         txtCSTMNo.Text = CustNo;
                         dtSODate.Value = t.First().SODate;
                         txtRemark.Text = t.First().RemarkHD;
@@ -247,7 +257,7 @@ namespace StockControl
         private void ClearData()
         {
             txtCSTMNo.Text = "";
-            txtSONo.Text = "";
+            txtInvNo.Text = "";
             dtSODate.Value = DateTime.Today;
             dgvData.Rows.Clear();
             dgvData.DataSource = null;
@@ -452,7 +462,7 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                string sono = txtSONo.Text;
+                string sono = txtInvNo.Text;
                 string cstmNo = txtCSTMNo.Text;
                 CallTotal();
                 using (var db = new DataClasses1DataContext())
@@ -529,7 +539,7 @@ namespace StockControl
                 baseClass.Info("Save complete(s).");
                 ClearData();
                 txtCSTMNo.Text = t_CustomerNo;
-                txtSONo.Text = t_SONo;
+                txtInvNo.Text = t_SONo;
                 DataLoad();
             }
             catch (Exception ex)
@@ -971,7 +981,7 @@ namespace StockControl
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (txtSONo.Text.Trim() == "")
+                if (txtInvNo.Text.Trim() == "")
                 {
                     baseClass.Warning("Please enter Sale Order no.");
                     return;
@@ -982,7 +992,7 @@ namespace StockControl
                     return;
                 }
 
-                t_SONo = txtSONo.Text;
+                t_SONo = txtInvNo.Text;
                 t_CustomerNo = txtCSTMNo.Text;
                 ClearData();
                 DataLoad();

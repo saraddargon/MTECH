@@ -141,6 +141,21 @@ namespace StockControl
                 demo_row("Waiting Order", "CSTMPO1809-001", new DateTime(2018, 09, 19), "I0001", "Item A", 100, 50, true, false, "PCS", 100, 100 * 100);
                 demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 20), "I0002", "Item B", 100, 100, false, false, "PCS", 100, 100 * 100);
                 demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 21), "I0003", "Item C", 50, 50, false, false, "PCS", 100, 50 * 100);
+                demo_row("Waiting Plan", "CSTMPO1809-001", new DateTime(2018, 09, 17), "I0001", "Item A", 100, 0, false, true, "PCS", 100, 100 * 100);
+                demo_row("Completed", "CSTMPO1809-001", new DateTime(2018, 09, 18), "I0001", "Item A", 50, 0, true, true, "PCS", 100, 50 * 100);
+                demo_row("Waiting Order", "CSTMPO1809-001", new DateTime(2018, 09, 19), "I0001", "Item A", 100, 50, true, false, "PCS", 100, 100 * 100);
+                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 20), "I0002", "Item B", 100, 100, false, false, "PCS", 100, 100 * 100);
+                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 21), "I0003", "Item C", 50, 50, false, false, "PCS", 100, 50 * 100);
+                demo_row("Waiting Plan", "CSTMPO1809-001", new DateTime(2018, 09, 17), "I0001", "Item A", 100, 0, false, true, "PCS", 100, 100 * 100);
+                demo_row("Completed", "CSTMPO1809-001", new DateTime(2018, 09, 18), "I0001", "Item A", 50, 0, true, true, "PCS", 100, 50 * 100);
+                demo_row("Waiting Order", "CSTMPO1809-001", new DateTime(2018, 09, 19), "I0001", "Item A", 100, 50, true, false, "PCS", 100, 100 * 100);
+                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 20), "I0002", "Item B", 100, 100, false, false, "PCS", 100, 100 * 100);
+                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 21), "I0003", "Item C", 50, 50, false, false, "PCS", 100, 50 * 100);
+                demo_row("Waiting Plan", "CSTMPO1809-001", new DateTime(2018, 09, 17), "I0001", "Item A", 100, 0, false, true, "PCS", 100, 100 * 100);
+                demo_row("Completed", "CSTMPO1809-001", new DateTime(2018, 09, 18), "I0001", "Item A", 50, 0, true, true, "PCS", 100, 50 * 100);
+                demo_row("Waiting Order", "CSTMPO1809-001", new DateTime(2018, 09, 19), "I0001", "Item A", 100, 50, true, false, "PCS", 100, 100 * 100);
+                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 20), "I0002", "Item B", 100, 100, false, false, "PCS", 100, 100 * 100);
+                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 21), "I0003", "Item C", 50, 50, false, false, "PCS", 100, 50 * 100);
             }
             catch (Exception ex)
             {
@@ -153,7 +168,7 @@ namespace StockControl
         {
             var row = dgvData.Rows.AddNew();
             row.Cells["SS"].Value = SS;
-            row.Cells["PONo"].Value = PONo;
+            row.Cells["PONo"].Value = "CSTMPO1809-" + (row.Index + 1).ToString("0000");
             row.Cells["ReqDate"].Value = ReqDate;
             row.Cells["Item"].Value = Item;
             row.Cells["ItemName"].Value = ItemName;
