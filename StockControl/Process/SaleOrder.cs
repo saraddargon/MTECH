@@ -20,6 +20,7 @@ namespace StockControl
         string t_CustomerNo = "";
         //Customer P/O to SaleORder
         List<int> idList = new List<int>();
+        //List<po_to_so> potoso = new List<po_to_so>();
 
         public SaleOrder()
         {
@@ -46,8 +47,19 @@ namespace StockControl
                 GETDTRow();
                 ListDefualt();
 
+                var a = new List<int>();
+                foreach (var item in idList)
+                {
+                    a.Add(item);
+                }
+
                 ClearData();
                 btnNew_Click(null, null);
+
+                foreach (var item in a)
+                {
+                    idList.Add(item);
+                }
 
                 if (t_SONo != "" && t_CustomerNo != "")
                     DataLoad();
@@ -124,8 +136,10 @@ namespace StockControl
                         {
                             var rowe = dgvData.Rows.AddNew();
                             addRow(rowe.Index, tt.ReqDeliveryDate.Date, tt.ItemNo, tt.ItemName, tt.Description, tt.Location
-                                , tt.Qty, tt.UOM, tt.PCSUnit, tt.UnitPrice, tt.Amount, tt.PriceIncVat, tt.OutShip
-                                , tt.id, tt.Status, tt.VatGroup, tt.VatType, tt.RefDocNo, tt.RefId.ToInt(), tt.RepType, "");
+                                , tt.Qty, tt.UOM, tt.PCSUnit, tt.UnitPrice, tt.Amount, tt.PriceIncVat
+                                , tt.OutShip, tt.OutPlan
+                                , tt.id, tt.Status, tt.PlanStatus
+                                , tt.VatGroup, tt.VatType, tt.RefDocNo, tt.RefId.ToInt(), tt.RepType, "");
                         }
 
                         SetRowNo1(dgvData);
@@ -164,10 +178,16 @@ namespace StockControl
                         var t = db.mh_Items.Where(x => x.InternalNo == c.ItemNo).First();
                         var cstm = db.mh_Customers.Where(x => x.No == c.CustomerNo).First();
                         addRow(rowe.Index, c.ReqDate, c.ItemNo, c.ItemName, "", t.Location
-                            , c.OutSO, c.UOM, c.PCSUnit, c.PricePerUnit, c.Amount, false, c.OutSO
-                            , 0, "Waiting", cstm.VatGroup, t.VatType, c.CustomerPONo, c.id, t.ReplenishmentType
+                            , Math.Round(c.OutSO / c.PCSUnit, 2), c.UOM, c.PCSUnit, c.PricePerUnit, c.Amount, false, c.OutSO, c.OutPlan
+                            , 0, "Waiting", "Waiting", cstm.VatGroup, t.VatType, c.CustomerPONo, c.id, t.ReplenishmentType
                             , "T");
 
+                        //potoso.Add(new po_to_so
+                        //{
+                        //    idPO = c.id,
+                        //    poQty = c.Quantity * c.PCSUnit,
+                        //    poAmnt = c.Amount
+                        //});
                     }
                     SetRowNo1(dgvData);
                     CallTotal();
@@ -252,6 +272,9 @@ namespace StockControl
             //getมาไว้ก่อน แต่ยังไมได้ save 
             //txtTempNo.Text = StockControl.dbClss.GetNo(10, 0);
 
+            idList.Clear();
+            //potoso.Clear();
+
         }
         private void btnView_Click(object sender, EventArgs e)
         {
@@ -306,6 +329,12 @@ namespace StockControl
                 string cstmNo = txtCSTMNo.Text.Trim();
                 if (poNo != "" && cstmNo != "")
                 {
+                    if (dgvData.Rows.Where(x => x.Cells["PlanStatus"].Value.ToSt() != "Waiting").Count() > 0)
+                    {
+                        baseClass.Warning("Cannot Delete because Already Planned.\n");
+                        return;
+                    }
+
                     if (baseClass.IsDel($"Do you want to Delete Sale Order: {poNo} ?"))
                     {
                         using (var db = new DataClasses1DataContext())
@@ -481,6 +510,8 @@ namespace StockControl
                         t.RefDocNo = item.Cells["RefDocNo"].Value.ToSt();
                         t.RefId = item.Cells["RefId"].Value.ToInt();
                         t.RepType = item.Cells["RepType"].Value.ToSt();
+                        t.PlanStatus = item.Cells["PlanStatus"].Value.ToSt();
+                        t.OutPlan = item.Cells["OutPlan"].Value.ToDecimal();
                     }
 
                     t_SONo = sono;
@@ -510,6 +541,7 @@ namespace StockControl
             {//Update Customer P/O (Out Sale Order Q'ty)
                 foreach (var idPO in dgvData.Rows.Select(x => x.Cells["RefId"].Value.ToInt()))
                 {
+                    if (idPO == 0) continue;
                     var c = db.mh_CustomerPOs.Where(x => x.id == idPO).First();
                     var m = db.mh_SaleOrders.Where(x => x.Active && x.RefId == idPO).ToList();
                     decimal qq = 0.00m;
@@ -536,16 +568,18 @@ namespace StockControl
                 if (e.RowIndex >= -1)
                 {
                     var itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
-                    if (e.Column.Name.Equals("Amount") || e.Column.Name.Equals("Qty"))
+                    if (e.Column.Name.Equals("UnitPrice") || e.Column.Name.Equals("Qty"))
                     {
                         if (e.Row.Cells["Qty"].Value.ToDecimal() > 0)
                         {
-                            var m = Math.Round(e.Row.Cells["Amount"].Value.ToDecimal() / e.Row.Cells["Qty"].Value.ToDecimal(), 2);
-                            dgvData.Rows[e.RowIndex].Cells["UnitPrice"].Value = m;
+                            var m = Math.Round(e.Row.Cells["UnitPrice"].Value.ToDecimal() * e.Row.Cells["Qty"].Value.ToDecimal(), 2);
+                            dgvData.Rows[e.RowIndex].Cells["Amount"].Value = m;
                         }
                         else
-                            dgvData.Rows[e.RowIndex].Cells["UnitPrice"].Value = 0;
+                            dgvData.Rows[e.RowIndex].Cells["Amount"].Value = 0;
 
+                        e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                        e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         CallTotal();
                     }
                     else if (e.Column.Name.Equals("ItemNo"))
@@ -572,14 +606,16 @@ namespace StockControl
                             {
                                 var cc = db.mh_Customers.Where(x => x.No == txtCSTMNo.Text).First();
                                 addRow(e.RowIndex, DateTime.Now, t.InternalNo, t.InternalName, "", t.Location
-                                    , 1, t.BaseUOM, pcsunit, 0, 0, false, 1, 0
-                                    , "Waiting", cc.VatGroup, t.VatType, "", 0, t.ReplenishmentType, "T");
+                                    , 1, t.BaseUOM, pcsunit, 0, 0, false, 1 * pcsunit, 1 * pcsunit, 0
+                                    , "Waiting", "Waiting", cc.VatGroup, t.VatType, "", 0, t.ReplenishmentType, "T");
                             }
                             else
                             {
                                 e.Row.Cells["ItemName"].Value = t.InternalName;
                                 e.Row.Cells["Unit"].Value = t.BaseUOM;
                                 e.Row.Cells["PCSUnit"].Value = pcsunit;
+                                e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                                e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                             }
 
                             //
@@ -595,6 +631,8 @@ namespace StockControl
                             var pcsunit = (u != null) ? u.QuantityPer : 1;
 
                             e.Row.Cells["PCSUnit"].Value = pcsunit;
+                            e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                            e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         }
                     }
 
@@ -607,6 +645,17 @@ namespace StockControl
         {
             if (e.RowIndex >= -1)
             {
+                if (e.Row.Cells["PlanStatus"].Value.ToSt() != "Waiting")
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                if (e.Row.Cells["Status"].Value.ToSt() != "Waiting")
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
                 string itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
                 if (e.Column.Name.Equals("Unit"))
                 {
@@ -628,7 +677,7 @@ namespace StockControl
         }
         void addRow(int rowIndex, DateTime ReqDate, string ItemNo, string ItemName, string Desc
             , string Location, decimal Qty, string UOM, decimal PCSUnit, decimal UnitPrice, decimal Amount
-            , bool PriceIncVat, decimal OutShip, int id, string Status, int VatGroup, string VatType
+            , bool PriceIncVat, decimal OutShip, decimal OutPlan, int id, string Status, string PlanStatus, int VatGroup, string VatType
             , string RefDocNo, int RefId, string RepType, string dgvC)
         {
             var rowE = dgvData.Rows[rowIndex];
@@ -654,6 +703,8 @@ namespace StockControl
                 rowE.Cells["RefId"].Value = RefId;
                 rowE.Cells["RepType"].Value = RepType;
                 rowE.Cells["dgvC"].Value = dgvC; //if Edit row -> value = T
+                rowE.Cells["PlanStatus"].Value = PlanStatus;
+                rowE.Cells["OutPlan"].Value = OutPlan;
 
                 SetRowNo1(dgvData);
             }
@@ -712,18 +763,23 @@ namespace StockControl
                 {
                     this.Cursor = Cursors.WaitCursor;
 
+                    if (dgvData.CurrentCell.RowInfo.Cells["PlanStatus"].Value.ToSt() != "Waiting")
+                    {
+                        baseClass.Warning("Cannot Delete because Already Planned.\n");
+                        return;
+                    }
 
-                    if (dgvData.CurrentRow.Cells["Status"].Value.ToSt() == "Waiting")
+                    if (dgvData.CurrentCell.RowInfo.Cells["Status"].Value.ToSt() == "Waiting")
                     {
 
                         int id = 0;
-                        int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["id"].Value), out id);
+                        int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentCell.RowInfo.Cells["id"].Value), out id);
                         if (id <= 0)
-                            dgvData.Rows.Remove(dgvData.CurrentRow);
+                            dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
 
                         else
                         {
-                            row = dgvData.CurrentRow.Index;
+                            row = dgvData.CurrentCell.RowInfo.Index;
                             //btnDelete_Click(null, null);
                             using (var db = new DataClasses1DataContext())
                             {
@@ -736,7 +792,7 @@ namespace StockControl
                                     db.SubmitChanges();
 
                                     updateOutSO();
-                                    dgvData.Rows.Remove(dgvData.CurrentRow);
+                                    dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
                                 }
                             }
                         }
@@ -933,7 +989,7 @@ namespace StockControl
                         var rowE = dgvData.Rows.AddNew();
                         var cc = db.mh_Customers.Where(x => x.No == txtCSTMNo.Text).First();
                         addRow(rowE.Index, DateTime.Now, itemNo, t.InternalName, "", t.Location
-                            , 1, t.BaseUOM, u, 0, 0, false, 1, 0, "Waiting"
+                            , 1, t.BaseUOM, u, 0, 0, false, 1 * u, 1 * u, 0, "Waiting", "Waiting"
                             , cc.VatGroup, t.VatType, "", 0, t.ReplenishmentType, "T");
                     }
                     SetRowNo1(dgvData);
@@ -973,6 +1029,21 @@ namespace StockControl
         {
             if (e.KeyCode == Keys.Enter)
                 CallTotal();
+        }
+    }
+
+
+    public class po_to_so
+    {
+        public int idPO { get; set; }
+        public decimal poQty { get; set; }
+        public decimal poAmnt { get; set; }
+        public decimal pricePer
+        {
+            get
+            {
+                return Math.Round(poAmnt / poQty, 2);
+            }
         }
     }
 }

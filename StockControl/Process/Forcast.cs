@@ -104,7 +104,7 @@ namespace StockControl
                             var rowe = dgvData.Rows.AddNew();
                             addRow(rowe.Index, tt.ReqDate.Date, tt.ItemNo, tt.ItemName
                                 , tt.Quantity, tt.UOM, tt.PCSUnit, tt.PricePerUnit, tt.Amount
-                                , tt.OutSO, tt.RemarkDT, tt.id, tt.Status, tt.ForcastType);
+                                , tt.OutSO, tt.OutPlan, tt.RemarkDT, tt.id, tt.Status, tt.PlanStatus, tt.ForcastType);
                         }
 
                         SetRowNo1(dgvData);
@@ -230,6 +230,12 @@ namespace StockControl
                 string cstmNo = txtCSTMNo.Text.Trim();
                 if (poNo != "" && cstmNo != "")
                 {
+                    if (dgvData.Rows.Where(x => x.Cells["PlanStatus"].Value.ToSt() != "Waiting").ToList().Count > 0)
+                    {
+                        baseClass.Warning("Cannot Delete because P/O is Already Planned.\n");
+                        return;
+                    }
+
                     if (baseClass.IsDel($"Do you want to Delete Forcast {poNo} ?"))
                     {
                         using (var db = new DataClasses1DataContext())
@@ -255,39 +261,6 @@ namespace StockControl
                         }
                     }
                 }
-                //if(row >= 0)
-                //{
-                //    string itemNo = dgvData.Rows[row].Cells["Item"].Value.ToSt();
-                //    if (baseClass.IsDel($"Do you want to Delete item ({itemNo}) ?"))
-                //    {
-                //        var rowe = dgvData.Rows[row];
-                //        if (rowe.Cells["id"].Value.ToInt() <= 0)
-                //            dgvData.Rows.Remove(rowe);
-                //        else
-                //        {
-                //            using (var db = new DataClasses1DataContext())
-                //            {
-                //                int id = rowe.Cells["id"].Value.ToInt();
-                //                var m = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
-                //                if (m != null)
-                //                {
-                //                    m.Active = false;
-                //                    m.UpdateDate = DateTime.Now;
-                //                    m.UpdateBy = Classlib.User;
-                //                    db.SubmitChanges();
-                //                    dgvData.Rows.Remove(rowe);
-                //                }
-                //            }
-                //        }
-
-                //        SetRowNo1(dgvData);
-                //        CallTotal();
-                //        if (dgvData.CurrentRow != null)
-                //            row = dgvData.CurrentRow.Index;
-                //        else
-                //            row = -1;
-                //    }
-                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -402,6 +375,8 @@ namespace StockControl
                         t.Status = item.Cells["Status"].Value.ToSt();
                         t.UOM = item.Cells["Unit"].Value.ToSt();
                         t.ForcastType = item.Cells["ForcastType"].Value.ToSt();
+                        t.OutPlan = item.Cells["OutPlan"].Value.ToDecimal();
+                        t.PlanStatus = item.Cells["PlanStatus"].Value.ToSt();
                         //t.ReqReceiveDate = item.Cells["ReqReceiveDate"].Value.ToDateTime();
                     }
 
@@ -432,16 +407,18 @@ namespace StockControl
                 if (e.RowIndex >= -1)
                 {
                     var itemNo = e.Row.Cells["Item"].Value.ToSt();
-                    if (e.Column.Name.Equals("Amount") || e.Column.Name.Equals("Qty"))
+                    if (e.Column.Name.Equals("PricePerUnit") || e.Column.Name.Equals("Qty"))
                     {
                         if (e.Row.Cells["Qty"].Value.ToDecimal() > 0)
                         {
-                            var m = Math.Round(e.Row.Cells["Amount"].Value.ToDecimal() / e.Row.Cells["Qty"].Value.ToDecimal(), 2);
-                            dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = m;
+                            var m = Math.Round(e.Row.Cells["PricePerUnit"].Value.ToDecimal() * e.Row.Cells["Qty"].Value.ToDecimal(), 2);
+                            dgvData.Rows[e.RowIndex].Cells["Amount"].Value = m;
                         }
                         else
                             dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = 0;
 
+                        e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                        e.Row.Cells["OutPlan"].Value = e.Row.Cells["OutPlan"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         CallTotal();
                     }
                     else if (e.Column.Name.Equals("Item"))
@@ -464,13 +441,15 @@ namespace StockControl
                                 addRow(e.RowIndex
                                     , DateTime.Now, t.InternalNo, t.InternalName
                                     , 1, t.BaseUOM, pcsunit, 0, 0
-                                    , 1, "", 0, "Waiting", t.ReplenishmentType);
+                                    , 1 * pcsunit, 1 * pcsunit, "", 0, "Waiting", "Waiting", t.ReplenishmentType);
                             }
                             else
                             {
                                 e.Row.Cells["ItemName"].Value = t.InternalName;
                                 e.Row.Cells["Unit"].Value = t.BaseUOM;
                                 e.Row.Cells["PCSUnit"].Value = pcsunit;
+                                e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                                e.Row.Cells["OutPlan"].Value = e.Row.Cells["OutPlan"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                             }
 
                             //
@@ -486,6 +465,9 @@ namespace StockControl
                             var pcsunit = (u != null) ? u.QuantityPer : 1;
 
                             e.Row.Cells["PCSUnit"].Value = pcsunit;
+                            e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                            e.Row.Cells["OutPlan"].Value = e.Row.Cells["OutPlan"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+
                         }
                     }
                 }
@@ -496,6 +478,16 @@ namespace StockControl
         {
             if (e.RowIndex >= -1)
             {
+                if (e.Row.Cells["Status"].Value.ToSt() != "Waiting")
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                if (e.Row.Cells["PlanStatus"].Value.ToSt() != "Waiting")
+                {
+                    e.Cancel = true;
+                    return;
+                }
                 string itemNo = e.Row.Cells["Item"].Value.ToSt();
                 if (e.Column.Name.Equals("Unit"))
                 {
@@ -517,7 +509,7 @@ namespace StockControl
         }
         void addRow(int rowIndex, DateTime ReqDate, string ItemNo, string ItemName, decimal Qty
             , string UOM, decimal PCSUnit, decimal PricePerUnit, decimal Amount
-            , decimal OutSO, string RemarkDT, int id, string Status, string forcastType)
+            , decimal OutSO, decimal OutPlan, string RemarkDT, int id, string Status, string PlanStatus, string forcastType)
         {
             var rowE = dgvData.Rows[rowIndex];
             try
@@ -531,9 +523,11 @@ namespace StockControl
                 rowE.Cells["PricePerUnit"].Value = PricePerUnit;
                 rowE.Cells["Amount"].Value = Amount;
                 rowE.Cells["OutSO"].Value = OutSO;
+                rowE.Cells["OutPlan"].Value = OutPlan;
                 rowE.Cells["Remark"].Value = RemarkDT;
                 rowE.Cells["id"].Value = id;
                 rowE.Cells["Status"].Value = Status;
+                rowE.Cells["PlanStatus"].Value = PlanStatus;
                 rowE.Cells["ForcastType"].Value = forcastType;
 
                 SetRowNo1(dgvData);
@@ -620,23 +614,27 @@ namespace StockControl
                 {
                     this.Cursor = Cursors.WaitCursor;
 
-
-                    if (dgvData.CurrentRow.Cells["Status"].Value.ToSt() == "Waiting")
+                    if (dgvData.CurrentCell.RowInfo.Cells["PlanStatus"].Value.ToSt() != "Waiting")
+                    {
+                        baseClass.Warning("Cannot Delete because Item is already Planned.\n");
+                        return;
+                    }
+                    if (dgvData.CurrentCell.RowInfo.Cells["Status"].Value.ToSt() == "Waiting")
                     {
 
                         int id = 0;
-                        int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["id"].Value), out id);
+                        int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentCell.RowInfo.Cells["id"].Value), out id);
                         if (id <= 0)
-                            dgvData.Rows.Remove(dgvData.CurrentRow);
+                            dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
 
                         else
                         {
-                            row = dgvData.CurrentRow.Index;
+                            row = dgvData.CurrentCell.RowInfo.Index;
                             //btnDelete_Click(null, null);
                             using (var db = new DataClasses1DataContext())
                             {
                                 var m = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
-                                if(m != null)
+                                if (m != null)
                                 {
                                     m.Active = false;
                                     m.UpdateDate = DateTime.Now;
@@ -969,8 +967,8 @@ namespace StockControl
 
                         var rowE = dgvData.Rows.AddNew();
                         addRow(rowE.Index, DateTime.Now, itemNo, t.InternalName
-                            , 1, t.BaseUOM, u, 0, 0, 0
-                            , "", 0, "Waiting", t.ReplenishmentType);
+                            , 1, t.BaseUOM, u, 0, 0, 1 * u, 1 * u
+                            , "", 0, "Waiting", "Waiting", t.ReplenishmentType);
                     }
                     SetRowNo1(dgvData);
 

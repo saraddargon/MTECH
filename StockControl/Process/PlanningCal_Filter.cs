@@ -89,6 +89,12 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
+                if(!cbMPS.Checked && !cbMRP.Checked)
+                {
+                    baseClass.Warning("Please select MRP or MPS.\n");
+                    return;
+                }
+
                 okFilter = true;
                 dateFrom = dtFrom.Value.Date;
                 dateTo = dtTo.Value.Date;
