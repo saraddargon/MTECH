@@ -87,17 +87,37 @@ namespace StockControl
             dgvData.DataSource = null;
             dgvData.Rows.Clear();
 
-            addrow("On Plan", "PD1809-001", "I0001", "Item FG 1", new DateTime(2018, 9, 30), "CSTMPO1809-001", "SO1809-001", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
-            addrow("Delay", "PD1809-002", "I0002", "Item FG 2", new DateTime(2018, 9, 20), "CSTMPO1809-002", "SO1809-002", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
-            addrow("On Plan", "PD1809-003", "I0003", "Item FG 3", new DateTime(2018, 10, 2), "CSTMPO1809-003", "SO1809-003", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
-            addrow("On Plan", "PD1809-004", "I0004", "Item FG 4", new DateTime(2018, 10, 3), "CSTMPO1809-004", "SO1809-004", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-001", "I0001", "Item FG 1", new DateTime(2018, 9, 30), "CSTMPO1809-001", "SO1809-001", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("Delay", "JOB1809-002", "I0002", "Item FG 2", new DateTime(2018, 9, 20), "CSTMPO1809-002", "SO1809-002", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-003", "I0003", "Item FG 3", new DateTime(2018, 10, 2), "CSTMPO1809-003", "SO1809-003", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-004", "I0004", "Item FG 4", new DateTime(2018, 10, 3), "CSTMPO1809-004", "SO1809-004", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-005", "I0001", "Item FG 1", new DateTime(2018, 9, 30), "CSTMPO1809-001", "SO1809-001", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("Delay", "JOB1809-006", "I0002", "Item FG 2", new DateTime(2018, 9, 20), "CSTMPO1809-002", "SO1809-002", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-007", "I0003", "Item FG 3", new DateTime(2018, 10, 2), "CSTMPO1809-003", "SO1809-003", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-008", "I0004", "Item FG 4", new DateTime(2018, 10, 3), "CSTMPO1809-004", "SO1809-004", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-009", "I0001", "Item FG 1", new DateTime(2018, 9, 30), "CSTMPO1809-001", "SO1809-001", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("Delay", "JOB1809-0010", "I0002", "Item FG 2", new DateTime(2018, 9, 20), "CSTMPO1809-002", "SO1809-002", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-003", "I0003", "Item FG 3", new DateTime(2018, 10, 2), "CSTMPO1809-003", "SO1809-003", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-004", "I0004", "Item FG 4", new DateTime(2018, 10, 3), "CSTMPO1809-004", "SO1809-004", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("Delay", "JOB1809-001", "I0001", "Item FG 1", new DateTime(2018, 9, 30), "CSTMPO1809-001", "SO1809-001", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("Delay", "JOB1809-002", "I0002", "Item FG 2", new DateTime(2018, 9, 20), "CSTMPO1809-002", "SO1809-002", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("Delay", "JOB1809-003", "I0003", "Item FG 3", new DateTime(2018, 10, 2), "CSTMPO1809-003", "SO1809-003", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-004", "I0004", "Item FG 4", new DateTime(2018, 10, 3), "CSTMPO1809-004", "SO1809-004", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-001", "I0001", "Item FG 1", new DateTime(2018, 9, 30), "CSTMPO1809-001", "SO1809-001", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-002", "I0002", "Item FG 2", new DateTime(2018, 9, 20), "CSTMPO1809-002", "SO1809-002", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-003", "I0003", "Item FG 3", new DateTime(2018, 10, 2), "CSTMPO1809-003", "SO1809-003", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-004", "I0004", "Item FG 4", new DateTime(2018, 10, 3), "CSTMPO1809-004", "SO1809-004", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-001", "I0001", "Item FG 1", new DateTime(2018, 9, 30), "CSTMPO1809-001", "SO1809-001", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("Delay", "JOB1809-002", "I0002", "Item FG 2", new DateTime(2018, 9, 20), "CSTMPO1809-002", "SO1809-002", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("Delay", "JOB1809-003", "I0003", "Item FG 3", new DateTime(2018, 10, 2), "CSTMPO1809-003", "SO1809-003", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
+            addrow("On Plan", "JOB1809-004", "I0004", "Item FG 4", new DateTime(2018, 10, 3), "CSTMPO1809-004", "SO1809-004", "C0001", "TT FUJIT TOOL SUPPORT CO.,LTD");
         }
         void addrow(string SS, string JobNo, string Item, string ItemName
             , DateTime DueDate, string CustomerPO, string SaleOrder, string CustomerNo, string CustomerName)
         {
             var rowe = dgvData.Rows.AddNew();
             rowe.Cells["SS"].Value = SS;
-            rowe.Cells["JobNo"].Value = JobNo;
+            rowe.Cells["JobNo"].Value = "JOB1809-" + (rowe.Index + 1).ToString("000");
             rowe.Cells["Item"].Value = Item;
             rowe.Cells["ItemName"].Value = ItemName;
             rowe.Cells["DueDate"].Value = DueDate;

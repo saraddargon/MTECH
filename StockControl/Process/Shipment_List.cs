@@ -130,11 +130,22 @@ namespace StockControl
             dgvData.DataSource = null;
             dgvData.Rows.Clear();
 
-            demorow("Waiting", "SP1809-001", "I0001", "Item A", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "PD1809-001");
-            demorow("Waiting", "SP1809-001", "I0002", "Item B", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "PD1809-002");
-            demorow("Waiting", "SP1809-002", "I0003", "Item C", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "PD1809-003");
-            demorow("Waiting", "SP1809-002", "I0004", "Item D", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "PD1809-004");
-            demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "PD1809-005");
+            demorow("Waiting", "SP1809-001", "I0001", "Item A", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-001");
+            demorow("Waiting", "SP1809-001", "I0002", "Item B", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-002");
+            demorow("Waiting", "SP1809-002", "I0003", "Item C", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-003");
+            demorow("Waiting", "SP1809-002", "I0004", "Item D", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-004");
+            demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
+            demorow("Waiting", "SP1809-001", "I0001", "Item A", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-001");
+            demorow("Waiting", "SP1809-001", "I0002", "Item B", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-002");
+            demorow("Waiting", "SP1809-002", "I0003", "Item C", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-003");
+            demorow("Waiting", "SP1809-002", "I0004", "Item D", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-004");
+            demorow("Waiting", "SP1809-001", "I0001", "Item A", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-001");
+            demorow("Waiting", "SP1809-001", "I0002", "Item B", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-002");
+            demorow("Waiting", "SP1809-002", "I0003", "Item C", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-003");
+            demorow("Waiting", "SP1809-002", "I0004", "Item D", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-004");
+            demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
+            demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
+            demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
 
         }
         void demorow(string SS, string ShipmentNo, string ItemNo, string ItemName, decimal ShipQty, decimal InvQty, decimal RemainQty
@@ -142,7 +153,7 @@ namespace StockControl
         {
             var rowe = dgvData.Rows.AddNew();
             rowe.Cells["SS"].Value = SS;
-            rowe.Cells["ShipmentNo"].Value = ShipmentNo;
+            rowe.Cells["ShipmentNo"].Value = "SP1809-" + (rowe.Index + 1).ToString("000");
             rowe.Cells["ItemNo"].Value = ItemNo;
             rowe.Cells["ItemName"].Value = ItemName;
             rowe.Cells["ShipQty"].Value = ShipQty;

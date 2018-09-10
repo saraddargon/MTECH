@@ -332,7 +332,7 @@ namespace StockControl
                         }
                         else
                         {
-                            ListItem.ImageIndex = 0;
+                            ListItem.ImageIndex = 16;
                         }
                         //if (c.LinkNode.ToString().Equals("SaleOrderList") || c.LinkNode.ToString().Equals("ToolsList") || c.LinkNode.ToString().Equals("KanbanListTx"))
                         //    ListItem.ForeColor = Color.Blue;

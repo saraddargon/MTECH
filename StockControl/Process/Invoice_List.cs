@@ -130,15 +130,41 @@ namespace StockControl
             dgvData.Rows.Clear();
 
             demorow("Completed", "IV0001", "SP1809-001", "SO1809-001", "I0001", "Item A", 100, 50, "PCS", false
-                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "PD1809-001", 80);
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001", 80);
             demorow("Completed", "IV0001", "SP1809-001", "SO1809-002", "I0002", "Item B", 100, 100, "PCS", false
-                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "PD1809-002", 90);
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002", 90);
             demorow("Completed", "IV0001", "SP1809-001", "SO1809-003", "I0003", "Item C", 100, 100, "PCS", false
-                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "PD1809-003", 100);
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003", 100);
             demorow("Completed", "IV0003", "SP1809-001", "SO1809-004", "I0004", "Item D", 100, 100, "PCS", false
-                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-004", "PD1809-004", 110);
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-004", "JOB1809-004", 110);
             demorow("Cancel", "IV0004", "SP1809-001", "SO1809-005", "I0005", "Item E", 100, 100, "PCS", true
-                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-005", "PD1809-005", 120);
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-005", "JOB1809-005", 120);
+            demorow("Cancel", "IV0004", "SP1809-001", "SO1809-005", "I0005", "Item E", 100, 100, "PCS", true
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-005", "JOB1809-005", 120);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-001", "I0001", "Item A", 100, 50, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001", 80);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-002", "I0002", "Item B", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002", 90);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-003", "I0003", "Item C", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003", 100);
+            demorow("Completed", "IV0003", "SP1809-001", "SO1809-004", "I0004", "Item D", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-004", "JOB1809-004", 110);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-001", "I0001", "Item A", 100, 50, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001", 80);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-002", "I0002", "Item B", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002", 90);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-003", "I0003", "Item C", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003", 100);
+            demorow("Completed", "IV0003", "SP1809-001", "SO1809-004", "I0004", "Item D", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-004", "JOB1809-004", 110);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-001", "I0001", "Item A", 100, 50, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001", 80);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-002", "I0002", "Item B", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002", 90);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-003", "I0003", "Item C", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003", 100);
+            demorow("Completed", "IV0003", "SP1809-001", "SO1809-004", "I0004", "Item D", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-004", "JOB1809-004", 110);
 
         }
         void demorow(string SS, string InvNo, string ShipmentNo, string SaleOrderNo, string ItemNo, string ItemName
@@ -147,7 +173,7 @@ namespace StockControl
         {
             var rowe = dgvData.Rows.AddNew();
             rowe.Cells["SS"].Value = SS;
-            rowe.Cells["InvNo"].Value = InvNo;
+            rowe.Cells["InvNo"].Value = "IV1809-" + (rowe.Index + 1).ToString("000");
             rowe.Cells["ShipmentNo"].Value = ShipmentNo;
             rowe.Cells["SaleOrderNo"].Value = SaleOrderNo;
             rowe.Cells["ItemNo"].Value = ItemNo;

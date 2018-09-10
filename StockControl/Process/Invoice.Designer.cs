@@ -90,16 +90,22 @@
             this.radLabel17 = new Telerik.WinControls.UI.RadLabel();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
             this.radGroupBox3 = new Telerik.WinControls.UI.RadGroupBox();
+            this.cbbCSTM = new Telerik.WinControls.UI.RadMultiColumnComboBox();
+            this.txtReferNo = new Telerik.WinControls.UI.RadTextBox();
+            this.txtAddress = new Telerik.WinControls.UI.RadTextBox();
             this.dtSODate = new Telerik.WinControls.UI.RadDateTimePicker();
-            this.txtSONo = new Telerik.WinControls.UI.RadTextBox();
+            this.txtInvNo = new Telerik.WinControls.UI.RadTextBox();
             this.txtCSTMNo = new Telerik.WinControls.UI.RadTextBox();
+            this.radLabel11 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel9 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel7 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel8 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel14 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.radGroupBox1 = new Telerik.WinControls.UI.RadGroupBox();
             this.lblStatus = new Telerik.WinControls.UI.RadLabel();
@@ -111,12 +117,6 @@
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
-            this.txtAddress = new Telerik.WinControls.UI.RadTextBox();
-            this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel11 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel14 = new Telerik.WinControls.UI.RadLabel();
-            this.txtReferNo = new Telerik.WinControls.UI.RadTextBox();
-            this.cbbCSTM = new Telerik.WinControls.UI.RadMultiColumnComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -139,28 +139,28 @@
             this.radPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox3)).BeginInit();
             this.radGroupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl.MasterTemplate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtReferNo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtAddress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtSODate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSONo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtInvNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCSTMNo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).BeginInit();
             this.radGroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtAddress)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtReferNo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl.MasterTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -193,7 +193,7 @@
             this.radMenuSeparatorItem1,
             this.radMenuItem2});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Shipment";
+            this.radRibbonBar1.Text = "Invoice";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
             // 
@@ -403,7 +403,7 @@
             // 
             this.radLabelElement1.Name = "radLabelElement1";
             this.radStatusStrip1.SetSpring(this.radLabelElement1, false);
-            this.radLabelElement1.Text = "Status : Shipment";
+            this.radLabelElement1.Text = "Status : Invoice";
             this.radLabelElement1.TextWrap = true;
             // 
             // panel1
@@ -729,7 +729,7 @@
             this.radGroupBox3.Controls.Add(this.txtReferNo);
             this.radGroupBox3.Controls.Add(this.txtAddress);
             this.radGroupBox3.Controls.Add(this.dtSODate);
-            this.radGroupBox3.Controls.Add(this.txtSONo);
+            this.radGroupBox3.Controls.Add(this.txtInvNo);
             this.radGroupBox3.Controls.Add(this.txtCSTMNo);
             this.radGroupBox3.Controls.Add(this.radLabel11);
             this.radGroupBox3.Controls.Add(this.radLabel4);
@@ -749,6 +749,53 @@
             this.radGroupBox3.TabIndex = 16;
             this.radGroupBox3.Text = "Invoice";
             // 
+            // cbbCSTM
+            // 
+            // 
+            // cbbCSTM.NestedRadGridView
+            // 
+            this.cbbCSTM.EditorControl.BackColor = System.Drawing.SystemColors.Window;
+            this.cbbCSTM.EditorControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.cbbCSTM.EditorControl.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cbbCSTM.EditorControl.Location = new System.Drawing.Point(0, 0);
+            // 
+            // 
+            // 
+            this.cbbCSTM.EditorControl.MasterTemplate.AllowAddNewRow = false;
+            this.cbbCSTM.EditorControl.MasterTemplate.AllowCellContextMenu = false;
+            this.cbbCSTM.EditorControl.MasterTemplate.AllowColumnChooser = false;
+            this.cbbCSTM.EditorControl.MasterTemplate.EnableGrouping = false;
+            this.cbbCSTM.EditorControl.MasterTemplate.ShowFilteringRow = false;
+            this.cbbCSTM.EditorControl.MasterTemplate.ViewDefinition = tableViewDefinition2;
+            this.cbbCSTM.EditorControl.Name = "NestedRadGridView";
+            this.cbbCSTM.EditorControl.ReadOnly = true;
+            this.cbbCSTM.EditorControl.ShowGroupPanel = false;
+            this.cbbCSTM.EditorControl.Size = new System.Drawing.Size(240, 150);
+            this.cbbCSTM.EditorControl.TabIndex = 0;
+            this.cbbCSTM.Location = new System.Drawing.Point(127, 45);
+            this.cbbCSTM.Name = "cbbCSTM";
+            this.cbbCSTM.Size = new System.Drawing.Size(227, 22);
+            this.cbbCSTM.TabIndex = 7;
+            this.cbbCSTM.TabStop = false;
+            this.cbbCSTM.ThemeName = "Office2010Blue";
+            this.cbbCSTM.SelectedIndexChanged += new System.EventHandler(this.cbbCSTM_SelectedIndexChanged);
+            // 
+            // txtReferNo
+            // 
+            this.txtReferNo.Location = new System.Drawing.Point(505, 71);
+            this.txtReferNo.Name = "txtReferNo";
+            this.txtReferNo.Size = new System.Drawing.Size(142, 20);
+            this.txtReferNo.TabIndex = 6;
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.AutoSize = false;
+            this.txtAddress.Location = new System.Drawing.Point(127, 71);
+            this.txtAddress.Multiline = true;
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(227, 54);
+            this.txtAddress.TabIndex = 5;
+            // 
             // dtSODate
             // 
             this.dtSODate.CustomFormat = "dd/MM/yyyy";
@@ -761,14 +808,14 @@
             this.dtSODate.Text = "04/09/2018";
             this.dtSODate.Value = new System.DateTime(2018, 9, 4, 18, 42, 59, 380);
             // 
-            // txtSONo
+            // txtInvNo
             // 
-            this.txtSONo.BackColor = System.Drawing.Color.White;
-            this.txtSONo.Location = new System.Drawing.Point(127, 21);
-            this.txtSONo.Name = "txtSONo";
-            this.txtSONo.Size = new System.Drawing.Size(227, 20);
-            this.txtSONo.TabIndex = 3;
-            this.txtSONo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPONo_KeyDown);
+            this.txtInvNo.BackColor = System.Drawing.Color.White;
+            this.txtInvNo.Location = new System.Drawing.Point(127, 21);
+            this.txtInvNo.Name = "txtInvNo";
+            this.txtInvNo.Size = new System.Drawing.Size(227, 20);
+            this.txtInvNo.TabIndex = 3;
+            this.txtInvNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPONo_KeyDown);
             // 
             // txtCSTMNo
             // 
@@ -779,6 +826,15 @@
             this.txtCSTMNo.ReadOnly = true;
             this.txtCSTMNo.Size = new System.Drawing.Size(142, 20);
             this.txtCSTMNo.TabIndex = 2;
+            // 
+            // radLabel11
+            // 
+            this.radLabel11.ForeColor = System.Drawing.Color.Red;
+            this.radLabel11.Location = new System.Drawing.Point(102, 71);
+            this.radLabel11.Name = "radLabel11";
+            this.radLabel11.Size = new System.Drawing.Size(11, 18);
+            this.radLabel11.TabIndex = 0;
+            this.radLabel11.Text = "*";
             // 
             // radLabel4
             // 
@@ -819,9 +875,9 @@
             // 
             this.radLabel5.Location = new System.Drawing.Point(17, 26);
             this.radLabel5.Name = "radLabel5";
-            this.radLabel5.Size = new System.Drawing.Size(73, 18);
+            this.radLabel5.Size = new System.Drawing.Size(58, 18);
             this.radLabel5.TabIndex = 0;
-            this.radLabel5.Text = "Shipment no.";
+            this.radLabel5.Text = "Invoice no";
             // 
             // radLabel3
             // 
@@ -832,6 +888,14 @@
             this.radLabel3.TabIndex = 0;
             this.radLabel3.Text = "*";
             // 
+            // radLabel14
+            // 
+            this.radLabel14.Location = new System.Drawing.Point(395, 71);
+            this.radLabel14.Name = "radLabel14";
+            this.radLabel14.Size = new System.Drawing.Size(53, 18);
+            this.radLabel14.TabIndex = 0;
+            this.radLabel14.Text = "Refer No.";
+            // 
             // radLabel2
             // 
             this.radLabel2.Location = new System.Drawing.Point(395, 46);
@@ -839,6 +903,14 @@
             this.radLabel2.Size = new System.Drawing.Size(71, 18);
             this.radLabel2.TabIndex = 0;
             this.radLabel2.Text = "Customer no";
+            // 
+            // radLabel10
+            // 
+            this.radLabel10.Location = new System.Drawing.Point(17, 74);
+            this.radLabel10.Name = "radLabel10";
+            this.radLabel10.Size = new System.Drawing.Size(46, 18);
+            this.radLabel10.TabIndex = 0;
+            this.radLabel10.Text = "Address";
             // 
             // radLabel1
             // 
@@ -932,78 +1004,6 @@
             this.radButtonElement2.Text = "รายการ";
             this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // txtAddress
-            // 
-            this.txtAddress.AutoSize = false;
-            this.txtAddress.Location = new System.Drawing.Point(127, 71);
-            this.txtAddress.Multiline = true;
-            this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(227, 54);
-            this.txtAddress.TabIndex = 5;
-            // 
-            // radLabel10
-            // 
-            this.radLabel10.Location = new System.Drawing.Point(17, 74);
-            this.radLabel10.Name = "radLabel10";
-            this.radLabel10.Size = new System.Drawing.Size(46, 18);
-            this.radLabel10.TabIndex = 0;
-            this.radLabel10.Text = "Address";
-            // 
-            // radLabel11
-            // 
-            this.radLabel11.ForeColor = System.Drawing.Color.Red;
-            this.radLabel11.Location = new System.Drawing.Point(102, 71);
-            this.radLabel11.Name = "radLabel11";
-            this.radLabel11.Size = new System.Drawing.Size(11, 18);
-            this.radLabel11.TabIndex = 0;
-            this.radLabel11.Text = "*";
-            // 
-            // radLabel14
-            // 
-            this.radLabel14.Location = new System.Drawing.Point(395, 71);
-            this.radLabel14.Name = "radLabel14";
-            this.radLabel14.Size = new System.Drawing.Size(53, 18);
-            this.radLabel14.TabIndex = 0;
-            this.radLabel14.Text = "Refer No.";
-            // 
-            // txtReferNo
-            // 
-            this.txtReferNo.Location = new System.Drawing.Point(505, 71);
-            this.txtReferNo.Name = "txtReferNo";
-            this.txtReferNo.Size = new System.Drawing.Size(142, 20);
-            this.txtReferNo.TabIndex = 6;
-            // 
-            // cbbCSTM
-            // 
-            // 
-            // cbbCSTM.NestedRadGridView
-            // 
-            this.cbbCSTM.EditorControl.BackColor = System.Drawing.SystemColors.Window;
-            this.cbbCSTM.EditorControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cbbCSTM.EditorControl.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cbbCSTM.EditorControl.Location = new System.Drawing.Point(0, 0);
-            // 
-            // 
-            // 
-            this.cbbCSTM.EditorControl.MasterTemplate.AllowAddNewRow = false;
-            this.cbbCSTM.EditorControl.MasterTemplate.AllowCellContextMenu = false;
-            this.cbbCSTM.EditorControl.MasterTemplate.AllowColumnChooser = false;
-            this.cbbCSTM.EditorControl.MasterTemplate.EnableGrouping = false;
-            this.cbbCSTM.EditorControl.MasterTemplate.ShowFilteringRow = false;
-            this.cbbCSTM.EditorControl.MasterTemplate.ViewDefinition = tableViewDefinition2;
-            this.cbbCSTM.EditorControl.Name = "NestedRadGridView";
-            this.cbbCSTM.EditorControl.ReadOnly = true;
-            this.cbbCSTM.EditorControl.ShowGroupPanel = false;
-            this.cbbCSTM.EditorControl.Size = new System.Drawing.Size(240, 150);
-            this.cbbCSTM.EditorControl.TabIndex = 0;
-            this.cbbCSTM.Location = new System.Drawing.Point(127, 45);
-            this.cbbCSTM.Name = "cbbCSTM";
-            this.cbbCSTM.Size = new System.Drawing.Size(227, 22);
-            this.cbbCSTM.TabIndex = 7;
-            this.cbbCSTM.TabStop = false;
-            this.cbbCSTM.ThemeName = "Office2010Blue";
-            this.cbbCSTM.SelectedIndexChanged += new System.EventHandler(this.cbbCSTM_SelectedIndexChanged);
-            // 
             // Invoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1020,7 +1020,7 @@
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Shipment";
+            this.Text = "Invoice";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Unit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
@@ -1047,28 +1047,28 @@
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox3)).EndInit();
             this.radGroupBox3.ResumeLayout(false);
             this.radGroupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl.MasterTemplate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtReferNo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtAddress)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtSODate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSONo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtInvNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCSTMNo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).EndInit();
             this.radGroupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtAddress)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtReferNo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl.MasterTemplate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1127,7 +1127,7 @@
         private Telerik.WinControls.UI.RadLabel radLabel2;
         private Telerik.WinControls.UI.RadLabel radLabel4;
         private Telerik.WinControls.UI.RadLabel radLabel3;
-        private Telerik.WinControls.UI.RadTextBox txtSONo;
+        private Telerik.WinControls.UI.RadTextBox txtInvNo;
         private Telerik.WinControls.UI.RadLabel radLabel7;
         private Telerik.WinControls.UI.RadLabel radLabel5;
         private Telerik.WinControls.UI.RadDateTimePicker dtSODate;

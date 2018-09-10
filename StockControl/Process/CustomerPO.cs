@@ -77,6 +77,8 @@ namespace StockControl
                     DataLoad();
 
 
+                demo();
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -120,6 +122,36 @@ namespace StockControl
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
+
+        void demo()
+        {
+            dgvData.DataSource = null;
+            dgvData.Rows.Clear();
+
+            cbbCSTM.SelectedIndex = 0;
+            txtPONo.Text = "CSTMPO1809-001";
+
+            demoadd(1, new DateTime(2018, 9, 15), "I0001", "Item A", 100, "PCS", 100);
+            demoadd(1, new DateTime(2018, 9, 9), "I0002", "Item A", 50, "PCS", 60);
+            demoadd(1, new DateTime(2018, 9, 12), "I0003", "Item A",150, "PCS", 50);
+            demoadd(1, new DateTime(2018, 9, 30), "I0004", "Item A", 100, "PCS", 90);
+
+            CallTotal();
+        }
+        void demoadd(int rno, DateTime reqdate, string item, string itemname, decimal qty
+            , string unit, decimal pricePerUnit)
+        {
+            var rowe = dgvData.Rows.AddNew();
+            rowe.Cells["RNo"].Value = rno;
+            rowe.Cells["ReqDate"].Value = reqdate;
+            rowe.Cells["Item"].Value = item;
+            rowe.Cells["ItemName"].Value = itemname;
+            rowe.Cells["Qty"].Value = qty;
+            rowe.Cells["Unit"].Value = "PCS";
+            rowe.Cells["PricePerUnit"].Value = pricePerUnit;
+            rowe.Cells["Amount"].Value = qty * pricePerUnit;
+        }
+
         private void Enable_Status(bool ss, string Condition)
         {
             if (Condition.Equals("-") || Condition.Equals("New"))

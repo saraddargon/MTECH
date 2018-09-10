@@ -659,7 +659,6 @@
             this.txtTotal.TabStop = false;
             this.txtTotal.Text = "0.00";
             this.txtTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtTotal.Visible = false;
             // 
             // txtRemark
             // 
@@ -711,7 +710,6 @@
             this.radLabel17.TabIndex = 8;
             this.radLabel17.Text = "Total";
             this.radLabel17.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.radLabel17.Visible = false;
             // 
             // radPanel1
             // 

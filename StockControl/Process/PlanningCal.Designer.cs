@@ -170,7 +170,7 @@
             this.btnGenerate.Image = ((System.Drawing.Image)(resources.GetObject("btnGenerate.Image")));
             this.btnGenerate.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Text = "Generate";
+            this.btnGenerate.Text = "<html><p> Generate to</p><p>Job/PR</p></html>";
             this.btnGenerate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
