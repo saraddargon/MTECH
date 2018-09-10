@@ -58,13 +58,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(369, 181);
+            this.ClientSize = new System.Drawing.Size(369, 154);
             this.Controls.Add(this.lbStatus);
             this.Controls.Add(this.radLabel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "PlanningCal_Status";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Planning Calculating Status";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PlanningCal_Status_FormClosing);
             this.Load += new System.EventHandler(this.PlanningCal_Status_Load);
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbStatus)).EndInit();

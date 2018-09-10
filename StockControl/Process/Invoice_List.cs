@@ -9,7 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 namespace StockControl
 {
-    public partial class Shipment_List : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Invoice_List : Telerik.WinControls.UI.RadRibbonForm
     {
         public string PONo { get; private set; } = "";
         public string CstmNo { get; private set; } = "";
@@ -17,12 +17,12 @@ namespace StockControl
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
 
-        public Shipment_List(int sType = 1)
+        public Invoice_List(int sType = 1)
         {
             InitializeComponent();
             this.sType = sType;
         }
-        public Shipment_List()
+        public Invoice_List()
         {
             InitializeComponent();
         }
@@ -78,7 +78,6 @@ namespace StockControl
             dgvData.AutoGenerateColumns = false;
             //DataLoad();
 
-
             demo();
         }
         private void DataLoad()
@@ -130,29 +129,39 @@ namespace StockControl
             dgvData.DataSource = null;
             dgvData.Rows.Clear();
 
-            demorow("Waiting", "SP1809-001", "I0001", "Item A", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "PD1809-001");
-            demorow("Waiting", "SP1809-001", "I0002", "Item B", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "PD1809-002");
-            demorow("Waiting", "SP1809-002", "I0003", "Item C", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "PD1809-003");
-            demorow("Waiting", "SP1809-002", "I0004", "Item D", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "PD1809-004");
-            demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "PD1809-005");
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-001", "I0001", "Item A", 100, 50, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "PD1809-001", 80);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-002", "I0002", "Item B", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "PD1809-002", 90);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-003", "I0003", "Item C", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "PD1809-003", 100);
+            demorow("Completed", "IV0003", "SP1809-001", "SO1809-004", "I0004", "Item D", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-004", "PD1809-004", 110);
+            demorow("Cancel", "IV0004", "SP1809-001", "SO1809-005", "I0005", "Item E", 100, 100, "PCS", true
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-005", "PD1809-005", 120);
 
         }
-        void demorow(string SS, string ShipmentNo, string ItemNo, string ItemName, decimal ShipQty, decimal InvQty, decimal RemainQty
-            , string Unit, string CustomerNo, string CustomerName, string RefDocNo, string ProductionNo)
+        void demorow(string SS, string InvNo, string ShipmentNo, string SaleOrderNo, string ItemNo, string ItemName
+            , decimal ShipQty, decimal InvQty, string Unit, bool Cancel, string CustomerNo, string CustomerName
+            , string CustomerPO, string ProductionNo, decimal UnitPrice)
         {
             var rowe = dgvData.Rows.AddNew();
             rowe.Cells["SS"].Value = SS;
+            rowe.Cells["InvNo"].Value = InvNo;
             rowe.Cells["ShipmentNo"].Value = ShipmentNo;
+            rowe.Cells["SaleOrderNo"].Value = SaleOrderNo;
             rowe.Cells["ItemNo"].Value = ItemNo;
             rowe.Cells["ItemName"].Value = ItemName;
             rowe.Cells["ShipQty"].Value = ShipQty;
             rowe.Cells["InvQty"].Value = InvQty;
-            rowe.Cells["RemainQty"].Value = ShipQty;
             rowe.Cells["Unit"].Value = Unit;
+            rowe.Cells["Cancel"].Value = Cancel;
             rowe.Cells["CustomerNo"].Value = CustomerNo;
             rowe.Cells["CustomerName"].Value = CustomerName;
-            rowe.Cells["RefDocNo"].Value = RefDocNo;
+            rowe.Cells["CustomerPO"].Value = CustomerPO;
             rowe.Cells["ProductionNo"].Value = ProductionNo;
+            rowe.Cells["UnitPrice"].Value = UnitPrice;
+            rowe.Cells["Amount"].Value = InvQty * UnitPrice;
         }
         //
 
@@ -236,6 +245,7 @@ namespace StockControl
         {
             //select Item for Print
             //throw new NotImplementedException();
+
         }
 
 
@@ -309,15 +319,15 @@ namespace StockControl
         }
 
 
-        void CreateInvoice()
+        void CreateShipment()
         {
-            var inv = new Invoice(true);
-            inv.ShowDialog();
+            var sm = new Shipment(true);
+            sm.ShowDialog();
         }
-        private void btnCreateInvoice_Click(object sender, EventArgs e)
+        private void btnCreateShipment_Click(object sender, EventArgs e)
         {
-            dgvData.EndInit();
-            CreateInvoice();
+            dgvData.EndEdit();
+            CreateShipment();
         }
     }
 

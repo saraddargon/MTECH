@@ -48,29 +48,44 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    //1.Get Customer P/O (OutPlan) and SaleOrder (OutPlan) [Only not customer P/O]
-                    var cstmPOs = db.mh_CustomerPOs.Where(x => x.Active
-                                && x.OutPlan > 0 && x.PlanStatus != "Completed"
-                                && x.ReqDate >= dtFrom && x.ReqDate <= dtTo
-                                && x.ItemNo.Contains(ItemNo) /*Location*/
-                            ).ToList();
-                    var saleOrders = db.mh_SaleOrders.Where(x => x.Active
-                                && x.RefId == 0 && x.OutPlan > 0
-                                && x.PlanStatus != "Completed" //not Refer with Customer P/O
-                                && x.ReqDeliveryDate >= dtFrom && x.ReqDeliveryDate <= dtTo
-                                && x.ItemNo.Contains(ItemNo)
-                            ).ToList();
-                    // หา PD กับ PO
-                    foreach (var item in cstmPOs)
+                    int i = 1;
+                    do
                     {
-                        var t = db.mh_Items.Where(x => x.InternalNo == item.ItemNo).FirstOrDefault();
-                        calPart(item.ItemNo, item.OutPlan, item.ReqDate, item.CustomerPONo, item.id, item.ForcastType);
-                    }
-                    foreach (var item in saleOrders)
+                        changeLabel($"Calculating...CSTMPO1809-{(i).ToString("000")}");
+                        System.Threading.Thread.Sleep(1000);
+                    } while (i++ < 5);
+                    changeLabel("Calculating complete...");
+                    System.Threading.Thread.Sleep(1000);
+                    startCal = false;
+                    this.Invoke(new MethodInvoker(() =>
                     {
-                        var t = db.mh_Items.Where(x => x.InternalNo == item.ItemNo).FirstOrDefault();
-                        calPart(item.ItemNo, item.OutPlan, item.ReqDeliveryDate, item.SONo, item.id, item.RepType);
-                    }
+                        this.Close();
+                    }));
+
+
+                    ////1.Get Customer P/O (OutPlan) and SaleOrder (OutPlan) [Only not customer P/O]
+                    //var cstmPOs = db.mh_CustomerPOs.Where(x => x.Active
+                    //            && x.OutPlan > 0 && x.PlanStatus != "Completed"
+                    //            && x.ReqDate >= dtFrom && x.ReqDate <= dtTo
+                    //            && x.ItemNo.Contains(ItemNo) /*Location*/
+                    //        ).ToList();
+                    //var saleOrders = db.mh_SaleOrders.Where(x => x.Active
+                    //            && x.RefId == 0 && x.OutPlan > 0
+                    //            && x.PlanStatus != "Completed" //not Refer with Customer P/O
+                    //            && x.ReqDeliveryDate >= dtFrom && x.ReqDeliveryDate <= dtTo
+                    //            && x.ItemNo.Contains(ItemNo)
+                    //        ).ToList();
+                    //// หา PD กับ PO
+                    //foreach (var item in cstmPOs)
+                    //{
+                    //    var t = db.mh_Items.Where(x => x.InternalNo == item.ItemNo).FirstOrDefault();
+                    //    calPart(item.ItemNo, item.OutPlan, item.ReqDate, item.CustomerPONo, item.id, item.ForcastType);
+                    //}
+                    //foreach (var item in saleOrders)
+                    //{
+                    //    var t = db.mh_Items.Where(x => x.InternalNo == item.ItemNo).FirstOrDefault();
+                    //    calPart(item.ItemNo, item.OutPlan, item.ReqDeliveryDate, item.SONo, item.id, item.RepType);
+                    //}
                 }
             }
             catch (Exception ex)
@@ -106,6 +121,11 @@ namespace StockControl
             }));
         }
 
+        private void PlanningCal_Status_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (startCal)
+                e.Cancel = true;
+        }
     }
 
     public class PDPlan
@@ -132,7 +152,7 @@ namespace StockControl
         public decimal ReqQty { get; set; }
     }
 
-    
+
     public class ItemData
     {
         public int rNo { get; set; } = 0;
@@ -153,8 +173,7 @@ namespace StockControl
 
         public decimal StockQty
         {
-            get
-            {
+            get {
                 return baseClass.StockQty(ItemNo, "Warehouse");
             }
         }
@@ -179,8 +198,7 @@ namespace StockControl
         public ReplenishmentType repType { get; set; }
         public string PlanningType
         {
-            get
-            {
+            get {
                 if (repType == ReplenishmentType.Production)
                     return "MPS";
                 else
@@ -189,8 +207,7 @@ namespace StockControl
         }
         public string RefOrderType
         {
-            get
-            {
+            get {
                 return repType.ToSt();
             }
         }
