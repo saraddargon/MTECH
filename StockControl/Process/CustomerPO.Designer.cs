@@ -60,6 +60,9 @@
             this.btnDelete = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup3 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnRefresh = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup8 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnImportCSV = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnExportFile = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup5 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.radRibbonBarButtonGroup3 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             this.btnFilter1 = new Telerik.WinControls.UI.RadButtonElement();
@@ -110,8 +113,10 @@
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarGroup8 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.btnImportCSV = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup9 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnImport = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarButtonGroup1 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -187,8 +192,8 @@
             this.ribbonTab1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radRibbonBarGroup1,
             this.radRibbonBarGroup2,
-            this.radRibbonBarGroup3,
             this.radRibbonBarGroup8,
+            this.radRibbonBarGroup3,
             this.radRibbonBarGroup5,
             this.radRibbonBarGroup4,
             this.radRibbonBarGroup6});
@@ -276,6 +281,36 @@
             this.btnRefresh.Text = "รีเฟรช";
             this.btnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // radRibbonBarGroup8
+            // 
+            this.radRibbonBarGroup8.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnImportCSV,
+            this.btnExportFile});
+            this.radRibbonBarGroup8.Margin = new System.Windows.Forms.Padding(0);
+            this.radRibbonBarGroup8.MaxSize = new System.Drawing.Size(0, 0);
+            this.radRibbonBarGroup8.MinSize = new System.Drawing.Size(0, 0);
+            this.radRibbonBarGroup8.Name = "radRibbonBarGroup8";
+            this.radRibbonBarGroup8.Text = "Import/Export";
+            this.radRibbonBarGroup8.UseCompatibleTextRendering = false;
+            // 
+            // btnImportCSV
+            // 
+            this.btnImportCSV.Image = ((System.Drawing.Image)(resources.GetObject("btnImportCSV.Image")));
+            this.btnImportCSV.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnImportCSV.Name = "btnImportCSV";
+            this.btnImportCSV.Text = "Import .csv";
+            this.btnImportCSV.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnImportCSV.UseCompatibleTextRendering = false;
+            // 
+            // btnExportFile
+            // 
+            this.btnExportFile.Image = ((System.Drawing.Image)(resources.GetObject("btnExportFile.Image")));
+            this.btnExportFile.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnExportFile.Name = "btnExportFile";
+            this.btnExportFile.Text = "Export file";
+            this.btnExportFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnExportFile.UseCompatibleTextRendering = false;
             // 
             // radRibbonBarGroup5
             // 
@@ -907,20 +942,47 @@
             this.radButtonElement2.Text = "รายการ";
             this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // radRibbonBarGroup8
+            // radRibbonBarGroup9
             // 
-            this.radRibbonBarGroup8.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnImportCSV});
-            this.radRibbonBarGroup8.Name = "radRibbonBarGroup8";
-            this.radRibbonBarGroup8.Text = "Import";
+            this.radRibbonBarGroup9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(86)))), ((int)(((byte)(86)))));
+            this.radRibbonBarGroup9.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnImport,
+            this.btnExport,
+            this.radRibbonBarButtonGroup1});
+            this.radRibbonBarGroup9.Margin = new System.Windows.Forms.Padding(0);
+            this.radRibbonBarGroup9.MaxSize = new System.Drawing.Size(0, 0);
+            this.radRibbonBarGroup9.MinSize = new System.Drawing.Size(0, 0);
+            this.radRibbonBarGroup9.Name = "radRibbonBarGroup9";
+            this.radRibbonBarGroup9.Text = "Import / Export";
+            this.radRibbonBarGroup9.UseCompatibleTextRendering = false;
             // 
-            // btnImportCSV
+            // btnImport
             // 
-            this.btnImportCSV.Image = ((System.Drawing.Image)(resources.GetObject("btnImportCSV.Image")));
-            this.btnImportCSV.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnImportCSV.Name = "btnImportCSV";
-            this.btnImportCSV.Text = "Import .csv";
-            this.btnImportCSV.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnImport.Image = ((System.Drawing.Image)(resources.GetObject("btnImport.Image")));
+            this.btnImport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnImport.Name = "btnImport";
+            this.btnImport.SmallImage = null;
+            this.btnImport.Text = "นำข้อมูลเข้า";
+            this.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnImport.UseCompatibleTextRendering = false;
+            // 
+            // btnExport
+            // 
+            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
+            this.btnExport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Text = "ส่งข้อมูลออก";
+            this.btnExport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnExport.UseCompatibleTextRendering = false;
+            // 
+            // radRibbonBarButtonGroup1
+            // 
+            this.radRibbonBarButtonGroup1.Name = "radRibbonBarButtonGroup1";
+            this.radRibbonBarButtonGroup1.Padding = new System.Windows.Forms.Padding(1);
+            this.radRibbonBarButtonGroup1.ShowBackColor = false;
+            this.radRibbonBarButtonGroup1.ShowBorder = false;
+            this.radRibbonBarButtonGroup1.Text = "radRibbonBarButtonGroup1";
+            this.radRibbonBarButtonGroup1.UseCompatibleTextRendering = false;
             // 
             // CustomerPO
             // 
@@ -1045,7 +1107,12 @@
         private Telerik.WinControls.UI.RadTextBox txtRemark;
         private Telerik.WinControls.UI.RadLabel radLabel6;
         private System.Windows.Forms.ToolStripMenuItem btnAddPart;
+        private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup9;
+        private Telerik.WinControls.UI.RadButtonElement btnImport;
+        private Telerik.WinControls.UI.RadButtonElement btnExport;
+        private Telerik.WinControls.UI.RadRibbonBarButtonGroup radRibbonBarButtonGroup1;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup8;
         private Telerik.WinControls.UI.RadButtonElement btnImportCSV;
+        private Telerik.WinControls.UI.RadButtonElement btnExportFile;
     }
 }

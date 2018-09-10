@@ -64,7 +64,6 @@
             this.radRibbonBarGroup4 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnImport = new Telerik.WinControls.UI.RadButtonElement();
             this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarButtonGroup1 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             this.radRibbonBarGroup3 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnRefresh = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup5 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -209,8 +208,7 @@
             this.radRibbonBarGroup4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(86)))), ((int)(((byte)(86)))));
             this.radRibbonBarGroup4.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.btnImport,
-            this.btnExport,
-            this.radRibbonBarButtonGroup1});
+            this.btnExport});
             this.radRibbonBarGroup4.Name = "radRibbonBarGroup4";
             this.radRibbonBarGroup4.Text = "Import / Export";
             // 
@@ -232,14 +230,6 @@
             this.btnExport.Text = "ส่งข้อมูลออก";
             this.btnExport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // radRibbonBarButtonGroup1
-            // 
-            this.radRibbonBarButtonGroup1.Name = "radRibbonBarButtonGroup1";
-            this.radRibbonBarButtonGroup1.Padding = new System.Windows.Forms.Padding(1);
-            this.radRibbonBarButtonGroup1.ShowBackColor = false;
-            this.radRibbonBarButtonGroup1.ShowBorder = false;
-            this.radRibbonBarButtonGroup1.Text = "radRibbonBarButtonGroup1";
             // 
             // radRibbonBarGroup3
             // 
@@ -636,7 +626,6 @@
         private Telerik.WinControls.UI.RadButtonElement btnView;
         private Telerik.WinControls.UI.RadButtonElement btnEdit;
         private Telerik.WinControls.UI.RadButtonElement btnDelete;
-        private Telerik.WinControls.UI.RadRibbonBarButtonGroup radRibbonBarButtonGroup1;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup3;
         private Telerik.WinControls.UI.RadButtonElement btnRefresh;
         private Telerik.WinControls.Themes.Office2010BlueTheme office2010BlueTheme1;
