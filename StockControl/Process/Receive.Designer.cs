@@ -1068,6 +1068,7 @@
             this.txtDocNo.Name = "txtDocNo";
             this.txtDocNo.Size = new System.Drawing.Size(119, 19);
             this.txtDocNo.TabIndex = 2;
+            this.txtDocNo.Text = "SMT1-20180009";
             this.txtDocNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPRNo_KeyPress);
             // 
             // radRibbonBarButtonGroup2

@@ -134,7 +134,7 @@ namespace StockControl
 
                     GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)dgvData.Columns["Location"];
                     col.DataSource = (from ix in db.mh_Locations.Where(s => Convert.ToBoolean(s.Active.Equals(true)) )
-                                      select new { ix.Code }).ToList();
+                                      select new { ix.Code, ix.Name }).ToList();
 
                     col.DisplayMember = "Code";
                     col.ValueMember = "Code";
@@ -693,6 +693,7 @@ namespace StockControl
                                 decimal BasePCSUOM  = dbClss.Con_UOM(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), BaseUOM);
                              
                                 db.sp_024_tb_Shipping_ADD(txtSHNo.Text.Trim(), StockControl.dbClss.TSt(g.Cells["CodeNo"].Value)
+                                    ,0
                                     , StockControl.dbClss.TDe(g.Cells["QTY"].Value), StockControl.dbClss.TSt(g.Cells["Remark"].Value)
                                     , StockControl.dbClss.TSt(g.Cells["LineName"].Value), StockControl.dbClss.TSt(g.Cells["MachineName"].Value)
                                     , StockControl.dbClss.TSt(g.Cells["SerialNo"].Value), StockControl.dbClss.TSt(g.Cells["LotNo"].Value)
@@ -701,6 +702,7 @@ namespace StockControl
                                     , txtTempJobCard.Text.Trim()
                                     , RefidJobNo
                                     ,dbClss.TSt(g.Cells["Location"].Value)
+                                    ,""
                                     , BaseUOM
                                     , BasePCSUOM
                                     ,dbClss.TSt(g.Cells["UnitShip"].Value)
@@ -1110,7 +1112,7 @@ namespace StockControl
 
                             if (Temp > RemainQty)
                             {
-                                MessageBox.Show("ไม่สามารถรับเกินจำนวนคงเหลือได้");
+                                MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
                                 e.Row.Cells["QTY"].Value = 0;
                                 QTY = 0;
                             }
@@ -1153,7 +1155,7 @@ namespace StockControl
 
                         if (Temp > RemainQty)
                         {
-                            MessageBox.Show("ไม่สามารถรับเกินจำนวนคงเหลือได้");
+                            MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
                             e.Row.Cells["QTY"].Value = 0;
                             QTY = 0;
                         }
@@ -1187,7 +1189,7 @@ namespace StockControl
 
                             if (Temp > RemainQty)
                             {
-                                MessageBox.Show("ไม่สามารถรับเกินจำนวนคงเหลือได้");
+                                MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
                                 e.Row.Cells["QTY"].Value = 0;
                                 QTY = 0;
                             }
@@ -1924,8 +1926,8 @@ namespace StockControl
 
                     //RadMultiColumnComboBoxElement Comcol = (RadMultiColumnComboBoxElement)e.ActiveEditor;
                     Comcol.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
-                    Comcol.DropDownWidth = 150;
-                    Comcol.DropDownHeight = 150;
+                    Comcol.DropDownWidth = 350;
+                    Comcol.DropDownHeight = 200;
                     //Comcol.EditorControl.BestFitColumns(BestFitColumnMode.AllCells);
                     Comcol.EditorControl.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
                     //ปรับอัตโนมัติ
@@ -2007,8 +2009,8 @@ namespace StockControl
             if (mccbEl != null)
             {
                 mccbEl.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
-                mccbEl.DropDownMinSize = new Size(200, 100);
-                mccbEl.DropDownMaxSize = new Size(200, 100);
+                mccbEl.DropDownMinSize = new Size(300, 100);
+                mccbEl.DropDownMaxSize = new Size(300, 100);
 
                 mccbEl.AutoSizeDropDownToBestFit = false;
                 mccbEl.DropDownAnimationEnabled = false;

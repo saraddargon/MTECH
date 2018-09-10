@@ -58,7 +58,7 @@ namespace StockControl
             dt_h.Columns.Add(new DataColumn("JobCard", typeof(string)));
             dt_h.Columns.Add(new DataColumn("TempJobCard", typeof(string)));
             dt_h.Columns.Add(new DataColumn("Location", typeof(string)));
-
+            dt_h.Columns.Add(new DataColumn("ToLocation", typeof(string)));
 
             dt_d.Columns.Add(new DataColumn("ShippingNo", typeof(string)));
             dt_d.Columns.Add(new DataColumn("ShipType", typeof(string)));
@@ -80,7 +80,7 @@ namespace StockControl
             dt_d.Columns.Add(new DataColumn("Status", typeof(string)));
             dt_d.Columns.Add(new DataColumn("BarCode", typeof(Image)));
             dt_d.Columns.Add(new DataColumn("Location", typeof(string)));
-
+            dt_d.Columns.Add(new DataColumn("ToLocation", typeof(string)));
 
         }
 
@@ -176,7 +176,7 @@ namespace StockControl
                             
                             txtTempJobCard.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TempJobCard);
                             txtJobCard.Text = StockControl.dbClss.TSt(g.FirstOrDefault().JobCard);
-                           // ddlLocation.Text = dbClss.TSt(g.FirstOrDefault().Location);
+                            txtLocation.Text = dbClss.TSt(g.FirstOrDefault().ToLocation);
 
                             if (txtTempJobCard.Text != "")
                             {
@@ -332,6 +332,7 @@ namespace StockControl
             txtJobCard.Text = "";
             txtTempJobCard.Text = "";
             txtRefidJobNo.Text = "0";
+            txtLocation.Text = "";
             txtJobCard.ReadOnly = false;
 
             txtSHNo.Text = "";
@@ -435,8 +436,8 @@ namespace StockControl
                     err += "- “ผู้เบิกสินค้า:” เป็นค่าว่าง \n";
                 if (dtRequire.Text.Equals(""))
                     err += "- “วันที่เบิกสินค้า:” เป็นค่าว่าง \n";
-                //if (ddlLocation.Text.Equals(""))
-                //    err += "- “สถานที่เก็บ:” เป็นค่าว่าง \n";
+                if (txtLocation.Text.Equals(""))
+                    err += "- “สถานที่ต้องการย้ายสินค้าไปเก็บ(Location):” เป็นค่าว่าง \n";
 
 
                 if (dgvData.Rows.Count <= 0)
@@ -576,11 +577,11 @@ namespace StockControl
                             gg.Remark = txtRemark.Text.Trim();
                             dbClss.AddHistory(this.Name, "แก้ไขการเบิก", "แก้ไขหมายเหตุ [" + txtRemark.Text.Trim() + " เดิม :" + row["Remark"].ToString() + "]", txtSHNo.Text);
                         }
-                        //if (!ddlLocation.Text.Trim().Equals(row["Location"].ToString()))
-                        //{
-                        //    gg.Location = ddlLocation.Text.Trim();
-                        //    dbClss.AddHistory(this.Name, "แก้ไขการเบิก", "แก้ไขสถานทีเก็บ [" + ddlLocation.Text.Trim() + " เดิม :" + row["Location"].ToString() + "]", txtSHNo.Text);
-                        //}
+                        if (!txtLocation.Text.Trim().Equals(row["ToLocation"].ToString()))
+                        {
+                            gg.ToLocation = txtLocation.Text.Trim();
+                            dbClss.AddHistory(this.Name, "แก้ไขการเบิก", "แก้ไขสถานทีเก็บ [" + txtLocation.Text.Trim() + " เดิม :" + row["ToLocation"].ToString() + "]", txtSHNo.Text);
+                        }
                         if (!dtRequire.Text.Trim().Equals(""))
                         {
                             string date1 = "";
@@ -629,7 +630,7 @@ namespace StockControl
                     gg.TempJobCard = txtTempJobCard.Text;
                     gg.BarCode = barcode;
                     gg.Status = "Completed";
-                    //gg.Location = ddlLocation.Text;
+                    gg.ToLocation = txtLocation.Text;
                     db.tb_ShippingHs.InsertOnSubmit(gg);
                     db.SubmitChanges();
 
@@ -661,8 +662,10 @@ namespace StockControl
                                 int RefidJobNo = dbClss.TInt(txtRefidJobNo.Text);
                                 string BaseUOM = dbClss.TSt(g.Cells["BaseUOM"].Value);
                                 decimal BasePCSUOM = dbClss.TDe(g.Cells["BasePCSUOM"].Value);//dbClss.Con_UOM(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), BaseUOM);
-                             
+
+                                //เบิกจาก WH
                                 db.sp_024_tb_Shipping_ADD(txtSHNo.Text.Trim(), StockControl.dbClss.TSt(g.Cells["CodeNo"].Value)
+                                    , dbClss.TDe(g.Cells["QtyPlan"].Value)
                                     , StockControl.dbClss.TDe(g.Cells["QtyShip"].Value), StockControl.dbClss.TSt(g.Cells["Remark"].Value)
                                     , StockControl.dbClss.TSt(g.Cells["LineName"].Value), StockControl.dbClss.TSt(g.Cells["MachineName"].Value)
                                     , StockControl.dbClss.TSt(g.Cells["SerialNo"].Value), StockControl.dbClss.TSt(g.Cells["LotNo"].Value)
@@ -670,12 +673,16 @@ namespace StockControl
                                     , txtJobCard.Text.Trim()
                                     , txtTempJobCard.Text.Trim()
                                     , RefidJobNo
-                                    ,dbClss.TSt(g.Cells["Location"].Value)
+                                    , dbClss.TSt(g.Cells["Location"].Value)
+                                    , txtLocation.Text
                                     , BaseUOM
                                     , BasePCSUOM
                                     ,dbClss.TSt(g.Cells["UnitShip"].Value)
                                     , StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
+                                    
                                     );
+
+                                //รับเข้า PD
 
                             }
                         }
@@ -1467,7 +1474,7 @@ namespace StockControl
                         //    PCSBaseUOM = 1;
                         //AC_PCSUnit = dbClss.TDe(vv.PCSUnit) * PCSBaseUOM;
                         Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescriptioin
-                                        , vv.RemainQty, vv.QtyPlan, vv.QtyPlan, vv.UnitShip, dbClss.TDe(vv.PCSUnit)
+                                        , dbClss.TDe( vv.RemainQty), vv.QtyPlan, vv.QtyPlan, vv.UnitShip, dbClss.TDe(vv.PCSUnit)
                                         , dbClss.TDe(vv.UnitCost)
                                         , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, vv.id
                                         , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM));
@@ -1767,6 +1774,7 @@ namespace StockControl
                     {
                         txtTempJobCard.Text = dbClss.TSt(p.FirstOrDefault().TempNo);
                         txtRefidJobNo.Text = dbClss.TSt(p.FirstOrDefault().id);
+                        txtLocation.Text = dbClss.TSt(p.FirstOrDefault().Location);
                         Insert_data_New_Location();
                     }
                     else if (dbClss.TSt(p.FirstOrDefault().Status) != "Completed")
@@ -1774,6 +1782,7 @@ namespace StockControl
                         txtTempJobCard.Text = "";
                         txtJobCard.Text = "";
                         txtRefidJobNo.Text = "0";
+                        txtLocation.Text = "";
                         MessageBox.Show("ใบงานการผลิตดังกล่าวถูกปิดไปแล้ว กรุณาระบุใบงานการผลิตใหม่");
                     }
 

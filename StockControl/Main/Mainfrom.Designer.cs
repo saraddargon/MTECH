@@ -39,11 +39,9 @@
             System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Shipping Part");
             System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Finished good (FG)");
             System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Stock Balance");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Job Management");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Report");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("CustomerPO");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Production Plan");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Planning");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Manufacturing");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("CustomerPO");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Planning");
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
@@ -586,7 +584,7 @@
             // 
             this.radMenuItem12.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem12.Image")));
             this.radMenuItem12.Name = "radMenuItem12";
-            this.radMenuItem12.Text = "About Warehouse Control";
+            this.radMenuItem12.Text = "About System";
             this.radMenuItem12.Click += new System.EventHandler(this.radMenuItem12_Click);
             // 
             // radMenuItem29
@@ -611,22 +609,22 @@
             // 
             this.radLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.radLabel1.Font = new System.Drawing.Font("Bauhaus 93", 15.25F);
+            this.radLabel1.Font = new System.Drawing.Font("Bauhaus 93", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel1.ForeColor = System.Drawing.Color.SeaGreen;
             this.radLabel1.Location = new System.Drawing.Point(271, 47);
             this.radLabel1.Name = "radLabel1";
-            this.radLabel1.Size = new System.Drawing.Size(447, 28);
+            this.radLabel1.Size = new System.Drawing.Size(319, 36);
             this.radLabel1.TabIndex = 8;
-            this.radLabel1.Text = "SHINKO MOLD INDUSTRIAL (THAILAND) CO.,LTD";
+            this.radLabel1.Text = "M-TECH Product Co.,Ltd.";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(50, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(55, 16);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(118, 76);
+            this.pictureBox1.Size = new System.Drawing.Size(119, 48);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
@@ -637,11 +635,11 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.radLabel3.Font = new System.Drawing.Font("Bauhaus 93", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel3.ForeColor = System.Drawing.Color.SeaGreen;
-            this.radLabel3.Location = new System.Drawing.Point(253, 11);
+            this.radLabel3.Location = new System.Drawing.Point(234, 6);
             this.radLabel3.Name = "radLabel3";
-            this.radLabel3.Size = new System.Drawing.Size(323, 46);
+            this.radLabel3.Size = new System.Drawing.Size(353, 46);
             this.radLabel3.TabIndex = 8;
-            this.radLabel3.Text = "Warehouse control";
+            this.radLabel3.Text = "Management System";
             // 
             // panel2
             // 
@@ -683,16 +681,12 @@
             treeNode8.Text = "Finished good (FG)";
             treeNode9.Name = "Stock";
             treeNode9.Text = "Stock Balance";
-            treeNode10.Name = "JobManagement";
-            treeNode10.Text = "Job Management";
-            treeNode11.Name = "Report";
-            treeNode11.Text = "Report";
-            treeNode12.Name = "CustomerPO";
-            treeNode12.Text = "CustomerPO";
-            treeNode13.Name = "ProductionPlan";
-            treeNode13.Text = "Production Plan";
-            treeNode14.Name = "Planning";
-            treeNode14.Text = "Planning";
+            treeNode10.Name = "Manufacturing";
+            treeNode10.Text = "Manufacturing";
+            treeNode11.Name = "CustomerPO";
+            treeNode11.Text = "CustomerPO";
+            treeNode12.Name = "Planning";
+            treeNode12.Text = "Planning";
             this.TreeManu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
@@ -705,9 +699,7 @@
             treeNode9,
             treeNode10,
             treeNode11,
-            treeNode12,
-            treeNode13,
-            treeNode14});
+            treeNode12});
             this.TreeManu.SelectedImageIndex = 4;
             this.TreeManu.ShowNodeToolTips = true;
             this.TreeManu.Size = new System.Drawing.Size(212, 486);
@@ -742,7 +734,7 @@
             this.linkLabel1.Size = new System.Drawing.Size(212, 40);
             this.linkLabel1.TabIndex = 2;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "         SHINKO MOLD INDUSTRIAL               (THAILAND) CO.,LTD";
+            this.linkLabel1.Text = "        M-TECH Product Co.,Ltd.";
             this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel1.VisitedLinkColor = System.Drawing.Color.Black;
             this.linkLabel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.linkLabel1_MouseClick);
@@ -802,7 +794,7 @@
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Warehouse control Version 1.0.0";
+            this.Text = "M-TECH Management System 1.0.0";
             this.ThemeName = "Office2010Blue";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.MaximumSizeChanged += new System.EventHandler(this.Mainfrom_MaximumSizeChanged);

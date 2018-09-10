@@ -143,7 +143,7 @@ namespace StockControl
                     //}
                     var r = (from d in db.tb_Shippings
                              join h in db.tb_ShippingHs on d.ShippingNo equals h.ShippingNo
-                             join i in db.tb_Items on d.CodeNo equals i.CodeNo
+                             //join i in db.mh_Items on d.CodeNo equals i.InternalNo
 
                              where h.Status != "Cancel" //&& d.verticalID == VerticalID
                                    &&  d.Status != "Cancel"
@@ -168,9 +168,9 @@ namespace StockControl
                                  QTY = d.QTY,
                                  UnitShip = d.UnitShip,
                                  PCSUnit = d.PCSUnit,
-                                 LeadTime = i.Leadtime,
-                                 MaxStock = i.MaximumStock,
-                                 MinStock = i.MinimumStock,
+                                 //LeadTime = i.Leadtime,
+                                 //MaxStock = i.MaximumQty,
+                                 //MinStock = i.MinimumQty,
                                  ShipName = h.ShipName,
                                  CreateDate = h.CreateDate,
 
@@ -183,6 +183,7 @@ namespace StockControl
                                  LotNo = d.LotNo,
                                  SerialNo = d.SerialNo
                                  ,Location = d.Location
+                                 ,ToLocation = d.ToLocation
 
 
                              }).ToList();
@@ -222,7 +223,7 @@ namespace StockControl
                     //}
                     var r = (from d in db.tb_Shippings
                              join h in db.tb_ShippingHs on d.ShippingNo equals h.ShippingNo
-                             join i in db.tb_Items on d.CodeNo equals i.CodeNo
+                             //join i in db.mh_Items on d.CodeNo equals i.InternalNo
 
                              where h.Status != "Cancel" //&& d.verticalID == VerticalID
                                    && d.Status != "Cancel"
@@ -248,9 +249,9 @@ namespace StockControl
                                  QTY = d.QTY,
                                  UnitShip = d.UnitShip,
                                  PCSUnit = d.PCSUnit,
-                                 LeadTime = i.Leadtime,
-                                 MaxStock = i.MaximumStock,
-                                 MinStock = i.MinimumStock,
+                                 ////LeadTime = i.Leadtime,
+                                 //MaxStock = i.MaximumQty,
+                                 //MinStock = i.MinimumQty,
                                  ShipName = h.ShipName,
                                  CreateDate = h.CreateDate,
 
@@ -264,7 +265,7 @@ namespace StockControl
                                  SerialNo = d.SerialNo
                                  ,
                                  Location = d.Location
-
+                                 ,ToLocation = d.ToLocation
 
                              }).ToList();
                     dgvData.DataSource = r;
@@ -607,7 +608,7 @@ namespace StockControl
 
         private void radButton1_Click_1(object sender, EventArgs e)
         {
-            if(TypeShip!="")
+            if (TypeShip != "")
                 DataLoad_for_Job();
             else
                 DataLoad();
@@ -711,7 +712,7 @@ namespace StockControl
                         Shipping a = new Shipping(Convert.ToString(e.Row.Cells["ShippingNo"].Value),
                         Convert.ToString(e.Row.Cells["CodeNo"].Value));
                         a.ShowDialog();
-                        this.Close();
+                        //this.Close();
                     }
                 }
 
