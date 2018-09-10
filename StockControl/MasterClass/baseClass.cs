@@ -157,12 +157,6 @@ namespace StockControl
         View
     }
     
-
-    public enum CustomerPO_SS
-    {
-        Waiting,
-        Process,
-        Completed
-    }
+    
 
 }

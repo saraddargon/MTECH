@@ -428,7 +428,8 @@ namespace StockControl
                                         x.Cells["dgvUnit"].ReadOnly = true;
                                         x.Cells["dgvCost"].ReadOnly = true;
                                         x.Cells["dgvPCSUnit"].ReadOnly = true;
-                                        x.Cells["dgvGroupCode"].ReadOnly = true;                                        
+                                        x.Cells["dgvGroupCode"].ReadOnly = true;
+                                        //x.Cells["dgvDiscountAmount"].ReadOnly = true;
                                     }
                                 }
                                 else if (dbClss.TDe(x.Cells["dgvBackOrder"].Value) <= dbClss.TDe(x.Cells["dgvOrderQty"].Value)
@@ -442,7 +443,7 @@ namespace StockControl
                                     x.Cells["dgvUnit"].ReadOnly = true;
                                     x.Cells["dgvCost"].ReadOnly = true;
                                     x.Cells["dgvPCSUnit"].ReadOnly = true;
-
+                                    x.Cells["dgvDiscountAmount"].ReadOnly = true;
                                 }
                                 else
                                 {
@@ -462,6 +463,7 @@ namespace StockControl
                                     x.Cells["dgvUnit"].ReadOnly = true;
                                     x.Cells["dgvCost"].ReadOnly = true;
                                     x.Cells["dgvPCSUnit"].ReadOnly = true;
+                                    x.Cells["dgvDiscountAmount"].ReadOnly = true;
                                 }
                             }
                         }
@@ -595,8 +597,8 @@ namespace StockControl
                             dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขเลขที่ใบสั่งซื้อ [" + txtPONo.Text.Trim() + "]", txtPONo.Text);
                         }
 
-                        //if (StockControl.dbClss.TSt(gg.Barcode).Equals(""))
-                        //    gg.Barcode = StockControl.dbClss.SaveQRCode2D(txtPONo.Text.Trim());
+                        if (StockControl.dbClss.TSt(gg.Barcode).Equals(""))
+                            gg.Barcode = StockControl.dbClss.SaveQRCode2D(txtPONo.Text.Trim());
 
                         if (!cboVatType.Text.Trim().Equals(row["VATType"].ToString()))
                         {
@@ -740,8 +742,8 @@ namespace StockControl
                 else  // Add ใหม่
                 {
                     byte[] barcode = null;
-                    //if(!txtPONo.Text.Equals(""))
-                    //    barcode = StockControl.dbClss.SaveQRCode2D(txtPONo.Text.Trim());
+                    if (!txtPONo.Text.Equals(""))
+                        barcode = StockControl.dbClss.SaveQRCode2D(txtPONo.Text.Trim());
                     //DateTime? UpdateDate = null;
 
                     mh_PurchaseOrder gg = new mh_PurchaseOrder();
@@ -1416,8 +1418,13 @@ namespace StockControl
                     err += "- “เบอร์โทร:” เป็นค่าว่าง \n";
                 if (dtDuedate.Text.Equals(""))
                     err += "- “วันที่ต้องการ:” เป็นค่าว่าง \n";
+                if (cboVatGroup.Text.Equals(""))
+                    err += "- “กลุ่มภาษี:” เป็นค่าว่าง \n";
+                if (cboVatType.Text.Equals(""))
+                    err += "- “ประเภทภาษี:” เป็นค่าว่าง \n";
 
-                if(dgvData.Rows.Count<=0)
+
+                if (dgvData.Rows.Count<=0)
                     err += "- “รายการ:” เป็นค่าว่าง \n";
                 foreach (GridViewRowInfo rowInfo in dgvData.Rows)
                 {
@@ -1590,47 +1597,47 @@ namespace StockControl
         {
             ////ปรับสถานะ PR เป็น Waiting
 
-            //try
-            //{
+            try
+            {
 
-            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
-            //    {
-            //        foreach (var g in dgvData.Rows)
-            //        {
-            //            if (g.IsVisible.Equals(true))
-            //            {
-            //                var v = (from ix in db.tb_PurchaseRequestLines
-            //                         where //ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
-            //                               // ix.TempNo == txtTempNo.Text 
-            //                            ix.id == StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value)
-            //                         select ix).ToList();
-            //                if (v.Count > 0)
-            //                {
-            //                    var p = (from ix in db.tb_PurchaseRequestLines
-            //                             where //ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
-            //                                   // ix.TempNo == txtTempNo.Text 
-            //                                ix.id == StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value)
-            //                             select ix).First();
-            //                    p.Status = "Completed";
-            //                    p.RemainQty = 0;
-            //                    p.PoNo = txtPONo.Text.Trim();
-            //                    p.RefPOid = StockControl.dbClss.TInt(g.Cells["dgvid"].Value);
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    foreach (var g in dgvData.Rows)
+                    {
+                        if (g.IsVisible.Equals(true))
+                        {
+                            var v = (from ix in db.mh_PurchaseRequestLines
+                                     where //ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+                                           // ix.TempNo == txtTempNo.Text 
+                                        ix.id == StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value)
+                                     select ix).ToList();
+                            if (v.Count > 0)
+                            {
+                                var p = (from ix in db.mh_PurchaseRequestLines
+                                         where //ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+                                               // ix.TempNo == txtTempNo.Text 
+                                            ix.id == StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value)
+                                         select ix).First();
+                                p.Status = "Completed";
+                                //p.RemainQty = 0;
+                                p.PoNo = txtPONo.Text.Trim();
+                                p.RefPOid = StockControl.dbClss.TInt(g.Cells["dgvid"].Value);
 
-            //                    dbClss.AddHistory(this.Name, "ปรับสถานะ Item PR", "สร้าง PO จาก PRid :" + StockControl.dbClss.TSt(g.Cells["dgvPRItem"].Value)
-            //                        + " PONo :" + txtPONo.Text.Trim()
-            //                        + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value));
+                                dbClss.AddHistory(this.Name, "ปรับสถานะ Item PR", "สร้าง PO จาก PRid :" + StockControl.dbClss.TSt(g.Cells["dgvPRItem"].Value)
+                                    + " PONo :" + txtPONo.Text.Trim()
+                                    + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value));
 
-            //                    db.SubmitChanges();
+                                db.SubmitChanges();
 
-            //                    db.sp_023_PRHD_Cal_Status(p.TempNo, p.PRNo);
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-            //catch (Exception ex) { MessageBox.Show(ex.Message); }
+                                db.sp_023_PRHD_Cal_Status(p.TempNo, p.PRNo);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
 
-            
+
         }
         bool LastDiscount = false;
         bool lastDiscountAmount = false;

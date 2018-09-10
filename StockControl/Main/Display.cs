@@ -14,7 +14,7 @@ namespace StockControl
 {
     public partial class display : Form
     {
-        public List<Process> Process_List = new List<Process>();
+        public List<System.Diagnostics.Process> Process_List = new List<System.Diagnostics.Process>();
         public ListViewItem ListItem;    
         private string sqlname;
         //private BaseClassAllDataContext GetData = null;
@@ -314,6 +314,22 @@ namespace StockControl
                         {
                             ListItem.ImageIndex = 19;
                         }
+                        else if (c.LinkNode.ToString().Equals("tb_Master_ItemUOM"))
+                        {
+                            ListItem.ImageIndex = 15;
+                        }
+                        else if (c.LinkNode.ToString().Equals("GanttCharts_Job"))
+                        {
+                            ListItem.ImageIndex = 26;
+                        }
+                        else if (c.LinkNode.ToString().Equals("Return_RM"))
+                        {
+                            ListItem.ImageIndex = 23;
+                        }
+                        else if (c.LinkNode.ToString().Equals("Shipping_RM"))
+                        {
+                            ListItem.ImageIndex = 25;
+                        }
                         else
                         {
                             ListItem.ImageIndex = 0;
@@ -475,7 +491,7 @@ namespace StockControl
                                 // GetData.sp_211_DC004_OpenProgram_SAVE(FMSClass.ConnectDB.User, 2);
 
                                 System.Diagnostics.Process.Start(ToolTipText);
-                            Process_List.Add(Process.GetProcessesByName(FileName[0]).FirstOrDefault());
+                            Process_List.Add(System.Diagnostics.Process.GetProcessesByName(FileName[0]).FirstOrDefault());
                         }
                         else
                         {

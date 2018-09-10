@@ -26,9 +26,20 @@ namespace StockControl
             screen = 1;
 
         }
+        public ShippingList(Telerik.WinControls.UI.RadTextBox SHNoxxx
+                   , Telerik.WinControls.UI.RadTextBox CodeNoxxx,string TypeShipx)
+        {
+            InitializeComponent();
+            SHNo_tt = SHNoxxx;
+            CodeNo_tt = CodeNoxxx;
+            screen = 1;
+            TypeShip = TypeShipx;
+
+        }
         Telerik.WinControls.UI.RadTextBox SHNo_tt = new Telerik.WinControls.UI.RadTextBox();
         Telerik.WinControls.UI.RadTextBox CodeNo_tt = new Telerik.WinControls.UI.RadTextBox();
         int screen = 0;
+        string TypeShip = "";
         DataTable dt = new DataTable();
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
@@ -132,7 +143,7 @@ namespace StockControl
                     //}
                     var r = (from d in db.tb_Shippings
                              join h in db.tb_ShippingHs on d.ShippingNo equals h.ShippingNo
-                             join i in db.tb_Items on d.CodeNo equals i.CodeNo
+                             //join i in db.mh_Items on d.CodeNo equals i.InternalNo
 
                              where h.Status != "Cancel" //&& d.verticalID == VerticalID
                                    &&  d.Status != "Cancel"
@@ -157,9 +168,9 @@ namespace StockControl
                                  QTY = d.QTY,
                                  UnitShip = d.UnitShip,
                                  PCSUnit = d.PCSUnit,
-                                 LeadTime = i.Leadtime,
-                                 MaxStock = i.MaximumStock,
-                                 MinStock = i.MinimumStock,
+                                 //LeadTime = i.Leadtime,
+                                 //MaxStock = i.MaximumQty,
+                                 //MinStock = i.MinimumQty,
                                  ShipName = h.ShipName,
                                  CreateDate = h.CreateDate,
 
@@ -172,6 +183,7 @@ namespace StockControl
                                  LotNo = d.LotNo,
                                  SerialNo = d.SerialNo
                                  ,Location = d.Location
+                                 ,ToLocation = d.ToLocation
 
 
                              }).ToList();
@@ -191,7 +203,88 @@ namespace StockControl
 
             //    radGridView1.DataSource = dt;
         }
-      
+        private void DataLoad_for_Job()
+        {
+            dgvData.Rows.Clear();
+
+            try
+            {
+                DateTime inclusiveStart = dtDate1.Value.Date;
+                // Include the *whole* of the day indicated by searchEndDate
+                DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
+
+                this.Cursor = Cursors.WaitCursor;
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    //string Status = cboStatus.Text;
+                    //if(cboStatus.Text.Equals("ทั้งหมด"))
+                    //{
+                    //    Status = "";
+                    //}
+                    var r = (from d in db.tb_Shippings
+                             join h in db.tb_ShippingHs on d.ShippingNo equals h.ShippingNo
+                             //join i in db.mh_Items on d.CodeNo equals i.InternalNo
+
+                             where h.Status != "Cancel" //&& d.verticalID == VerticalID
+                                   && d.Status != "Cancel"
+                                 && d.ShippingNo.Contains(txtSHNo.Text.Trim())
+                                 && h.JobCard != ""
+                                 //&& (h.ShipDate >= inclusiveStart
+                                 //       && h.ShipDate < exclusiveEnd)
+
+                                 && (((h.ShipDate >= inclusiveStart
+                                   && h.ShipDate < exclusiveEnd)
+                                   && cbDate.Checked == true)
+                                || (cbDate.Checked == false))
+
+                             //&& ((Convert.ToDateTime(h.ShipDate.Value)) >= (Convert.ToDateTime(dtDate1.Value)))
+                             //&& ((Convert.ToDateTime(h.ShipDate.Value)) <= (Convert.ToDateTime(dtDate2.Value)))
+
+                             select new
+                             {
+                                 ShippingNo = d.ShippingNo,
+                                 CodeNo = d.CodeNo,
+                                 ItemNo = d.ItemNo,
+                                 ItemDescription = d.ItemDescription,
+                                 QTY = d.QTY,
+                                 UnitShip = d.UnitShip,
+                                 PCSUnit = d.PCSUnit,
+                                 ////LeadTime = i.Leadtime,
+                                 //MaxStock = i.MaximumQty,
+                                 //MinStock = i.MinimumQty,
+                                 ShipName = h.ShipName,
+                                 CreateDate = h.CreateDate,
+
+                                 CreateBy = h.CreateBy,
+                                 Remark = d.Remark,
+                                 Status = d.Status,
+                                 id = d.id,
+                                 LineName = d.LineName,
+                                 MachineName = d.MachineName,
+                                 LotNo = d.LotNo,
+                                 SerialNo = d.SerialNo
+                                 ,
+                                 Location = d.Location
+                                 ,ToLocation = d.ToLocation
+
+                             }).ToList();
+                    dgvData.DataSource = r;
+
+                    int rowcount = 0;
+                    foreach (var x in dgvData.Rows)
+                    {
+                        rowcount += 1;
+                        x.Cells["dgvNo"].Value = rowcount;
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            this.Cursor = Cursors.Default;
+
+
+            //    radGridView1.DataSource = dt;
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
           
@@ -515,7 +608,10 @@ namespace StockControl
 
         private void radButton1_Click_1(object sender, EventArgs e)
         {
-            DataLoad();
+            if (TypeShip != "")
+                DataLoad_for_Job();
+            else
+                DataLoad();
         }
 
         private void radGridView1_CellFormatting(object sender, Telerik.WinControls.UI.CellFormattingEventArgs e)
@@ -616,7 +712,7 @@ namespace StockControl
                         Shipping a = new Shipping(Convert.ToString(e.Row.Cells["ShippingNo"].Value),
                         Convert.ToString(e.Row.Cells["CodeNo"].Value));
                         a.ShowDialog();
-                        this.Close();
+                        //this.Close();
                     }
                 }
 
@@ -667,6 +763,12 @@ namespace StockControl
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void radButtonElement1_Click(object sender, EventArgs e)
+        {
+            PrintPR a = new PrintPR("", "", "ShippingToDay");
+            a.ShowDialog();
         }
     }
 }

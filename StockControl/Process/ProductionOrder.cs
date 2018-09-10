@@ -19,6 +19,7 @@ namespace StockControl
         string t_PONo = "";
         string t_CustomerNo = "";
 
+        bool demo = false;
         public ProductionOrder()
         {
             InitializeComponent();
@@ -28,6 +29,11 @@ namespace StockControl
             InitializeComponent();
             this.t_PONo = PONo;
             this.t_CustomerNo = CustomerNo;
+        }
+        public ProductionOrder(bool demo)
+        {
+            InitializeComponent();
+            this.demo = demo;
         }
 
         List<GridViewRowInfo> RetDT;
@@ -71,11 +77,13 @@ namespace StockControl
                 if (t_PONo != "" && t_CustomerNo != "")
                     DataLoad();
 
-
+                if (demo)
+                    setdemo();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
+        
         private void DataLoad(bool warningMssg = true)
         {
             try
@@ -97,6 +105,35 @@ namespace StockControl
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
+
+        void setdemo()
+        {
+            txtProductionNo.Text = "PD1809-002";
+            txtRefNo.Text = "CSTMPO1809-002";
+            txtItemNo.Text = "I002";
+            txtItemName.Text = "FG 2";
+            txtDueDate.Text = "8/Sep/2018";
+            txtFGQty.Value = 50;
+            txtUnit.Text = "PCS";
+            txtStartingDate.Text = "1/Sep/2018";
+            txtEndingDate.Text = "7/Sep/2018";
+
+            adddemo(1, "I0008", "RM 1", 10, "PCS");
+            adddemo(2, "I0009", "RM 2", 100, "PCS");
+            adddemo(3, "I0010", "SEMI 1", 50, "PCS");
+        }
+        void adddemo(int RNo, string Item, string ItemName, decimal Qty, string Unit)
+        {
+            var rowe = dgvData.Rows.AddNew();
+            rowe.Cells["RNo"].Value = RNo;
+            rowe.Cells["Item"].Value = Item;
+            rowe.Cells["ItemName"].Value = ItemName;
+            rowe.Cells["Qty"].Value = Qty;
+            rowe.Cells["Unit"].Value = Unit;
+        }
+        //
+
+
         private void Enable_Status(bool ss, string Condition)
         {
             if (Condition.Equals("-") || Condition.Equals("New"))
@@ -121,7 +158,6 @@ namespace StockControl
             btnNew.Enabled = false;
             btnSave.Enabled = true;
             btnDelete.Enabled = true;
-            btnDiscon.Enabled = false;
 
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
@@ -214,15 +250,15 @@ namespace StockControl
         {
             try
             {
-                if (Ac.Equals("New") || Ac.Equals("Edit"))
-                {
-                    if (Check_Save())
-                        return;
-                    else if (baseClass.IsSave())
-                        SaveE();
-                }
-                else
-                    MessageBox.Show("สถานะต้องเป็น New หรือ Edit เท่านั่น");
+                //if (Ac.Equals("New") || Ac.Equals("Edit"))
+                //{
+                //    if (Check_Save())
+                //        return;
+                //    else if (baseClass.IsSave())
+                //        SaveE();
+                //}
+                //else
+                //    MessageBox.Show("สถานะต้องเป็น New หรือ Edit เท่านั่น");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -287,7 +323,7 @@ namespace StockControl
                                 addRow(e.RowIndex
                                     , DateTime.Now, t.InternalNo, t.InternalName
                                     , 1, t.BaseUOM, pcsunit, 0, 0
-                                    , 1, 1, "", 0, CustomerPO_SS.Waiting);
+                                    , 1, 1, "", 0, "Waiting");
                             else
                             {
                                 e.Row.Cells["ItemName"].Value = t.InternalName;
@@ -339,7 +375,7 @@ namespace StockControl
         }
         void addRow(int rowIndex, DateTime ReqDate, string ItemNo, string ItemName, decimal Qty
             , string UOM, decimal PCSUnit, decimal PricePerUnit, decimal Amount
-            , decimal OutShip, decimal OutInv, string RemarkDT, int id, CustomerPO_SS Status)
+            , decimal OutShip, decimal OutInv, string RemarkDT, int id, string Status)
         {
             var rowE = dgvData.Rows[rowIndex];
             try
@@ -412,39 +448,39 @@ namespace StockControl
             try
             {
 
-                if (dgvData.Rows.Count < 0)
-                    return;
+                //if (dgvData.Rows.Count < 0)
+                //    return;
 
 
-                if (Ac.Equals("New") || Ac.Equals("Edit"))
-                {
-                    this.Cursor = Cursors.WaitCursor;
+                //if (Ac.Equals("New") || Ac.Equals("Edit"))
+                //{
+                //    this.Cursor = Cursors.WaitCursor;
 
 
-                    if (dgvData.CurrentRow.Cells["Status"].Value.ToInt() == CustomerPO_SS.Waiting.ToInt())
-                    {
+                //    if (dgvData.CurrentRow.Cells["Status"].Value.ToSt() == "Waiting")
+                //    {
 
-                        int id = 0;
-                        int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["id"].Value), out id);
-                        if (id <= 0)
-                            dgvData.Rows.Remove(dgvData.CurrentRow);
+                //        int id = 0;
+                //        int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["id"].Value), out id);
+                //        if (id <= 0)
+                //            dgvData.Rows.Remove(dgvData.CurrentRow);
 
-                        else
-                        {
-                            row = dgvData.CurrentRow.Index;
-                            btnDelete_Click(null, null);
-                        }
-                        CallTotal();
-                        //getTotal();
-                        SetRowNo1(dgvData);
-                    }
-                    else
-                        MessageBox.Show("ไม่สามารถทำการลบรายการได้ สถานะไม่ถูกต้อง");
-                }
-                else
-                {
-                    MessageBox.Show("ไม่สามารถทำการลบรายการได้");
-                }
+                //        else
+                //        {
+                //            row = dgvData.CurrentRow.Index;
+                //            btnDelete_Click(null, null);
+                //        }
+                //        CallTotal();
+                //        //getTotal();
+                //        SetRowNo1(dgvData);
+                //    }
+                //    else
+                //        MessageBox.Show("ไม่สามารถทำการลบรายการได้ สถานะไม่ถูกต้อง");
+                //}
+                //else
+                //{
+                //    MessageBox.Show("ไม่สามารถทำการลบรายการได้");
+                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -479,16 +515,16 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                var pol = new CustomerPO_List(2);
+                //var pol = new CustomerPO_List(2);
                 this.Cursor = Cursors.Default;
-                pol.ShowDialog();
-                if (pol.PONo != "" && pol.CstmNo != "")
-                {
-                    t_PONo = pol.PONo;
-                    t_CustomerNo = pol.CstmNo;
-                    //LoadData
-                    DataLoad();
-                }
+                //pol.ShowDialog();
+                //if (pol.PONo != "" && pol.CstmNo != "")
+                //{
+                //    t_PONo = pol.PONo;
+                //    t_CustomerNo = pol.CstmNo;
+                //    //LoadData
+                //    DataLoad();
+                //}
 
 
                 GC.Collect();
@@ -509,7 +545,6 @@ namespace StockControl
             btnEdit.Enabled = true;
             btnView.Enabled = false;
             btnNew.Enabled = true;
-            btnDiscon.Enabled = false;
             ClearData();
             Enable_Status(false, "View");
             DataLoad();
@@ -666,7 +701,7 @@ namespace StockControl
                         var rowE = dgvData.Rows.AddNew();
                         addRow(rowE.Index, DateTime.Now, itemNo, t.InternalName
                             , 1, t.BaseUOM, u, 0, 0, 0, 0
-                            , "", 0, CustomerPO_SS.Waiting);
+                            , "", 0, "Waiting");
                     }
                     SetRowNo1(dgvData);
 

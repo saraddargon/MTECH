@@ -95,11 +95,11 @@
             // radLabel3
             // 
             this.radLabel3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel3.Location = new System.Drawing.Point(77, 47);
+            this.radLabel3.Location = new System.Drawing.Point(61, 46);
             this.radLabel3.Name = "radLabel3";
-            this.radLabel3.Size = new System.Drawing.Size(180, 18);
+            this.radLabel3.Size = new System.Drawing.Size(211, 18);
             this.radLabel3.TabIndex = 7;
-            this.radLabel3.Text = "Warehouse control Version 1.0.0";
+            this.radLabel3.Text = "M-TECH Product Co.,Ltd. Version 1.0.0";
             // 
             // cbConfig
             // 

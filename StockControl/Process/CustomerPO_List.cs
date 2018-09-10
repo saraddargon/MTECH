@@ -69,6 +69,16 @@ namespace StockControl
 
             dgvData.AutoGenerateColumns = false;
             DataLoad();
+
+            dgvData.Columns.ToList().ForEach(x =>
+            {
+                if (x.Name != "S")
+                    x.ReadOnly = true;
+            });
+
+
+            //
+            DemoData();
         }
         private void DataLoad()
         {
@@ -87,7 +97,7 @@ namespace StockControl
                     DateTime dTo = (cbChkDate.Checked) ? dtTo.Value.Date.AddDays(1).AddMinutes(1) : DateTime.MaxValue;
 
                     var t = db.mh_CustomerPOs.Where(x =>
-                                x.Active
+                                x.Active && x.DemandType == 0
                                 && (x.CustomerPONo.Contains(pono))
                                 && (x.CustomerNo == cstmno || cstmno == "")
                                 && (x.ItemNo == item || item == "")
@@ -104,6 +114,11 @@ namespace StockControl
                         var c = db.mh_Customers.Where(q => q.No == cNo).FirstOrDefault();
                         if (c != null)
                             x.Cells["CustomerName"].Value = c.Name;
+
+                        if (DateTime.Now <= x.Cells["ReqDate"].Value.ToDateTime().Value)
+                            x.Cells["SS"].Value = 1;
+                        else
+                            x.Cells["SS"].Value = 2;
                     });
                 }
             }
@@ -113,6 +128,44 @@ namespace StockControl
 
             //    radGridView1.DataSource = dt;
         }
+        
+
+        void DemoData()
+        {
+            try
+            {
+                dgvData.DataSource = null;
+                dgvData.Rows.Clear();
+                demo_row("Waiting Plan", "CSTMPO1809-001", new DateTime(2018, 09, 17), "I0001", "Item A", 100, 0, false, true, "PCS", 100, 100 * 100);
+                demo_row("Completed", "CSTMPO1809-001", new DateTime(2018, 09, 18), "I0001", "Item A", 50, 0, true, true, "PCS", 100, 50 * 100);
+                demo_row("Waiting Order", "CSTMPO1809-001", new DateTime(2018, 09, 19), "I0001", "Item A", 100, 50, true, false, "PCS", 100, 100 * 100);
+                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 20), "I0002", "Item B", 100, 100, false, false, "PCS", 100, 100 * 100);
+                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 21), "I0003", "Item C", 50, 50, false, false, "PCS", 100, 50 * 100);
+            }
+            catch (Exception ex)
+            {
+                baseClass.Warning(ex.Message);
+            }
+        }
+        void demo_row(string SS, string PONo, DateTime ReqDate, string Item
+            , string ItemName, decimal Qty, decimal Remain, bool Plan, bool SaleOrder
+            , string Unit, decimal PricePerUnit, decimal Amnt)
+        {
+            var row = dgvData.Rows.AddNew();
+            row.Cells["SS"].Value = SS;
+            row.Cells["PONo"].Value = PONo;
+            row.Cells["ReqDate"].Value = ReqDate;
+            row.Cells["Item"].Value = Item;
+            row.Cells["ItemName"].Value = ItemName;
+            row.Cells["Qty"].Value = Qty;
+            row.Cells["Remain"].Value = Remain;
+            row.Cells["Plan"].Value = Plan;
+            row.Cells["SaleOrder"].Value = SaleOrder;
+            row.Cells["Unit"].Value = Unit;
+            row.Cells["PricePerUnit"].Value = PricePerUnit;
+            row.Cells["Amount"].Value = Amnt;
+        }
+        
 
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -158,13 +211,14 @@ namespace StockControl
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            DataLoad();
+            //DataLoad();
+            DemoData();
         }
 
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
-            //select Item from Double click
-            selRow();
+            ////select Item from Double click
+            //selRow();
 
         }
         void selRow()
@@ -179,6 +233,7 @@ namespace StockControl
                 {
                     var p = new CustomerPO(PONo, CstmNo);
                     p.ShowDialog();
+                    DataLoad();
                     PONo = "";
                     CstmNo = "";
                 }
@@ -190,7 +245,7 @@ namespace StockControl
         private void btn_PrintPR_Click(object sender, EventArgs e)
         {
             //select Item for Print
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
 
@@ -261,6 +316,55 @@ namespace StockControl
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void btnCreateSaleOrder_Click(object sender, EventArgs e)
+        {
+            CreateSaleOrder();
+        }
+        void CreateSaleOrder()
+        {
+            dgvData.EndEdit();
+            try
+            {
+                if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
+                {
+                    //var rowS = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
+                    //if (rowS.Select(x => x.Cells["CustomerNo"].Value.ToSt()).Count() > 1)
+                    //{
+                    //    baseClass.Warning("Sale order have only 1 Customer.");
+                    //    return;
+                    //}
+
+                    //var idList = new List<int>();
+                    //foreach (var item in rowS)
+                    //{
+                    //    int id = item.Cells["id"].Value.ToInt();
+                    //    if (item.Cells["OutSO"].Value.ToDecimal() <= 0)
+                    //    {
+                    //        baseClass.Warning("Status P/O Cannot create Sale Order.\n");
+                    //        return;
+                    //    }
+                    //    idList.Add(id);
+                    //}
+
+                    //var so = new SaleOrder(idList);
+                    //so.ShowDialog();
+                    //DataLoad();
+
+                    var so = new SaleOrder(true);
+                    so.ShowDialog();
+                }
+                else
+                {
+                    baseClass.Warning("Please select data.");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Warning(ex.Message);
+            }
         }
     }
 

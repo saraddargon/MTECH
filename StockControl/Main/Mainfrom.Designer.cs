@@ -30,20 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainfrom));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Part Setting");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Create Job Card");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Bill of Material (Bom)");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Purchase Request");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Purchase Order");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Receive Part");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Shipping Part");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Finished good (FG)");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Stock Balance");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Job Management");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Report");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Manufacturing");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("CustomerPO");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Planning");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Charts View");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Part Setting");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Bill of Material (Bom)");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Purchase Request");
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Purchase Order");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Receive Part");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Shipping Part");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Stock Balance");
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Sale");
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Production Plan");
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Planning");
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Production");
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
@@ -82,11 +80,6 @@
             this.radMenuItem17 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem18 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem23 = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnMasterShift = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenuItem20 = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenuItem24 = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnRouting = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnLocation = new Telerik.WinControls.UI.RadMenuItem();
             this.btnVat = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem26 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem27 = new Telerik.WinControls.UI.RadMenuItem();
@@ -340,19 +333,14 @@
             this.radMenuItem7,
             this.radMenuItem8,
             this.radMenuSeparatorItem3,
+            this.radMenuItem18,
+            this.radMenuItem23,
             this.btnMasterDepartment,
             this.btnMasterUser,
             this.btnMasterLocation,
             this.radMenuItem15,
             this.radMenuItem16,
             this.radMenuItem17,
-            this.radMenuItem18,
-            this.radMenuItem23,
-            this.btnMasterShift,
-            this.radMenuItem20,
-            this.radMenuItem24,
-            this.btnRouting,
-            this.btnLocation,
             this.btnVat,
             this.btnCurrency,
             this.btnPermisstion,
@@ -438,41 +426,6 @@
             this.radMenuItem23.Name = "radMenuItem23";
             this.radMenuItem23.Text = "Master Customer";
             this.radMenuItem23.Click += new System.EventHandler(this.radMenuItem23_Click);
-            // 
-            // btnMasterShift
-            // 
-            this.btnMasterShift.Image = ((System.Drawing.Image)(resources.GetObject("btnMasterShift.Image")));
-            this.btnMasterShift.Name = "btnMasterShift";
-            this.btnMasterShift.Text = "Master Shift";
-            this.btnMasterShift.Click += new System.EventHandler(this.btnMasterShift_Click);
-            // 
-            // radMenuItem20
-            // 
-            this.radMenuItem20.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem20.Image")));
-            this.radMenuItem20.Name = "radMenuItem20";
-            this.radMenuItem20.Text = "Calendar";
-            this.radMenuItem20.Click += new System.EventHandler(this.radMenuItem20_Click);
-            // 
-            // radMenuItem24
-            // 
-            this.radMenuItem24.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem24.Image")));
-            this.radMenuItem24.Name = "radMenuItem24";
-            this.radMenuItem24.Text = "Work Centers";
-            this.radMenuItem24.Click += new System.EventHandler(this.btnWorkCenters_Click);
-            // 
-            // btnRouting
-            // 
-            this.btnRouting.Image = ((System.Drawing.Image)(resources.GetObject("btnRouting.Image")));
-            this.btnRouting.Name = "btnRouting";
-            this.btnRouting.Text = "Routings";
-            this.btnRouting.Click += new System.EventHandler(this.btnRoutings_Click);
-            // 
-            // btnLocation
-            // 
-            this.btnLocation.Image = ((System.Drawing.Image)(resources.GetObject("btnLocation.Image")));
-            this.btnLocation.Name = "btnLocation";
-            this.btnLocation.Text = "Master Location";
-            this.btnLocation.Click += new System.EventHandler(this.btnLocation_Click);
             // 
             // btnVat
             // 
@@ -586,7 +539,7 @@
             // 
             this.radMenuItem12.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem12.Image")));
             this.radMenuItem12.Name = "radMenuItem12";
-            this.radMenuItem12.Text = "About Warehouse Control";
+            this.radMenuItem12.Text = "About System";
             this.radMenuItem12.Click += new System.EventHandler(this.radMenuItem12_Click);
             // 
             // radMenuItem29
@@ -611,22 +564,22 @@
             // 
             this.radLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.radLabel1.Font = new System.Drawing.Font("Bauhaus 93", 15.25F);
+            this.radLabel1.Font = new System.Drawing.Font("Bauhaus 93", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel1.ForeColor = System.Drawing.Color.SeaGreen;
             this.radLabel1.Location = new System.Drawing.Point(271, 47);
             this.radLabel1.Name = "radLabel1";
-            this.radLabel1.Size = new System.Drawing.Size(447, 28);
+            this.radLabel1.Size = new System.Drawing.Size(319, 36);
             this.radLabel1.TabIndex = 8;
-            this.radLabel1.Text = "SHINKO MOLD INDUSTRIAL (THAILAND) CO.,LTD";
+            this.radLabel1.Text = "M-TECH Product Co.,Ltd.";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(50, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(55, 16);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(118, 76);
+            this.pictureBox1.Size = new System.Drawing.Size(119, 48);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
@@ -637,11 +590,11 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.radLabel3.Font = new System.Drawing.Font("Bauhaus 93", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel3.ForeColor = System.Drawing.Color.SeaGreen;
-            this.radLabel3.Location = new System.Drawing.Point(253, 11);
+            this.radLabel3.Location = new System.Drawing.Point(234, 6);
             this.radLabel3.Name = "radLabel3";
-            this.radLabel3.Size = new System.Drawing.Size(323, 46);
+            this.radLabel3.Size = new System.Drawing.Size(353, 46);
             this.radLabel3.TabIndex = 8;
-            this.radLabel3.Text = "Warehouse control";
+            this.radLabel3.Text = "Management System";
             // 
             // panel2
             // 
@@ -665,49 +618,43 @@
             this.TreeManu.ImageList = this.ImageList;
             this.TreeManu.Location = new System.Drawing.Point(0, 40);
             this.TreeManu.Name = "TreeManu";
-            treeNode1.Name = "PartSetting";
-            treeNode1.Text = "Part Setting";
-            treeNode2.Name = "CreateJob";
-            treeNode2.Text = "Create Job Card";
-            treeNode3.Name = "Bom";
-            treeNode3.Text = "Bill of Material (Bom)";
-            treeNode4.Name = "PurchaseReq";
-            treeNode4.Text = "Purchase Request";
-            treeNode5.Name = "PurchaseOrder";
-            treeNode5.Text = "Purchase Order";
-            treeNode6.Name = "Receive";
-            treeNode6.Text = "Receive Part";
-            treeNode7.Name = "Shipping";
-            treeNode7.Text = "Shipping Part";
-            treeNode8.Name = "FG";
-            treeNode8.Text = "Finished good (FG)";
-            treeNode9.Name = "Stock";
-            treeNode9.Text = "Stock Balance";
-            treeNode10.Name = "JobManagement";
-            treeNode10.Text = "Job Management";
-            treeNode11.Name = "Report";
-            treeNode11.Text = "Report";
-            treeNode12.Name = "Manufacturing";
-            treeNode12.Text = "Manufacturing";
-            treeNode13.Name = "CustomerPO";
-            treeNode13.Text = "CustomerPO";
-            treeNode14.Name = "Planning";
-            treeNode14.Text = "Planning";
+            treeNode13.Name = "ChartsView";
+            treeNode13.Text = "Charts View";
+            treeNode14.Name = "PartSetting";
+            treeNode14.Text = "Part Setting";
+            treeNode15.Name = "Bom";
+            treeNode15.Text = "Bill of Material (Bom)";
+            treeNode16.Name = "PurchaseReq";
+            treeNode16.Text = "Purchase Request";
+            treeNode17.Name = "PurchaseOrder";
+            treeNode17.Text = "Purchase Order";
+            treeNode18.Name = "Receive";
+            treeNode18.Text = "Receive Part";
+            treeNode19.Name = "Shipping";
+            treeNode19.Text = "Shipping Part";
+            treeNode20.Name = "Stock";
+            treeNode20.Text = "Stock Balance";
+            treeNode21.Name = "Sale";
+            treeNode21.Text = "Sale";
+            treeNode22.Name = "ProductionPlan";
+            treeNode22.Text = "Production Plan";
+            treeNode23.Name = "Planning";
+            treeNode23.Text = "Planning";
+            treeNode24.Name = "Production";
+            treeNode24.Text = "Production";
             this.TreeManu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7,
-            treeNode8,
-            treeNode9,
-            treeNode10,
-            treeNode11,
-            treeNode12,
             treeNode13,
-            treeNode14});
+            treeNode14,
+            treeNode15,
+            treeNode16,
+            treeNode17,
+            treeNode18,
+            treeNode19,
+            treeNode20,
+            treeNode21,
+            treeNode22,
+            treeNode23,
+            treeNode24});
             this.TreeManu.SelectedImageIndex = 4;
             this.TreeManu.ShowNodeToolTips = true;
             this.TreeManu.Size = new System.Drawing.Size(212, 486);
@@ -742,7 +689,7 @@
             this.linkLabel1.Size = new System.Drawing.Size(212, 40);
             this.linkLabel1.TabIndex = 2;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "         SHINKO MOLD INDUSTRIAL               (THAILAND) CO.,LTD";
+            this.linkLabel1.Text = "        M-TECH Product Co.,Ltd.";
             this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel1.VisitedLinkColor = System.Drawing.Color.Black;
             this.linkLabel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.linkLabel1_MouseClick);
@@ -802,7 +749,7 @@
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Warehouse control Version 1.0.0";
+            this.Text = "M-TECH Management System 1.0.0";
             this.ThemeName = "Office2010Blue";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.MaximumSizeChanged += new System.EventHandler(this.Mainfrom_MaximumSizeChanged);
@@ -873,9 +820,6 @@
         private Telerik.WinControls.UI.RadMenuSeparatorItem radMenuSeparatorItem4;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem21;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem22;
-        private Telerik.WinControls.UI.RadMenuItem radMenuItem20;
-        private Telerik.WinControls.UI.RadMenuItem radMenuItem24;
-        private Telerik.WinControls.UI.RadMenuItem btnRouting;
         private Telerik.WinControls.UI.CommandBarSeparator commandBarSeparator4;
         private Telerik.WinControls.UI.RadLabelElement radLabelElement4;
         private Telerik.WinControls.UI.RadLabelElement lblresolution;
@@ -889,14 +833,12 @@
         private Telerik.WinControls.UI.RadLabel radLabel3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Telerik.WinControls.UI.RadLabel radLabel1;
-        private Telerik.WinControls.UI.RadMenu radMenu1;
         private Telerik.WinControls.UI.RadMenuItem btnVat;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem26;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem27;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem28;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem29;
         private Telerik.WinControls.UI.RadMenuItem btnCurrency;
-        private Telerik.WinControls.UI.RadMenuItem btnMasterShift;
-        private Telerik.WinControls.UI.RadMenuItem btnLocation;
+        private Telerik.WinControls.UI.RadMenu radMenu1;
     }
 }

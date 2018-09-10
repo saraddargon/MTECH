@@ -499,8 +499,6 @@ namespace StockControl
 
                 //    }
                 //}
-
-
             }
             catch (Exception ex) { }
         }

@@ -53,13 +53,20 @@ namespace StockControl
 
         }
 
+        System.Threading.Thread td;
+        bool startC = false;
         private void btnRecal_Click(object sender, EventArgs e)
         {
-            Calculate();
+            if (!startC)
+            {
+                startC = true;
+                td = new System.Threading.Thread(new System.Threading.ThreadStart(Calculate));
+                td.Start();
+            }
         }
         void Calculate()
         {
-            this.Cursor = Cursors.WaitCursor;
+            //this.Cursor = Cursors.WaitCursor;
             try
             {
                 set_lbStatus("Calculating...");
@@ -84,7 +91,7 @@ namespace StockControl
                             if (dTemp > dtTo.Value.Date)
                                 break;
 
-                            set_lbStatus($"Calculating...[{t.WorkCenterNo}]:{t.WorkCenterName} - {dTemp.ToDtString()}");
+                            set_lbStatus($"Calculating...[{t.WorkCenterNo}] : {t.WorkCenterName} - {dTemp.ToDtString()}");
                             //find total minute day of work
                             decimal minWork = 0.00m;
                             //not day of work
@@ -110,11 +117,11 @@ namespace StockControl
                                         var sTime = new TimeSpan(h.StartTime.Substring(0, 2).ToInt(), h.StartTime.Substring(3).ToInt(), 0);
                                         var eTime = new TimeSpan(h.EndingTime.Substring(0, 2).ToInt(), h.EndingTime.Substring(3).ToInt(), 0);
                                         if (eTime > new TimeSpan(0, 0, 0))
-                                            minWork -= ((eTime - sTime).TotalMinutes).ToDecimal();
+                                            minWork -= ((eTime - sTime).TotalMinutes).ToDecimal() * t.Capacity;
                                         else
                                         {
                                             eTime = new TimeSpan(23, 59, 0);
-                                            minWork -= ((eTime - sTime).TotalMinutes + 1).ToDecimal();
+                                            minWork -= ((eTime - sTime).TotalMinutes + 1).ToDecimal() * t.Capacity;
                                         }
                                         if (minWork < 0)
                                             break;
@@ -170,7 +177,8 @@ namespace StockControl
             }
             finally
             {
-                this.Cursor = Cursors.Default;
+                //this.Cursor = Cursors.Default;
+                startC = false;
             }
         }
         void set_lbStatus(string x)

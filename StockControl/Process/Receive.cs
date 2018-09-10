@@ -92,6 +92,11 @@ namespace StockControl
 
                 DefaultItem();
 
+                //Test
+                txtDocNo.Text = "SMT1-20180009";
+                Insert_data_PR();
+                txtDocNo.Text = "";
+
                 if (!RCNo_L.Equals(""))
                 {
                     btnNew.Enabled = true;
@@ -107,7 +112,8 @@ namespace StockControl
                     Insert_data_PR();
                     txtDocNo.Text = "";
                 }
-                    
+
+               
                 
             }catch(Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -727,6 +733,7 @@ namespace StockControl
                                 u.TypeReceive = StockControl.dbClss.TSt(g.Cells["TypeReceive"].Value);
                                 u.Location = StockControl.dbClss.TSt(g.Cells["Location"].Value);
                                 u.Rate = dbClss.TDe(g.Cells["Rate"].Value);
+                                
 
                                 string BaseUOM = "";
                                 decimal BasePCSUnit = 1;
@@ -740,9 +747,13 @@ namespace StockControl
                                     BasePCSUnit = dbClss.Con_UOM((StockControl.dbClss.TSt(g.Cells["CodeNo"].Value).Trim().ToUpper()), BaseUOM);
                                 }
                                 if (BaseUOM == "" || BasePCSUnit <= 0)
+                                {
                                     BasePCSUnit = 1;
+                                    BaseUOM = "PCS";
+                                }
 
-                                u.PCSUnit_Base = BasePCSUnit;                          
+                                u.PCSUnit_Base = BasePCSUnit;
+                                u.BaseUOM = BaseUOM;
                                 if (rdoDL.IsChecked)
                                 {
                                     u.InvoiceNo =txtDLNo.Text;
@@ -1400,13 +1411,14 @@ namespace StockControl
                                 u.Seq = Seq;
                                 u.Status = "Completed";
                                 u.UnitCost = UnitCost;
+                                u.Location = vv.Location;
+                                u.BasePCSUOM = vv.PCSUnit_Base;
+                                u.BaseUOM = vv.BaseUOM;
 
                                 db.tb_Shippings.InsertOnSubmit(u);
                                 db.SubmitChanges();
 
                                 //-----------------------------------
-
-
                                 tb_Stock gg = new tb_Stock();
                                 gg.AppDate = AppDate;
                                 gg.Seq = Seq;
@@ -2120,7 +2132,7 @@ namespace StockControl
                                     No = dgvData.Rows.Count() + 1;
 
                                     CodeNo = StockControl.dbClss.TSt(gg.CodeNo);
-                                    if (!check_Duppicate(CodeNo))
+                                    if (!check_Duppicate(gg.id))
                                     {
                                         TempNo = StockControl.dbClss.TSt(gg.TempPNo);
 
@@ -2280,12 +2292,12 @@ namespace StockControl
                 txtTotal.Text = Total.ToString("###,###,##0.00");
             }
         }
-        private bool check_Duppicate(string CodeNo)
+        private bool check_Duppicate(int id)
         {
             bool re = false;
             foreach (var rd1 in dgvData.Rows)
             {
-                if (StockControl.dbClss.TSt(rd1.Cells["CodeNo"].Value).Equals(CodeNo))
+                if (StockControl.dbClss.TInt(rd1.Cells["PRID"].Value).Equals(id))
                     re = true;
             }
             
@@ -2538,8 +2550,8 @@ namespace StockControl
             if (mccbEl != null)
             {
                 mccbEl.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
-                mccbEl.DropDownMinSize = new Size(200, 150);
-                mccbEl.DropDownMaxSize = new Size(200, 150);
+                mccbEl.DropDownMinSize = new Size(300, 200);
+                mccbEl.DropDownMaxSize = new Size(300, 200);
 
                 mccbEl.AutoSizeDropDownToBestFit = false;
                 mccbEl.DropDownAnimationEnabled = false;
