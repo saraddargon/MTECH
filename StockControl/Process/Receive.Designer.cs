@@ -561,7 +561,7 @@
             gridViewTextBoxColumn10.Width = 108;
             gridViewTextBoxColumn11.EnableExpressionEditor = false;
             gridViewTextBoxColumn11.FieldName = "PRNo";
-            gridViewTextBoxColumn11.HeaderText = "เลขที่  P/O";
+            gridViewTextBoxColumn11.HeaderText = "เลขที่ P/R หรือ P/O";
             gridViewTextBoxColumn11.Name = "PRNo";
             gridViewTextBoxColumn11.ReadOnly = true;
             gridViewTextBoxColumn11.Width = 120;

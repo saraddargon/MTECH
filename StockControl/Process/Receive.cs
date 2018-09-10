@@ -740,13 +740,9 @@ namespace StockControl
                                     BasePCSUnit = dbClss.Con_UOM((StockControl.dbClss.TSt(g.Cells["CodeNo"].Value).Trim().ToUpper()), BaseUOM);
                                 }
                                 if (BaseUOM == "" || BasePCSUnit <= 0)
-                                {
                                     BasePCSUnit = 1;
-                                    BaseUOM = "PCS";
-                                }
 
-                                u.PCSUnit_Base = BasePCSUnit;
-                                u.BaseUOM = BaseUOM;
+                                u.PCSUnit_Base = BasePCSUnit;                          
                                 if (rdoDL.IsChecked)
                                 {
                                     u.InvoiceNo =txtDLNo.Text;
@@ -1404,14 +1400,13 @@ namespace StockControl
                                 u.Seq = Seq;
                                 u.Status = "Completed";
                                 u.UnitCost = UnitCost;
-                                u.Location = vv.Location;
-                                u.BasePCSUOM = vv.PCSUnit_Base;
-                                u.BaseUOM = vv.BaseUOM;
 
                                 db.tb_Shippings.InsertOnSubmit(u);
                                 db.SubmitChanges();
 
                                 //-----------------------------------
+
+
                                 tb_Stock gg = new tb_Stock();
                                 gg.AppDate = AppDate;
                                 gg.Seq = Seq;
