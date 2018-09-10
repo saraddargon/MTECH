@@ -125,6 +125,7 @@ namespace StockControl
         void DemoLoad()
         {
             demoAdd(1, new DateTime(2018, 09, 19), "I0001", "Item A", "", 10, "PCS", 100, "CSTM001");
+            cbbCSTM.SelectedValue = 0;
         }
         void demoAdd(int rno, DateTime reqDate, string ItemNO, string ItemName, string Description, decimal Qty, string Unit, decimal UnitPrice, string RefDocNo)
         {
@@ -355,43 +356,43 @@ namespace StockControl
         {
             try
             {
-                string poNo = txtSONo.Text.Trim();
-                string cstmNo = txtCSTMNo.Text.Trim();
-                if (poNo != "" && cstmNo != "")
-                {
-                    if (dgvData.Rows.Where(x => x.Cells["PlanStatus"].Value.ToSt() != "Waiting").Count() > 0)
-                    {
-                        baseClass.Warning("Cannot Delete because Already Planned.\n");
-                        return;
-                    }
+                //string poNo = txtSONo.Text.Trim();
+                //string cstmNo = txtCSTMNo.Text.Trim();
+                //if (poNo != "" && cstmNo != "")
+                //{
+                //    if (dgvData.Rows.Where(x => x.Cells["PlanStatus"].Value.ToSt() != "Waiting").Count() > 0)
+                //    {
+                //        baseClass.Warning("Cannot Delete because Already Planned.\n");
+                //        return;
+                //    }
 
-                    if (baseClass.IsDel($"Do you want to Delete Sale Order: {poNo} ?"))
-                    {
-                        using (var db = new DataClasses1DataContext())
-                        {
-                            var p = db.mh_SaleOrders.Where(x => x.SONo == poNo && x.Active).ToList();
-                            if (p.Where(x => x.Status != "Waiting").Count() < 1)
-                            {
-                                foreach (var pp in p)
-                                {
-                                    pp.Active = false;
-                                    pp.UpdateBy = Classlib.User;
-                                    pp.UpdateDate = DateTime.Now;
-                                }
+                //    if (baseClass.IsDel($"Do you want to Delete Sale Order: {poNo} ?"))
+                //    {
+                //        using (var db = new DataClasses1DataContext())
+                //        {
+                //            var p = db.mh_SaleOrders.Where(x => x.SONo == poNo && x.Active).ToList();
+                //            if (p.Where(x => x.Status != "Waiting").Count() < 1)
+                //            {
+                //                foreach (var pp in p)
+                //                {
+                //                    pp.Active = false;
+                //                    pp.UpdateBy = Classlib.User;
+                //                    pp.UpdateDate = DateTime.Now;
+                //                }
 
-                                db.SubmitChanges();
+                //                db.SubmitChanges();
 
-                                updateOutSO();
+                //                updateOutSO();
 
-                                baseClass.Info("Delete Sale Order complete.");
-                                ClearData();
-                                btnNew_Click(null, null);
-                            }
-                            else
-                                baseClass.Warning("Sale Order Status cannot Delete.");
-                        }
-                    }
-                }
+                //                baseClass.Info("Delete Sale Order complete.");
+                //                ClearData();
+                //                btnNew_Click(null, null);
+                //            }
+                //            else
+                //                baseClass.Warning("Sale Order Status cannot Delete.");
+                //        }
+                //    }
+                //}
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -457,16 +458,16 @@ namespace StockControl
         {
             try
             {
-                dgvData.EndInit();
-                if (Ac.Equals("New") || Ac.Equals("Edit"))
-                {
-                    if (Check_Save())
-                        return;
-                    else if (baseClass.IsSave())
-                        SaveE();
-                }
-                else
-                    MessageBox.Show("สถานะต้องเป็น New หรือ Edit เท่านั่น");
+                //dgvData.EndInit();
+                //if (Ac.Equals("New") || Ac.Equals("Edit"))
+                //{
+                //    if (Check_Save())
+                //        return;
+                //    else if (baseClass.IsSave())
+                //        SaveE();
+                //}
+                //else
+                //    MessageBox.Show("สถานะต้องเป็น New หรือ Edit เท่านั่น");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -786,58 +787,59 @@ namespace StockControl
         {
             try
             {
-                if (dgvData.Rows.Count < 0)
-                    return;
+                //if (dgvData.Rows.Count < 0)
+                //    return;
 
-                if (Ac.Equals("New") || Ac.Equals("Edit"))
-                {
-                    this.Cursor = Cursors.WaitCursor;
+                //if (Ac.Equals("New") || Ac.Equals("Edit"))
+                //{
+                //    this.Cursor = Cursors.WaitCursor;
 
-                    if (dgvData.CurrentCell.RowInfo.Cells["PlanStatus"].Value.ToSt() != "Waiting")
-                    {
-                        baseClass.Warning("Cannot Delete because Already Planned.\n");
-                        return;
-                    }
+                //    if (dgvData.CurrentCell.RowInfo.Cells["PlanStatus"].Value.ToSt() != "Waiting")
+                //    {
+                //        baseClass.Warning("Cannot Delete because Already Planned.\n");
+                //        return;
+                //    }
 
-                    if (dgvData.CurrentCell.RowInfo.Cells["Status"].Value.ToSt() == "Waiting")
-                    {
+                //    if (dgvData.CurrentCell.RowInfo.Cells["Status"].Value.ToSt() == "Waiting")
+                //    {
 
-                        int id = 0;
-                        int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentCell.RowInfo.Cells["id"].Value), out id);
-                        if (id <= 0)
-                            dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
+                //        int id = 0;
+                //        int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentCell.RowInfo.Cells["id"].Value), out id);
+                //        if (id <= 0)
+                //            dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
 
-                        else
-                        {
-                            row = dgvData.CurrentCell.RowInfo.Index;
-                            //btnDelete_Click(null, null);
-                            using (var db = new DataClasses1DataContext())
-                            {
-                                var m = db.mh_SaleOrders.Where(x => x.id == id).FirstOrDefault();
-                                if (m != null)
-                                {
-                                    m.Active = false;
-                                    m.UpdateDate = DateTime.Now;
-                                    m.UpdateBy = ClassLib.Classlib.User;
-                                    db.SubmitChanges();
+                //        else
+                //        {
+                //            row = dgvData.CurrentCell.RowInfo.Index;
+                //            //btnDelete_Click(null, null);
+                //            using (var db = new DataClasses1DataContext())
+                //            {
+                //                var m = db.mh_SaleOrders.Where(x => x.id == id).FirstOrDefault();
+                //                if (m != null)
+                //                {
+                //                    m.Active = false;
+                //                    m.UpdateDate = DateTime.Now;
+                //                    m.UpdateBy = ClassLib.Classlib.User;
+                //                    db.SubmitChanges();
 
-                                    updateOutSO();
-                                    dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
-                                }
-                            }
-                        }
-                        CallTotal();
-                        //getTotal();
-                        SetRowNo1(dgvData);
+                //                    updateOutSO();
+                //                    dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
+                //                }
+                //            }
+                //        }
+                //        CallTotal();
+                //        //getTotal();
+                //        SetRowNo1(dgvData);
 
-                    }
-                    else
-                        MessageBox.Show("Cannot Delete please check Status");
-                }
-                else
-                {
-                    MessageBox.Show("Cannot Delete");
-                }
+                //    }
+                //    else
+                //        MessageBox.Show("Cannot Delete please check Status");
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Cannot Delete");
+                //}
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
