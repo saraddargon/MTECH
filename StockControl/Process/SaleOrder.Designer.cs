@@ -482,6 +482,7 @@
             gridViewComboBoxColumn1.EnableExpressionEditor = false;
             gridViewComboBoxColumn1.FieldName = "Location";
             gridViewComboBoxColumn1.HeaderText = "Location";
+            gridViewComboBoxColumn1.IsVisible = false;
             gridViewComboBoxColumn1.Name = "Location";
             gridViewComboBoxColumn1.Width = 106;
             gridViewDecimalColumn1.EnableExpressionEditor = false;
@@ -565,6 +566,7 @@
             gridViewTextBoxColumn9.EnableExpressionEditor = false;
             gridViewTextBoxColumn9.FieldName = "Status";
             gridViewTextBoxColumn9.HeaderText = "Status";
+            gridViewTextBoxColumn9.IsVisible = false;
             gridViewTextBoxColumn9.Name = "Status";
             gridViewTextBoxColumn9.Width = 87;
             gridViewTextBoxColumn10.EnableExpressionEditor = false;

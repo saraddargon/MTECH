@@ -9,7 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 namespace StockControl
 {
-    public partial class CustomerPO_List : Telerik.WinControls.UI.RadRibbonForm
+    public partial class ProductionOrder_List : Telerik.WinControls.UI.RadRibbonForm
     {
         public string PONo { get; private set; } = "";
         public string CstmNo { get; private set; } = "";
@@ -17,12 +17,12 @@ namespace StockControl
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
 
-        public CustomerPO_List(int sType = 1)
+        public ProductionOrder_List(int sType = 1)
         {
             InitializeComponent();
             this.sType = sType;
         }
-        public CustomerPO_List()
+        public ProductionOrder_List()
         {
             InitializeComponent();
         }
@@ -38,19 +38,6 @@ namespace StockControl
             //radGridView1.ReadOnly = true;
             using (var db = new DataClasses1DataContext())
             {
-                var cust = db.mh_Customers.Where(x => x.Active)
-                    .Select(x => new CustomerCombo { No = x.No, Name = x.Name }).ToList();
-                cust.Add(new CustomerCombo
-                {
-                    No = "",
-                    Name = ""
-                });
-                cust = cust.OrderBy(x => x.No).ToList();
-                cbbCSTM.AutoSizeDropDownToBestFit = true;
-                cbbCSTM.MultiColumnComboBoxElement.DisplayMember = "Name";
-                cbbCSTM.MultiColumnComboBoxElement.Value = "No";
-                cbbCSTM.MultiColumnComboBoxElement.DataSource = cust;
-                cbbCSTM.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
                 var item = db.mh_Items.Where(x => x.Active)
                     .Select(x => new ItemCombo { Item = x.InternalNo, ItemName = x.InternalName }).ToList();
@@ -68,7 +55,7 @@ namespace StockControl
             }
 
             dgvData.AutoGenerateColumns = false;
-            DataLoad();
+            //DataLoad();
 
             dgvData.Columns.ToList().ForEach(x =>
             {
@@ -90,36 +77,7 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    string pono = txtPONo.Text;
-                    string cstmno = txtCSTMNo.Text;
-                    string item = cbbItem.SelectedValue.ToSt();
-                    DateTime dFrom = (cbChkDate.Checked) ? dtFrom.Value.Date : new DateTime(1999, 1, 1);
-                    DateTime dTo = (cbChkDate.Checked) ? dtTo.Value.Date.AddDays(1).AddMinutes(1) : DateTime.MaxValue;
 
-                    var t = db.mh_CustomerPOs.Where(x =>
-                                x.Active && x.DemandType == 0
-                                && (x.CustomerPONo.Contains(pono))
-                                && (x.CustomerNo == cstmno || cstmno == "")
-                                && (x.ItemNo == item || item == "")
-                                && (x.OrderDate >= dFrom && x.OrderDate <= dTo)).ToList();
-                    dgvData.DataSource = null;
-                    dgvData.AutoGenerateColumns = false;
-                    dgvData.DataSource = t;
-
-                    int rNo = 1;
-                    dgvData.Rows.ToList().ForEach(x =>
-                    {
-                        x.Cells["RNo"].Value = rNo++;
-                        string cNo = x.Cells["CustomerNo"].Value.ToSt();
-                        var c = db.mh_Customers.Where(q => q.No == cNo).FirstOrDefault();
-                        if (c != null)
-                            x.Cells["CustomerName"].Value = c.Name;
-
-                        if (DateTime.Now <= x.Cells["ReqDate"].Value.ToDateTime().Value)
-                            x.Cells["SS"].Value = 1;
-                        else
-                            x.Cells["SS"].Value = 2;
-                    });
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -136,34 +94,31 @@ namespace StockControl
             {
                 dgvData.DataSource = null;
                 dgvData.Rows.Clear();
-                demo_row("Waiting Plan", "CSTMPO1809-001", new DateTime(2018, 09, 17), "I0001", "Item A", 100, 0, false, true, "PCS", 100, 100 * 100);
-                demo_row("Completed", "CSTMPO1809-001", new DateTime(2018, 09, 18), "I0001", "Item A", 50, 0, true, true, "PCS", 100, 50 * 100);
-                demo_row("Waiting Order", "CSTMPO1809-001", new DateTime(2018, 09, 19), "I0001", "Item A", 100, 50, true, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 20), "I0002", "Item B", 100, 100, false, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 21), "I0003", "Item C", 50, 50, false, false, "PCS", 100, 50 * 100);
+
+                demoadd("On Plan", "PD1809-001", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-001");
+                demoadd("Delay", "PD1809-002", new DateTime(2018, 9, 8), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-002");
+                demoadd("On Plan", "PD1809-003", new DateTime(2018, 9, 30), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-003");
+
             }
             catch (Exception ex)
             {
                 baseClass.Warning(ex.Message);
             }
         }
-        void demo_row(string SS, string PONo, DateTime ReqDate, string Item
-            , string ItemName, decimal Qty, decimal Remain, bool Plan, bool SaleOrder
-            , string Unit, decimal PricePerUnit, decimal Amnt)
+        void demoadd(string SS, string ProductionNo, DateTime DueDate, string ItemNo, string ItemName
+            , decimal Qty, string Unit, DateTime StartingDate, DateTime EndingDate, string RefDocNo)
         {
             var row = dgvData.Rows.AddNew();
             row.Cells["SS"].Value = SS;
-            row.Cells["PONo"].Value = PONo;
-            row.Cells["ReqDate"].Value = ReqDate;
-            row.Cells["Item"].Value = Item;
+            row.Cells["ProductionNo"].Value = ProductionNo;
+            row.Cells["DueDate"].Value = DueDate;
+            row.Cells["Item"].Value = ItemNo;
             row.Cells["ItemName"].Value = ItemName;
             row.Cells["Qty"].Value = Qty;
-            row.Cells["Remain"].Value = Remain;
-            row.Cells["Plan"].Value = Plan;
-            row.Cells["SaleOrder"].Value = SaleOrder;
             row.Cells["Unit"].Value = Unit;
-            row.Cells["PricePerUnit"].Value = PricePerUnit;
-            row.Cells["Amount"].Value = Amnt;
+            row.Cells["StartingDate"].Value = StartingDate;
+            row.Cells["EndingDate"].Value = EndingDate;
+            row.Cells["RefDocNo"].Value = RefDocNo;
         }
         
 
@@ -219,7 +174,8 @@ namespace StockControl
         {
             ////select Item from Double click
             //selRow();
-
+            var ee = new ProductionOrder(true);
+            ee.ShowDialog();
         }
         void selRow()
         {
@@ -369,14 +325,5 @@ namespace StockControl
     }
 
 
-    public class CustomerCombo
-    {
-        public string No { get; set; }
-        public string Name { get; set; }
-    }
-    public class ItemCombo
-    {
-        public string Item { get; set; }
-        public string ItemName { get; set; }
-    }
+
 }

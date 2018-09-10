@@ -30,19 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainfrom));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Charts View");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Part Setting");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Create Job Card");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Bill of Material (Bom)");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Purchase Request");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Purchase Order");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Receive Part");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Shipping Part");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Finished good (FG)");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Stock Balance");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Manufacturing");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("CustomerPO");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Planning");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Part Setting");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Create Job Card");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Bill of Material (Bom)");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Purchase Request");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Purchase Order");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Receive Part");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Shipping Part");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Finished good (FG)");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Stock Balance");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Sale");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Production Plan");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Planning");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Production");
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
@@ -81,11 +81,6 @@
             this.radMenuItem17 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem18 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem23 = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnMasterShift = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenuItem20 = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenuItem24 = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnRouting = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnLocation = new Telerik.WinControls.UI.RadMenuItem();
             this.btnVat = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem26 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem27 = new Telerik.WinControls.UI.RadMenuItem();
@@ -347,11 +342,6 @@
             this.radMenuItem17,
             this.radMenuItem18,
             this.radMenuItem23,
-            this.btnMasterShift,
-            this.radMenuItem20,
-            this.radMenuItem24,
-            this.btnRouting,
-            this.btnLocation,
             this.btnVat,
             this.btnCurrency,
             this.btnPermisstion,
@@ -437,41 +427,6 @@
             this.radMenuItem23.Name = "radMenuItem23";
             this.radMenuItem23.Text = "Master Customer";
             this.radMenuItem23.Click += new System.EventHandler(this.radMenuItem23_Click);
-            // 
-            // btnMasterShift
-            // 
-            this.btnMasterShift.Image = ((System.Drawing.Image)(resources.GetObject("btnMasterShift.Image")));
-            this.btnMasterShift.Name = "btnMasterShift";
-            this.btnMasterShift.Text = "Master Shift";
-            this.btnMasterShift.Click += new System.EventHandler(this.btnMasterShift_Click);
-            // 
-            // radMenuItem20
-            // 
-            this.radMenuItem20.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem20.Image")));
-            this.radMenuItem20.Name = "radMenuItem20";
-            this.radMenuItem20.Text = "Calendar";
-            this.radMenuItem20.Click += new System.EventHandler(this.radMenuItem20_Click);
-            // 
-            // radMenuItem24
-            // 
-            this.radMenuItem24.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem24.Image")));
-            this.radMenuItem24.Name = "radMenuItem24";
-            this.radMenuItem24.Text = "Work Centers";
-            this.radMenuItem24.Click += new System.EventHandler(this.btnWorkCenters_Click);
-            // 
-            // btnRouting
-            // 
-            this.btnRouting.Image = ((System.Drawing.Image)(resources.GetObject("btnRouting.Image")));
-            this.btnRouting.Name = "btnRouting";
-            this.btnRouting.Text = "Routings";
-            this.btnRouting.Click += new System.EventHandler(this.btnRoutings_Click);
-            // 
-            // btnLocation
-            // 
-            this.btnLocation.Image = ((System.Drawing.Image)(resources.GetObject("btnLocation.Image")));
-            this.btnLocation.Name = "btnLocation";
-            this.btnLocation.Text = "Master Location";
-            this.btnLocation.Click += new System.EventHandler(this.btnLocation_Click);
             // 
             // btnVat
             // 
@@ -629,7 +584,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // radLabel3
             // 
@@ -665,32 +619,32 @@
             this.TreeManu.ImageList = this.ImageList;
             this.TreeManu.Location = new System.Drawing.Point(0, 40);
             this.TreeManu.Name = "TreeManu";
-            treeNode1.Name = "ChartsView";
-            treeNode1.Text = "Charts View";
-            treeNode2.Name = "PartSetting";
-            treeNode2.Text = "Part Setting";
-            treeNode3.Name = "CreateJob";
-            treeNode3.Text = "Create Job Card";
-            treeNode4.Name = "Bom";
-            treeNode4.Text = "Bill of Material (Bom)";
-            treeNode5.Name = "PurchaseReq";
-            treeNode5.Text = "Purchase Request";
-            treeNode6.Name = "PurchaseOrder";
-            treeNode6.Text = "Purchase Order";
-            treeNode7.Name = "Receive";
-            treeNode7.Text = "Receive Part";
-            treeNode8.Name = "Shipping";
-            treeNode8.Text = "Shipping Part";
-            treeNode9.Name = "FG";
-            treeNode9.Text = "Finished good (FG)";
-            treeNode10.Name = "Stock";
-            treeNode10.Text = "Stock Balance";
-            treeNode11.Name = "Manufacturing";
-            treeNode11.Text = "Manufacturing";
-            treeNode12.Name = "CustomerPO";
-            treeNode12.Text = "CustomerPO";
-            treeNode13.Name = "Planning";
-            treeNode13.Text = "Planning";
+            treeNode1.Name = "PartSetting";
+            treeNode1.Text = "Part Setting";
+            treeNode2.Name = "CreateJob";
+            treeNode2.Text = "Create Job Card";
+            treeNode3.Name = "Bom";
+            treeNode3.Text = "Bill of Material (Bom)";
+            treeNode4.Name = "PurchaseReq";
+            treeNode4.Text = "Purchase Request";
+            treeNode5.Name = "PurchaseOrder";
+            treeNode5.Text = "Purchase Order";
+            treeNode6.Name = "Receive";
+            treeNode6.Text = "Receive Part";
+            treeNode7.Name = "Shipping";
+            treeNode7.Text = "Shipping Part";
+            treeNode8.Name = "FG";
+            treeNode8.Text = "Finished good (FG)";
+            treeNode9.Name = "Stock";
+            treeNode9.Text = "Stock Balance";
+            treeNode10.Name = "Sale";
+            treeNode10.Text = "Sale";
+            treeNode11.Name = "ProductionPlan";
+            treeNode11.Text = "Production Plan";
+            treeNode12.Name = "Planning";
+            treeNode12.Text = "Planning";
+            treeNode13.Name = "Production";
+            treeNode13.Text = "Production";
             this.TreeManu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
@@ -870,9 +824,6 @@
         private Telerik.WinControls.UI.RadMenuSeparatorItem radMenuSeparatorItem4;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem21;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem22;
-        private Telerik.WinControls.UI.RadMenuItem radMenuItem20;
-        private Telerik.WinControls.UI.RadMenuItem radMenuItem24;
-        private Telerik.WinControls.UI.RadMenuItem btnRouting;
         private Telerik.WinControls.UI.CommandBarSeparator commandBarSeparator4;
         private Telerik.WinControls.UI.RadLabelElement radLabelElement4;
         private Telerik.WinControls.UI.RadLabelElement lblresolution;
@@ -886,14 +837,12 @@
         private Telerik.WinControls.UI.RadLabel radLabel3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Telerik.WinControls.UI.RadLabel radLabel1;
-        private Telerik.WinControls.UI.RadMenu radMenu1;
         private Telerik.WinControls.UI.RadMenuItem btnVat;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem26;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem27;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem28;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem29;
         private Telerik.WinControls.UI.RadMenuItem btnCurrency;
-        private Telerik.WinControls.UI.RadMenuItem btnMasterShift;
-        private Telerik.WinControls.UI.RadMenuItem btnLocation;
+        private Telerik.WinControls.UI.RadMenu radMenu1;
     }
 }

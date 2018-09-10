@@ -144,11 +144,23 @@
     <Compile Include="Process\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\GanttCharts_Job.cs">
+    <Compile Include="Process\ProductionOrder_List.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\GanttCharts_Job.Designer.cs">
-      <DependentUpon>GanttCharts_Job.cs</DependentUpon>
+    <Compile Include="Process\ProductionOrder_List.Designer.cs">
+      <DependentUpon>ProductionOrder_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\PlanningStatus_Detail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\PlanningStatus_Detail.Designer.cs">
+      <DependentUpon>PlanningStatus_Detail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\PlanningStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\PlanningStatus.Designer.cs">
+      <DependentUpon>PlanningStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Return_RM.cs">
       <SubType>Form</SubType>
@@ -179,6 +191,30 @@
     </Compile>
     <Compile Include="Process\PlanningCal_Status.Designer.cs">
       <DependentUpon>PlanningCal_Status.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Invoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Invoice.Designer.cs">
+      <DependentUpon>Invoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Invoice_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Invoice_List.Designer.cs">
+      <DependentUpon>Invoice_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Shipment_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Shipment_List.Designer.cs">
+      <DependentUpon>Shipment_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Shipment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Shipment.Designer.cs">
+      <DependentUpon>Shipment.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\SaleOrder_List.cs">
       <SubType>Form</SubType>
@@ -958,8 +994,14 @@
     <EmbeddedResource Include="Process\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\GanttCharts_Job.resx">
-      <DependentUpon>GanttCharts_Job.cs</DependentUpon>
+    <EmbeddedResource Include="Process\ProductionOrder_List.resx">
+      <DependentUpon>ProductionOrder_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\PlanningStatus_Detail.resx">
+      <DependentUpon>PlanningStatus_Detail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\PlanningStatus.resx">
+      <DependentUpon>PlanningStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Return_RM.resx">
       <DependentUpon>Return_RM.cs</DependentUpon>
@@ -975,6 +1017,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\PlanningCal_Status.resx">
       <DependentUpon>PlanningCal_Status.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Invoice.resx">
+      <DependentUpon>Invoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Invoice_List.resx">
+      <DependentUpon>Invoice_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Shipment_List.resx">
+      <DependentUpon>Shipment_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Shipment.resx">
+      <DependentUpon>Shipment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\SaleOrder_List.resx">
       <DependentUpon>SaleOrder_List.cs</DependentUpon>

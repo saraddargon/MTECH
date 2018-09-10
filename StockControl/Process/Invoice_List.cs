@@ -9,7 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 namespace StockControl
 {
-    public partial class CustomerPO_List : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Invoice_List : Telerik.WinControls.UI.RadRibbonForm
     {
         public string PONo { get; private set; } = "";
         public string CstmNo { get; private set; } = "";
@@ -17,12 +17,12 @@ namespace StockControl
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
 
-        public CustomerPO_List(int sType = 1)
+        public Invoice_List(int sType = 1)
         {
             InitializeComponent();
             this.sType = sType;
         }
-        public CustomerPO_List()
+        public Invoice_List()
         {
             InitializeComponent();
         }
@@ -67,18 +67,18 @@ namespace StockControl
                 cbbItem.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
 
-            dgvData.AutoGenerateColumns = false;
-            DataLoad();
-
             dgvData.Columns.ToList().ForEach(x =>
             {
-                if (x.Name != "S")
+                if (x.Name == "S")
+                    x.ReadOnly = false;
+                else
                     x.ReadOnly = true;
             });
 
+            dgvData.AutoGenerateColumns = false;
+            //DataLoad();
 
-            //
-            DemoData();
+            demo();
         }
         private void DataLoad()
         {
@@ -96,12 +96,12 @@ namespace StockControl
                     DateTime dFrom = (cbChkDate.Checked) ? dtFrom.Value.Date : new DateTime(1999, 1, 1);
                     DateTime dTo = (cbChkDate.Checked) ? dtTo.Value.Date.AddDays(1).AddMinutes(1) : DateTime.MaxValue;
 
-                    var t = db.mh_CustomerPOs.Where(x =>
-                                x.Active && x.DemandType == 0
-                                && (x.CustomerPONo.Contains(pono))
+                    var t = db.mh_SaleOrders.Where(x =>
+                                x.Active
+                                && (x.SONo.Contains(pono))
                                 && (x.CustomerNo == cstmno || cstmno == "")
                                 && (x.ItemNo == item || item == "")
-                                && (x.OrderDate >= dFrom && x.OrderDate <= dTo)).ToList();
+                                && (x.SODate >= dFrom && x.SODate <= dTo)).ToList();
                     dgvData.DataSource = null;
                     dgvData.AutoGenerateColumns = false;
                     dgvData.DataSource = t;
@@ -114,58 +114,56 @@ namespace StockControl
                         var c = db.mh_Customers.Where(q => q.No == cNo).FirstOrDefault();
                         if (c != null)
                             x.Cells["CustomerName"].Value = c.Name;
-
-                        if (DateTime.Now <= x.Cells["ReqDate"].Value.ToDateTime().Value)
-                            x.Cells["SS"].Value = 1;
-                        else
-                            x.Cells["SS"].Value = 2;
                     });
                 }
+
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             this.Cursor = Cursors.Default;
 
+        }
 
-            //    radGridView1.DataSource = dt;
-        }
-        
+        void demo()
+        {
+            dgvData.DataSource = null;
+            dgvData.Rows.Clear();
 
-        void DemoData()
-        {
-            try
-            {
-                dgvData.DataSource = null;
-                dgvData.Rows.Clear();
-                demo_row("Waiting Plan", "CSTMPO1809-001", new DateTime(2018, 09, 17), "I0001", "Item A", 100, 0, false, true, "PCS", 100, 100 * 100);
-                demo_row("Completed", "CSTMPO1809-001", new DateTime(2018, 09, 18), "I0001", "Item A", 50, 0, true, true, "PCS", 100, 50 * 100);
-                demo_row("Waiting Order", "CSTMPO1809-001", new DateTime(2018, 09, 19), "I0001", "Item A", 100, 50, true, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 20), "I0002", "Item B", 100, 100, false, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 21), "I0003", "Item C", 50, 50, false, false, "PCS", 100, 50 * 100);
-            }
-            catch (Exception ex)
-            {
-                baseClass.Warning(ex.Message);
-            }
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-001", "I0001", "Item A", 100, 50, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "PD1809-001", 80);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-002", "I0002", "Item B", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "PD1809-002", 90);
+            demorow("Completed", "IV0001", "SP1809-001", "SO1809-003", "I0003", "Item C", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "PD1809-003", 100);
+            demorow("Completed", "IV0003", "SP1809-001", "SO1809-004", "I0004", "Item D", 100, 100, "PCS", false
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-004", "PD1809-004", 110);
+            demorow("Cancel", "IV0004", "SP1809-001", "SO1809-005", "I0005", "Item E", 100, 100, "PCS", true
+                , "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-005", "PD1809-005", 120);
+
         }
-        void demo_row(string SS, string PONo, DateTime ReqDate, string Item
-            , string ItemName, decimal Qty, decimal Remain, bool Plan, bool SaleOrder
-            , string Unit, decimal PricePerUnit, decimal Amnt)
+        void demorow(string SS, string InvNo, string ShipmentNo, string SaleOrderNo, string ItemNo, string ItemName
+            , decimal ShipQty, decimal InvQty, string Unit, bool Cancel, string CustomerNo, string CustomerName
+            , string CustomerPO, string ProductionNo, decimal UnitPrice)
         {
-            var row = dgvData.Rows.AddNew();
-            row.Cells["SS"].Value = SS;
-            row.Cells["PONo"].Value = PONo;
-            row.Cells["ReqDate"].Value = ReqDate;
-            row.Cells["Item"].Value = Item;
-            row.Cells["ItemName"].Value = ItemName;
-            row.Cells["Qty"].Value = Qty;
-            row.Cells["Remain"].Value = Remain;
-            row.Cells["Plan"].Value = Plan;
-            row.Cells["SaleOrder"].Value = SaleOrder;
-            row.Cells["Unit"].Value = Unit;
-            row.Cells["PricePerUnit"].Value = PricePerUnit;
-            row.Cells["Amount"].Value = Amnt;
+            var rowe = dgvData.Rows.AddNew();
+            rowe.Cells["SS"].Value = SS;
+            rowe.Cells["InvNo"].Value = InvNo;
+            rowe.Cells["ShipmentNo"].Value = ShipmentNo;
+            rowe.Cells["SaleOrderNo"].Value = SaleOrderNo;
+            rowe.Cells["ItemNo"].Value = ItemNo;
+            rowe.Cells["ItemName"].Value = ItemName;
+            rowe.Cells["ShipQty"].Value = ShipQty;
+            rowe.Cells["InvQty"].Value = InvQty;
+            rowe.Cells["Unit"].Value = Unit;
+            rowe.Cells["Cancel"].Value = Cancel;
+            rowe.Cells["CustomerNo"].Value = CustomerNo;
+            rowe.Cells["CustomerName"].Value = CustomerName;
+            rowe.Cells["CustomerPO"].Value = CustomerPO;
+            rowe.Cells["ProductionNo"].Value = ProductionNo;
+            rowe.Cells["UnitPrice"].Value = UnitPrice;
+            rowe.Cells["Amount"].Value = InvQty * UnitPrice;
         }
-        
+        //
 
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -202,7 +200,7 @@ namespace StockControl
             //select Item
             if (sType == 1)
             {
-                var t = new CustomerPO();
+                var t = new SaleOrder();
                 t.ShowDialog();
             }
             else
@@ -212,13 +210,14 @@ namespace StockControl
         private void btnSearch_Click(object sender, EventArgs e)
         {
             //DataLoad();
-            DemoData();
+            demo();
         }
 
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
             //selRow();
+            demo();
 
         }
         void selRow()
@@ -226,12 +225,12 @@ namespace StockControl
             if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
                 var rowe = dgvData.CurrentCell.RowInfo;
-                PONo = rowe.Cells["PONo"].Value.ToSt();
+                PONo = rowe.Cells["SONo"].Value.ToSt();
                 CstmNo = rowe.Cells["CustomerNo"].Value.ToSt();
 
                 if (sType == 1)
                 {
-                    var p = new CustomerPO(PONo, CstmNo);
+                    var p = new SaleOrder(PONo, CstmNo);
                     p.ShowDialog();
                     DataLoad();
                     PONo = "";
@@ -246,6 +245,7 @@ namespace StockControl
         {
             //select Item for Print
             //throw new NotImplementedException();
+
         }
 
 
@@ -318,65 +318,18 @@ namespace StockControl
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
-        private void btnCreateSaleOrder_Click(object sender, EventArgs e)
+
+        void CreateShipment()
         {
-            CreateSaleOrder();
+            var sm = new Shipment(true);
+            sm.ShowDialog();
         }
-        void CreateSaleOrder()
+        private void btnCreateShipment_Click(object sender, EventArgs e)
         {
             dgvData.EndEdit();
-            try
-            {
-                if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
-                {
-                    //var rowS = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
-                    //if (rowS.Select(x => x.Cells["CustomerNo"].Value.ToSt()).Count() > 1)
-                    //{
-                    //    baseClass.Warning("Sale order have only 1 Customer.");
-                    //    return;
-                    //}
-
-                    //var idList = new List<int>();
-                    //foreach (var item in rowS)
-                    //{
-                    //    int id = item.Cells["id"].Value.ToInt();
-                    //    if (item.Cells["OutSO"].Value.ToDecimal() <= 0)
-                    //    {
-                    //        baseClass.Warning("Status P/O Cannot create Sale Order.\n");
-                    //        return;
-                    //    }
-                    //    idList.Add(id);
-                    //}
-
-                    //var so = new SaleOrder(idList);
-                    //so.ShowDialog();
-                    //DataLoad();
-
-                    var so = new SaleOrder(true);
-                    so.ShowDialog();
-                }
-                else
-                {
-                    baseClass.Warning("Please select data.");
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                baseClass.Warning(ex.Message);
-            }
+            CreateShipment();
         }
     }
 
 
-    public class CustomerCombo
-    {
-        public string No { get; set; }
-        public string Name { get; set; }
-    }
-    public class ItemCombo
-    {
-        public string Item { get; set; }
-        public string ItemName { get; set; }
-    }
 }
