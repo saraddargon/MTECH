@@ -30,18 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainfrom));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Part Setting");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Create Job Card");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Bill of Material (Bom)");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Purchase Request");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Purchase Order");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Receive Part");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Shipping Part");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Finished good (FG)");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Stock Balance");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Manufacturing");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("CustomerPO");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Planning");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Charts View");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Part Setting");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Create Job Card");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Bill of Material (Bom)");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Purchase Request");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Purchase Order");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Receive Part");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Shipping Part");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Finished good (FG)");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Stock Balance");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Manufacturing");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("CustomerPO");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Planning");
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
@@ -628,6 +629,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // radLabel3
             // 
@@ -663,30 +665,32 @@
             this.TreeManu.ImageList = this.ImageList;
             this.TreeManu.Location = new System.Drawing.Point(0, 40);
             this.TreeManu.Name = "TreeManu";
-            treeNode1.Name = "PartSetting";
-            treeNode1.Text = "Part Setting";
-            treeNode2.Name = "CreateJob";
-            treeNode2.Text = "Create Job Card";
-            treeNode3.Name = "Bom";
-            treeNode3.Text = "Bill of Material (Bom)";
-            treeNode4.Name = "PurchaseReq";
-            treeNode4.Text = "Purchase Request";
-            treeNode5.Name = "PurchaseOrder";
-            treeNode5.Text = "Purchase Order";
-            treeNode6.Name = "Receive";
-            treeNode6.Text = "Receive Part";
-            treeNode7.Name = "Shipping";
-            treeNode7.Text = "Shipping Part";
-            treeNode8.Name = "FG";
-            treeNode8.Text = "Finished good (FG)";
-            treeNode9.Name = "Stock";
-            treeNode9.Text = "Stock Balance";
-            treeNode10.Name = "Manufacturing";
-            treeNode10.Text = "Manufacturing";
-            treeNode11.Name = "CustomerPO";
-            treeNode11.Text = "CustomerPO";
-            treeNode12.Name = "Planning";
-            treeNode12.Text = "Planning";
+            treeNode1.Name = "ChartsView";
+            treeNode1.Text = "Charts View";
+            treeNode2.Name = "PartSetting";
+            treeNode2.Text = "Part Setting";
+            treeNode3.Name = "CreateJob";
+            treeNode3.Text = "Create Job Card";
+            treeNode4.Name = "Bom";
+            treeNode4.Text = "Bill of Material (Bom)";
+            treeNode5.Name = "PurchaseReq";
+            treeNode5.Text = "Purchase Request";
+            treeNode6.Name = "PurchaseOrder";
+            treeNode6.Text = "Purchase Order";
+            treeNode7.Name = "Receive";
+            treeNode7.Text = "Receive Part";
+            treeNode8.Name = "Shipping";
+            treeNode8.Text = "Shipping Part";
+            treeNode9.Name = "FG";
+            treeNode9.Text = "Finished good (FG)";
+            treeNode10.Name = "Stock";
+            treeNode10.Text = "Stock Balance";
+            treeNode11.Name = "Manufacturing";
+            treeNode11.Text = "Manufacturing";
+            treeNode12.Name = "CustomerPO";
+            treeNode12.Text = "CustomerPO";
+            treeNode13.Name = "Planning";
+            treeNode13.Text = "Planning";
             this.TreeManu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
@@ -699,7 +703,8 @@
             treeNode9,
             treeNode10,
             treeNode11,
-            treeNode12});
+            treeNode12,
+            treeNode13});
             this.TreeManu.SelectedImageIndex = 4;
             this.TreeManu.ShowNodeToolTips = true;
             this.TreeManu.Size = new System.Drawing.Size(212, 486);

@@ -718,5 +718,11 @@ namespace StockControl
                 dbClss.WarningIT("No Permisstion.");
             }
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            GanttCharts_Job a = new GanttCharts_Job();
+            a.ShowDialog();
+        }
     }
 }

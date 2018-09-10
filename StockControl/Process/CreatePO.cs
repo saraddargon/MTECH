@@ -597,8 +597,8 @@ namespace StockControl
                             dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขเลขที่ใบสั่งซื้อ [" + txtPONo.Text.Trim() + "]", txtPONo.Text);
                         }
 
-                        //if (StockControl.dbClss.TSt(gg.Barcode).Equals(""))
-                        //    gg.Barcode = StockControl.dbClss.SaveQRCode2D(txtPONo.Text.Trim());
+                        if (StockControl.dbClss.TSt(gg.Barcode).Equals(""))
+                            gg.Barcode = StockControl.dbClss.SaveQRCode2D(txtPONo.Text.Trim());
 
                         if (!cboVatType.Text.Trim().Equals(row["VATType"].ToString()))
                         {
@@ -742,8 +742,8 @@ namespace StockControl
                 else  // Add ใหม่
                 {
                     byte[] barcode = null;
-                    //if(!txtPONo.Text.Equals(""))
-                    //    barcode = StockControl.dbClss.SaveQRCode2D(txtPONo.Text.Trim());
+                    if (!txtPONo.Text.Equals(""))
+                        barcode = StockControl.dbClss.SaveQRCode2D(txtPONo.Text.Trim());
                     //DateTime? UpdateDate = null;
 
                     mh_PurchaseOrder gg = new mh_PurchaseOrder();

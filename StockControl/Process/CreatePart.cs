@@ -432,6 +432,7 @@ namespace StockControl
                         seMaximumInventory.Value = StockControl.dbClss.TInt(g.FirstOrDefault().MaximumInventory);
                         cbInspaction.Checked = dbClss.TBo(g.FirstOrDefault().Inspection);
 
+                        cboLocation.Text = dbClss.TSt(g.FirstOrDefault().Location);
                         ddlReOrderType.Text = StockControl.dbClss.TSt(g.FirstOrDefault().ReorderType);
                         seMaximum.Value = StockControl.dbClss.TDe(g.FirstOrDefault().MaximumQty);
                         seMinimum.Value = StockControl.dbClss.TDe(g.FirstOrDefault().MinimumQty);
@@ -439,6 +440,7 @@ namespace StockControl
                         seReOrderQty.Value = StockControl.dbClss.TDe(g.FirstOrDefault().ReorderQty);
                         seSafetyStock.Value = StockControl.dbClss.TDe(g.FirstOrDefault().SafetyStock);
                         seTimebucket.Value = StockControl.dbClss.TInt(g.FirstOrDefault().Timebucket);
+                        cbTakingLot.Checked = dbClss.TBo(g.FirstOrDefault().TakingLot);
 
                         txtDrawing.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Drawing);
                         chkDWG.Checked = StockControl.dbClss.TBo(g.FirstOrDefault().chkDrawing);
@@ -582,12 +584,13 @@ namespace StockControl
                             if (txtCustomerPartNo.Text == "")
                                 txtCustomerPartNo.Text = txtInternalNo.Text;
                         }
-                        //byte[] barcode = StockControl.dbClss.SaveQRCode2D(txtCodeNo.Text);
+                        byte[] barcode = StockControl.dbClss.SaveQRCode2D(txtInternalNo.Text.Trim());
                         //byte[] barcode = null;
-                        
+
                         //DateTime? UpdateDate = null;
 
                         mh_Item u = new mh_Item();
+                        u.BarCode = barcode;
                         u.InternalNo = txtInternalNo.Text.Trim();
                         u.InternalName = txtInternalName.Text.Trim();
                         u.InternalDescription = txtInternalDesc.Text.Trim();
@@ -2279,120 +2282,120 @@ namespace StockControl
         }
         private void btnPrintShelfTAG_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    dt_ShelfTag.Rows.Clear();
+            try
+            {
+                dt_ShelfTag.Rows.Clear();
 
-            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
-            //    {
-            //        var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == txtInternalNo.Text).ToList();
-            //        if (g.Count() > 0)
-            //        {
-            //            //foreach(var gg in g)
-            //            //{
-            //            //    dt_ShelfTag.Rows.Add(gg.CodeNo, gg.ItemDescription, gg.ShelfNo);
-            //            //}
-            //            //DataTable DT =  StockControl.dbClss.LINQToDataTable(g);
-            //            //Reportx1 po = new Reportx1("Report_PurchaseRequest_Content1.rpt", DT, "FromDT");
-            //            //po.Show();
-            //            var deleteItem = (from ii in db.TempPrintShelfs where ii.UserName == ClassLib.Classlib.User select ii);
-            //            foreach (var d in deleteItem)
-            //            {
-            //                db.TempPrintShelfs.DeleteOnSubmit(d);
-            //                db.SubmitChanges();
-            //            }
-            //            TempPrintShelf ps = new TempPrintShelf();
-            //            ps.UserName = ClassLib.Classlib.User;
-            //            ps.CodeNo = g.FirstOrDefault().CodeNo;
-            //            ps.PartDescription = g.FirstOrDefault().ItemDescription;
-            //            ps.PartNo = g.FirstOrDefault().ItemNo;
-            //            ps.ShelfNo = g.FirstOrDefault().ShelfNo;
-            //            ps.Max = Convert.ToDecimal(g.FirstOrDefault().MaximumStock);
-            //            ps.Min = Convert.ToDecimal(g.FirstOrDefault().MinimumStock);
-            //            ps.OrderPoint = Convert.ToDecimal(g.FirstOrDefault().ReOrderPoint);
-            //            db.TempPrintShelfs.InsertOnSubmit(ps);
-            //            db.SubmitChanges();
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == txtInternalNo.Text).ToList();
+                    if (g.Count() > 0)
+                    {
+                        //foreach(var gg in g)
+                        //{
+                        //    dt_ShelfTag.Rows.Add(gg.CodeNo, gg.ItemDescription, gg.ShelfNo);
+                        //}
+                        //DataTable DT =  StockControl.dbClss.LINQToDataTable(g);
+                        //Reportx1 po = new Reportx1("Report_PurchaseRequest_Content1.rpt", DT, "FromDT");
+                        //po.Show();
+                        var deleteItem = (from ii in db.TempPrintShelfs where ii.UserName == ClassLib.Classlib.User select ii);
+                        foreach (var d in deleteItem)
+                        {
+                            db.TempPrintShelfs.DeleteOnSubmit(d);
+                            db.SubmitChanges();
+                        }
+                        TempPrintShelf ps = new TempPrintShelf();
+                        ps.UserName = ClassLib.Classlib.User;
+                        ps.CodeNo = g.FirstOrDefault().InternalNo;
+                        ps.PartDescription = g.FirstOrDefault().InternalDescription;
+                        ps.PartNo = g.FirstOrDefault().InternalName;
+                        ps.ShelfNo = "";// g.FirstOrDefault().ShelfNo;
+                        ps.Max = Convert.ToDecimal(g.FirstOrDefault().MaximumQty);
+                        ps.Min = Convert.ToDecimal(g.FirstOrDefault().MinimumQty);
+                        ps.OrderPoint = Convert.ToDecimal(g.FirstOrDefault().ReorderPoint);
+                        db.TempPrintShelfs.InsertOnSubmit(ps);
+                        db.SubmitChanges();
 
-            //            Report.Reportx1.Value = new string[2];
-            //            Report.Reportx1.Value[0] = ClassLib.Classlib.User;
-            //            Report.Reportx1.WReport = "002_BoxShelf_Part";
-            //            Report.Reportx1 op = new Report.Reportx1("002_BoxShelf_Part.rpt");
-            //            op.Show();
-                       
-            //        }
-            //        else
-            //            MessageBox.Show("not found.");
-            //    }
+                        Report.Reportx1.Value = new string[2];
+                        Report.Reportx1.Value[0] = ClassLib.Classlib.User;
+                        Report.Reportx1.WReport = "002_BoxShelf_Part";
+                        Report.Reportx1 op = new Report.Reportx1("002_BoxShelf_Part.rpt");
+                        op.Show();
 
-            //}
-            //catch(Exception ex) { MessageBox.Show(ex.Message); }
+                    }
+                    else
+                        MessageBox.Show("not found.");
+                }
+
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void btnPrintBarCode_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    dt_Kanban.Rows.Clear();
-            //    this.Cursor = Cursors.WaitCursor;
-            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
-            //    {
+            try
+            {
+                dt_Kanban.Rows.Clear();
+                this.Cursor = Cursors.WaitCursor;
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
 
-            //        var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == txtInternalNo.Text).ToList();
-            //        if (g.Count() > 0)
-            //        {
-            //            // Step 1 delete UserName
-            //            var deleteItem = (from ii in db.TempPrintKanbans where ii.UserName == ClassLib.Classlib.User select ii);
-            //            foreach(var d in deleteItem)
-            //            {
-            //                db.TempPrintKanbans.DeleteOnSubmit(d);
-            //                db.SubmitChanges();
-            //            }
+                    var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == txtInternalNo.Text).ToList();
+                    if (g.Count() > 0)
+                    {
+                        // Step 1 delete UserName
+                        var deleteItem = (from ii in db.TempPrintKanbans where ii.UserName == ClassLib.Classlib.User select ii);
+                        foreach (var d in deleteItem)
+                        {
+                            db.TempPrintKanbans.DeleteOnSubmit(d);
+                            db.SubmitChanges();
+                        }
 
-            //            // Step 2 Insert to Table
-            //            TempPrintKanban tm = new TempPrintKanban();
-            //            tm.UserName = ClassLib.Classlib.User;
-            //            tm.CodeNo = g.FirstOrDefault().CodeNo;
-            //            tm.PartDescription = g.FirstOrDefault().ItemDescription;
-            //            tm.PartNo = g.FirstOrDefault().ItemNo;
-            //            tm.VendorName = g.FirstOrDefault().VendorItemName;
-            //            tm.ShelfNo = g.FirstOrDefault().ShelfNo;
-            //            tm.GroupType = g.FirstOrDefault().GroupCode;
-            //            tm.Max=Convert.ToDecimal(g.FirstOrDefault().MaximumStock);
-            //            tm.Min= Convert.ToDecimal(g.FirstOrDefault().MinimumStock);
-            //            tm.ReOrderPoint= Convert.ToDecimal(g.FirstOrDefault().ReOrderPoint);
-            //            tm.ToolLife= Convert.ToDecimal(g.FirstOrDefault().Toollife);
-            //            byte[] barcode = StockControl.dbClss.SaveQRCode2D(g.FirstOrDefault().CodeNo);
-            //            tm.BarCode = barcode;
-            //            tm.Location = ddlLocation.Text;
-            //            tm.TypePart = ddlInventoryGroup.Text;
+                        // Step 2 Insert to Table
+                        TempPrintKanban tm = new TempPrintKanban();
+                        tm.UserName = ClassLib.Classlib.User;
+                        tm.CodeNo = g.FirstOrDefault().InternalNo;
+                        tm.PartDescription = g.FirstOrDefault().InternalDescription;
+                        tm.PartNo = g.FirstOrDefault().InternalName;
+                        tm.VendorName = g.FirstOrDefault().VendorName;
+                        tm.ShelfNo = "";// g.FirstOrDefault().ShelfNo;
+                        tm.GroupType = g.FirstOrDefault().GroupType;
+                        tm.Max = Convert.ToDecimal(g.FirstOrDefault().MaximumQty);
+                        tm.Min = Convert.ToDecimal(g.FirstOrDefault().MinimumQty);
+                        tm.ReOrderPoint = Convert.ToDecimal(g.FirstOrDefault().ReorderPoint);
+                        tm.ToolLife = 1;// Convert.ToDecimal(g.FirstOrDefault().Toollife);
+                        byte[] barcode = StockControl.dbClss.SaveQRCode2D(g.FirstOrDefault().InternalNo);
+                        tm.BarCode = barcode;
+                        tm.Location = cboLocation.Text;
+                        tm.TypePart = ddlInventoryGroup.Text;
 
-            //            db.TempPrintKanbans.InsertOnSubmit(tm);
-            //            db.SubmitChanges();
-            //            this.Cursor = Cursors.Default;
-            //            // Step 3 Call Report
-            //            Report.Reportx1.Value = new string[2];
-            //            Report.Reportx1.Value[0] = ClassLib.Classlib.User;
-            //            Report.Reportx1.WReport = "001_Kanban_Part";
-            //            Report.Reportx1 op = new Report.Reportx1("001_Kanban_Part.rpt");
-            //            op.Show();
+                        db.TempPrintKanbans.InsertOnSubmit(tm);
+                        db.SubmitChanges();
+                        this.Cursor = Cursors.Default;
+                        // Step 3 Call Report
+                        Report.Reportx1.Value = new string[2];
+                        Report.Reportx1.Value[0] = ClassLib.Classlib.User;
+                        Report.Reportx1.WReport = "001_Kanban_Part";
+                        Report.Reportx1 op = new Report.Reportx1("001_Kanban_Part.rpt");
+                        op.Show();
 
-            //            //foreach (var gg in g)
-            //            //{
-            //            //    dt_Kanban.Rows.Add(gg.CodeNo, gg.ItemNo, gg.ItemDescription, gg.ShelfNo, gg.Leadtime, gg.VendorItemName, gg.GroupCode, gg.Toollife, gg.MaximumStock, gg.MinimumStock,gg.ReOrderPoint, gg.BarCode);
-            //            //}
-            //            //DataTable DT =  StockControl.dbClss.LINQToDataTable(g);
-            //            //Reportx1 po = new Reportx1("Report_PurchaseRequest_Content1.rpt", DT, "FromDT");
-            //            //po.Show();
+                        //foreach (var gg in g)
+                        //{
+                        //    dt_Kanban.Rows.Add(gg.CodeNo, gg.ItemNo, gg.ItemDescription, gg.ShelfNo, gg.Leadtime, gg.VendorItemName, gg.GroupCode, gg.Toollife, gg.MaximumStock, gg.MinimumStock,gg.ReOrderPoint, gg.BarCode);
+                        //}
+                        //DataTable DT =  StockControl.dbClss.LINQToDataTable(g);
+                        //Reportx1 po = new Reportx1("Report_PurchaseRequest_Content1.rpt", DT, "FromDT");
+                        //po.Show();
 
 
-            //        }
-            //        else
-            //            MessageBox.Show("not found.");
-            //    }
+                    }
+                    else
+                        MessageBox.Show("not found.");
+                }
 
-            //}
-            //catch (Exception ex) { MessageBox.Show(ex.Message); }
-            //this.Cursor = Cursors.Default;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            this.Cursor = Cursors.Default;
         }
 
         private void txtMimimumStock_TextChanged(object sender, EventArgs e)

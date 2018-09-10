@@ -1954,5 +1954,11 @@ namespace StockControl
                 mccbEl.EditorControl.MasterTemplate.FilterDescriptors.Add(filterDescriptor);
             }
         }
+
+        private void radButtonElement1_Click(object sender, EventArgs e)
+        {
+            PrintPR a = new PrintPR(txtSHNo.Text, txtSHNo.Text, "ShippingToDay");
+            a.ShowDialog();
+        }
     }
 }

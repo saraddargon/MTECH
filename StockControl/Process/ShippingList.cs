@@ -764,5 +764,11 @@ namespace StockControl
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+
+        private void radButtonElement1_Click(object sender, EventArgs e)
+        {
+            PrintPR a = new PrintPR("", "", "ShippingToDay");
+            a.ShowDialog();
+        }
     }
 }

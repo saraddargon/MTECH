@@ -92,6 +92,11 @@ namespace StockControl
 
                 DefaultItem();
 
+                //Test
+                txtDocNo.Text = "SMT1-20180009";
+                Insert_data_PR();
+                txtDocNo.Text = "";
+
                 if (!RCNo_L.Equals(""))
                 {
                     btnNew.Enabled = true;
@@ -108,8 +113,7 @@ namespace StockControl
                     txtDocNo.Text = "";
                 }
 
-                //Test
-                txtDocNo.Text = "SMT1-20180009";
+               
                 
             }catch(Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }

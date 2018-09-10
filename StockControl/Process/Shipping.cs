@@ -639,14 +639,15 @@ namespace StockControl
                 else //สร้างใหม่
                 {
                     byte[] barcode = null;
-                        //barcode = StockControl.dbClss.SaveQRCode2D(txtSHNo.Text.Trim());
+                    barcode = StockControl.dbClss.SaveQRCode2D(txtSHNo.Text.Trim());
+
                     DateTime? UpdateDate = null;
 
                     DateTime? RequireDate = DateTime.Now;
                     if (!dtRequire.Text.Equals(""))
                         RequireDate = dtRequire.Value;
 
-                    tb_ShippingH gg = new tb_ShippingH();
+                    tb_ShippingH gg = new tb_ShippingH();                   
                     gg.ShippingNo = txtSHNo.Text;
                     gg.ShipDate = RequireDate;
                     gg.UpdateBy = null;
@@ -2018,6 +2019,12 @@ namespace StockControl
                 FilterDescriptor filterDescriptor = new FilterDescriptor(mccbEl.DisplayMember, FilterOperator.Contains, string.Empty);
                 mccbEl.EditorControl.MasterTemplate.FilterDescriptors.Add(filterDescriptor);
             }
+        }
+
+        private void radButtonElement1_Click(object sender, EventArgs e)
+        {
+            PrintPR a = new PrintPR(txtSHNo.Text, txtSHNo.Text, "ShippingToDay");
+            a.ShowDialog();
         }
     }
 }

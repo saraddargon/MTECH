@@ -545,15 +545,15 @@ namespace StockControl
                                 err += "- “จำนวนย้ายคืน:” มากกว่าจำนวนคงเหลือคงคลังไม่ได้ \n";
                             }
                         }
-                        if (StockControl.dbClss.TDe(rowInfo.Cells["Unit"].Value).Equals(""))
+                        if (StockControl.dbClss.TSt(rowInfo.Cells["Unit"].Value).Equals(""))
                             err += "- “หน่วย:” เป็นค่าว่าง \n";
                         if (StockControl.dbClss.TDe(rowInfo.Cells["PCSUnit"].Value) <= 0)
                             err += "- “จำนวน/หนวย:” น้อยกว่า 0 \n";
-                        if (StockControl.dbClss.TDe(rowInfo.Cells["Location"].Value).Equals(""))
+                        if (StockControl.dbClss.TSt(rowInfo.Cells["Location"].Value).Equals(""))
                             err += "- “จากสถานที่เก็บ:” เป็นค่าว่าง \n";
-                        if (StockControl.dbClss.TDe(rowInfo.Cells["ToLocation"].Value).Equals(""))
+                        if (StockControl.dbClss.TSt(rowInfo.Cells["ToLocation"].Value).Equals(""))
                             err += "- “ไปยังสถานที่เก็บ:” เป็นค่าว่าง \n";
-                        if(StockControl.dbClss.TDe(rowInfo.Cells["Location"].Value) == StockControl.dbClss.TDe(rowInfo.Cells["ToLocation"].Value))
+                        if(StockControl.dbClss.TSt(rowInfo.Cells["Location"].Value) == StockControl.dbClss.TSt(rowInfo.Cells["ToLocation"].Value))
                             err += "- “'จากสถานที่เก็บ' และ 'ไปยังสถานที่เก็บ':” ไม่สามารถเป็นสถานทีเดียวกันได้ \n";
                         
 

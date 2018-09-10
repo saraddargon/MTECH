@@ -75,6 +75,7 @@ namespace StockControl
                     lblName.Text = "เลขที่รับสินค้า";
                 else if (Type.Equals("Shipping"))
                     lblName.Text = "เลขที่เบิกสินค้า";
+
                 else if (Type.Equals("AdjustStock"))
                     lblName.Text = "เลขที่ปรับปรุงสินค้า";
                 else if (Type.Equals("JobCard"))
@@ -132,15 +133,15 @@ namespace StockControl
                     radRibbonBarGroup2.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
                     btnExportExcel.Visibility = Telerik.WinControls.ElementVisibility.Visible;
 
-                  
-                        ddlYear.DataSource = null;
-                        ddlYear.DisplayMember = "YYYY";
-                        ddlYear.ValueMember = "YYYY";
 
-                        var g = (from ix in db.sp_Select_Year() select ix).ToList();
-                        ddlYear.DataSource = g;
-                        ddlYear.SelectedIndex = 0;
-                    
+                    ddlYear.DataSource = null;
+                    ddlYear.DisplayMember = "YYYY";
+                    ddlYear.ValueMember = "YYYY";
+
+                    var g = (from ix in db.sp_Select_Year() select ix).ToList();
+                    ddlYear.DataSource = g;
+                    ddlYear.SelectedIndex = 0;
+
                     ddlMonth.Text = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("MM");
                     ddlYear.Text = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("yyyy");
 
@@ -171,6 +172,18 @@ namespace StockControl
                     cbYYYYMM.Visible = true;
                     ddlMonth.Visible = true;
                     ddlYear.Visible = true;
+
+                }
+                else if (Type.Equals("ShippingToDay"))
+                {
+                    lblName.Text = "เลขที่เบิกสินค้า";
+                    cbDate.Visible = true;
+                    dtDate1.Visible = true;
+                    dtDate2.Visible = true;
+                    lblToDate.Visible = true;
+
+                    dtDate1.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                    dtDate2.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
 
                 }
             }
@@ -498,6 +511,35 @@ namespace StockControl
                             Report.Reportx1.WReport = "ReportShipping2";
                             //Report.Reportx1 op = new Report.Reportx1("ReportShipping2.rpt");
                             Report.Reportx1 op = new Report.Reportx1("Movement_InOut.rpt");
+
+                            op.Show();
+                        }
+                        else
+                            MessageBox.Show("not found.");
+                    }
+                    else if (Type.Equals("ShippingToDay"))
+                    {
+                        string dt1 = "";
+                        string dt2 = "";
+
+                        if (cbDate.Checked)
+                        {
+                            // Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))
+                            dt1 = Convert.ToDateTime((dtDate1.Value), new CultureInfo("en-US")).ToString("yyyyMMdd");
+                            dt2 = Convert.ToDateTime((dtDate2.Value), new CultureInfo("en-US")).ToString("yyyyMMdd");
+                        }
+
+                        var g = (from ix in db.sp_R021_ReportShipping_Today(PRNo1, PRNo2, dt1,dt2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        if (g.Count() > 0)
+                        {
+                            Report.Reportx1.Value = new string[4];
+                            Report.Reportx1.Value[0] = PRNo1;
+                            Report.Reportx1.Value[1] = PRNo2;
+                            Report.Reportx1.Value[2] = dt1;
+                            Report.Reportx1.Value[3] = dt2;
+                            Report.Reportx1.WReport = "ReportShippingToDay";
+                            //Report.Reportx1 op = new Report.Reportx1("ReportShipping2.rpt");
+                            Report.Reportx1 op = new Report.Reportx1("ReportShippingToDay.rpt");
 
                             op.Show();
                         }

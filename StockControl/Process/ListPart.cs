@@ -547,21 +547,21 @@ namespace StockControl
                     {
                         if (StockControl.dbClss.TBo(Rowinfo.Cells["S"].Value).Equals(true))
                         {
-                            CodeNo = StockControl.dbClss.TSt(Rowinfo.Cells["CodeNo"].Value);
-                            var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == CodeNo).ToList();
+                            CodeNo = StockControl.dbClss.TSt(Rowinfo.Cells["InternalNo"].Value);
+                            var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == CodeNo).ToList();
                             if (g.Count() > 0)
                             {
                                 
                                 c += 1;
                                 TempPrintShelf ps = new TempPrintShelf();
                                 ps.UserName = ClassLib.Classlib.User;
-                                ps.CodeNo = g.FirstOrDefault().CodeNo;
-                                ps.PartDescription = g.FirstOrDefault().ItemDescription;
-                                ps.PartNo = g.FirstOrDefault().ItemNo;
-                                ps.ShelfNo = g.FirstOrDefault().ShelfNo;
-                                ps.Max = Convert.ToDecimal(g.FirstOrDefault().MaximumStock);
-                                ps.Min = Convert.ToDecimal(g.FirstOrDefault().MinimumStock);
-                                ps.OrderPoint = Convert.ToDecimal(g.FirstOrDefault().ReOrderPoint);
+                                ps.CodeNo = g.FirstOrDefault().InternalNo;
+                                ps.PartDescription = g.FirstOrDefault().InternalDescription;
+                                ps.PartNo = g.FirstOrDefault().InternalName;
+                                ps.ShelfNo = "";// g.FirstOrDefault().ShelfNo;
+                                ps.Max = Convert.ToDecimal(g.FirstOrDefault().MaximumQty);
+                                ps.Min = Convert.ToDecimal(g.FirstOrDefault().MinimumQty);
+                                ps.OrderPoint = Convert.ToDecimal(g.FirstOrDefault().ReorderPoint);
                                 db.TempPrintShelfs.InsertOnSubmit(ps);
                                 db.SubmitChanges();
                             }
@@ -611,26 +611,26 @@ namespace StockControl
                     {
                         if (StockControl.dbClss.TBo(Rowinfo.Cells["S"].Value).Equals(true))
                         {
-                            CodeNo = StockControl.dbClss.TSt(Rowinfo.Cells["CodeNo"].Value);
-                            var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == CodeNo).ToList();
+                            CodeNo = StockControl.dbClss.TSt(Rowinfo.Cells["InternalNo"].Value);
+                            var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == CodeNo).ToList();
                             if (g.Count() > 0)
                             {
                                 c += 1;
                                 TempPrintKanban tm = new TempPrintKanban();
                                 tm.UserName = ClassLib.Classlib.User;
-                                tm.CodeNo = g.FirstOrDefault().CodeNo;
-                                tm.PartDescription = g.FirstOrDefault().ItemDescription;
-                                tm.PartNo = g.FirstOrDefault().ItemNo;
-                                tm.VendorName = g.FirstOrDefault().VendorItemName;
-                                tm.ShelfNo = g.FirstOrDefault().ShelfNo;
-                                tm.GroupType = g.FirstOrDefault().GroupCode;
-                                tm.Max = Convert.ToDecimal(g.FirstOrDefault().MaximumStock);
-                                tm.Min = Convert.ToDecimal(g.FirstOrDefault().MinimumStock);
-                                tm.ReOrderPoint = Convert.ToDecimal(g.FirstOrDefault().ReOrderPoint);
-                                tm.ToolLife = Convert.ToDecimal(g.FirstOrDefault().Toollife);
+                                tm.CodeNo = g.FirstOrDefault().InternalNo;
+                                tm.PartDescription = g.FirstOrDefault().InternalDescription;
+                                tm.PartNo = g.FirstOrDefault().InternalName;
+                                tm.VendorName = g.FirstOrDefault().VendorName;
+                                tm.ShelfNo = "";// g.FirstOrDefault().ShelfNo;
+                                tm.GroupType = g.FirstOrDefault().GroupType;
+                                tm.Max = Convert.ToDecimal(g.FirstOrDefault().MaximumQty);
+                                tm.Min = Convert.ToDecimal(g.FirstOrDefault().MinimumQty);
+                                tm.ReOrderPoint = Convert.ToDecimal(g.FirstOrDefault().ReorderPoint);
+                                tm.ToolLife = 1;// Convert.ToDecimal(g.FirstOrDefault().Toollife);
                                 tm.Location = g.FirstOrDefault().Location;
-                                tm.TypePart = g.FirstOrDefault().TypePart;
-                                byte[] barcode = StockControl.dbClss.SaveQRCode2D(g.FirstOrDefault().CodeNo);
+                                tm.TypePart = g.FirstOrDefault().InventoryGroup;
+                                byte[] barcode = StockControl.dbClss.SaveQRCode2D(g.FirstOrDefault().InternalNo);
                                 tm.BarCode = barcode;
                                 db.TempPrintKanbans.InsertOnSubmit(tm);
                                 db.SubmitChanges();
@@ -731,7 +731,7 @@ namespace StockControl
 
             string CodeNo = "";
             if (radGridView1.Rows.Count > 0)
-                CodeNo = StockControl.dbClss.TSt(radGridView1.CurrentRow.Cells["CodeNo"].Value);
+                CodeNo = StockControl.dbClss.TSt(radGridView1.CurrentRow.Cells["InternalNo"].Value);
 
             PrintPR a = new PrintPR(CodeNo, CodeNo, "ReportStockMovement");
             a.ShowDialog();
