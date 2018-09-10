@@ -144,6 +144,12 @@
     <Compile Include="Process\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\GanttCharts_Job.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\GanttCharts_Job.Designer.cs">
+      <DependentUpon>GanttCharts_Job.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\ProductionOrder_List.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -993,6 +999,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\GanttCharts_Job.resx">
+      <DependentUpon>GanttCharts_Job.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\ProductionOrder_List.resx">
       <DependentUpon>ProductionOrder_List.cs</DependentUpon>

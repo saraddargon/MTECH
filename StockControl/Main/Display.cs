@@ -314,6 +314,22 @@ namespace StockControl
                         {
                             ListItem.ImageIndex = 19;
                         }
+                        else if (c.LinkNode.ToString().Equals("tb_Master_ItemUOM"))
+                        {
+                            ListItem.ImageIndex = 15;
+                        }
+                        else if (c.LinkNode.ToString().Equals("GanttCharts_Job"))
+                        {
+                            ListItem.ImageIndex = 26;
+                        }
+                        else if (c.LinkNode.ToString().Equals("Return_RM"))
+                        {
+                            ListItem.ImageIndex = 23;
+                        }
+                        else if (c.LinkNode.ToString().Equals("Shipping_RM"))
+                        {
+                            ListItem.ImageIndex = 25;
+                        }
                         else
                         {
                             ListItem.ImageIndex = 0;
