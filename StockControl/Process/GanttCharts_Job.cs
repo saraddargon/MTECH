@@ -361,7 +361,9 @@ namespace StockControl
             dt.Columns.Add("Id", typeof(int));
             dt.Columns.Add("ParentId", typeof(int));
             dt.Columns.Add("Title", typeof(string));
+            dt.Columns.Add("FGName", typeof(string));
             dt.Columns.Add("Qty", typeof(decimal));
+            dt.Columns.Add("DueDate", typeof(DateTime));
             dt.Columns.Add("Start", typeof(DateTime));
             dt.Columns.Add("End", typeof(DateTime));
             dt.Columns.Add("Deadline", typeof(DateTime));
@@ -396,8 +398,7 @@ namespace StockControl
 
             this.radGanttView1.GanttViewElement.TaskDataMember = "Tasks";
             this.radGanttView1.GanttViewElement.ChildMember = "Id";
-            this.radGanttView1.GanttViewElement.ParentMember = "ParentId";
-            //this.radGanttView1.GanttViewElement. .QtyMember = "Qty";
+            this.radGanttView1.GanttViewElement.ParentMember = "ParentId";            
             this.radGanttView1.GanttViewElement.TitleMember = "Title";
             this.radGanttView1.GanttViewElement.StartMember = "Start";
             this.radGanttView1.GanttViewElement.EndMember = "End";
@@ -419,7 +420,9 @@ namespace StockControl
             tasks.Columns.Add("Id", typeof(int));
             tasks.Columns.Add("ParentId", typeof(int));
             tasks.Columns.Add("Title", typeof(string));
-            //tasks.Columns.Add("Qty", typeof(decimal));
+            tasks.Columns.Add("FGName", typeof(string));
+            tasks.Columns.Add("Qty", typeof(decimal));
+            tasks.Columns.Add("DueDate", typeof(DateTime));
             tasks.Columns.Add("Start", typeof(DateTime));
             tasks.Columns.Add("End", typeof(DateTime));
             tasks.Columns.Add("Deadline", typeof(DateTime));
@@ -446,7 +449,10 @@ namespace StockControl
                         row += 1;
                         Running += 1;
                         countid += 1;
-                        tasks.Rows.Add(Running, 0, r.DocumentNo.Trim()//,r.FGName
+                        tasks.Rows.Add(Running, 0, r.DocumentNo.Trim()
+                             ,r.FGName
+                             ,r.Qty
+                             ,r.DueDate
                             , r.StartingDate, r.EndingDate, DBNull.Value, r.Days);
                         //var x = (from io in db.sp_053_Ganttview(txtProductsOrder.Text) select io).ToList();
                         //start = DateTime.Now;

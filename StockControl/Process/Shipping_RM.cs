@@ -94,6 +94,9 @@ namespace StockControl
             
             btnNew_Click(null, null);
 
+            txtJobCard.Text = "JOB201801-001";
+            Add_JobCard();
+
             if (!SHNo_t.Equals(""))
             {
                 btnNew.Enabled = true;
@@ -1457,8 +1460,16 @@ namespace StockControl
             {
 
                 string JobCard = txtJobCard.Text;
+                string TempJob = txtTempJobCard.Text;
+                string  Refid = txtRefidJobNo.Text  ;
+                string loca = txtLocation.Text;
+
                 btnNew_Click(null, null);
                 txtJobCard.Text = JobCard;
+
+                txtTempJobCard.Text = TempJob;
+                txtRefidJobNo.Text = Refid;
+                txtLocation.Text = loca;
 
                 int dgvNo = 0;
                 var r = (from ix in db.sp_051_Job_list(JobCard)
@@ -1792,6 +1803,7 @@ namespace StockControl
                     txtJobCard.Text = "";
                     txtTempJobCard.Text = "";
                     txtRefidJobNo.Text = "0";
+                    txtLocation.Text = "";
                 }
             }
         }
@@ -1833,10 +1845,10 @@ namespace StockControl
 
         private void txtJobCard_TextChanged(object sender, EventArgs e)
         {
-            if (txtJobCard.Text != "")
-                cbShipforJob.Checked = true;
-            else
-                cbShipforJob.Checked = false;
+            //if (txtJobCard.Text != "")
+            //    cbShipforJob.Checked = true;
+            //else
+            //    cbShipforJob.Checked = false;
         }
 
         private void MasterTemplate_CellBeginEdit(object sender, GridViewCellCancelEventArgs e)
