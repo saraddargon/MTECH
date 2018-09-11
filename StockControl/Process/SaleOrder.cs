@@ -74,7 +74,7 @@ namespace StockControl
                 else if (idList.Count > 0)
                     LoadFromId();
 
-                if (demo)
+                //if (demo)
                     DemoLoad();
 
             }
@@ -124,8 +124,18 @@ namespace StockControl
 
         void DemoLoad()
         {
+            dgvData.DataSource = null;
+            dgvData.Rows.Clear();
             demoAdd(1, new DateTime(2018, 09, 19), "I0001", "Item A", "", 10, "PCS", 100, "CSTM001");
-            cbbCSTM.SelectedValue = 0;
+            demoAdd(2, new DateTime(2018, 09, 22), "I0002", "Item B", "", 100, "PCS", 55, "CSTM001");
+            demoAdd(3, new DateTime(2018, 09, 15), "I0003", "Item C", "", 20, "PCS", 60, "CSTM001");
+            demoAdd(4, new DateTime(2018, 09, 30), "I0004", "Item D", "", 30, "PCS", 80, "CSTM001");
+            cbbCSTM.SelectedIndex = 0;
+            txtVatA.Value = 7;
+            cbVat.Checked = true;
+            txtSONo.Text = "SO1809-001";
+            
+            CallTotal();
         }
         void demoAdd(int rno, DateTime reqDate, string ItemNO, string ItemName, string Description, decimal Qty, string Unit, decimal UnitPrice, string RefDocNo)
         {

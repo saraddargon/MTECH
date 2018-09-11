@@ -73,6 +73,46 @@ namespace StockControl
                 , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
             addrow("Over Due", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
                 , new DateTime(2018, 9, 15), new DateTime(2018, 10, 5), 100, "Production", "CSTMPO1809-004");
+            addrow("OK", "I0001", "Item FG 1", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 10), new DateTime(2018, 9, 28), 100, "Production", "CSTMPO1809-001");
+            addrow("OK", "I0002", "Item FG 2", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 20), 100, "Production", "CSTMPO1809-002");
+            addrow("OK", "I0003", "Item FG 3", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
+            addrow("Over Due", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 15), new DateTime(2018, 10, 5), 100, "Production", "CSTMPO1809-004");
+            addrow("OK", "I0001", "Item FG 1", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 10), new DateTime(2018, 9, 28), 100, "Production", "CSTMPO1809-001");
+            addrow("OK", "I0002", "Item FG 2", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 20), 100, "Production", "CSTMPO1809-002");
+            addrow("OK", "I0003", "Item FG 3", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
+            addrow("Over Due", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 15), new DateTime(2018, 10, 25), 100, "Production", "CSTMPO1809-004");
+            addrow("OK", "I0001", "Item FG 1", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 10), new DateTime(2018, 9, 28), 100, "Production", "CSTMPO1809-001");
+            addrow("OK", "I0002", "Item FG 2", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 20), 100, "Production", "CSTMPO1809-002");
+            addrow("OK", "I0003", "Item FG 3", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
+            addrow("OK", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 15), new DateTime(2018, 10, 25), 100, "Production", "CSTMPO1809-004");
+            addrow("OK", "I0001", "Item FG 1", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 10), new DateTime(2018, 9, 14), 100, "Production", "CSTMPO1809-001");
+            addrow("Over Due", "I0002", "Item FG 2", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 20), 100, "Production", "CSTMPO1809-002");
+            addrow("Over Due", "I0003", "Item FG 3", new DateTime(2018, 9, 12)
+                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
+            addrow("Over Due", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 15), new DateTime(2018, 10, 5), 100, "Production", "CSTMPO1809-004");
+            addrow("OK", "I0001", "Item FG 1", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 10), new DateTime(2018, 9, 28), 100, "Production", "CSTMPO1809-001");
+            addrow("OK", "I0002", "Item FG 2", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 20), 100, "Production", "CSTMPO1809-002");
+            addrow("OK", "I0003", "Item FG 3", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
+            addrow("Over Due", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
+                , new DateTime(2018, 9, 15), new DateTime(2018, 10, 25), 100, "Production", "CSTMPO1809-004");
         }
         void addrow(string SS, string Item, string ItemName, DateTime DueDate, DateTime StartDate, DateTime EndDate, decimal Qty, string PlanType, string RefDocNo)
         {

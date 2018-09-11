@@ -29,12 +29,15 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GanttCharts_Job));
+            Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn1 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
+            Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn2 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
+            Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn3 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
+            Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn4 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
+            Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn5 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
+            Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn6 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
             Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn7 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
             Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn8 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
             Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn9 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
-            Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn10 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
-            Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn11 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
-            Telerik.WinControls.UI.GanttViewTextViewColumn ganttViewTextViewColumn12 = new Telerik.WinControls.UI.GanttViewTextViewColumn();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -256,43 +259,62 @@
             // 
             // radGanttView1
             // 
+            ganttViewTextViewColumn1.DataType = null;
+            ganttViewTextViewColumn1.FieldName = "Id";
+            ganttViewTextViewColumn1.HeaderText = "Id";
+            ganttViewTextViewColumn1.Name = "Id";
+            ganttViewTextViewColumn1.Visible = false;
+            ganttViewTextViewColumn2.DataType = null;
+            ganttViewTextViewColumn2.FieldName = "ParentId";
+            ganttViewTextViewColumn2.HeaderText = "ParentId";
+            ganttViewTextViewColumn2.Name = "ParentId";
+            ganttViewTextViewColumn2.Visible = false;
+            ganttViewTextViewColumn3.DataType = null;
+            ganttViewTextViewColumn3.FieldName = "Title";
+            ganttViewTextViewColumn3.HeaderText = "Document No";
+            ganttViewTextViewColumn3.Name = "Title";
+            ganttViewTextViewColumn3.Width = 120;
+            ganttViewTextViewColumn4.DataType = null;
+            ganttViewTextViewColumn4.FieldName = "FGName";
+            ganttViewTextViewColumn4.HeaderText = "Name";
+            ganttViewTextViewColumn4.Name = "FGName";
+            ganttViewTextViewColumn4.Width = 120;
+            ganttViewTextViewColumn5.DataType = null;
+            ganttViewTextViewColumn5.FieldName = "Qty";
+            ganttViewTextViewColumn5.FormatString = "{0:N2}";
+            ganttViewTextViewColumn5.HeaderText = "Qty";
+            ganttViewTextViewColumn5.Name = "Qty";
+            ganttViewTextViewColumn5.Width = 80;
+            ganttViewTextViewColumn6.DataType = null;
+            ganttViewTextViewColumn6.FieldName = "DueDate";
+            ganttViewTextViewColumn6.FormatString = "{0:dd/MMM/yyyy}";
+            ganttViewTextViewColumn6.HeaderText = "Due Date";
+            ganttViewTextViewColumn6.Name = "DueDate";
             ganttViewTextViewColumn7.DataType = null;
-            ganttViewTextViewColumn7.FieldName = "Id";
-            ganttViewTextViewColumn7.HeaderText = "Id";
-            ganttViewTextViewColumn7.Name = "Id";
-            ganttViewTextViewColumn7.Visible = false;
+            ganttViewTextViewColumn7.FieldName = "Start";
+            ganttViewTextViewColumn7.FormatString = "{0:dd/MMM/yyyy}";
+            ganttViewTextViewColumn7.HeaderText = "Start Date";
+            ganttViewTextViewColumn7.Name = "Start";
             ganttViewTextViewColumn8.DataType = null;
-            ganttViewTextViewColumn8.FieldName = "ParentId";
-            ganttViewTextViewColumn8.HeaderText = "ParentId";
-            ganttViewTextViewColumn8.Name = "ParentId";
-            ganttViewTextViewColumn8.Visible = false;
+            ganttViewTextViewColumn8.FieldName = "End";
+            ganttViewTextViewColumn8.FormatString = "{0:dd/MMM/yyyy}";
+            ganttViewTextViewColumn8.HeaderText = "End Date";
+            ganttViewTextViewColumn8.Name = "End";
             ganttViewTextViewColumn9.DataType = null;
-            ganttViewTextViewColumn9.FieldName = "Title";
-            ganttViewTextViewColumn9.HeaderText = "DocumentNo";
-            ganttViewTextViewColumn9.Name = "Title";
-            ganttViewTextViewColumn9.Width = 120;
-            ganttViewTextViewColumn10.DataType = null;
-            ganttViewTextViewColumn10.FieldName = "Start";
-            ganttViewTextViewColumn10.FormatString = "{0:dd/MMM/yyyy}";
-            ganttViewTextViewColumn10.HeaderText = "Start Date";
-            ganttViewTextViewColumn10.Name = "Start";
-            ganttViewTextViewColumn11.DataType = null;
-            ganttViewTextViewColumn11.FieldName = "End";
-            ganttViewTextViewColumn11.FormatString = "{0:dd/MMM/yyyy}";
-            ganttViewTextViewColumn11.HeaderText = "End Date";
-            ganttViewTextViewColumn11.Name = "End";
-            ganttViewTextViewColumn12.DataType = null;
-            ganttViewTextViewColumn12.FieldName = "Days";
-            ganttViewTextViewColumn12.HeaderText = "Days";
-            ganttViewTextViewColumn12.Name = "Days";
-            ganttViewTextViewColumn12.Width = 50;
+            ganttViewTextViewColumn9.FieldName = "Days";
+            ganttViewTextViewColumn9.HeaderText = "Days";
+            ganttViewTextViewColumn9.Name = "Days";
+            ganttViewTextViewColumn9.Width = 50;
             this.radGanttView1.Columns.AddRange(new Telerik.WinControls.UI.GanttViewTextViewColumn[] {
+            ganttViewTextViewColumn1,
+            ganttViewTextViewColumn2,
+            ganttViewTextViewColumn3,
+            ganttViewTextViewColumn4,
+            ganttViewTextViewColumn5,
+            ganttViewTextViewColumn6,
             ganttViewTextViewColumn7,
             ganttViewTextViewColumn8,
-            ganttViewTextViewColumn9,
-            ganttViewTextViewColumn10,
-            ganttViewTextViewColumn11,
-            ganttViewTextViewColumn12});
+            ganttViewTextViewColumn9});
             this.radGanttView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radGanttView1.Location = new System.Drawing.Point(0, 0);
             this.radGanttView1.Name = "radGanttView1";

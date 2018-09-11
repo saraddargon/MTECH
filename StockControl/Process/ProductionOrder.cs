@@ -77,13 +77,12 @@ namespace StockControl
                 if (t_PONo != "" && t_CustomerNo != "")
                     DataLoad();
 
-                if (demo)
-                    setdemo();
+                setdemo();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
-        
+
         private void DataLoad(bool warningMssg = true)
         {
             try
@@ -98,7 +97,7 @@ namespace StockControl
 
                         btnView_Click(null, null);
                     }
-                    else if(warningMssg)
+                    else if (warningMssg)
                         baseClass.Warning("P/O not found.!!");
                 }
             }
@@ -108,7 +107,9 @@ namespace StockControl
 
         void setdemo()
         {
-            txtProductionNo.Text = "PD1809-002";
+            dgvData.DataSource = null;
+            dgvData.Rows.Clear();
+            txtProductionNo.Text = "JOB1809-002";
             txtRefNo.Text = "CSTMPO1809-002";
             txtItemNo.Text = "I002";
             txtItemName.Text = "FG 2";
@@ -121,6 +122,9 @@ namespace StockControl
             adddemo(1, "I0008", "RM 1", 10, "PCS");
             adddemo(2, "I0009", "RM 2", 100, "PCS");
             adddemo(3, "I0010", "SEMI 1", 50, "PCS");
+            adddemo(4, "I0011", "SEMI 2", 10, "PCS");
+            adddemo(5, "I0012", "RM 3", 100, "PCS");
+            adddemo(6, "I0013", "RM 4", 50, "PCS");
         }
         void adddemo(int RNo, string Item, string ItemName, decimal Qty, string Unit)
         {
@@ -162,7 +166,7 @@ namespace StockControl
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
-            
+
             dgvData.ReadOnly = false;
 
             ClearData();
@@ -515,9 +519,9 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                //var pol = new CustomerPO_List(2);
+                var pd = new ProductionOrder_List();
                 this.Cursor = Cursors.Default;
-                //pol.ShowDialog();
+                pd.ShowDialog();
                 //if (pol.PONo != "" && pol.CstmNo != "")
                 //{
                 //    t_PONo = pol.PONo;
