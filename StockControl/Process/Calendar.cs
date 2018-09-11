@@ -212,9 +212,10 @@ namespace StockControl
                     {
                         if (Convert.ToString(g.Cells["dgvC"].Value).Equals("T"))
                         {
-                            if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
+                            if (g.Cells["dgvCodeTemp"].Value.ToInt() == 0)
                             {
                                 var t = new mh_Calendar();
+                                t.Code = g.Cells["Code"].Value.ToSt();
                                 t.Description = g.Cells["Description"].Value.ToSt();
                                 t.Active = true;
                                 dbClss.AddHistory(this.Name, "เพิ่มปฏิทิน", $"เพิ่มปฏิทิน [{t.Description}]", "");
@@ -225,7 +226,8 @@ namespace StockControl
                             }
                             else
                             {
-                                var t = db.mh_Calendars.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
+                                var t = db.mh_Calendars.Where(x => x.id == g.Cells["dgvCodetemp"].Value.ToInt()).First();
+                                t.Code = g.Cells["Code"].Value.ToSt();
                                 t.Description = g.Cells["Description"].Value.ToSt();
 
                                 C += 1;
@@ -266,12 +268,6 @@ namespace StockControl
                         {
                             if (!CodeTemp.Equals(""))
                             {
-                                //var unit1 = db.mh_Vendors.Where(x => x.No == CodeDelete).ToList();
-                                //foreach (var d in unit1)
-                                //{
-                                //    db.mh_Vendors.DeleteOnSubmit(d);
-                                //    dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.Name + "]", "");
-                                //}
                                 var t = db.mh_Calendars.Where(x => x.id == CodeTemp.ToInt()).ToList();
                                 foreach (var d in t)
                                 {
@@ -361,15 +357,23 @@ namespace StockControl
                     err += "- “รายการ:” เป็นค่าว่าง \n";
                 // int c = 0;
 
-                foreach (var g in radGridView1.Rows)
+                using (var db = new DataClasses1DataContext())
                 {
-                    if (g.IsVisible)
+                    foreach (var g in radGridView1.Rows)
                     {
+                        if (g.Cells["Code"].Value.ToSt() == "")
+                            err += "- “Code.:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["Description"].Value).Equals(""))
-                            err += "- “รายละเอียด.:” เป็นค่าว่างไม่ได้ \n";
+                            err += "- “Description.:” เป็นค่าว่างไม่ได้ \n";
+                        int id = g.Cells["dgvCodetemp"].Value.ToInt();
+                        string code = g.Cells["Code"].Value.ToSt();
+                        var d = db.mh_Calendars.Where(x => x.id != id && x.Code == code).ToList();
+                        if(d.Count > 0)
+                        {
+                            err += "- “Code.:” ซ้ำไม่ได้ \n";
+                            break;
+                        }
                     }
-
-
                 }
 
 

@@ -417,10 +417,9 @@
             gridViewTextBoxColumn4.IsVisible = false;
             gridViewTextBoxColumn4.Name = "dgvCodetemp2";
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
-            gridViewTextBoxColumn5.FieldName = "id";
+            gridViewTextBoxColumn5.FieldName = "Code";
             gridViewTextBoxColumn5.HeaderText = "Code";
             gridViewTextBoxColumn5.Name = "Code";
-            gridViewTextBoxColumn5.ReadOnly = true;
             gridViewTextBoxColumn5.Width = 77;
             gridViewTextBoxColumn6.EnableExpressionEditor = false;
             gridViewTextBoxColumn6.FieldName = "Description";

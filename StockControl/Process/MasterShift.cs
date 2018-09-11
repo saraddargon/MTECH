@@ -197,9 +197,10 @@ namespace StockControl
                     {
                         if (Convert.ToString(g.Cells["dgvC"].Value).Equals("T"))
                         {
-                            if (Convert.ToString(g.Cells["Code"].Value).Equals(""))
+                            if (g.Cells["dgvCodetemp"].Value.ToInt() == 0)
                             {
                                 var t = new mh_Shift();
+                                t.Code = g.Cells["Code"].Value.ToSt();
                                 t.Description = g.Cells["Description"].Value.ToSt();
                                 t.Active = true;
 
@@ -211,7 +212,8 @@ namespace StockControl
                             }
                             else
                             {
-                                var t = db.mh_Shifts.Where(x => x.Code == g.Cells["Code"].Value.ToInt()).First();
+                                var t = db.mh_Shifts.Where(x => x.id == g.Cells["dgvCodetemp"].Value.ToInt()).First();
+                                t.Code = g.Cells["Code"].Value.ToSt();
                                 t.Description = g.Cells["Description"].Value.ToSt();
 
                                 C += 1;
@@ -245,7 +247,7 @@ namespace StockControl
 
                 if (row >= 0)
                 {
-                    string CodeTemp = Convert.ToString(radGridView1.Rows[row].Cells["Code"].Value);
+                    string CodeTemp = Convert.ToString(radGridView1.Rows[row].Cells["id"].Value);
                     radGridView1.EndEdit();
                     if (MessageBox.Show("ต้องการลบรายการหรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
@@ -259,7 +261,7 @@ namespace StockControl
                                 //    db.mh_Vendors.DeleteOnSubmit(d);
                                 //    dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.Name + "]", "");
                                 //}
-                                var t = db.mh_Shifts.Where(x => x.Code == CodeTemp.ToInt()).ToList();
+                                var t = db.mh_Shifts.Where(x => x.id == CodeTemp.ToInt()).ToList();
                                 foreach (var d in t)
                                 {
                                     //db.mh_Routings.DeleteOnSubmit(d);
@@ -351,22 +353,30 @@ namespace StockControl
                     err += "- “รายการ:” เป็นค่าว่าง \n";
                 // int c = 0;
 
-                foreach (var g in radGridView1.Rows)
+                using (var db = new DataClasses1DataContext())
                 {
-                    if (g.IsVisible)
+                    foreach (var g in radGridView1.Rows)
                     {
+                        if (g.Cells["Code"].Value.ToSt() == "")
+                            err += "- “Code.:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["Description"].Value).Equals(""))
-                            err += "- “รายละเอียด.:” เป็นค่าว่างไม่ได้ \n";
+                            err += "- “Description.:” เป็นค่าว่างไม่ได้ \n";
+                        int id = g.Cells["dgvCodetemp"].Value.ToInt();
+                        string code = g.Cells["Code"].Value.ToSt();
+                        var d = db.mh_Shifts.Where(x => x.id != id && x.Code == code).ToList();
+                        if(d.Count > 0)
+                        {
+                            err += "- “Code.:” ซ้ำไม่ได้. \n";
+                            break;
+                        }
                     }
-
-
                 }
 
 
-                if (!err.Equals(""))
-                    MessageBox.Show(err);
-                else
-                    re = false;
+                    if (!err.Equals(""))
+                        MessageBox.Show(err);
+                    else
+                        re = false;
             }
             catch (Exception ex)
             {
