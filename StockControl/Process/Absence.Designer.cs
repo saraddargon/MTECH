@@ -38,6 +38,7 @@
             Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn1 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
             Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn2 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
@@ -424,6 +425,7 @@
             gridViewMaskBoxColumn1.Name = "StartTime";
             gridViewMaskBoxColumn1.Width = 85;
             gridViewMaskBoxColumn2.EnableExpressionEditor = false;
+            gridViewMaskBoxColumn2.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
             gridViewMaskBoxColumn2.FieldName = "EndingTime";
             gridViewMaskBoxColumn2.HeaderText = "Ending Time";
             gridViewMaskBoxColumn2.Mask = "00:00";
@@ -436,6 +438,11 @@
             gridViewDecimalColumn1.IsVisible = false;
             gridViewDecimalColumn1.Name = "WorkHours";
             gridViewDecimalColumn1.Width = 65;
+            gridViewComboBoxColumn1.EnableExpressionEditor = false;
+            gridViewComboBoxColumn1.FieldName = "SubWorkId";
+            gridViewComboBoxColumn1.HeaderText = "Sub-Work";
+            gridViewComboBoxColumn1.Name = "SubWorkId";
+            gridViewComboBoxColumn1.Width = 147;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "Capacity";
             gridViewDecimalColumn2.HeaderText = "Capacity";
@@ -450,6 +457,7 @@
             gridViewMaskBoxColumn1,
             gridViewMaskBoxColumn2,
             gridViewDecimalColumn1,
+            gridViewComboBoxColumn1,
             gridViewDecimalColumn2});
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition1;

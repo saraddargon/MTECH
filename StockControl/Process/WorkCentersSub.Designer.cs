@@ -415,7 +415,6 @@
             gridViewComboBoxColumn1.FieldName = "SubWorkNo";
             gridViewComboBoxColumn1.HeaderText = "Sub-Work No";
             gridViewComboBoxColumn1.Name = "SubWorkNo";
-            gridViewComboBoxColumn1.ReadOnly = true;
             gridViewComboBoxColumn1.Width = 82;
             gridViewTextBoxColumn4.EnableExpressionEditor = false;
             gridViewTextBoxColumn4.FieldName = "SubWorkName";
@@ -574,10 +573,9 @@
             // 
             // txtWorkNo
             // 
-            this.txtWorkNo.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.txtWorkNo.BackColor = System.Drawing.Color.White;
             this.txtWorkNo.Location = new System.Drawing.Point(147, 28);
             this.txtWorkNo.Name = "txtWorkNo";
-            this.txtWorkNo.ReadOnly = true;
             this.txtWorkNo.Size = new System.Drawing.Size(124, 20);
             this.txtWorkNo.TabIndex = 0;
             // 

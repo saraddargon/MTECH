@@ -74,12 +74,8 @@ namespace StockControl
             //}
 
 
-            DataLoad();
             LoadDefualt();
-            MyFont = new System.Drawing.Font(
-    "Tahoma", 9,
-    FontStyle.Italic,    // + obviously doesn't work, but what am I meant to do?
-    GraphicsUnit.Pixel);
+            DataLoad();
         }
 
         private void RMenu6_Click(object sender, EventArgs e)
@@ -132,28 +128,25 @@ namespace StockControl
         {
             try
             {
-                DayOfWeek.Clear();
-                DayOfWeek.Add(0, "Monday");
-                DayOfWeek.Add(1, "Tueday");
-                DayOfWeek.Add(2, "Wednesday");
-                DayOfWeek.Add(3, "Thursday");
-                DayOfWeek.Add(4, "Friday");
-                DayOfWeek.Add(5, "Saturday");
-                DayOfWeek.Add(6, "Sunday");
+                var com = radGridView1.Columns["SubWorkId"] as GridViewComboBoxColumn;
+                com.DisplayMember = "SubWorkName";
+                com.ValueMember = "id";
+                var q = new List<ComboboxSubWork>();
 
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    //var gt = (from ix in db.mh_CRRNCies select ix).ToList();
-                    //GridViewComboBoxColumn comboBoxColumn = this.radGridView1.Columns["DefaultCrrncy"] as GridViewComboBoxColumn;
-                    //comboBoxColumn.DisplayMember = "CRRNCY";
-                    //comboBoxColumn.ValueMember = "id";
-                    //comboBoxColumn.DataSource = gt;
-
-                    //var com = radGridView1.Columns["Day"] as GridViewComboBoxColumn;
-                    //com.DisplayMember = "Value";
-                    //com.ValueMember = "Key";
-                    //com.DataSource = DayOfWeek;
+                    var s = db.mh_WorkCenterSubs.Where(x => x.idWorkCenter == idWorkCenters).ToList();
+                    foreach (var ss in s)
+                    {
+                        q.Add(new ComboboxSubWork
+                        {
+                            id = ss.id,
+                            SubWorkName = ss.SubWorkName
+                        });
+                    }
                 }
+
+                com.DataSource = q;
             }
             catch (Exception ex)
             {
@@ -223,7 +216,7 @@ namespace StockControl
                                 t.EndingTime = g.Cells["EndTime"].Value.ToSt();
                                 t.Capacity = g.Cells["Capacity"].Value.ToDecimal();
                                 t.idWorkCenters = idWorkCenters;
-                                t.ShiftId = 0;
+                                t.SubWorkId = g.Cells["SubWorkId"].Value.ToInt();
                                 t.Active = true;
 
                                 dbClss.AddHistory(this.Name, "เพิ่มวัน", $"เพิ่มวันหยุดงาน [{t.Date.ToDtString()}]", "");
@@ -241,7 +234,7 @@ namespace StockControl
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
                                 t.Capacity = g.Cells["Capacity"].Value.ToDecimal();
                                 t.idWorkCenters = idWorkCenters;
-                                t.ShiftId = 0;
+                                t.SubWorkId = g.Cells["SubWorkId"].Value.ToInt();
 
                                 C += 1;
                                 db.SubmitChanges();
@@ -386,6 +379,8 @@ namespace StockControl
                             err += "- “เวลาเริ่ม:” กรอกข้อมูลไม่ถูกต้อง \n";
                         if (g.Cells["EndTime"].Value.ToSt().Replace(":", ".").ToDecimal() > 23.59m)
                             err += "- “เวลาสิ้นสุด:” กรอกข้อมูลไม่ถูกต้อง \n";
+                        if(g.Cells["SubWorkId"].Value.ToInt() == 0)
+                            err += "- “Sub-Work:” เป็นค่าว่างไม่ได้ \n";
                     }
 
 
@@ -422,19 +417,19 @@ namespace StockControl
             try
             {
                 radGridView1.Rows[e.RowIndex].Cells["dgvC"].Value = "T";
-                //string check1 = Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["VendorName"].Value);
-                //string TM= Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["dgvCodeTemp2"].Value);
-                //if (!check1.Trim().Equals("") && TM.Equals(""))
-                //{
 
-                //    if (!CheckDuplicate(check1.Trim()))
-                //    {
-                //        MessageBox.Show("ชื้อผู้ขายซ้ำ ซ้ำ");
-                //        radGridView1.Rows[e.RowIndex].Cells["GroupCode"].Value = "";
-                //        radGridView1.Rows[e.RowIndex].Cells["GroupCode"].IsSelected = true;
-
-                //    }
-                //}
+                if (e.Column.Name.Equals("SubWorkId"))
+                {
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        int idsubwork = e.Row.Cells["SubWorkId"].Value.ToInt();
+                        var sb = db.mh_WorkCenterSubs.Where(x => x.id == idsubwork).FirstOrDefault();
+                        if(sb != null)
+                        {
+                            e.Row.Cells["Capacity"].Value = sb.Capacity;
+                        }
+                    }
+                }
 
 
             }
@@ -767,5 +762,11 @@ namespace StockControl
                 ClassLib.Memory.Heap();
             }
         }
+    }
+
+    class ComboboxSubWork
+    {
+        public int id { get; set; }
+        public string SubWorkName { get; set; }
     }
 }

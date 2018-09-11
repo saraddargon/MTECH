@@ -70,11 +70,11 @@ namespace StockControl
         }
         void DeleteRow()
         {
-            if (dgvData.Rows.Count <= 1)
-            {
-                baseClass.Warning("Cannot remove last Row.\n");
-                return;
-            }
+            //if (dgvData.Rows.Count <= 1)
+            //{
+            //    baseClass.Warning("Cannot remove last Row.\n");
+            //    return;
+            //}
 
             if(dgvData.CurrentCell != null)
             {
@@ -206,7 +206,7 @@ namespace StockControl
                     if (work == null)
                     {
                         work = new mh_WorkCenter();
-                        workNo = dbClss.GetNo(25, 2);
+                        //workNo = dbClss.GetNo(25, 2);
                     }
                     work.WorkCenterNo = workNo;
                     work.WorkCenterName = workName;
@@ -236,8 +236,8 @@ namespace StockControl
 
                         int id = item.Cells["id"].Value.ToInt();
                         string SubWorkNo = item.Cells["SubWorkNo"].Value.ToSt();
-                        if (SubWorkNo == "")
-                            SubWorkNo = dbClss.GetNo(27, 2);
+                        //if (SubWorkNo == "")
+                        //    SubWorkNo = dbClss.GetNo(27, 2);
                         string SubWorkName = item.Cells["SubWorkName"].Value.ToSt();
                         int WType = item.Cells["WType"].Value.ToInt();
                         string Description = item.Cells["Description"].Value.ToSt();
@@ -358,6 +358,7 @@ namespace StockControl
             btnView.Enabled = true;
             dgvData.AllowAddNewRow = false;
 
+            txtWorkNo.ReadOnly = false;
             txtWorkName.ReadOnly = false;
             cbbUOM.ReadOnly = false;
 
@@ -370,6 +371,7 @@ namespace StockControl
             btnEdit.Enabled = true;
             dgvData.AllowAddNewRow = false;
 
+            txtWorkNo.ReadOnly = true;
             txtWorkName.ReadOnly = true;
             cbbUOM.ReadOnly = true;
             cbbUOM.SelectedIndex = -1;
@@ -400,33 +402,65 @@ namespace StockControl
 
                 dgvData.EndEdit();
 
-                if (dgvData.Rows.Count <= 0)
-                    err += "- Sub-Work is empty.\n";
-                if (txtWorkName.Text.Trim() == "")
-                    err += "- Work name is empty.\n";
-                if (cbbCalendar.SelectedValue.ToInt() <= 0)
-                    err += "- Calendar is empty.\n";
-                if (cbbUOM.SelectedValue.ToInt() <= 0)
-                    err += "- Unit of Measure is empty.\n";
-
-                foreach (var e in dgvData.Rows)
+                using (var db = new DataClasses1DataContext())
                 {
-                    if (e.Cells["SubWorkName"].Value.ToSt().Trim() == "")
-                        err += "- Sub-Work Name is empty.\n";
-                    if (e.Cells["WType"].Value.ToInt() == 0)
-                        err += "- Work Type is empty.\n";
-                    if (e.Cells["Capacity"].Value.ToDecimal() <= 0)
-                        err += "- Capacity is empty.\n";
+                    if (txtWorkNo.Text == "")
+                        err += "- Work id is empty.\n";
+                    else
+                    {
+                        int idw = txtWorkId.Text.ToInt();
+                        string workcode = txtWorkNo.Text;
+                        var d = db.mh_WorkCenters.Where(x => x.id != idw && x.Active && x.WorkCenterNo == workcode).ToList();
+                        if(d.Count > 0)
+                        {
+                            err += "- Work center no. is dupplicate.\n";
+                        }
+                    }
 
-                    if (err != "")
-                        break;
+
+                    if (dgvData.Rows.Count <= 0)
+                        err += "- Sub-Work is empty.\n";
+                    if (txtWorkName.Text.Trim() == "")
+                        err += "- Work name is empty.\n";
+                    if (cbbCalendar.SelectedValue.ToInt() <= 0)
+                        err += "- Calendar is empty.\n";
+                    if (cbbUOM.SelectedValue.ToInt() <= 0)
+                        err += "- Unit of Measure is empty.\n";
+
+                    foreach (var e in dgvData.Rows)
+                    {
+                        int ids = e.Cells["id"].Value.ToInt();
+                        string subworkno = e.Cells["SubWorkNo"].Value.ToSt();
+                        if (subworkno == "")
+                            err += "- Sub-Work no is empty.\n";
+                        else
+                        {
+                            var sb = db.mh_WorkCenterSubs.Where(x => x.id != ids && x.Active && x.SubWorkNo == subworkno).ToList();
+                            if(sb.Count >0)
+                            {
+                                err += "- Sub-Work No is dupplicate.\n";
+                                break;
+                            }
+                        }
+                        if (e.Cells["SubWorkName"].Value.ToSt().Trim() == "")
+                            err += "- Sub-Work Name is empty.\n";
+                        if (e.Cells["WType"].Value.ToInt() == 0)
+                            err += "- Work Type is empty.\n";
+                        if (e.Cells["Capacity"].Value.ToDecimal() <= 0)
+                            err += "- Capacity is empty.\n";
+                        
+
+
+                        if (err != "")
+                            break;
+                    }
                 }
 
 
-                if (!err.Equals(""))
-                    MessageBox.Show(err);
-                else
-                    re = false;
+                    if (!err.Equals(""))
+                        MessageBox.Show(err);
+                    else
+                        re = false;
             }
             catch (Exception ex)
             {

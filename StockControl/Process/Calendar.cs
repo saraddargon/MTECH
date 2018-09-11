@@ -367,7 +367,7 @@ namespace StockControl
                             err += "- “Description.:” เป็นค่าว่างไม่ได้ \n";
                         int id = g.Cells["dgvCodetemp"].Value.ToInt();
                         string code = g.Cells["Code"].Value.ToSt();
-                        var d = db.mh_Calendars.Where(x => x.id != id && x.Code == code).ToList();
+                        var d = db.mh_Calendars.Where(x => x.id != id && x.Active && x.Code == code).ToList();
                         if(d.Count > 0)
                         {
                             err += "- “Code.:” ซ้ำไม่ได้ \n";

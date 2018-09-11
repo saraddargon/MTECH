@@ -14,12 +14,12 @@ namespace StockControl
 {
     public partial class RoutingDetail : Telerik.WinControls.UI.RadRibbonForm
     {
-        string RoutingNo = "";
+        int RoutingId = 0;
         TypeAction tAction = TypeAction.Add;
-        public RoutingDetail(string RoutingNo, TypeAction tAction)
+        public RoutingDetail(int RoutingId, TypeAction tAction)
         {
             InitializeComponent();
-            this.RoutingNo = RoutingNo;
+            this.RoutingId = RoutingId;
             this.tAction = tAction;
         }
 
@@ -73,12 +73,6 @@ namespace StockControl
                 DataLoad();
             }
 
-            MyFont = new System.Drawing.Font(
-                        "Tahoma", 9,
-                        FontStyle.Italic,    // + obviously doesn't work, but what am I meant to do?
-                        GraphicsUnit.Pixel);
-
-
             if (tAction == TypeAction.Add)
                 NewClick();
             else if (tAction == TypeAction.Edit)
@@ -95,12 +89,6 @@ namespace StockControl
         }
         void DeleteRow()
         {
-            if (dgvData.Rows.Count <= 1)
-            {
-                baseClass.Warning("Cannot remove last Row.\n");
-                return;
-            }
-
             if (dgvData.CurrentCell != null)
             {
                 int id = dgvData.CurrentCell.RowInfo.Cells["dgvCodetemp"].Value.ToInt();
@@ -108,7 +96,7 @@ namespace StockControl
                 {
                     using (var db = new DataClasses1DataContext())
                     {
-                        var w = db.mh_Routings.Where(x => x.id == id).First();
+                        var w = db.mh_RoutingDTs.Where(x => x.id == id).First();
                         w.Active = false;
                         db.SubmitChanges();
                     }
@@ -177,26 +165,18 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
-                var g = db.mh_Routings.Where(x => x.RoutingNo == RoutingNo && x.Active).OrderBy(x => x.RNo).ToList();
-                DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
+                var g = db.mh_Routings.Where(x => x.id == RoutingId && x.Active).FirstOrDefault();
+                txtid.Text = g.id.ToSt();
+                txtRoutingNo.Text = g.RoutingNo;
+                txtRoutingName.Text = g.RoutingName.ToSt();
+                cbbUOM.SelectedValue = g.RoutingUOM;
+                txtDescription.Text = g.Description;
+
+                var dt = db.mh_RoutingDTs.Where(x => x.RoutingId == RoutingId && x.Active).OrderBy(x => x.RNo).ToList();
+                DataTable dt2 = ClassLib.Classlib.LINQToDataTable(dt);
                 dgvData.DataSource = null;
                 dgvData.DataSource = dt2;
-                int ck = 0;
-                foreach (var x in dgvData.Rows)
-                {
-                    if (row >= 0 && row == ck)
-                    {
-                        x.ViewInfo.CurrentRow = x;
-                    }
-                    ck += 1;
-                }
 
-                if (g.Count > 0)
-                {
-                    txtRoutingNo.Text = g.First().RoutingNo;
-                    txtRoutingName.Text = g.First().RoutingName;
-                    cbbUOM.SelectedValue = g.First().RoutingUOM;
-                }
             }
 
             setRowNo();
@@ -211,61 +191,55 @@ namespace StockControl
             int C = 0;
             try
             {
-
+                int Rid = txtid.Text.ToInt();
                 string RoutingNo = txtRoutingNo.Text.Trim();
                 string RoutingName = txtRoutingName.Text.Trim();
                 int UOM = cbbUOM.SelectedValue.ToInt();
-                if (RoutingNo == "")
-                    RoutingNo = dbClss.GetNo(26, 2);
-                txtRoutingNo.Text = RoutingNo;
-                this.RoutingNo = RoutingNo;
+                string Description = txtDescription.Text.Trim();
 
                 dgvData.EndEdit();
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
+                    //HD
+                    var hd = db.mh_Routings.Where(x => x.id == Rid).FirstOrDefault();
+                    if (hd == null)
+                    {
+                        hd = new mh_Routing();
+                        db.mh_Routings.InsertOnSubmit(hd);
+                    }
+                    hd.RoutingNo = RoutingNo;
+                    hd.RoutingName = RoutingName;
+                    hd.Description = Description;
+                    hd.RoutingUOM = UOM;
+                    hd.Active = true;
+                    db.SubmitChanges();
+                    txtid.Text = hd.id.ToSt();
+                    RoutingId = hd.id;
+
+                    //DT
                     foreach (var g in dgvData.Rows)
                     {
-                        if (Convert.ToString(g.Cells["dgvC"].Value).Equals("T"))
+                        if (g.Cells["dgvC"].Value.ToSt().Equals("T"))
                         {
-                            if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
+                            int id = g.Cells["dgvCodetemp"].Value.ToInt();
+                            var t = db.mh_RoutingDTs.Where(x => x.id == id).FirstOrDefault();
+                            if (t == null)
                             {
-                                var t = new mh_Routing();
-                                t.RoutingNo = RoutingNo;
-                                t.RoutingName = RoutingName;
-                                t.RoutingUOM = UOM;
-                                t.idWorkCenter = g.Cells["WorkCenter"].Value.ToInt();
-                                t.Description = g.Cells["Description"].Value.ToSt();
-                                t.SetupTime = g.Cells["SetupTime"].Value.ToDecimal();
-                                t.RunTime = g.Cells["RunTime"].Value.ToDecimal();
-                                t.WaitTime = g.Cells["WaitTime"].Value.ToDecimal();
-                                t.UnitCostPer = g.Cells["UnitCostPer"].Value.ToDecimal();
-                                t.RNo = g.Cells["No"].Value.ToInt();
-                                t.Active = true;
-
-                                dbClss.AddHistory(this.Name, "Add Routing", $"เพิ่ม Routing [{t.RoutingNo}]", "");
-                                //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
-                                db.mh_Routings.InsertOnSubmit(t);
-                                db.SubmitChanges();
-                                C += 1;
+                                t = new mh_RoutingDT();
+                                db.mh_RoutingDTs.InsertOnSubmit(t);
                             }
-                            else
-                            {
-                                var t = db.mh_Routings.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
-                                t.RoutingName = RoutingName;
-                                t.RoutingUOM = UOM;
-                                t.idWorkCenter = g.Cells["WorkCenter"].Value.ToInt();
-                                t.Description = g.Cells["Description"].Value.ToSt();
-                                t.SetupTime = g.Cells["SetupTime"].Value.ToDecimal();
-                                t.RunTime = g.Cells["RunTime"].Value.ToDecimal();
-                                t.WaitTime = g.Cells["WaitTime"].Value.ToDecimal();
-                                t.UnitCostPer = g.Cells["UnitCostPer"].Value.ToDecimal();
-                                t.RNo = g.Cells["No"].Value.ToInt();
+                            //var t = new mh_RoutingDT();
+                            t.RoutingId = RoutingId;
+                            t.RNo = g.Cells["No"].Value.ToInt();
+                            t.idWorkCenter = g.Cells["WorkCenter"].Value.ToInt();
+                            t.Description = g.Cells["Description"].Value.ToSt();
+                            t.SetupTime = g.Cells["SetupTime"].Value.ToDecimal();
+                            t.RunTime = g.Cells["RunTime"].Value.ToDecimal();
+                            t.WaitTime = g.Cells["WaitTime"].Value.ToDecimal();
+                            t.UnitCost = g.Cells["UnitCost"].Value.ToDecimal();
+                            t.Active = true;
 
-                                C += 1;
-                                db.SubmitChanges();
-                                dbClss.AddHistory(this.Name, "Edit Routing", $"แก้ไข Routing [{t.RoutingNo}]", "");
-
-                            }
+                            db.SubmitChanges();
                         }
                     }
                 }
@@ -276,8 +250,7 @@ namespace StockControl
                 dbClss.AddError("Add Routing", ex.Message, this.Name);
             }
 
-            if (C > 0)
-                MessageBox.Show("Save complete.!");
+            MessageBox.Show("Save complete.!");
 
             return ck;
         }
@@ -342,6 +315,7 @@ namespace StockControl
             btnView.Enabled = true;
             var rowe = dgvData.Rows.AddNew();
             rowe.Cells["No"].Value = rowe.Index + 1;
+            rowe.Cells["RunTime"].Value = 1;
 
         }
         private void EditClick()
@@ -353,6 +327,7 @@ namespace StockControl
 
             txtRoutingName.ReadOnly = false;
             cbbUOM.ReadOnly = false;
+            txtRoutingNo.ReadOnly = false;
         }
         private void ViewClick()
         {
@@ -364,6 +339,7 @@ namespace StockControl
             txtRoutingName.ReadOnly = true;
             cbbUOM.ReadOnly = true;
             cbbUOM.SelectedIndex = -1;
+            txtRoutingNo.ReadOnly = true;
 
             DataLoad();
         }
@@ -389,6 +365,22 @@ namespace StockControl
             {
 
                 dgvData.EndEdit();
+
+                if (txtRoutingNo.Text == "")
+                    err += "- Routing No is empty.\n";
+                else
+                {
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        int id = txtid.Text.ToInt();
+                        string routingNo = txtRoutingNo.Text.Trim();
+                        var m = db.mh_Routings.Where(x => x.id != id && x.Active && x.RoutingNo == routingNo).ToList();
+                        if (m.Count > 0)
+                        {
+                            err += "- Routing No. is Dupplicate.\n";
+                        }
+                    }
+                }
                 if (txtRoutingName.Text.Trim() == "")
                     err += "- Routing Name is empty.\n";
                 if (cbbUOM.SelectedValue.ToInt() == 0)

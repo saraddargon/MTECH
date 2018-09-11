@@ -149,9 +149,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
-                var g = db.mh_Routings.Where(x => x.Active)
-                    .GroupBy(x => new { x.RoutingNo, x.RoutingName })
-                    .Select(x => new { RoutingNo = x.Key.RoutingNo, RoutingName = x.Key.RoutingName }).ToList();
+                var g = db.mh_Routings.Where(x => x.Active).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.AutoGenerateColumns = false;
                 radGridView1.DataSource = dt2;
@@ -329,7 +327,7 @@ namespace StockControl
         private void btnNew_Click(object sender, EventArgs e)
         {
             //NewClick();
-            var rd = new RoutingDetail("", TypeAction.Add);
+            var rd = new RoutingDetail(0, TypeAction.Add);
             rd.ShowDialog();
 
             DataLoad();
@@ -341,7 +339,7 @@ namespace StockControl
             //ViewClick();
             if (row >= 0)
             {
-                var rd = new RoutingDetail(radGridView1.Rows[row].Cells["No"].Value.ToSt(), TypeAction.View);
+                var rd = new RoutingDetail(radGridView1.Rows[row].Cells["dgvCodetemp"].Value.ToInt(), TypeAction.View);
                 rd.ShowDialog();
                 DataLoad();
             }
@@ -352,7 +350,7 @@ namespace StockControl
             //EditClick();
             if (row >= 0)
             {
-                var rd = new RoutingDetail(radGridView1.Rows[row].Cells["No"].Value.ToSt(), TypeAction.Edit);
+                var rd = new RoutingDetail(radGridView1.Rows[row].Cells["dgvCodetemp"].Value.ToInt(), TypeAction.Edit);
                 rd.ShowDialog();
                 DataLoad();
             }
