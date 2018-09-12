@@ -188,18 +188,6 @@ namespace StockControl
             pc.ShowDialog();
         }
         
-        public DateTime setStandardTime(DateTime dt, bool TimeStart)
-        {
-            using (var db = new DataClasses1DataContext())
-            {
-                var g = db.mh_ManufacturingSetups.FirstOrDefault();
-                if (TimeStart)
-                    dt = dt.AddHours(g.StandardStartingTime.Hours).AddMinutes(g.StandardStartingTime.Minutes);
-                else
-                    dt = dt.AddHours(g.StandardEndingTime.Hours).AddMinutes(g.StandardEndingTime.Minutes);
-                return dt;
-            }
-        }
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
