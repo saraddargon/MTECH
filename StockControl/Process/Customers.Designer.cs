@@ -426,6 +426,7 @@
             gridViewTextBoxColumn18.ReadOnly = true;
             gridViewTextBoxColumn18.Width = 8;
             gridViewTextBoxColumn19.EnableExpressionEditor = false;
+            gridViewTextBoxColumn19.FieldName = "id";
             gridViewTextBoxColumn19.HeaderText = "Code";
             gridViewTextBoxColumn19.IsVisible = false;
             gridViewTextBoxColumn19.Name = "dgvCodetemp";
@@ -504,6 +505,7 @@
             gridViewCheckBoxColumn6.EnableExpressionEditor = false;
             gridViewCheckBoxColumn6.FieldName = "Active";
             gridViewCheckBoxColumn6.HeaderText = "Active";
+            gridViewCheckBoxColumn6.IsVisible = false;
             gridViewCheckBoxColumn6.MinWidth = 20;
             gridViewCheckBoxColumn6.Name = "Active";
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {

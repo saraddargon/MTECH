@@ -182,6 +182,7 @@ namespace StockControl
 
         void setEdit(bool ss)
         {
+            txtNo.ReadOnly = !ss;
             txtBranchCOde.ReadOnly = !ss;
             txtName.ReadOnly = !ss;
             txtAddress.ReadOnly = !ss;
@@ -208,15 +209,15 @@ namespace StockControl
                 dgvData.EndEdit();
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    string cstmno = txtNo.Text.Trim();
-                    var cstm = new mh_Customer();
-                    if (tAction == TypeAction.Add)
-                        cstmno = dbClss.GetNo(24, 2);
-                    else
-                        cstm = db.mh_Customers.Where(x => x.No == cstmno).FirstOrDefault();
-                    txtNo.Text = cstmno;
+                    int id = txtid.Text.ToInt();
+                    var cstm = db.mh_Customers.Where(x => x.id == id).FirstOrDefault();
+                    if(cstm == null)
+                    {
+                        cstm = new mh_Customer();
+                        db.mh_Customers.InsertOnSubmit(cstm);
+                    }
                     cstm.BranchCode = txtBranchCOde.Text;
-                    cstm.No = cstmno;
+                    cstm.No = txtNo.Text.Trim();
                     cstm.Name = txtName.Text.Trim();
                     cstm.Address = txtAddress.Text.Trim();
                     cstm.CreditLimit = txtCreditLimit.Value.ToDecimal();
@@ -229,19 +230,20 @@ namespace StockControl
                     cstm.VatGroup = cbbVatGroup.SelectedValue.ToInt();
                     cstm.DefaultCurrency = cbbCurrency.SelectedValue.ToInt();
                     cstm.Active = cbActive.Checked;
-                    if (tAction == TypeAction.Add)
-                        db.mh_Customers.InsertOnSubmit(cstm);
                     db.SubmitChanges();
 
                     foreach (var c in dgvData.Rows)
                     {
-                        if (c.Cells["dgvC"].Value.ToSt() == "")
-                            continue;
+                        if (c.Cells["dgvC"].Value.ToSt() == "") continue;
 
-                        int id = c.Cells["id"].Value.ToInt();
+                        int idDt = c.Cells["id"].Value.ToInt();
                         var con = db.mh_CustomerContacts.Where(x => x.id == id).FirstOrDefault();
                         if (con == null)
+                        {
                             con = new mh_CustomerContact();
+                            db.mh_CustomerContacts.InsertOnSubmit(con);
+                        }
+                        con.idCustomer = cstm.id;
                         con.Def = c.Cells["Def"].Value.ToBool();
                         con.id = 0;
                         con.ContactName = c.Cells["ContactName"].Value.ToSt();
@@ -249,8 +251,6 @@ namespace StockControl
                         con.Fax = c.Cells["Fax"].Value.ToSt();
                         con.Email = c.Cells["Email"].Value.ToSt();
                         con.Active = true;
-                        if (id <= 0)
-                            db.mh_CustomerContacts.InsertOnSubmit(con);
                         db.SubmitChanges();
                     }
 
@@ -259,10 +259,11 @@ namespace StockControl
 
                     if (dgvData.Rows.Count == 1)
                     {
-                        int id = dgvData.Rows[0].Cells["id"].Value.ToInt();
+                        int idDt = dgvData.Rows[0].Cells["id"].Value.ToInt();
                         dgvData.Rows[0].Cells["Def"].Value = true;
-                        var m = db.mh_CustomerContacts.Where(x => x.id == id).FirstOrDefault();
-                        m.Def = true;
+                        var m = db.mh_CustomerContacts.Where(x => x.id == idDt).FirstOrDefault();
+                        if(m != null)
+                            m.Def = true;
                         db.SubmitChanges();
                     }
                 }
@@ -287,25 +288,17 @@ namespace StockControl
             int C = 0;
             try
             {
-
-                if (row >= 0)
+                int id = txtid.Text.ToInt();
+                using (var db = new DataClasses1DataContext())
                 {
-                    int id = dgvData.CurrentCell.RowInfo.Cells["id"].Value.ToInt();
-                    string name = dgvData.CurrentCell.RowInfo.Cells["ContactName"].Value.ToSt();
-                    dgvData.EndEdit();
-                    if (MessageBox.Show("Do you want to Delete ( " + name + " ) ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    var cstm = db.mh_Customers.Where(x => x.id == id).FirstOrDefault();
+                    if(cstm != null)
                     {
-                        using (DataClasses1DataContext db = new DataClasses1DataContext())
-                        {
-                            var m = db.mh_CustomerContacts.Where(x => x.id == id).FirstOrDefault();
-                            if (m != null)
-                            {
-                                m.Active = false;
-                                db.SubmitChanges();
-                                C++;
-                            }
-                        }
+                        cstm.Active = false;
+                        db.SubmitChanges();
                     }
+
+                    baseClass.Info("Delete complete.\n");
                 }
             }
 
@@ -314,14 +307,7 @@ namespace StockControl
                 MessageBox.Show(ex.Message);
                 dbClss.AddError("Delete Cusomter Contact", ex.Message, this.Name);
             }
-
-            if (C > 0)
-            {
-                row = row - 1;
-                MessageBox.Show("Delete complete.");
-            }
-
-
+            
 
 
             return ck;
@@ -395,6 +381,19 @@ namespace StockControl
                 //    err += "- “รายการ:” เป็นค่าว่าง \n";
                 // int c = 0;
 
+                if (txtNo.Text.Trim().Equals(""))
+                    err += "- Customer no is empty.\n";
+                else
+                {
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        string cno = txtNo.Text.Trim();
+                        int id = txtid.Text.ToInt();
+                        var cstm = db.mh_Customers.Where(x => x.No == cno && x.Active && x.id != id).ToList();
+                        if (cstm.Count > 0)
+                            err += "- Customer no. is dupplication.\n";
+                    }
+                }
                 if (txtName.Text.Trim().Equals(""))
                     err += "- Customer name is empty.\n";
                 if (txtBranchCOde.Text.Trim().Equals(""))
@@ -409,7 +408,15 @@ namespace StockControl
                     err += "- Vat Group is empty.\n";
                 if (cbbCurrency.SelectedValue.ToInt() == 0)
                     err += "- Currency is empty.\n";
-
+                if(dgvData.Rows.Count == 0)
+                {
+                    err += "- Contact data is empty.\n";
+                }
+                else
+                {
+                    if (dgvData.Rows.Where(x => x.Cells["Def"].Value.ToBool()).Count() == 0)
+                        err += "- Not set Default Contact.\n";
+                }
 
                 if (!err.Equals(""))
                     MessageBox.Show(err);
@@ -707,6 +714,40 @@ namespace StockControl
 
                 }
             }
+        }
+
+        private void btnDeleteRow_Click(object sender, EventArgs e)
+        {
+            dgvData.EndEdit();
+
+            if (dgvData.CurrentCell == null) return;
+            var rowe = dgvData.CurrentCell.RowInfo;
+
+            if (rowe.Cells["Def"].Value.ToBool())
+            {
+                baseClass.Warning("Cannot Remove Default Contact.\n");
+                return;
+            }
+
+            int idDt = rowe.Cells["id"].Value.ToInt();
+            if (idDt > 0)
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.mh_CustomerContacts.Where(x => x.id == idDt).FirstOrDefault();
+                    if(m != null)
+                    {
+                        m.Active = false;
+                        db.SubmitChanges();
+                    }
+                }
+            }
+            dgvData.Rows.Remove(rowe);
+        }
+
+        private void btnAddRow_Click(object sender, EventArgs e)
+        {
+            var rowe = dgvData.Rows.AddNew();
         }
 
 
