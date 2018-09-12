@@ -12,10 +12,10 @@ namespace StockControl
 {
     public partial class PlanningCal_Status : Form
     {
-        private DateTime dtFrom = DateTime.Now;
-        private DateTime dtTo = DateTime.Now;
-        private string ItemNo = "";
-        private string Location = "";
+        public DateTime dFrom { get; set; } = DateTime.Now;
+        public DateTime dTo { get; set; } = DateTime.Now;
+        public string ItemNo { get; set; } = "";
+        public string LocationItem { get; set; } = "";
 
         public PlanningCal_Status()
         {
@@ -24,10 +24,10 @@ namespace StockControl
         public PlanningCal_Status(DateTime dFrom, DateTime dTo, string ItemNo, string Location)
         {
             InitializeComponent();
-            this.dtFrom = dFrom;
-            this.dtTo = dTo;
+            this.dFrom = dFrom;
+            this.dTo = dTo;
             this.ItemNo = ItemNo;
-            this.Location = Location;
+            this.LocationItem = Location;
         }
 
         bool startCal = false;
@@ -42,50 +42,52 @@ namespace StockControl
         }
 
 
+        List<ItemData> itemDatas = new List<ItemData>();
         void calE()
         {
             try
             {
+                itemDatas.Clear();
+                
+                var cstmPO_List = new List<CustomerPOCal>();
                 using (var db = new DataClasses1DataContext())
                 {
-                    int i = 1;
-                    do
+                    //1.Get Customer P/O (OutPlan) and SaleOrder (OutPlan) [Only not customer P/O]
+                    var poDt = db.mh_CustomerPODTs.Where(x => x.Active
+                        && x.ReqDate >= dFrom && x.ReqDate <= dTo
+                    ).OrderBy(x => x.ReqDate).ToList();
+                    foreach (var dt in poDt)
                     {
-                        changeLabel($"Calculating...CSTMPO1809-{(i).ToString("000")}");
-                        System.Threading.Thread.Sleep(1000);
-                    } while (i++ < 5);
-                    changeLabel("Calculating complete...");
-                    System.Threading.Thread.Sleep(1000);
-                    startCal = false;
-                    this.Invoke(new MethodInvoker(() =>
+                        if (ItemNo != "" && dt.ItemNo != ItemNo) continue;
+                        var t = db.mh_Items.Where(x => x.InternalNo == dt.ItemNo).FirstOrDefault();
+                        if (t == null) continue;
+                        if (LocationItem != "" && t.Location != LocationItem) continue;
+
+                        var pohd = db.mh_CustomerPOs.Where(x => x.id == dt.idCustomerPO && x.Active).FirstOrDefault();
+                        if (pohd == null) continue;
+
+                        cstmPO_List.Add(new CustomerPOCal
+                        {
+                            POHd = pohd,
+                            PODt = dt
+                        });
+                    }
+
+                    //2.Loop order by Due date (Dt) then Order date (Hd) then Order id (Hd)
+                    cstmPO_List = cstmPO_List.OrderBy(x => x.PODt.ReqDate)
+                        .ThenBy(x => x.POHd.OrderDate).ThenBy(x => x.POHd.id).ToList();
+                    foreach (var item in cstmPO_List)
                     {
-                        this.Close();
-                    }));
-
-
-                    ////1.Get Customer P/O (OutPlan) and SaleOrder (OutPlan) [Only not customer P/O]
-                    //var cstmPOs = db.mh_CustomerPOs.Where(x => x.Active
-                    //            && x.OutPlan > 0 && x.PlanStatus != "Completed"
-                    //            && x.ReqDate >= dtFrom && x.ReqDate <= dtTo
-                    //            && x.ItemNo.Contains(ItemNo) /*Location*/
-                    //        ).ToList();
-                    //var saleOrders = db.mh_SaleOrders.Where(x => x.Active
-                    //            && x.RefId == 0 && x.OutPlan > 0
-                    //            && x.PlanStatus != "Completed" //not Refer with Customer P/O
-                    //            && x.ReqDeliveryDate >= dtFrom && x.ReqDeliveryDate <= dtTo
-                    //            && x.ItemNo.Contains(ItemNo)
-                    //        ).ToList();
-                    //// หา PD กับ PO
-                    //foreach (var item in cstmPOs)
-                    //{
-                    //    var t = db.mh_Items.Where(x => x.InternalNo == item.ItemNo).FirstOrDefault();
-                    //    calPart(item.ItemNo, item.OutPlan, item.ReqDate, item.CustomerPONo, item.id, item.ForcastType);
-                    //}
-                    //foreach (var item in saleOrders)
-                    //{
-                    //    var t = db.mh_Items.Where(x => x.InternalNo == item.ItemNo).FirstOrDefault();
-                    //    calPart(item.ItemNo, item.OutPlan, item.ReqDeliveryDate, item.SONo, item.id, item.RepType);
-                    //}
+                        calPart(new calPartData
+                        {
+                            DocId = item.PODt.id,
+                            DocNo = item.POHd.CustomerNo,
+                            ItemNo = item.PODt.ItemNo,
+                            repType = baseClass.getRepType(item.PODt.ReplenishmentType),
+                            ReqDate = item.PODt.ReqDate,
+                            ReqQty = item.PODt.OutPlan,
+                        });
+                    }
                 }
             }
             catch (Exception ex)
@@ -97,14 +99,28 @@ namespace StockControl
                 startCal = false;
             }
         }
-        void calPart(string itemNo, decimal reqQty, DateTime reqDate, string DocNo, int DocId, string RepType)
+        void calPart(calPartData data)
         {
             try
             {
                 //RepType == Production, Purchase
                 using (var db = new DataClasses1DataContext())
                 {
-
+                    var tdata = itemDatas.Where(x => x.ItemNo == data.ItemNo).FirstOrDefault();
+                    if (tdata == null)
+                    {
+                        tdata = new ItemData(data.ItemNo);
+                    }
+                    //3.Find Stock is enought ?
+                    if (data.ReqQty <= tdata.QtyOnHand) //3.1 Stock is enought
+                    {
+                        tdata.QtyOnHand -= data.ReqQty;
+                        return;
+                    }
+                    //3.2 Stock not enought
+                    var t_QtyOnHand = tdata.QtyOnHand;
+                    data.ReqQty -= t_QtyOnHand;
+                    t_QtyOnHand = 0;
                 }
             }
             catch (Exception ex)
@@ -123,122 +139,23 @@ namespace StockControl
 
         private void PlanningCal_Status_FormClosing(object sender, FormClosingEventArgs e)
         {
+            e.Cancel = startCal;
             if (startCal)
-                e.Cancel = true;
+                baseClass.Warning("Waiting for calculation.\n");
         }
     }
 
-    public class PDPlan
-    {
-        public ItemData Item { get; set; }
-        public string CstmNo { get; set; }
-        public string RefDocNo { get; set; }
-        public int RefId { get; set; }
-        public DateTime ReqDate { get; set; }
-        public decimal ReqQty { get; set; }
-
-    }
-    public class POPlan
-    {
-        public ItemData Item { get; set; }
-        public List<DocPlan> DocRef { get; set; }
-        public decimal ReqQty { get; set; }
-
-    }
-    public class DocPlan
-    {
-        public string DocNo { get; set; }
-        public int DocId { get; set; }
-        public decimal ReqQty { get; set; }
-    }
-
-
-    public class ItemData
-    {
-        public int rNo { get; set; } = 0;
-        public int ref_rNo { get; set; } = 0;
-        public string ItemNo { get; set; }
-        public string ItemName { get; set; }
-        public ReorderType ReorderType { get; set; }
-        public decimal QtyOnHand { get; set; }
-        public decimal SafetyStock { get; set; }
-        public decimal ReorderPoint { get; set; }
-        public decimal ReorderQty { get; set; }
-        public decimal MinQty { get; set; }
-        public decimal MaxQty { get; set; }
-        public int TimeBuket { get; set; }
-        public int LeadTime { get; set; }
-        public ReplenishmentType repType { get; set; }
-        public InventoryGroup invGroup { get; set; }
-
-        public decimal StockQty
-        {
-            get {
-                return baseClass.StockQty(ItemNo, "Warehouse");
-            }
-        }
-        public DateTime ReqDate { get; set; }
-
-        public ItemData(string ItemNo, string ItemName)
-        {
-            this.ItemNo = ItemNo;
-            this.ItemName = ItemName;
-
-        }
-
-    }
-    public class PlanData
-    {
-        public string ItemNo { get; set; }
-        public string ItemName { get; set; }
-        public DateTime DueDate { get; set; }
-        public DateTime StartingDate { get; set; }
-        public DateTime EndingDate { get; set; }
-        public decimal Qty { get; set; }
-        public ReplenishmentType repType { get; set; }
-        public string PlanningType
-        {
-            get {
-                if (repType == ReplenishmentType.Production)
-                    return "MPS";
-                else
-                    return "MRP";
-            }
-        }
-        public string RefOrderType
-        {
-            get {
-                return repType.ToSt();
-            }
-        }
-
-        public PlanData(string ItemNo, string ItemName)
-        {
-            this.ItemNo = ItemNo;
-            this.ItemName = ItemName;
-        }
-    }
 
     //1 Job --> 1 Customer P/O or 1 Sale Order, 1 FG
     //RM รวมกันได้
 
-
-
-    public enum ReplenishmentType
+    public class calPartData
     {
-        Purchase, //MRP
-        Production //MPS
-    }
-    public enum ReorderType
-    {
-        Fixed,
-        MinMax,
-        ByOrder
-    }
-    public enum InventoryGroup
-    {
-        RM,
-        Semi,
-        FG
+        public string ItemNo { get; set; }
+        public decimal ReqQty { get; set; }
+        public DateTime ReqDate { get; set; }
+        public string DocNo { get; set; }
+        public int DocId { get; set; }
+        public ReplenishmentType repType { get; set; }
     }
 }
