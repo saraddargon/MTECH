@@ -36,6 +36,19 @@ namespace StockControl
         private void Unit_Load(object sender, EventArgs e)
         {
             //radGridView1.ReadOnly = true;
+            LoadDef();
+            dgvData.AutoGenerateColumns = false;
+            DataLoad();
+
+            dgvData.Columns.ToList().ForEach(x =>
+            {
+                if (x.Name != "S")
+                    x.ReadOnly = true;
+            });
+        }
+
+        private void LoadDef()
+        {
             using (var db = new DataClasses1DataContext())
             {
                 var cust = db.mh_Customers.Where(x => x.Active)
@@ -66,121 +79,35 @@ namespace StockControl
                 cbbItem.DataSource = item;
                 cbbItem.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
-
-            dgvData.AutoGenerateColumns = false;
-            DataLoad();
-
-            dgvData.Columns.ToList().ForEach(x =>
-            {
-                if (x.Name != "S")
-                    x.ReadOnly = true;
-            });
-
-
-            //
-            DemoData();
         }
+
         private void DataLoad()
         {
-
+            this.Cursor = Cursors.WaitCursor;
             //dt.Rows.Clear();
             try
             {
                 dgvData.DataSource = null;
-                this.Cursor = Cursors.WaitCursor;
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                dgvData.Rows.Clear();
+
+                using (var db = new DataClasses1DataContext())
                 {
-                    string pono = txtPONo.Text;
-                    string cstmno = txtCSTMNo.Text;
-                    string item = cbbItem.SelectedValue.ToSt();
-                    DateTime dFrom = (cbChkDate.Checked) ? dtFrom.Value.Date : new DateTime(1999, 1, 1);
-                    DateTime dTo = (cbChkDate.Checked) ? dtTo.Value.Date.AddDays(1).AddMinutes(1) : DateTime.MaxValue;
+                    DateTime? dFrom = (cbChkDate.Checked) ? (DateTime?)dtFrom.Value.Date : null;
+                    DateTime? dTo = (cbChkDate.Checked) ? (DateTime?)dtTo.Value.Date.AddDays(1).AddMinutes(-1) : null;
+                    var m = getGrid.GetGrid_CustomerPO(txtPONo.Text.Trim(), txtCSTMNo.Text.Trim()
+                        , cbbItem.SelectedValue.ToSt(), dFrom, dTo);
 
-                    var t = db.mh_CustomerPOs.Where(x =>
-                                x.Active && x.DemandType == 0
-                                && (x.CustomerPONo.Contains(pono))
-                                && (x.CustomerNo == cstmno || cstmno == "")
-                                && (x.ItemNo == item || item == "")
-                                && (x.OrderDate >= dFrom && x.OrderDate <= dTo)).ToList();
-                    dgvData.DataSource = null;
-                    dgvData.AutoGenerateColumns = false;
-                    dgvData.DataSource = t;
-
-                    int rNo = 1;
-                    dgvData.Rows.ToList().ForEach(x =>
-                    {
-                        x.Cells["RNo"].Value = rNo++;
-                        string cNo = x.Cells["CustomerNo"].Value.ToSt();
-                        var c = db.mh_Customers.Where(q => q.No == cNo).FirstOrDefault();
-                        if (c != null)
-                            x.Cells["CustomerName"].Value = c.Name;
-
-                        if (DateTime.Now <= x.Cells["ReqDate"].Value.ToDateTime().Value)
-                            x.Cells["SS"].Value = 1;
-                        else
-                            x.Cells["SS"].Value = 2;
-                    });
+                    dgvData.DataSource = m;
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-            this.Cursor = Cursors.Default;
-
-
-            //    radGridView1.DataSource = dt;
-        }
-        
-
-        void DemoData()
-        {
-            try
+            finally
             {
-                dgvData.DataSource = null;
-                dgvData.Rows.Clear();
-                demo_row("Waiting Plan", "CSTMPO1809-001", new DateTime(2018, 09, 17), "I0001", "Item A", 100, 0, false, true, "PCS", 100, 100 * 100);
-                demo_row("Completed", "CSTMPO1809-001", new DateTime(2018, 09, 18), "I0001", "Item A", 50, 0, true, true, "PCS", 100, 50 * 100);
-                demo_row("Waiting Order", "CSTMPO1809-001", new DateTime(2018, 09, 19), "I0001", "Item A", 100, 50, true, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 20), "I0002", "Item B", 100, 100, false, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 21), "I0003", "Item C", 50, 50, false, false, "PCS", 100, 50 * 100);
-                demo_row("Waiting Plan", "CSTMPO1809-001", new DateTime(2018, 09, 17), "I0001", "Item A", 100, 0, false, true, "PCS", 100, 100 * 100);
-                demo_row("Completed", "CSTMPO1809-001", new DateTime(2018, 09, 18), "I0001", "Item A", 50, 0, true, true, "PCS", 100, 50 * 100);
-                demo_row("Waiting Order", "CSTMPO1809-001", new DateTime(2018, 09, 19), "I0001", "Item A", 100, 50, true, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 20), "I0002", "Item B", 100, 100, false, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 21), "I0003", "Item C", 50, 50, false, false, "PCS", 100, 50 * 100);
-                demo_row("Waiting Plan", "CSTMPO1809-001", new DateTime(2018, 09, 17), "I0001", "Item A", 100, 0, false, true, "PCS", 100, 100 * 100);
-                demo_row("Completed", "CSTMPO1809-001", new DateTime(2018, 09, 18), "I0001", "Item A", 50, 0, true, true, "PCS", 100, 50 * 100);
-                demo_row("Waiting Order", "CSTMPO1809-001", new DateTime(2018, 09, 19), "I0001", "Item A", 100, 50, true, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 20), "I0002", "Item B", 100, 100, false, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 21), "I0003", "Item C", 50, 50, false, false, "PCS", 100, 50 * 100);
-                demo_row("Waiting Plan", "CSTMPO1809-001", new DateTime(2018, 09, 17), "I0001", "Item A", 100, 0, false, true, "PCS", 100, 100 * 100);
-                demo_row("Completed", "CSTMPO1809-001", new DateTime(2018, 09, 18), "I0001", "Item A", 50, 0, true, true, "PCS", 100, 50 * 100);
-                demo_row("Waiting Order", "CSTMPO1809-001", new DateTime(2018, 09, 19), "I0001", "Item A", 100, 50, true, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 20), "I0002", "Item B", 100, 100, false, false, "PCS", 100, 100 * 100);
-                demo_row("Waiting", "CSTMPO1809-002", new DateTime(2018, 09, 21), "I0003", "Item C", 50, 50, false, false, "PCS", 100, 50 * 100);
+                this.Cursor = Cursors.Default;
             }
-            catch (Exception ex)
-            {
-                baseClass.Warning(ex.Message);
-            }
+            
         }
-        void demo_row(string SS, string PONo, DateTime ReqDate, string Item
-            , string ItemName, decimal Qty, decimal Remain, bool Plan, bool SaleOrder
-            , string Unit, decimal PricePerUnit, decimal Amnt)
-        {
-            var row = dgvData.Rows.AddNew();
-            row.Cells["SS"].Value = SS;
-            row.Cells["PONo"].Value = "CSTMPO1809-" + (row.Index + 1).ToString("0000");
-            row.Cells["ReqDate"].Value = ReqDate;
-            row.Cells["Item"].Value = Item;
-            row.Cells["ItemName"].Value = ItemName;
-            row.Cells["Qty"].Value = Qty;
-            row.Cells["Remain"].Value = Remain;
-            row.Cells["Plan"].Value = Plan;
-            row.Cells["SaleOrder"].Value = SaleOrder;
-            row.Cells["Unit"].Value = Unit;
-            row.Cells["PricePerUnit"].Value = PricePerUnit;
-            row.Cells["Amount"].Value = Amnt;
-        }
-        
+
 
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -226,8 +153,7 @@ namespace StockControl
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            //DataLoad();
-            DemoData();
+            DataLoad();
         }
 
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
@@ -246,11 +172,11 @@ namespace StockControl
 
                 if (sType == 1)
                 {
-                    var p = new CustomerPO(PONo, CstmNo);
-                    p.ShowDialog();
-                    DataLoad();
-                    PONo = "";
-                    CstmNo = "";
+                    //var p = new CustomerPO(PONo, CstmNo);
+                    //p.ShowDialog();
+                    //DataLoad();
+                    //PONo = "";
+                    //CstmNo = "";
                 }
                 else
                     this.Close();
@@ -344,29 +270,6 @@ namespace StockControl
             {
                 if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
                 {
-                    //var rowS = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
-                    //if (rowS.Select(x => x.Cells["CustomerNo"].Value.ToSt()).Count() > 1)
-                    //{
-                    //    baseClass.Warning("Sale order have only 1 Customer.");
-                    //    return;
-                    //}
-
-                    //var idList = new List<int>();
-                    //foreach (var item in rowS)
-                    //{
-                    //    int id = item.Cells["id"].Value.ToInt();
-                    //    if (item.Cells["OutSO"].Value.ToDecimal() <= 0)
-                    //    {
-                    //        baseClass.Warning("Status P/O Cannot create Sale Order.\n");
-                    //        return;
-                    //    }
-                    //    idList.Add(id);
-                    //}
-
-                    //var so = new SaleOrder(idList);
-                    //so.ShowDialog();
-                    //DataLoad();
-
                     var so = new SaleOrder(true);
                     so.ShowDialog();
                 }
@@ -381,17 +284,69 @@ namespace StockControl
                 baseClass.Warning(ex.Message);
             }
         }
+
+        private void btnEditItem_Click(object sender, EventArgs e)
+        {
+            EditItem();
+        }
+        void EditItem()
+        {
+            if (dgvData.CurrentCell == null) return;
+            int idCustomerPO = dgvData.CurrentCell.RowInfo.Cells["idCustomerPO"].Value.ToInt();
+
+            CustomerPO c = new CustomerPO(idCustomerPO);
+            c.ShowDialog();
+            DataLoad();
+        }
+
+        private void btnViewItem_Click(object sender, EventArgs e)
+        {
+            EditItem();
+        }
+
+        private void btnDeleteItem_Click(object sender, EventArgs e)
+        {
+            Del();
+        }
+        void Del()
+        {
+            if (dgvData.CurrentCell == null) return;
+            if (dgvData.CurrentCell.RowInfo.Cells["Status"].Value.ToSt() != "Waiting")
+            {
+                baseClass.Warning("Status Cannot Delete.\n");
+                return;
+            }
+
+            int id = dgvData.CurrentCell.RowInfo.Cells["id"].Value.ToInt();
+            using (var db = new DataClasses1DataContext())
+            {
+                var m = db.mh_CustomerPODTs.Where(x => x.id == id).FirstOrDefault();
+                if (m != null)
+                {
+                    m.Active = false;
+                    db.SubmitChanges();
+
+                    int idCustomerPO = m.idCustomerPO;
+                    var hd = db.mh_CustomerPOs.Where(x => x.id == idCustomerPO).FirstOrDefault();
+                    if (hd != null)
+                    {
+                        hd.UpdateBy = ClassLib.Classlib.User;
+                        hd.UpdateDate = DateTime.Now;
+                        var j = db.mh_CustomerPODTs.Where(x => x.idCustomerPO == idCustomerPO && x.Active).ToList();
+                        if (j.Count == 0)
+                        {
+                            hd.Active = false;
+                        }
+                        db.SubmitChanges();
+                    }
+
+                }
+
+                dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
+                baseClass.Info("Delete complete.\n");
+            }
+        }
     }
 
 
-    public class CustomerCombo
-    {
-        public string No { get; set; }
-        public string Name { get; set; }
-    }
-    public class ItemCombo
-    {
-        public string Item { get; set; }
-        public string ItemName { get; set; }
-    }
 }

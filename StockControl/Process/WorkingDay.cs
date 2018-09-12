@@ -74,8 +74,8 @@ namespace StockControl
             //}
 
 
-            DataLoad();
             LoadDefualt();
+            DataLoad();
             MyFont = new System.Drawing.Font(
     "Tahoma", 9,
     FontStyle.Italic,    // + obviously doesn't work, but what am I meant to do?
@@ -143,12 +143,6 @@ namespace StockControl
 
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    //var gt = (from ix in db.mh_CRRNCies select ix).ToList();
-                    //GridViewComboBoxColumn comboBoxColumn = this.radGridView1.Columns["DefaultCrrncy"] as GridViewComboBoxColumn;
-                    //comboBoxColumn.DisplayMember = "CRRNCY";
-                    //comboBoxColumn.ValueMember = "id";
-                    //comboBoxColumn.DataSource = gt;
-
                     var com = radGridView1.Columns["Day"] as GridViewComboBoxColumn;
                     com.DisplayMember = "Value";
                     com.ValueMember = "Key";
@@ -157,7 +151,7 @@ namespace StockControl
                     var m = db.mh_Shifts.Where(x => x.Active).ToList();
                     var com2 = radGridView1.Columns["ShiftCode"] as GridViewComboBoxColumn;
                     com2.DisplayMember = "Description";
-                    com2.ValueMember = "Code";
+                    com2.ValueMember = "id";
                     com2.DataSource = m;
                 }
             }

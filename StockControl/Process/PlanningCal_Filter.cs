@@ -72,7 +72,7 @@ namespace StockControl
                     id = 0,
                     Name = ""
                 });
-
+                l = l.OrderBy(x => x.id).ToList();
                 cbbLocation.DisplayMember = "Name";
                 cbbLocation.ValueMember = "Code";
                 cbbLocation.DataSource = l;
@@ -97,7 +97,7 @@ namespace StockControl
 
                 okFilter = true;
                 dateFrom = dtFrom.Value.Date;
-                dateTo = dtTo.Value.Date;
+                dateTo = dtTo.Value.Date.AddDays(1).AddMinutes(-1);
                 MPS = cbMPS.Checked;
                 MRP = cbMRP.Checked;
                 ItemNo = cbbItem.SelectedValue.ToSt();

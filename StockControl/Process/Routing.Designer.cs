@@ -36,6 +36,7 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn5 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn6 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
@@ -419,23 +420,30 @@
             gridViewTextBoxColumn4.Name = "dgvCodetemp2";
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
             gridViewTextBoxColumn5.FieldName = "RoutingNo";
-            gridViewTextBoxColumn5.HeaderText = "No";
+            gridViewTextBoxColumn5.HeaderText = "Routing No";
             gridViewTextBoxColumn5.Name = "No";
             gridViewTextBoxColumn5.ReadOnly = true;
-            gridViewTextBoxColumn5.Width = 140;
+            gridViewTextBoxColumn5.Width = 96;
             gridViewTextBoxColumn6.EnableExpressionEditor = false;
             gridViewTextBoxColumn6.FieldName = "RoutingName";
-            gridViewTextBoxColumn6.HeaderText = "Name";
+            gridViewTextBoxColumn6.HeaderText = "Routing Name";
             gridViewTextBoxColumn6.Name = "Name";
             gridViewTextBoxColumn6.ReadOnly = true;
-            gridViewTextBoxColumn6.Width = 295;
+            gridViewTextBoxColumn6.Width = 150;
+            gridViewTextBoxColumn7.EnableExpressionEditor = false;
+            gridViewTextBoxColumn7.FieldName = "Description";
+            gridViewTextBoxColumn7.HeaderText = "Description";
+            gridViewTextBoxColumn7.Name = "Description";
+            gridViewTextBoxColumn7.ReadOnly = true;
+            gridViewTextBoxColumn7.Width = 250;
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
             gridViewTextBoxColumn3,
             gridViewTextBoxColumn4,
             gridViewTextBoxColumn5,
-            gridViewTextBoxColumn6});
+            gridViewTextBoxColumn6,
+            gridViewTextBoxColumn7});
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.radGridView1.Name = "radGridView1";

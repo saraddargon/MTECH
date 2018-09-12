@@ -60,75 +60,7 @@ namespace StockControl
             });
         }
 
-        void demo()
-        {
-            dgvData.DataSource = null;
-            dgvData.Rows.Clear();
-
-            addrow("OK", "I0001", "Item FG 1", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 10), new DateTime(2018, 9, 28), 100, "Production", "CSTMPO1809-001");
-            addrow("OK", "I0002", "Item FG 2", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 20), 100, "Production", "CSTMPO1809-002");
-            addrow("OK", "I0003", "Item FG 3", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
-            addrow("Over Due", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 15), new DateTime(2018, 10, 5), 100, "Production", "CSTMPO1809-004");
-            addrow("OK", "I0001", "Item FG 1", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 10), new DateTime(2018, 9, 28), 100, "Production", "CSTMPO1809-001");
-            addrow("OK", "I0002", "Item FG 2", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 20), 100, "Production", "CSTMPO1809-002");
-            addrow("OK", "I0003", "Item FG 3", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
-            addrow("Over Due", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 15), new DateTime(2018, 10, 5), 100, "Production", "CSTMPO1809-004");
-            addrow("OK", "I0001", "Item FG 1", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 10), new DateTime(2018, 9, 28), 100, "Production", "CSTMPO1809-001");
-            addrow("OK", "I0002", "Item FG 2", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 20), 100, "Production", "CSTMPO1809-002");
-            addrow("OK", "I0003", "Item FG 3", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
-            addrow("Over Due", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 15), new DateTime(2018, 10, 25), 100, "Production", "CSTMPO1809-004");
-            addrow("OK", "I0001", "Item FG 1", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 10), new DateTime(2018, 9, 28), 100, "Production", "CSTMPO1809-001");
-            addrow("OK", "I0002", "Item FG 2", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 20), 100, "Production", "CSTMPO1809-002");
-            addrow("OK", "I0003", "Item FG 3", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
-            addrow("OK", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 15), new DateTime(2018, 10, 25), 100, "Production", "CSTMPO1809-004");
-            addrow("OK", "I0001", "Item FG 1", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 10), new DateTime(2018, 9, 14), 100, "Production", "CSTMPO1809-001");
-            addrow("Over Due", "I0002", "Item FG 2", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 20), 100, "Production", "CSTMPO1809-002");
-            addrow("Over Due", "I0003", "Item FG 3", new DateTime(2018, 9, 12)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
-            addrow("Over Due", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 15), new DateTime(2018, 10, 5), 100, "Production", "CSTMPO1809-004");
-            addrow("OK", "I0001", "Item FG 1", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 10), new DateTime(2018, 9, 28), 100, "Production", "CSTMPO1809-001");
-            addrow("OK", "I0002", "Item FG 2", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 20), 100, "Production", "CSTMPO1809-002");
-            addrow("OK", "I0003", "Item FG 3", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 12), new DateTime(2018, 9, 30), 100, "Production", "CSTMPO1809-003");
-            addrow("Over Due", "I0004", "Item FG 4", new DateTime(2018, 9, 30)
-                , new DateTime(2018, 9, 15), new DateTime(2018, 10, 25), 100, "Production", "CSTMPO1809-004");
-        }
-        void addrow(string SS, string Item, string ItemName, DateTime DueDate, DateTime StartDate, DateTime EndDate, decimal Qty, string PlanType, string RefDocNo)
-        {
-            var rowe = dgvData.Rows.AddNew();
-            rowe.Cells["SS"].Value = SS;
-            rowe.Cells["Item"].Value = Item;
-            rowe.Cells["ItemName"].Value = ItemName;
-            rowe.Cells["DueDate"].Value = DueDate;
-            rowe.Cells["StartingDate"].Value = StartDate;
-            rowe.Cells["EndingDate"].Value = EndDate;
-            rowe.Cells["Quantity"].Value = Qty;
-            rowe.Cells["PlanningType"].Value = PlanType;
-            rowe.Cells["RefDocNo"].Value = RefDocNo;
-        }
         //
-
 
         private void radGridView1_CellEndEdit(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
@@ -189,11 +121,14 @@ namespace StockControl
             ft.ShowDialog();
             if (ft.okFilter)
             {
-                //radLabelElement1.Text = $"Filter date : {ft.dateFrom.ToDtString()}-{ft.dateTo.ToDtString()}";
+                radLabelElement1.Text = $"Filter date : {ft.dateFrom.ToDtString()}-{ft.dateTo.ToDtString()}";
                 //LoadData(true, ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
                 var ps = new PlanningCal_Status();
+                ps.dFrom = ft.dateFrom;
+                ps.dTo = ft.dateTo;
+                ps.ItemNo = ft.ItemNo;
+                ps.LocationItem = ft.locationItem;
                 ps.ShowDialog();
-                demo();
             }
         }
         private void btnFil_Click(object sender, EventArgs e)
@@ -202,11 +137,7 @@ namespace StockControl
             ft.ShowDialog();
             if (ft.okFilter)
             {
-                //radLabelElement1.Text = $"Filter date : {ft.dateFrom.ToDtString()}-{ft.dateTo.ToDtString()}";
-                //LoadData(false, ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
-                var ps = new PlanningCal_Status();
-                ps.ShowDialog();
-                demo();
+
             }
         }
         void LoadData(bool reCal, DateTime dtFrom, DateTime dtTo, bool MRP, bool MPS, string ItemNo, string LocationItem)

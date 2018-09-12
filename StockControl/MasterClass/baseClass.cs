@@ -146,6 +146,32 @@ namespace StockControl
                 return g;
             }
         }
+        
+        public static ReorderType getReorderType(string ReorderTypeSt)
+        {
+            if (ReorderTypeSt == "Fixed Reorder Qty")
+                return ReorderType.Fixed;
+            else if (ReorderTypeSt == "Minimum & Maximum Qty")
+                return ReorderType.MinMax;
+            else
+                return ReorderType.ByOrder;
+        }
+        public static ReplenishmentType getRepType(string RepTypeSt)
+        {
+            if (RepTypeSt == "Production")
+                return ReplenishmentType.Production;
+            else
+                return ReplenishmentType.Purchase;
+        }
+        public static InventoryGroup getInventoryGroup(string InvGroupSt)
+        {
+            if (InvGroupSt == "FG")
+                return InventoryGroup.FG;
+            else if (InvGroupSt == "SEMI")
+                return InventoryGroup.SEMI;
+            else
+                return InventoryGroup.RM;
+        }
     }
     
 

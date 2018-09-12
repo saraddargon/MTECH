@@ -202,11 +202,11 @@ namespace StockControl
 
                 if (sType == 1)
                 {
-                    var p = new CustomerPO(PONo, CstmNo);
-                    p.ShowDialog();
-                    DataLoad();
-                    PONo = "";
-                    CstmNo = "";
+                    //var p = new CustomerPO(PONo, CstmNo);
+                    //p.ShowDialog();
+                    //DataLoad();
+                    //PONo = "";
+                    //CstmNo = "";
                 }
                 else
                     this.Close();

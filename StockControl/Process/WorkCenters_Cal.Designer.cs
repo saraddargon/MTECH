@@ -360,6 +360,7 @@
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Work Center Calculate";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WorkCenters_Cal_FormClosing);
             this.Load += new System.EventHandler(this.Unit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).EndInit();
