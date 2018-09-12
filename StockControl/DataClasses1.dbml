@@ -483,22 +483,6 @@
       <Column Name="Location" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tb_Sell_FG" Member="ไs">
-    <Type Name="ไ">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="DocNo" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="DocBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Invoice" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="DocNoDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="CSTM_Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="CSTM_Address" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Barcode" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
-    </Type>
-  </Table>
   <Table Name="dbo.tb_ChargePOD" Member="tb_ChargePODs">
     <Type Name="tb_ChargePOD">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
