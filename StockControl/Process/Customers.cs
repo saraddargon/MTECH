@@ -172,7 +172,7 @@ namespace StockControl
             {
 
 
-                var g = db.mh_Customers.ToList();
+                var g = db.mh_Customers.Where(x => x.Active).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.DataSource = dt2;
                 int ck = 0;
