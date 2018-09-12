@@ -21,10 +21,11 @@ namespace StockControl
                         && (dFrom == null || (x.OrderDate >= dFrom && x.OrderDate <= dTo))).ToList();
                     foreach (var hd in m)
                     {
-                        var t = db.mh_CustomerPODTs.Where(x => x.Active && x.idCustomerPO == hd.id).ToList();
+                        var t = db.mh_CustomerPODTs.Where(x => x.Active && x.idCustomerPO == hd.id).ToList();)
                         foreach (var dt in t)
                         {
                             if (Item != "" && dt.ItemNo != Item) continue;
+                            var tool = db.mh_Items.Where(x => x.InternalNo == dt.ItemNo).FirstOrDefault();
                             l.Add(new grid_CustomerPO
                             {
                                 Status = dt.Status,
@@ -41,7 +42,12 @@ namespace StockControl
                                 OutSO = dt.OutSO,
                                 OutPlan = dt.OutPlan,
                                 id = dt.id,
-                                idCustomerPO = dt.idCustomerPO
+                                idCustomerPO = dt.idCustomerPO,
+                                GroupType = tool.GroupType,
+                                InvGroup = tool.InventoryGroup,
+                                Type = tool.Type,
+                                VendorNo = tool.VendorNo,
+                                VendorName = tool.VendorName
                             });
                         }
                     }
@@ -127,7 +133,11 @@ namespace StockControl
         public int id { get; set; }
         public int idCustomerPO { get; set; }
 
-
+        public string GroupType { get; set; }
+        public string Type { get; set; }
+        public string InvGroup { get; set; }
+        public string VendorNo { get; set; }
+        public string VendorName { get; set; }
     }
     public class grid_Planning
     {

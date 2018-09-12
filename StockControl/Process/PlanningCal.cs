@@ -66,9 +66,7 @@ namespace StockControl
         {
             try
             {
-
-
-
+                
             }
             catch (Exception ex) { }
         }

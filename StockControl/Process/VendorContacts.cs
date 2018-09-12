@@ -161,13 +161,18 @@ namespace StockControl
                     setEdit(true);
             }
 
+            if (tAction == TypeAction.Add)
+                txtNo.ReadOnly = false;
+            else
+                txtNo.ReadOnly = true;
+
 
             //    radGridView1.DataSource = dt;
         }
 
         void setEdit(bool ss)
         {
-            txtNo.ReadOnly = !ss;
+            //txtNo.ReadOnly = !ss;
             txtBranchCode.ReadOnly = !ss;
             txtName.ReadOnly = !ss;
             txtAddress.ReadOnly = !ss;
@@ -330,7 +335,7 @@ namespace StockControl
             dgvData.AllowAddNewRow = false;
             setEdit(true);
             lblStatus.Text = "Edit";
-            tAction = TypeAction.Edit;
+            //tAction = TypeAction.Edit;
         }
         private void ViewClick()
         {
@@ -341,8 +346,7 @@ namespace StockControl
             dgvData.AllowAddNewRow = false;
             setEdit(false);
             lblStatus.Text = "View";
-            tAction = TypeAction.View;
-            //DataLoad();
+            //tAction = TypeAction.View;
         }
         private void btnNew_Click(object sender, EventArgs e)
         {

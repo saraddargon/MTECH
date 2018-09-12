@@ -1452,6 +1452,7 @@
     <None Include="Resources\printer.png" />
     <None Include="Resources\filter.png" />
     <None Include="Resources\filter_cancel.png" />
+    <None Include="Resources\goto.png" />
     <Content Include="Shinko Mold.ico" />
   </ItemGroup>
   <ItemGroup>
