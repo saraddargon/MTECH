@@ -285,12 +285,12 @@ namespace StockControl
     partial void Insertmh_RoutingDT(mh_RoutingDT instance);
     partial void Updatemh_RoutingDT(mh_RoutingDT instance);
     partial void Deletemh_RoutingDT(mh_RoutingDT instance);
-    partial void Insertmh_CustomerPO(mh_CustomerPO instance);
-    partial void Updatemh_CustomerPO(mh_CustomerPO instance);
-    partial void Deletemh_CustomerPO(mh_CustomerPO instance);
     partial void Insertmh_CustomerPODT(mh_CustomerPODT instance);
     partial void Updatemh_CustomerPODT(mh_CustomerPODT instance);
     partial void Deletemh_CustomerPODT(mh_CustomerPODT instance);
+    partial void Insertmh_CustomerPO(mh_CustomerPO instance);
+    partial void Updatemh_CustomerPO(mh_CustomerPO instance);
+    partial void Deletemh_CustomerPO(mh_CustomerPO instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -1035,19 +1035,19 @@ namespace StockControl
 			}
 		}
 		
-		public System.Data.Linq.Table<mh_CustomerPO> mh_CustomerPOs
-		{
-			get
-			{
-				return this.GetTable<mh_CustomerPO>();
-			}
-		}
-		
 		public System.Data.Linq.Table<mh_CustomerPODT> mh_CustomerPODTs
 		{
 			get
 			{
 				return this.GetTable<mh_CustomerPODT>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_CustomerPO> mh_CustomerPOs
+		{
+			get
+			{
+				return this.GetTable<mh_CustomerPO>();
 			}
 		}
 		
@@ -34902,308 +34902,6 @@ namespace StockControl
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CustomerPO")]
-	public partial class mh_CustomerPO : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private int _DemandType;
-		
-		private string _CustomerNo;
-		
-		private string _CustomerPONo;
-		
-		private System.DateTime _OrderDate;
-		
-		private bool _Active;
-		
-		private string _Remark;
-		
-		private string _CreateBy;
-		
-		private System.DateTime _CreateDate;
-		
-		private string _UpdateBy;
-		
-		private System.DateTime _UpdateDate;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnDemandTypeChanging(int value);
-    partial void OnDemandTypeChanged();
-    partial void OnCustomerNoChanging(string value);
-    partial void OnCustomerNoChanged();
-    partial void OnCustomerPONoChanging(string value);
-    partial void OnCustomerPONoChanged();
-    partial void OnOrderDateChanging(System.DateTime value);
-    partial void OnOrderDateChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    partial void OnRemarkChanging(string value);
-    partial void OnRemarkChanged();
-    partial void OnCreateByChanging(string value);
-    partial void OnCreateByChanged();
-    partial void OnCreateDateChanging(System.DateTime value);
-    partial void OnCreateDateChanged();
-    partial void OnUpdateByChanging(string value);
-    partial void OnUpdateByChanged();
-    partial void OnUpdateDateChanging(System.DateTime value);
-    partial void OnUpdateDateChanged();
-    #endregion
-		
-		public mh_CustomerPO()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DemandType", DbType="Int NOT NULL")]
-		public int DemandType
-		{
-			get
-			{
-				return this._DemandType;
-			}
-			set
-			{
-				if ((this._DemandType != value))
-				{
-					this.OnDemandTypeChanging(value);
-					this.SendPropertyChanging();
-					this._DemandType = value;
-					this.SendPropertyChanged("DemandType");
-					this.OnDemandTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerNo", DbType="NVarChar(50)")]
-		public string CustomerNo
-		{
-			get
-			{
-				return this._CustomerNo;
-			}
-			set
-			{
-				if ((this._CustomerNo != value))
-				{
-					this.OnCustomerNoChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerNo = value;
-					this.SendPropertyChanged("CustomerNo");
-					this.OnCustomerNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerPONo", DbType="NVarChar(100)")]
-		public string CustomerPONo
-		{
-			get
-			{
-				return this._CustomerPONo;
-			}
-			set
-			{
-				if ((this._CustomerPONo != value))
-				{
-					this.OnCustomerPONoChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerPONo = value;
-					this.SendPropertyChanged("CustomerPONo");
-					this.OnCustomerPONoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderDate", DbType="DateTime NOT NULL")]
-		public System.DateTime OrderDate
-		{
-			get
-			{
-				return this._OrderDate;
-			}
-			set
-			{
-				if ((this._OrderDate != value))
-				{
-					this.OnOrderDateChanging(value);
-					this.SendPropertyChanging();
-					this._OrderDate = value;
-					this.SendPropertyChanged("OrderDate");
-					this.OnOrderDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(200)")]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this.OnRemarkChanging(value);
-					this.SendPropertyChanging();
-					this._Remark = value;
-					this.SendPropertyChanged("Remark");
-					this.OnRemarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(50)")]
-		public string CreateBy
-		{
-			get
-			{
-				return this._CreateBy;
-			}
-			set
-			{
-				if ((this._CreateBy != value))
-				{
-					this.OnCreateByChanging(value);
-					this.SendPropertyChanging();
-					this._CreateBy = value;
-					this.SendPropertyChanged("CreateBy");
-					this.OnCreateByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
-		public System.DateTime CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this.OnCreateDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreateDate = value;
-					this.SendPropertyChanged("CreateDate");
-					this.OnCreateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="NVarChar(50)")]
-		public string UpdateBy
-		{
-			get
-			{
-				return this._UpdateBy;
-			}
-			set
-			{
-				if ((this._UpdateBy != value))
-				{
-					this.OnUpdateByChanging(value);
-					this.SendPropertyChanging();
-					this._UpdateBy = value;
-					this.SendPropertyChanged("UpdateBy");
-					this.OnUpdateByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateDate", DbType="DateTime NOT NULL")]
-		public System.DateTime UpdateDate
-		{
-			get
-			{
-				return this._UpdateDate;
-			}
-			set
-			{
-				if ((this._UpdateDate != value))
-				{
-					this.OnUpdateDateChanging(value);
-					this.SendPropertyChanging();
-					this._UpdateDate = value;
-					this.SendPropertyChanged("UpdateDate");
-					this.OnUpdateDateChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CustomerPODT")]
 	public partial class mh_CustomerPODT : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -35625,6 +35323,308 @@ namespace StockControl
 					this._Status = value;
 					this.SendPropertyChanged("Status");
 					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CustomerPO")]
+	public partial class mh_CustomerPO : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _DemandType;
+		
+		private string _CustomerNo;
+		
+		private string _CustomerPONo;
+		
+		private System.DateTime _OrderDate;
+		
+		private bool _Active;
+		
+		private string _Remark;
+		
+		private string _CreateBy;
+		
+		private System.DateTime _CreateDate;
+		
+		private string _UpdateBy;
+		
+		private System.DateTime _UpdateDate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnDemandTypeChanging(int value);
+    partial void OnDemandTypeChanged();
+    partial void OnCustomerNoChanging(string value);
+    partial void OnCustomerNoChanged();
+    partial void OnCustomerPONoChanging(string value);
+    partial void OnCustomerPONoChanged();
+    partial void OnOrderDateChanging(System.DateTime value);
+    partial void OnOrderDateChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnCreateByChanging(string value);
+    partial void OnCreateByChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
+    partial void OnUpdateByChanging(string value);
+    partial void OnUpdateByChanged();
+    partial void OnUpdateDateChanging(System.DateTime value);
+    partial void OnUpdateDateChanged();
+    #endregion
+		
+		public mh_CustomerPO()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DemandType", DbType="Int NOT NULL")]
+		public int DemandType
+		{
+			get
+			{
+				return this._DemandType;
+			}
+			set
+			{
+				if ((this._DemandType != value))
+				{
+					this.OnDemandTypeChanging(value);
+					this.SendPropertyChanging();
+					this._DemandType = value;
+					this.SendPropertyChanged("DemandType");
+					this.OnDemandTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerNo", DbType="NVarChar(50)")]
+		public string CustomerNo
+		{
+			get
+			{
+				return this._CustomerNo;
+			}
+			set
+			{
+				if ((this._CustomerNo != value))
+				{
+					this.OnCustomerNoChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerNo = value;
+					this.SendPropertyChanged("CustomerNo");
+					this.OnCustomerNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerPONo", DbType="NVarChar(100)")]
+		public string CustomerPONo
+		{
+			get
+			{
+				return this._CustomerPONo;
+			}
+			set
+			{
+				if ((this._CustomerPONo != value))
+				{
+					this.OnCustomerPONoChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerPONo = value;
+					this.SendPropertyChanged("CustomerPONo");
+					this.OnCustomerPONoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderDate", DbType="DateTime NOT NULL")]
+		public System.DateTime OrderDate
+		{
+			get
+			{
+				return this._OrderDate;
+			}
+			set
+			{
+				if ((this._OrderDate != value))
+				{
+					this.OnOrderDateChanging(value);
+					this.SendPropertyChanging();
+					this._OrderDate = value;
+					this.SendPropertyChanged("OrderDate");
+					this.OnOrderDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(200)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(50)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this.OnCreateByChanging(value);
+					this.SendPropertyChanging();
+					this._CreateBy = value;
+					this.SendPropertyChanged("CreateBy");
+					this.OnCreateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="NVarChar(50)")]
+		public string UpdateBy
+		{
+			get
+			{
+				return this._UpdateBy;
+			}
+			set
+			{
+				if ((this._UpdateBy != value))
+				{
+					this.OnUpdateByChanging(value);
+					this.SendPropertyChanging();
+					this._UpdateBy = value;
+					this.SendPropertyChanged("UpdateBy");
+					this.OnUpdateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime UpdateDate
+		{
+			get
+			{
+				return this._UpdateDate;
+			}
+			set
+			{
+				if ((this._UpdateDate != value))
+				{
+					this.OnUpdateDateChanging(value);
+					this.SendPropertyChanging();
+					this._UpdateDate = value;
+					this.SendPropertyChanged("UpdateDate");
+					this.OnUpdateDateChanged();
 				}
 			}
 		}

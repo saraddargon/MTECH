@@ -201,37 +201,37 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    bool fRow = true;
-                    foreach (var id in idList)
-                    {
-                        var c = db.mh_CustomerPOs.Where(x => x.id == id).First();
-                        if (fRow)
-                        {
-                            txtCSTMNo.Text = c.CustomerNo;
-                            cbbCSTM.SelectedValue = c.CustomerNo;
-                            dtSODate.Value = DateTime.Now;
-                            cbbCSTM_SelectedIndexChanged(null, null);
-                            txtRemark.Text = c.RemarkHD;
-                            fRow = false;
-                        }
-                        //detail
-                        var rowe = dgvData.Rows.AddNew();
-                        var t = db.mh_Items.Where(x => x.InternalNo == c.ItemNo).First();
-                        var cstm = db.mh_Customers.Where(x => x.No == c.CustomerNo).First();
-                        addRow(rowe.Index, c.ReqDate, c.ItemNo, c.ItemName, "", t.Location
-                            , Math.Round(c.OutSO / c.PCSUnit, 2), c.UOM, c.PCSUnit, c.PricePerUnit, c.Amount, false, c.OutSO, c.OutPlan
-                            , 0, "Waiting", "Waiting", cstm.VatGroup, t.VatType, c.CustomerPONo, c.id, t.ReplenishmentType
-                            , "T");
+                    //bool fRow = true;
+                    //foreach (var id in idList)
+                    //{
+                    //    var c = db.mh_CustomerPOs.Where(x => x.id == id).First();
+                    //    if (fRow)
+                    //    {
+                    //        txtCSTMNo.Text = c.CustomerNo;
+                    //        cbbCSTM.SelectedValue = c.CustomerNo;
+                    //        dtSODate.Value = DateTime.Now;
+                    //        cbbCSTM_SelectedIndexChanged(null, null);
+                    //        txtRemark.Text = c.RemarkHD;
+                    //        fRow = false;
+                    //    }
+                    //    //detail
+                    //    var rowe = dgvData.Rows.AddNew();
+                    //    var t = db.mh_Items.Where(x => x.InternalNo == c.ItemNo).First();
+                    //    var cstm = db.mh_Customers.Where(x => x.No == c.CustomerNo).First();
+                    //    addRow(rowe.Index, c.ReqDate, c.ItemNo, c.ItemName, "", t.Location
+                    //        , Math.Round(c.OutSO / c.PCSUnit, 2), c.UOM, c.PCSUnit, c.PricePerUnit, c.Amount, false, c.OutSO, c.OutPlan
+                    //        , 0, "Waiting", "Waiting", cstm.VatGroup, t.VatType, c.CustomerPONo, c.id, t.ReplenishmentType
+                    //        , "T");
 
-                        //potoso.Add(new po_to_so
-                        //{
-                        //    idPO = c.id,
-                        //    poQty = c.Quantity * c.PCSUnit,
-                        //    poAmnt = c.Amount
-                        //});
-                    }
-                    SetRowNo1(dgvData);
-                    CallTotal();
+                    //    //potoso.Add(new po_to_so
+                    //    //{
+                    //    //    idPO = c.id,
+                    //    //    poQty = c.Quantity * c.PCSUnit,
+                    //    //    poAmnt = c.Amount
+                    //    //});
+                    //}
+                    //SetRowNo1(dgvData);
+                    //CallTotal();
                 }
             }
             catch (Exception ex)
@@ -422,33 +422,34 @@ namespace StockControl
                     err += " “Items:” is empty \n";
                 if (err == "")
                 {
-                    foreach (var item in dgvData.Rows.Where(x => x.IsVisible))
-                    {
-                        string itemNo = item.Cells["ItemNo"].Value.ToSt();
-                        if (itemNo == "") continue;
-                        if (item.Cells["ReqDate"].Value == null)
-                            err += " “Request Date.:” is empty \n";
-                        if (item.Cells["Qty"].Value.ToDecimal() <= 0)
-                            err += " “Qty:” is less than 0 \n";
-                        int idPO = item.Cells["RefId"].Value.ToInt();
-                        if (idPO > 0)
-                        {
-                            var Qty = item.Cells["Qty"].Value.ToDecimal();
-                            using (var db = new DataClasses1DataContext())
-                            {
-                                var qtyPO = db.mh_CustomerPOs.Where(x => x.id == idPO).First().Quantity;
-                                int idSO = item.Cells["id"].Value.ToInt();
-                                var qtySO = db.mh_SaleOrders.Where(x => x.Active && x.RefId == idPO && x.id != idSO).ToList();
-                                if (qtySO.Sum(x => x.Qty * x.PCSUnit) + Qty > qtyPO)
-                                {
-                                    err += " “Qty:” is more than Customer P/O Qty.\n";
-                                }
-                            }
-                        }
+                    //foreach (var item in dgvData.Rows.Where(x => x.IsVisible))
+                    //{
+                    //    string itemNo = item.Cells["ItemNo"].Value.ToSt();
+                    //    if (itemNo == "") continue;
+                    //    if (item.Cells["ReqDate"].Value == null)
+                    //        err += " “Request Date.:” is empty \n";
+                    //    if (item.Cells["Qty"].Value.ToDecimal() <= 0)
+                    //        err += " “Qty:” is less than 0 \n";
+                    //    int idPO = item.Cells["RefId"].Value.ToInt();
+                    //    if (idPO > 0)
+                    //    {
+                    //        var Qty = item.Cells["Qty"].Value.ToDecimal();
+                    //        using (var db = new DataClasses1DataContext())
+                    //        {
+                    //            var qtyPO = db.mh_CustomerPOs.Where(x => x.id == idPO).First().Quantity;
+                    //            int idSO = item.Cells["id"].Value.ToInt();
+                    //            var qtySO = db.mh_SaleOrders.Where(x => x.Active && x.RefId == idPO && x.id != idSO).ToList();
+                    //            if (qtySO.Sum(x => x.Qty * x.PCSUnit) + Qty > qtyPO)
+                    //            {
+                    //                err += " “Qty:” is more than Customer P/O Qty.\n";
+                    //            }
+                    //        }
+                    //    }
 
-                        if (err != "")
-                            break;
-                    }
+                    //    if (err != "")
+                    //        break;
+                    //}
+
                 }
 
                 if (!err.Equals(""))
@@ -580,23 +581,23 @@ namespace StockControl
         {
             using (var db = new DataClasses1DataContext())
             {//Update Customer P/O (Out Sale Order Q'ty)
-                foreach (var idPO in dgvData.Rows.Select(x => x.Cells["RefId"].Value.ToInt()))
-                {
-                    if (idPO == 0) continue;
-                    var c = db.mh_CustomerPOs.Where(x => x.id == idPO).First();
-                    var m = db.mh_SaleOrders.Where(x => x.Active && x.RefId == idPO).ToList();
-                    decimal qq = 0.00m;
-                    if (m.Count > 0)
-                        qq = m.Sum(x => x.Qty * x.PCSUnit);
-                    c.OutSO = (c.Quantity * c.PCSUnit) - qq;
-                    if (c.OutSO == c.Quantity)
-                        c.Status = "Waiting";
-                    else if (c.OutSO <= 0)
-                        c.Status = "Completed";
-                    else
-                        c.Status = "Proeces";
-                    db.SubmitChanges();
-                }
+                //foreach (var idPO in dgvData.Rows.Select(x => x.Cells["RefId"].Value.ToInt()))
+                //{
+                //    if (idPO == 0) continue;
+                //    var c = db.mh_CustomerPOs.Where(x => x.id == idPO).First();
+                //    var m = db.mh_SaleOrders.Where(x => x.Active && x.RefId == idPO).ToList();
+                //    decimal qq = 0.00m;
+                //    if (m.Count > 0)
+                //        qq = m.Sum(x => x.Qty * x.PCSUnit);
+                //    c.OutSO = (c.Quantity * c.PCSUnit) - qq;
+                //    if (c.OutSO == c.Quantity)
+                //        c.Status = "Waiting";
+                //    else if (c.OutSO <= 0)
+                //        c.Status = "Completed";
+                //    else
+                //        c.Status = "Proeces";
+                //    db.SubmitChanges();
+                //}
             }
         }
 

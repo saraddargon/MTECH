@@ -86,41 +86,41 @@ namespace StockControl
             //dt.Rows.Clear();
             try
             {
-                dgvData.DataSource = null;
-                this.Cursor = Cursors.WaitCursor;
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    string pono = txtPONo.Text;
-                    string cstmno = txtCSTMNo.Text;
-                    string item = cbbItem.SelectedValue.ToSt();
-                    DateTime dFrom = (cbChkDate.Checked) ? dtFrom.Value.Date : new DateTime(1999, 1, 1);
-                    DateTime dTo = (cbChkDate.Checked) ? dtTo.Value.Date.AddDays(1).AddMinutes(1) : DateTime.MaxValue;
+                //dgvData.DataSource = null;
+                //this.Cursor = Cursors.WaitCursor;
+                //using (DataClasses1DataContext db = new DataClasses1DataContext())
+                //{
+                //    string pono = txtPONo.Text;
+                //    string cstmno = txtCSTMNo.Text;
+                //    string item = cbbItem.SelectedValue.ToSt();
+                //    DateTime dFrom = (cbChkDate.Checked) ? dtFrom.Value.Date : new DateTime(1999, 1, 1);
+                //    DateTime dTo = (cbChkDate.Checked) ? dtTo.Value.Date.AddDays(1).AddMinutes(1) : DateTime.MaxValue;
 
-                    var t = db.mh_CustomerPOs.Where(x =>
-                                x.Active && x.DemandType == 0
-                                && (x.CustomerPONo.Contains(pono))
-                                && (x.CustomerNo == cstmno || cstmno == "")
-                                && (x.ItemNo == item || item == "")
-                                && (x.OrderDate >= dFrom && x.OrderDate <= dTo)).ToList();
-                    dgvData.DataSource = null;
-                    dgvData.AutoGenerateColumns = false;
-                    dgvData.DataSource = t;
+                //    var t = db.mh_CustomerPOs.Where(x =>
+                //                x.Active && x.DemandType == 0
+                //                && (x.CustomerPONo.Contains(pono))
+                //                && (x.CustomerNo == cstmno || cstmno == "")
+                //                && (x.ItemNo == item || item == "")
+                //                && (x.OrderDate >= dFrom && x.OrderDate <= dTo)).ToList();
+                //    dgvData.DataSource = null;
+                //    dgvData.AutoGenerateColumns = false;
+                //    dgvData.DataSource = t;
 
-                    int rNo = 1;
-                    dgvData.Rows.ToList().ForEach(x =>
-                    {
-                        x.Cells["RNo"].Value = rNo++;
-                        string cNo = x.Cells["CustomerNo"].Value.ToSt();
-                        var c = db.mh_Customers.Where(q => q.No == cNo).FirstOrDefault();
-                        if (c != null)
-                            x.Cells["CustomerName"].Value = c.Name;
+                //    int rNo = 1;
+                //    dgvData.Rows.ToList().ForEach(x =>
+                //    {
+                //        x.Cells["RNo"].Value = rNo++;
+                //        string cNo = x.Cells["CustomerNo"].Value.ToSt();
+                //        var c = db.mh_Customers.Where(q => q.No == cNo).FirstOrDefault();
+                //        if (c != null)
+                //            x.Cells["CustomerName"].Value = c.Name;
 
-                        if (DateTime.Now <= x.Cells["ReqDate"].Value.ToDateTime().Value)
-                            x.Cells["SS"].Value = 1;
-                        else
-                            x.Cells["SS"].Value = 2;
-                    });
-                }
+                //        if (DateTime.Now <= x.Cells["ReqDate"].Value.ToDateTime().Value)
+                //            x.Cells["SS"].Value = 1;
+                //        else
+                //            x.Cells["SS"].Value = 2;
+                //    });
+                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             this.Cursor = Cursors.Default;
@@ -246,11 +246,11 @@ namespace StockControl
 
                 if (sType == 1)
                 {
-                    var p = new CustomerPO(PONo, CstmNo);
-                    p.ShowDialog();
-                    DataLoad();
-                    PONo = "";
-                    CstmNo = "";
+                    //var p = new CustomerPO(PONo, CstmNo);
+                    //p.ShowDialog();
+                    //DataLoad();
+                    //PONo = "";
+                    //CstmNo = "";
                 }
                 else
                     this.Close();
