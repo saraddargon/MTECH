@@ -179,7 +179,7 @@ namespace StockControl
                 foreach (var x in radGridView1.Rows)
                 {
                     string cstmNo = x.Cells["VendorNo"].Value.ToSt();
-                    var m = db.mh_CustomerContacts.Where(w => w.CustomerNo == cstmNo && w.Def && w.Active).ToList();
+                    var m = db.mh_CustomerContacts.Where(w => w.idCustomer == 0 && w.Def && w.Active).ToList();
                     if (m.Count() > 0)
                     {
                         var mm = m.First();
@@ -389,7 +389,7 @@ namespace StockControl
             //btnEdit.Enabled = false;
             //btnView.Enabled = true;
             //radGridView1.Rows.AddNew();
-            var c = new CustomerContacts("", TypeAction.Add);
+            var c = new CustomerContacts(0, TypeAction.Add);
             c.ShowDialog();
             DataLoad();
         }
@@ -402,7 +402,7 @@ namespace StockControl
             if (radGridView1.CurrentCell != null)
             {
                 string cstm = radGridView1.CurrentCell.RowInfo.Cells["VendorNo"].Value.ToSt();
-                var c = new CustomerContacts(cstm, TypeAction.Edit);
+                var c = new CustomerContacts(0, TypeAction.Edit);
                 c.ShowDialog();
                 DataLoad();
             }
@@ -417,7 +417,7 @@ namespace StockControl
             if (radGridView1.CurrentCell != null)
             {
                 string cstm = radGridView1.CurrentCell.RowInfo.Cells["VendorNo"].Value.ToSt();
-                var c = new CustomerContacts(cstm, TypeAction.View);
+                var c = new CustomerContacts(0, TypeAction.View);
                 c.ShowDialog();
                 DataLoad();
             }

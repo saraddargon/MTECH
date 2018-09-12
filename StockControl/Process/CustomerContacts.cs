@@ -243,7 +243,7 @@ namespace StockControl
                         if (con == null)
                             con = new mh_CustomerContact();
                         con.Def = c.Cells["Def"].Value.ToBool();
-                        con.CustomerNo = cstmno;
+                        con.id = 0;
                         con.ContactName = c.Cells["ContactName"].Value.ToSt();
                         con.Tel = c.Cells["Tel"].Value.ToSt();
                         con.Fax = c.Cells["Fax"].Value.ToSt();
