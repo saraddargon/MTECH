@@ -186,6 +186,10 @@ namespace StockControl
                     dtDate2.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
 
                 }
+                else if(Type == "ReportProductionOrder")
+                {
+                    lblName.Text = "เลขที่เอกสาร";
+                }
             }
         }
 
@@ -665,8 +669,28 @@ namespace StockControl
                         else
                             MessageBox.Show("not found.");
                     }
+                    if (Type.Equals("ReportProductionOrder"))
+                    {
+                        string Dt1 = "";
+                        string Dt2 = "";
+                        var g = (from ix in db.sp_R022_ReportProductsOrder(PRNo1, PRNo2, Dt1, Dt2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        if (g.Count() > 0)
+                        {
+                            
+                            Report.Reportx1.Value = new string[4];
+                            Report.Reportx1.Value[0] = PRNo1;
+                            Report.Reportx1.Value[1] = PRNo2;
+                            Report.Reportx1.Value[2] = Dt1;
+                            Report.Reportx1.Value[3] = Dt2;
+                            Report.Reportx1.WReport = "ReporProductionOrder";
+                            Report.Reportx1 op = new Report.Reportx1("ReporProductionOrder.rpt");
+                            op.Show();
+                        }
+                        else
+                            MessageBox.Show("not found.");
+                    }
 
-                    
+
                 }
 
             }

@@ -560,7 +560,8 @@ namespace StockControl
         {
             try
             {
-
+                PrintPR a = new PrintPR(txtProductionNo.Text, txtProductionNo.Text, "ReportProductionOrder");
+                a.ShowDialog();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }

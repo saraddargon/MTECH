@@ -1114,6 +1114,7 @@ namespace StockControl
                             return;
 
                         AddPart();
+                        //AddBom();
                         DataLoad();
                        
                         Ac = "View";

@@ -197,7 +197,7 @@ namespace StockControl
             switch (inventoryGroup)
             {
                 case "RM": return InventoryGroup.RM;
-                case "SEMI": return InventoryGroup.Semi;
+                case "SEMI": return InventoryGroup.SEMI;
                 case "FG": return InventoryGroup.FG;
                 default: return InventoryGroup.RM;
             }

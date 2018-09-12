@@ -331,7 +331,15 @@ namespace Report
                         // rptDc.SetParameterValue("@Action", Convert.ToInt32(ClassReport.Value[1]));
                     }
                     break;
-
+                case "ReporProductionOrder":
+                    {
+                        rptDc.SetParameterValue("@DocumentNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DocumentNo2", Convert.ToString(Value[1].ToString()));
+                        rptDc.SetParameterValue("@Dt1", Convert.ToString(Value[2].ToString()));
+                        rptDc.SetParameterValue("@Dt2", Convert.ToString(Value[3].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
 
 
 

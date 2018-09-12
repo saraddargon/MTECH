@@ -203,6 +203,7 @@ namespace StockControl
                         && a.InternalName.Contains(txtPartName.Text)
                         && a.VendorName.Contains(txtVendorName.Text)
                         && a.InventoryGroup.Contains(ddlTypePart.Text)
+                        && a.Active==true
                         )
                         .ToList();
                     if(g.Count>0)
