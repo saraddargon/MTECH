@@ -91,14 +91,14 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(636, 160);
+            this.radRibbonBar1.Size = new System.Drawing.Size(496, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
             this.radMenuSeparatorItem1,
             this.radMenuItem2});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Shift (กะทำงาน)";
+            this.radRibbonBar1.Text = "Manufacturing Setup";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
             // 
@@ -218,9 +218,9 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 491);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 383);
             this.radStatusStrip1.Name = "radStatusStrip1";
-            this.radStatusStrip1.Size = new System.Drawing.Size(636, 26);
+            this.radStatusStrip1.Size = new System.Drawing.Size(496, 26);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
             // 
@@ -228,7 +228,7 @@
             // 
             this.radLabelElement1.Name = "radLabelElement1";
             this.radStatusStrip1.SetSpring(this.radLabelElement1, false);
-            this.radLabelElement1.Text = "Status : รายละเอียดกะทำงาน";
+            this.radLabelElement1.Text = "Status : Manufacturing Setup";
             this.radLabelElement1.TextWrap = true;
             // 
             // panel1
@@ -243,7 +243,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(636, 331);
+            this.panel1.Size = new System.Drawing.Size(496, 223);
             this.panel1.TabIndex = 2;
             // 
             // cbbShowCapa
@@ -255,6 +255,7 @@
             this.cbbShowCapa.Size = new System.Drawing.Size(100, 20);
             this.cbbShowCapa.TabIndex = 2;
             this.cbbShowCapa.ThemeName = "Office2010Blue";
+            this.cbbShowCapa.Visible = false;
             // 
             // txtEndingTime
             // 
@@ -287,6 +288,7 @@
             this.radLabel3.Size = new System.Drawing.Size(109, 18);
             this.radLabel3.TabIndex = 0;
             this.radLabel3.Text = "Show Capacity UOM";
+            this.radLabel3.Visible = false;
             // 
             // radLabel2
             // 
@@ -342,7 +344,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(636, 517);
+            this.ClientSize = new System.Drawing.Size(496, 409);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);
@@ -354,7 +356,7 @@
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Shift (กะทำงาน)";
+            this.Text = "Manufacturing Setup";
             this.Load += new System.EventHandler(this.Unit_Load);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Unit_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();

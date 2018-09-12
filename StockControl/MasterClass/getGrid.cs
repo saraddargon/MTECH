@@ -95,6 +95,13 @@ namespace StockControl
                 //----Remain cut by Shipment
             }
         }
+        public decimal Shipped
+        {
+            get
+            {
+                return Qty - Remain;
+            }
+        }
         public bool Plan
         {
             get
