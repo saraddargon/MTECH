@@ -69,6 +69,7 @@ namespace StockControl
             dt_HD.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
             dt_HD.Columns.Add(new DataColumn("ModifyBy", typeof(string)));
             dt_HD.Columns.Add(new DataColumn("ModifyDate", typeof(DateTime)));
+            dt_HD.Columns.Add(new DataColumn("ShelfNo", typeof(DateTime)));
 
 
             dt_DT.Columns.Add(new DataColumn("id", typeof(string)));
@@ -181,11 +182,11 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     var g = (from a in db.tb_BomHDs
-                              join b in db.mh_Items on a.PartNo equals b.InternalNo
-                              where (a.Status != "Cancel")
-                              && (b.Active == true)
-                              && (a.BomNo == (txtBomNo.Text.Trim()))
-                              && (a.PartNo == txtPartNo.Text.Trim())
+                             join b in db.mh_Items on a.PartNo equals b.InternalNo
+                             where (a.Status != "Cancel")
+                             && (b.Active == true)
+                             && (a.BomNo == (txtBomNo.Text.Trim()))
+                             && (a.PartNo == txtPartNo.Text.Trim())
 
                              select new
                              {
@@ -197,14 +198,17 @@ namespace StockControl
                                  Remark = a.Remark,
                                  Description = a.Description,
                                  Year_ = a.Year_,
-                                 Month_= a.Month_,
+                                 Month_ = a.Month_,
                                  CreateBy = a.CreateBy,
                                  CreateDate = a.CreateDate,
                                  ModifyBy = a.ModifyBy,
                                  ModifyDate = a.ModifyDate,
                                  StartDate = a.StartDate,
                                  EndDate = a.EndDate,
-                                 Status = a.Status
+                                 Status = a.Status,
+                                 ReplenishmentType = b.ReplenishmentType
+                                 , GroupType = b.GroupType
+                                 , Version = a.Version
 
                              }//.Where(ab => ab.VendorNo.Contains(Vendorno))
                               ).ToList();
@@ -237,6 +241,7 @@ namespace StockControl
                         txtBomNo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().BomNo).ToUpper();
                         txtYear_.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Year_);
                         txtMonth_.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Month_);
+                        txtVersion.Text = dbClss.TSt(g.FirstOrDefault().Version);
 
                         txtCreateby.Text = StockControl.dbClss.TSt(g.FirstOrDefault().CreateBy);
                         DateTime temp = Convert.ToDateTime(g.FirstOrDefault().CreateDate,new CultureInfo("en-US"));
@@ -317,8 +322,10 @@ namespace StockControl
                                 var i2 = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == StockControl.dbClss.TSt(x.Cells["dgvComponent"].Value)).ToList();
                                 if (i2.Count() > 0)
                                 {
-                                   // x.Cells["dgvComponentName"].Value = StockControl.dbClss.TSt(i2.FirstOrDefault().InternalName);
+                                    x.Cells["dgvGroupType"].Value = StockControl.dbClss.TSt(i2.FirstOrDefault().InventoryGroup);
                                     x.Cells["dgvType"].Value = StockControl.dbClss.TSt(i2.FirstOrDefault().InventoryGroup);
+                                    x.Cells["dgvReplenishmentType"].Value = StockControl.dbClss.TSt(i2.FirstOrDefault().ReplenishmentType);
+
                                 }
                             }
                         }
@@ -446,6 +453,7 @@ namespace StockControl
                         //if (StockControl.dbClss.TSt(gg.Barcode).Equals(""))
                         //    gg.Barcode = StockControl.dbClss.SaveQRCode2D(txtPRNo.Text.Trim());
 
+                        gg.Version = txtVersion.Text.Trim();
                         gg.Status = "Process";
                         //if (!txtDescription.Text.Trim().Equals(row["Description"].ToString()))
                         //{
@@ -502,6 +510,7 @@ namespace StockControl
                     gg.PartDescription = txtDescription.Text.Trim();
                     gg.PartName = txtPartName.Text.Trim();
                     gg.Remark = txtRemarkHD.Text.Trim();
+                    gg.Version = txtVersion.Text.Trim();
                     gg.Status = "Process";
                     if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                     {
@@ -679,6 +688,7 @@ namespace StockControl
                 txtRemarkHD.Enabled = ss;              
                 btnAdd_Item.Enabled = ss;
                 btnDel_Item.Enabled = ss;
+                txtVersion.Enabled = ss;
                
             }
             else if (Condition.Equals("View"))
@@ -691,7 +701,8 @@ namespace StockControl
                 dgvData.ReadOnly = !ss;
                 txtRemarkHD.Enabled = ss; 
                 btnAdd_Item.Enabled = ss;
-                btnDel_Item.Enabled = ss;               
+                btnDel_Item.Enabled = ss;
+                txtVersion.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
@@ -703,7 +714,8 @@ namespace StockControl
                 dgvData.ReadOnly = !ss;
                 txtRemarkHD.Enabled = ss;              
                 btnAdd_Item.Enabled = ss;
-                btnDel_Item.Enabled = ss;               
+                btnDel_Item.Enabled = ss;
+                txtVersion.Enabled = ss;
             }
         }
        
@@ -1181,23 +1193,83 @@ namespace StockControl
                     decimal PCSUnit = dbClss.Con_UOM(StockControl.dbClss.TSt(g.FirstOrDefault().InternalNo)
                             , StockControl.dbClss.TSt(g.FirstOrDefault().ConsumptionUOM));
 
-                    dgvData.Rows.Add(Row.ToString()
-                        , txtPartNo.Text.Trim()
-                        , CodeNo
-                         //StockControl.dbClss.TSt(g.FirstOrDefault().InternalNo)
-                         , dbClss.TSt(g.FirstOrDefault().InternalName)
-                         , dbClss.TSt(g.FirstOrDefault().InternalDescription)
+                    //dgvData.Rows.Add(Row.ToString()
+                    //    , txtPartNo.Text.Trim()
+                    //    , CodeNo
+                    //     //StockControl.dbClss.TSt(g.FirstOrDefault().InternalNo)
+                    //     , dbClss.TSt(g.FirstOrDefault().InternalName)
+                    //     , dbClss.TSt(g.FirstOrDefault().InternalDescription)
+                    //     , dbClss.TSt(g.FirstOrDefault().GroupType)
+                    //    , StockControl.dbClss.TSt(g.FirstOrDefault().InventoryGroup)
+                    //    , OrderQty
+                    //    //, StockControl.dbClss.TDe(g.FirstOrDefault().PCSUnit)
+                    //    , StockControl.dbClss.TSt(g.FirstOrDefault().ConsumptionUOM)
+                    //    , PCSUnit
+                    //    , 0//1 * StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
+                    //    , 0
+                    //    , 0
+                    //    ,0
+                    //    , dbClss.TSt(g.FirstOrDefault().ReplenishmentType)
+                    //    );
+
+                    Add_Item(Row.ToString(), CodeNo, dbClss.TSt(g.FirstOrDefault().InternalNo)
+                       , dbClss.TSt(g.FirstOrDefault().InternalName)
+                        , dbClss.TSt(g.FirstOrDefault().InternalDescription)
+                        , dbClss.TSt(g.FirstOrDefault().GroupType)
                         , StockControl.dbClss.TSt(g.FirstOrDefault().InventoryGroup)
                         , OrderQty
-                        //, StockControl.dbClss.TDe(g.FirstOrDefault().PCSUnit)
                         , StockControl.dbClss.TSt(g.FirstOrDefault().ConsumptionUOM)
                         , PCSUnit
-                        , 0//1 * StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost)
-                        , 0
-                        , 0
+                        , 0, 0, 0, 0, dbClss.TSt(g.FirstOrDefault().ReplenishmentType)
                         );
                 }
             }
+        }
+        private void Add_Item(string No, string dgvPartNo, string dgvComponent
+      , string dgvComponentName, string dgvComponentDescription, string dgvGroupType
+          , string dgvType
+          , decimal dgvQty, string dgvUnit, decimal dgvPCSUnit
+     , decimal dgvUnitCost, decimal dgvCost, int dgvid, int dgvLine, string dgvReplenishmentType
+
+      )
+        {
+            try
+            {
+                int rowindex = -1;
+                GridViewRowInfo ee;
+                if (rowindex == -1)
+                {
+                    ee = dgvData.Rows.AddNew();
+                }
+                else
+                    ee = dgvData.Rows[rowindex];
+
+                ee.Cells["dgvNo"].Value = No.ToString();
+                ee.Cells["dgvPartNo"].Value = dgvPartNo;
+                ee.Cells["dgvComponent"].Value = dgvComponent;
+                ee.Cells["dgvComponentName"].Value = dgvComponentName;
+                ee.Cells["dgvComponentDescription"].Value = dgvComponentDescription;
+                ee.Cells["dgvGroupType"].Value = dgvGroupType;
+                ee.Cells["dgvType"].Value = dgvType;
+                ee.Cells["dgvQty"].Value = dgvQty;
+                ee.Cells["dgvUnit"].Value = dgvUnit;
+                ee.Cells["dgvPCSUnit"].Value = dgvPCSUnit;
+                ee.Cells["dgvUnitCost"].Value = dgvUnitCost;
+                ee.Cells["dgvCost"].Value = dgvCost;
+                ee.Cells["dgvid"].Value = dgvid;
+                ee.Cells["dgvLine"].Value = dgvLine;
+                ee.Cells["dgvReplenishmentType"].Value = dgvReplenishmentType;
+
+
+                ////if (lblStatus.Text.Equals("Completed"))//|| lbStatus.Text.Equals("Reject"))
+                ////    dgvData.AllowAddNewRow = false;
+                ////else
+                ////    dgvData.AllowAddNewRow = true;
+
+                ////dbclass.SetRowNo1(dgvData);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError(this.Name, ex.Message + " : Add_Item", this.Name); }
+
         }
         private void ลบพารทToolStripMenuItem_Click(object sender, EventArgs e)
         {
