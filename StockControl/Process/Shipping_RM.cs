@@ -179,14 +179,14 @@ namespace StockControl
                             
                             txtTempJobCard.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TempJobCard);
                             txtJobCard.Text = StockControl.dbClss.TSt(g.FirstOrDefault().JobCard);
-                            txtLocation.Text = dbClss.TSt(g.FirstOrDefault().ToLocation);
+                            //txtLocation.Text = dbClss.TSt(g.FirstOrDefault().ToLocation);
 
                             if (txtTempJobCard.Text != "")
                             {
                                 cbShipforJob.Checked = true;
-                                var p = (from ix in db.tb_JobCards select ix)
+                                var p = (from ix in db.mh_ProductsOrders select ix)
                                     .Where
-                                    (a => a.JobCard.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Status != "Cancel"
+                                    (a => a.DocumentNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Status != "Cancel"
                                     ).ToList();
                                         if (p.Count > 0)
                                         {
@@ -275,26 +275,38 @@ namespace StockControl
                                 dgvData.DataSource = d;
                                 dt_d = StockControl.dbClss.LINQToDataTable(d);
 
-                                int id = 0;
+                                //int id = 0;
                                 foreach (var x in dgvData.Rows)
                                 {
                                     c += 1;
                                     x.Cells["dgvNo"].Value = c;
 
-                                    id = Convert.ToInt32(x.Cells["id"].Value);
+                                    var p = (from ix in db.mh_Items select ix)
+                                         .Where
+                                         (a => a.InternalNo.Trim().ToUpper() == Convert.ToString(x.Cells["CodeNo"].Value).Trim().ToUpper()
 
+                                         ).ToList();
+                                    if (p.Count > 0)
+                                    {
+                                        x.Cells["GroupType"].Value = dbClss.TSt(p.FirstOrDefault().GroupType);
+                                        x.Cells["Type"].Value = dbClss.TSt(p.FirstOrDefault().InventoryGroup);
+                                    }
+
+                                    x.Cells["QtyUsed"].Value = dbClss.TDe( db.Get_ShipQty(Convert.ToString(x.Cells["CodeNo"].Value),txtJobCard.Text));
+
+                                    //id = Convert.ToInt32(x.Cells["id"].Value);
                                     var s = (from ix in db.tb_Stocks select ix)
-                                       .Where(a => a.DocNo == txtSHNo.Text.Trim()
-                                           //&& a.Refid == id)
-                                           && a.Location == Convert.ToString(x.Cells["Location"].Value)
-                                           && a.CodeNo == Convert.ToString(x.Cells["CodeNo"].Value)).OrderByDescending(ab => ab.id)
-                                           
-                                           .FirstOrDefault();
+                                   .Where(a => a.DocNo == txtSHNo.Text.Trim()
+                                       //&& a.Refid == id)
+                                       && a.Location == Convert.ToString(x.Cells["Location"].Value)
+                                       && a.CodeNo == Convert.ToString(x.Cells["CodeNo"].Value)).OrderByDescending(ab => ab.id)
+
+                                       .FirstOrDefault();
                                     if (s != null)
                                     {
                                         x.Cells["RemainQty"].Value = Convert.ToDecimal(s.RemainQty);
                                         x.Cells["StandardCost"].Value = Convert.ToDecimal(s.UnitCost);
-                                        x.Cells["Amount"].Value = Math.Abs( Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QTY"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
+                                        x.Cells["Amount"].Value = Math.Abs(Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QTY"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
                                     }
                                 }
                             }
@@ -335,7 +347,7 @@ namespace StockControl
             txtJobCard.Text = "";
             txtTempJobCard.Text = "";
             txtRefidJobNo.Text = "0";
-            txtLocation.Text = "";
+            txtLocation.Text = "Production";
             txtJobCard.ReadOnly = false;
 
             txtSHNo.Text = "";
@@ -439,8 +451,8 @@ namespace StockControl
                     err += "- “ผู้เบิกสินค้า:” เป็นค่าว่าง \n";
                 if (dtRequire.Text.Equals(""))
                     err += "- “วันที่เบิกสินค้า:” เป็นค่าว่าง \n";
-                if (txtLocation.Text.Equals(""))
-                    err += "- “สถานที่ต้องการย้ายสินค้าไปเก็บ(Location):” เป็นค่าว่าง \n";
+                //if (txtLocation.Text.Equals(""))
+                //    err += "- “สถานที่ต้องการย้ายสินค้าไปเก็บ(Location):” เป็นค่าว่าง \n";
 
 
                 if (dgvData.Rows.Count <= 0)
@@ -1462,14 +1474,14 @@ namespace StockControl
                 string JobCard = txtJobCard.Text;
                 string TempJob = txtTempJobCard.Text;
                 string  Refid = txtRefidJobNo.Text  ;
-                string loca = txtLocation.Text;
+                //string loca = txtLocation.Text;
 
                 btnNew_Click(null, null);
                 txtJobCard.Text = JobCard;
 
                 txtTempJobCard.Text = TempJob;
                 txtRefidJobNo.Text = Refid;
-                txtLocation.Text = loca;
+                //txtLocation.Text = loca;
 
                 int dgvNo = 0;
                 var r = (from ix in db.sp_051_Job_list(JobCard)
@@ -1488,7 +1500,7 @@ namespace StockControl
                                         , dbClss.TDe( vv.RemainQty), vv.QtyPlan, vv.QtyPlan, vv.UnitShip, dbClss.TDe(vv.PCSUnit)
                                         , dbClss.TDe(vv.UnitCost)
                                         , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, vv.id
-                                        , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM));
+                                        , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM),dbClss.TDe(vv.QtyUsed),vv.GroupType,vv.Type);
 
                     }
                 }
@@ -1499,7 +1511,9 @@ namespace StockControl
         private void Add_Item(int Row, string CodeNo, string ItemNo
             , string ItemDescription,decimal RemainQty, decimal QtyPlan, decimal QtyShip, string UnitShip, decimal PCSUnit
            , decimal StandardCost,decimal Amount,string LotNo,string SerialNo,string MachineName,string LineName
-            ,string Remark,int id,string Location,string BaseUOM,decimal BasePCSUOM)
+            ,string Remark,int id,string Location,string BaseUOM,decimal BasePCSUOM
+            ,decimal QtyUsed,string GroupType,string Type
+            )
         {
             
 
@@ -1535,7 +1549,9 @@ namespace StockControl
                 ee.Cells["Location"].Value = Location;
                 ee.Cells["BaseUOM"].Value = BaseUOM;
                 ee.Cells["BasePCSUOM"].Value = BasePCSUOM;
-
+                ee.Cells["QtyUsed"].Value = QtyUsed;
+                ee.Cells["GroupType"].Value = GroupType;
+                ee.Cells["Type"].Value = Type;
                 //if (GroupCode != "Other")
                 //{
                 //    ee.Cells["dgvCodeNo"].ReadOnly = true;
@@ -1785,7 +1801,7 @@ namespace StockControl
                     {
                         txtTempJobCard.Text = dbClss.TSt(p.FirstOrDefault().TempNo);
                         txtRefidJobNo.Text = dbClss.TSt(p.FirstOrDefault().id);
-                        txtLocation.Text = dbClss.TSt(p.FirstOrDefault().Location);
+                        //txtLocation.Text = dbClss.TSt(p.FirstOrDefault().Location);
                         Insert_data_New_Location();
                     }
                     else if (dbClss.TSt(p.FirstOrDefault().Status) != "Completed")
@@ -1793,7 +1809,7 @@ namespace StockControl
                         txtTempJobCard.Text = "";
                         txtJobCard.Text = "";
                         txtRefidJobNo.Text = "0";
-                        txtLocation.Text = "";
+                        //txtLocation.Text = "";
                         MessageBox.Show("ใบงานการผลิตดังกล่าวถูกปิดไปแล้ว กรุณาระบุใบงานการผลิตใหม่");
                     }
 
@@ -1803,7 +1819,7 @@ namespace StockControl
                     txtJobCard.Text = "";
                     txtTempJobCard.Text = "";
                     txtRefidJobNo.Text = "0";
-                    txtLocation.Text = "";
+                    //txtLocation.Text = "";
                 }
             }
         }

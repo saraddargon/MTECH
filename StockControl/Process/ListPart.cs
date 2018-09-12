@@ -209,84 +209,17 @@ namespace StockControl
                     if(g.Count>0)
                     {
                         radGridView1.DataSource = g;
-                        dbClss.SetRowNo1(radGridView1);
+
+                        decimal RemainStock = 0;
+                        //string Location = "";
+                        foreach (var x in radGridView1.Rows)
+                        {
+                            //Location = dbClss.TSt(x.Cells["Location"].Value);
+                            RemainStock = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["InternalNo"].Value), "Invoice", 0, Convert.ToString(x.Cells["Location"].Value))));
+                            x.Cells["RemainStock"].Value = RemainStock;
+                        }
+                            dbClss.SetRowNo1(radGridView1);
                     }
-
-                    ////string Lo1 = dbClss.TSt(db.get_Location_No(1));
-                    ////string Lo2 = dbClss.TSt(db.get_Location_No(2));
-                    ////string Lo3 = dbClss.TSt(db.get_Location_No(3));
-                    ////string Lo4 = dbClss.TSt( db.get_Location_No(4));
-
-                    //var g = (from ix in db.sp_014_Select_PartList(txtCodeNo.Text,txtPartName.Text                             
-                    //         ,txtDescription.Text,"",txtVendorName.Text,ddlTypePart.Text,"",ddlLocation.Text) select ix).ToList();
-                    //if (g.Count > 0)
-                    //{
-                    //    radGridView1.DataSource = g;
-
-                    //    ////if (Lo1 == "")
-                    //    ////    radGridView1.Columns["QtyLocation11"].IsVisible = false;
-                    //    ////if (Lo2 == "")
-                    //    ////    radGridView1.Columns["QtyLocation22"].IsVisible = false;
-                    //    ////if (Lo3 == "")
-                    //    ////    radGridView1.Columns["QtyLocation33"].IsVisible = false;
-                    //    ////if (Lo4 == "")
-                    //    ////    radGridView1.Columns["QtyLocation44"].IsVisible = false;
-
-                    //    ////radGridView1.Columns["QtyLocation11"].HeaderText = Lo1;
-                    //    ////radGridView1.Columns["QtyLocation22"].HeaderText = Lo2;
-                    //    ////radGridView1.Columns["QtyLocation33"].HeaderText = Lo3;
-                    //    ////radGridView1.Columns["QtyLocation44"].HeaderText = Lo4;
-
-                    //    //foreach (var x in radGridView1.Rows)
-                    //    //{
-                    //    //    c += 1;
-                    //    //    x.Cells["No"].Value = c;
-
-                    //    //    x.Cells["QtyLocation11"].Value = 0;
-                    //    //    x.Cells["QtyLocation22"].Value = 0;
-                    //    //    x.Cells["QtyLocation33"].Value = 0;
-                    //    //    x.Cells["QtyLocation44"].Value = 0;
-
-                    //    //    //if (Lo1 == "")
-                    //    //    //    x.Cells["QtyLocation11"].ColumnInfo.IsVisible = false;
-                    //    //    //if (Lo2 == "")
-                    //    //    //    x.Cells["QtyLocation22"].ColumnInfo.IsVisible = false;
-                    //    //    //if (Lo3 == "")
-                    //    //    //    x.Cells["QtyLocation33"].ColumnInfo.IsVisible = false;
-                    //    //    //if (Lo4 == "")
-                    //    //    //    x.Cells["QtyLocation44"].ColumnInfo.IsVisible = false;
-
-                    //    //    //x.Cells["QtyLocation11"].ColumnInfo.HeaderText = Lo1;
-                    //    //    //x.Cells["QtyLocation22"].ColumnInfo.HeaderText = Lo2;
-                    //    //    //x.Cells["QtyLocation33"].ColumnInfo.HeaderText = Lo3;
-                    //    //    //x.Cells["QtyLocation44"].ColumnInfo.HeaderText = Lo4;
-
-                    //    //    if (dbClss.TSt(x.Cells["CodeNo"].Value) != "")
-                    //    //    {
-
-
-                    //    //        var l = (from ix in db.sp_031_Location_Stock(dbClss.TSt(x.Cells["CodeNo"].Value), "") select ix).ToList();
-                    //    //        if (l.Count > 0)
-                    //    //        {
-                    //    //            foreach (var ll in l)
-                    //    //            {
-                    //    //                if (Lo1 == ll.Location)
-                    //    //                {
-                    //    //                    x.Cells["QtyLocation11"].Value = ll.Qty;
-                    //    //                }
-                    //    //                else if (Lo2 == ll.Location)
-                    //    //                    x.Cells["QtyLocation22"].Value = ll.Qty;
-                    //    //                else if (Lo3 == ll.Location)
-                    //    //                    x.Cells["QtyLocation33"].Value = ll.Qty;
-                    //    //                else if (Lo4 == ll.Location)
-                    //    //                    x.Cells["QtyLocation44"].Value = ll.Qty;
-                    //    //            }
-                    //    //        }
-                    //    //    }
-
-                    //    //}
-                    //}
-
 
                 }
             }
