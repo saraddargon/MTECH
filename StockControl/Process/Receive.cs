@@ -155,27 +155,27 @@ namespace StockControl
                     Uom.DropDownStyle = RadDropDownStyle.DropDown;
                 }
                 catch { }
-                //try
-                //{
-                //    var a = (from ix in db.sp_045_ShelfNo_Select("") select ix).ToList();
-                //    //if (g.Count > 0)
-                //    //{
-                //    //GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)dgvData.Columns["ShelfNo"];
+                try
+                {
+                    var a = (from ix in db.sp_045_ShelfNo_Select("") select ix).ToList();
+                    //if (g.Count > 0)
+                    //{
+                    //GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)dgvData.Columns["ShelfNo"];
 
-                //    //col.DataSource = g;
+                    //col.DataSource = g;
 
-                //    //col.DisplayMember = "ShelfNo";
-                //    //col.ValueMember = "ShelfNo";
-                //    //col.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
-                //    //col.FilteringMode = GridViewFilteringMode.DisplayMember;
+                    //col.DisplayMember = "ShelfNo";
+                    //col.ValueMember = "ShelfNo";
+                    //col.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
+                    //col.FilteringMode = GridViewFilteringMode.DisplayMember;
 
-                //    GridViewComboBoxColumn comboColumn = (GridViewComboBoxColumn)dgvData.Columns["ShelfNo"];
+                    GridViewComboBoxColumn comboColumn = (GridViewComboBoxColumn)dgvData.Columns["ShelfNo"];
 
-                //    List<string> aaa = new List<string>();
-                //    aaa.AddRange(a.Select(o => o.ShelfNo));
-                //    comboColumn.DataSource = aaa;                    
-                //}
-                //catch { }
+                    List<string> aaa = new List<string>();
+                    aaa.AddRange(a.Select(o => o.ShelfNo));
+                    comboColumn.DataSource = aaa;
+                }
+                catch { }
 
 
 
@@ -505,6 +505,9 @@ namespace StockControl
                                 err += "- “จำนวน/หน่วย:” น้อยกว่า 0 \n";
                             if (StockControl.dbClss.TSt(rowInfo.Cells["Location"].Value).Equals(""))
                                 err += "- “สถานที่เก็บ:” เป็นค่าว่าง \n";
+                            if (StockControl.dbClss.TSt(rowInfo.Cells["ShelfNo"].Value).Equals(""))
+                                err += "- “ชึ้นเก็บ Shelf No.:” เป็นค่าว่าง \n";
+
                         }
                     }
                 }
@@ -1414,6 +1417,7 @@ namespace StockControl
                                 u.Location = vv.Location;
                                 u.BasePCSUOM = vv.PCSUnit_Base;
                                 u.BaseUOM = vv.BaseUOM;
+                               
 
                                 db.tb_Shippings.InsertOnSubmit(u);
                                 db.SubmitChanges();
@@ -2090,6 +2094,8 @@ namespace StockControl
                     string Location = "";
                     decimal Rate = 1;
 
+                   
+
                     var g = (from ix in db.mh_PurchaseOrders select ix)
                         .Where(a => a.PONo == txtDocNo.Text.Trim()
                         && a.Status != "Cancel"
@@ -2175,15 +2181,15 @@ namespace StockControl
                                         //    , SerialNo, ShelfNo, Location, Remark, TempNo, PRNo, RCNo, InvoiceNo
                                         //    , ID.ToString(), PRID.ToString(),ddlTypeReceive.Text
                                         //    );
-                                        //var l = (from ix in db.mh_Items select ix)
-                                        //        .Where(a => a.InternalNo == CodeNo.Trim()
-                                        //        && (a.Active==true)
-                                        //        ).ToList();
-                                        //if (l.Count > 0)
-                                        //{
-                                        //    Location = dbClss.TSt(l.FirstOrDefault().);
-                                        //    ShelfNo = dbClss.TSt(l.FirstOrDefault().ShelfNo);
-                                        //}
+                                        var l = (from ix in db.mh_Items select ix)
+                                                .Where(a => a.InternalNo == CodeNo.Trim()
+                                                && (a.Active == true)
+                                                ).ToList();
+                                        if (l.Count > 0)
+                                        {
+                                            Location = dbClss.TSt(l.FirstOrDefault().Location);
+                                            ShelfNo = dbClss.TSt(l.FirstOrDefault().ShelfNo);
+                                        }
                                         Add_Item(No.ToString(), Status, CodeNo, ItemNo
                                            , ItemDescription, QTY, RemainQty, Unit
                                            , PCSUnit, CostPerUnit, Amount, CRRNCY, LotNo

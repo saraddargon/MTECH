@@ -173,33 +173,33 @@ namespace StockControl
         }
         private void DataLoad()
         {
-            //dt.Rows.Clear();
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
+            ////dt.Rows.Clear();
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
 
-                var g = db.mh_Routings.Where(x => x.RoutingNo == RoutingNo && x.Active).OrderBy(x => x.RNo).ToList();
-                DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
-                dgvData.DataSource = null;
-                dgvData.DataSource = dt2;
-                int ck = 0;
-                foreach (var x in dgvData.Rows)
-                {
-                    if (row >= 0 && row == ck)
-                    {
-                        x.ViewInfo.CurrentRow = x;
-                    }
-                    ck += 1;
-                }
+            //    var g = db.mh_Routings.Where(x => x.RoutingNo == RoutingNo && x.Active).OrderBy(x => x.RNo).ToList();
+            //    DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
+            //    dgvData.DataSource = null;
+            //    dgvData.DataSource = dt2;
+            //    int ck = 0;
+            //    foreach (var x in dgvData.Rows)
+            //    {
+            //        if (row >= 0 && row == ck)
+            //        {
+            //            x.ViewInfo.CurrentRow = x;
+            //        }
+            //        ck += 1;
+            //    }
 
-                if (g.Count > 0)
-                {
-                    txtRoutingNo.Text = g.First().RoutingNo;
-                    txtRoutingName.Text = g.First().RoutingName;
-                    cbbUOM.SelectedValue = g.First().RoutingUOM;
-                }
-            }
+            //    if (g.Count > 0)
+            //    {
+            //        txtRoutingNo.Text = g.First().RoutingNo;
+            //        txtRoutingName.Text = g.First().RoutingName;
+            //        cbbUOM.SelectedValue = g.First().RoutingUOM;
+            //    }
+            //}
 
-            setRowNo();
+            //setRowNo();
 
 
             //    radGridView1.DataSource = dt;
@@ -208,76 +208,76 @@ namespace StockControl
         private bool AddUnit()
         {
             bool ck = false;
-            int C = 0;
-            try
-            {
+            //int C = 0;
+            //try
+            //{
 
-                string RoutingNo = txtRoutingNo.Text.Trim();
-                string RoutingName = txtRoutingName.Text.Trim();
-                int UOM = cbbUOM.SelectedValue.ToInt();
-                if (RoutingNo == "")
-                    RoutingNo = dbClss.GetNo(26, 2);
-                txtRoutingNo.Text = RoutingNo;
-                this.RoutingNo = RoutingNo;
+            //    string RoutingNo = txtRoutingNo.Text.Trim();
+            //    string RoutingName = txtRoutingName.Text.Trim();
+            //    int UOM = cbbUOM.SelectedValue.ToInt();
+            //    if (RoutingNo == "")
+            //        RoutingNo = dbClss.GetNo(26, 2);
+            //    txtRoutingNo.Text = RoutingNo;
+            //    this.RoutingNo = RoutingNo;
 
-                dgvData.EndEdit();
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    foreach (var g in dgvData.Rows)
-                    {
-                        if (Convert.ToString(g.Cells["dgvC"].Value).Equals("T"))
-                        {
-                            if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
-                            {
-                                var t = new mh_Routing();
-                                t.RoutingNo = RoutingNo;
-                                t.RoutingName = RoutingName;
-                                t.RoutingUOM = UOM;
-                                t.idWorkCenter = g.Cells["WorkCenter"].Value.ToInt();
-                                t.Description = g.Cells["Description"].Value.ToSt();
-                                t.SetupTime = g.Cells["SetupTime"].Value.ToDecimal();
-                                t.RunTime = g.Cells["RunTime"].Value.ToDecimal();
-                                t.WaitTime = g.Cells["WaitTime"].Value.ToDecimal();
-                                t.UnitCostPer = g.Cells["UnitCostPer"].Value.ToDecimal();
-                                t.RNo = g.Cells["No"].Value.ToInt();
-                                t.Active = true;
+            //    dgvData.EndEdit();
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        foreach (var g in dgvData.Rows)
+            //        {
+            //            if (Convert.ToString(g.Cells["dgvC"].Value).Equals("T"))
+            //            {
+            //                if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
+            //                {
+            //                    var t = new mh_Routing();
+            //                    t.RoutingNo = RoutingNo;
+            //                    t.RoutingName = RoutingName;
+            //                    t.RoutingUOM = UOM;
+            //                    t.idWorkCenter = g.Cells["WorkCenter"].Value.ToInt();
+            //                    t.Description = g.Cells["Description"].Value.ToSt();
+            //                    t.SetupTime = g.Cells["SetupTime"].Value.ToDecimal();
+            //                    t.RunTime = g.Cells["RunTime"].Value.ToDecimal();
+            //                    t.WaitTime = g.Cells["WaitTime"].Value.ToDecimal();
+            //                    t.UnitCostPer = g.Cells["UnitCostPer"].Value.ToDecimal();
+            //                    t.RNo = g.Cells["No"].Value.ToInt();
+            //                    t.Active = true;
 
-                                dbClss.AddHistory(this.Name, "Add Routing", $"เพิ่ม Routing [{t.RoutingNo}]", "");
-                                //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
-                                db.mh_Routings.InsertOnSubmit(t);
-                                db.SubmitChanges();
-                                C += 1;
-                            }
-                            else
-                            {
-                                var t = db.mh_Routings.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
-                                t.RoutingName = RoutingName;
-                                t.RoutingUOM = UOM;
-                                t.idWorkCenter = g.Cells["WorkCenter"].Value.ToInt();
-                                t.Description = g.Cells["Description"].Value.ToSt();
-                                t.SetupTime = g.Cells["SetupTime"].Value.ToDecimal();
-                                t.RunTime = g.Cells["RunTime"].Value.ToDecimal();
-                                t.WaitTime = g.Cells["WaitTime"].Value.ToDecimal();
-                                t.UnitCostPer = g.Cells["UnitCostPer"].Value.ToDecimal();
-                                t.RNo = g.Cells["No"].Value.ToInt();
+            //                    dbClss.AddHistory(this.Name, "Add Routing", $"เพิ่ม Routing [{t.RoutingNo}]", "");
+            //                    //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
+            //                    db.mh_Routings.InsertOnSubmit(t);
+            //                    db.SubmitChanges();
+            //                    C += 1;
+            //                }
+            //                else
+            //                {
+            //                    var t = db.mh_Routings.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
+            //                    t.RoutingName = RoutingName;
+            //                    t.RoutingUOM = UOM;
+            //                    t.idWorkCenter = g.Cells["WorkCenter"].Value.ToInt();
+            //                    t.Description = g.Cells["Description"].Value.ToSt();
+            //                    t.SetupTime = g.Cells["SetupTime"].Value.ToDecimal();
+            //                    t.RunTime = g.Cells["RunTime"].Value.ToDecimal();
+            //                    t.WaitTime = g.Cells["WaitTime"].Value.ToDecimal();
+            //                    t.UnitCostPer = g.Cells["UnitCostPer"].Value.ToDecimal();
+            //                    t.RNo = g.Cells["No"].Value.ToInt();
 
-                                C += 1;
-                                db.SubmitChanges();
-                                dbClss.AddHistory(this.Name, "Edit Routing", $"แก้ไข Routing [{t.RoutingNo}]", "");
+            //                    C += 1;
+            //                    db.SubmitChanges();
+            //                    dbClss.AddHistory(this.Name, "Edit Routing", $"แก้ไข Routing [{t.RoutingNo}]", "");
 
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                dbClss.AddError("Add Routing", ex.Message, this.Name);
-            }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //    dbClss.AddError("Add Routing", ex.Message, this.Name);
+            //}
 
-            if (C > 0)
-                MessageBox.Show("Save complete.!");
+            //if (C > 0)
+            //    MessageBox.Show("Save complete.!");
 
             return ck;
         }

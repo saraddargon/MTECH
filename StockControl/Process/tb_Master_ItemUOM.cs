@@ -224,7 +224,7 @@ namespace StockControl
                                         C += 1;
 
                                         db.SubmitChanges();
-                                        dbClss.AddHistory(this.Name, "แก้ไข", "Update Vat Setup [ ItemNo:" + unit1.ItemNo + ", UOMCode:" + unit1.UOMCode + "]", "");
+                                        dbClss.AddHistory(this.Name, "แก้ไข", "Update Item UOM [ ItemNo:" + unit1.ItemNo + ", UOMCode:" + unit1.UOMCode + "]", "");
                                     }
                                 }
                                 else
@@ -241,7 +241,7 @@ namespace StockControl
                                     db.mh_ItemUOMs.InsertOnSubmit(u);
                                     db.SubmitChanges();
                                     C += 1;
-                                    dbClss.AddHistory(this.Name, "เพิ่ม", "Insert Vat Setup [ ItemNo:" + u.ItemNo + ", UOMCode:" + u.UOMCode + "]", "");
+                                    dbClss.AddHistory(this.Name, "เพิ่ม", "Insert Item UOM  [ ItemNo:" + u.ItemNo + ", UOMCode:" + u.UOMCode + "]", "");
 
 
                                 }
