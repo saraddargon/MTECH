@@ -228,41 +228,36 @@ namespace StockControl
         {
             try
             {
-                //string poNo = txtPONo.Text.Trim();
-                //string cstmNo = txtCSTMNo.Text.Trim();
-                //if (poNo != "" && cstmNo != "")
-                //{
-                //    if (dgvData.Rows.Where(x => x.Cells["PlanStatus"].Value.ToSt() != "Waiting").Count() > 0)
-                //    {
-                //        baseClass.Warning("Cannot Delete because P/O is Already Planned.\n");
-                //        return;
-                //    }
+                int id = txtid.Text.ToInt();
+                if (id == 0) { }
+                else
+                {
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        var m = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
+                        if (m != null)
+                        {
+                            var dt = db.mh_CustomerPODTs.Where(x => x.idCustomerPO == m.id && x.Active).ToList();
+                            if(dt.Where(x=>x.Status != "Waiting").Count() > 0)
+                            {
+                                baseClass.Warning("Status cannot Delete.\n");
+                                return;
+                            }
 
-                //    if (baseClass.IsDel($"Do you want to Delete Customer P/O {poNo} ?"))
-                //    {
-                //        using (var db = new DataClasses1DataContext())
-                //        {
-                //            var p = db.mh_CustomerPOs.Where(x => x.CustomerNo == cstmNo && x.DemandType == 0 && x.CustomerPONo == poNo && x.Active).ToList();
-                //            if (p.Where(x => x.Status != "Waiting").Count() < 1)
-                //            {
-                //                foreach (var pp in p)
-                //                {
-                //                    pp.Active = false;
-                //                    pp.UpdateBy = Classlib.User;
-                //                    pp.UpdateDate = DateTime.Now;
-                //                }
+                            m.Active = false;
+                            m.UpdateDate = DateTime.Now;
+                            m.UpdateBy = Classlib.User;
+                            db.SubmitChanges();
+                        }
+                        else
+                        {
+                            baseClass.Warning("Customer P/O not found.\n");
+                            return;
+                        }
+                    }
+                }
 
-                //                db.SubmitChanges();
-
-                //                baseClass.Info("Delete P/O complete.");
-                //                ClearData();
-                //                btnNew_Click(null, null);
-                //            }
-                //            else
-                //                baseClass.Warning("P/O Status cannot Delete.");
-                //        }
-                //    }
-                //}
+                baseClass.Info("Delete Customer P/O complete.\n");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -376,6 +371,8 @@ namespace StockControl
                     {
                         int idDT = item.Cells["id"].Value.ToInt();
                         if (item.Cells["Status"].Value.ToSt() != "Waiting") continue;
+                        string itemNo = item.Cells["ItemNo"].Value.ToSt();
+                        if (itemNo == "") continue;
                         var t = db.mh_CustomerPODTs.Where(x => x.id == idDT).FirstOrDefault();
                         if (t != null)
                         {
@@ -384,10 +381,24 @@ namespace StockControl
                             t.Active = true;
                             db.mh_CustomerPODTs.InsertOnSubmit(t);
                         }
-
+                        t.idCustomerPO = hd.id;
+                        t.ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value.Date;
+                        t.ItemNo = item.Cells["ItemNo"].Value.ToSt();
+                        t.ItemName = item.Cells["ItemName"].Value.ToSt();
+                        t.Qty = item.Cells["Qty"].Value.ToDecimal();
+                        t.UOM = item.Cells["UOM"].Value.ToSt();
+                        t.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
+                        t.UnitPrice = item.Cells["UnitPrice"].Value.ToDecimal();
+                        t.Amount = item.Cells["Amount"].Value.ToDecimal();
+                        t.Remark = item.Cells["Remark"].Value.ToSt();
+                        t.Active = true;
+                        t.ReplenishmentType = item.Cells["ReplenishmentType"].Value.ToSt();
+                        t.OutSO = item.Cells["OutSO"].Value.ToDecimal();
+                        t.OutPlan = item.Cells["OutPlan"].Value.ToDecimal();
+                        t.Status = item.Cells["Status"].Value.ToSt();
                     }
 
-                    t_idCSTMPO = 0;
+                    t_idCSTMPO = hd.id;
                     db.SubmitChanges();
                 }
 
@@ -606,56 +617,30 @@ namespace StockControl
         {
             try
             {
+                if (dgvData.Rows.Count < 0) return;
+                if (dgvData.CurrentCell == null) return;
 
-                if (dgvData.Rows.Count < 0)
+                var row = dgvData.CurrentCell.RowInfo;
+                if(row.Cells["Status"].Value.ToSt() != "Waiting")
+                {
+                    baseClass.Warning("Status cannot 'Delete'.\n");
                     return;
+                }
 
 
-                //if (Ac.Equals("New") || Ac.Equals("Edit"))
-                //{
-                //    this.Cursor = Cursors.WaitCursor;
+                int id = row.Cells["id"].Value.ToInt();
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.mh_CustomerPODTs.Where(x => x.id == id).FirstOrDefault();
+                    if (m == null) return;
+                    m.Active = false;
+                    db.SubmitChanges();
 
-                //    if (dgvData.CurrentCell.RowInfo.Cells["PlanStatus"].Value.ToSt() != "Waiting")
-                //    {
-                //        baseClass.Warning("Cannot Delete because Item is already Planned.\n");
-                //        return;
-                //    }
-
-                //    if (dgvData.CurrentCell.RowInfo.Cells["Status"].Value.ToSt() == "Waiting")
-                //    {
-
-                //        int id = 0;
-                //        int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentCell.RowInfo.Cells["id"].Value), out id);
-                //        if (id <= 0)
-                //            dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
-
-                //        else
-                //        {
-                //            row = dgvData.CurrentCell.RowInfo.Index;
-                //            //btnDelete_Click(null, null);
-                //            using (var db = new DataClasses1DataContext())
-                //            {
-                //                var m = db.mh_CustomerPOs.Where(x => x.id == id).FirstOrDefault();
-                //                if (m != null)
-                //                {
-                //                    m.Active = false;
-                //                    m.UpdateBy = ClassLib.Classlib.User;
-                //                    m.UpdateDate = DateTime.Now;
-                //                    db.SubmitChanges();
-                //                }
-                //            }
-                //        }
-                //        CallTotal();
-                //        //getTotal();
-                //        SetRowNo1(dgvData);
-                //    }
-                //    else
-                //        MessageBox.Show("Cannot Delete this Status");
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Cannot Delete.");
-                //}
+                    dgvData.Rows.Remove(row);
+                    SetRowNo1(dgvData);
+                    CallTotal();
+                    baseClass.Info("Delete complete.\n");
+                }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }

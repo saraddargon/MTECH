@@ -20,7 +20,7 @@ namespace StockControl
 {
     class dbClss
     {
-        public string versioin = "ss2";
+        public string versioin = "ss3-Pongsakorn_s";
         public static Telerik.WinControls.UI.RadRibbonForm CreateForm(string form)
         {
             try
