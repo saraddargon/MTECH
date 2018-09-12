@@ -51,7 +51,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Shinko Mold.ico</ApplicationIcon>
+    <ApplicationIcon>logo_4pG_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
@@ -1459,6 +1459,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Graphicloads-100-Flat-Cloud.ico" />
     <Content Include="Graphicloads-100-Flat-System-analytics.ico" />
+    <Content Include="logo_4pG_icon.ico" />
     <Content Include="Shinko Mold.ico" />
   </ItemGroup>
   <ItemGroup>
