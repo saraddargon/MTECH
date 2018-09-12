@@ -189,38 +189,7 @@ namespace StockControl
             var pc = new PlanningCal_Status();
             pc.ShowDialog();
         }
-
-
-
-        private InventoryGroup getInvGroup(string inventoryGroup)
-        {
-            switch (inventoryGroup)
-            {
-                case "RM": return InventoryGroup.RM;
-                case "SEMI": return InventoryGroup.Semi;
-                case "FG": return InventoryGroup.FG;
-                default: return InventoryGroup.RM;
-            }
-        }
-        public ReorderType getReorderType(string reName)
-        {
-            switch (reName)
-            {
-                case "Fixed Reorder Qty": return ReorderType.Fixed;
-                case "Minimum & Maximum Qty": return ReorderType.MinMax;
-                case "By Order": return ReorderType.ByOrder;
-                default: return ReorderType.Fixed;
-            }
-        }
-        public ReplenishmentType getRepType(string reName)
-        {
-            switch (reName)
-            {
-                case "Purchase": return ReplenishmentType.Purchase;
-                case "Production": return ReplenishmentType.Production;
-                default: return ReplenishmentType.Purchase;
-            }
-        }
+        
         public DateTime setStandardTime(DateTime dt, bool TimeStart)
         {
             using (var db = new DataClasses1DataContext())
