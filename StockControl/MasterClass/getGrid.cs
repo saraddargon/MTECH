@@ -21,7 +21,7 @@ namespace StockControl
                         && (dFrom == null || (x.OrderDate >= dFrom && x.OrderDate <= dTo))).ToList();
                     foreach (var hd in m)
                     {
-                        var t = db.mh_CustomerPODTs.Where(x => x.Active && x.idCustomerPO == hd.id).ToList();)
+                        var t = db.mh_CustomerPODTs.Where(x => x.Active && x.idCustomerPO == hd.id).ToList();
                         foreach (var dt in t)
                         {
                             if (Item != "" && dt.ItemNo != Item) continue;
