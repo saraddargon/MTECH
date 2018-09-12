@@ -1497,7 +1497,7 @@ namespace StockControl
                         //    PCSBaseUOM = 1;
                         //AC_PCSUnit = dbClss.TDe(vv.PCSUnit) * PCSBaseUOM;
                         Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescriptioin
-                                        , dbClss.TDe( vv.RemainQty), vv.QtyPlan, vv.QtyPlan, vv.UnitShip, dbClss.TDe(vv.PCSUnit)
+                                        , dbClss.TDe( vv.RemainQty), vv.QtyPlan, vv.QtyShip, vv.UnitShip, dbClss.TDe(vv.PCSUnit)
                                         , dbClss.TDe(vv.UnitCost)
                                         , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, vv.id
                                         , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM),dbClss.TDe(vv.QtyUsed),vv.GroupType,vv.Type);
