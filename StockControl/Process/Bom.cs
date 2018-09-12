@@ -182,9 +182,9 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     var g = (from a in db.tb_BomHDs
-                             join b in db.mh_Items on a.PartNo equals b.InternalNo
+                             join b in db.mh_Items on a.PartNo equals b.InternalNo //&& b.Active == true
                              where (a.Status != "Cancel")
-                             && (b.Active == true)
+                             //&& (b.Active == true)
                              && (a.BomNo == (txtBomNo.Text.Trim()))
                              && (a.PartNo == txtPartNo.Text.Trim())
 
