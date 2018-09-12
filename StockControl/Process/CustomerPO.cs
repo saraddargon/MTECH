@@ -89,7 +89,6 @@ namespace StockControl
             try
             {
                 this.Cursor = Cursors.WaitCursor;
-                int ck = 0;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     var t = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 0 && x.id == t_idCSTMPO).FirstOrDefault();
@@ -238,7 +237,7 @@ namespace StockControl
                         if (m != null)
                         {
                             var dt = db.mh_CustomerPODTs.Where(x => x.idCustomerPO == m.id && x.Active).ToList();
-                            if(dt.Where(x=>x.Status != "Waiting").Count() > 0)
+                            if (dt.Where(x => x.Status != "Waiting").Count() > 0)
                             {
                                 baseClass.Warning("Status cannot Delete.\n");
                                 return;
@@ -284,7 +283,7 @@ namespace StockControl
                     {
                         var m = db.mh_CustomerPOs.Where(x => x.Active && x.id != idPO
                          && x.CustomerPONo == po && x.CustomerNo == cstmno).ToList();
-                        if(m.Count > 0)
+                        if (m.Count > 0)
                         {
                             err += " “P/O No.:” is dupplicate. \n";
                         }
@@ -351,19 +350,21 @@ namespace StockControl
                 {
                     //hd
                     var hd = db.mh_CustomerPOs.Where(x => x.Active && x.id == id).FirstOrDefault();
-                    if(hd == null)
+                    if (hd == null)
                     {
                         hd = new mh_CustomerPO();
                         hd.CreateDate = DateTime.Now;
                         hd.CreateBy = Classlib.User;
                         db.mh_CustomerPOs.InsertOnSubmit(hd);
                     }
+                    hd.DemandType = 0; //Customer P/O
                     hd.CustomerPONo = pono;
                     hd.CustomerNo = cstmNo;
                     hd.OrderDate = OrderDate;
                     hd.Remark = remark;
                     hd.UpdateBy = Classlib.User;
                     hd.UpdateDate = DateTime.Now;
+                    hd.Active = true;
                     db.SubmitChanges();
 
                     //DT
@@ -374,7 +375,7 @@ namespace StockControl
                         string itemNo = item.Cells["ItemNo"].Value.ToSt();
                         if (itemNo == "") continue;
                         var t = db.mh_CustomerPODTs.Where(x => x.id == idDT).FirstOrDefault();
-                        if (t != null)
+                        if (t == null)
                         {
                             //add
                             t = new mh_CustomerPODT();
@@ -434,7 +435,7 @@ namespace StockControl
                             dgvData.Rows[e.RowIndex].Cells["Amount"].Value = 0;
 
                         e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                        e.Row.Cells["OutPlan"].Value = e.Row.Cells["OutPlan"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                        e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         CallTotal();
                     }
                     else if (e.Column.Name.Equals("ItemNo"))
@@ -463,19 +464,19 @@ namespace StockControl
                             else
                             {
                                 e.Row.Cells["ItemName"].Value = t.InternalName;
-                                e.Row.Cells["Unit"].Value = t.BaseUOM;
+                                e.Row.Cells["UOM"].Value = t.BaseUOM;
                                 e.Row.Cells["PCSUnit"].Value = pcsunit;
                                 e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                                e.Row.Cells["OutPlan"].Value = e.Row.Cells["OutPlan"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                                e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                             }
 
                             //
                             SetRowNo1(dgvData);
                         }
                     }
-                    else if (e.Column.Name.Equals("Unit"))
+                    else if (e.Column.Name.Equals("UOM"))
                     {
-                        var unit = e.Row.Cells["Unit"].Value.ToSt();
+                        var unit = e.Row.Cells["UOM"].Value.ToSt();
                         using (var db = new DataClasses1DataContext())
                         {
                             var u = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == unit).FirstOrDefault();
@@ -483,7 +484,7 @@ namespace StockControl
 
                             e.Row.Cells["PCSUnit"].Value = pcsunit;
                             e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                            e.Row.Cells["OutPlan"].Value = e.Row.Cells["OutPlan"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                            e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         }
                     }
                 }
@@ -494,20 +495,21 @@ namespace StockControl
         {
             if (e.RowIndex >= -1)
             {
-                if (e.Row.Cells["Status"].Value.ToSt() != "Waiting")
+                if (e.Row.Cells["Status"].Value.ToSt() != "Waiting"
+                    && e.Row.Cells["Status"].Value.ToSt() != "")
                 {
                     e.Cancel = true;
                     return;
                 }
                 //
                 string itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
-                if (e.Column.Name.Equals("Unit"))
+                if (e.Column.Name.Equals("UOM"))
                 {
                     using (var db = new DataClasses1DataContext())
                     {
                         var unit = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo).ToList();
                         unit = unit.Where(x => x.Active.ToBool()).ToList();
-                        var c1 = dgvData.Columns["Unit"] as GridViewComboBoxColumn;
+                        var c1 = dgvData.Columns["UOM"] as GridViewComboBoxColumn;
                         c1.ValueMember = "UOMCode";
                         c1.DisplayMember = "UOMCode";
                         c1.DataSource = unit;
@@ -621,7 +623,8 @@ namespace StockControl
                 if (dgvData.CurrentCell == null) return;
 
                 var row = dgvData.CurrentCell.RowInfo;
-                if(row.Cells["Status"].Value.ToSt() != "Waiting")
+                if (row.Cells["Status"].Value.ToSt() != "Waiting"
+                    && row.Cells["Status"].Value.ToSt() != "")
                 {
                     baseClass.Warning("Status cannot 'Delete'.\n");
                     return;
@@ -632,15 +635,17 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     var m = db.mh_CustomerPODTs.Where(x => x.id == id).FirstOrDefault();
-                    if (m == null) return;
-                    m.Active = false;
-                    db.SubmitChanges();
+                    if (m != null)
+                    {
+                        m.Active = false;
+                        db.SubmitChanges();
+                    }
 
-                    dgvData.Rows.Remove(row);
-                    SetRowNo1(dgvData);
-                    CallTotal();
-                    baseClass.Info("Delete complete.\n");
                 }
+                SetRowNo1(dgvData);
+                CallTotal();
+                dgvData.Rows.Remove(row);
+                //baseClass.Info("Delete complete.\n");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
