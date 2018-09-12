@@ -479,10 +479,10 @@ namespace StockControl
 
         private void btnMasterLocation_Click(object sender, EventArgs e)
         {
-            if (StockControl.dbClss.Permisstion("", "tb_MasterLocation", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
+            if (StockControl.dbClss.Permisstion("", "MasterLocation", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
             {
                 this.Cursor = Cursors.WaitCursor;
-                tb_MasterLocation dept = new tb_MasterLocation();
+                MasterLocation dept = new MasterLocation();
                 this.Cursor = Cursors.Default;
                 dept.ShowDialog();
                 GC.Collect();

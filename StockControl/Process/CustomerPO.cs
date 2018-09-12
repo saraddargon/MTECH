@@ -81,6 +81,8 @@ namespace StockControl
                 cbbCSTM.MultiColumnComboBoxElement.DataSource = cus;
                 cbbCSTM.SelectedIndex = -1;
 
+                txtCreateBy.Text = ClassLib.Classlib.User;
+                txtCreateDate.Text = DateTime.Now.ToDtString();
             }
         }
 
@@ -99,6 +101,8 @@ namespace StockControl
                         txtPONo.Text = t.CustomerPONo;
                         dtOrderDate.Value = t.OrderDate;
                         txtid.Text = t.id.ToSt();
+                        txtCreateDate.Text = t.CreateDate.ToDtString();
+                        txtCreateBy.Text = t.CreateBy;
 
                         var m = db.mh_CustomerPODTs.Where(x => x.Active && x.idCustomerPO == t.id).ToList();
                         dgvData.DataSource = null;

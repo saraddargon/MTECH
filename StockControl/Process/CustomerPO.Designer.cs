@@ -45,6 +45,9 @@
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn5 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn6 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject1 = new Telerik.WinControls.UI.ConditionalFormattingObject();
+            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject2 = new Telerik.WinControls.UI.ConditionalFormattingObject();
+            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject3 = new Telerik.WinControls.UI.ConditionalFormattingObject();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn8 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition2 = new Telerik.WinControls.UI.TableViewDefinition();
@@ -117,6 +120,10 @@
             this.btnImport = new Telerik.WinControls.UI.RadButtonElement();
             this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup1 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.txtCreateDate = new Telerik.WinControls.UI.RadTextBox();
+            this.txtCreateBy = new Telerik.WinControls.UI.RadTextBox();
+            this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel11 = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -151,6 +158,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).BeginInit();
             this.radGroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCreateDate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCreateBy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -489,7 +500,7 @@
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "Qty";
             gridViewDecimalColumn1.FormatString = "{0:N2}";
-            gridViewDecimalColumn1.HeaderText = "Qty";
+            gridViewDecimalColumn1.HeaderText = "Order Q\'ty";
             gridViewDecimalColumn1.Name = "Qty";
             gridViewDecimalColumn1.Width = 66;
             gridViewComboBoxColumn1.EnableExpressionEditor = false;
@@ -547,6 +558,36 @@
             gridViewDecimalColumn6.Name = "OutPlan";
             gridViewDecimalColumn6.ReadOnly = true;
             gridViewDecimalColumn6.Width = 66;
+            conditionalFormattingObject1.ApplyToRow = true;
+            conditionalFormattingObject1.CellBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject1.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject1.CellForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject1.Name = "Waiting";
+            conditionalFormattingObject1.RowBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject1.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject1.RowForeColor = System.Drawing.Color.Black;
+            conditionalFormattingObject1.TValue1 = "Waiting";
+            conditionalFormattingObject2.ApplyToRow = true;
+            conditionalFormattingObject2.CellBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject2.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject2.CellForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject2.Name = "Process";
+            conditionalFormattingObject2.RowBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject2.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject2.RowForeColor = System.Drawing.Color.Fuchsia;
+            conditionalFormattingObject2.TValue1 = "Process";
+            conditionalFormattingObject3.ApplyToRow = true;
+            conditionalFormattingObject3.CellBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject3.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject3.CellForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject3.Name = "Completed";
+            conditionalFormattingObject3.RowBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject3.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject3.RowForeColor = System.Drawing.Color.Green;
+            conditionalFormattingObject3.TValue1 = "Completed";
+            gridViewTextBoxColumn7.ConditionalFormattingObjectList.Add(conditionalFormattingObject1);
+            gridViewTextBoxColumn7.ConditionalFormattingObjectList.Add(conditionalFormattingObject2);
+            gridViewTextBoxColumn7.ConditionalFormattingObjectList.Add(conditionalFormattingObject3);
             gridViewTextBoxColumn7.EnableExpressionEditor = false;
             gridViewTextBoxColumn7.FieldName = "Status";
             gridViewTextBoxColumn7.HeaderText = "Status";
@@ -702,6 +743,8 @@
             // radGroupBox3
             // 
             this.radGroupBox3.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
+            this.radGroupBox3.Controls.Add(this.txtCreateBy);
+            this.radGroupBox3.Controls.Add(this.txtCreateDate);
             this.radGroupBox3.Controls.Add(this.dtOrderDate);
             this.radGroupBox3.Controls.Add(this.txtPONo);
             this.radGroupBox3.Controls.Add(this.txtid);
@@ -713,20 +756,22 @@
             this.radGroupBox3.Controls.Add(this.radLabel8);
             this.radGroupBox3.Controls.Add(this.radLabel5);
             this.radGroupBox3.Controls.Add(this.radLabel3);
+            this.radGroupBox3.Controls.Add(this.radLabel11);
+            this.radGroupBox3.Controls.Add(this.radLabel10);
             this.radGroupBox3.Controls.Add(this.radLabel2);
             this.radGroupBox3.Controls.Add(this.radLabel1);
-            this.radGroupBox3.HeaderText = "ใบสั่งซื้อ";
+            this.radGroupBox3.HeaderText = "Customer P/O";
             this.radGroupBox3.Location = new System.Drawing.Point(12, 6);
             this.radGroupBox3.Name = "radGroupBox3";
-            this.radGroupBox3.Size = new System.Drawing.Size(679, 118);
+            this.radGroupBox3.Size = new System.Drawing.Size(679, 131);
             this.radGroupBox3.TabIndex = 16;
-            this.radGroupBox3.Text = "ใบสั่งซื้อ";
+            this.radGroupBox3.Text = "Customer P/O";
             // 
             // dtOrderDate
             // 
             this.dtOrderDate.CustomFormat = "dd/MMM/yyyy";
             this.dtOrderDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtOrderDate.Location = new System.Drawing.Point(478, 70);
+            this.dtOrderDate.Location = new System.Drawing.Point(117, 101);
             this.dtOrderDate.Name = "dtOrderDate";
             this.dtOrderDate.Size = new System.Drawing.Size(100, 20);
             this.dtOrderDate.TabIndex = 4;
@@ -736,7 +781,7 @@
             // 
             // txtPONo
             // 
-            this.txtPONo.Location = new System.Drawing.Point(120, 71);
+            this.txtPONo.Location = new System.Drawing.Point(117, 75);
             this.txtPONo.Name = "txtPONo";
             this.txtPONo.Size = new System.Drawing.Size(227, 20);
             this.txtPONo.TabIndex = 3;
@@ -746,7 +791,7 @@
             // 
             this.txtid.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtid.Enabled = false;
-            this.txtid.Location = new System.Drawing.Point(353, 11);
+            this.txtid.Location = new System.Drawing.Point(244, 22);
             this.txtid.Name = "txtid";
             this.txtid.ReadOnly = true;
             this.txtid.Size = new System.Drawing.Size(100, 20);
@@ -757,7 +802,7 @@
             // 
             this.txtCSTMNo.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtCSTMNo.Enabled = false;
-            this.txtCSTMNo.Location = new System.Drawing.Point(478, 36);
+            this.txtCSTMNo.Location = new System.Drawing.Point(117, 21);
             this.txtCSTMNo.Name = "txtCSTMNo";
             this.txtCSTMNo.ReadOnly = true;
             this.txtCSTMNo.Size = new System.Drawing.Size(100, 20);
@@ -786,7 +831,7 @@
             this.cbbCSTM.EditorControl.ShowGroupPanel = false;
             this.cbbCSTM.EditorControl.Size = new System.Drawing.Size(240, 150);
             this.cbbCSTM.EditorControl.TabIndex = 0;
-            this.cbbCSTM.Location = new System.Drawing.Point(120, 38);
+            this.cbbCSTM.Location = new System.Drawing.Point(117, 47);
             this.cbbCSTM.Name = "cbbCSTM";
             this.cbbCSTM.Size = new System.Drawing.Size(227, 22);
             this.cbbCSTM.TabIndex = 1;
@@ -797,7 +842,7 @@
             // radLabel4
             // 
             this.radLabel4.ForeColor = System.Drawing.Color.Red;
-            this.radLabel4.Location = new System.Drawing.Point(105, 37);
+            this.radLabel4.Location = new System.Drawing.Point(102, 46);
             this.radLabel4.Name = "radLabel4";
             this.radLabel4.Size = new System.Drawing.Size(11, 18);
             this.radLabel4.TabIndex = 0;
@@ -806,7 +851,7 @@
             // radLabel9
             // 
             this.radLabel9.ForeColor = System.Drawing.Color.Red;
-            this.radLabel9.Location = new System.Drawing.Point(454, 69);
+            this.radLabel9.Location = new System.Drawing.Point(100, 101);
             this.radLabel9.Name = "radLabel9";
             this.radLabel9.Size = new System.Drawing.Size(11, 18);
             this.radLabel9.TabIndex = 0;
@@ -815,7 +860,7 @@
             // radLabel7
             // 
             this.radLabel7.ForeColor = System.Drawing.Color.Red;
-            this.radLabel7.Location = new System.Drawing.Point(103, 73);
+            this.radLabel7.Location = new System.Drawing.Point(100, 77);
             this.radLabel7.Name = "radLabel7";
             this.radLabel7.Size = new System.Drawing.Size(11, 18);
             this.radLabel7.TabIndex = 0;
@@ -823,7 +868,7 @@
             // 
             // radLabel8
             // 
-            this.radLabel8.Location = new System.Drawing.Point(393, 71);
+            this.radLabel8.Location = new System.Drawing.Point(36, 102);
             this.radLabel8.Name = "radLabel8";
             this.radLabel8.Size = new System.Drawing.Size(60, 18);
             this.radLabel8.TabIndex = 0;
@@ -831,16 +876,16 @@
             // 
             // radLabel5
             // 
-            this.radLabel5.Location = new System.Drawing.Point(58, 73);
+            this.radLabel5.Location = new System.Drawing.Point(20, 77);
             this.radLabel5.Name = "radLabel5";
-            this.radLabel5.Size = new System.Drawing.Size(46, 18);
+            this.radLabel5.Size = new System.Drawing.Size(76, 18);
             this.radLabel5.TabIndex = 0;
-            this.radLabel5.Text = "P/O No.";
+            this.radLabel5.Text = "Refer Doc No.";
             // 
             // radLabel3
             // 
             this.radLabel3.ForeColor = System.Drawing.Color.Red;
-            this.radLabel3.Location = new System.Drawing.Point(460, 36);
+            this.radLabel3.Location = new System.Drawing.Point(102, 21);
             this.radLabel3.Name = "radLabel3";
             this.radLabel3.Size = new System.Drawing.Size(11, 18);
             this.radLabel3.TabIndex = 0;
@@ -848,7 +893,7 @@
             // 
             // radLabel2
             // 
-            this.radLabel2.Location = new System.Drawing.Point(393, 37);
+            this.radLabel2.Location = new System.Drawing.Point(25, 22);
             this.radLabel2.Name = "radLabel2";
             this.radLabel2.Size = new System.Drawing.Size(71, 18);
             this.radLabel2.TabIndex = 0;
@@ -856,7 +901,7 @@
             // 
             // radLabel1
             // 
-            this.radLabel1.Location = new System.Drawing.Point(21, 38);
+            this.radLabel1.Location = new System.Drawing.Point(11, 47);
             this.radLabel1.Name = "radLabel1";
             this.radLabel1.Size = new System.Drawing.Size(85, 18);
             this.radLabel1.TabIndex = 0;
@@ -988,6 +1033,40 @@
             this.radRibbonBarButtonGroup1.Text = "radRibbonBarButtonGroup1";
             this.radRibbonBarButtonGroup1.UseCompatibleTextRendering = false;
             // 
+            // txtCreateDate
+            // 
+            this.txtCreateDate.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.txtCreateDate.Location = new System.Drawing.Point(489, 22);
+            this.txtCreateDate.Name = "txtCreateDate";
+            this.txtCreateDate.ReadOnly = true;
+            this.txtCreateDate.Size = new System.Drawing.Size(153, 20);
+            this.txtCreateDate.TabIndex = 5;
+            // 
+            // txtCreateBy
+            // 
+            this.txtCreateBy.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.txtCreateBy.Location = new System.Drawing.Point(489, 48);
+            this.txtCreateBy.Name = "txtCreateBy";
+            this.txtCreateBy.ReadOnly = true;
+            this.txtCreateBy.Size = new System.Drawing.Size(153, 20);
+            this.txtCreateBy.TabIndex = 5;
+            // 
+            // radLabel10
+            // 
+            this.radLabel10.Location = new System.Drawing.Point(412, 23);
+            this.radLabel10.Name = "radLabel10";
+            this.radLabel10.Size = new System.Drawing.Size(64, 18);
+            this.radLabel10.TabIndex = 0;
+            this.radLabel10.Text = "Create date";
+            // 
+            // radLabel11
+            // 
+            this.radLabel11.Location = new System.Drawing.Point(412, 49);
+            this.radLabel11.Name = "radLabel11";
+            this.radLabel11.Size = new System.Drawing.Size(54, 18);
+            this.radLabel11.TabIndex = 0;
+            this.radLabel11.Text = "Create by";
+            // 
             // CustomerPO
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1043,6 +1122,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).EndInit();
             this.radGroupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCreateDate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCreateBy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1120,5 +1203,9 @@
         private Telerik.WinControls.UI.RadButtonElement btnImportCSV;
         private Telerik.WinControls.UI.RadButtonElement btnExportFile;
         private Telerik.WinControls.UI.RadTextBox txtid;
+        private Telerik.WinControls.UI.RadTextBox txtCreateBy;
+        private Telerik.WinControls.UI.RadTextBox txtCreateDate;
+        private Telerik.WinControls.UI.RadLabel radLabel11;
+        private Telerik.WinControls.UI.RadLabel radLabel10;
     }
 }

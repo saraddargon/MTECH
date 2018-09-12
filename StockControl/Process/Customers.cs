@@ -79,9 +79,9 @@ namespace StockControl
             //    dt.Rows.Add(rd);
             //}
 
+            LoadDefualt();
 
             DataLoad();
-            LoadDefualt();
             MyFont = new System.Drawing.Font(
     "Tahoma", 9,
     FontStyle.Italic,    // + obviously doesn't work, but what am I meant to do?
@@ -172,14 +172,14 @@ namespace StockControl
             {
 
 
-                var g = db.mh_Customers.ToList();
+                var g = db.mh_Customers.Where(x => x.Active).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.DataSource = dt2;
                 int ck = 0;
                 foreach (var x in radGridView1.Rows)
                 {
-                    string cstmNo = x.Cells["VendorNo"].Value.ToSt();
-                    var m = db.mh_CustomerContacts.Where(w => w.idCustomer == 0 && w.Def && w.Active).ToList();
+                    int id = x.Cells["dgvCodetemp"].Value.ToInt();
+                    var m = db.mh_CustomerContacts.Where(w => w.idCustomer == id && w.Def && w.Active).ToList();
                     if (m.Count() > 0)
                     {
                         var mm = m.First();
@@ -339,23 +339,20 @@ namespace StockControl
                 if (row >= 0)
                 {
                     string CodeDelete = Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value);
-                    string CodeTemp = Convert.ToString(radGridView1.Rows[row].Cells["dgvCodeTemp"].Value);
+                    int id = radGridView1.Rows[row].Cells["dgvCodetemp"].Value.ToInt();
                     radGridView1.EndEdit();
                     if (MessageBox.Show("ต้องการลบรายการ ( " + CodeDelete + " ) หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            var unit1 = db.mh_Customers.Where(x => x.No == CodeDelete).ToList();
-                            foreach (var d in unit1)
+                            var unit1 = db.mh_Customers.Where(x => x.id == id).ToList();
+                            foreach (var item in unit1)
                             {
-                                d.Active = false;
-                                db.mh_Customers.DeleteOnSubmit(d);
-                                dbClss.AddHistory(this.Name, "Delete Customers", "Delete Customer [" + d.Name + "]", "");
+                                item.Active = false;
+                                C++;
                             }
-                            C += 1;
-
                             db.SubmitChanges();
-
+                            radGridView1.Rows.Remove(radGridView1.Rows[row]);
                         }
                     }
                 }
@@ -401,8 +398,8 @@ namespace StockControl
             //radGridView1.AllowAddNewRow = false;
             if (radGridView1.CurrentCell != null)
             {
-                string cstm = radGridView1.CurrentCell.RowInfo.Cells["VendorNo"].Value.ToSt();
-                var c = new CustomerContacts(0, TypeAction.Edit);
+                int cstm = radGridView1.CurrentCell.RowInfo.Cells["dgvCodetemp"].Value.ToInt();
+                var c = new CustomerContacts(cstm, TypeAction.Edit);
                 c.ShowDialog();
                 DataLoad();
             }
@@ -416,8 +413,8 @@ namespace StockControl
             //DataLoad();
             if (radGridView1.CurrentCell != null)
             {
-                string cstm = radGridView1.CurrentCell.RowInfo.Cells["VendorNo"].Value.ToSt();
-                var c = new CustomerContacts(0, TypeAction.View);
+                int cstm = radGridView1.CurrentCell.RowInfo.Cells["dgvCodetemp"].Value.ToInt();
+                var c = new CustomerContacts(cstm, TypeAction.View);
                 c.ShowDialog();
                 DataLoad();
             }
