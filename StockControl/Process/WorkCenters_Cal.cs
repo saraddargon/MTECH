@@ -82,7 +82,7 @@ namespace StockControl
                         //minWork*Capacity
                         DateTime dTemp = dtFrom.Value.Date.AddDays(-1);
                         var cal = db.mh_Calendars.Where(x => x.id == t.Calendar).First(); //Calendar
-                        var dow = db.mh_WorkingDays.Where(x => x.idCalendar == cal.id).ToList(); //0:Mon - 6:Sun
+                        var dow = db.mh_WorkingDays.Where(x => x.Active && x.idCalendar == cal.id).ToList(); //0:Mon - 6:Sun
                         var hol = db.mh_Holidays.Where(x => x.Active && x.idCalendar == cal.id).ToList(); //Holiday
                         var abs = db.mh_CapacityAbsences.Where(x => x.Active && x.idWorkCenters == t.id).ToList(); //Absence
                         do

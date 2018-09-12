@@ -135,7 +135,7 @@ namespace StockControl
 
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var s = db.mh_WorkCenterSubs.Where(x => x.idWorkCenter == idWorkCenters).ToList();
+                    var s = db.mh_WorkCenterSubs.Where(x => x.idWorkCenter == idWorkCenters && x.Active).ToList();
                     foreach (var ss in s)
                     {
                         q.Add(new ComboboxSubWork
