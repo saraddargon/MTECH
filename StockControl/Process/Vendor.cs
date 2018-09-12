@@ -69,22 +69,9 @@ namespace StockControl
             radGridView1.ReadOnly = true;
             radGridView1.AutoGenerateColumns = false;
             GETDTRow();
-            //for (int i = 0; i <= RowView; i++)
-            //{
-            //    DataRow rd = dt.NewRow();
-            //    rd["UnitCode"] = "";
-            //    rd["UnitDetail"] = "";
-            //    rd["UnitActive"] = false;
-            //    dt.Rows.Add(rd);
-            //}
 
-
-            DataLoad();
             LoadDefualt();
-            MyFont = new System.Drawing.Font(
-    "Tahoma", 9,
-    FontStyle.Italic,    // + obviously doesn't work, but what am I meant to do?
-    GraphicsUnit.Pixel);
+            DataLoad();
         }
 
         private void RMenu6_Click(object sender, EventArgs e)
@@ -166,18 +153,17 @@ namespace StockControl
         }
         private void DataLoad()
         {
-            //dt.Rows.Clear();
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
-                var g = db.mh_Vendors.ToList();
+                var g = db.mh_Vendors.Where(x => x.Active).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(g);
                 radGridView1.DataSource = dt2;
                 int ck = 0;
                 foreach (var x in radGridView1.Rows)
                 {
-                    string cstmNo = x.Cells["VendorNo"].Value.ToSt();
-                    var m = db.mh_VendorContacts.Where(w => w.VendorNo == cstmNo && w.Def && w.Active).ToList();
+                    int id = x.Cells["dgvCodetemp"].Value.ToInt();
+                    var m = db.mh_VendorContacts.Where(w => w.VendorId == id && w.Def && w.Active).ToList();
                     if (m.Count() > 0)
                     {
                         var mm = m.First();
@@ -190,7 +176,6 @@ namespace StockControl
             }
 
 
-            //    radGridView1.DataSource = dt;
         }
         private bool CheckDuplicate(string code)
         {
@@ -328,49 +313,32 @@ namespace StockControl
         {
             bool ck = false;
 
-            int C = 0;
             try
             {
 
                 if (row >= 0)
                 {
                     string CodeDelete = Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value);
-                    string CodeTemp = Convert.ToString(radGridView1.Rows[row].Cells["dgvCodeTemp"].Value);
+                    int idHd = Convert.ToString(radGridView1.Rows[row].Cells["dgvCodetemp"].Value).ToInt();
                     radGridView1.EndEdit();
                     if (MessageBox.Show("Do you want to Delete ( " + CodeDelete + " ) หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
 
-                            if (!CodeDelete.Equals(""))
+                            if (idHd > 0)
                             {
-                                if (!CodeTemp.Equals(""))
+                                var unit1 = db.mh_Vendors.Where(x => x.id == idHd).FirstOrDefault();
+                                if (unit1 != null)
                                 {
-
-                                    //var unit1 = (from ix in db.tb_Vendors
-                                    //             where ix.VendorNo == CodeDelete
-                                    //             select ix).ToList();
-                                    //foreach (var d in unit1)
-                                    //{
-                                    //    db.tb_Vendors.DeleteOnSubmit(d);
-                                    //    dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.VendorName + "]", "");
-                                    //}
-                                    var unit1 = db.mh_Vendors.Where(x => x.No == CodeDelete).ToList();
-                                    foreach (var d in unit1)
-                                    {
-                                        d.Active = false;
-                                        db.mh_Vendors.DeleteOnSubmit(d);
-                                        dbClss.AddHistory(this.Name, "Delete Vendor", "Delete Vendor [" + d.Name + "]", "");
-                                    }
-                                    C += 1;
-
-
-
+                                    unit1.Active = false;
                                     db.SubmitChanges();
                                 }
                             }
-
                         }
+
+                        radGridView1.Rows.Remove(radGridView1.Rows[row]);
+                        baseClass.Info("Delete complete.");
                     }
                 }
             }
@@ -380,16 +348,6 @@ namespace StockControl
                 MessageBox.Show(ex.Message);
                 dbClss.AddError("Delete Vendor", ex.Message, this.Name);
             }
-
-            if (C > 0)
-            {
-                row = row - 1;
-                MessageBox.Show("Delete Vendor complete.!");
-            }
-
-
-
-
             return ck;
         }
         private void btnCancel_Click(object sender, EventArgs e)
@@ -398,24 +356,15 @@ namespace StockControl
         }
         private void NewClick()
         {
-            //radGridView1.ReadOnly = false;
-            //radGridView1.AllowAddNewRow = false;
-            //btnEdit.Enabled = false;
-            //btnView.Enabled = true;
-            //radGridView1.Rows.AddNew();
-            var c = new VendorContacts("", TypeAction.Add);
+            var c = new VendorContacts(0, TypeAction.Add);
             c.ShowDialog();
             DataLoad();
         }
         private void EditClick()
         {
-            //radGridView1.ReadOnly = false;
-            //btnEdit.Enabled = false;
-            //btnView.Enabled = true;
-            //radGridView1.AllowAddNewRow = false;
             if (radGridView1.CurrentCell != null)
             {
-                string cstm = radGridView1.CurrentCell.RowInfo.Cells["VendorNo"].Value.ToSt();
+                int cstm = radGridView1.CurrentCell.RowInfo.Cells["dgvCodetemp"].Value.ToInt();
                 var c = new VendorContacts(cstm, TypeAction.Edit);
                 c.ShowDialog();
                 DataLoad();
@@ -423,14 +372,9 @@ namespace StockControl
         }
         private void ViewClick()
         {
-            //radGridView1.ReadOnly = true;
-            //btnView.Enabled = false;
-            //btnEdit.Enabled = true;
-            //radGridView1.AllowAddNewRow = false;
-            //DataLoad();
             if (radGridView1.CurrentCell != null)
             {
-                string cstm = radGridView1.CurrentCell.RowInfo.Cells["VendorNo"].Value.ToSt();
+                int cstm = radGridView1.CurrentCell.RowInfo.Cells["dgvCodetemp"].Value.ToInt();
                 var c = new VendorContacts(cstm, TypeAction.View);
                 c.ShowDialog();
                 DataLoad();
@@ -560,10 +504,8 @@ namespace StockControl
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-
             DeleteUnit();
             DataLoad();
-
         }
 
         int row = -1;
@@ -740,11 +682,11 @@ namespace StockControl
             // {
 
             // }
-            if(e.Column.Name == "DefaultCrrncy")
+            if (e.Column.Name == "DefaultCrrncy")
             {
                 var ee = e.Value;
             }
-            else if(e.Column.Name == "VendorGroup")
+            else if (e.Column.Name == "VendorGroup")
             {
                 var ee = e.Value;
                 var eee = e.Value.ToInt();

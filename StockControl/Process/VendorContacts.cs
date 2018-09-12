@@ -19,10 +19,10 @@ namespace StockControl
         {
             InitializeComponent();
         }
-        public VendorContacts(string CustomerNo, TypeAction tAction)
+        public VendorContacts(int idVendor, TypeAction tAction)
         {
             InitializeComponent();
-            txtNo.Text = CustomerNo;
+            txtid.Text = idVendor.ToSt();
             this.tAction = tAction;
         }
 
@@ -78,6 +78,7 @@ namespace StockControl
             dgvData.AutoGenerateColumns = false;
             GETDTRow();
 
+            LoadDefualt();
             DataLoad();
             if (tAction == TypeAction.View)
             {
@@ -91,7 +92,6 @@ namespace StockControl
             {
                 setEdit(true);
             }
-            LoadDefualt();
         }
         private void LoadDefualt()
         {
@@ -129,10 +129,11 @@ namespace StockControl
             //dt.Rows.Clear();
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                if (txtNo.Text != "" && tAction != TypeAction.Add)
+                if (txtid.Text.ToInt() != 0 && tAction != TypeAction.Add)
                 {
-                    string cstmNo = txtNo.Text;
-                    var g = db.mh_Vendors.Where(x => x.No == cstmNo).FirstOrDefault();
+                    int id = txtid.Text.ToInt();
+                    var g = db.mh_Vendors.Where(x => x.id == id).FirstOrDefault();
+                    txtNo.Text = g.No;
                     txtBranchCode.Text = g.BranchCode;
                     txtName.Text = g.Name;
                     txtAddress.Text = g.Address;
@@ -145,7 +146,8 @@ namespace StockControl
                     cbVatRegis.Checked = g.VATRegistration;
                     cbPriceIncVat.Checked = g.PriceIncludeingVat;
                     cbActive.Checked = g.Active;
-                    var m = db.mh_VendorContacts.Where(w => w.VendorNo == cstmNo && w.Active).ToList();
+
+                    var m = db.mh_VendorContacts.Where(w => w.VendorId == id && w.Active).ToList();
                     dgvData.AutoGenerateColumns = false;
                     dgvData.DataSource = null;
                     dgvData.DataSource = m;
@@ -165,6 +167,7 @@ namespace StockControl
 
         void setEdit(bool ss)
         {
+            txtNo.ReadOnly = !ss;
             txtBranchCode.ReadOnly = !ss;
             txtName.ReadOnly = !ss;
             txtAddress.ReadOnly = !ss;
@@ -190,47 +193,46 @@ namespace StockControl
                 dgvData.EndEdit();
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    string cstmno = txtNo.Text.Trim();
-                    var cstm = new mh_Vendor();
-                    if (tAction == TypeAction.Add)
-                        cstmno = dbClss.GetNo(1, 2);
-                    else
-                        cstm = db.mh_Vendors.Where(x => x.No == cstmno).FirstOrDefault();
-                    txtNo.Text = cstmno;
-                    cstm.BranchCode = txtBranchCode.Text;
-                    cstm.No = cstmno;
-                    cstm.Name = txtName.Text.Trim();
-                    cstm.Address = txtAddress.Text.Trim();
-                    cstm.ShippingTime = txtShippingTime.Value.ToInt();
-                    cstm.AttachFile = txtAttachFile.Value.ToSt();
-                    cstm.VATRegistration = cbVatRegis.Checked;
-                    cstm.PriceIncludeingVat = cbPriceIncVat.Checked;
-                    cstm.ReceivingAddress = txtShippingAddress.Text.Trim();
-                    cstm.VendorGroup = cbbCustomerGroup.SelectedValue.ToInt();
-                    cstm.VatGroup = cbbVatGroup.SelectedValue.ToInt();
-                    cstm.DefaultCurrency = cbbCurrency.SelectedValue.ToInt();
-                    cstm.Active = cbActive.Checked;
-                    if (tAction == TypeAction.Add)
-                        db.mh_Vendors.InsertOnSubmit(cstm);
+                    int id = txtid.Text.ToInt();
+                    var vndr = db.mh_Vendors.Where(x => x.id == id).FirstOrDefault();
+                    if(vndr == null)
+                    {
+                        vndr = new mh_Vendor();
+                        db.mh_Vendors.InsertOnSubmit(vndr);
+                    }
+                    vndr.No = txtNo.Text.Trim();
+                    vndr.BranchCode = txtBranchCode.Text;
+                    vndr.Name = txtName.Text.Trim();
+                    vndr.Address = txtAddress.Text.Trim();
+                    vndr.ShippingTime = txtShippingTime.Value.ToInt();
+                    vndr.AttachFile = txtAttachFile.Value.ToSt();
+                    vndr.VATRegistration = cbVatRegis.Checked;
+                    vndr.PriceIncludeingVat = cbPriceIncVat.Checked;
+                    vndr.ReceivingAddress = txtShippingAddress.Text.Trim();
+                    vndr.VendorGroup = cbbCustomerGroup.SelectedValue.ToInt();
+                    vndr.VatGroup = cbbVatGroup.SelectedValue.ToInt();
+                    vndr.DefaultCurrency = cbbCurrency.SelectedValue.ToInt();
+                    vndr.Active = cbActive.Checked;
                     db.SubmitChanges();
+
+                    txtid.Text = vndr.id.ToSt();
 
                     foreach (var c in dgvData.Rows)
                     {
-                        if (c.Cells["dgvC"].Value.ToSt() == "")
-                            continue;
+                        if (c.Cells["dgvC"].Value.ToSt() == "") continue;
 
-                        int id = c.Cells["id"].Value.ToInt();
-                        var con = db.mh_VendorContacts.Where(x => x.id == id).FirstOrDefault();
+                        int idDT = c.Cells["id"].Value.ToInt();
+                        var con = db.mh_VendorContacts.Where(x => x.id == idDT).FirstOrDefault();
                         if (con == null)
                             con = new mh_VendorContact();
                         con.Def = c.Cells["Def"].Value.ToBool();
-                        con.VendorNo = cstmno;
+                        con.VendorId = vndr.id;
                         con.ContactName = c.Cells["ContactName"].Value.ToSt();
                         con.Tel = c.Cells["Tel"].Value.ToSt();
                         con.Fax = c.Cells["Fax"].Value.ToSt();
                         con.Email = c.Cells["Email"].Value.ToSt();
                         con.Active = true;
-                        if (id <= 0)
+                        if (idDT <= 0)
                             db.mh_VendorContacts.InsertOnSubmit(con);
                         db.SubmitChanges();
                     }
@@ -240,9 +242,9 @@ namespace StockControl
 
                     if (dgvData.Rows.Count == 1)
                     {
-                        int id = dgvData.Rows[0].Cells["id"].Value.ToInt();
+                        int idDT = dgvData.Rows[0].Cells["id"].Value.ToInt();
                         dgvData.Rows[0].Cells["Def"].Value = true;
-                        var m = db.mh_VendorContacts.Where(x => x.id == id).FirstOrDefault();
+                        var m = db.mh_VendorContacts.Where(x => x.id == idDT).FirstOrDefault();
                         m.Def = true;
                         db.SubmitChanges();
                     }
@@ -268,25 +270,25 @@ namespace StockControl
             int C = 0;
             try
             {
-
-                if (row >= 0)
+                int id = txtid.Text.ToInt();
+                string name = dgvData.CurrentCell.RowInfo.Cells["ContactName"].Value.ToSt();
+                dgvData.EndEdit();
+                if (MessageBox.Show("Do you want to Delete ( " + name + " ) ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    int id = dgvData.CurrentCell.RowInfo.Cells["id"].Value.ToInt();
-                    string name = dgvData.CurrentCell.RowInfo.Cells["ContactName"].Value.ToSt();
-                    dgvData.EndEdit();
-                    if (MessageBox.Show("Do you want to Delete ( " + name + " ) ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if(id > 0)
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            var m = db.mh_VendorContacts.Where(x => x.id == id).FirstOrDefault();
-                            if (m != null)
+                            var v = db.mh_Vendors.Where(x => x.id == id).FirstOrDefault();
+                            if(v != null)
                             {
-                                m.Active = false;
+                                v.Active = false;
                                 db.SubmitChanges();
-                                C++;
                             }
                         }
                     }
+
+                    baseClass.Info("Delete complete.\n");
                 }
             }
 
@@ -295,15 +297,6 @@ namespace StockControl
                 MessageBox.Show(ex.Message);
                 dbClss.AddError("Delete Vendor Contact", ex.Message, this.Name);
             }
-
-            if (C > 0)
-            {
-                row = row - 1;
-                MessageBox.Show("Delete complete.");
-            }
-
-
-
 
             return ck;
         }
@@ -376,6 +369,19 @@ namespace StockControl
                 //    err += "- “รายการ:” เป็นค่าว่าง \n";
                 // int c = 0;
 
+                if (txtNo.Text.Trim() == "")
+                    err += "- Vendor no is empty.\n";
+                else
+                {
+                    int id = txtid.Text.ToInt();
+                    string vndrNo = txtNo.Text.Trim();
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        var m = db.mh_Vendors.Where(x => x.Active && x.id != id && x.No == vndrNo).ToList();
+                        if (m.Count > 0)
+                            err += "- Vendor no is dupplicate.\n";
+                    }
+                }
                 if (txtName.Text.Trim().Equals(""))
                     err += "- Vendor name is empty.\n";
                 if (txtBranchCode.Text.Trim().Equals(""))
@@ -390,7 +396,15 @@ namespace StockControl
                     err += "- Vat Group is empty.\n";
                 if (cbbCurrency.SelectedValue.ToInt() == 0)
                     err += "- Currency is empty.\n";
-
+                if(dgvData.Rows.Count == 0)
+                {
+                    err += "- Vendor contact is empty.\n";
+                }
+                else
+                {
+                    if (dgvData.Rows.Where(x => x.Cells["Def"].Value.ToBool()).Count() == 0)
+                        err += "- Not set Default Contact.\n";
+                }
 
                 if (!err.Equals(""))
                     MessageBox.Show(err);
@@ -423,20 +437,6 @@ namespace StockControl
             try
             {
                 dgvData.Rows[e.RowIndex].Cells["dgvC"].Value = "T";
-                //string check1 = Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["VendorName"].Value);
-                //string TM= Convert.ToString(radGridView1.Rows[e.RowIndex].Cells["dgvCodeTemp2"].Value);
-                //if (!check1.Trim().Equals("") && TM.Equals(""))
-                //{
-
-                //    if (!CheckDuplicate(check1.Trim()))
-                //    {
-                //        MessageBox.Show("ชื้อผู้ขายซ้ำ ซ้ำ");
-                //        radGridView1.Rows[e.RowIndex].Cells["GroupCode"].Value = "";
-                //        radGridView1.Rows[e.RowIndex].Cells["GroupCode"].IsSelected = true;
-
-                //    }
-                //}
-
 
             }
             catch (Exception ex) { }
@@ -690,6 +690,29 @@ namespace StockControl
             }
         }
 
+        private void btnAddRow_Click(object sender, EventArgs e)
+        {
+            dgvData.Rows.AddNew();
+        }
 
+        private void btnDeleteRow_Click(object sender, EventArgs e)
+        {
+            if (dgvData.CurrentCell == null) return;
+            var rowe = dgvData.CurrentCell.RowInfo;
+            int idDt = rowe.Cells["id"].Value.ToInt();
+            if(idDt > 0)
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.mh_VendorContacts.Where(x => x.id == idDt).FirstOrDefault();
+                    if(m != null)
+                    {
+                        m.Active = true;
+                        db.SubmitChanges();
+                    }
+                }
+            }
+            dgvData.Rows.Remove(rowe);
+        }
     }
 }
