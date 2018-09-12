@@ -42,11 +42,13 @@ namespace StockControl
         }
 
 
+        List<grid_Planning> gridPlans = new List<grid_Planning>(); 
         List<ItemData> itemDatas = new List<ItemData>();
         void calE()
         {
             try
             {
+                gridPlans.Clear();
                 itemDatas.Clear();
                 
                 var cstmPO_List = new List<CustomerPOCal>();
@@ -121,6 +123,12 @@ namespace StockControl
                     var t_QtyOnHand = tdata.QtyOnHand;
                     data.ReqQty -= t_QtyOnHand;
                     t_QtyOnHand = 0;
+
+                    //set data
+                    var gPlan = new grid_Planning();
+                    gPlan.DueDate = data.ReqDate;
+                    gPlan.idRef = data.DocId;
+                    gPlan.ItemNo = data.ItemNo;
                 }
             }
             catch (Exception ex)
