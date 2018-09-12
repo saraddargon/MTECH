@@ -208,8 +208,16 @@ namespace StockControl
 
         private void btnCapaView_Click(object sender, EventArgs e)
         {
-            var capa = new WorkCenters_Capa();
-            capa.ShowDialog();
+            if (!startC)
+            {
+                var capa = new WorkCenters_Capa();
+                capa.ShowDialog();
+            }
+        }
+
+        private void WorkCenters_Cal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = startC;
         }
     }
 }
