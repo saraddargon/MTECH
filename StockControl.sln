@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLib", "ClassLib\ClassL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report", "Report\Report.csproj", "{18A2396D-DCF4-481C-8645-C0600B534E68}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{1C70F02D-9910-4218-8983-11AC16E01948}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,12 +53,6 @@ Global
 		{18A2396D-DCF4-481C-8645-C0600B534E68}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{18A2396D-DCF4-481C-8645-C0600B534E68}.Release|x86.ActiveCfg = Release|x86
 		{18A2396D-DCF4-481C-8645-C0600B534E68}.Release|x86.Build.0 = Release|x86
-		{1C70F02D-9910-4218-8983-11AC16E01948}.Debug|Any CPU.ActiveCfg = Debug
-		{1C70F02D-9910-4218-8983-11AC16E01948}.Debug|Mixed Platforms.ActiveCfg = Debug
-		{1C70F02D-9910-4218-8983-11AC16E01948}.Debug|x86.ActiveCfg = Debug
-		{1C70F02D-9910-4218-8983-11AC16E01948}.Release|Any CPU.ActiveCfg = Release
-		{1C70F02D-9910-4218-8983-11AC16E01948}.Release|Mixed Platforms.ActiveCfg = Release
-		{1C70F02D-9910-4218-8983-11AC16E01948}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

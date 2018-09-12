@@ -19,10 +19,10 @@ namespace StockControl
         {
             InitializeComponent();
         }
-        public CustomerContacts(string CustomerNo, TypeAction tAction)
+        public CustomerContacts(int idCust, TypeAction tAction)
         {
             InitializeComponent();
-            txtNo.Text = CustomerNo;
+            txtid.Text = idCust.ToSt();
             this.tAction = tAction;
         }
 
@@ -78,6 +78,7 @@ namespace StockControl
             dgvData.AutoGenerateColumns = false;
             GETDTRow();
 
+            LoadDefualt();
             DataLoad();
             if (tAction == TypeAction.View)
             {
@@ -91,7 +92,6 @@ namespace StockControl
             {
                 setEdit(true);
             }
-            LoadDefualt();
         }
         private void LoadDefualt()
         {
@@ -129,10 +129,12 @@ namespace StockControl
             //dt.Rows.Clear();
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                if (txtNo.Text != "" && tAction != TypeAction.Add)
+                if (txtid.Text.ToInt() != 0 && tAction != TypeAction.Add)
                 {
-                    string cstmNo = txtNo.Text;
-                    var g = db.mh_Customers.Where(x => x.No == cstmNo).FirstOrDefault();
+                    int id = txtid.Text.ToInt();
+                    var g = db.mh_Customers.Where(x => x.id == id).FirstOrDefault();
+                    txtid.Text = g.id.ToSt();
+                    txtNo.Text = g.No.ToSt();
                     txtBranchCOde.Text = g.BranchCode;
                     txtName.Text = g.Name;
                     txtAddress.Text = g.Address;
@@ -146,7 +148,7 @@ namespace StockControl
                     cbVatRegis.Checked = g.VATRegistration;
                     cbPriceIncVat.Checked = g.PriceIncludeingVat;
                     cbActive.Checked = g.Active;
-                    var m = db.mh_CustomerContacts.Where(w => w.CustomerNo == cstmNo && w.Active).ToList();
+                    var m = db.mh_CustomerContacts.Where(w => w.idCustomer == id && w.Active).ToList();
                     dgvData.AutoGenerateColumns = false;
                     dgvData.DataSource = null;
                     dgvData.DataSource = m;
@@ -241,7 +243,7 @@ namespace StockControl
                         if (con == null)
                             con = new mh_CustomerContact();
                         con.Def = c.Cells["Def"].Value.ToBool();
-                        con.CustomerNo = cstmno;
+                        con.id = 0;
                         con.ContactName = c.Cells["ContactName"].Value.ToSt();
                         con.Tel = c.Cells["Tel"].Value.ToSt();
                         con.Fax = c.Cells["Fax"].Value.ToSt();
