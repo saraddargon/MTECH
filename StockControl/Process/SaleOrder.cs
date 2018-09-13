@@ -145,51 +145,51 @@ namespace StockControl
         }
         private void LoadFromId()
         {
-            try
-            {
-                //using (var db = new DataClasses1DataContext())
-                //{
-                //    bool fRow = true;
-                //    foreach (var id in idList)
-                //    {
-                //        var c = db.mh_CustomerPODTs.Where(x => x.id == id).First();
-                //        if (fRow)
-                //        {
-                //            var dd = db.mh_CustomerPODTs.Where(x => x.id == id).ToList();
-                //            if (dd.Count > 0)
-                //            {
-                //                txtCSTMNo.Text = dbClss.TSt(dd.FirstOrDefault().;
-                //                cbbCSTM.SelectedValue = c.CustomerNo;
-                //                dtSODate.Value = DateTime.Now;
-                //                cbbCSTM_SelectedIndexChanged(null, null);
-                //                txtRemark.Text = "";// c.RemarkHD;
-                //                fRow = false;
-                //            }
-                //        }
-                //        //detail
-                //        var rowe = dgvData.Rows.AddNew();
-                //        var t = db.mh_Items.Where(x => x.InternalNo == c.ItemNo).First();
-                //        var cstm = db.mh_Customers.Where(x => x.No == c.CustomerNo).First();
-                //        addRow(rowe.Index, c.ReqDate, c.ItemNo, c.ItemName, "", t.Location
-                //            , Math.Round(c.OutSO / c.PCSUnit, 2), c.UOM, c.PCSUnit, c.PricePerUnit, c.Amount, false, c.OutSO, c.OutPlan
-                //            , 0, "Waiting", "Waiting", cstm.VatGroup, t.VatType, c.CustomerPONo, c.id, t.ReplenishmentType
-                //            , "T");
+            //try
+            //{
+            //    using (var db = new DataClasses1DataContext())
+            //    {
+            //        bool fRow = true;
+            //        foreach (var id in idList)
+            //        {
+            //            var c = db.mh_CustomerPODTs.Where(x => x.id == id).First();
+            //            if (fRow)
+            //            {
+            //                var dd = db.mh_CustomerPOs.Where(x => x.id == id).ToList();
+            //                if (dd.Count > 0)
+            //                {
+            //                    txtCSTMNo.Text = dbClss.TSt(dd.FirstOrDefault().c;
+            //                    cbbCSTM.SelectedValue = c.CustomerNo;
+            //                    dtSODate.Value = DateTime.Now;
+            //                    cbbCSTM_SelectedIndexChanged(null, null);
+            //                    txtRemark.Text = "";// c.RemarkHD;
+            //                    fRow = false;
+            //                }
+            //            }
+            //            //detail
+            //            var rowe = dgvData.Rows.AddNew();
+            //            var t = db.mh_Items.Where(x => x.InternalNo == c.ItemNo).First();
+            //            var cstm = db.mh_Customers.Where(x => x.No == c.CustomerNo).First();
+            //            addRow(rowe.Index, c.ReqDate, c.ItemNo, c.ItemName, "", t.Location
+            //                , Math.Round(c.OutSO / c.PCSUnit, 2), c.UOM, c.PCSUnit, c.PricePerUnit, c.Amount, false, c.OutSO, c.OutPlan
+            //                , 0, "Waiting", "Waiting", cstm.VatGroup, t.VatType, c.CustomerPONo, c.id, t.ReplenishmentType
+            //                , "T");
 
-                //        //potoso.Add(new po_to_so
-                //        //{
-                //        //    idPO = c.id,
-                //        //    poQty = c.Quantity * c.PCSUnit,
-                //        //    poAmnt = c.Amount
-                //        //});
-                //    }
-                //    SetRowNo1(dgvData);
-                //    CallTotal();
-                //}
-            }
-            catch (Exception ex)
-            {
-                baseClass.Error(ex.Message);
-            }
+            //            //potoso.Add(new po_to_so
+            //            //{
+            //            //    idPO = c.id,
+            //            //    poQty = c.Quantity * c.PCSUnit,
+            //            //    poAmnt = c.Amount
+            //            //});
+            //        }
+            //        SetRowNo1(dgvData);
+            //        CallTotal();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    baseClass.Error(ex.Message);
+            //}
         }
         //
         List<GridViewRowInfo> RetDT;

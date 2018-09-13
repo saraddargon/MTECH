@@ -1301,7 +1301,7 @@ namespace StockControl
 
                             ItemNo = d.InternalName;
                             ItemDescription = d.InternalDescription;
-                            RemainQty = 0;// (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Invoice", 0,d.Location)));//Convert.ToDecimal(d.StockInv);
+                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Invoice", 0, "Warehouse")));//Convert.ToDecimal(d.StockInv);
                             Unit = d.PurchaseUOM;
                             PCSUnit = dbClss.Con_UOM(CodeNo, d.PurchaseUOM);
                             CostPerUnit = 0; // Convert.ToDecimal(d.StandardCost); // Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "Avg"));//Convert.ToDecimal(d.StandardCost);
