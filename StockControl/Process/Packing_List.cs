@@ -9,7 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 namespace StockControl
 {
-    public partial class ProductionOrder_List : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Packing_List : Telerik.WinControls.UI.RadRibbonForm
     {
         public string PONo { get; private set; } = "";
         public string CstmNo { get; private set; } = "";
@@ -17,12 +17,12 @@ namespace StockControl
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
 
-        public ProductionOrder_List(int sType = 1)
+        public Packing_List(int sType = 1)
         {
             InitializeComponent();
             this.sType = sType;
         }
-        public ProductionOrder_List()
+        public Packing_List()
         {
             InitializeComponent();
         }
@@ -56,12 +56,7 @@ namespace StockControl
 
             dgvData.AutoGenerateColumns = false;
             DataLoad();
-
-            dgvData.Columns.ToList().ForEach(x =>
-            {
-                if (x.Name != "S")
-                    x.ReadOnly = true;
-            });
+            
 
             
         }
@@ -76,18 +71,42 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    string jobNo = txtJobNo.Text.Trim();
-                    string FGNo = cbbItem.SelectedValue.ToSt();
+                    string pk = txtPackingNo.Text.Trim();
+                    string itemno = cbbItem.SelectedValue.ToSt();
                     DateTime? dFrom = (cbChkDate.Checked) ? (DateTime?)dtFrom.Value.Date : null;
                     DateTime? dTo = (cbChkDate.Checked) ? (DateTime?)dtTo.Value.Date.AddDays(1).AddMinutes(-1) : null;
-                    var m = db.mh_ProductionOrders.Where(x => x.Active
-                            && (jobNo == "" || x.JobNo == jobNo)
-                            && (FGNo == "" || x.FGNo == FGNo)
-                            && (dFrom == null || (x.ReqDate.Date >= dFrom && x.ReqDate.Date <= dTo))
+                    var m = db.mh_PackingDts
+                        .Where(x => x.Active
+                            && (pk == "" || x.PackingNo == pk)
+                            && (itemno == "" || x.ItemNo == itemno)
+                            //&& (dFrom == null || (x.ReqDate.Date >= dFrom && x.ReqDate.Date <= dTo))
+                            && x.Active
                     ).ToList();
-                    dgvData.DataSource = m;
+                    //dgvData.DataSource = m;
+                    foreach(var item in m)   
+                    {
+                        var hd = db.mh_Packings.Where(x => x.PackingNo == item.PackingNo).FirstOrDefault();
+                        if(hd != null)
+                        {
+                            if (dFrom != null && hd.PackingDate >= dFrom && hd.PackingDate <= dTo)
+                            { }
+                            else if(dFrom != null) { continue; }
 
-                    setStatus();
+                            var row = dgvData.Rows.AddNew();
+                            row.Cells["PackingNo"].Value = hd.PackingNo;
+                            row.Cells["PackingDate"].Value = hd.PackingDate;
+                            row.Cells["ItemNo"].Value = item.ItemNo;
+                            row.Cells["ItemName"].Value = item.ItemName;
+                            row.Cells["Qty"].Value = item.Qty;
+                            row.Cells["UOM"].Value = item.UOM;
+                            row.Cells["PCSUnit"].Value = item.PCSUnit;
+                            row.Cells["RefNo"].Value = item.RefNo;
+                            row.Cells["CustomerPONo"].Value = item.CustomerPONo;
+                            row.Cells["LotNo"].Value = item.LotNo;
+                        }
+                    }
+
+                    //setStatus();
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -101,9 +120,7 @@ namespace StockControl
         {
             foreach (var item in dgvData.Rows)
             {
-                if (item.Cells["OutQty"].Value.ToDecimal() == 0)
-                    item.Cells["Status"].Value = "Completed";
-                else if (DateTime.Today <= item.Cells["ReqDate"].Value.ToDateTime().Value.Date)
+                if (DateTime.Today <= item.Cells["ReqDate"].Value.ToDateTime().Value.Date)
                     item.Cells["Status"].Value = "On Plan";
                 else
                     item.Cells["Status"].Value = "Delay";
@@ -145,8 +162,9 @@ namespace StockControl
             //select Item
             if (sType == 1)
             {
-                var t = new ProductionOrder();
+                var t = new Packing();
                 t.ShowDialog();
+                DataLoad();
             }
             else
                 selRow();
@@ -160,7 +178,7 @@ namespace StockControl
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
-            selRow();
+            //selRow();
         }
         void selRow()
         {
@@ -174,15 +192,6 @@ namespace StockControl
         {
             //select Item for Print
             //throw new NotImplementedException();
-            if (dgvData.CurrentCell.RowIndex >= 0)
-            {
-                string JobNo= dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
-                Report.Reportx1.Value = new string[1];
-                Report.Reportx1.Value[0] = JobNo;
-                Report.Reportx1.WReport = "JOBNoList";
-                Report.Reportx1 op = new Report.Reportx1("JobOrderSheet3.rpt");
-                op.Show();
-            }
         }
 
 
@@ -288,8 +297,8 @@ namespace StockControl
             dgvData.EndEdit();
             if (dgvData.CurrentCell == null) return;
 
-            string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
-            var p = new ProductionOrder(jobNo);
+            string jobNo = dgvData.CurrentCell.RowInfo.Cells["PackingNo"].Value.ToSt();
+            var p = new Packing(jobNo);
             p.ShowDialog();
             DataLoad();
         }
@@ -299,7 +308,7 @@ namespace StockControl
             dgvData.EndEdit();
             if (dgvData.CurrentCell == null) return;
 
-            string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
+            string jobNo = dgvData.CurrentCell.RowInfo.Cells["PackingNo"].Value.ToSt();
             var p = new ProductionOrder(jobNo);
             p.ShowDialog();
             DataLoad();
@@ -342,7 +351,7 @@ namespace StockControl
             {
                 using (var d = new DataClasses1DataContext())
                 {
-                    string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
+                    string jobNo = dgvData.CurrentCell.RowInfo.Cells["PackingNo"].Value.ToSt();
                     using (var db = new DataClasses1DataContext())
                     {
                         var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo && x.Active).FirstOrDefault();
@@ -377,17 +386,6 @@ namespace StockControl
             }
         }
 
-        private void radButtonElement5_Click(object sender, EventArgs e)
-        {
-            
-              //  string JobNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
-                Report.Reportx1.Value = new string[1];
-                Report.Reportx1.Value[0] = "";
-                Report.Reportx1.WReport = "ProductionList";
-                Report.Reportx1 op = new Report.Reportx1("ReportProductionList.rpt");
-                op.Show();
-            
-        }
     }
 
 
