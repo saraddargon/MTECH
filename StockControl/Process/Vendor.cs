@@ -167,6 +167,7 @@ namespace StockControl
         private void DataLoad()
         {
             //dt.Rows.Clear();
+
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
 
