@@ -495,6 +495,16 @@ namespace StockControl
                 this.Cursor = Cursors.Default;
             }
         }
+
+        private void btnGenPR_Click(object sender, EventArgs e)
+        {
+            dgvData.EndEdit();
+            GenPR();
+        }
+        void GenPR()
+        {
+
+        }
     }
 
 }

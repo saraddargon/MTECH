@@ -115,11 +115,11 @@ namespace StockControl
         {
             return RadMessageBox.Show(Mssg, Caption, MessageBoxButtons.YesNo, RadMessageIcon.Question) == DialogResult.Yes;
         }
-        public static bool IsSave(string Mssg = "ต้องการบันทึก ?")
+        public static bool IsSave(string Mssg = "Do you want to 'Save' ?")
         {
             return Question(Mssg, "บันทึก");
         }
-        public static bool IsDel(string Mssg = "ต้องการลบ ?")
+        public static bool IsDel(string Mssg = "Do you want to 'Delete' ?")
         {
             return Question(Mssg, "ลบ");
         }

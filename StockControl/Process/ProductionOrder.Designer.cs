@@ -77,8 +77,6 @@
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
             this.radLabel8 = new Telerik.WinControls.UI.RadLabel();
             this.radGroupBox3 = new Telerik.WinControls.UI.RadGroupBox();
-            this.txtOutQty = new Telerik.WinControls.UI.RadSpinEditor();
-            this.txtPCSUnit = new Telerik.WinControls.UI.RadSpinEditor();
             this.txtEndingDate = new Telerik.WinControls.UI.RadTextBox();
             this.txtStartingDate = new Telerik.WinControls.UI.RadTextBox();
             this.txtUOM = new Telerik.WinControls.UI.RadTextBox();
@@ -117,6 +115,8 @@
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
+            this.txtPCSUnit = new Telerik.WinControls.UI.RadMaskedEditBox();
+            this.txtOutQty = new Telerik.WinControls.UI.RadMaskedEditBox();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -127,8 +127,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox3)).BeginInit();
             this.radGroupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtOutQty)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPCSUnit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEndingDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStartingDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUOM)).BeginInit();
@@ -156,6 +154,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPCSUnit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtOutQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -618,26 +618,6 @@
             this.radGroupBox3.TabIndex = 16;
             this.radGroupBox3.Text = "Production order";
             // 
-            // txtOutQty
-            // 
-            this.txtOutQty.DecimalPlaces = 2;
-            this.txtOutQty.Location = new System.Drawing.Point(541, 105);
-            this.txtOutQty.Name = "txtOutQty";
-            this.txtOutQty.Size = new System.Drawing.Size(63, 20);
-            this.txtOutQty.TabIndex = 18;
-            this.txtOutQty.TabStop = false;
-            this.txtOutQty.Visible = false;
-            // 
-            // txtPCSUnit
-            // 
-            this.txtPCSUnit.DecimalPlaces = 2;
-            this.txtPCSUnit.Location = new System.Drawing.Point(610, 81);
-            this.txtPCSUnit.Name = "txtPCSUnit";
-            this.txtPCSUnit.Size = new System.Drawing.Size(56, 20);
-            this.txtPCSUnit.TabIndex = 18;
-            this.txtPCSUnit.TabStop = false;
-            this.txtPCSUnit.Visible = false;
-            // 
             // txtEndingDate
             // 
             this.txtEndingDate.BackColor = System.Drawing.Color.White;
@@ -964,6 +944,30 @@
             this.radButtonElement2.Text = "รายการ";
             this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // txtPCSUnit
+            // 
+            this.txtPCSUnit.Location = new System.Drawing.Point(610, 80);
+            this.txtPCSUnit.Mask = "N2";
+            this.txtPCSUnit.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            this.txtPCSUnit.Name = "txtPCSUnit";
+            this.txtPCSUnit.Size = new System.Drawing.Size(56, 20);
+            this.txtPCSUnit.TabIndex = 19;
+            this.txtPCSUnit.TabStop = false;
+            this.txtPCSUnit.Text = "0.00";
+            this.txtPCSUnit.Visible = false;
+            // 
+            // txtOutQty
+            // 
+            this.txtOutQty.Location = new System.Drawing.Point(610, 107);
+            this.txtOutQty.Mask = "N2";
+            this.txtOutQty.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            this.txtOutQty.Name = "txtOutQty";
+            this.txtOutQty.Size = new System.Drawing.Size(56, 20);
+            this.txtOutQty.TabIndex = 19;
+            this.txtOutQty.TabStop = false;
+            this.txtOutQty.Text = "0.00";
+            this.txtOutQty.Visible = false;
+            // 
             // ProductionOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -995,8 +999,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox3)).EndInit();
             this.radGroupBox3.ResumeLayout(false);
             this.radGroupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtOutQty)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPCSUnit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEndingDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStartingDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUOM)).EndInit();
@@ -1024,6 +1026,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.txtPCSUnit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtOutQty)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1097,13 +1101,13 @@
         private Telerik.WinControls.UI.RadButtonElement btnImportFile;
         private Telerik.WinControls.UI.RadButtonElement btnExportFile;
         private Telerik.WinControls.UI.RadTextBox txtRefDocId;
-        private Telerik.WinControls.UI.RadSpinEditor txtOutQty;
-        private Telerik.WinControls.UI.RadSpinEditor txtPCSUnit;
         private Telerik.WinControls.UI.RadTextBox txtCreateBy;
         private Telerik.WinControls.UI.RadTextBox txtCreateDate;
         private Telerik.WinControls.UI.RadLabel radLabel10;
         private Telerik.WinControls.UI.RadLabel radLabel9;
         private Telerik.WinControls.UI.RadLabel radLabel11;
         private Telerik.WinControls.UI.RadTextBox txtLotNo;
+        private Telerik.WinControls.UI.RadMaskedEditBox txtOutQty;
+        private Telerik.WinControls.UI.RadMaskedEditBox txtPCSUnit;
     }
 }

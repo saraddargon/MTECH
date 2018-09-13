@@ -59,8 +59,10 @@ namespace StockControl
                 GETDTRow();
 
                 LoadDefault();
+                var m = t_JobNo;
                 ClearData();
                 btnNew_Click(null, null);
+                t_JobNo = m;
 
                 if (t_JobNo != "")
                     DataLoad();
@@ -252,7 +254,7 @@ namespace StockControl
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (txtFGNo.Text == "") return;
-            if (Math.Round(txtFGQty.Text.ToDecimal() * txtPCSUnit.Value, 2) != txtOutQty.Value.ToDecimal())
+            if (Math.Round(txtFGQty.Value.ToDecimal() * txtPCSUnit.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal())
             {
                 baseClass.Warning("Status Process cannot Delete.\n");
                 return;

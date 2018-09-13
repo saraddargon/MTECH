@@ -537,6 +537,7 @@
             this.btnGenPR.Name = "btnGenPR";
             this.btnGenPR.Text = "<html><p>Generate</p><p>to P/R</p></html>";
             this.btnGenPR.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnGenPR.Click += new System.EventHandler(this.btnGenPR_Click);
             // 
             // radButtonElement4
             // 

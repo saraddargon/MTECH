@@ -55,7 +55,7 @@ namespace StockControl
             }
 
             dgvData.AutoGenerateColumns = false;
-            //DataLoad();
+            DataLoad();
 
             dgvData.Columns.ToList().ForEach(x =>
             {
@@ -274,18 +274,98 @@ namespace StockControl
         //View
         private void radButtonElement2_Click(object sender, EventArgs e)
         {
+            dgvData.EndEdit();
+            if (dgvData.CurrentCell == null) return;
 
+            string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
+            var p = new ProductionOrder(jobNo);
+            p.ShowDialog();
+            DataLoad();
         }
         //Edit
         private void radButtonElement3_Click(object sender, EventArgs e)
         {
+            dgvData.EndEdit();
+            if (dgvData.CurrentCell == null) return;
 
+            string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
+            var p = new ProductionOrder(jobNo);
+            p.ShowDialog();
+            DataLoad();
         }
         //Delete
+        bool chkDelE()
+        {
+            bool ret = true;
+            string mssg = "";
+
+            var c = dgvData.CurrentCell.RowInfo;
+            var s = Math.Round(c.Cells["Qty"].Value.ToDecimal() * c.Cells["PCSUnit"].Value.ToDecimal(), 2);
+            var s2 = c.Cells["OutQty"].Value.ToDecimal();
+
+            if(s != s2)
+            {
+                mssg += "- Cannot delete because FG is already receive.\n";
+            }
+
+            if (mssg != "")
+            {
+                baseClass.Warning(mssg);
+                ret = false;
+            }
+            return ret;
+        }
         private void radButtonElement4_Click(object sender, EventArgs e)
         {
+            dgvData.EndEdit();
+            if (dgvData.CurrentCell == null) return;
+
+            if (chkDelE() && baseClass.IsDel())
+                DeleteE();
 
         }
+        void DeleteE()
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                using (var d = new DataClasses1DataContext())
+                {
+                    string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo && x.Active).FirstOrDefault();
+                        if (m != null)
+                        {
+                            m.Active = false;
+                            m.UpdateDate = DateTime.Now;
+                            m.UpdateBy = ClassLib.Classlib.User;
+
+                            var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                            if (po != null)
+                            {
+                                //po.OutPlan += (m.Qty * m.PCSUnit) - m.OutQty;
+                                po.OutPlan = Math.Round(m.Qty * m.PCSUnit, 3); //Full Return Qty
+                                po.Status = baseClass.setCustomerPOStatus(po);
+                                db.SubmitChanges();
+
+                                DataLoad();
+                                baseClass.Info("Delete complete.\n");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
     }
 
 
