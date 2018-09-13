@@ -91,31 +91,7 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    string pono = txtPONo.Text;
-                    string cstmno = txtCSTMNo.Text;
-                    string item = cbbItem.SelectedValue.ToSt();
-                    DateTime dFrom = (cbChkDate.Checked) ? dtFrom.Value.Date : new DateTime(1999, 1, 1);
-                    DateTime dTo = (cbChkDate.Checked) ? dtTo.Value.Date.AddDays(1).AddMinutes(1) : DateTime.MaxValue;
 
-                    var t = db.mh_SaleOrders.Where(x =>
-                                x.Active
-                                && (x.SONo.Contains(pono))
-                                && (x.CustomerNo == cstmno || cstmno == "")
-                                && (x.ItemNo == item || item == "")
-                                && (x.SODate >= dFrom && x.SODate <= dTo)).ToList();
-                    dgvData.DataSource = null;
-                    dgvData.AutoGenerateColumns = false;
-                    dgvData.DataSource = t;
-
-                    int rNo = 1;
-                    dgvData.Rows.ToList().ForEach(x =>
-                    {
-                        x.Cells["RNo"].Value = rNo++;
-                        string cNo = x.Cells["CustomerNo"].Value.ToSt();
-                        var c = db.mh_Customers.Where(q => q.No == cNo).FirstOrDefault();
-                        if (c != null)
-                            x.Cells["CustomerName"].Value = c.Name;
-                    });
                 }
 
 

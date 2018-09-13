@@ -129,33 +129,7 @@ namespace StockControl
                 int ck = 0;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var t = db.mh_SaleOrders.Where(x => x.Active && x.SONo == t_SONo).ToList();
-                    if (t.Count > 0)
-                    {
-                        string CustNo = t.First().CustomerNo;
-                        txtSONo.Text = t_SONo;
-                        txtCSTMNo.Text = CustNo;
-                        dtSODate.Value = t.First().SODate;
-                        txtRemark.Text = t.First().RemarkHD;
-                        txtTotal.Value = t.First().TotalPrice;
 
-                        foreach (var tt in t)
-                        {
-                            var rowe = dgvData.Rows.AddNew();
-                            addRow(rowe.Index, tt.ReqDeliveryDate.Date, tt.ItemNo, tt.ItemName, tt.Description, tt.Location
-                                , tt.Qty, tt.UOM, tt.PCSUnit, tt.UnitPrice, tt.Amount, tt.PriceIncVat
-                                , tt.OutShip, tt.OutPlan
-                                , tt.id, tt.Status, tt.PlanStatus
-                                , tt.VatGroup, tt.VatType, tt.RefDocNo, tt.RefId.ToInt(), tt.RepType, "");
-                        }
-
-                        SetRowNo1(dgvData);
-                        CallTotal();
-
-                        btnView_Click(null, null);
-                    }
-                    else if (warningMssg)
-                        baseClass.Warning("Sale Order not found.!!");
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -452,76 +426,11 @@ namespace StockControl
                 CallTotal();
                 using (var db = new DataClasses1DataContext())
                 {
-                    bool fItem = true;
-                    foreach (var item in dgvData.Rows)
-                    {
-                        if (item.Cells["dgvC"].Value.ToSt() == "") continue;
-                        int id = item.Cells["id"].Value.ToInt();
-                        var t = db.mh_SaleOrders.Where(x => x.id == id).FirstOrDefault();
-                        if (t != null)
-                        {
-                            //edit
-                            t.Active = item.IsVisible;
-                        }
-                        else if (item.IsVisible)
-                        {
-                            //add
-                            t = new mh_SaleOrder();
-                            if (sono == "" && fItem)
-                                sono = dbClss.GetNo(28, 2);
-                            t.Active = true;
-                            t.CreateDate = DateTime.Now;
-                            t.CreateBy = ClassLib.Classlib.User;
-                            db.mh_SaleOrders.InsertOnSubmit(t);
-                        }
-                        else
-                            continue;
-                        t.SONo = sono;
-                        t.CustomerNo = cstmNo;
-                        t.SODate = dtSODate.Value.Date;
-                        t.TotalPrice = txtTotal.Value.ToDecimal();
-                        t.Vat = cbVat.Checked;
-                        t.VatA = txtVatA.Value.ToDecimal();
-                        t.VatAmnt = txtVatAmnt.Value.ToDecimal();
-                        t.TotalPriceIncVat = txtGrandTotal.Value.ToDecimal();
-                        t.UpdateBy = Classlib.User;
-                        t.UpdateDate = DateTime.Now;
-                        t.RemarkHD = txtRemark.Text;
-                        //rowe
-                        t.ReqDeliveryDate = item.Cells["ReqDate"].Value.ToDateTime().Value;
-                        t.ItemNo = item.Cells["ItemNo"].Value.ToSt();
-                        t.ItemName = item.Cells["ItemName"].Value.ToSt();
-                        t.Description = item.Cells["Description"].Value.ToSt();
-                        t.Location = item.Cells["Location"].Value.ToSt();
-                        t.Qty = item.Cells["Qty"].Value.ToDecimal();
-                        t.UOM = item.Cells["Unit"].Value.ToSt();
-                        t.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
-                        t.UnitPrice = item.Cells["UnitPrice"].Value.ToDecimal();
-                        t.Amount = item.Cells["Amount"].Value.ToDecimal();
-                        t.PriceIncVat = item.Cells["PriceIncVat"].Value.ToBool();
-                        t.VatGroup = item.Cells["VatGroup"].Value.ToInt();
-                        t.VatType = item.Cells["VatType"].Value.ToSt();
-                        if (item.Cells["Status"].Value.ToSt() == "Waiting")
-                            t.OutShip = item.Cells["Qty"].Value.ToDecimal();
-                        else
-                            t.OutShip = item.Cells["OutShip"].Value.ToDecimal();
-                        t.Status = item.Cells["Status"].Value.ToSt();
-                        t.RefDocNo = item.Cells["RefDocNo"].Value.ToSt();
-                        t.RefId = item.Cells["RefId"].Value.ToInt();
-                        t.RepType = item.Cells["RepType"].Value.ToSt();
-                        t.PlanStatus = item.Cells["PlanStatus"].Value.ToSt();
-                        t.OutPlan = item.Cells["OutPlan"].Value.ToDecimal();
-                    }
 
-                    t_SONo = sono;
-                    t_CustomerNo = cstmNo;
-                    db.SubmitChanges();
-
-                    updateOutSO();
                 }
 
 
-                baseClass.Info("Save complete(s).");
+                    baseClass.Info("Save complete(s).");
                 ClearData();
                 txtCSTMNo.Text = t_CustomerNo;
                 txtSONo.Text = t_SONo;

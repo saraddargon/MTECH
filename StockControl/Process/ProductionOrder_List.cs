@@ -300,31 +300,9 @@ namespace StockControl
             {
                 if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
                 {
-                    //var rowS = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
-                    //if (rowS.Select(x => x.Cells["CustomerNo"].Value.ToSt()).Count() > 1)
-                    //{
-                    //    baseClass.Warning("Sale order have only 1 Customer.");
-                    //    return;
-                    //}
 
-                    //var idList = new List<int>();
-                    //foreach (var item in rowS)
-                    //{
-                    //    int id = item.Cells["id"].Value.ToInt();
-                    //    if (item.Cells["OutSO"].Value.ToDecimal() <= 0)
-                    //    {
-                    //        baseClass.Warning("Status P/O Cannot create Sale Order.\n");
-                    //        return;
-                    //    }
-                    //    idList.Add(id);
-                    //}
-
-                    //var so = new SaleOrder(idList);
+                    //var so = new SaleOrder(true);
                     //so.ShowDialog();
-                    //DataLoad();
-
-                    var so = new SaleOrder(true);
-                    so.ShowDialog();
                 }
                 else
                 {
