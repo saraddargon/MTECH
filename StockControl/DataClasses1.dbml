@@ -183,18 +183,6 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tb_VendorContact" Member="tb_VendorContacts">
-    <Type Name="tb_VendorContact">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="DefaultNo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="VendorNo" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="ContactName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Mobile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Tel" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Fax" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.tb_WorkDays" Member="tb_WorkDays">
     <Type Name="tb_WorkDay">
       <Column Name="YYYY" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -1610,6 +1598,18 @@
   </Table>
   <Table Name="dbo.mh_VendorContacts" Member="mh_VendorContacts">
     <Type Name="mh_VendorContact">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Def" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="VendorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ContactName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Tel" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Fax" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_VendorContacts" Member="mh_VendorContact1s">
+    <Type Name="mh_VendorContact1">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Def" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="VendorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
