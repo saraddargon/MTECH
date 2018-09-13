@@ -3451,7 +3451,7 @@ namespace StockControl
 
         private void radButtonElement3_Click(object sender, EventArgs e)
         {
-            Bom a = new Bom(txtInternalNo.Text, cboBOM.Text);
+            Bom_List a = new Bom_List();
             a.ShowDialog();
 
         }
