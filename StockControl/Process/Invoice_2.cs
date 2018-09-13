@@ -14,7 +14,7 @@ using ClassLib;
 
 namespace StockControl
 {
-    public partial class Shipment : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Invoice_2 : Telerik.WinControls.UI.RadRibbonForm
     {
         string t_SONo = "";
         string t_CustomerNo = "";
@@ -22,30 +22,30 @@ namespace StockControl
         List<int> idList = new List<int>();
         //List<po_to_so> potoso = new List<po_to_so>();
 
-        public Shipment()
+        public Invoice_2()
         {
             InitializeComponent();
         }
-        public Shipment(string SHNo)
+        public Invoice_2(string SHNo)
         {
             InitializeComponent();
             txtSONo.Text = SHNo;
             t_SONo = SHNo;
         }
-        public Shipment(string PONo, string CustomerNo)
+        public Invoice_2(string PONo, string CustomerNo)
         {
             InitializeComponent();
             this.t_SONo = PONo;
             this.t_CustomerNo = CustomerNo;
         }
-        public Shipment(List<int> idList)
+        public Invoice_2(List<int> idList)
         {
             InitializeComponent();
             this.idList = idList;
         }
 
         bool demo = false;
-        public Shipment(bool demo)
+        public Invoice_2(bool demo)
         {
             InitializeComponent();
             this.demo = demo;
@@ -152,7 +152,7 @@ namespace StockControl
                 int ck = 0;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    mh_Shipment mh = db.mh_Shipments.Where(s => s.SSNo == txtSONo.Text).FirstOrDefault();
+                    mh_InvoiceHD mh = db.mh_InvoiceHDs.Where(s => s.IVNo == txtSONo.Text).FirstOrDefault();
                     if(mh!=null)
                     {
                         txtTel.Text = mh.Tel;
@@ -169,15 +169,15 @@ namespace StockControl
                         txtVatA.Text = mh.VatA.ToSt();
                         cbVat.Checked = mh.Vat;
 
-                        var deletTemp = db.mh_ShipmentDTTemps.Where(t => t.UserID == ConnectDB.user && t.SSNo == txtSONo.Text).ToList();
+                        var deletTemp = db.mh_InvoiceDTTemps.Where(t =>  t.IVNo == txtSONo.Text).ToList();
                         if(deletTemp.Count>0)
                         {
-                            db.mh_ShipmentDTTemps.DeleteAllOnSubmit(deletTemp);
+                            db.mh_InvoiceDTTemps.DeleteAllOnSubmit(deletTemp);
                         }
 
                         int rows1 = 0;
 
-                        var list1 = db.mh_ShipmentDTs.Where(w => w.SSNo == txtSONo.Text && !w.Status.Equals("Cancel")).ToList();
+                        var list1 = db.mh_InvoiceDTs.Where(w => w.IVNo == txtSONo.Text && !w.Status.Equals("Cancel")).ToList();
                         if (list1.Count > 0)
                         {
                             foreach (var rd in list1)
@@ -186,10 +186,10 @@ namespace StockControl
                                 if (im != null)
                                 {
                                     rows1 += 1;
-                                    mh_ShipmentDTTemp st = new mh_ShipmentDTTemp();
+                                    mh_InvoiceDTTemp st = new mh_InvoiceDTTemp();
                                     st.RNo = rows1;
-                                    st.SSNo = txtSONo.Text;
-                                    st.UserID = ClassLib.Classlib.User;
+                                    st.IVNo = txtSONo.Text;
+                                    //st.UserID = ClassLib.Classlib.User;
                                     st.ItemNo = rd.ItemNo;
                                     st.ItemName = rd.ItemName;
                                     st.Description = rd.Description;
@@ -200,7 +200,7 @@ namespace StockControl
                                     st.Amount = rd.Amount;
                                     st.Active = true;
                                     st.UOM = rd.UOM;
-                                    db.mh_ShipmentDTTemps.InsertOnSubmit(st);
+                                    db.mh_InvoiceDTTemps.InsertOnSubmit(st);
                                     db.SubmitChanges();
                                 }
                             }
@@ -514,7 +514,7 @@ namespace StockControl
 
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    mh_Shipment sh = db.mh_Shipments.Where(s => s.SSNo == sono).FirstOrDefault();
+                    mh_InvoiceHD sh = db.mh_InvoiceHDs.Where(s => s.IVNo == sono).FirstOrDefault();
                     if (sh != null)
                     {
 
@@ -530,8 +530,8 @@ namespace StockControl
                         decimal.TryParse(txtTotal.Text, out totalPrice);
                         decimal.TryParse(txtVatA.Text, out vatA);
 
-                        mh_Shipment sh1 = new mh_Shipment();
-                        sh1.SSNo = txtSONo.Text;
+                        mh_InvoiceHD sh1 = new mh_InvoiceHD();
+                        sh1.IVNo = txtSONo.Text;
                         sh1.Remark = txtRemark.Text;
                         sh1.SSDate = dtSODate.Value;
                         sh1.Tel = txtTel.Text;
@@ -555,7 +555,7 @@ namespace StockControl
                         sh1.StatusHD = "Process";
                         sh1.ContactName = txtContactName.Text;
                         sh1.Active = true;
-                        db.mh_Shipments.InsertOnSubmit(sh1);
+                        db.mh_InvoiceHDs.InsertOnSubmit(sh1);
                         db.SubmitChanges();
 
                         ////Addd DT///
@@ -564,10 +564,10 @@ namespace StockControl
                         foreach(GridViewRowInfo rd in dgvData.Rows)
                         {
                             rno += 1;
-                            mh_ShipmentDTTemp mtem = db.mh_ShipmentDTTemps.Where(t => t.id == Convert.ToInt32(rd.Cells["id"].Value.ToSt())).FirstOrDefault();
+                            mh_InvoiceDTTemp mtem = db.mh_InvoiceDTTemps.Where(t => t.id == Convert.ToInt32(rd.Cells["id"].Value.ToSt())).FirstOrDefault();
                             if (mtem != null)
                             {
-                                mh_ShipmentDT nd = new mh_ShipmentDT();
+                                mh_InvoiceDT nd = new mh_InvoiceDT();
                                
                                 nd.ItemNo = rd.Cells["ItemNo"].Value.ToSt();
                                 nd.RefDocNo = Convert.ToString(rd.Cells["RefDocNo"].Value);
@@ -580,14 +580,14 @@ namespace StockControl
                                 nd.Description = mtem.Description;
                                 nd.UnitPrice= Convert.ToDecimal(rd.Cells["UnitPrice"].Value.ToSt());
                                 nd.PCSUnit = mtem.PCSUnit;
-                                nd.SSNo = txtSONo.Text;
+                                nd.IVNo = txtSONo.Text;
                                 nd.Status = "Process";
                                 nd.RefId = mtem.RefId;
                                 nd.Active = Convert.ToBoolean(true);
                                 
 
-                                db.mh_ShipmentDTs.InsertOnSubmit(nd);   
-                                db.mh_ShipmentDTTemps.DeleteOnSubmit(mtem);
+                                db.mh_InvoiceDTs.InsertOnSubmit(nd);   
+                                db.mh_InvoiceDTTemps.DeleteOnSubmit(mtem);
                                 db.SubmitChanges();
                             }
 
@@ -831,10 +831,10 @@ namespace StockControl
                         {
                             if(RNo>0)
                             {
-                                mh_ShipmentDTTemp md = db.mh_ShipmentDTTemps.Where(s => s.id == RNo).FirstOrDefault();
+                                mh_InvoiceDTTemp md = db.mh_InvoiceDTTemps.Where(s => s.id == RNo).FirstOrDefault();
                                 if(md!=null)
                                 {
-                                    db.mh_ShipmentDTTemps.DeleteOnSubmit(md);
+                                    db.mh_InvoiceDTTemps.DeleteOnSubmit(md);
                                     db.SubmitChanges();
                                 }
                                 LoadShipment();
@@ -882,7 +882,7 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                var sm = new Shipment_List();
+                var sm = new Invoice_List2();
                 this.Cursor = Cursors.Default;
                 sm.ShowDialog();
                 //if (pol.PONo != "" && pol.CstmNo != "")
@@ -1061,7 +1061,8 @@ namespace StockControl
         {
             try
             {
-                ShipmentListPart sh = new ShipmentListPart(txtSONo.Text);
+                //InvoiceListPart sh = new InvoiceListPart(txtSONo.Text);
+                Invoice_Shipment_List sh = new Invoice_Shipment_List(txtSONo.Text);
                 sh.ShowDialog();
                 LoadShipment();
             }
@@ -1073,7 +1074,7 @@ namespace StockControl
             {
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var ShipList = db.mh_ShipmentDTTemps.Where(s => s.SSNo == txtSONo.Text).ToList();
+                    var ShipList = db.mh_InvoiceDTTemps.Where(s => s.IVNo == txtSONo.Text).ToList();
                     if (ShipList.Count > 0)
                     {
                         dgvData.DataSource = ShipList;

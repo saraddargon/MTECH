@@ -130,8 +130,15 @@ namespace StockControl
                         txtCreateDate.Text = t.CreateDate.ToDtString();
                         txtCreateBy.Text = t.CreateBy;
 
+                        dgvData.Rows.Clear();
+                        var dt = db.mh_SaleOrderDTs.Where(x => x.Active && x.SONo == t_SONo).ToList();
+                        if (dt.Count>0)
+                        {
+                            dgvData.DataSource = dt;
+                        }
 
-                        SetRowNo1(dgvData);
+
+                            SetRowNo1(dgvData);
                         CallTotal();
 
                         btnView_Click(null, null);
@@ -374,11 +381,11 @@ namespace StockControl
                 string cstmNo = txtCSTMNo.Text.Trim();
                 if (poNo != "" && cstmNo != "")
                 {
-                    if (dgvData.Rows.Where(x => x.Cells["PlanStatus"].Value.ToSt() != "Waiting").Count() > 0)
-                    {
-                        baseClass.Warning("Cannot Delete because Already Planned.\n");
-                        return;
-                    }
+                    //if (dgvData.Rows.Where(x => x.Cells["PlanStatus"].Value.ToSt() != "Waiting").Count() > 0)
+                    //{
+                    //    baseClass.Warning("Cannot Delete because Already Planned.\n");
+                    //    return;
+                    //}
 
                     if (baseClass.IsDel($"Do you want to Delete Sale Order: {poNo} ?"))
                     {
@@ -407,6 +414,7 @@ namespace StockControl
 
 
                                 updateOutSO();
+                              
 
                                 baseClass.Info("Delete Sale Order complete.");
                                 ClearData();
@@ -462,7 +470,7 @@ namespace StockControl
                         SaveE();
                 }
                 else
-                    MessageBox.Show("สถานะต้องเป็น New หรือ Edit เท่านั่น");
+                    MessageBox.Show("สถานะต้องเป็น New เท่านั่น");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -590,7 +598,7 @@ namespace StockControl
                     gg.UOM = dbClss.TSt(ix.Cells["Unit"].Value);
                     gg.VatType = dbClss.TSt(ix.Cells["VatType"].Value);
                     gg.Amount = dbClss.TDe(ix.Cells["Amount"].Value);
-
+                    gg.Description = dbClss.TSt(ix.Cells["Description"].Value);
                     gg.Active = true;
 
 
@@ -611,18 +619,23 @@ namespace StockControl
                 {
                     if (idPO == 0) continue;
                     var c = db.mh_CustomerPODTs.Where(x => x.id == idPO).First();
+                    
                     var m = db.mh_SaleOrderDTs.Where(x => x.Active && x.RefId == idPO).ToList();
                     decimal qq = 0.00m;
                     if (m.Count > 0)
                         qq = m.Sum(x => x.Qty * x.PCSUnit);
                     c.OutSO = (c.Qty * c.PCSUnit) - qq;
-                    if (c.OutSO == c.Qty)
-                        c.Status = "Waiting";
-                    else if (c.OutSO <= 0)
-                        c.Status = "Completed";
-                    else
-                        c.Status = "Proeces";
+                    c.Status = baseClass.setCustomerPOStatus(c);
+
+                    //if (c.OutSO == c.Qty)
+                    //    c.Status = "Waiting";
+                    //else if (c.OutSO <= 0)
+                    //    c.Status = "Completed";
+                    //else
+                    //    c.Status = "Proeces";
                     db.SubmitChanges();
+
+                    
                 }
             }
         }
@@ -925,18 +938,38 @@ namespace StockControl
                 ClearData();
                 Ac = "View";
                 Enable_Status(false, "View");
-
                 this.Cursor = Cursors.WaitCursor;
-                var pol = new SaleOrder_List(2);
-                this.Cursor = Cursors.Default;
-                pol.ShowDialog();
-                if (pol.PONo != "" && pol.CstmNo != "")
+                List<GridViewRowInfo> dgvRow_List = new List<GridViewRowInfo>();
+                var selP = new SaleOrder_List2(dgvRow_List);
+                selP.ShowDialog();
+                if (dgvRow_List.Count > 0)
                 {
-                    t_SONo = pol.PONo;
-                    t_CustomerNo = pol.CstmNo;
-                    //LoadData
-                    DataLoad();
+                    string SONo = "";
+                    this.Cursor = Cursors.WaitCursor;
+                    
+                    foreach (GridViewRowInfo ee in dgvRow_List)
+                    {
+                        SONo = dbClss.TSt(ee.Cells["SONo"].Value);
+                        
+                    }
+
+                    txtSONo.Text = SONo;
+                    t_SONo = SONo;
                 }
+
+                     
+                ////var pol = new SaleOrder_List2(txtSONo);
+                //this.Cursor = Cursors.Default;
+                //pol.ShowDialog();
+                //if (pol.PONo != "" && pol.CstmNo != "")
+                //{
+                //    t_SONo = pol.PONo;
+                //    t_CustomerNo = pol.CstmNo;
+                //    //LoadData
+                    
+                //}
+
+                DataLoad();
 
 
                 GC.Collect();

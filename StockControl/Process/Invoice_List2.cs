@@ -9,7 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 namespace StockControl
 {
-    public partial class Shipment_List : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Invoice_List2 : Telerik.WinControls.UI.RadRibbonForm
     {
         public string PONo { get; private set; } = "";
         public string CstmNo { get; private set; } = "";
@@ -17,12 +17,12 @@ namespace StockControl
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
 
-        public Shipment_List(int sType = 1)
+        public Invoice_List2(int sType = 1)
         {
             InitializeComponent();
             this.sType = sType;
         }
-        public Shipment_List()
+        public Invoice_List2()
         {
             InitializeComponent();
         }
@@ -91,7 +91,7 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    dgvData.DataSource = db.mh_Shipments.ToList();
+                    dgvData.DataSource = db.mh_InvoiceHDs.Where(ab=>ab.IVNo.Contains(txtPONo.Text)).ToList();
                 }
 
 

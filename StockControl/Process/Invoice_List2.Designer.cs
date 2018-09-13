@@ -1,6 +1,6 @@
 ﻿namespace StockControl
 {
-    partial class Shipment_List
+    partial class Invoice_List2
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Shipment_List));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Invoice_List2));
             Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn1 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject1 = new Telerik.WinControls.UI.ConditionalFormattingObject();
@@ -149,10 +149,10 @@
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Shipment List";
+            this.radRibbonBar1.Text = "Invoice List";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
-            ((Telerik.WinControls.UI.RadRibbonBarElement)(this.radRibbonBar1.GetChildAt(0))).Text = "Shipment List";
+            ((Telerik.WinControls.UI.RadRibbonBarElement)(this.radRibbonBar1.GetChildAt(0))).Text = "Invoice List";
             ((Telerik.WinControls.UI.RadToggleButtonElement)(this.radRibbonBar1.GetChildAt(0).GetChildAt(6).GetChildAt(0))).AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.Auto;
             // 
             // ribbonTab1
@@ -320,7 +320,7 @@
             // 
             this.radLabelElement1.Name = "radLabelElement1";
             this.radStatusStrip1.SetSpring(this.radLabelElement1, false);
-            this.radLabelElement1.Text = "Status : Shipment List";
+            this.radLabelElement1.Text = "Status : Invoice List";
             this.radLabelElement1.TextWrap = true;
             this.radLabelElement1.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
@@ -399,9 +399,9 @@
             gridViewTextBoxColumn1.Name = "SS";
             gridViewTextBoxColumn1.Width = 83;
             gridViewTextBoxColumn2.EnableExpressionEditor = false;
-            gridViewTextBoxColumn2.FieldName = "SSNo";
-            gridViewTextBoxColumn2.HeaderText = "Shipment No";
-            gridViewTextBoxColumn2.Name = "ShipmentNo";
+            gridViewTextBoxColumn2.FieldName = "IVNo";
+            gridViewTextBoxColumn2.HeaderText = "Invoice No";
+            gridViewTextBoxColumn2.Name = "IVNo";
             gridViewTextBoxColumn2.ReadOnly = true;
             gridViewTextBoxColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewTextBoxColumn2.Width = 104;
@@ -409,9 +409,9 @@
             gridViewDateTimeColumn1.FieldName = "SSDate";
             gridViewDateTimeColumn1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             gridViewDateTimeColumn1.FormatString = "{0:dd/MM/yyyy}";
-            gridViewDateTimeColumn1.HeaderText = "Shipment Date";
+            gridViewDateTimeColumn1.HeaderText = "Invoice Date";
             gridViewDateTimeColumn1.IsVisible = false;
-            gridViewDateTimeColumn1.Name = "ShipmentDate";
+            gridViewDateTimeColumn1.Name = "InvoiceDate";
             gridViewDateTimeColumn1.Width = 87;
             gridViewTextBoxColumn3.EnableExpressionEditor = false;
             gridViewTextBoxColumn3.FieldName = "CustomerNo";
@@ -423,10 +423,12 @@
             gridViewTextBoxColumn4.HeaderText = "Customer Name";
             gridViewTextBoxColumn4.Name = "CustomerName";
             gridViewTextBoxColumn4.Width = 179;
+            gridViewTextBoxColumn5.EnableExpressionEditor = false;
             gridViewTextBoxColumn5.FieldName = "ContactName";
             gridViewTextBoxColumn5.HeaderText = "ContactName";
             gridViewTextBoxColumn5.Name = "ContactName";
             gridViewTextBoxColumn5.Width = 100;
+            gridViewTextBoxColumn6.EnableExpressionEditor = false;
             gridViewTextBoxColumn6.FieldName = "VatAmnt";
             gridViewTextBoxColumn6.FormatString = "{0:N2}";
             gridViewTextBoxColumn6.HeaderText = "VatAmnt";
@@ -440,22 +442,26 @@
             gridViewDecimalColumn1.IsVisible = false;
             gridViewDecimalColumn1.Name = "Amount";
             gridViewDecimalColumn1.Width = 100;
+            gridViewTextBoxColumn7.EnableExpressionEditor = false;
             gridViewTextBoxColumn7.FieldName = "TotalPriceIncVat";
             gridViewTextBoxColumn7.FormatString = "{0:N2}";
             gridViewTextBoxColumn7.HeaderText = "Grand Total";
             gridViewTextBoxColumn7.Name = "TotalPriceIncVat";
             gridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
             gridViewTextBoxColumn7.Width = 100;
+            gridViewTextBoxColumn8.EnableExpressionEditor = false;
             gridViewTextBoxColumn8.FieldName = "Remark";
             gridViewTextBoxColumn8.HeaderText = "Remark";
             gridViewTextBoxColumn8.Name = "Remark";
             gridViewTextBoxColumn8.Width = 100;
+            gridViewTextBoxColumn9.EnableExpressionEditor = false;
             gridViewTextBoxColumn9.FieldName = "CreateDate";
             gridViewTextBoxColumn9.FormatString = "{0:dd/MM/yyyy}";
             gridViewTextBoxColumn9.HeaderText = "CreateDate";
             gridViewTextBoxColumn9.Name = "CreateDate";
             gridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewTextBoxColumn9.Width = 100;
+            gridViewTextBoxColumn10.EnableExpressionEditor = false;
             gridViewTextBoxColumn10.FieldName = "CreateBy";
             gridViewTextBoxColumn10.HeaderText = "CreateBy";
             gridViewTextBoxColumn10.Name = "CreateBy";
@@ -665,9 +671,9 @@
             // 
             this.cbChkDate.Location = new System.Drawing.Point(78, 109);
             this.cbChkDate.Name = "cbChkDate";
-            this.cbChkDate.Size = new System.Drawing.Size(95, 18);
+            this.cbChkDate.Size = new System.Drawing.Size(82, 18);
             this.cbChkDate.TabIndex = 8;
-            this.cbChkDate.Text = "Shipment Date";
+            this.cbChkDate.Text = "Invoice Date";
             // 
             // radLabel3
             // 
@@ -689,9 +695,9 @@
             // 
             this.radLabel1.Location = new System.Drawing.Point(78, 24);
             this.radLabel1.Name = "radLabel1";
-            this.radLabel1.Size = new System.Drawing.Size(73, 18);
+            this.radLabel1.Size = new System.Drawing.Size(60, 18);
             this.radLabel1.TabIndex = 7;
-            this.radLabel1.Text = "Shipment no.";
+            this.radLabel1.Text = "Invoice no.";
             // 
             // btnSearch
             // 
@@ -739,7 +745,7 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
-            // Shipment_List
+            // Invoice_List2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -749,13 +755,13 @@
             this.Controls.Add(this.radRibbonBar1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "Shipment_List";
+            this.Name = "Invoice_List2";
             // 
             // 
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Shipment List";
+            this.Text = "Invoice List";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Unit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
