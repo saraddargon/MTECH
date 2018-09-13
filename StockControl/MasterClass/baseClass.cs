@@ -94,6 +94,10 @@ namespace StockControl
         {
             return val.ToString("dd/MMM/yyyy");
         }
+        public static string ToDtTimeString(this DateTime val)
+        {
+            return val.ToString("dd/MMM/yyyy HH:mm");
+        }
 
         public static void Info(string Mssg)
         {
