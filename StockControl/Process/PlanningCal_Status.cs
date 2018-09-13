@@ -108,7 +108,7 @@ namespace StockControl
                         var gPlan = calPartDemo(new calPartData
                         {
                             DocId = item.PODt.id,
-                            DocNo = item.POHd.CustomerNo,
+                            DocNo = item.POHd.CustomerPONo,
                             ItemNo = item.PODt.ItemNo,
                             repType = baseClass.getRepType(item.PODt.ReplenishmentType),
                             ReqDate = item.PODt.ReqDate,
