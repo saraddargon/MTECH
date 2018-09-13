@@ -313,7 +313,7 @@ namespace StockControl
                                 foreach (var vv in r)
                                 {
                                     string QtyAC = "";
-                                    //QtyAC = 
+                                    QtyAC = (dbClss.TDe(vv.QTY)* dbClss.TDe(vv.PCSUnit)).ToString() + " "+ vv.Unit;
 
                                     Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription, vv.RemainQty
                                         , dbClss.TDe( vv.QTY), vv.Unit, dbClss.TDe(vv.PCSUnit)
@@ -532,12 +532,12 @@ namespace StockControl
                             err += "- “หน่วย:” เป็นค่าว่าง \n";
                         if (StockControl.dbClss.TDe(rowInfo.Cells["PCSUnit"].Value) <= 0)
                             err += "- “จำนวน/หนวย:” น้อยกว่า 0 \n";
-                        if (StockControl.dbClss.TSt(rowInfo.Cells["Location"].Value).Equals(""))
-                            err += "- “จากสถานที่เก็บ:” เป็นค่าว่าง \n";
+                        //if (StockControl.dbClss.TSt(rowInfo.Cells["Location"].Value).Equals(""))
+                        //    err += "- “จากสถานที่เก็บ:” เป็นค่าว่าง \n";
                         if (StockControl.dbClss.TSt(rowInfo.Cells["ToLocation"].Value).Equals(""))
                             err += "- “ไปยังสถานที่เก็บ:” เป็นค่าว่าง \n";
-                        if(StockControl.dbClss.TSt(rowInfo.Cells["Location"].Value) == StockControl.dbClss.TSt(rowInfo.Cells["ToLocation"].Value))
-                            err += "- “'จากสถานที่เก็บ' และ 'ไปยังสถานที่เก็บ':” ไม่สามารถเป็นสถานทีเดียวกันได้ \n";
+                        //if(StockControl.dbClss.TSt(rowInfo.Cells["Location"].Value) == StockControl.dbClss.TSt(rowInfo.Cells["ToLocation"].Value))
+                        //    err += "- “'จากสถานที่เก็บ' และ 'ไปยังสถานที่เก็บ':” ไม่สามารถเป็นสถานทีเดียวกันได้ \n";
                         
 
                     }
@@ -870,10 +870,15 @@ namespace StockControl
                                         BaseUOM = dbClss.TSt(g1.FirstOrDefault().BaseUOM);
                                         BasePCSUOM = dbClss.Con_UOM(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), BaseUOM);
                                     }
+                                if (BasePCSUOM <= 0) BasePCSUOM = 1;
+
+                                decimal Qty = (StockControl.dbClss.TDe(g.Cells["QTY"].Value)
+                                                * StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
+                                                ) * BasePCSUOM;
 
                                 db.sp_052_Reture_RM(txtADNo.Text
                                     , StockControl.dbClss.TSt(g.Cells["CodeNo"].Value)
-                                    , StockControl.dbClss.TDe(g.Cells["QTY"].Value)
+                                    , Qty
                                     , StockControl.dbClss.TSt(g.Cells["Remark"].Value)
                                      , ""// StockControl.dbClss.TSt(g.Cells["LineName"].Value)
                                      , ""//StockControl.dbClss.TSt(g.Cells["MachineName"].Value)
@@ -955,7 +960,7 @@ namespace StockControl
                         // || dgvData.Columns["StandardCost"].Index == e.ColumnIndex
                         )
                     {
-                        
+
                         if (dbClss.TSt(e.Row.Cells["Unit"].Value) == "")
                         {
                             e.Row.Cells["QTY"].Value = 0;
@@ -987,17 +992,20 @@ namespace StockControl
                             }
 
                             decimal Temp = 0;
-                            Temp = BasePCSUOM * PCSUnit * QTY;
-                            //Temp = Check_RemainStock(CodeNo, PCSUnit, BaseUOM, BasePCSUOM, QTY, RemainQty);
-                            if (Temp > RemainQty)
-                            {
-                                MessageBox.Show("ไม่สามารถย้ายทูลเกินจำนวนคงเหลือสินค้าคงคลังได้");
-                                e.Row.Cells["QTY"].Value = 0;
-                                QTY = 0;
-                            }
+                            Temp = Math.Round((BasePCSUOM * PCSUnit * QTY), 2);
+                            e.Row.Cells["QtyAC"].Value = Temp.ToString() + " " + BaseUOM;
+
+                            //    //Temp = Check_RemainStock(CodeNo, PCSUnit, BaseUOM, BasePCSUOM, QTY, RemainQty);
+                            //    if (Temp > RemainQty)
+                            //    {
+                            //        MessageBox.Show("ไม่สามารถย้ายทูลเกินจำนวนคงเหลือสินค้าคงคลังได้");
+                            //        e.Row.Cells["QTY"].Value = 0;
+                            //        QTY = 0;
+                            //    }
 
                             if (QTY > 0)
                                 e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value));
+
 
 
                         }
@@ -1024,6 +1032,8 @@ namespace StockControl
                         string CodeNo = dbClss.TSt(e.Row.Cells["CodeNo"].Value);
                         e.Row.Cells["PCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
 
+
+
                         //Cal Remain Qty
                         //string CodeNo = dbClss.TSt(e.Row.Cells["CodeNo"].Value);
                         decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
@@ -1048,17 +1058,48 @@ namespace StockControl
                         }
 
                         decimal Temp = 0;
-                        Temp = BasePCSUOM * PCSUnit * QTY;
-                        //Temp = Check_RemainStock(CodeNo, PCSUnit, BaseUOM, BasePCSUOM, QTY, RemainQty);
-                        if (Temp > RemainQty)
+                        Temp = Math.Round((BasePCSUOM * PCSUnit * QTY), 2);
+                        e.Row.Cells["QtyAC"].Value = Temp.ToString() + " " + BaseUOM;
+
+                        ////Temp = Check_RemainStock(CodeNo, PCSUnit, BaseUOM, BasePCSUOM, QTY, RemainQty);
+                        //if (Temp > RemainQty)
+                        //{
+                        //    MessageBox.Show("ไม่สามารถย้ายทูลเกินจำนวนคงเหลือสินค้าคงคลังได้");
+                        //    e.Row.Cells["QTY"].Value = 0;
+                        //    QTY = 0;
+                        //    e.Row.Cells["StandardCost"].Value = 0;
+                        //    e.Row.Cells["Amount"].Value = 0;
+                        //}
+
+                    }
+                    else if (dgvData.Columns["PCSUnit"].Index == e.ColumnIndex)
+                    {
+                        //Cal Remain Qty
+                        string CodeNo = dbClss.TSt(e.Row.Cells["CodeNo"].Value);
+                        decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
+                        string BaseUOM = "PCS";//dbClss.TSt(e.Row.Cells["Unit"].Value);
+                        decimal BasePCSUOM = 1;// dbClss.Con_UOM(CodeNo, BaseUOM);
+                        using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            MessageBox.Show("ไม่สามารถย้ายทูลเกินจำนวนคงเหลือสินค้าคงคลังได้");
-                            e.Row.Cells["QTY"].Value = 0;
-                            QTY = 0;
-                            e.Row.Cells["StandardCost"].Value = 0;
-                            e.Row.Cells["Amount"].Value = 0;
+                            var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == CodeNo).ToList();
+                            if (g.Count() > 0)
+                            {
+                                BaseUOM = dbClss.TSt(g.FirstOrDefault().BaseUOM);
+                                BasePCSUOM = dbClss.Con_UOM(CodeNo, BaseUOM);
+                            }
                         }
-                        
+
+                        decimal QTY = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["QTY"].Value), out QTY);
+                        decimal RemainQty = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["RemainQty"].Value), out RemainQty);
+                        if (BasePCSUOM <= 0 || BaseUOM == "")
+                        {
+                            BasePCSUOM = 1;
+                            BaseUOM = "PCS";
+                        }
+
+                        decimal Temp = 0;
+                        Temp = Math.Round(( BasePCSUOM * PCSUnit * QTY),2);
+                        e.Row.Cells["QtyAC"].Value = Temp.ToString() + " " + BaseUOM;
                     }
                 }
 
@@ -1264,8 +1305,8 @@ namespace StockControl
                             Unit = d.PurchaseUOM;
                             PCSUnit = dbClss.Con_UOM(CodeNo, d.PurchaseUOM);
                             CostPerUnit = 0; // Convert.ToDecimal(d.StandardCost); // Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "Avg"));//Convert.ToDecimal(d.StandardCost);
-                            Location = "";
-                            ToLocation = d.Location;
+                            Location = "Warehouse";
+                            ToLocation = "Warehouse";//d.Location;
                             No = dgvData.Rows.Count() + 1;
                             QtyAC = QTY.ToString() + " "+Unit;
                             //ShelfNo = d.ShelfNo;
