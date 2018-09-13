@@ -46,6 +46,7 @@ namespace StockControl
         private List<ItemData> itemDatas = new List<ItemData>();
         private List<WorkLoad> workLoads = new List<WorkLoad>();
         private DateTime? PDDate = null;
+        int mainNo = 0;
         void calE()
         {
             try
@@ -54,6 +55,7 @@ namespace StockControl
                 itemDatas.Clear();
                 workLoads.Clear();
                 PDDate = null;
+                mainNo = 0;
 
                 changeLabel("Finding Docno for plan...");
                 var cstmPO_List = new List<CustomerPOCal>();
@@ -103,15 +105,18 @@ namespace StockControl
                         //});
                         var m = PDDate;
                         changeLabel($"Calculating... Doc no.{item.POHd.CustomerPONo} : [{item.PODt.ItemNo}] {item.PODt.ItemName}");
-                        calPartDemo(new calPartData
+                        var gPlan = calPartDemo(new calPartData
                         {
                             DocId = item.PODt.id,
-                            DocNo = item.POHd.CustomerNo,
+                            DocNo = item.POHd.CustomerPONo,
                             ItemNo = item.PODt.ItemNo,
                             repType = baseClass.getRepType(item.PODt.ReplenishmentType),
                             ReqDate = item.PODt.ReqDate,
                             ReqQty = item.PODt.OutPlan,
+                            mainNo = mainNo
                         });
+                        gPlan.root = true;
+                        mainNo++;
                     }
 
                     changeLabel($"Calculate complete...\n");
@@ -293,7 +298,7 @@ namespace StockControl
             }));
         }
 
-        void calPartDemo(calPartData data)
+        grid_Planning calPartDemo(calPartData data)
         {
             //demo
             //Purchase Leadtime + 7
@@ -324,6 +329,9 @@ namespace StockControl
                 gPlan.UOM = tdata.UOM;
                 gPlan.PCSUnit = tdata.PCSUnit;
                 gPlan.LocationItem = tdata.LocationItem;
+                gPlan.refNo = data.mainNo;
+                mainNo++;
+                gPlan.mainNo = mainNo;
 
                 //set Production or Purchase
                 if (tdata.RepType_enum == ReplenishmentType.Production)
@@ -341,7 +349,8 @@ namespace StockControl
                             ItemNo = b.Component,
                             repType = baseClass.getRepType(tool.ReplenishmentType),
                             ReqDate = data.ReqDate,
-                            ReqQty = Math.Round(b.Qty.ToDecimal() * b.PCSUnit.ToDecimal() * data.ReqQty.ToDecimal(), 2)
+                            ReqQty = Math.Round(b.Qty.ToDecimal() * b.PCSUnit.ToDecimal() * data.ReqQty.ToDecimal(), 2),
+                            mainNo = gPlan.mainNo,
                         };
                         calPartDemo(cd);
                     }
@@ -385,6 +394,7 @@ namespace StockControl
                 gPlan.DueDate = gPlan.EndingDate.Value;
 
                 gridPlans.Add(gPlan);
+                return gPlan;
             }
         }
 
@@ -408,5 +418,7 @@ namespace StockControl
         public string DocNo { get; set; }
         public int DocId { get; set; }
         public ReplenishmentType repType { get; set; }
+        
+        public int mainNo { get; set; } = 0;
     }
 }

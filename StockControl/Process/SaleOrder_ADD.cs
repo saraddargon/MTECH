@@ -7,9 +7,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
+using Telerik.WinControls.UI;
+
 namespace StockControl
 {
-    public partial class ProductionOrder_List : Telerik.WinControls.UI.RadRibbonForm
+    public partial class SaleOrder_ADD : Telerik.WinControls.UI.RadRibbonForm
     {
         public string PONo { get; private set; } = "";
         public string CstmNo { get; private set; } = "";
@@ -17,12 +19,18 @@ namespace StockControl
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
 
-        public ProductionOrder_List(int sType = 1)
+        public SaleOrder_ADD(int sType = 1)
         {
             InitializeComponent();
             this.sType = sType;
         }
-        public ProductionOrder_List()
+        List<GridViewRowInfo> RetDT;
+        public SaleOrder_ADD(List<GridViewRowInfo> RetDT)
+        {
+            InitializeComponent();
+            this.RetDT = RetDT;
+        }
+        public SaleOrder_ADD()
         {
             InitializeComponent();
         }
@@ -36,8 +44,34 @@ namespace StockControl
         private void Unit_Load(object sender, EventArgs e)
         {
             //radGridView1.ReadOnly = true;
+            LoadDef();
+            dgvData.AutoGenerateColumns = false;
+            DataLoad();
+
+            dgvData.Columns.ToList().ForEach(x =>
+            {
+                if (x.Name != "S")
+                    x.ReadOnly = true;
+            });
+        }
+
+        private void LoadDef()
+        {
             using (var db = new DataClasses1DataContext())
             {
+                var cust = db.mh_Customers.Where(x => x.Active)
+                    .Select(x => new CustomerCombo { No = x.No, Name = x.Name }).ToList();
+                cust.Add(new CustomerCombo
+                {
+                    No = "",
+                    Name = ""
+                });
+                cust = cust.OrderBy(x => x.No).ToList();
+                cbbCSTM.AutoSizeDropDownToBestFit = true;
+                cbbCSTM.MultiColumnComboBoxElement.DisplayMember = "Name";
+                cbbCSTM.MultiColumnComboBoxElement.Value = "No";
+                cbbCSTM.MultiColumnComboBoxElement.DataSource = cust;
+                cbbCSTM.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
                 var item = db.mh_Items.Where(x => x.Active)
                     .Select(x => new ItemCombo { Item = x.InternalNo, ItemName = x.InternalName }).ToList();
@@ -53,60 +87,35 @@ namespace StockControl
                 cbbItem.DataSource = item;
                 cbbItem.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
-
-            dgvData.AutoGenerateColumns = false;
-            DataLoad();
-
-            dgvData.Columns.ToList().ForEach(x =>
-            {
-                if (x.Name != "S")
-                    x.ReadOnly = true;
-            });
-
-            
         }
+
         private void DataLoad()
         {
-
+            this.Cursor = Cursors.WaitCursor;
             //dt.Rows.Clear();
             try
             {
                 dgvData.DataSource = null;
                 dgvData.Rows.Clear();
-                this.Cursor = Cursors.WaitCursor;
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
+
+                using (var db = new DataClasses1DataContext())
                 {
-                    string jobNo = txtJobNo.Text.Trim();
-                    string FGNo = cbbItem.SelectedValue.ToSt();
                     DateTime? dFrom = (cbChkDate.Checked) ? (DateTime?)dtFrom.Value.Date : null;
                     DateTime? dTo = (cbChkDate.Checked) ? (DateTime?)dtTo.Value.Date.AddDays(1).AddMinutes(-1) : null;
-                    var m = db.mh_ProductionOrders.Where(x => x.Active
-                            && (jobNo == "" || x.JobNo == jobNo)
-                            && (FGNo == "" || x.FGNo == FGNo)
-                            && (dFrom == null || (x.ReqDate.Date >= dFrom && x.ReqDate.Date <= dTo))
-                    ).ToList();
-                    dgvData.DataSource = m;
+                    var m = getGrid.GetGrid_CustomerPO(txtPONo.Text.Trim(), txtCSTMNo.Text.Trim()
+                        , cbbItem.SelectedValue.ToSt(), dFrom, dTo).Where(a=>a.OutSO>0);
 
-                    setStatus();
+                    dgvData.DataSource = m;
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-            this.Cursor = Cursors.Default;
-
-
-            //    radGridView1.DataSource = dt;
-        }
-        
-        void setStatus()
-        {
-            foreach (var item in dgvData.Rows)
+            finally
             {
-                if (DateTime.Today <= item.Cells["ReqDate"].Value.ToDateTime().Value.Date)
-                    item.Cells["Status"].Value = "On Plan";
-                else
-                    item.Cells["Status"].Value = "Delay";
+                this.Cursor = Cursors.Default;
             }
+            
         }
+
 
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -140,14 +149,22 @@ namespace StockControl
 
         private void radButtonElement1_Click(object sender, EventArgs e)
         {
-            //select Item
-            if (sType == 1)
-            {
-                var t = new ProductionOrder();
-                t.ShowDialog();
-            }
-            else
-                selRow();
+            if (dgvData.Rows.Count <= 0) return;
+
+                try
+                {
+                    dgvData.EndEdit();
+
+                    foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                    {
+                        RetDT.Add(rowinfo);
+                    }
+
+                    this.Close();
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
+            
+          
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -158,13 +175,27 @@ namespace StockControl
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
-            selRow();
+            //selRow();
+
         }
         void selRow()
         {
             if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
+                var rowe = dgvData.CurrentCell.RowInfo;
+                PONo = rowe.Cells["PONo"].Value.ToSt();
+                CstmNo = rowe.Cells["CustomerNo"].Value.ToSt();
 
+                if (sType == 1)
+                {
+                    //var p = new CustomerPO(PONo, CstmNo);
+                    //p.ShowDialog();
+                    //DataLoad();
+                    //PONo = "";
+                    //CstmNo = "";
+                }
+                else
+                    this.Close();
             }
         }
 
@@ -255,8 +286,7 @@ namespace StockControl
             {
                 if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
                 {
-
-                    //var so = new SaleOrder(true);
+                    //var so = new SaleOrder(0);
                     //so.ShowDialog();
                 }
                 else
@@ -271,103 +301,68 @@ namespace StockControl
             }
         }
 
-        //View
-        private void radButtonElement2_Click(object sender, EventArgs e)
+        private void btnEditItem_Click(object sender, EventArgs e)
         {
-            dgvData.EndEdit();
+            EditItem();
+        }
+        void EditItem()
+        {
             if (dgvData.CurrentCell == null) return;
+            int idCustomerPO = dgvData.CurrentCell.RowInfo.Cells["idCustomerPO"].Value.ToInt();
 
-            string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
-            var p = new ProductionOrder(jobNo);
-            p.ShowDialog();
+            CustomerPO c = new CustomerPO(idCustomerPO);
+            c.ShowDialog();
             DataLoad();
         }
-        //Edit
-        private void radButtonElement3_Click(object sender, EventArgs e)
-        {
-            dgvData.EndEdit();
-            if (dgvData.CurrentCell == null) return;
 
-            string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
-            var p = new ProductionOrder(jobNo);
-            p.ShowDialog();
-            DataLoad();
+        private void btnViewItem_Click(object sender, EventArgs e)
+        {
+            EditItem();
         }
-        //Delete
-        bool chkDelE()
+
+        private void btnDeleteItem_Click(object sender, EventArgs e)
         {
-            bool ret = true;
-            string mssg = "";
-
-            var c = dgvData.CurrentCell.RowInfo;
-            var s = Math.Round(c.Cells["Qty"].Value.ToDecimal() * c.Cells["PCSUnit"].Value.ToDecimal(), 2);
-            var s2 = c.Cells["OutQty"].Value.ToDecimal();
-
-            if(s != s2)
+            Del();
+        }
+        void Del()
+        {
+            if (dgvData.CurrentCell == null) return;
+            if (dgvData.CurrentCell.RowInfo.Cells["Status"].Value.ToSt() != "Waiting")
             {
-                mssg += "- Cannot delete because FG is already receive.\n";
+                baseClass.Warning("Status Cannot Delete.\n");
+                return;
             }
 
-            if (mssg != "")
+            int id = dgvData.CurrentCell.RowInfo.Cells["id"].Value.ToInt();
+            using (var db = new DataClasses1DataContext())
             {
-                baseClass.Warning(mssg);
-                ret = false;
-            }
-            return ret;
-        }
-        private void radButtonElement4_Click(object sender, EventArgs e)
-        {
-            dgvData.EndEdit();
-            if (dgvData.CurrentCell == null) return;
-
-            if (chkDelE() && baseClass.IsDel())
-                DeleteE();
-
-        }
-        void DeleteE()
-        {
-            this.Cursor = Cursors.WaitCursor;
-            try
-            {
-                using (var d = new DataClasses1DataContext())
+                var m = db.mh_CustomerPODTs.Where(x => x.id == id).FirstOrDefault();
+                if (m != null)
                 {
-                    string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
-                    using (var db = new DataClasses1DataContext())
+                    m.Active = false;
+                    db.SubmitChanges();
+
+                    int idCustomerPO = m.idCustomerPO;
+                    var hd = db.mh_CustomerPOs.Where(x => x.id == idCustomerPO).FirstOrDefault();
+                    if (hd != null)
                     {
-                        var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo && x.Active).FirstOrDefault();
-                        if (m != null)
+                        hd.UpdateBy = ClassLib.Classlib.User;
+                        hd.UpdateDate = DateTime.Now;
+                        var j = db.mh_CustomerPODTs.Where(x => x.idCustomerPO == idCustomerPO && x.Active).ToList();
+                        if (j.Count == 0)
                         {
-                            m.Active = false;
-                            m.UpdateDate = DateTime.Now;
-                            m.UpdateBy = ClassLib.Classlib.User;
-
-                            var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                            if (po != null)
-                            {
-                                //po.OutPlan += (m.Qty * m.PCSUnit) - m.OutQty;
-                                po.OutPlan = Math.Round(m.Qty * m.PCSUnit, 3); //Full Return Qty
-                                po.Status = baseClass.setCustomerPOStatus(po);
-                                db.SubmitChanges();
-
-                                DataLoad();
-                                baseClass.Info("Delete complete.\n");
-                            }
+                            hd.Active = false;
                         }
+                        db.SubmitChanges();
                     }
+
                 }
-            }
-            catch (Exception ex)
-            {
-                baseClass.Error(ex.Message);
-            }
-            finally
-            {
-                this.Cursor = Cursors.Default;
+
+                dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
+                baseClass.Info("Delete complete.\n");
             }
         }
-
     }
-
 
 
 }

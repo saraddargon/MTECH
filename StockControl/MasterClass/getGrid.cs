@@ -173,6 +173,10 @@ namespace StockControl
         public decimal TotalCost { get; set; } = 0.00m;
 
         public string LocationItem { get; set; }
+
+        public bool root { get; set; } = false;
+        public int mainNo { get; set; } = 0;
+        public int refNo { get; set; } = 0;
     }
 
 
