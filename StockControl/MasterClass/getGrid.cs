@@ -171,6 +171,8 @@ namespace StockControl
         public decimal PCSUnit { get; set; }
 
         public decimal TotalCost { get; set; } = 0.00m;
+
+        public string LocationItem { get; set; }
     }
 
 
@@ -206,6 +208,8 @@ namespace StockControl
 
         public string UOM { get; set; }
         public decimal PCSUnit { get; set; }
+
+        public string LocationItem { get; set; }
 
         public decimal StockQty
         {
@@ -251,6 +255,8 @@ namespace StockControl
                 var u = db.mh_ItemUOMs.Where(x => x.ItemNo == this.ItemNo).FirstOrDefault();
                 if (u != null) this.PCSUnit = u.QuantityPer.ToDecimal();
                 else this.PCSUnit = 1;
+
+                this.LocationItem = t.Location;
 
                 this.GroupType = t.GroupType;
                 this.Type = t.Type;

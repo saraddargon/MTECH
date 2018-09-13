@@ -323,6 +323,7 @@ namespace StockControl
                 gPlan.VendorName = tdata.VendorName;
                 gPlan.UOM = tdata.UOM;
                 gPlan.PCSUnit = tdata.PCSUnit;
+                gPlan.LocationItem = tdata.LocationItem;
 
                 //set Production or Purchase
                 if (tdata.RepType_enum == ReplenishmentType.Production)
