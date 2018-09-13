@@ -62,6 +62,28 @@ namespace StockControl
                     dgvData.DataSource = null;
                     dgvData.AutoGenerateColumns = false;
                     dgvData.DataSource = m;
+
+                    var rowList = new List<GridViewRowInfo>();
+                    foreach (var item in dgvData.Rows)
+                    {
+                        int idRef = item.Cells["idRef"].Value.ToInt();
+                        if (item.Cells["PlanningType"].Value.ToSt() == "Production")
+                        {
+                            var d = db.mh_ProductionOrders.Where(x => x.RefDocId == idRef && x.Active).ToList();
+                            if (d != null) //already on job
+                                rowList.Add(item);
+                        }
+                        else //Purchase
+                        {
+
+                        }
+                    }
+
+                    //remove row
+                    rowList.ForEach(x =>
+                    {
+                        dgvData.Rows.Remove(x);
+                    });
                 }
             }
             catch (Exception ex)
@@ -213,12 +235,12 @@ namespace StockControl
                             }
                             else if (ft.MRP && pType == "Purchase")
                                 item.IsVisible = true;
-                            else if(ft.MRP && pType == "Production")
+                            else if (ft.MRP && pType == "Production")
                             {
                                 item.IsVisible = false;
                                 continue;
                             }
-                            else if(!ft.MRP && pType == "Purchase")
+                            else if (!ft.MRP && pType == "Purchase")
                             {
                                 item.IsVisible = false;
                                 continue;
@@ -261,25 +283,6 @@ namespace StockControl
             }
         }
 
-
-
-        private void btnGenerate_Click(object sender, EventArgs e)
-        {
-            dgvData.EndEdit();
-            GenE();
-        }
-        void GenE()
-        {
-            if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList().Count > 0)
-            {
-                if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool() && x.Cells["SS"].Value.ToSt() == "Over Due").Count() > 0)
-                    return;
-                this.Cursor = Cursors.WaitCursor;
-                Thread.Sleep(3000);
-                baseClass.Info("Generate to Production/Purchase complete.!!");
-                this.Cursor = Cursors.Default;
-            }
-        }
 
         private void MasterTemplate_CellBeginEdit(object sender, GridViewCellCancelEventArgs e)
         {
@@ -357,6 +360,9 @@ namespace StockControl
                             VendorName = g.VendorName,
                             VendorNo = g.VendorNo,
                             LocationItem = g.LocationItem,
+                            root = g.root,
+                            mainNo = g.mainNo,
+                            refNo = g.refNo,
                         };
                         db.mh_Planning_TEMPs.InsertOnSubmit(p);
                     }
@@ -381,6 +387,113 @@ namespace StockControl
         private void radButtonElement2_Click(object sender, EventArgs e)
         {
             dgvData.EnableFiltering = false;
+        }
+
+        private void btnGenJob_Click(object sender, EventArgs e)
+        {
+            dgvData.EndEdit();
+            GenJob();
+        }
+        void GenJob()
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                var rowS = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
+                if (rowS.Count < 1)
+                {
+                    baseClass.Warning("Please select data.!");
+                    return;
+                }
+                if (rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production").Count() < 1)
+                {
+                    baseClass.Warning("Please select Production.\n");
+                    return;
+                }
+
+                using (var db = new DataClasses1DataContext())
+                {
+                    foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
+                    {
+                        //Hd
+                        var m = new mh_ProductionOrder();
+                        m.CreateBy = ClassLib.Classlib.User;
+                        m.CreateDate = DateTime.Now;
+                        m.JobDate = DateTime.Now.Date;
+                        m.JobNo = dbClss.GetNo(29, 2);
+                        //
+                        m.Active = true;
+                        m.EndingDate = item.Cells["EndingDate"].Value.ToDateTime().Value;
+                        m.FGName = item.Cells["ItemName"].Value.ToSt();
+                        m.FGNo = item.Cells["ItemNo"].Value.ToSt();
+                        m.ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value;
+                        var reqDate = m.ReqDate.Date;
+                        var lot = db.mh_LotFGs.Where(x => x.LotDate == reqDate).FirstOrDefault();
+                        if (lot != null)
+                            m.LotNo = lot.LotNo;
+                        else
+                            m.LotNo = "";
+                        m.Qty = item.Cells["Qty"].Value.ToDecimal();
+                        m.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
+                        m.OutQty = m.Qty * m.PCSUnit;
+                        m.RefDocId = item.Cells["idRef"].Value.ToInt();
+                        m.RefDocNo = item.Cells["RefDocNo"].Value.ToSt();
+                        m.StartingDate = item.Cells["StartingDate"].Value.ToDateTime().Value;
+                        m.UOM = item.Cells["UOM"].Value.ToSt();
+                        m.UpdateBy = ClassLib.Classlib.User;
+                        m.UpdateDate = DateTime.Now;
+                        db.mh_ProductionOrders.InsertOnSubmit(m);
+                        //Update Customer P/O
+                        if (item.Cells["root"].Value.ToBool())
+                        {
+                            var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                            if (po != null)
+                            {
+                                //po.OutPlan -= m.OutQty;
+                                po.OutPlan = 0;//Full Ref Customer P/O
+                                po.Status = baseClass.setCustomerPOStatus(po);
+                                db.SubmitChanges();
+                            }
+                            db.SubmitChanges();
+                        }
+
+                        //Dt
+                        int mainNo = item.Cells["mainNo"].Value.ToInt(); //find all component of Item
+                        var rowDt = dgvData.Rows.Where(x => x.Cells["idRef"].Value.ToInt() == m.RefDocId
+                            && x.Cells["refNo"].Value.ToInt() == mainNo).ToList();
+                        foreach(var r in rowDt)
+                        {
+                            var dt = new mh_ProductionOrderRM
+                            {
+                                Active = true,
+                                GroupType = r.Cells["GroupType"].Value.ToSt(),
+                                InvGroup = r.Cells["InvGroup"].Value.ToSt(),
+                                ItemName = r.Cells["ItemName"].Value.ToSt(),
+                                ItemNo = r.Cells["ItemNo"].Value.ToSt(),
+                                JobNo = m.JobNo,
+                                PCSUnit = r.Cells["PCSUnit"].Value.ToDecimal(),
+                                Qty = r.Cells["Qty"].Value.ToDecimal(),
+                                RemQty = Math.Round(r.Cells["Qty"].Value.ToDecimal() * r.Cells["PCSUnit"].Value.ToDecimal()),
+                                Type = r.Cells["Type"].Value.ToSt(),
+                                UOM = r.Cells["UOM"].Value.ToSt(),
+                            };
+                            db.mh_ProductionOrderRMs.InsertOnSubmit(dt);
+                            db.SubmitChanges();
+                        }
+                    }
+                    DataLoad();
+
+                    baseClass.Info("Generate Job Order Sheet complete.\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
         }
     }
 
