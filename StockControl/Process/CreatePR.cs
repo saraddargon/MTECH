@@ -1189,7 +1189,7 @@ namespace StockControl
                                     decimal OrderQty = dbClss.TDe(e.Row.Cells["dgvCost"].Value);
                                     decimal PCSUOM = dbClss.Con_UOM(CodeNo, StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM));
                                     string UOM = StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM);
-                                    //decimal StandardCost = 0;
+                                    decimal StandardCost = dbClss.TDe(g.FirstOrDefault().StandardCost);
                                     string Status = "Adding";
                                     string VATType = dbClss.TSt(g.FirstOrDefault().VatType);
                                     e.Row.Cells["dgvCodeNo"].Value = CodeNo;
@@ -1199,8 +1199,8 @@ namespace StockControl
                                     e.Row.Cells["dgvPCSUOM"].Value = PCSUOM;
                                     e.Row.Cells["dgvUOM"].Value = UOM;
                                     e.Row.Cells["dgvVATType"].Value = VATType;
-                                    //e.Row.Cells["dgvCost"].Value = StandardCost;
-                                    //e.Row.Cells["dgvAmount"].Value = OrderQty * StandardCost;
+                                    e.Row.Cells["dgvCost"].Value = StandardCost;
+                                    e.Row.Cells["dgvAmount"].Value = OrderQty * StandardCost;
                                     //e.Row.Cells["dgvid"].Value = 0;
                                     e.Row.Cells["dgvStatus"].Value = Status;
                                     e.Row.Cells["dgvVendorNo"].Value = dbClss.TSt(g.FirstOrDefault().VendorNo);
@@ -1473,9 +1473,9 @@ namespace StockControl
                     //decimal OrderQty = 0;
                     decimal PCSUOM = dbClss.Con_UOM(CodeNo, StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM));
                     bool Sys = true ;
-                    
-                    decimal Cost = 0;
-                    decimal Amount = 0;
+
+                    decimal Cost = dbClss.TDe(g.FirstOrDefault().StandardCost);
+                    decimal Amount = Cost* OrderQty;
                     string VendorNo = StockControl.dbClss.TSt(g.FirstOrDefault().VendorNo);
                     string VendorName = StockControl.dbClss.TSt(g.FirstOrDefault().VendorName);
                     string Remark = "";
