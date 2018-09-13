@@ -141,7 +141,16 @@ namespace StockControl
     }
     public class grid_Planning
     {
-        public string Status { get; set; }
+        public string Status
+        {
+            get
+            {
+                if (EndingDate.Value.Date > ReqDate.Date)
+                    return "Over Due";
+                else
+                    return "OK";
+            }
+        }
         public string ItemNo { get; set; }
         public string ItemName { get; set; }
         public DateTime ReqDate { get; set; }
@@ -158,6 +167,12 @@ namespace StockControl
         public string InvGroup { get; set; }
         public string VendorNo { get; set; }
         public string VendorName { get; set; }
+        public string UOM { get; set; }
+        public decimal PCSUnit { get; set; }
+
+        public decimal TotalCost { get; set; } = 0.00m;
+
+        public string LocationItem { get; set; }
     }
 
 
@@ -172,30 +187,6 @@ namespace StockControl
         public string ItemName { get; set; }
     }
 
-
-    public class PDPlan
-    {
-        public ItemData Item { get; set; }
-        public string CstmNo { get; set; }
-        public string RefDocNo { get; set; }
-        public int RefId { get; set; }
-        public DateTime ReqDate { get; set; }
-        public decimal ReqQty { get; set; }
-
-    }
-    public class POPlan
-    {
-        public ItemData Item { get; set; }
-        public List<DocPlan> DocRef { get; set; }
-        public decimal ReqQty { get; set; }
-
-    }
-    public class DocPlan
-    {
-        public string DocNo { get; set; }
-        public int DocId { get; set; }
-        public decimal ReqQty { get; set; }
-    }
 
 
     public class ItemData
@@ -218,6 +209,8 @@ namespace StockControl
         public string UOM { get; set; }
         public decimal PCSUnit { get; set; }
 
+        public string LocationItem { get; set; }
+
         public decimal StockQty
         {
             get
@@ -232,6 +225,8 @@ namespace StockControl
         public string InvGroup { get; set; } //Inventory Group
         public string VendorNo { get; set; }
         public string VendorName { get; set; }
+
+        public int Routeid { get; set; }
 
         public ItemData(string ItemNo, string ItemName = "")
         {
@@ -261,15 +256,34 @@ namespace StockControl
                 if (u != null) this.PCSUnit = u.QuantityPer.ToDecimal();
                 else this.PCSUnit = 1;
 
+                this.LocationItem = t.Location;
+
                 this.GroupType = t.GroupType;
                 this.Type = t.Type;
                 this.InvGroup = t.InventoryGroup;
                 this.VendorNo = t.VendorNo;
                 this.VendorName = t.VendorName;
+
+
+                this.Routeid = t.Routing;
             }
 
         }
 
+    }
+    public class WorkLoad
+    {
+        public DateTime Date { get; set; }
+        public int idWorkCenter { get; set; }
+        public decimal CapacityAvailable { get; set; } = 0.00m;
+        public decimal CapacityAlocate { get; set; } = 0.00m;
+        public decimal CapacityAfter
+        {
+            get
+            {
+                return CapacityAvailable - CapacityAlocate;
+            }
+        }
     }
     public class PlanData
     {

@@ -94,6 +94,10 @@ namespace StockControl
         {
             return val.ToString("dd/MMM/yyyy");
         }
+        public static string ToDtTimeString(this DateTime val)
+        {
+            return val.ToString("dd/MMM/yyyy HH:mm");
+        }
 
         public static void Info(string Mssg)
         {
@@ -138,7 +142,7 @@ namespace StockControl
             return (T)Enum.Parse(typeof(T), value, true);
         }
 
-        public static decimal StockQty (string ItemNo, string LocationCode)
+        public static decimal StockQty(string ItemNo, string LocationCode)
         {
             using (var db = new DataClasses1DataContext())
             {
@@ -146,7 +150,25 @@ namespace StockControl
                 return g;
             }
         }
-        
+
+        public static int getDayOfWeek(DayOfWeek day)
+        {
+            switch (day)
+            {
+                case DayOfWeek.Sunday: return 6;
+                case DayOfWeek.Monday: return 0;
+                case DayOfWeek.Tuesday: return 1;
+                case DayOfWeek.Wednesday: return 2;
+                case DayOfWeek.Thursday: return 3;
+                case DayOfWeek.Friday: return 4;
+                default: return 5; //Saturday
+            }
+        }
+        public static TimeSpan setTimeSpan(string TimeText)
+        {
+            TimeSpan t = new TimeSpan();
+            return t;
+        }
         public static ReorderType getReorderType(string ReorderTypeSt)
         {
             if (ReorderTypeSt == "Fixed Reorder Qty")
@@ -185,8 +207,68 @@ namespace StockControl
             }
         }
 
+        public static List<WorkLoad> getWorkLoad(DateTime beginDate)
+        {
+            var workLoads = new List<WorkLoad>();
+            using (var db = new DataClasses1DataContext())
+            {
+                var d = db.mh_CapacityAvailables.Where(x => x.Date >= beginDate).ToList();
+                foreach (var dd in d)
+                {
+                    var m = db.mh_CapacityLoads.Where(x => x.Date == dd.Date
+                            && x.WorkCenterID == dd.WorkCenterID && x.Active).ToList();
+                    decimal loadCapa = 0.00m;
+                    if (m.Count > 0)
+                        loadCapa = m.Sum(x => x.Capacity);
+                    var wl = workLoads.Where(x => x.Date == dd.Date
+                        && x.idWorkCenter == dd.WorkCenterID).FirstOrDefault();
+                    if (wl == null)
+                    {
+                        wl = new WorkLoad();
+                        workLoads.Add(wl);
+                    }
+                    wl.idWorkCenter = dd.WorkCenterID;
+                    wl.Date = dd.Date.Date;
+                    wl.CapacityAvailable = dd.Capacity.ToDecimal();
+                    wl.CapacityAlocate += loadCapa;
+                }
+                return workLoads;
+            }
+        }
+        public static DateTime setWorkTime(DateTime d, int idWorkCenter, decimal CapaLoad)
+        {
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.mh_WorkCenters.Where(x => x.id == idWorkCenter).First();
+                    int dow = getDayOfWeek(d.DayOfWeek);
+                    var c = db.mh_WorkingDays.Where(x => x.idCalendar == m.Calendar && x.Active
+                                && x.Day == dow).ToList();
+                    TimeSpan sTime = setTimeSpan(c.OrderBy(x => x.StartingTime.Replace(":", "").ToInt()).First().StartingTime);
+                    //find Ending time
+                    var endingTime = "00:00";
+                    if (c.Where(x => x.EndingTime.Replace(":", "").ToInt() == 0).Count() < 1)
+                    {
+                        endingTime = c.OrderByDescending(x => x.EndingTime.Replace(":", "").ToInt()).First().EndingTime;
+                    }
+                    TimeSpan eTime = setTimeSpan(endingTime);
+
+                    //find Time
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return d;
+        }
+
+
     }
-    
+
 
     public enum TypeAction
     {
@@ -195,7 +277,7 @@ namespace StockControl
         Delete,
         View
     }
-    
-    
+
+
 
 }

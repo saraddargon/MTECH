@@ -435,7 +435,7 @@
             conditionalFormattingObject3.ApplyToRow = true;
             conditionalFormattingObject3.CellBackColor = System.Drawing.Color.Empty;
             conditionalFormattingObject3.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject3.CellForeColor = System.Drawing.Color.Bisque;
+            conditionalFormattingObject3.CellForeColor = System.Drawing.Color.Empty;
             conditionalFormattingObject3.Name = "Waiting";
             conditionalFormattingObject3.RowBackColor = System.Drawing.Color.Empty;
             conditionalFormattingObject3.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -455,7 +455,6 @@
             gridViewTextBoxColumn2.HeaderText = "PONo";
             gridViewTextBoxColumn2.Name = "PONo";
             gridViewTextBoxColumn2.ReadOnly = true;
-            gridViewTextBoxColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewTextBoxColumn2.Width = 104;
             gridViewTextBoxColumn3.EnableExpressionEditor = false;
             gridViewTextBoxColumn3.FieldName = "CustomerNo";

@@ -48,9 +48,9 @@ namespace StockControl
             dtFrom.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             dtTo.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
 
-            //for test data
-            dtFrom.Value = new DateTime(2018, 9, 4);
-            dtTo.Value = new DateTime(2018, 9, 7);
+            ////for test data
+            //dtFrom.Value = new DateTime(2018, 9, 4);
+            //dtTo.Value = new DateTime(2018, 9, 7);
 
             using (var db = new DataClasses1DataContext())
             {
