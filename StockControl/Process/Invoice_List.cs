@@ -331,6 +331,13 @@ namespace StockControl
             dgvData.EndEdit();
             CreateShipment();
         }
+
+        private void btn_PrintPR_Click_1(object sender, EventArgs e)
+        {
+            //INV1809-0020
+            //Invoice
+           
+        }
     }
 
 

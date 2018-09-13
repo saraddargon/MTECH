@@ -200,8 +200,10 @@ namespace StockControl
             {
                 if (e.RowIndex >= 0)
                 {
-                    Shipment sh = new Shipment(dgvData.Rows[e.RowIndex].Cells["ShipmentNo"].Value.ToSt());
-                    sh.ShowDialog();
+                    //Shipment sh = new Shipment(dgvData.Rows[e.RowIndex].Cells["ShipmentNo"].Value.ToSt());
+                    //sh.ShowDialog();
+                    Invoice_2 iv = new Invoice_2(dgvData.Rows[e.RowIndex].Cells["IVNo"].Value.ToSt());
+                    iv.ShowDialog();
                     DataLoad();
                 }
 
@@ -233,6 +235,20 @@ namespace StockControl
         {
             //select Item for Print
             //throw new NotImplementedException();
+            try
+            {
+                if (dgvData.CurrentCell.RowIndex >= 0)
+                {
+                    string InvNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["IVNo"].Value.ToSt();
+                    Report.Reportx1.Value = new string[2];
+                    Report.Reportx1.Value[0] = InvNo;
+                    Report.Reportx1.Value[1] = InvNo;
+                    Report.Reportx1.WReport = "Invoice";
+                    Report.Reportx1 op = new Report.Reportx1("Invoice.rpt");
+                    op.Show();
+                }
+            }
+            catch { }
         }
 
 

@@ -289,6 +289,7 @@
             this.btnCreateInvoice});
             this.radRibbonBarGroup6.Name = "radRibbonBarGroup6";
             this.radRibbonBarGroup6.Text = "";
+            this.radRibbonBarGroup6.Visibility = Telerik.WinControls.ElementVisibility.Hidden;
             // 
             // btnCreateInvoice
             // 

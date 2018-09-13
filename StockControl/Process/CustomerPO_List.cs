@@ -346,6 +346,15 @@ namespace StockControl
                 baseClass.Info("Delete complete.\n");
             }
         }
+
+        private void btn_PrintPR_Click_1(object sender, EventArgs e)
+        {
+            Report.Reportx1.Value = new string[1];
+            Report.Reportx1.Value[0] = "";
+            Report.Reportx1.WReport = "CustomerList";
+            Report.Reportx1 op = new Report.Reportx1("ReportCustomerList.rpt");
+            op.Show();
+        }
     }
 
 

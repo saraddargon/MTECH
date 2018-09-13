@@ -233,6 +233,16 @@ namespace StockControl
         {
             //select Item for Print
             //throw new NotImplementedException();
+            try
+            {
+                Report.Reportx1.Value = new string[2];
+                Report.Reportx1.Value[0] = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["ShipmentNo"].Value.ToSt();
+                Report.Reportx1.Value[1] = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["ShipmentNo"].Value.ToSt();
+                Report.Reportx1.WReport = "Shipment";
+                Report.Reportx1 op = new Report.Reportx1("ReportDelivery.rpt");
+                op.Show();
+            }
+            catch { }
         }
 
 

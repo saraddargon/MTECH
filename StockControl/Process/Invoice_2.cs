@@ -302,6 +302,7 @@ namespace StockControl
             dgvData.DataSource = null;
             txtRemark.Text = "";
             txtTotal.Text = (0).ToMoney();
+            txtSONo.Text = dbClss.GetNo(31, 0);
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -330,7 +331,7 @@ namespace StockControl
                 row = 0;
             //getมาไว้ก่อน แต่ยังไมได้ save 
             //txtTempNo.Text = StockControl.dbClss.GetNo(10, 0);
-            txtSONo.Text = dbClss.GetNo(30, 0);
+            txtSONo.Text = dbClss.GetNo(31, 0);
 
             idList.Clear();
             //potoso.Clear();
@@ -507,7 +508,7 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                txtSONo.Text = dbClss.GetNo(30, 2);
+                txtSONo.Text = dbClss.GetNo(31, 2);
                 string sono = txtSONo.Text;
                 string cstmNo = txtContactName.Text;
                 CallTotal();

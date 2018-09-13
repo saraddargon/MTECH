@@ -172,6 +172,15 @@ namespace StockControl
         {
             //select Item for Print
             //throw new NotImplementedException();
+            if (dgvData.CurrentCell.RowIndex >= 0)
+            {
+                string JobNo= dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
+                Report.Reportx1.Value = new string[1];
+                Report.Reportx1.Value[0] = JobNo;
+                Report.Reportx1.WReport = "JOBNoList";
+                Report.Reportx1 op = new Report.Reportx1("JobOrderSheet3.rpt");
+                op.Show();
+            }
         }
 
 
@@ -366,6 +375,17 @@ namespace StockControl
             }
         }
 
+        private void radButtonElement5_Click(object sender, EventArgs e)
+        {
+            
+              //  string JobNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
+                Report.Reportx1.Value = new string[1];
+                Report.Reportx1.Value[0] = "";
+                Report.Reportx1.WReport = "ProductionList";
+                Report.Reportx1 op = new Report.Reportx1("ReportProductionList.rpt");
+                op.Show();
+            
+        }
     }
 
 
