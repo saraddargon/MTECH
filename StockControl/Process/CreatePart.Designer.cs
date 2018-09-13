@@ -162,10 +162,14 @@
             this.btnOpenDWG = new Telerik.WinControls.UI.RadButton();
             this.txtPathDWG = new Telerik.WinControls.UI.RadTextBox();
             this.btnGET = new Telerik.WinControls.UI.RadButton();
+            this.seStandardPrice = new Telerik.WinControls.UI.RadSpinEditor();
+            this.seStandardCost = new Telerik.WinControls.UI.RadSpinEditor();
             this.seInternalLeadTime = new Telerik.WinControls.UI.RadSpinEditor();
             this.seTimebucket = new Telerik.WinControls.UI.RadSpinEditor();
             this.ddlInventoryGroup = new Telerik.WinControls.UI.RadDropDownList();
             this.ddlReplenishmentType = new Telerik.WinControls.UI.RadDropDownList();
+            this.radLabel64 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel63 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel35 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel22 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel45 = new Telerik.WinControls.UI.RadLabel();
@@ -236,6 +240,8 @@
             this.radLabel31 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel20 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel12 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel62 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel61 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel30 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel21 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
@@ -268,12 +274,6 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.seStandardCost = new Telerik.WinControls.UI.RadSpinEditor();
-            this.seStandardPrice = new Telerik.WinControls.UI.RadSpinEditor();
-            this.radLabel61 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel62 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel63 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel64 = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -309,10 +309,14 @@
             this.btnOpenDWG.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPathDWG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnGET)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.seStandardPrice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.seStandardCost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seInternalLeadTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seTimebucket)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlInventoryGroup)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlReplenishmentType)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel64)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel63)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel35)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel45)).BeginInit();
@@ -403,6 +407,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel31)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel20)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel62)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel61)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel30)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
@@ -429,12 +435,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtVersion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel54)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel56)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.seStandardCost)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.seStandardPrice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel61)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel62)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel63)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel64)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -1214,6 +1214,34 @@
             this.btnGET.Visible = false;
             this.btnGET.Click += new System.EventHandler(this.btnGET_Click);
             // 
+            // seStandardPrice
+            // 
+            this.seStandardPrice.DecimalPlaces = 2;
+            this.seStandardPrice.Location = new System.Drawing.Point(126, 268);
+            this.seStandardPrice.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.seStandardPrice.Name = "seStandardPrice";
+            this.seStandardPrice.Size = new System.Drawing.Size(128, 20);
+            this.seStandardPrice.TabIndex = 20;
+            this.seStandardPrice.TabStop = false;
+            // 
+            // seStandardCost
+            // 
+            this.seStandardCost.DecimalPlaces = 2;
+            this.seStandardCost.Location = new System.Drawing.Point(126, 243);
+            this.seStandardCost.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.seStandardCost.Name = "seStandardCost";
+            this.seStandardCost.Size = new System.Drawing.Size(128, 20);
+            this.seStandardCost.TabIndex = 20;
+            this.seStandardCost.TabStop = false;
+            // 
             // seInternalLeadTime
             // 
             this.seInternalLeadTime.Location = new System.Drawing.Point(126, 443);
@@ -1273,6 +1301,24 @@
             this.ddlReplenishmentType.Text = "Purchase";
             this.ddlReplenishmentType.ThemeName = "Office2010Blue";
             this.ddlReplenishmentType.SelectedIndexChanged += new Telerik.WinControls.UI.Data.PositionChangedEventHandler(this.radDropDownList1_SelectedIndexChanged);
+            // 
+            // radLabel64
+            // 
+            this.radLabel64.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel64.Location = new System.Drawing.Point(65, 268);
+            this.radLabel64.Name = "radLabel64";
+            this.radLabel64.Size = new System.Drawing.Size(56, 17);
+            this.radLabel64.TabIndex = 0;
+            this.radLabel64.Text = "ราคาขาย :";
+            // 
+            // radLabel63
+            // 
+            this.radLabel63.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel63.Location = new System.Drawing.Point(69, 243);
+            this.radLabel63.Name = "radLabel63";
+            this.radLabel63.Size = new System.Drawing.Size(51, 17);
+            this.radLabel63.TabIndex = 0;
+            this.radLabel63.Text = "ราคาซื้อ :";
             // 
             // radLabel35
             // 
@@ -2610,6 +2656,28 @@
             this.radLabel12.Text = "* Consumption UOM";
             this.radLabel12.Click += new System.EventHandler(this.radLabel27_Click);
             // 
+            // radLabel62
+            // 
+            this.radLabel62.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel62.ForeColor = System.Drawing.Color.DarkGray;
+            this.radLabel62.Location = new System.Drawing.Point(259, 271);
+            this.radLabel62.Name = "radLabel62";
+            this.radLabel62.Size = new System.Drawing.Size(75, 17);
+            this.radLabel62.TabIndex = 0;
+            this.radLabel62.Text = "StandardPrice";
+            this.radLabel62.Click += new System.EventHandler(this.radLabel27_Click);
+            // 
+            // radLabel61
+            // 
+            this.radLabel61.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel61.ForeColor = System.Drawing.Color.DarkGray;
+            this.radLabel61.Location = new System.Drawing.Point(259, 243);
+            this.radLabel61.Name = "radLabel61";
+            this.radLabel61.Size = new System.Drawing.Size(73, 17);
+            this.radLabel61.TabIndex = 0;
+            this.radLabel61.Text = "StandardCost";
+            this.radLabel61.Click += new System.EventHandler(this.radLabel27_Click);
+            // 
             // radLabel30
             // 
             this.radLabel30.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3048,72 +3116,6 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
-            // seStandardCost
-            // 
-            this.seStandardCost.Location = new System.Drawing.Point(126, 243);
-            this.seStandardCost.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-            this.seStandardCost.Name = "seStandardCost";
-            this.seStandardCost.Size = new System.Drawing.Size(128, 20);
-            this.seStandardCost.TabIndex = 20;
-            this.seStandardCost.TabStop = false;
-            // 
-            // seStandardPrice
-            // 
-            this.seStandardPrice.Location = new System.Drawing.Point(126, 268);
-            this.seStandardPrice.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-            this.seStandardPrice.Name = "seStandardPrice";
-            this.seStandardPrice.Size = new System.Drawing.Size(128, 20);
-            this.seStandardPrice.TabIndex = 20;
-            this.seStandardPrice.TabStop = false;
-            // 
-            // radLabel61
-            // 
-            this.radLabel61.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel61.ForeColor = System.Drawing.Color.DarkGray;
-            this.radLabel61.Location = new System.Drawing.Point(259, 243);
-            this.radLabel61.Name = "radLabel61";
-            this.radLabel61.Size = new System.Drawing.Size(73, 17);
-            this.radLabel61.TabIndex = 0;
-            this.radLabel61.Text = "StandardCost";
-            this.radLabel61.Click += new System.EventHandler(this.radLabel27_Click);
-            // 
-            // radLabel62
-            // 
-            this.radLabel62.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel62.ForeColor = System.Drawing.Color.DarkGray;
-            this.radLabel62.Location = new System.Drawing.Point(259, 271);
-            this.radLabel62.Name = "radLabel62";
-            this.radLabel62.Size = new System.Drawing.Size(75, 17);
-            this.radLabel62.TabIndex = 0;
-            this.radLabel62.Text = "StandardPrice";
-            this.radLabel62.Click += new System.EventHandler(this.radLabel27_Click);
-            // 
-            // radLabel63
-            // 
-            this.radLabel63.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel63.Location = new System.Drawing.Point(69, 243);
-            this.radLabel63.Name = "radLabel63";
-            this.radLabel63.Size = new System.Drawing.Size(51, 17);
-            this.radLabel63.TabIndex = 0;
-            this.radLabel63.Text = "ราคาซื้อ :";
-            // 
-            // radLabel64
-            // 
-            this.radLabel64.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel64.Location = new System.Drawing.Point(65, 268);
-            this.radLabel64.Name = "radLabel64";
-            this.radLabel64.Size = new System.Drawing.Size(56, 17);
-            this.radLabel64.TabIndex = 0;
-            this.radLabel64.Text = "ราคาขาย :";
-            // 
             // CreatePart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3175,10 +3177,14 @@
             this.btnOpenDWG.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPathDWG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnGET)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.seStandardPrice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.seStandardCost)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seInternalLeadTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seTimebucket)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlInventoryGroup)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlReplenishmentType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel64)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel63)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel35)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel45)).EndInit();
@@ -3270,6 +3276,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel31)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel20)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel62)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel61)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel30)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
@@ -3297,12 +3305,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtVersion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel54)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel56)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.seStandardCost)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.seStandardPrice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel61)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel62)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel63)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel64)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
