@@ -217,6 +217,12 @@
     <Compile Include="Process\Invoice_List.Designer.cs">
       <DependentUpon>Invoice_List.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\SaleOrder_List2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\SaleOrder_List2.Designer.cs">
+      <DependentUpon>SaleOrder_List2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Shipment_List.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1030,6 +1036,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Invoice_List.resx">
       <DependentUpon>Invoice_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\SaleOrder_List2.resx">
+      <DependentUpon>SaleOrder_List2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Shipment_List.resx">
       <DependentUpon>Shipment_List.cs</DependentUpon>
