@@ -436,9 +436,7 @@ namespace StockControl
                                   //&& ix.Status != "Cancel"
                                   ////&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
                                   select ix).First();
-
-                        //gg.Status = "Waiting";
-                        //gg.TEMPNo = txtTempNo.Text;
+                        
                         gg.ModifyBy = ClassLib.Classlib.User;
                         gg.ModifyDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
 
@@ -453,8 +451,8 @@ namespace StockControl
                         //if (StockControl.dbClss.TSt(gg.Barcode).Equals(""))
                         //    gg.Barcode = StockControl.dbClss.SaveQRCode2D(txtPRNo.Text.Trim());
 
-                        int ver = dbClss.TInt(txtVersion.Text) +1;
-                        gg.Version = ver.ToString();
+                        //int ver = dbClss.TInt(txtVersion.Text) +1;
+                        gg.Version = txtVersion.Text.Trim();
                         gg.Status = "Process";
                         
                         if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
