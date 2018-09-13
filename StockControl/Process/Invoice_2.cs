@@ -1061,7 +1061,8 @@ namespace StockControl
         {
             try
             {
-                ShipmentListPart sh = new ShipmentListPart(txtSONo.Text);
+                //InvoiceListPart sh = new InvoiceListPart(txtSONo.Text);
+                Invoice_Shipment_List sh = new Invoice_Shipment_List(txtSONo.Text);
                 sh.ShowDialog();
                 LoadShipment();
             }
