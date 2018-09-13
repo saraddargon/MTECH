@@ -463,8 +463,15 @@ namespace StockControl
 
                     AdNo2 = Convert.ToString(dgvData.CurrentRow.Cells["ADNo"].Value);
                 }
-                PrintPR a = new PrintPR(AdNo1, AdNo2, "AdjustStock");
-                a.ShowDialog();
+
+                Report.Reportx1.Value = new string[1];
+                Report.Reportx1.Value[0] = AdNo1;             
+                Report.Reportx1.WReport = "ALLReport";
+                Report.Reportx1 op = new Report.Reportx1("ReportReturnRM.rpt");
+                op.Show();
+
+                //PrintPR a = new PrintPR(AdNo1, AdNo2, "AdjustStock");
+                //a.ShowDialog();
 
                 //using (DataClasses1DataContext db = new DataClasses1DataContext())
                 //{

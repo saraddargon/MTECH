@@ -152,6 +152,14 @@ namespace Report
 
             switch (WReport)
             {
+                case "ALLReport":
+                    {
+
+                        rptDc.SetParameterValue("@DocumentNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+
+                    }
+                    break;
                 case "001_Kanban_Part":
                     {
 
