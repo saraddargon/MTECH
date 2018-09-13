@@ -16,19 +16,17 @@ namespace StockControl
 {
     public partial class ProductionOrder : Telerik.WinControls.UI.RadRibbonForm
     {
-        string t_PONo = "";
-        string t_CustomerNo = "";
+        string t_JobNo = "";
 
         bool demo = false;
         public ProductionOrder()
         {
             InitializeComponent();
         }
-        public ProductionOrder(string PONo, string CustomerNo)
+        public ProductionOrder(string JobNo)
         {
             InitializeComponent();
-            this.t_PONo = PONo;
-            this.t_CustomerNo = CustomerNo;
+            this.t_JobNo = JobNo;
         }
         public ProductionOrder(bool demo)
         {
@@ -74,7 +72,7 @@ namespace StockControl
                 ClearData();
                 btnNew_Click(null, null);
 
-                if (t_PONo != "" && t_CustomerNo != "")
+                if (t_JobNo != "" && t_CustomerNo != "")
                     DataLoad();
 
                 setdemo();
@@ -91,14 +89,34 @@ namespace StockControl
                 int ck = 0;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var t = db.mh_CustomerPOs.Where(x => x.Active && x.CustomerPONo == t_PONo && x.CustomerNo == t_CustomerNo).ToList();
-                    if (t.Count > 0)
+                    var t = db.mh_ProductionOrders.Where(x => x.Active && x.JobNo == t_JobNo).FirstOrDefault();
+                    if (t != null)
                     {
+                        txtJobNo.Text = t.JobNo;
+                        txtRefDocNo.Text = t.RefDocNo;
+                        txtRefDocId.Text = t.RefDocId.ToSt();
+                        txtFGNo.Text = t.FGNo;
+                        txtFGName.Text = t.FGName;
+                        txtStartingDate.Text = t.StartingDate.ToDtTimeString();
+                        txtEndingDate.Text = t.EndingDate.ToDtTimeString();
+                        txtReqDate.Text = t.ReqDate.ToDtString();
+                        txtUOM.Text = t.UOM;
+                        txtPCSUnit.Value = t.PCSUnit;
+                        txtOutQty.Value = t.OutQty;
+                        txtCreateDate.Text = t.CreateDate.ToDtString();
+                        txtCreateBy.Text = t.CreateBy;
+
+                        //dt
+                        var dts = db.mh_ProductionOrderRMs.Where(x => x.JobNo == t.JobNo && x.Active).ToList();
+                        foreach (var dt in dts)
+                        {
+
+                        }
 
                         btnView_Click(null, null);
                     }
                     else if (warningMssg)
-                        baseClass.Warning("P/O not found.!!");
+                        baseClass.Warning("Job Orders not found.!!");
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -109,13 +127,13 @@ namespace StockControl
         {
             dgvData.DataSource = null;
             dgvData.Rows.Clear();
-            txtProductionNo.Text = "JOB1809-002";
-            txtRefNo.Text = "CSTMPO1809-002";
-            txtItemNo.Text = "I002";
-            txtItemName.Text = "FG 2";
-            txtDueDate.Text = "8/Sep/2018";
+            txtJobNo.Text = "JOB1809-002";
+            txtRefDocNo.Text = "CSTMPO1809-002";
+            txtFGNo.Text = "I002";
+            txtFGName.Text = "FG 2";
+            txtReqDate.Text = "8/Sep/2018";
             txtFGQty.Value = 50;
-            txtUnit.Text = "PCS";
+            txtUOM.Text = "PCS";
             txtStartingDate.Text = "1/Sep/2018";
             txtEndingDate.Text = "7/Sep/2018";
 
@@ -560,7 +578,7 @@ namespace StockControl
         {
             try
             {
-                PrintPR a = new PrintPR(txtProductionNo.Text, txtProductionNo.Text, "ReportProductionOrder");
+                PrintPR a = new PrintPR(txtJobNo.Text, txtJobNo.Text, "ReportProductionOrder");
                 a.ShowDialog();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
