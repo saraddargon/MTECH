@@ -746,5 +746,9 @@ namespace StockControl
             }
         }
 
+        private void btnRecal_Click(object sender, EventArgs e)
+        {
+            baseClass.Info("Comming Soon...");
+        }
     }
 }
