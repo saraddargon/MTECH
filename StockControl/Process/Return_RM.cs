@@ -896,6 +896,49 @@ namespace StockControl
                                     , StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
                                     );
 
+
+
+                                Seq += 1;
+                                tb_StockAdjust u = new tb_StockAdjust();
+                                u.AdjustNo = txtADNo.Text;
+
+                                u.CodeNo = StockControl.dbClss.TSt(g.Cells["CodeNo"].Value);
+                                u.ItemNo = StockControl.dbClss.TSt(g.Cells["ItemNo"].Value);
+                                u.ItemDescription = StockControl.dbClss.TSt(g.Cells["ItemDescription"].Value);
+                                u.Qty = StockControl.dbClss.TDe(g.Cells["QTY"].Value); //Qty
+                                u.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);
+                                u.Unit = StockControl.dbClss.TSt(g.Cells["Unit"].Value);
+                                u.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
+                                u.Reason = StockControl.dbClss.TSt(g.Cells["Remark"].Value);
+                                u.LotNo = StockControl.dbClss.TSt(g.Cells["LotNo"].Value);
+                                //u.RCDate = RequireDate;
+                                u.Seq = Seq;
+                                u.Status = "Completed";
+                                u.StandardCost = StockControl.dbClss.TDe(g.Cells["StandardCost"].Value);
+
+                                u.CreateBy = ClassLib.Classlib.User;
+                                u.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                u.Location = StockControl.dbClss.TSt(g.Cells["Location"].Value);
+                                u.ShelfNo = StockControl.dbClss.TSt(g.Cells["ShelfNo"].Value);
+
+                                u.RefidJobCard = StockControl.dbClss.TInt(g.Cells["RefidJobCard"].Value);
+                                u.RefJobCard = StockControl.dbClss.TSt(g.Cells["RefJobCard"].Value);
+                                u.RefTempJobCard = StockControl.dbClss.TSt(g.Cells["RefTempJobCard"].Value);
+
+                                db.tb_StockAdjusts.InsertOnSubmit(u);
+                                db.SubmitChanges();
+
+                                ////// update Remainใน tb_receive ที่เป็น PRID เดียวกัน ทั้งหมด
+                                //update_remainqty_Receive(PRNo, Temp, PRID, RemainQty);
+
+                                //////หมายถึงรับสินค้าครบหมดแล้ว ให้ไป เปลี่ยนสถาะ เป็น Completed ทุกตัวที่เป็น PRID เดียวกัน
+                                //if (!SS.Equals(""))
+                                //    Save_Status_Receive(PRNo, Temp, PRID, RemainQty);
+
+                                //C += 1;
+                                dbClss.AddHistory(this.Name, "ปรับสต็อก", "เพิ่มรายการ ปรับสต็อก [" + u.CodeNo + " จำนวนรับ :" + u.Qty.ToString() + "]", txtADNo.Text);
+
+
                             }
 
                         }
