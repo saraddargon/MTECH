@@ -2527,11 +2527,11 @@ namespace StockControl
                 if (Sys)
                 {
                     ee.Cells["dgvCodeNo"].ReadOnly = true;
-                    ee.Cells["dgvUnit"].ReadOnly = true;
+                    //ee.Cells["dgvUnit"].ReadOnly = true;
                     ee.Cells["dgvItemDesc"].ReadOnly = true;
                     ee.Cells["dgvGroupCode"].ReadOnly = true;
                     ee.Cells["dgvItemName"].ReadOnly = true;
-                    ee.Cells["dgvPCSUnit"].ReadOnly = true;
+                    //ee.Cells["dgvPCSUnit"].ReadOnly = true;
                 }               
 
                 if(Refid>0)
@@ -2543,6 +2543,7 @@ namespace StockControl
                     ee.Cells["dgvOrderQty"].ReadOnly = true;
                     ee.Cells["dgvGroupCode"].ReadOnly = true;
                     ee.Cells["dgvUnit"].ReadOnly = true;
+                    
                 }
 
                 //dbclass.SetRowNo1(dgvData);

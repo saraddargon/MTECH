@@ -25,6 +25,7 @@ namespace StockControl
                         foreach (var dt in t)
                         {
                             if (Item != "" && dt.ItemNo != Item) continue;
+                            var tool = db.mh_Items.Where(x => x.InternalNo == dt.ItemNo).FirstOrDefault();
                             l.Add(new grid_CustomerPO
                             {
                                 Status = dt.Status,
@@ -41,7 +42,12 @@ namespace StockControl
                                 OutSO = dt.OutSO,
                                 OutPlan = dt.OutPlan,
                                 id = dt.id,
-                                idCustomerPO = dt.idCustomerPO
+                                idCustomerPO = dt.idCustomerPO,
+                                GroupType = tool.GroupType,
+                                InvGroup = tool.InventoryGroup,
+                                Type = tool.Type,
+                                VendorNo = tool.VendorNo,
+                                VendorName = tool.VendorName
                             });
                         }
                     }
@@ -95,6 +101,13 @@ namespace StockControl
                 //----Remain cut by Shipment
             }
         }
+        public decimal Shipped
+        {
+            get
+            {
+                return Qty - Remain;
+            }
+        }
         public bool Plan
         {
             get
@@ -120,20 +133,31 @@ namespace StockControl
         public int id { get; set; }
         public int idCustomerPO { get; set; }
 
-
+        public string GroupType { get; set; }
+        public string Type { get; set; }
+        public string InvGroup { get; set; }
+        public string VendorNo { get; set; }
+        public string VendorName { get; set; }
     }
     public class grid_Planning
     {
         public string Status { get; set; }
         public string ItemNo { get; set; }
         public string ItemName { get; set; }
+        public DateTime ReqDate { get; set; }
         public DateTime DueDate { get; set; }
-        public DateTime StartingDate { get; set; }
-        public DateTime EndingDate { get; set; }
+        public DateTime? StartingDate { get; set; }
+        public DateTime? EndingDate { get; set; }
         public decimal Qty { get; set; }
         public string PlanningType { get; set; }
         public int idRef { get; set; }
         public string RefDocNo { get; set; }
+
+        public string GroupType { get; set; }
+        public string Type { get; set; }
+        public string InvGroup { get; set; }
+        public string VendorNo { get; set; }
+        public string VendorName { get; set; }
     }
 
 
@@ -188,8 +212,11 @@ namespace StockControl
         public decimal MaximumInventory { get; set; }
         public int TimeBuket { get; set; }
         public int LeadTime { get; set; }
-        public ReplenishmentType repType { get; set; }
-        public InventoryGroup invGroup { get; set; }
+        public ReplenishmentType RepType_enum { get; set; }
+        public InventoryGroup InvGroup_enum { get; set; }
+
+        public string UOM { get; set; }
+        public decimal PCSUnit { get; set; }
 
         public decimal StockQty
         {
@@ -199,6 +226,12 @@ namespace StockControl
             }
         }
         public DateTime ReqDate { get; set; }
+
+        public string GroupType { get; set; }
+        public string Type { get; set; }
+        public string InvGroup { get; set; } //Inventory Group
+        public string VendorNo { get; set; }
+        public string VendorName { get; set; }
 
         public ItemData(string ItemNo, string ItemName = "")
         {
@@ -220,8 +253,19 @@ namespace StockControl
                 this.MaximumInventory = t.MaximumInventory.ToDecimal();
                 this.TimeBuket = t.Timebucket.ToInt();
                 this.LeadTime = t.InternalLeadTime.ToInt();
-                this.repType = baseClass.getRepType(t.ReplenishmentType);
-                this.invGroup = baseClass.getInventoryGroup(t.InventoryGroup);
+                this.RepType_enum = baseClass.getRepType(t.ReplenishmentType);
+                this.InvGroup_enum = baseClass.getInventoryGroup(t.InventoryGroup);
+
+                this.UOM = t.BaseUOM;
+                var u = db.mh_ItemUOMs.Where(x => x.ItemNo == this.ItemNo).FirstOrDefault();
+                if (u != null) this.PCSUnit = u.QuantityPer.ToDecimal();
+                else this.PCSUnit = 1;
+
+                this.GroupType = t.GroupType;
+                this.Type = t.Type;
+                this.InvGroup = t.InventoryGroup;
+                this.VendorNo = t.VendorNo;
+                this.VendorName = t.VendorName;
             }
 
         }

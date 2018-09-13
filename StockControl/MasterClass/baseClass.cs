@@ -92,7 +92,7 @@ namespace StockControl
         }
         public static string ToDtString(this DateTime val)
         {
-            return val.ToString("dd/MM/yyyy");
+            return val.ToString("dd/MMM/yyyy");
         }
 
         public static void Info(string Mssg)
@@ -172,6 +172,19 @@ namespace StockControl
             else
                 return InventoryGroup.RM;
         }
+        public static DateTime setStandardTime(DateTime dt, bool TimeStart)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                var g = db.mh_ManufacturingSetups.FirstOrDefault();
+                if (TimeStart)
+                    dt = dt.AddHours(g.StandardStartingTime.Hours).AddMinutes(g.StandardStartingTime.Minutes);
+                else
+                    dt = dt.AddHours(g.StandardEndingTime.Hours).AddMinutes(g.StandardEndingTime.Minutes);
+                return dt;
+            }
+        }
+
     }
     
 

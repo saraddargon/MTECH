@@ -42,7 +42,7 @@ namespace StockControl
         }
 
 
-        List<grid_Planning> gridPlans = new List<grid_Planning>(); 
+        List<grid_Planning> gridPlans = new List<grid_Planning>();
         List<ItemData> itemDatas = new List<ItemData>();
         void calE()
         {
@@ -50,7 +50,7 @@ namespace StockControl
             {
                 gridPlans.Clear();
                 itemDatas.Clear();
-                
+
                 var cstmPO_List = new List<CustomerPOCal>();
                 using (var db = new DataClasses1DataContext())
                 {
@@ -126,9 +126,61 @@ namespace StockControl
 
                     //set data
                     var gPlan = new grid_Planning();
-                    gPlan.DueDate = data.ReqDate;
+                    gPlan.ReqDate = data.ReqDate;
                     gPlan.idRef = data.DocId;
                     gPlan.ItemNo = data.ItemNo;
+                    gPlan.ItemName = tdata.ItemName;
+                    gPlan.PlanningType = tdata.RepType_enum == ReplenishmentType.Production ? "Production" : "Purchase";
+                    gPlan.Qty = data.ReqQty;
+                    gPlan.RefDocNo = data.DocNo;
+                    gPlan.Status = "";
+                    gPlan.GroupType = tdata.GroupType;
+                    gPlan.Type = tdata.Type;
+                    gPlan.InvGroup = tdata.InvGroup;
+                    gPlan.VendorNo = tdata.VendorNo;
+                    gPlan.VendorName = tdata.VendorName;
+
+                    //set Production or Purchase
+                    if (tdata.RepType_enum == ReplenishmentType.Production)
+                    {
+                        //Prodction
+                        //find BOM
+                        var boms = db.tb_BomDTs.Where(x => x.PartNo == gPlan.ItemNo).ToList();
+                        foreach (var b in boms)
+                        {
+                            var tool = db.mh_Items.Where(x => x.InternalNo == b.Component).FirstOrDefault();
+                            var cd = new calPartData
+                            {
+                                DocId = data.DocId,
+                                DocNo  = data.DocNo,
+                                ItemNo = b.Component,
+                                repType = baseClass.getRepType(tool.ReplenishmentType),
+                                ReqDate = data.ReqDate,
+                                ReqQty = b.Qty.ToDecimal() * b.PCSUnit.ToDecimal()
+                            };
+                            calPart(cd);
+                        }
+
+                        var rmList = gridPlans.Where(x => x.idRef == gPlan.idRef).ToList();
+                        if(rmList.Count > 0)
+                        {
+                            gPlan.StartingDate = rmList.OrderByDescending(x => x.DueDate).First().DueDate;
+                            //find time in Routing...
+                        }
+                    }
+                    else
+                    {
+                        //Purchase
+                        gPlan.StartingDate = baseClass.setStandardTime(dFrom, true);
+                        gPlan.EndingDate = gPlan.StartingDate.Value.Date.AddDays(tdata.LeadTime);
+                        var vndr = db.mh_Vendors.Where(x => x.No == gPlan.VendorNo).FirstOrDefault();
+                        if (vndr != null)
+                            gPlan.EndingDate = gPlan.EndingDate.Value.AddDays(vndr.ShippingTime);
+                        gPlan.EndingDate = baseClass.setStandardTime(dTo, false);
+                    }
+                    gPlan.DueDate = gPlan.EndingDate.Value.AddDays(1);
+
+                    gridPlans.Add(gPlan);
                 }
             }
             catch (Exception ex)

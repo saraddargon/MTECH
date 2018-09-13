@@ -453,31 +453,13 @@ namespace StockControl
                         //if (StockControl.dbClss.TSt(gg.Barcode).Equals(""))
                         //    gg.Barcode = StockControl.dbClss.SaveQRCode2D(txtPRNo.Text.Trim());
 
-                        gg.Version = txtVersion.Text.Trim();
+                        int ver = dbClss.TInt(txtVersion.Text) +1;
+                        gg.Version = ver.ToString();
                         gg.Status = "Process";
-                        //if (!txtDescription.Text.Trim().Equals(row["Description"].ToString()))
-                        //{
-                        //    gg.Description = txtDescription.Text;
-                        //    dbClss.AddHistory(this.Name, "แก้ไข Bom", "แก้ไขรายละเอียด [" + txtDescription.Text.Trim() + "]", txtBomNo.Text.Trim() + "-" + txtPartNo.Text.Trim());
-                        //}
-
+                        
                         if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                         {
-                            //string date1 = "";
-                            //date1 = dtBegin.Value.ToString("yyyyMMdd", new CultureInfo("en-US"));
-                            //string date2 = "";
-                            //if (!StockControl.dbClss.TSt(row["RequireDate"].ToString()).Equals(""))
-                            //{
-                            //    DateTime temp = DateTime.Now;
-                            //    temp = Convert.ToDateTime(row["RequireDate"]);
-                            //    date2 = temp.ToString("yyyyMMdd", new CultureInfo("en-US"));
-
-                            //}
-                            //if (!date1.Equals(date2))
-                            //{
-                            //    DateTime? RequireDate = DateTime.Now;
-                            //    if (!dtRequire.Text.Equals(""))
-                            //        RequireDate = dtRequire.Value;
+                           
                             gg.StartDate = Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
                             gg.EndDate = Convert.ToDateTime(dtEnd.Value, new CultureInfo("en-US"));
 

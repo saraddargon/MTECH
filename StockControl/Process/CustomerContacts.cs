@@ -162,8 +162,7 @@ namespace StockControl
                     setEdit(true);
             }
 
-
-            //    radGridView1.DataSource = dt;
+            txtNo.ReadOnly = tAction != TypeAction.Add;
         }
         private bool CheckDuplicate(string code)
         {
@@ -182,7 +181,7 @@ namespace StockControl
 
         void setEdit(bool ss)
         {
-            txtNo.ReadOnly = !ss;
+            //txtNo.ReadOnly = !ss;
             txtBranchCOde.ReadOnly = !ss;
             txtName.ReadOnly = !ss;
             txtAddress.ReadOnly = !ss;
@@ -342,7 +341,7 @@ namespace StockControl
             dgvData.AllowAddNewRow = false;
             setEdit(true);
             lblStatus.Text = "Edit";
-            tAction = TypeAction.Edit;
+            //tAction = TypeAction.Edit;
         }
         private void ViewClick()
         {
@@ -353,7 +352,7 @@ namespace StockControl
             dgvData.AllowAddNewRow = false;
             setEdit(false);
             lblStatus.Text = "View";
-            tAction = TypeAction.View;
+            //tAction = TypeAction.View;
             //DataLoad();
         }
         private void btnNew_Click(object sender, EventArgs e)
