@@ -66,7 +66,7 @@ namespace StockControl
         {
             try
             {
-                
+
             }
             catch (Exception ex) { }
         }
@@ -100,7 +100,14 @@ namespace StockControl
 
         private void MasterTemplate_CellValueChanged(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
-
+            if(e.RowIndex >= 0)
+            {
+                if(e.Column.Name.Equals("S") && e.Row.Cells["S"].Value.ToBool())
+                {
+                    if (e.Row.Cells["Status"].Value.ToSt() == "Over Due")
+                        e.Row.Cells["S"].Value = false;
+                }
+            }
         }
 
         private void MasterTemplate_RowFormatting(object sender, RowFormattingEventArgs e)
@@ -127,6 +134,12 @@ namespace StockControl
                 ps.ItemNo = ft.ItemNo;
                 ps.LocationItem = ft.locationItem;
                 ps.ShowDialog();
+                if (ps.calComplete)
+                {
+                    dgvData.DataSource = null;
+                    dgvData.AutoGenerateColumns = false;
+                    dgvData.DataSource = ps.gridPlans.OrderBy(x => x.ReqDate).ToList();
+                }
             }
         }
         private void btnFil_Click(object sender, EventArgs e)
@@ -175,7 +188,8 @@ namespace StockControl
         DateTime t_ReqDate = DateTime.Now;
         DateTime minDate
         {
-            get {
+            get
+            {
                 if (DateTime.Now.Date > t_dtFrom.Date)
                     return DateTime.Now.Date;
                 else
@@ -187,7 +201,7 @@ namespace StockControl
             var pc = new PlanningCal_Status();
             pc.ShowDialog();
         }
-        
+
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
@@ -196,9 +210,9 @@ namespace StockControl
         }
         void GenE()
         {
-            if(dgvData.Rows.Where(x=>x.Cells["S"].Value.ToBool()).ToList().Count > 0)
+            if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList().Count > 0)
             {
-                if(dgvData.Rows.Where(x=>x.Cells["S"].Value.ToBool() && x.Cells["SS"].Value.ToSt() == "Over Due").Count() > 0)
+                if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool() && x.Cells["SS"].Value.ToSt() == "Over Due").Count() > 0)
                     return;
                 this.Cursor = Cursors.WaitCursor;
                 Thread.Sleep(3000);
@@ -207,6 +221,16 @@ namespace StockControl
             }
         }
 
+        private void MasterTemplate_CellBeginEdit(object sender, GridViewCellCancelEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                if (e.Column.Name.Equals("S"))
+                {
+                    e.Cancel = e.Row.Cells["Status"].Value.Equals("Over Due");
+                }
+            }
+        }
     }
 
 }

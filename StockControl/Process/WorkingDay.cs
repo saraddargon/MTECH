@@ -134,7 +134,7 @@ namespace StockControl
             {
                 DayOfWeek.Clear();
                 DayOfWeek.Add(0, "Monday");
-                DayOfWeek.Add(1, "Tueday");
+                DayOfWeek.Add(1, "Tuesday");
                 DayOfWeek.Add(2, "Wednesday");
                 DayOfWeek.Add(3, "Thursday");
                 DayOfWeek.Add(4, "Friday");
@@ -179,6 +179,8 @@ namespace StockControl
                     }
                     ck += 1;
                 }
+
+                radGridView1.Columns["Day"].SortOrder = RadSortOrder.Ascending;
             }
 
 

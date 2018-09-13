@@ -35,22 +35,27 @@ namespace StockControl
         {
             if (!startCal)
             {
+                startCal = false;
                 Thread td = new Thread(new ThreadStart(calE));
                 td.Start();
-                startCal = false;
             }
         }
 
-
-        List<grid_Planning> gridPlans = new List<grid_Planning>();
-        List<ItemData> itemDatas = new List<ItemData>();
+        public bool calComplete = false;
+        public List<grid_Planning> gridPlans = new List<grid_Planning>();
+        private List<ItemData> itemDatas = new List<ItemData>();
+        private List<WorkLoad> workLoads = new List<WorkLoad>();
+        private DateTime? PDDate = null;
         void calE()
         {
             try
             {
                 gridPlans.Clear();
                 itemDatas.Clear();
+                workLoads.Clear();
+                PDDate = null;
 
+                changeLabel("Finding Docno for plan...");
                 var cstmPO_List = new List<CustomerPOCal>();
                 using (var db = new DataClasses1DataContext())
                 {
@@ -58,6 +63,9 @@ namespace StockControl
                     var poDt = db.mh_CustomerPODTs.Where(x => x.Active
                         && x.ReqDate >= dFrom && x.ReqDate <= dTo
                     ).OrderBy(x => x.ReqDate).ToList();
+
+                    if (dFrom < DateTime.Now.Date)
+                        dFrom = DateTime.Today;
                     foreach (var dt in poDt)
                     {
                         if (ItemNo != "" && dt.ItemNo != ItemNo) continue;
@@ -75,12 +83,27 @@ namespace StockControl
                         });
                     }
 
+                    //changeLabel("Prepare Working Day.\n");
+                    ////1.1 Get work load for prepare Calculation
+                    //workLoads = baseClass.getWorkLoad(dFrom);
+
                     //2.Loop order by Due date (Dt) then Order date (Hd) then Order id (Hd)
                     cstmPO_List = cstmPO_List.OrderBy(x => x.PODt.ReqDate)
                         .ThenBy(x => x.POHd.OrderDate).ThenBy(x => x.POHd.id).ToList();
                     foreach (var item in cstmPO_List)
                     {
-                        calPart(new calPartData
+                        //calPart(new calPartData
+                        //{
+                        //    DocId = item.PODt.id,
+                        //    DocNo = item.POHd.CustomerNo,
+                        //    ItemNo = item.PODt.ItemNo,
+                        //    repType = baseClass.getRepType(item.PODt.ReplenishmentType),
+                        //    ReqDate = item.PODt.ReqDate,
+                        //    ReqQty = item.PODt.OutPlan,
+                        //});
+                        var m = PDDate;
+                        changeLabel($"Calculating... Doc no.{item.POHd.CustomerPONo} : [{item.PODt.ItemNo}] {item.PODt.ItemName}");
+                        calPartDemo(new calPartData
                         {
                             DocId = item.PODt.id,
                             DocNo = item.POHd.CustomerNo,
@@ -90,6 +113,9 @@ namespace StockControl
                             ReqQty = item.PODt.OutPlan,
                         });
                     }
+
+                    changeLabel($"Calculate complete...\n");
+                    calComplete = true;
                 }
             }
             catch (Exception ex)
@@ -99,6 +125,10 @@ namespace StockControl
             finally
             {
                 startCal = false;
+                this.Invoke(new MethodInvoker(() =>
+                {
+                    this.Close();
+                }));
             }
         }
         void calPart(calPartData data)
@@ -112,6 +142,7 @@ namespace StockControl
                     if (tdata == null)
                     {
                         tdata = new ItemData(data.ItemNo);
+                        itemDatas.Add(tdata);
                     }
                     //3.Find Stock is enought ?
                     if (data.ReqQty <= tdata.QtyOnHand) //3.1 Stock is enought
@@ -133,7 +164,6 @@ namespace StockControl
                     gPlan.PlanningType = tdata.RepType_enum == ReplenishmentType.Production ? "Production" : "Purchase";
                     gPlan.Qty = data.ReqQty;
                     gPlan.RefDocNo = data.DocNo;
-                    gPlan.Status = "";
                     gPlan.GroupType = tdata.GroupType;
                     gPlan.Type = tdata.Type;
                     gPlan.InvGroup = tdata.InvGroup;
@@ -152,7 +182,7 @@ namespace StockControl
                             var cd = new calPartData
                             {
                                 DocId = data.DocId,
-                                DocNo  = data.DocNo,
+                                DocNo = data.DocNo,
                                 ItemNo = b.Component,
                                 repType = baseClass.getRepType(tool.ReplenishmentType),
                                 ReqDate = data.ReqDate,
@@ -162,11 +192,77 @@ namespace StockControl
                         }
 
                         var rmList = gridPlans.Where(x => x.idRef == gPlan.idRef).ToList();
-                        if(rmList.Count > 0)
+                        DateTime tempStarting = new DateTime();
+                        if (rmList.Count > 0)
                         {
-                            gPlan.StartingDate = rmList.OrderByDescending(x => x.DueDate).First().DueDate;
-                            //find time in Routing...
+                            tempStarting = rmList.OrderByDescending(x => x.DueDate).First().DueDate;
                         }
+                        else
+                            tempStarting = dFrom;
+                        //find time in Routing...
+                        var CapaUse = 0.00m;
+                        var rt = db.mh_RoutingDTs.Where(x => x.RoutingId == tdata.Routeid).ToList();
+                        foreach (var r in rt)
+                        {
+                            int idWorkCenter = r.idWorkCenter;
+                            var totalCapa_All = 0.00m;
+                            var SetupTime = r.SetupTime;
+                            var RunTime = r.RunTime;
+                            var WaitingTime = r.WaitTime;
+                            totalCapa_All = SetupTime + (RunTime * gPlan.Qty) + r.WaitTime;
+                            CapaUse += totalCapa_All;
+
+                            var t_StartingDate = (DateTime?)null;
+                            //find capacity Available (Workcenter) on date
+                            do
+                            {
+                                var wl = workLoads.Where(x => x.Date >= tempStarting && x.CapacityAfter > 0
+                                    && x.idWorkCenter == idWorkCenter).OrderBy(x => x.Date).FirstOrDefault();
+                                if (wl == null)
+                                {
+                                    string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
+                                    baseClass.Warning(mssg);
+                                    throw new Exception(mssg);
+                                }
+                                tempStarting = wl.Date.Date;
+                                //set Starting
+                                if (t_StartingDate == null)
+                                {
+                                    t_StartingDate = tempStarting;
+                                    if (wl.CapacityAlocate > 0)
+                                    { }
+                                }
+
+
+
+                                //
+                                if (CapaUse > 0)
+                                    tempStarting = tempStarting.AddDays(1).Date;
+                            } while (CapaUse > 0);
+
+                        }
+
+                        ////find Capacity Available on date
+                        //do
+                        //{
+                        //    var wl = workLoads.Where(x => x.Date >= tempStarting && x.CapacityAfter > 0)
+                        //        .OrderBy(x => x.Date).FirstOrDefault();
+                        //    if(wl == null)
+                        //    {
+                        //        string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
+                        //        baseClass.Warning(mssg);
+                        //        throw new Exception(mssg);
+                        //    }
+
+                        //    if (t_StartingDate == null)
+                        //        t_StartingDate = null;
+
+
+                        //    //next Date
+                        //    if (CapaUse > 0)
+                        //        tempStarting = tempStarting.AddDays(1);
+                        //}
+                        //while (CapaUse > 0);
                     }
                     else
                     {
@@ -195,6 +291,100 @@ namespace StockControl
                 lbStatus.Text = lb;
                 this.Update();
             }));
+        }
+
+        void calPartDemo(calPartData data)
+        {
+            //demo
+            //Purchase Leadtime + 7
+            //Production 4Hr
+            using (var db = new DataClasses1DataContext())
+            {
+                var tdata = itemDatas.Where(x => x.ItemNo == data.ItemNo).FirstOrDefault();
+                if (tdata == null)
+                {
+                    tdata = new ItemData(data.ItemNo);
+                    itemDatas.Add(tdata);
+                }
+
+                //set data
+                var gPlan = new grid_Planning();
+                gPlan.ReqDate = data.ReqDate;
+                gPlan.idRef = data.DocId;
+                gPlan.ItemNo = data.ItemNo;
+                gPlan.ItemName = tdata.ItemName;
+                gPlan.PlanningType = tdata.RepType_enum == ReplenishmentType.Production ? "Production" : "Purchase";
+                gPlan.Qty = data.ReqQty;
+                gPlan.RefDocNo = data.DocNo;
+                gPlan.GroupType = tdata.GroupType;
+                gPlan.Type = tdata.Type;
+                gPlan.InvGroup = tdata.InvGroup;
+                gPlan.VendorNo = tdata.VendorNo;
+                gPlan.VendorName = tdata.VendorName;
+                gPlan.UOM = tdata.UOM;
+                gPlan.PCSUnit = tdata.PCSUnit;
+
+                //set Production or Purchase
+                if (tdata.RepType_enum == ReplenishmentType.Production)
+                {
+                    //Prodction
+                    //find BOM
+                    var boms = db.tb_BomDTs.Where(x => x.PartNo == gPlan.ItemNo).ToList();
+                    foreach (var b in boms)
+                    {
+                        var tool = db.mh_Items.Where(x => x.InternalNo == b.Component).FirstOrDefault();
+                        var cd = new calPartData
+                        {
+                            DocId = data.DocId,
+                            DocNo = data.DocNo,
+                            ItemNo = b.Component,
+                            repType = baseClass.getRepType(tool.ReplenishmentType),
+                            ReqDate = data.ReqDate,
+                            ReqQty = Math.Round(b.Qty.ToDecimal() * b.PCSUnit.ToDecimal() * data.ReqQty.ToDecimal(), 2)
+                        };
+                        calPartDemo(cd);
+                    }
+
+                    var rmList = gridPlans.Where(x => x.idRef == gPlan.idRef).ToList();
+                    DateTime tempStarting = new DateTime();
+                    if (rmList.Count > 0)
+                    {
+                        tempStarting = rmList.OrderByDescending(x => x.DueDate).First().DueDate;
+                        tempStarting = tempStarting.Date.AddDays(1);
+                    }
+                    else
+                        tempStarting = dFrom;
+
+                    if (PDDate != null && tempStarting > PDDate)
+                        PDDate = tempStarting;
+
+                    //find time in Routing...
+                    if(PDDate == null)
+                    {
+                        gPlan.StartingDate = baseClass.setStandardTime(tempStarting.Date, true);
+                    }
+                    else
+                    {
+                        if (PDDate.Value.Hour == 12)
+                            gPlan.StartingDate = PDDate.Value.AddHours(1);
+                        else //17:00
+                            gPlan.StartingDate = baseClass.setStandardTime(PDDate.Value.AddDays(1).Date, true);
+                    }
+                    gPlan.EndingDate = gPlan.StartingDate.Value.AddHours(4);
+                    PDDate = gPlan.EndingDate;
+                }
+                else
+                {
+                    //Purchase
+                    gPlan.StartingDate = baseClass.setStandardTime(dFrom, true);
+                    gPlan.EndingDate = gPlan.StartingDate.Value.Date.AddDays(7);
+                    gPlan.EndingDate = baseClass.setStandardTime(gPlan.EndingDate.Value.Date, false);
+                }
+                //gPlan.DueDate = gPlan.EndingDate.Value.AddDays(1);
+                gPlan.DueDate = gPlan.EndingDate.Value;
+
+                gridPlans.Add(gPlan);
+            }
         }
 
         private void PlanningCal_Status_FormClosing(object sender, FormClosingEventArgs e)
