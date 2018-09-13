@@ -270,8 +270,8 @@ namespace StockControl
             {
                 if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
                 {
-                    var so = new SaleOrder(true);
-                    so.ShowDialog();
+                    //var so = new SaleOrder(0);
+                    //so.ShowDialog();
                 }
                 else
                 {
