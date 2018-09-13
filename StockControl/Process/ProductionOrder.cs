@@ -72,7 +72,7 @@ namespace StockControl
                 ClearData();
                 btnNew_Click(null, null);
 
-                if (t_JobNo != "" && t_CustomerNo != "")
+                if (t_JobNo != "")
                     DataLoad();
 
                 setdemo();
