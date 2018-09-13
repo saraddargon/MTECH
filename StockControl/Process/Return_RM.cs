@@ -312,32 +312,15 @@ namespace StockControl
 
                                 foreach (var vv in r)
                                 {
-                                    //dgvData.Rows.Add(dgvNo.ToString(),
-                                    //    vv.CodeNo,
-                                    //    vv.ItemNo,
-                                    //    vv.ItemDescription,
-                                    //    vv.RemainQty,
-                                    //    vv.QTY,
-                                    //    vv.Unit,
-                                    //    vv.PCSUnit,
-                                    //    vv.StandardCost,
-                                    //    vv.Amount,
-                                    //    vv.LotNo,
-                                    //    vv.Remark,
-                                    //    vv.id,
-                                    //    vv.ShelfNo,
-                                    //    vv.Location
-                                    //    ,vv.RefJobCard
-                                    //    ,vv.RefTempJobCard
-                                    //    ,vv.RefidJobCard
-                                    //    );
+                                    string QtyAC = "";
+                                    //QtyAC = 
 
                                     Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription, vv.RemainQty
                                         , dbClss.TDe( vv.QTY), vv.Unit, dbClss.TDe(vv.PCSUnit)
                                         , dbClss.TDe(vv.StandardCost), dbClss.TDe(vv.Amount), vv.LotNo
                                         , vv.Remark,vv.id.ToString(),vv.ShelfNo, vv.Location, vv.RefJobCard
                                         ,vv.RefTempJobCard, vv.RefidJobCard.ToString()
-                                        ,vv.ToLocation);
+                                        ,vv.ToLocation,QtyAC);
                                 }
 
                             }
@@ -931,11 +914,11 @@ namespace StockControl
                         {
                             using (DataClasses1DataContext db = new DataClasses1DataContext())
                             {
-                                var g = (from ix in db.mh_ProductsOrders select ix)
-                               .Where(a => a.DocumentNo == JobCard.Trim()).ToList();
+                                var g = (from ix in db.mh_ProductionOrders select ix)
+                               .Where(a => a.JobNo == JobCard.Trim()).ToList();
                                 if (g.Count() > 0)
                                 {
-                                    e.Row.Cells["RefTempJobCard"].Value = dbClss.TSt(g.FirstOrDefault().TempNo);
+                                    //e.Row.Cells["RefTempJobCard"].Value = dbClss.TSt(g.FirstOrDefault().TempNo);
                                     e.Row.Cells["RefidJobCard"].Value = dbClss.TInt(g.FirstOrDefault().id);
                                 }
                                 else
@@ -1262,6 +1245,7 @@ namespace StockControl
                         string ShelfNo = "";
                         //int duppicate_CodeNo = 0;
                         //string Status = "Waiting";
+                        string QtyAC = "";
 
                         var d1 = (from ix in db.mh_Items select ix)
                             .Where(a => a.InternalNo == CodeNo.Trim() && a.Active == true
@@ -1283,12 +1267,13 @@ namespace StockControl
                             Location = "";
                             ToLocation = d.Location;
                             No = dgvData.Rows.Count() + 1;
+                            QtyAC = QTY.ToString() + " "+Unit;
                             //ShelfNo = d.ShelfNo;
                             if (!check_Duppicate(CodeNo))
                             {
                               
                                 Add_Item(No, CodeNo, ItemNo, ItemDescription, RemainQty, QTY, Unit
-                                    , PCSUnit, CostPerUnit, Amount, LotNo, Remark, "0", ShelfNo, Location, "", "", "0", ToLocation);
+                                    , PCSUnit, CostPerUnit, Amount, LotNo, Remark, "0", ShelfNo, Location, "", "", "0", ToLocation,QtyAC);
                             }
                         }
                     }
@@ -1300,7 +1285,8 @@ namespace StockControl
         private void Add_Item(int Row, string CodeNo, string ItemNo
             , string ItemDescription ,decimal RemainQty
            , decimal QTY, string Unit,decimal PCSUnit, decimal StandardCost,decimal Amount,string LotNo,string Remark
-            ,string id ,string ShelfNo,string Location,string RefJobCard,string RefTempJobCard,string RefidJobCard,string ToLocation)
+            ,string id ,string ShelfNo,string Location,string RefJobCard
+            ,string RefTempJobCard,string RefidJobCard,string ToLocation,string QtyAC)
         {
 
             try
@@ -1334,6 +1320,7 @@ namespace StockControl
                 ee.Cells["RefidJobCard"].Value = RefidJobCard;
                 ee.Cells["ShelfNo"].Value = ShelfNo;
                 ee.Cells["ToLocation"].Value = ToLocation;
+                ee.Cells["QtyAC"].Value = QtyAC;
 
                 //dbclass.SetRowNo1(dgvData);
             }

@@ -1123,11 +1123,11 @@ namespace StockControl
                         {
                             using (DataClasses1DataContext db = new DataClasses1DataContext())
                             {
-                                var g = (from ix in db.mh_ProductsOrders select ix)
-                               .Where(a => a.DocumentNo == JobCard.Trim()).ToList();
+                                var g = (from ix in db.mh_ProductionOrders select ix)
+                               .Where(a => a.JobNo == JobCard.Trim()).ToList();
                                 if (g.Count() > 0)
                                 {
-                                    e.Row.Cells["RefTempJobCard"].Value = dbClss.TSt(g.FirstOrDefault().TempNo);
+                                    //e.Row.Cells["RefTempJobCard"].Value = dbClss.TSt(g.FirstOrDefault().TempNo);
                                     e.Row.Cells["RefidJobCard"].Value = dbClss.TInt(g.FirstOrDefault().id);
                                 }
                                 else
