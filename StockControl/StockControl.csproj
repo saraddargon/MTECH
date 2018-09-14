@@ -157,6 +157,12 @@
     <Compile Include="Process\SaleOrder_ADD.Designer.cs">
       <DependentUpon>SaleOrder_ADD.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\ShipmentOrderList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\ShipmentOrderList.Designer.cs">
+      <DependentUpon>ShipmentOrderList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\SaleOrder_List2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1048,6 +1054,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\SaleOrder_ADD.resx">
       <DependentUpon>SaleOrder_ADD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\ShipmentOrderList.resx">
+      <DependentUpon>ShipmentOrderList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\SaleOrder_List2.resx">
       <DependentUpon>SaleOrder_List2.cs</DependentUpon>

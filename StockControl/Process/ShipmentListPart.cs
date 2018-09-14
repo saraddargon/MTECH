@@ -355,6 +355,7 @@ namespace StockControl
                                 st.Amount = im.StandardPrice * 1;
                                 st.Active = true;
                                 st.UOM = im.BaseUOM;
+                                
                                 db.mh_ShipmentDTTemps.InsertOnSubmit(st);
                                 db.SubmitChanges();
                             }

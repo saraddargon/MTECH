@@ -1134,7 +1134,13 @@ namespace StockControl
 
         private void radButton2_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                ShipmentOrderList sh = new ShipmentOrderList(txtSONo.Text);
+                sh.ShowDialog();
+                LoadShipment();
+            }
+            catch { }
         }
     }
 
