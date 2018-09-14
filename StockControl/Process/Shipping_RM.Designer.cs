@@ -468,7 +468,7 @@
             conditionalFormattingObject1.TValue1 = "\"\"";
             gridViewDecimalColumn4.ConditionalFormattingObjectList.Add(conditionalFormattingObject1);
             gridViewDecimalColumn4.EnableExpressionEditor = false;
-            gridViewDecimalColumn4.FieldName = "QtyShip";
+            gridViewDecimalColumn4.FieldName = "QTY";
             gridViewDecimalColumn4.FormatString = "{0:N2}";
             gridViewDecimalColumn4.HeaderText = "จำนวนเบิก";
             gridViewDecimalColumn4.Minimum = new decimal(new int[] {

@@ -305,8 +305,8 @@ namespace StockControl
                                     if (s != null)
                                     {
                                         x.Cells["RemainQty"].Value = Convert.ToDecimal(s.RemainQty);
-                                        x.Cells["StandardCost"].Value = Convert.ToDecimal(s.UnitCost);
-                                        x.Cells["Amount"].Value = Math.Abs(Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QTY"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
+                                        x.Cells["UnitCost"].Value = Convert.ToDecimal(s.UnitCost);
+                                        x.Cells["Amount"].Value = Math.Abs(Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QtyShip"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
                                     }
                                 }
                             }
