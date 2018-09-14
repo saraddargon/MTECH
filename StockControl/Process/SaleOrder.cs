@@ -26,6 +26,11 @@ namespace StockControl
         {
             InitializeComponent();
         }
+        public SaleOrder(string PONo)
+        {
+            InitializeComponent();
+            this.t_SONo = PONo;
+        }
         public SaleOrder(string PONo, string CustomerNo)
         {
             InitializeComponent();
@@ -64,6 +69,8 @@ namespace StockControl
                 }
 
                 if (t_SONo != "" && t_CustomerNo != "")
+                    DataLoad();
+                else if (t_SONo!="")
                     DataLoad();
                 else if (idList.Count > 0)
                     LoadFromId();
@@ -968,8 +975,8 @@ namespace StockControl
                 //    //LoadData
                     
                 //}
-
-                DataLoad();
+                if(t_SONo!="")
+                    DataLoad();
 
 
                 GC.Collect();

@@ -26,6 +26,25 @@ namespace StockControl
                         {
                             if (Item != "" && dt.ItemNo != Item) continue;
                             var tool = db.mh_Items.Where(x => x.InternalNo == dt.ItemNo).FirstOrDefault();
+                            var shipQ = 0.00m;
+                            var s = db.mh_SaleOrderDTs.Join(db.mh_SaleOrders,
+                                    dtShip => dtShip.SONo,
+                                    hdShip => hdShip.SONo,
+                                    (dtShip, hdShip) => new { dtShip, hdShip }
+                                )
+                                .Where(x => x.dtShip.RefId == dt.id && x.hdShip.Active && x.dtShip.Active).ToList();
+                            foreach (var mm in s)
+                            {
+                                //find Shipment
+                                var ss = db.mh_ShipmentDTs.Join(db.mh_Shipments,
+                                    dtSS => dtSS.SSNo,
+                                    hdSS => hdSS.SSNo,
+                                    (dtSS, hdSS) => new { dtSS, hdSS })
+                                    .Where(x => x.hdSS.Active.Value && x.dtSS.Active && x.dtSS.RefId == mm.dtShip.id).ToList();
+                                if (ss.Count > 0)
+                                    shipQ += ss.Sum(x => x.dtSS.Qty).ToDecimal();
+                            }
+
                             l.Add(new grid_CustomerPO
                             {
                                 Status = dt.Status,
@@ -47,7 +66,8 @@ namespace StockControl
                                 InvGroup = tool.InventoryGroup,
                                 Type = tool.Type,
                                 VendorNo = tool.VendorNo,
-                                VendorName = tool.VendorName
+                                VendorName = tool.VendorName,
+                                Shipped = shipQ,//
                             });
                         }
                     }
@@ -96,17 +116,13 @@ namespace StockControl
         {
             get
             {
-                return 0;
-                //not imprement
-                //----Remain cut by Shipment
+                return (Qty) - Shipped;
             }
         }
+        private decimal _ship = -1.00m;
         public decimal Shipped
         {
-            get
-            {
-                return Qty - Remain;
-            }
+            get; set;
         }
         public bool Plan
         {

@@ -113,7 +113,12 @@ namespace StockControl
                                 , dt.RemQty, dt.GroupType, dt.Type, dt.InvGroup);
                         }
 
+                        //Load Pr in Job
+                        LoadPRwithJob(t.RefDocId);
+
+
                         SetRowNo1(dgvData);
+                        SetRowNo1(dgvPurchase);
                         btnView_Click(null, null);
                     }
                     else if (warningMssg)
@@ -135,11 +140,83 @@ namespace StockControl
             rowe.Cells["Qty"].Value = qty;
             rowe.Cells["UOM"].Value = uOM;
             rowe.Cells["PCSUnit"].Value = pCSUnit;
-            rowe.Cells["RemQty"].Value = remQty;
             rowe.Cells["GroupType"].Value = groupType;
             rowe.Cells["Type"].Value = type;
             rowe.Cells["InvGroup"].Value = invGroup;
             rowe.Cells["dgvC"].Value = "T";
+
+            //find Shipped
+            if (txtJobNo.Text != "")
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.Get_ShipQty(itemNo, txtJobNo.Text);
+                    rowe.Cells["Shipped"].Value = m.ToDecimal();
+                    rowe.Cells["OutShip"].Value = qty - m.ToDecimal();
+                }
+            }
+            else
+            {
+                rowe.Cells["Shipped"].Value = 0.00m;
+                rowe.Cells["OutShip"].Value = qty;
+            }
+        }
+
+        void LoadPRwithJob(int idCustomerPoDt)
+        {
+            try
+            {
+                dgvData.DataSource = null;
+                dgvData.Rows.Clear();
+                using (var db = new DataClasses1DataContext())
+                {
+                    //load Purchase, P/O, Receive
+                    var pr = db.mh_PurchaseRequestLines.Where(x => x.SS == 1 && x.idCstmPODt != null
+                            && x.idCstmPODt == idCustomerPoDt)
+                        .Join(db.mh_PurchaseRequests.Where(q => q.Status != "Cancel")
+                        , dt => dt.PRNo
+                        , hd => hd.PRNo
+                        , (dt, hd) => new { dt, hd }
+                    ).ToList();
+                    foreach (var itemPr in pr)
+                    {
+                        var rowe = addRowPr(itemPr.dt.id, itemPr.hd.PRNo, itemPr.dt.PoNo
+                             , itemPr.dt.CodeNo, itemPr.dt.ItemName, itemPr.dt.OrderQty
+                             , 0, itemPr.dt.UOM, itemPr.dt.PCSUOM);
+                        //find PO
+                        if (itemPr.dt.RefPOid.ToInt() > 0)
+                        {
+                            var po = db.mh_PurchaseOrderDetails.Where(x => x.SS == 1 && x.id == itemPr.dt.RefPOid)
+                                .Join(db.mh_PurchaseOrders.Where(x => x.Status != "Cancel")
+                                , dt => dt.PONo
+                                , hd => hd.PONo
+                                , (dt, hd) => new { dt, hd });
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Warning(ex.Message);
+            }
+        }
+
+        private GridViewRowInfo addRowPr(int id, string pRNo, string poNo, string ItemNo
+            , string itemName, decimal orderQty, decimal outReceive, string uOM, decimal pCSUnit)
+        {
+            var rowe = dgvData.Rows.AddNew();
+            rowe.Cells["rNo"].Value = id;
+            rowe.Cells["PRNo"].Value = pRNo;
+            rowe.Cells["PONo"].Value = poNo;
+            rowe.Cells["ItemNo"].Value = ItemNo;
+            rowe.Cells["ItemName"].Value = itemName;
+            rowe.Cells["Qty"].Value = orderQty;
+            //rowe.Cells["Received"].Value = 0;
+            rowe.Cells["OutReceive"].Value = outReceive;
+            rowe.Cells["UOM"].Value = uOM;
+            rowe.Cells["PCSUnit"].Value = pCSUnit;
+            return rowe;
         }
 
         //
@@ -254,13 +331,12 @@ namespace StockControl
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (txtFGNo.Text == "") return;
-            if (Math.Round(txtFGQty.Value.ToDecimal() * txtPCSUnit.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal())
+            if (Math.Round(txtFGQty.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal())
             {
                 baseClass.Warning("Status Process cannot Delete.\n");
                 return;
             }
-            if (dgvData.Rows.Where(x => x.Cells["Qty"].Value.ToDecimal() 
-                * x.Cells["PCSUnit"].Value.ToDecimal() != x.Cells["RemQty"].Value.ToDecimal()).Count() > 0)
+            if (dgvData.Rows.Where(x => x.Cells["Qty"].Value.ToDecimal() != x.Cells["RemQty"].Value.ToDecimal()).Count() > 0)
             {
                 baseClass.Warning("RM or SEMI alreday shipped into this 'Job', Please cancel shipping RM.\n");
                 return;
@@ -278,17 +354,17 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo && x.Active).FirstOrDefault();
-                    if(m != null)
+                    if (m != null)
                     {
                         m.Active = false;
                         m.UpdateDate = DateTime.Now;
                         m.UpdateBy = ClassLib.Classlib.User;
 
                         var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                        if(po != null)
+                        if (po != null)
                         {
                             //po.OutPlan += (m.Qty * m.PCSUnit) - m.OutQty;
-                            po.OutPlan = Math.Round(m.Qty * m.PCSUnit, 3); //Full Return Qty
+                            po.OutPlan = Math.Round(m.Qty, 2); //Full Return Qty
                             po.Status = baseClass.setCustomerPOStatus(po);
                             db.SubmitChanges();
 
@@ -368,7 +444,7 @@ namespace StockControl
                     m.LotNo = txtLotNo.Text;
                     m.Qty = txtFGQty.Value.ToDecimal();
                     m.PCSUnit = txtPCSUnit.Value.ToDecimal();
-                    m.OutQty = m.Qty * m.PCSUnit;
+                    m.OutQty = m.Qty;
                     m.RefDocId = txtRefDocId.Text.ToInt();
                     m.RefDocNo = txtRefDocNo.Text;
                     m.ReqDate = txtReqDate.Text.ToDateTime().Value;
@@ -691,7 +767,7 @@ namespace StockControl
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
-        
+
 
 
         private void CallTotal()

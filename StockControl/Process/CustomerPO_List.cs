@@ -270,8 +270,18 @@ namespace StockControl
             {
                 if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
                 {
-                    //var so = new SaleOrder(0);
-                    //so.ShowDialog();
+                    List<int> idList = new List<int>();
+                    var a = new List<int>();
+                    foreach (var ix in dgvData.Rows)
+                    {
+                        if (dbClss.TBo(ix.Cells["S"].Value))
+                        {
+                            a.Add(dbClss.TInt(ix.Cells["id"].Value));
+                            break;
+                        }
+                    }
+                    var so = new SaleOrder(a);
+                    so.ShowDialog();
                 }
                 else
                 {
