@@ -151,6 +151,18 @@
     <Compile Include="Process\GanttCharts_Job.Designer.cs">
       <DependentUpon>GanttCharts_Job.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Packing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Packing.Designer.cs">
+      <DependentUpon>Packing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Packing_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Packing_List.Designer.cs">
+      <DependentUpon>Packing_List.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\SaleOrder_ADD.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1051,6 +1063,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\GanttCharts_Job.resx">
       <DependentUpon>GanttCharts_Job.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Packing.resx">
+      <DependentUpon>Packing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Packing_List.resx">
+      <DependentUpon>Packing_List.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\SaleOrder_ADD.resx">
       <DependentUpon>SaleOrder_ADD.cs</DependentUpon>

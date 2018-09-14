@@ -2267,7 +2267,7 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                ReceiveList sc = new ReceiveList(txtPackingNo, txtJobNo);
+                var sc = new Packing_List();
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
