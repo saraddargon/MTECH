@@ -629,7 +629,7 @@ namespace StockControl
                                 s.Inbound = 0;
                                 s.Outbound = s.QTY;
                                 s.Type_i = 1;
-                                s.Category = "Shipment";
+                                s.Category = "Invoice";
                                 s.Refid = 0;// mtem.RefId;
                                 s.Type_in_out = "Out";
                                 s.AmountCost = Convert.ToDecimal(rd.Cells["Amount"].Value.ToSt());
@@ -653,7 +653,7 @@ namespace StockControl
                                 s.Flag_ClearTemp = 0;
                                 s.TLCost = s.AmountCost;
                                 s.TLQty = s.QTY;
-                                s.ShipQty = 0;
+                                s.ShipQty = s.QTY * -1;
                                 s.Location = "Warehouse";
                                 s.ShelfNo = "";
 

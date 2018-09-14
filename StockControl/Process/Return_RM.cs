@@ -1522,8 +1522,28 @@ namespace StockControl
         {
             try
             {
-                PrintPR a = new PrintPR(txtADNo.Text, txtADNo.Text, "AdjustStock");
-                a.ShowDialog();
+                //PrintPR a = new PrintPR(txtADNo.Text, txtADNo.Text, "AdjustStock");
+                //a.ShowDialog();
+                Report.Reportx1.Value = new string[1];
+                Report.Reportx1.Value[0] = txtADNo.Text;
+                Report.Reportx1.WReport = "ALLReport";
+                Report.Reportx1 op = new Report.Reportx1("ReportReturnRM.rpt");
+                op.Show();
+
+                //Report.Reportx1.Value = new string[2];
+                //Report.Reportx1.Value[0] = txtSONo.Text;
+                //Report.Reportx1.Value[1] = txtSONo.Text;
+                //Report.Reportx1.WReport = "Shipment";
+                //Report.Reportx1 op = new Report.Reportx1("ReportDelivery.rpt");
+                //op.Show();
+                //PrintPR a = new PrintPR(txtADNo.Text, txtADNo.Text, "Shipping");
+                //a.ShowDialog();
+                //Report.Reportx1.Value = new string[1];
+                //Report.Reportx1.Value[0] = AdNo1;
+                //Report.Reportx1.WReport = "ALLReport";
+                //Report.Reportx1 op = new Report.Reportx1("ReportReturnRM.rpt");
+                //op.Show();
+
 
                 //using (DataClasses1DataContext db = new DataClasses1DataContext())
                 //{
