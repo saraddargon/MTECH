@@ -34090,8 +34090,10 @@ namespace StockControl
 				}
 			}
 		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
+
+        public object SSNo { get; internal set; }
+
+        public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
 		
