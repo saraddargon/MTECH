@@ -438,8 +438,8 @@ namespace StockControl
                         else
                             dgvData.Rows[e.RowIndex].Cells["Amount"].Value = 0;
 
-                        e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                        e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                        e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
+                        e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                         CallTotal();
                     }
                     else if (e.Column.Name.Equals("ItemNo"))
@@ -470,8 +470,8 @@ namespace StockControl
                                 e.Row.Cells["ItemName"].Value = t.InternalName;
                                 e.Row.Cells["UOM"].Value = t.BaseUOM;
                                 e.Row.Cells["PCSUnit"].Value = pcsunit;
-                                e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                                e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                                e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
+                                e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                             }
 
                             //
@@ -487,8 +487,8 @@ namespace StockControl
                             var pcsunit = (u != null) ? u.QuantityPer : 1;
 
                             e.Row.Cells["PCSUnit"].Value = pcsunit;
-                            e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                            e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                            e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
+                            e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                         }
                     }
                 }
