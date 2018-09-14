@@ -237,6 +237,7 @@ namespace StockControl
 
                                 if (Qty == 0)
                                     Qty = 1;
+
                                 rows1 += 1;
                                 mh_ShipmentDTTemp st = new mh_ShipmentDTTemp();
                                 st.RNo = rows1;
@@ -254,9 +255,10 @@ namespace StockControl
                                 if (!Convert.ToString(rd.Cells["Unit"].Value.ToSt()).Equals(""))
                                     st.UOM = rd.Cells["Unit"].Value.ToSt();
                                 else
-                                    st.UOM = im.BaseUOM;   
+                                    st.UOM = im.SalesUOM;   
+
                                 st.RefDocNo = rd.Cells["SONo"].Value.ToSt();
-                                st.RefId = Convert.ToInt32(rd.Cells["RefId"].Value);
+                                st.RefId = Convert.ToInt32(rd.Cells["id"].Value);
                                 db.mh_ShipmentDTTemps.InsertOnSubmit(st);
                                 db.SubmitChanges();
                             }
