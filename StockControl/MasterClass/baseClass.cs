@@ -272,10 +272,10 @@ namespace StockControl
             var fullQty = dt.Qty * dt.PCSUnit;
             if (dt.OutPlan == fullQty && dt.OutSO == fullQty)
                 return "Waiting";
-            else if (dt.OutPlan != fullQty || dt.OutSO != fullQty)
-                return "Process";
             else if (dt.OutPlan == 0 && dt.OutSO == 0)
                 return "Completed";
+            else if (dt.OutPlan != fullQty || dt.OutSO != fullQty)
+                return "Process";
             else
                 return "Waiting";
         }
