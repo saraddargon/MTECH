@@ -975,8 +975,8 @@ namespace StockControl
                 //    //LoadData
                     
                 //}
-
-                DataLoad();
+                if(t_SONo!="")
+                    DataLoad();
 
 
                 GC.Collect();
