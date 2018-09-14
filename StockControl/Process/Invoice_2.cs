@@ -607,7 +607,7 @@ namespace StockControl
                                                 ix.id == mtem.RefId
                                              select ix).First();
                                    
-                                    p.OutShip = Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
+                                    p.OutShip = p.OutShip - Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
 
                                     dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "ปรับ OutShip : " + (rd.Cells["Qty"].Value.ToSt())
                                     + " ShipmentNo :" + mtem.RefDocNo
@@ -682,63 +682,63 @@ namespace StockControl
                         else
                             dgvData.Rows[e.RowIndex].Cells["Amount"].Value = 0;
 
-                        e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                        e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                        //e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                        //e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         CallTotal();
                     }
-                    else if (e.Column.Name.Equals("ItemNo"))
-                    {
-                        if (txtContactName.Text == "")
-                        {
-                            baseClass.Warning("Please select Customer first.\n");
-                            return;
-                        }
-                        using (var db = new DataClasses1DataContext())
-                        {
-                            var t = db.mh_Items.Where(x => x.InternalNo.Equals(itemNo)).FirstOrDefault();
-                            if (t == null)
-                            {
-                                baseClass.Warning($"Item no. ({itemNo}) not found.!!");
-                                e.Row.Cells["ItemNo"].Value = beginItem;
-                                return;
-                            }
-                            var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == t.InternalNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
-                            var pcsunit = (tU != null) ? tU.QuantityPer : 1;
+                    //else if (e.Column.Name.Equals("ItemNo"))
+                    //{
+                    //    if (txtContactName.Text == "")
+                    //    {
+                    //        baseClass.Warning("Please select Customer first.\n");
+                    //        return;
+                    //    }
+                    //    using (var db = new DataClasses1DataContext())
+                    //    {
+                    //        var t = db.mh_Items.Where(x => x.InternalNo.Equals(itemNo)).FirstOrDefault();
+                    //        if (t == null)
+                    //        {
+                    //            baseClass.Warning($"Item no. ({itemNo}) not found.!!");
+                    //            e.Row.Cells["ItemNo"].Value = beginItem;
+                    //            return;
+                    //        }
+                    //        var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == t.InternalNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
+                    //        var pcsunit = (tU != null) ? tU.QuantityPer : 1;
 
-                            //set Tool
-                            if (beginItem == "")
-                            {
-                                var cc = db.mh_Customers.Where(x => x.No == txtContactName.Text).First();
-                                addRow(e.RowIndex, DateTime.Now, t.InternalNo, t.InternalName, "", t.Location
-                                    , 1, t.BaseUOM, pcsunit, 0, 0, false, 1 * pcsunit, 1 * pcsunit, 0
-                                    , "Waiting", "Waiting", cc.VatGroup, t.VatType, "", 0, t.ReplenishmentType, "T");
-                            }
-                            else
-                            {
-                                e.Row.Cells["ItemName"].Value = t.InternalName;
-                               // e.Row.Cells["Unit"].Value = t.BaseUOM;
-                                e.Row.Cells["PCSUnit"].Value = pcsunit;
-                                e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                                e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                            }
+                    //        //set Tool
+                    //        if (beginItem == "")
+                    //        {
+                    //            var cc = db.mh_Customers.Where(x => x.No == txtContactName.Text).First();
+                    //            addRow(e.RowIndex, DateTime.Now, t.InternalNo, t.InternalName, "", t.Location
+                    //                , 1, t.BaseUOM, pcsunit, 0, 0, false, 1 * pcsunit, 1 * pcsunit, 0
+                    //                , "Waiting", "Waiting", cc.VatGroup, t.VatType, "", 0, t.ReplenishmentType, "T");
+                    //        }
+                    //        else
+                    //        {
+                    //            e.Row.Cells["ItemName"].Value = t.InternalName;
+                    //           // e.Row.Cells["Unit"].Value = t.BaseUOM;
+                    //            e.Row.Cells["PCSUnit"].Value = pcsunit;
+                    //            e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                    //            e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                    //        }
 
-                            //
-                            SetRowNo1(dgvData);
-                        }
-                    }
-                    else if (e.Column.Name.Equals("Unit"))
-                    {
-                        var unit = e.Row.Cells["Unit"].Value.ToSt();
-                        using (var db = new DataClasses1DataContext())
-                        {
-                            var u = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == unit).FirstOrDefault();
-                            var pcsunit = (u != null) ? u.QuantityPer : 1;
+                    //        //
+                    //        SetRowNo1(dgvData);
+                    //    }
+                    //}
+                    //else if (e.Column.Name.Equals("Unit"))
+                    //{
+                    //    var unit = e.Row.Cells["Unit"].Value.ToSt();
+                    //    using (var db = new DataClasses1DataContext())
+                    //    {
+                    //        var u = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == unit).FirstOrDefault();
+                    //        var pcsunit = (u != null) ? u.QuantityPer : 1;
 
-                            e.Row.Cells["PCSUnit"].Value = pcsunit;
-                            e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                            e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                        }
-                    }
+                    //        e.Row.Cells["PCSUnit"].Value = pcsunit;
+                    //        e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                    //        e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                    //    }
+                    //}
 
                     e.Row.Cells["dgvC"].Value = "T";
                 }
@@ -1024,6 +1024,8 @@ namespace StockControl
         }
         void AddPartE()
         {
+            return;
+
             if (txtContactName.Text == "")
             {
                 baseClass.Warning("Please select Customers first.\n");
@@ -1051,6 +1053,7 @@ namespace StockControl
 
                         var rowE = dgvData.Rows.AddNew();
                         var cc = db.mh_Customers.Where(x => x.No == txtContactName.Text).First();
+
                         addRow(rowE.Index, DateTime.Now, itemNo, t.InternalName, "", t.Location
                             , 1, t.BaseUOM, u, 0, 0, false, 1 * u, 1 * u, 0, "Waiting", "Waiting"
                             , cc.VatGroup, t.VatType, "", 0, t.ReplenishmentType, "T");
@@ -1167,6 +1170,16 @@ namespace StockControl
                 }
             }
             catch { }
+        }
+
+        private void radButton2_Click(object sender, EventArgs e)
+        {
+            AddPartE();
+        }
+
+        private void radButton3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
