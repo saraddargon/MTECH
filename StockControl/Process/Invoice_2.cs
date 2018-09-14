@@ -770,8 +770,8 @@ namespace StockControl
         }
         void addRow(int rowIndex, DateTime ReqDate, string ItemNo, string ItemName, string Desc
             , string Location, decimal Qty, string UOM, decimal PCSUnit, decimal UnitPrice, decimal Amount
-            , bool PriceIncVat, decimal OutShip, decimal OutPlan, int id, string Status, string PlanStatus, int VatGroup, string VatType
-            , string RefDocNo, int RefId, string RepType, string dgvC)
+            , bool PriceIncVat, decimal OutShip, decimal OutPlan, int id, string Status, string PlanStatus            
+            , string RefDocNo, int RefId, string dgvC)
         {
             var rowE = dgvData.Rows[rowIndex];
             try
@@ -781,23 +781,23 @@ namespace StockControl
                 rowE.Cells["ItemNo"].Value = ItemNo;
                 rowE.Cells["ItemName"].Value = ItemName;
                 rowE.Cells["Description"].Value = Desc;
-                rowE.Cells["Location"].Value = Location;
+                //rowE.Cells["Location"].Value = Location;
                 rowE.Cells["Qty"].Value = Qty;
                 rowE.Cells["Unit"].Value = UOM;
                 rowE.Cells["PCSUnit"].Value = PCSUnit;
                 rowE.Cells["UnitPrice"].Value = UnitPrice;
                 rowE.Cells["Amount"].Value = Amount;
-                rowE.Cells["PriceIncVat"].Value = PriceIncVat;
-                rowE.Cells["VatGroup"].Value = VatGroup;
-                rowE.Cells["VatType"].Value = VatType;
-                rowE.Cells["OutShip"].Value = OutShip;
-                rowE.Cells["Status"].Value = Status;
+                //rowE.Cells["PriceIncVat"].Value = PriceIncVat;
+                //rowE.Cells["VatGroup"].Value = VatGroup;
+                //rowE.Cells["VatType"].Value = VatType;
+                //rowE.Cells["OutShip"].Value = OutShip;
+                //rowE.Cells["Status"].Value = Status;
                 rowE.Cells["RefDocNo"].Value = RefDocNo;
-                rowE.Cells["RefId"].Value = RefId;
-                rowE.Cells["RepType"].Value = RepType;
+                //rowE.Cells["RefId"].Value = RefId;
+                //rowE.Cells["RepType"].Value = RepType;
                 rowE.Cells["dgvC"].Value = dgvC; //if Edit row -> value = T
-                rowE.Cells["PlanStatus"].Value = PlanStatus;
-                rowE.Cells["OutPlan"].Value = OutPlan;
+                //rowE.Cells["PlanStatus"].Value = PlanStatus;
+                //rowE.Cells["OutPlan"].Value = OutPlan;
 
                 SetRowNo1(dgvData);
             }
@@ -1024,7 +1024,7 @@ namespace StockControl
         }
         void AddPartE()
         {
-            return;
+           
 
             if (txtContactName.Text == "")
             {
@@ -1047,16 +1047,22 @@ namespace StockControl
                             baseClass.Warning($"Item ({itemNo} not found.!!!");
                             return;
                         }
+                        
+                        decimal PCSUnit = dbClss.Con_UOM(itemNo, StockControl.dbClss.TSt(t.PurchaseUOM));
 
-                        var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
-                        decimal u = (tU != null) ? tU.QuantityPer : 1;
+                        //var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == t.BaseUOM).ToList();
+                        //if(tU.Count>0)
+                        //{
+
+                        //}
 
                         var rowE = dgvData.Rows.AddNew();
-                        var cc = db.mh_Customers.Where(x => x.No == txtContactName.Text).First();
+                        //var cc = db.mh_Customers.Where(x => x.No == txtContactName.Text).ToList();
 
                         addRow(rowE.Index, DateTime.Now, itemNo, t.InternalName, "", t.Location
-                            , 1, t.BaseUOM, u, 0, 0, false, 1 * u, 1 * u, 0, "Waiting", "Waiting"
-                            , cc.VatGroup, t.VatType, "", 0, t.ReplenishmentType, "T");
+                            , 1, t.BaseUOM, PCSUnit, dbClss.TDe(t.StandardPrice), dbClss.TDe(t.StandardPrice)*1
+                            , false, 1 * PCSUnit, 1 * PCSUnit, 0, "Waiting", "Waiting",
+                             "", 0, "T");
                     }
                     SetRowNo1(dgvData);
 
