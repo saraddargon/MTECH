@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
+using Telerik.WinControls.UI;
+
 namespace StockControl
 {
     public partial class Invoice_List2 : Telerik.WinControls.UI.RadRibbonForm
@@ -16,7 +18,13 @@ namespace StockControl
 
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
-
+        List<GridViewRowInfo> RetDT;
+        public Invoice_List2(List<GridViewRowInfo> RetDT)
+        {
+            InitializeComponent();
+            this.RetDT = RetDT;
+            sType = 2;
+        }
         public Invoice_List2(int sType = 1)
         {
             InitializeComponent();
@@ -175,14 +183,50 @@ namespace StockControl
 
         private void radButtonElement1_Click(object sender, EventArgs e)
         {
-            //select Item
-            if (sType == 1)
+            ////select Item
+            //if (sType == 1)
+            //{
+            //    var t = new SaleOrder();
+            //    t.ShowDialog();
+            //}
+            //else
+            //    selRow();
+
+            if (dgvData.Rows.Count <= 0) return;
+
+            try
             {
-                var t = new SaleOrder();
-                t.ShowDialog();
+                if (sType == 2)
+                {
+                    dgvData.EndEdit();
+                    foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                    {
+                        RetDT.Add(rowinfo);
+                    }
+
+                    this.Close();
+                }
+                else
+                {
+                    dgvData.EndEdit();
+                    string temp = "";
+                    foreach (var ix in dgvData.Rows)
+                    {
+                        if (dbClss.TBo(ix.Cells["S"].Value))
+                        {
+                            temp = dbClss.TSt(ix.Cells["IVNo"].Value);
+                            break;
+                        }
+                    }
+                    if (temp != "")
+                    {
+                        Invoice_2 a = new Invoice_2(temp);
+                        a.ShowDialog();
+                    }
+                }
             }
-            else
-                selRow();
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -193,22 +237,24 @@ namespace StockControl
 
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
-            ////select Item from Double click
-            //selRow();
-            // demo();
-            try
-            {
-                if (e.RowIndex >= 0)
-                {
-                    //Shipment sh = new Shipment(dgvData.Rows[e.RowIndex].Cells["ShipmentNo"].Value.ToSt());
-                    //sh.ShowDialog();
-                    Invoice_2 iv = new Invoice_2(dgvData.Rows[e.RowIndex].Cells["IVNo"].Value.ToSt());
-                    iv.ShowDialog();
-                    DataLoad();
-                }
+            //////select Item from Double click
+            ////selRow();
+            //// demo();
+            //try
+            //{
+            //    if (e.RowIndex >= 0)
+            //    {
+            //        //Shipment sh = new Shipment(dgvData.Rows[e.RowIndex].Cells["ShipmentNo"].Value.ToSt());
+            //        //sh.ShowDialog();
+            //        Invoice_2 iv = new Invoice_2(dgvData.Rows[e.RowIndex].Cells["IVNo"].Value.ToSt());
+            //        iv.ShowDialog();
+            //        DataLoad();
+            //    }
 
-            }catch { }
+            //}catch { }
 
+            radButtonElement1_Click(null, null);
+            DataLoad();
         }
         void selRow()
         {
