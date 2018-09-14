@@ -166,8 +166,9 @@ namespace StockControl
         {
             try
             {
-                dgvData.DataSource = null;
-                dgvData.Rows.Clear();
+                dgvPurchase.DataSource = null;
+                dgvPurchase.Rows.Clear();
+                if (idCustomerPoDt == 0) return;
                 using (var db = new DataClasses1DataContext())
                 {
                     //load Purchase, P/O, Receive
@@ -191,7 +192,22 @@ namespace StockControl
                                 , dt => dt.PONo
                                 , hd => hd.PONo
                                 , (dt, hd) => new { dt, hd });
-
+                            foreach (var p in po)
+                            {
+                                //set OutReceive ---- BackOrder
+                                var OutReceive = rowe.Cells["OutReceive"].Value.ToDecimal();
+                                var OrderQty = rowe.Cells["Qty"].Value.ToDecimal();
+                                rowe.Cells["OutReceive"].Value = Math.Round(OutReceive + p.dt.BackOrder.ToDecimal(), 2);
+                                OutReceive = rowe.Cells["OutReceive"].Value.ToDecimal();
+                                rowe.Cells["ReceiveQty"].Value = Math.Round(OrderQty - OutReceive, 2);
+                            }
+                        }
+                        else
+                        {
+                            var OrderQty = rowe.Cells["Qty"].Value.ToDecimal();
+                            rowe.Cells["OutReceive"].Value = OrderQty;
+                            var OutReceive = rowe.Cells["OutReceive"].Value.ToDecimal();
+                            rowe.Cells["ReceiveQty"].Value = Math.Round(OrderQty - OutReceive, 2);
                         }
                     }
                 }
@@ -202,17 +218,18 @@ namespace StockControl
             }
         }
 
-        private GridViewRowInfo addRowPr(int id, string pRNo, string poNo, string ItemNo
+        private GridViewRowInfo addRowPr(int idPR, string pRNo, string poNo, string ItemNo
             , string itemName, decimal orderQty, decimal outReceive, string uOM, decimal pCSUnit)
         {
-            var rowe = dgvData.Rows.AddNew();
-            rowe.Cells["rNo"].Value = id;
+            var rowe = dgvPurchase.Rows.AddNew();
+            rowe.Cells["rNo"].Value = rowe.Index + 1;
+            rowe.Cells["idPR"].Value = idPR;
             rowe.Cells["PRNo"].Value = pRNo;
             rowe.Cells["PONo"].Value = poNo;
             rowe.Cells["ItemNo"].Value = ItemNo;
             rowe.Cells["ItemName"].Value = itemName;
-            rowe.Cells["Qty"].Value = orderQty;
-            //rowe.Cells["Received"].Value = 0;
+            rowe.Cells["Qty"].Value = Math.Round(orderQty, 2);
+            rowe.Cells["ReceiveQty"].Value = Math.Round(orderQty - outReceive, 2);
             rowe.Cells["OutReceive"].Value = outReceive;
             rowe.Cells["UOM"].Value = uOM;
             rowe.Cells["PCSUnit"].Value = pCSUnit;
@@ -512,7 +529,7 @@ namespace StockControl
                 dgvData.EndEdit();
                 if (e.RowIndex >= -1)
                 {
-                    var itemNo = e.Row.Cells["Item"].Value.ToSt();
+                    var itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
                     if (e.Column.Name.Equals("Amount") || e.Column.Name.Equals("Qty"))
                     {
                         if (e.Row.Cells["Qty"].Value.ToDecimal() > 0)
@@ -524,7 +541,7 @@ namespace StockControl
                             dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = 0;
 
                     }
-                    else if (e.Column.Name.Equals("Item"))
+                    else if (e.Column.Name.Equals("ItemNo"))
                     {
                         using (var db = new DataClasses1DataContext())
                         {
@@ -532,7 +549,7 @@ namespace StockControl
                             if (t == null)
                             {
                                 baseClass.Warning($"Item no. ({itemNo}) not found.!!");
-                                e.Row.Cells["Item"].Value = beginItem;
+                                e.Row.Cells["ItemNo"].Value = beginItem;
                                 return;
                             }
                             var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == t.InternalNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
@@ -576,7 +593,7 @@ namespace StockControl
         {
             if (e.RowIndex >= -1)
             {
-                string itemNo = e.Row.Cells["Item"].Value.ToSt();
+                string itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
                 if (e.Column.Name.Equals("Unit"))
                 {
                     using (var db = new DataClasses1DataContext())
@@ -589,7 +606,7 @@ namespace StockControl
                         c1.DataSource = unit;
                     }
                 }
-                else if (e.Column.Name.Equals("Item"))
+                else if (e.Column.Name.Equals("ItemNo"))
                 {
                     beginItem = itemNo;
                 }
