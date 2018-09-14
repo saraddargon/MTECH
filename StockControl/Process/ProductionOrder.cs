@@ -254,13 +254,12 @@ namespace StockControl
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (txtFGNo.Text == "") return;
-            if (Math.Round(txtFGQty.Value.ToDecimal() * txtPCSUnit.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal())
+            if (Math.Round(txtFGQty.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal())
             {
                 baseClass.Warning("Status Process cannot Delete.\n");
                 return;
             }
-            if (dgvData.Rows.Where(x => x.Cells["Qty"].Value.ToDecimal() 
-                * x.Cells["PCSUnit"].Value.ToDecimal() != x.Cells["RemQty"].Value.ToDecimal()).Count() > 0)
+            if (dgvData.Rows.Where(x => x.Cells["Qty"].Value.ToDecimal() != x.Cells["RemQty"].Value.ToDecimal()).Count() > 0)
             {
                 baseClass.Warning("RM or SEMI alreday shipped into this 'Job', Please cancel shipping RM.\n");
                 return;
@@ -288,7 +287,7 @@ namespace StockControl
                         if(po != null)
                         {
                             //po.OutPlan += (m.Qty * m.PCSUnit) - m.OutQty;
-                            po.OutPlan = Math.Round(m.Qty * m.PCSUnit, 3); //Full Return Qty
+                            po.OutPlan = Math.Round(m.Qty, 2); //Full Return Qty
                             po.Status = baseClass.setCustomerPOStatus(po);
                             db.SubmitChanges();
 
@@ -368,7 +367,7 @@ namespace StockControl
                     m.LotNo = txtLotNo.Text;
                     m.Qty = txtFGQty.Value.ToDecimal();
                     m.PCSUnit = txtPCSUnit.Value.ToDecimal();
-                    m.OutQty = m.Qty * m.PCSUnit;
+                    m.OutQty = m.Qty;
                     m.RefDocId = txtRefDocId.Text.ToInt();
                     m.RefDocNo = txtRefDocNo.Text;
                     m.ReqDate = txtReqDate.Text.ToDateTime().Value;

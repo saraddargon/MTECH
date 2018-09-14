@@ -64,6 +64,7 @@ namespace StockControl
                     //1.Get Customer P/O (OutPlan) and SaleOrder (OutPlan) [Only not customer P/O]
                     var poDt = db.mh_CustomerPODTs.Where(x => x.Active
                         && x.ReqDate >= dFrom && x.ReqDate <= dTo
+                        && x.OutPlan > 0
                     ).OrderBy(x => x.ReqDate).ToList();
 
                     if (dFrom < DateTime.Now.Date)
@@ -75,7 +76,8 @@ namespace StockControl
                         if (t == null) continue;
                         if (LocationItem != "" && t.Location != LocationItem) continue;
 
-                        var pohd = db.mh_CustomerPOs.Where(x => x.id == dt.idCustomerPO && x.Active).FirstOrDefault();
+                        var pohd = db.mh_CustomerPOs.Where(x => x.id == dt.idCustomerPO
+                                && x.Active).FirstOrDefault();
                         if (pohd == null) continue;
 
                         cstmPO_List.Add(new CustomerPOCal

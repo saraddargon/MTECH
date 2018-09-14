@@ -96,16 +96,37 @@ namespace StockControl
         {
             get
             {
-                return 0;
-                //not imprement
-                //----Remain cut by Shipment
+                return (Qty * PCSUnit) - Shipped;
             }
         }
         public decimal Shipped
         {
             get
             {
-                return Qty - Remain;
+                decimal shipQ = 0.00m;
+                //not imprement
+                //----Remain cut by Shipment
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.mh_SaleOrderDTs.Join(db.mh_SaleOrders,
+                            dt => dt.SONo,
+                            hd => hd.SONo,
+                            (dt, hd) => new { dt, hd }
+                        )
+                        .Where(x => x.dt.RefId == this.id && x.hd.Active && x.dt.Active).ToList();
+                    foreach (var mm in m)
+                    {
+                        //find Shipment
+                        var s = db.mh_ShipmentDTs.Join(db.mh_Shipments,
+                            dt => dt.SSNo,
+                            hd => hd.SSNo,
+                            (dt, hd) => new { dt, hd })
+                            .Where(x => x.hd.Active.Value && x.dt.Active && x.dt.RefId == mm.dt.id).ToList();
+                        if (s.Count > 0)
+                            shipQ += s.Sum(x => x.dt.Qty * x.dt.PCSUnit).ToDecimal();
+                    }
+                }
+                return shipQ;
             }
         }
         public bool Plan

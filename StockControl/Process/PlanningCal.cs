@@ -437,7 +437,7 @@ namespace StockControl
                             m.LotNo = "";
                         m.Qty = item.Cells["Qty"].Value.ToDecimal();
                         m.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
-                        m.OutQty = m.Qty * m.PCSUnit;
+                        m.OutQty = m.Qty;
                         m.RefDocId = item.Cells["idRef"].Value.ToInt();
                         m.RefDocNo = item.Cells["RefDocNo"].Value.ToSt();
                         m.StartingDate = item.Cells["StartingDate"].Value.ToDateTime().Value;
@@ -475,7 +475,7 @@ namespace StockControl
                                 JobNo = m.JobNo,
                                 PCSUnit = r.Cells["PCSUnit"].Value.ToDecimal(),
                                 Qty = r.Cells["Qty"].Value.ToDecimal(),
-                                RemQty = Math.Round(r.Cells["Qty"].Value.ToDecimal() * r.Cells["PCSUnit"].Value.ToDecimal()),
+                                RemQty = Math.Round(r.Cells["Qty"].Value.ToDecimal()),
                                 Type = r.Cells["Type"].Value.ToSt(),
                                 UOM = r.Cells["UOM"].Value.ToSt(),
                             };
