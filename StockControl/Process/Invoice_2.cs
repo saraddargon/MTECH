@@ -607,7 +607,7 @@ namespace StockControl
                                                 ix.id == mtem.RefId
                                              select ix).First();
                                    
-                                    p.OutShip = p.OutShip - Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
+                                    p.OutInv = p.OutInv - Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
 
                                     dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "ปรับ OutShip : " + (rd.Cells["Qty"].Value.ToSt())
                                     + " ShipmentNo :" + mtem.RefDocNo
