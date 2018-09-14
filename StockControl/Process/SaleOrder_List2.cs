@@ -30,6 +30,7 @@ namespace StockControl
         {
             InitializeComponent();
             this.RetDT = RetDT;
+            sType = 2;
         }
         public SaleOrder_List2()
         {
@@ -200,14 +201,34 @@ namespace StockControl
 
             try
             {
-                dgvData.EndEdit();
-
-                foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                if (sType == 2)
                 {
-                    RetDT.Add(rowinfo);
-                }
+                    dgvData.EndEdit();
+                    foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                    {
+                        RetDT.Add(rowinfo);
+                    }
 
-                this.Close();
+                    this.Close();
+                }
+                else
+                {
+                    dgvData.EndEdit();
+                    string temp = "";
+                    foreach (var ix in dgvData.Rows)
+                    {
+                        if (dbClss.TBo(ix.Cells["S"].Value))
+                        {
+                            temp = dbClss.TSt(ix.Cells["SONo"].Value);
+                            break;
+                        }
+                    }
+                    if(temp !="")
+                    {
+                        SaleOrder a = new SaleOrder(temp);
+                        a.ShowDialog();
+                    }
+                }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
