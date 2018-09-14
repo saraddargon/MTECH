@@ -227,6 +227,8 @@ namespace StockControl
                                     st.Amount = im.UnitPrice * 1;
                                     st.Active = true;
                                     st.UOM = im.UOM;
+                                    st.RefId = im.id;
+                                    st.RefDocNo = im.SSNo;
                                     db.mh_InvoiceDTTemps.InsertOnSubmit(st);
                                     db.SubmitChanges();
                                 }

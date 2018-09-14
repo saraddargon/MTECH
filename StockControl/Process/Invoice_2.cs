@@ -572,7 +572,7 @@ namespace StockControl
                                
                                 nd.ItemNo = rd.Cells["ItemNo"].Value.ToSt();
                                 nd.RefDocNo = Convert.ToString(rd.Cells["RefDocNo"].Value);
-                                nd.RefId = 0;
+                                //nd.RefId = 0;
                                 nd.Qty = Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
                                 nd.Amount = Convert.ToDecimal(rd.Cells["Amount"].Value.ToSt());
                                 nd.ItemName = mtem.ItemName;
@@ -584,12 +584,39 @@ namespace StockControl
                                 nd.IVNo = txtSONo.Text;
                                 nd.Status = "Process";
                                 nd.RefId = mtem.RefId;
-                                nd.Active = Convert.ToBoolean(true);
-                                
+                                //nd.RefDocNo = mtem.RefDocNo;
+                                nd.Active = Convert.ToBoolean(true);                               
 
                                 db.mh_InvoiceDTs.InsertOnSubmit(nd);   
                                 db.mh_InvoiceDTTemps.DeleteOnSubmit(mtem);
                                 db.SubmitChanges();
+
+
+
+
+                                var v = (from ix in db.mh_ShipmentDTs
+                                         where //ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+                                               // ix.TempNo == txtTempNo.Text 
+                                                   ix.id == mtem.RefId
+                                         select ix).ToList();
+                                if (v.Count > 0)
+                                {
+                                    var p = (from ix in db.mh_ShipmentDTs
+                                             where //ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+                                                   // ix.TempNo == txtTempNo.Text 
+                                                ix.id == mtem.RefId
+                                             select ix).First();
+                                   
+                                    p.OutShip = Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
+
+                                    dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "ปรับ OutShip : " + (rd.Cells["Qty"].Value.ToSt())
+                                    + " ShipmentNo :" + mtem.RefDocNo
+                                    + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", mtem.RefDocNo);
+
+                                    db.SubmitChanges();
+                                    
+                                }
+
                             }
 
                         }
@@ -882,17 +909,26 @@ namespace StockControl
                 Ac = "View";
                 Enable_Status(false, "View");
 
+                List<GridViewRowInfo> dgvRow_List = new List<GridViewRowInfo>();
                 this.Cursor = Cursors.WaitCursor;
-                var sm = new Invoice_List2();
+                var sm = new Invoice_List2(dgvRow_List);
                 this.Cursor = Cursors.Default;
                 sm.ShowDialog();
-                //if (pol.PONo != "" && pol.CstmNo != "")
-                //{
-                //    t_SONo = pol.PONo;
-                //    t_CustomerNo = pol.CstmNo;
-                //    //LoadData
-                //    DataLoad();
-                //}
+                if (dgvRow_List.Count > 0)
+                {
+                    string SONo = "";
+                    this.Cursor = Cursors.WaitCursor;
+
+                    foreach (GridViewRowInfo ee in dgvRow_List)
+                    {
+                        SONo = dbClss.TSt(ee.Cells["IVNo"].Value);
+                        
+
+                    }
+
+                    txtSONo.Text = SONo;
+                    DataLoad();
+                }
 
 
                 GC.Collect();

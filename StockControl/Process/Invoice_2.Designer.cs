@@ -362,6 +362,7 @@
             this.btnAddPart.Name = "btnAddPart";
             this.btnAddPart.Size = new System.Drawing.Size(150, 22);
             this.btnAddPart.Text = "Add Part";
+            this.btnAddPart.Visible = false;
             this.btnAddPart.Click += new System.EventHandler(this.btnAddPart_Click);
             // 
             // btnAdd_Row
@@ -371,6 +372,7 @@
             this.btnAdd_Row.Name = "btnAdd_Row";
             this.btnAdd_Row.Size = new System.Drawing.Size(150, 22);
             this.btnAdd_Row.Text = "Add New Item";
+            this.btnAdd_Row.Visible = false;
             this.btnAdd_Row.Click += new System.EventHandler(this.btnAdd_Row_Click);
             // 
             // toolStripSeparator2
