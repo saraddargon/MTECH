@@ -1694,31 +1694,6 @@
       <Column Name="idCstmPO" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_ShipmentDTTemp" Member="mh_ShipmentDTTemps">
-    <Type Name="mh_ShipmentDTTemp">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="UserID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SSNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="RefDocNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="RefId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="RNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="LocationItem" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="UnitPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="PriceIncVat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="VatType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ReplenishmentType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="OutShip" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="OutPlan" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.mh_Shipment" Member="mh_Shipments">
     <Type Name="mh_Shipment">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -1744,31 +1719,6 @@
       <Column Name="UpdateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="StatusHD" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="ContactName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.mh_ShipmentDT" Member="mh_ShipmentDTs">
-    <Type Name="mh_ShipmentDT">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="SSNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="RefDocNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="RefId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="RNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="LocationItem" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="UnitPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="PriceIncVat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="VatType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ReplenishmentType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="OutShip" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="OutPlan" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.mh_InvoiceDT" Member="mh_InvoiceDTs">
@@ -1881,6 +1831,59 @@
       <Column Name="CustomerPONo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="idCstmPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_ShipmentDT" Member="mh_ShipmentDTs">
+    <Type Name="mh_ShipmentDT">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SSNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RefDocNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RefId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="LocationItem" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="PriceIncVat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="VatType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ReplenishmentType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="OutShip" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="OutPlan" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OutInv" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_ShipmentDTTemp" Member="mh_ShipmentDTTemps">
+    <Type Name="mh_ShipmentDTTemp">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SSNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RefDocNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RefId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="LocationItem" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="PriceIncVat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="VatType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ReplenishmentType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="OutShip" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="OutPlan" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="OutInv" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">
@@ -4245,14 +4248,23 @@
       <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="Stock" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
       <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="ShipQty" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ShipQty" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Column Name="Remain" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
       <Column Name="InvQty" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Unit" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="CustomerNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="CustomerName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="temp" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
       <Column Name="RefDocNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="ProductionNo" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="refNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UnitPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.getCSTMNo" Method="getCSTMNo" IsComposable="true">
+    <Parameter Name="CSTMName" Parameter="cSTMName" Type="System.String" DbType="NVarChar(100)" />
+    <Return Type="System.String" />
   </Function>
 </Database>
