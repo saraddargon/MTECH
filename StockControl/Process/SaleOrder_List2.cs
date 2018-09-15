@@ -32,6 +32,14 @@ namespace StockControl
             this.RetDT = RetDT;
             sType = 2;
         }
+        public SaleOrder_List2(List<GridViewRowInfo> RetDT,string CSTMNo)
+        {
+            InitializeComponent();
+            this.RetDT = RetDT;
+            sType = 2;
+            txtCSTMNo.Text = CSTMNo;
+            cbbCSTM.Enabled = false;
+        }
         public SaleOrder_List2()
         {
             InitializeComponent();
