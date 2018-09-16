@@ -119,6 +119,10 @@ namespace StockControl
         {
             return Question(Mssg, "บันทึก");
         }
+        public static bool IsSendApprove(string Mssg = "Do you want to 'Send Approve' ?")
+        {
+            return Question(Mssg, "Send Approve");
+        }
         public static bool IsDel(string Mssg = "Do you want to 'Delete' ?")
         {
             return Question(Mssg, "ลบ");

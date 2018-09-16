@@ -561,6 +561,7 @@
             this.radButton3.Size = new System.Drawing.Size(102, 24);
             this.radButton3.TabIndex = 17;
             this.radButton3.Text = "เลือกรายการ SO";
+            this.radButton3.Visible = false;
             this.radButton3.Click += new System.EventHandler(this.radButton3_Click);
             // 
             // radButton2
@@ -570,6 +571,7 @@
             this.radButton2.Size = new System.Drawing.Size(102, 24);
             this.radButton2.TabIndex = 17;
             this.radButton2.Text = "เลือกรายการ Item";
+            this.radButton2.Visible = false;
             this.radButton2.Click += new System.EventHandler(this.radButton2_Click);
             // 
             // radButton1
