@@ -444,6 +444,7 @@ namespace StockControl
                                                         StartingTime = meTime,
                                                         EndingTime = meTime2,
                                                         idJob = thisMain, //id Temp
+                                                        idAbs = -1,
                                                     };
                                                     calLoad.Add(cl);
                                                 }
@@ -501,6 +502,7 @@ namespace StockControl
                                                 StartingTime = meTime,
                                                 EndingTime = meTime2,
                                                 idJob = thisMain,
+                                                idAbs = -1,
                                             };
                                             calLoad.Add(cl);
 

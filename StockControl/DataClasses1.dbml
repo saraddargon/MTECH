@@ -1902,6 +1902,32 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.mh_CalendarLoad_TEMP" Member="mh_CalendarLoad_TEMPs">
+    <Type Name="mh_CalendarLoad_TEMP">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idJob" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idRoute" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idCal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idWorkcenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idHol" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idAbs" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="StartingTime" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="EndingTime" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_CapacityLoad_TEMP" Member="mh_CapacityLoad_TEMPs">
+    <Type Name="mh_CapacityLoad_TEMP">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WorkCenterID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DocNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DocId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CapacityX" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">
     <ElementType Name="Sp_ADM03_OpenFormSelectResult">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />

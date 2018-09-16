@@ -171,6 +171,8 @@ namespace StockControl
                                     ).OrderBy(x => x.ReqDate).ToList();
 
                     SavePlan(ps.gridPlans, ft.dateFrom, ft.dateTo);
+                    SaveCapacity_TEMP(ps.capacityLoad);
+                    SaveCalendar_TEMP(ps.calLoad);
                 }
             }
         }
@@ -310,7 +312,8 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     db.mh_Planning_TEMPs.DeleteAllOnSubmit(db.mh_Planning_TEMPs);
-                    
+                    db.mh_CapacityLoad_TEMPs.DeleteAllOnSubmit(db.mh_CapacityLoad_TEMPs);
+                    db.mh_CalendarLoad_TEMPs.DeleteAllOnSubmit(db.mh_CalendarLoad_TEMPs);
                     db.SubmitChanges();
 
                     dgvData.DataSource = null;
@@ -379,6 +382,53 @@ namespace StockControl
             finally
             {
                 this.Cursor = Cursors.Default;
+            }
+        }
+        void SaveCapacity_TEMP(List<mh_CapacityLoad> capas)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                foreach (var item in capas)
+                {
+                    if (item.id == 0)
+                    {
+                        var a = new mh_CapacityLoad_TEMP();
+                        db.mh_CapacityLoad_TEMPs.InsertOnSubmit(a);
+
+                        a.Active = true;
+                        a.Capacity = item.Capacity;
+                        a.CapacityX = item.CapacityX;
+                        a.DocId = item.DocId;
+                        a.Date = item.Date;
+                        a.DocNo = item.DocNo;
+                        a.WorkCenterID = item.WorkCenterID;
+                    }
+                }
+                db.SubmitChanges();
+            }
+        }
+        void SaveCalendar_TEMP(List<mh_CalendarLoad> calens)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                foreach (var item in calens)
+                {
+                    if (item.idAbs < 0)
+                    {
+                        var a = new mh_CalendarLoad_TEMP();
+                        db.mh_CalendarLoad_TEMPs.InsertOnSubmit(a);
+                        a.Date = item.Date;
+                        a.EndingTime = item.EndingTime;
+                        a.idAbs = item.idAbs;
+                        a.idCal = item.idCal;
+                        a.idHol = item.idHol;
+                        a.idJob = item.idJob;
+                        a.idRoute = item.idRoute;
+                        a.idWorkcenter = item.idWorkcenter;
+                        a.StartingTime = item.StartingTime;
+                    }
+                }
+                db.SubmitChanges();
             }
         }
 
