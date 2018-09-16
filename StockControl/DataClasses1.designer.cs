@@ -267,9 +267,6 @@ namespace StockControl
     partial void Insertmh_CustomerContact(mh_CustomerContact instance);
     partial void Updatemh_CustomerContact(mh_CustomerContact instance);
     partial void Deletemh_CustomerContact(mh_CustomerContact instance);
-    partial void Insertmh_CapacityLoad(mh_CapacityLoad instance);
-    partial void Updatemh_CapacityLoad(mh_CapacityLoad instance);
-    partial void Deletemh_CapacityLoad(mh_CapacityLoad instance);
     partial void Insertmh_VendorContact(mh_VendorContact instance);
     partial void Updatemh_VendorContact(mh_VendorContact instance);
     partial void Deletemh_VendorContact(mh_VendorContact instance);
@@ -333,6 +330,9 @@ namespace StockControl
     partial void Insertmh_CalendarLoad(mh_CalendarLoad instance);
     partial void Updatemh_CalendarLoad(mh_CalendarLoad instance);
     partial void Deletemh_CalendarLoad(mh_CalendarLoad instance);
+    partial void Insertmh_CapacityLoad(mh_CapacityLoad instance);
+    partial void Updatemh_CapacityLoad(mh_CapacityLoad instance);
+    partial void Deletemh_CapacityLoad(mh_CapacityLoad instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -1029,14 +1029,6 @@ namespace StockControl
 			}
 		}
 		
-		public System.Data.Linq.Table<mh_CapacityLoad> mh_CapacityLoads
-		{
-			get
-			{
-				return this.GetTable<mh_CapacityLoad>();
-			}
-		}
-		
 		public System.Data.Linq.Table<mh_VendorContact> mh_VendorContacts
 		{
 			get
@@ -1202,6 +1194,14 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<mh_CalendarLoad>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_CapacityLoad> mh_CapacityLoads
+		{
+			get
+			{
+				return this.GetTable<mh_CapacityLoad>();
 			}
 		}
 		
@@ -31148,212 +31148,6 @@ namespace StockControl
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CapacityLoad")]
-	public partial class mh_CapacityLoad : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private int _WorkCenterID;
-		
-		private string _DocNo;
-		
-		private int _DocId;
-		
-		private System.DateTime _Date;
-		
-		private decimal _Capacity;
-		
-		private bool _Active;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnWorkCenterIDChanging(int value);
-    partial void OnWorkCenterIDChanged();
-    partial void OnDocNoChanging(string value);
-    partial void OnDocNoChanged();
-    partial void OnDocIdChanging(int value);
-    partial void OnDocIdChanged();
-    partial void OnDateChanging(System.DateTime value);
-    partial void OnDateChanged();
-    partial void OnCapacityChanging(decimal value);
-    partial void OnCapacityChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    #endregion
-		
-		public mh_CapacityLoad()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkCenterID", DbType="Int NOT NULL")]
-		public int WorkCenterID
-		{
-			get
-			{
-				return this._WorkCenterID;
-			}
-			set
-			{
-				if ((this._WorkCenterID != value))
-				{
-					this.OnWorkCenterIDChanging(value);
-					this.SendPropertyChanging();
-					this._WorkCenterID = value;
-					this.SendPropertyChanged("WorkCenterID");
-					this.OnWorkCenterIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNo", DbType="NVarChar(50)")]
-		public string DocNo
-		{
-			get
-			{
-				return this._DocNo;
-			}
-			set
-			{
-				if ((this._DocNo != value))
-				{
-					this.OnDocNoChanging(value);
-					this.SendPropertyChanging();
-					this._DocNo = value;
-					this.SendPropertyChanged("DocNo");
-					this.OnDocNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocId", DbType="Int NOT NULL")]
-		public int DocId
-		{
-			get
-			{
-				return this._DocId;
-			}
-			set
-			{
-				if ((this._DocId != value))
-				{
-					this.OnDocIdChanging(value);
-					this.SendPropertyChanging();
-					this._DocId = value;
-					this.SendPropertyChanged("DocId");
-					this.OnDocIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
-		public System.DateTime Date
-		{
-			get
-			{
-				return this._Date;
-			}
-			set
-			{
-				if ((this._Date != value))
-				{
-					this.OnDateChanging(value);
-					this.SendPropertyChanging();
-					this._Date = value;
-					this.SendPropertyChanged("Date");
-					this.OnDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Capacity", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Capacity
-		{
-			get
-			{
-				return this._Capacity;
-			}
-			set
-			{
-				if ((this._Capacity != value))
-				{
-					this.OnCapacityChanging(value);
-					this.SendPropertyChanging();
-					this._Capacity = value;
-					this.SendPropertyChanged("Capacity");
-					this.OnCapacityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_VendorContacts")]
 	public partial class mh_VendorContact : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -41415,6 +41209,236 @@ namespace StockControl
 					this._EndingTime = value;
 					this.SendPropertyChanged("EndingTime");
 					this.OnEndingTimeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CapacityLoad")]
+	public partial class mh_CapacityLoad : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _WorkCenterID;
+		
+		private string _DocNo;
+		
+		private int _DocId;
+		
+		private System.DateTime _Date;
+		
+		private decimal _Capacity;
+		
+		private decimal _CapacityX;
+		
+		private bool _Active;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnWorkCenterIDChanging(int value);
+    partial void OnWorkCenterIDChanged();
+    partial void OnDocNoChanging(string value);
+    partial void OnDocNoChanged();
+    partial void OnDocIdChanging(int value);
+    partial void OnDocIdChanged();
+    partial void OnDateChanging(System.DateTime value);
+    partial void OnDateChanged();
+    partial void OnCapacityChanging(decimal value);
+    partial void OnCapacityChanged();
+    partial void OnCapacityXChanging(decimal value);
+    partial void OnCapacityXChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public mh_CapacityLoad()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkCenterID", DbType="Int NOT NULL")]
+		public int WorkCenterID
+		{
+			get
+			{
+				return this._WorkCenterID;
+			}
+			set
+			{
+				if ((this._WorkCenterID != value))
+				{
+					this.OnWorkCenterIDChanging(value);
+					this.SendPropertyChanging();
+					this._WorkCenterID = value;
+					this.SendPropertyChanged("WorkCenterID");
+					this.OnWorkCenterIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNo", DbType="NVarChar(50)")]
+		public string DocNo
+		{
+			get
+			{
+				return this._DocNo;
+			}
+			set
+			{
+				if ((this._DocNo != value))
+				{
+					this.OnDocNoChanging(value);
+					this.SendPropertyChanging();
+					this._DocNo = value;
+					this.SendPropertyChanged("DocNo");
+					this.OnDocNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocId", DbType="Int NOT NULL")]
+		public int DocId
+		{
+			get
+			{
+				return this._DocId;
+			}
+			set
+			{
+				if ((this._DocId != value))
+				{
+					this.OnDocIdChanging(value);
+					this.SendPropertyChanging();
+					this._DocId = value;
+					this.SendPropertyChanged("DocId");
+					this.OnDocIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Capacity", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Capacity
+		{
+			get
+			{
+				return this._Capacity;
+			}
+			set
+			{
+				if ((this._Capacity != value))
+				{
+					this.OnCapacityChanging(value);
+					this.SendPropertyChanging();
+					this._Capacity = value;
+					this.SendPropertyChanged("Capacity");
+					this.OnCapacityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CapacityX", DbType="Decimal(18,2) NOT NULL")]
+		public decimal CapacityX
+		{
+			get
+			{
+				return this._CapacityX;
+			}
+			set
+			{
+				if ((this._CapacityX != value))
+				{
+					this.OnCapacityXChanging(value);
+					this.SendPropertyChanging();
+					this._CapacityX = value;
+					this.SendPropertyChanged("CapacityX");
+					this.OnCapacityXChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
 				}
 			}
 		}

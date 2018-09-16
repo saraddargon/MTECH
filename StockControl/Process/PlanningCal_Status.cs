@@ -223,7 +223,6 @@ namespace StockControl
                         else
                             tempStarting = dFrom;
                         //find time in Routing...
-                        var CapaUse = 0.00m;
                         var rt = db.mh_RoutingDTs.Where(x => x.RoutingId == tdata.Routeid)
                             .Join(db.mh_WorkCenters.Where(x => x.Active)
                             , hd => hd.idWorkCenter
@@ -240,13 +239,17 @@ namespace StockControl
                             var RunTimeCapa = Math.Round(((RunTime * gPlan.Qty) / r.workcenter.Capacity), 2);
                             var WaitingTime = r.WaitTime;
                             totalCapa_All = SetupTime + RunTimeCapa + r.WaitTime;
-                            CapaUse += totalCapa_All;
+                            var CapaUseX = 0.00m;
+                            //var CapaUse = 0.00m;
+                            CapaUseX = totalCapa_All;
+                            //CapaUse = SetupTime + RunTimeCapa;
 
                             var t_StartingDate = (DateTime?)null;
+                            var t_EndingDate = (DateTime?)null;
                             //find capacity Available (Workcenter) on date
                             do
                             {
-                                var wl = workLoads.Where(x => x.Date >= tempStarting && x.CapacityAfter > 0
+                                var wl = workLoads.Where(x => x.Date >= tempStarting && x.CapacityAfterX > 0
                                     && x.idWorkCenter == idWorkCenter).OrderBy(x => x.Date).FirstOrDefault();
                                 if (wl == null)
                                 {
@@ -256,38 +259,160 @@ namespace StockControl
                                 }
                                 tempStarting = wl.Date.Date;
                                 //set Starting
-                                if (t_StartingDate == null)
+                                int dow = baseClass.getDayOfWeek(tempStarting.DayOfWeek);
+                                //
+                                var wd = db.mh_WorkCenters.Where(x => x.id == wl.idWorkCenter)
+                                    .Join(db.mh_WorkingDays.Where(x => x.Day == dow && x.Active)
+                                    , hd => hd.Calendar
+                                    , dt => dt.id
+                                    , (hd, dt) => new { hd, dt, StartingTime = baseClass.setTimeSpan(dt.StartingTime), EndingTime = baseClass.setTimeSpan(dt.EndingTime) }).ToList();
+                                if (wd.Count > 0)
                                 {
-                                    t_StartingDate = tempStarting;
-                                    //set Starting Time
-                                    int dow = baseClass.getDayOfWeek(t_StartingDate.Value.DayOfWeek);
-                                    if (dow < 0)
+                                    var sTime = wd.Min(x => x.StartingTime); //Starting Time of Working Day
+                                    var eTime = wd.Max(x => x.EndingTime); //Ending Time of Working Day
+                                    var meTime = sTime; //for starting Time
+                                    int idCalendar = wd.First().hd.Calendar;
+                                    //Find Starting Date-Time
+                                    if (t_StartingDate == null)
                                     {
-                                        string mssg = "Working day not available in Work center calendar.\n";
-                                        baseClass.Warning(mssg);
-                                        throw new Exception(mssg);
+                                        var calLoads = calLoad.Where(x => x.Date == tempStarting
+                                                && (x.idCal == idCalendar || x.idWorkcenter == wl.idWorkCenter)
+                                            ).OrderBy(x => x.StartingTime).ThenBy(x => x.EndingTime).ToList();
+                                        if (calLoads.Count > 0)
+                                        {
+                                            bool foundTime = false;
+                                            List<int> idCal = new List<int>();
+                                            while (meTime < eTime)
+                                            {
+                                                var ww = calLoads.Where(x => meTime >= x.StartingTime
+                                                    && meTime <= x.EndingTime && !idCal.Any(q => q == x.id)).FirstOrDefault();
+                                                if (ww != null)
+                                                {
+                                                    idCal.Add(ww.id);
+                                                    meTime = ww.EndingTime;
+                                                    //ถ้าเป็นช่วงเวลาที่ไม่ใช่เวลาทำงาน
+                                                    if (wd.Where(x => meTime >= x.StartingTime
+                                                         && meTime <= x.EndingTime).ToList().Count < 1)
+                                                    {
+                                                        //หาเวลาที่น้อยที่สุดที่มากกว่า meTime
+                                                        var a = wd.Where(x => meTime < x.StartingTime).FirstOrDefault();
+                                                        if (a != null)
+                                                            meTime = a.StartingTime;
+                                                    }
+                                                    //ถ้าเป็นช่วงเวลาทำงานปกติ ต้องเช็คต่อว่ายังมีเวลา CalendarLoad เหลือให้เช็คอีกไหม และ
+                                                    //ถ้าไม่เหลือแล้ว และน้อยกว่า Ending Time WorkingDay
+                                                    else if (idCal.Count == calLoads.Count()
+                                                        && meTime < eTime)
+                                                    {
+                                                        foundTime = true;
+                                                        break;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    foundTime = true;
+                                                    break;
+                                                }
+
+                                                if (foundTime)
+                                                    break;
+                                            }
+                                            if (foundTime)
+                                                t_StartingDate = tempStarting.AddHours(meTime.Hours).AddMinutes(meTime.Minutes);
+                                        }
+                                        else
+                                            t_StartingDate = tempStarting.AddHours(meTime.Hours).AddMinutes(meTime.Minutes);
                                     }
-                                    //
-                                    var wd = db.mh_WorkCenters.Where(x => x.id == wl.idWorkCenter)
-                                        .Join(db.mh_WorkingDays.Where(x => x.Day == dow && x.Active)
-                                        , hd => hd.Calendar
-                                        , dt => dt.id
-                                        , (hd, dt) => new { hd, dt }).FirstOrDefault();
-                                    var sTime = baseClass.setTimeSpan(wd.dt.StartingTime); //Starting Time of Working Day
-                                    var cal = calLoad.Where(x => x.Date == t_StartingDate).ToList();
-                                    var aps = db.mh_CapacityAbsences.Where(x => x.Date == t_StartingDate && x.Active).ToList();
-                                    var hol = db.mh_Holidays.Where(x => x.StartingDate == t_StartingDate 
-                                            && x.idCalendar == wd.hd.Calendar
-                                            && x.Active).ToList();
+
+                                    var meTime2 = meTime; //for ending time
+                                    //Find Ending Date-Time
+                                    if (t_StartingDate != null)
+                                    {
+                                        int autoid = 0;
+                                        do
+                                        {
+                                            var rd = new Random();
+                                            autoid = rd.Next(1, 999999999);
+                                        } while (calLoad.Where(x => x.id == autoid).Count() > 0);
+                                        //
+                                        var cal = calLoad.Where(x => x.Date == tempStarting
+                                                 && (x.idCal == idCalendar || x.idWorkcenter == wl.idWorkCenter)
+                                                 && x.StartingTime >= meTime
+                                             ).OrderBy(x => x.StartingTime).ThenBy(x => x.EndingTime).ToList();
+                                        if (cal.Count > 0)
+                                        {
+                                            var t_meTime2 = meTime2;
+                                            while(wl.CapacityAfterX > 0)
+                                            {
+                                                var minStartingTime = cal.FirstOrDefault().StartingTime;
+                                                if(minStartingTime > t_meTime2)
+                                                {
+                                                    wl.CapacityAlocateX += (minStartingTime - t_meTime2).TotalMinutes.ToDecimal();
+                                                    CapaUseX -= (minStartingTime - t_meTime2).TotalMinutes.ToDecimal();
+                                                }
+                                                t_meTime2 = cal.FirstOrDefault().EndingTime;
+                                                meTime2 = t_meTime2;
+                                                var cl = new CalendarLoad
+                                                {
+                                                    id = autoid,
+                                                    idRoute = r.id,
+                                                    idWorkcenter = r.idWorkCenter,
+                                                    Date = tempStarting.Date,
+                                                    StartingTime = meTime,
+                                                    EndingTime = meTime2,
+                                                };
+                                                calLoad.Add(cl);
+
+                                                cal.Remove(cal.FirstOrDefault());
+                                            }
+                                        }
+                                        else
+                                        {//ไม่มี Calendar Load เลย
+                                            if (wl.CapacityAfterX >= CapaUseX)
+                                            {
+                                                meTime2 = meTime.Add(TimeSpan.FromMinutes(CapaUseX.ToDouble()));
+                                                CapaUseX = 0;
+                                                //CapaUse = 0;
+                                                //wl.CapacityAlocate += CapaUse;
+                                                wl.CapacityAlocateX += CapaUseX;
+                                            }
+                                            else //CapacityAfterX < CapaUseX
+                                            {
+                                                meTime2 = meTime.Add(TimeSpan.FromMinutes(wl.CapacityAfterX.ToDouble()));
+                                                CapaUseX -= wl.CapacityAlocateX;
+                                                wl.CapacityAlocateX = wl.CapacityAvailable;
+                                                //wl.CapacityAlocate += (wl.CapacityAlocate - CapaUse);
+                                            }
+
+                                            var cl = new CalendarLoad
+                                            {
+                                                id = autoid,
+                                                idRoute = r.id,
+                                                idWorkcenter = r.idWorkCenter,
+                                                Date = tempStarting.Date,
+                                                StartingTime = meTime,
+                                                EndingTime = meTime2,
+                                            };
+                                            calLoad.Add(cl);
+
+                                            t_EndingDate = tempStarting.AddHours(meTime2.Hours).AddMinutes(meTime2.Minutes);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    string mssg = "Work center not having Working days.!!!\n";
+                                    baseClass.Warning(mssg);
+                                    throw new Exception(mssg);
                                 }
 
-
-
                                 //
-                                if (CapaUse > 0)
+                                if (CapaUseX > 0)
                                     tempStarting = tempStarting.AddDays(1).Date;
-                            } while (CapaUse > 0);
+                            } while (CapaUseX > 0);
 
+                            gPlan.StartingDate = t_StartingDate;
+                            gPlan.EndingDate = t_EndingDate;
                         }
 
                     }

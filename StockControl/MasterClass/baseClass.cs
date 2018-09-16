@@ -222,8 +222,10 @@ namespace StockControl
                     var m = db.mh_CapacityLoads.Where(x => x.Date == dd.Date
                             && x.WorkCenterID == dd.WorkCenterID && x.Active).ToList();
                     decimal loadCapa = 0.00m;
+                    decimal loadCapaX = 0.00m;
                     //if (m.Count > 0)
                     loadCapa = m.Sum(x => x.Capacity);
+                    loadCapaX = m.Sum(x => x.CapacityX);
                     var wl = workLoads.Where(x => x.Date == dd.Date
                         && x.idWorkCenter == dd.WorkCenterID).FirstOrDefault();
                     if (wl == null)
@@ -235,6 +237,7 @@ namespace StockControl
                     wl.Date = dd.Date.Date;
                     wl.CapacityAvailable = dd.Capacity.ToDecimal();
                     wl.CapacityAlocate += loadCapa;
+                    wl.CapacityAlocateX += loadCapaX;
                 }
                 return workLoads;
             }
@@ -255,6 +258,10 @@ namespace StockControl
                         idJob = dd.idJob,
                         idRoute = dd.idRoute,
                         idWorkcenter = dd.idWorkcenter,
+                        id = dd.id,
+                        idAbs = dd.idAbs,
+                        idCal = dd.idCal,
+                        idHol = dd.idHol,
                     });
                 }
                 return calLoad;

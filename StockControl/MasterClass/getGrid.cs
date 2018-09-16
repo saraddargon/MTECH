@@ -250,7 +250,7 @@ namespace StockControl
 
                 this.ItemName = t.InternalName;
                 this.ReorderType = baseClass.getReorderType(t.ReorderType);
-                this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
+                //this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
                 this.SafetyStock = t.SafetyStock;
                 this.ReorderPoint = t.ReorderPoint.ToDecimal();
                 this.ReorderQty = t.ReorderQty.ToDecimal();
@@ -288,6 +288,7 @@ namespace StockControl
         public int idWorkCenter { get; set; }
         public decimal CapacityAvailable { get; set; } = 0.00m;
         public decimal CapacityAlocate { get; set; } = 0.00m;
+        public decimal CapacityAlocateX { get; set; } = 0.00m;
         public decimal CapacityAfter
         {
             get
@@ -295,15 +296,26 @@ namespace StockControl
                 return CapacityAvailable - CapacityAlocate;
             }
         }
+        public decimal CapacityAfterX
+        {
+            get
+            {
+                return CapacityAvailable - CapacityAlocateX;
+            }
+        }
     }
     public class CalendarLoad
     {
+        public int id { get; set; }
+        public int idJob { get; set; } = 0;
+        public int idRoute { get; set; } = 0;
+        public int idCal { get; set; } = 0;
+        public int idWorkcenter { get; set; } = 0;
+        public int idHol { get; set; } = 0;
+        public int idAbs { get; set; } = 0;
         public DateTime Date { get; set; }
         public TimeSpan StartingTime { get; set; }
         public TimeSpan EndingTime { get; set; }
-        public int idJob { get; set; }
-        public int idWorkcenter { get; set; }
-        public int idRoute { get; set; }
     }
     public class PlanData
     {
