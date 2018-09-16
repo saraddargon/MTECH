@@ -674,27 +674,27 @@ namespace StockControl
 
                                 }
                             }
-                            else if (Type_Button == 2)
-                            {
-                                int id = Convert.ToInt16(rd.Cells["RefId"].Value.ToSt());
-                                if (id != 0)
-                                {
-                                    mh_SaleOrderDT sd = db.mh_SaleOrderDTs.Where(ss => ss.id == id).FirstOrDefault();
-                                    if (sd != null)
-                                    {
-                                        sd.OutShip = sd.OutShip - Math.Round(Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt()) * Convert.ToDecimal(rd.Cells["PCSUnit"].Value), 2);
-                                        if (sd.OutShip <= 0)
-                                            sd.OutShip = 0;
+                            //else if (Type_Button == 2)
+                            //{
+                            //    int id = Convert.ToInt16(rd.Cells["RefId"].Value.ToSt());
+                            //    if (id != 0)
+                            //    {
+                            //        mh_SaleOrderDT sd = db.mh_SaleOrderDTs.Where(ss => ss.id == id).FirstOrDefault();
+                            //        if (sd != null)
+                            //        {
+                            //            sd.OutShip = sd.OutShip - Math.Round(Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt()) * Convert.ToDecimal(rd.Cells["PCSUnit"].Value), 2);
+                            //            if (sd.OutShip <= 0)
+                            //                sd.OutShip = 0;
 
-                                        dbClss.AddHistory(this.Name, "ปรับสถานะ mh_SaleOrderDTs ", "ปรับ OutShip : " + (rd.Cells["Qty"].Value.ToSt())
-                                    + " SaleOrder :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
-                                    + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
+                            //            dbClss.AddHistory(this.Name, "ปรับสถานะ mh_SaleOrderDTs ", "ปรับ OutShip : " + (rd.Cells["Qty"].Value.ToSt())
+                            //        + " SaleOrder :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
+                            //        + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
 
-                                        // db.SubmitChanges();
-                                    }
-                                }
-                                db.SubmitChanges();
-                            }
+                            //            // db.SubmitChanges();
+                            //        }
+                            //    }
+                            //    db.SubmitChanges();
+                            //}
                             else if (Type_Button == 3)
                             {
                                 decimal Qty = Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
