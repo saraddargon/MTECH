@@ -161,7 +161,7 @@ namespace StockControl
         {
             get
             {
-                if (EndingDate.Value.Date > ReqDate.Date)
+                if (DueDate.Date > ReqDate.Date)
                     return "Over Due";
                 else
                     return "OK";
@@ -251,6 +251,9 @@ namespace StockControl
                 this.ItemName = t.InternalName;
                 this.ReorderType = baseClass.getReorderType(t.ReorderType);
                 //this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
+                var a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneJob", 0, "Warehouse");
+                if (a != null)
+                    this.QtyOnHand = a.Value.ToDecimal();
                 this.SafetyStock = t.SafetyStock;
                 this.ReorderPoint = t.ReorderPoint.ToDecimal();
                 this.ReorderQty = t.ReorderQty.ToDecimal();
@@ -282,6 +285,7 @@ namespace StockControl
 
     }
 
+
     public class WorkLoad
     {
         public DateTime Date { get; set; }
@@ -304,6 +308,16 @@ namespace StockControl
             }
         }
     }
+    public class WorkLoad_Item
+    {
+        public int id { get; set; }
+        public int idWorkCenterID { get; set; }
+        public string DocNo { get; set; }
+        public int DocId { get; set; }
+        public DateTime Date { get; set; }
+        public decimal Capacity { get; set; }
+        public decimal CapacityX { get; set; }
+    }
     public class CalendarLoad
     {
         public int id { get; set; }
@@ -316,39 +330,6 @@ namespace StockControl
         public DateTime Date { get; set; }
         public TimeSpan StartingTime { get; set; }
         public TimeSpan EndingTime { get; set; }
-    }
-    public class PlanData
-    {
-        public string ItemNo { get; set; }
-        public string ItemName { get; set; }
-        public DateTime DueDate { get; set; }
-        public DateTime StartingDate { get; set; }
-        public DateTime EndingDate { get; set; }
-        public decimal Qty { get; set; }
-        public ReplenishmentType repType { get; set; }
-        public string PlanningType
-        {
-            get
-            {
-                if (repType == ReplenishmentType.Production)
-                    return "MPS";
-                else
-                    return "MRP";
-            }
-        }
-        public string RefOrderType
-        {
-            get
-            {
-                return repType.ToSt();
-            }
-        }
-
-        public PlanData(string ItemNo, string ItemName)
-        {
-            this.ItemNo = ItemNo;
-            this.ItemName = ItemName;
-        }
     }
 
 
