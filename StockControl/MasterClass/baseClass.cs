@@ -161,12 +161,16 @@ namespace StockControl
                 case DayOfWeek.Wednesday: return 2;
                 case DayOfWeek.Thursday: return 3;
                 case DayOfWeek.Friday: return 4;
-                default: return 5; //Saturday
+                case DayOfWeek.Saturday: return 5;
+                default: return -1; //not have day
             }
         }
         public static TimeSpan setTimeSpan(string TimeText)
         {
             TimeSpan t = new TimeSpan();
+            //00:00
+            TimeText = TimeText.Substring(0, 5);
+            t = new TimeSpan(TimeText.Substring(0, 2).ToInt(), TimeText.Substring(3).ToInt(), 0);
             return t;
         }
         public static ReorderType getReorderType(string ReorderTypeSt)
@@ -218,8 +222,8 @@ namespace StockControl
                     var m = db.mh_CapacityLoads.Where(x => x.Date == dd.Date
                             && x.WorkCenterID == dd.WorkCenterID && x.Active).ToList();
                     decimal loadCapa = 0.00m;
-                    if (m.Count > 0)
-                        loadCapa = m.Sum(x => x.Capacity);
+                    //if (m.Count > 0)
+                    loadCapa = m.Sum(x => x.Capacity);
                     var wl = workLoads.Where(x => x.Date == dd.Date
                         && x.idWorkCenter == dd.WorkCenterID).FirstOrDefault();
                     if (wl == null)
@@ -233,6 +237,38 @@ namespace StockControl
                     wl.CapacityAlocate += loadCapa;
                 }
                 return workLoads;
+            }
+        }
+        public static List<CalendarLoad> getCalendarLoad(DateTime beginDate)
+        {
+            var calLoad = new List<CalendarLoad>();
+            using (var db = new DataClasses1DataContext())
+            {
+                var d = db.mh_CalendarLoads.Where(x => x.Date >= beginDate).ToList();
+                foreach (var dd in d)
+                {
+                    calLoad.Add(new CalendarLoad
+                    {
+                        Date = dd.Date,
+                        StartingTime = dd.StartingTime,
+                        EndingTime = dd.EndingTime,
+                        idJob = dd.idJob,
+                        idRoute = dd.idRoute,
+                        idWorkcenter = dd.idWorkcenter,
+                    });
+                }
+                return calLoad;
+            }
+        }
+        public static void getStartingWork(ref DateTime d, int idWorkcenter)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
         public static DateTime setWorkTime(DateTime d, int idWorkCenter, decimal CapaLoad)

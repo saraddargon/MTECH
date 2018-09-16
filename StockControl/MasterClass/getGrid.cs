@@ -281,10 +281,6 @@ namespace StockControl
         }
 
     }
-    public class CstmPO_Plan
-    {
-
-    }
 
     public class WorkLoad
     {
@@ -299,6 +295,15 @@ namespace StockControl
                 return CapacityAvailable - CapacityAlocate;
             }
         }
+    }
+    public class CalendarLoad
+    {
+        public DateTime Date { get; set; }
+        public TimeSpan StartingTime { get; set; }
+        public TimeSpan EndingTime { get; set; }
+        public int idJob { get; set; }
+        public int idWorkcenter { get; set; }
+        public int idRoute { get; set; }
     }
     public class PlanData
     {

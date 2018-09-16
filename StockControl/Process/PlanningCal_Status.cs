@@ -45,6 +45,7 @@ namespace StockControl
         public List<grid_Planning> gridPlans = new List<grid_Planning>();
         private List<ItemData> itemDatas = new List<ItemData>();
         private List<WorkLoad> workLoads = new List<WorkLoad>();
+        private List<CalendarLoad> calLoad = new List<CalendarLoad>();
         private DateTime? PDDate = null;
         int mainNo = 0;
         void calE()
@@ -90,6 +91,10 @@ namespace StockControl
                     changeLabel("Prepare Working Day(Capacity Loaded).\n");
                     ////1.1 Get work load for prepare Calculation
                     workLoads = baseClass.getWorkLoad(dFrom);
+
+                    changeLabel("Prepare Calendar Load.\n");
+                    ////1.2 Get Calandar Load for prepare Calculation
+                    calLoad = baseClass.getCalendarLoad(dFrom);
 
                     //2.Loop order by Due date (Dt) then Order date (Hd) then Order id (Hd)
                     cstmPO_List = cstmPO_List.OrderBy(x => x.PODt.ReqDate)
@@ -219,15 +224,22 @@ namespace StockControl
                             tempStarting = dFrom;
                         //find time in Routing...
                         var CapaUse = 0.00m;
-                        var rt = db.mh_RoutingDTs.Where(x => x.RoutingId == tdata.Routeid).ToList();
+                        var rt = db.mh_RoutingDTs.Where(x => x.RoutingId == tdata.Routeid)
+                            .Join(db.mh_WorkCenters.Where(x => x.Active)
+                            , hd => hd.idWorkCenter
+                            , workcenter => workcenter.id
+                            , (hd, workcenter)
+                            => new { hd, hd.idWorkCenter, hd.id, hd.SetupTime, hd.RunTime, hd.WaitTime, workcenter })
+                            .ToList();
                         foreach (var r in rt)
                         {
                             int idWorkCenter = r.idWorkCenter;
                             var totalCapa_All = 0.00m;
                             var SetupTime = r.SetupTime;
                             var RunTime = r.RunTime;
+                            var RunTimeCapa = Math.Round(((RunTime * gPlan.Qty) / r.workcenter.Capacity), 2);
                             var WaitingTime = r.WaitTime;
-                            totalCapa_All = SetupTime + (RunTime * gPlan.Qty) + r.WaitTime;
+                            totalCapa_All = SetupTime + RunTimeCapa + r.WaitTime;
                             CapaUse += totalCapa_All;
 
                             var t_StartingDate = (DateTime?)null;
@@ -247,8 +259,26 @@ namespace StockControl
                                 if (t_StartingDate == null)
                                 {
                                     t_StartingDate = tempStarting;
-                                    if (wl.CapacityAlocate > 0)
-                                    { }
+                                    //set Starting Time
+                                    int dow = baseClass.getDayOfWeek(t_StartingDate.Value.DayOfWeek);
+                                    if (dow < 0)
+                                    {
+                                        string mssg = "Working day not available in Work center calendar.\n";
+                                        baseClass.Warning(mssg);
+                                        throw new Exception(mssg);
+                                    }
+                                    //
+                                    var wd = db.mh_WorkCenters.Where(x => x.id == wl.idWorkCenter)
+                                        .Join(db.mh_WorkingDays.Where(x => x.Day == dow && x.Active)
+                                        , hd => hd.Calendar
+                                        , dt => dt.id
+                                        , (hd, dt) => new { hd, dt }).FirstOrDefault();
+                                    var sTime = baseClass.setTimeSpan(wd.dt.StartingTime); //Starting Time of Working Day
+                                    var cal = calLoad.Where(x => x.Date == t_StartingDate).ToList();
+                                    var aps = db.mh_CapacityAbsences.Where(x => x.Date == t_StartingDate && x.Active).ToList();
+                                    var hol = db.mh_Holidays.Where(x => x.StartingDate == t_StartingDate 
+                                            && x.idCalendar == wd.hd.Calendar
+                                            && x.Active).ToList();
                                 }
 
 
@@ -260,27 +290,6 @@ namespace StockControl
 
                         }
 
-                        ////find Capacity Available on date
-                        //do
-                        //{
-                        //    var wl = workLoads.Where(x => x.Date >= tempStarting && x.CapacityAfter > 0)
-                        //        .OrderBy(x => x.Date).FirstOrDefault();
-                        //    if(wl == null)
-                        //    {
-                        //        string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
-                        //        baseClass.Warning(mssg);
-                        //        throw new Exception(mssg);
-                        //    }
-
-                        //    if (t_StartingDate == null)
-                        //        t_StartingDate = null;
-
-
-                        //    //next Date
-                        //    if (CapaUse > 0)
-                        //        tempStarting = tempStarting.AddDays(1);
-                        //}
-                        //while (CapaUse > 0);
                     }
                     else
                     {

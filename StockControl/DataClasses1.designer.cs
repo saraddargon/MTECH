@@ -330,6 +330,9 @@ namespace StockControl
     partial void Insertmh_InvoiceHD(mh_InvoiceHD instance);
     partial void Updatemh_InvoiceHD(mh_InvoiceHD instance);
     partial void Deletemh_InvoiceHD(mh_InvoiceHD instance);
+    partial void Insertmh_CalendarLoad(mh_CalendarLoad instance);
+    partial void Updatemh_CalendarLoad(mh_CalendarLoad instance);
+    partial void Deletemh_CalendarLoad(mh_CalendarLoad instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -1191,6 +1194,14 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<mh_InvoiceHD>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_CalendarLoad> mh_CalendarLoads
+		{
+			get
+			{
+				return this.GetTable<mh_CalendarLoad>();
 			}
 		}
 		
@@ -41126,6 +41137,284 @@ namespace StockControl
 					this._Type = value;
 					this.SendPropertyChanged("Type");
 					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CalendarLoad")]
+	public partial class mh_CalendarLoad : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _idJob;
+		
+		private int _idRoute;
+		
+		private int _idCal;
+		
+		private int _idWorkcenter;
+		
+		private int _idHol;
+		
+		private int _idAbs;
+		
+		private System.DateTime _Date;
+		
+		private System.TimeSpan _StartingTime;
+		
+		private System.TimeSpan _EndingTime;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnidJobChanging(int value);
+    partial void OnidJobChanged();
+    partial void OnidRouteChanging(int value);
+    partial void OnidRouteChanged();
+    partial void OnidCalChanging(int value);
+    partial void OnidCalChanged();
+    partial void OnidWorkcenterChanging(int value);
+    partial void OnidWorkcenterChanged();
+    partial void OnidHolChanging(int value);
+    partial void OnidHolChanged();
+    partial void OnidAbsChanging(int value);
+    partial void OnidAbsChanged();
+    partial void OnDateChanging(System.DateTime value);
+    partial void OnDateChanged();
+    partial void OnStartingTimeChanging(System.TimeSpan value);
+    partial void OnStartingTimeChanged();
+    partial void OnEndingTimeChanging(System.TimeSpan value);
+    partial void OnEndingTimeChanged();
+    #endregion
+		
+		public mh_CalendarLoad()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idJob", DbType="Int NOT NULL")]
+		public int idJob
+		{
+			get
+			{
+				return this._idJob;
+			}
+			set
+			{
+				if ((this._idJob != value))
+				{
+					this.OnidJobChanging(value);
+					this.SendPropertyChanging();
+					this._idJob = value;
+					this.SendPropertyChanged("idJob");
+					this.OnidJobChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idRoute", DbType="Int NOT NULL")]
+		public int idRoute
+		{
+			get
+			{
+				return this._idRoute;
+			}
+			set
+			{
+				if ((this._idRoute != value))
+				{
+					this.OnidRouteChanging(value);
+					this.SendPropertyChanging();
+					this._idRoute = value;
+					this.SendPropertyChanged("idRoute");
+					this.OnidRouteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCal", DbType="Int NOT NULL")]
+		public int idCal
+		{
+			get
+			{
+				return this._idCal;
+			}
+			set
+			{
+				if ((this._idCal != value))
+				{
+					this.OnidCalChanging(value);
+					this.SendPropertyChanging();
+					this._idCal = value;
+					this.SendPropertyChanged("idCal");
+					this.OnidCalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idWorkcenter", DbType="Int NOT NULL")]
+		public int idWorkcenter
+		{
+			get
+			{
+				return this._idWorkcenter;
+			}
+			set
+			{
+				if ((this._idWorkcenter != value))
+				{
+					this.OnidWorkcenterChanging(value);
+					this.SendPropertyChanging();
+					this._idWorkcenter = value;
+					this.SendPropertyChanged("idWorkcenter");
+					this.OnidWorkcenterChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idHol", DbType="Int NOT NULL")]
+		public int idHol
+		{
+			get
+			{
+				return this._idHol;
+			}
+			set
+			{
+				if ((this._idHol != value))
+				{
+					this.OnidHolChanging(value);
+					this.SendPropertyChanging();
+					this._idHol = value;
+					this.SendPropertyChanged("idHol");
+					this.OnidHolChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idAbs", DbType="Int NOT NULL")]
+		public int idAbs
+		{
+			get
+			{
+				return this._idAbs;
+			}
+			set
+			{
+				if ((this._idAbs != value))
+				{
+					this.OnidAbsChanging(value);
+					this.SendPropertyChanging();
+					this._idAbs = value;
+					this.SendPropertyChanged("idAbs");
+					this.OnidAbsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartingTime", DbType="Time NOT NULL")]
+		public System.TimeSpan StartingTime
+		{
+			get
+			{
+				return this._StartingTime;
+			}
+			set
+			{
+				if ((this._StartingTime != value))
+				{
+					this.OnStartingTimeChanging(value);
+					this.SendPropertyChanging();
+					this._StartingTime = value;
+					this.SendPropertyChanged("StartingTime");
+					this.OnStartingTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndingTime", DbType="Time NOT NULL")]
+		public System.TimeSpan EndingTime
+		{
+			get
+			{
+				return this._EndingTime;
+			}
+			set
+			{
+				if ((this._EndingTime != value))
+				{
+					this.OnEndingTimeChanging(value);
+					this.SendPropertyChanging();
+					this._EndingTime = value;
+					this.SendPropertyChanged("EndingTime");
+					this.OnEndingTimeChanged();
 				}
 			}
 		}
