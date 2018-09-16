@@ -310,6 +310,7 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     db.mh_Planning_TEMPs.DeleteAllOnSubmit(db.mh_Planning_TEMPs);
+                    
                     db.SubmitChanges();
 
                     dgvData.DataSource = null;

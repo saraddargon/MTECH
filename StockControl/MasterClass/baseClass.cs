@@ -215,12 +215,13 @@ namespace StockControl
             }
         }
 
-        public static List<WorkLoad> getWorkLoad(DateTime beginDate)
+        public static List<WorkLoad> getWorkLoad(DateTime beginDate, DateTime? dTo)
         {
             var workLoads = new List<WorkLoad>();
             using (var db = new DataClasses1DataContext())
             {
-                var d = db.mh_CapacityAvailables.Where(x => x.Date >= beginDate).ToList();
+                var d = db.mh_CapacityAvailables.Where(x => x.Date >= beginDate
+                    && (dTo == null || x.Date <= dTo)).ToList();
                 foreach (var dd in d)
                 {
                     var m = db.mh_CapacityLoads.Where(x => x.Date == dd.Date
