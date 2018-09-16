@@ -149,6 +149,8 @@ namespace StockControl
                         CallTotal();
 
                         btnView_Click(null, null);
+
+                        lblStatus.Text = t.Status.ToSt();
                     }
                     else if (warningMssg)
                         baseClass.Warning("Sale Order not found.!!");
@@ -388,41 +390,40 @@ namespace StockControl
                 string cstmNo = txtCSTMNo.Text.Trim();
                 if (poNo != "" && cstmNo != "")
                 {
-                    //if (dgvData.Rows.Where(x => x.Cells["PlanStatus"].Value.ToSt() != "Waiting").Count() > 0)
-                    //{
-                    //    baseClass.Warning("Cannot Delete because Already Planned.\n");
-                    //    return;
-                    //}
-
+                   
                     if (baseClass.IsDel($"Do you want to Delete Sale Order: {poNo} ?"))
                     {
+                        //Status
+                        //Waiting
+                        //Waiting Approve
+                        //Approved
+                        //Process-- > Shipment Partial
+                        //Complete --> Shipment Full
+
                         using (var db = new DataClasses1DataContext())
                         {
                             var p = db.mh_SaleOrders.Where(x => x.SONo == poNo && x.Active).ToList();
-                            if (p.Where(x => x.Active ==true).Count() >0)
+                            if (p.Where(x => x.Active ==true && (x.Status.ToSt()=="Waiting" || x.Status.ToSt() == "Waiting Approve")).Count() >0)
                             {
                                 foreach (var pp in p)
                                 {
                                     pp.Active = false;
+                                    pp.Status = "Cancel";
                                     pp.UpdateBy = Classlib.User;
                                     pp.UpdateDate = Convert.ToDateTime( DateTime.Now,new CultureInfo("en-US"));
                                 }
-
-                              
-
+                                
                                 var d = db.mh_SaleOrderDTs.Where(x => x.SONo == poNo && x.Active).ToList();
-                                if (d.Where(x => x.Active == true).Count() > 0)
+                                if (d.Where(x => x.Active == true && x.OutShip==x.Qty ).Count() > 0)
                                 {
                                     foreach (var pp in d)
                                         pp.Active = false;
                                 }
 
                                 db.SubmitChanges();
-
-
+                                
                                 updateOutSO();
                               
-
                                 baseClass.Info("Delete Sale Order complete.");
                                 ClearData();
                                 btnNew_Click(null, null);
@@ -568,6 +569,9 @@ namespace StockControl
                 gg.VatAmnt = dbClss.TDe(txtVatAmnt);
                 gg.TotalPriceIncVat = dbClss.TDe(txtGrandTotal.Text);
                 gg.Active = true;
+                gg.Status = "Waiting";
+                gg.SendApproveBy = "";
+                gg.ApproveBy = "";
 
 
                 db.mh_SaleOrders.InsertOnSubmit(gg);
@@ -881,28 +885,29 @@ namespace StockControl
                         if (id <= 0)
                             dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
 
-                        else
-                        {
-                            row = dgvData.CurrentCell.RowInfo.Index;
-                            //btnDelete_Click(null, null);
-                            using (var db = new DataClasses1DataContext())
-                            {
-                                var m = db.mh_SaleOrders.Where(x => x.id == id).FirstOrDefault();
-                                if (m != null)
-                                {
-                                    m.Active = false;
-                                    m.UpdateDate = DateTime.Now;
-                                    m.UpdateBy = ClassLib.Classlib.User;
-                                    db.SubmitChanges();
+                        //else
+                        //{
+                        //    row = dgvData.CurrentCell.RowInfo.Index;
+                        //    //btnDelete_Click(null, null);
+                        //    using (var db = new DataClasses1DataContext())
+                        //    {
+                        //        var m = db.mh_SaleOrders.Where(x => x.id == id && x.Status =="Waiting" && x.Status =="Waiting Approve" ).FirstOrDefault();
+                        //        if (m != null)
+                        //        {
+                        //            m.Active = false;
+                        //            m.Status = "Cancel";
+                        //            m.UpdateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                        //            m.UpdateBy = ClassLib.Classlib.User;
+                        //            db.SubmitChanges();
 
-                                    updateOutSO();
-                                    dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
-                                }
-                            }
-                        }
-                        CallTotal();
-                        //getTotal();
-                        SetRowNo1(dgvData);
+                        //            updateOutSO();
+                        //            dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
+                        //        }
+                        //    }
+                        //}
+                        //CallTotal();
+                        ////getTotal();
+                        //SetRowNo1(dgvData);
 
                     }
                     else
@@ -1105,7 +1110,7 @@ namespace StockControl
                 selP.ShowDialog();
                 if (dgvRow_List.Count > 0)
                 {
-                    string CodeNo = "";
+                    //string CodeNo = "";
                     this.Cursor = Cursors.WaitCursor;
                     int id = 0;
                     foreach (GridViewRowInfo ee in dgvRow_List)
@@ -1114,7 +1119,6 @@ namespace StockControl
 
                         using (var db = new DataClasses1DataContext())
                         {
-
                             var c = db.mh_CustomerPODTs.Where(x => x.id == id).ToList();
                             if (c.Count > 0)
                             {
@@ -1126,8 +1130,7 @@ namespace StockControl
                                     dtSODate.Value = DateTime.Now;
                                     cbbCSTM_SelectedIndexChanged(null, null);
                                     txtRemark.Text = "";// c.RemarkHD;
-
-
+                                    
                                     if (c.Count > 0)
                                     {
                                         //detail
@@ -1147,8 +1150,8 @@ namespace StockControl
                                             , dbClss.TDe(c.FirstOrDefault().PCSUnit)
                                             , dbClss.TDe(c.FirstOrDefault().UnitPrice)
                                             , dbClss.TDe(c.FirstOrDefault().Amount)
-                                            , false,
-                                            dbClss.TDe(c.FirstOrDefault().OutSO)
+                                            , false
+                                            , Qty//dbClss.TDe(c.FirstOrDefault().OutSO)
                                             , dbClss.TDe(c.FirstOrDefault().OutPlan)
                                             , 0
                                             , "Waiting", "Waiting", cstm.VatGroup
@@ -1228,6 +1231,38 @@ namespace StockControl
         {
             if (e.KeyCode == Keys.Enter)
                 CallTotal();
+        }
+
+        private void btnSendApprove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    if (lblStatus.Text == "Waiting")
+                    {
+                        if (baseClass.IsSendApprove())
+                        {
+                            var p = db.mh_SaleOrders.Where(x => x.SONo == txtSONo.Text && x.Active).ToList();
+                            if (p.Where(x => x.Active == true && (x.Status.ToSt() == "Waiting")).Count() > 0)
+                            {
+                                foreach (var pp in p)
+                                {
+                                    pp.Status = "Waiting Approve";
+                                    pp.UpdateBy = Classlib.User;
+                                    pp.UpdateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                }
+
+                                db.SubmitChanges();
+
+                                baseClass.Info("Send Approve complete.");
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 

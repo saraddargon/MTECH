@@ -659,6 +659,7 @@
             this.btnAdd_Item.TabIndex = 14;
             this.btnAdd_Item.Text = "   เพิ่ม";
             this.btnAdd_Item.ThemeName = "Office2010Blue";
+            this.btnAdd_Item.Visible = false;
             this.btnAdd_Item.Click += new System.EventHandler(this.btnAdd_Item_Click);
             // 
             // pictureBox1
@@ -669,6 +670,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(19, 18);
             this.pictureBox1.TabIndex = 12;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
             // 
             // radGroupBox1
             // 
@@ -715,6 +717,7 @@
             this.radLabel1.Size = new System.Drawing.Size(171, 30);
             this.radLabel1.TabIndex = 8;
             this.radLabel1.Text = "* การปรับปรุงสต็อก Taking จะนำ \r\nสต็อกออกทั้งหมดแล้วเอาเข้าใหม่";
+            this.radLabel1.Visible = false;
             this.radLabel1.Click += new System.EventHandler(this.radLabel5_Click);
             // 
             // radLabel2
@@ -736,6 +739,7 @@
             this.radLabel3.Size = new System.Drawing.Size(41, 17);
             this.radLabel3.TabIndex = 8;
             this.radLabel3.Text = "รหัสทูล";
+            this.radLabel3.Visible = false;
             this.radLabel3.Click += new System.EventHandler(this.radLabel5_Click);
             // 
             // radLabel7
@@ -805,6 +809,7 @@
             this.txtCodeNo.Name = "txtCodeNo";
             this.txtCodeNo.Size = new System.Drawing.Size(119, 19);
             this.txtCodeNo.TabIndex = 7;
+            this.txtCodeNo.Visible = false;
             this.txtCodeNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodeNo_KeyPress);
             // 
             // radRibbonBarButtonGroup2
