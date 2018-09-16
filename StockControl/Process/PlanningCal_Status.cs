@@ -87,36 +87,39 @@ namespace StockControl
                         });
                     }
 
-                    //changeLabel("Prepare Working Day.\n");
+                    changeLabel("Prepare Working Day(Capacity Loaded).\n");
                     ////1.1 Get work load for prepare Calculation
-                    //workLoads = baseClass.getWorkLoad(dFrom);
+                    workLoads = baseClass.getWorkLoad(dFrom);
 
                     //2.Loop order by Due date (Dt) then Order date (Hd) then Order id (Hd)
                     cstmPO_List = cstmPO_List.OrderBy(x => x.PODt.ReqDate)
                         .ThenBy(x => x.POHd.OrderDate).ThenBy(x => x.POHd.id).ToList();
                     foreach (var item in cstmPO_List)
                     {
-                        //calPart(new calPartData
+                        var m = PDDate;
+                        changeLabel($"Calculating... Doc no.{item.POHd.CustomerPONo} : [{item.PODt.ItemNo}] {item.PODt.ItemName}");
+                        var gPlan = calPart(new calPartData
+                        {
+                            DocId = item.PODt.id,
+                            DocNo = item.POHd.CustomerNo,
+                            ItemNo = item.PODt.ItemNo,
+                            repType = baseClass.getRepType(item.PODt.ReplenishmentType),
+                            ReqDate = item.PODt.ReqDate,
+                            ReqQty = Math.Round(item.PODt.OutPlan * item.PODt.PCSUnit, 2),
+                            mainNo = mainNo
+                        });
+                        if (gPlan == null)
+                            continue;
+                        //var gPlan = calPartDemo(new calPartData
                         //{
                         //    DocId = item.PODt.id,
-                        //    DocNo = item.POHd.CustomerNo,
+                        //    DocNo = item.POHd.CustomerPONo,
                         //    ItemNo = item.PODt.ItemNo,
                         //    repType = baseClass.getRepType(item.PODt.ReplenishmentType),
                         //    ReqDate = item.PODt.ReqDate,
                         //    ReqQty = item.PODt.OutPlan,
+                        //    mainNo = mainNo
                         //});
-                        var m = PDDate;
-                        changeLabel($"Calculating... Doc no.{item.POHd.CustomerPONo} : [{item.PODt.ItemNo}] {item.PODt.ItemName}");
-                        var gPlan = calPartDemo(new calPartData
-                        {
-                            DocId = item.PODt.id,
-                            DocNo = item.POHd.CustomerPONo,
-                            ItemNo = item.PODt.ItemNo,
-                            repType = baseClass.getRepType(item.PODt.ReplenishmentType),
-                            ReqDate = item.PODt.ReqDate,
-                            ReqQty = item.PODt.OutPlan,
-                            mainNo = mainNo
-                        });
                         gPlan.root = true;
                         mainNo++;
                     }
@@ -138,7 +141,7 @@ namespace StockControl
                 }));
             }
         }
-        void calPart(calPartData data)
+        grid_Planning calPart(calPartData data)
         {
             try
             {
@@ -151,12 +154,13 @@ namespace StockControl
                         tdata = new ItemData(data.ItemNo);
                         itemDatas.Add(tdata);
                     }
-                    //3.Find Stock is enought ?
+                    //3.Find Stock is enought ? ---> only stock q'ty not for JOB/Customer P/O
                     if (data.ReqQty <= tdata.QtyOnHand) //3.1 Stock is enought
                     {
                         tdata.QtyOnHand -= data.ReqQty;
-                        return;
+                        return null;
                     }
+
                     //3.2 Stock not enought
                     var t_QtyOnHand = tdata.QtyOnHand;
                     data.ReqQty -= t_QtyOnHand;
@@ -176,6 +180,12 @@ namespace StockControl
                     gPlan.InvGroup = tdata.InvGroup;
                     gPlan.VendorNo = tdata.VendorNo;
                     gPlan.VendorName = tdata.VendorName;
+                    gPlan.UOM = tdata.UOM;
+                    gPlan.PCSUnit = tdata.PCSUnit;
+                    gPlan.LocationItem = tdata.LocationItem;
+                    gPlan.refNo = data.mainNo;
+                    mainNo++;
+                    gPlan.mainNo = mainNo;
 
                     //set Production or Purchase
                     if (tdata.RepType_enum == ReplenishmentType.Production)
@@ -193,7 +203,8 @@ namespace StockControl
                                 ItemNo = b.Component,
                                 repType = baseClass.getRepType(tool.ReplenishmentType),
                                 ReqDate = data.ReqDate,
-                                ReqQty = b.Qty.ToDecimal() * b.PCSUnit.ToDecimal()
+                                ReqQty = b.Qty.ToDecimal() * b.PCSUnit.ToDecimal(),
+                                mainNo = gPlan.mainNo,
                             };
                             calPart(cd);
                         }
@@ -284,11 +295,13 @@ namespace StockControl
                     gPlan.DueDate = gPlan.EndingDate.Value.AddDays(1);
 
                     gridPlans.Add(gPlan);
+                    return gPlan;
                 }
             }
             catch (Exception ex)
             {
                 baseClass.Warning("Cal Part : " + ex.Message);
+                return null;
             }
         }
         void changeLabel(string lb)
@@ -371,7 +384,7 @@ namespace StockControl
                         PDDate = tempStarting;
 
                     //find time in Routing...
-                    if(PDDate == null)
+                    if (PDDate == null)
                     {
                         gPlan.StartingDate = baseClass.setStandardTime(tempStarting.Date, true);
                     }
@@ -420,7 +433,7 @@ namespace StockControl
         public string DocNo { get; set; }
         public int DocId { get; set; }
         public ReplenishmentType repType { get; set; }
-        
+
         public int mainNo { get; set; } = 0;
     }
 }

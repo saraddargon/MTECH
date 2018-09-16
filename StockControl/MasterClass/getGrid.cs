@@ -230,16 +230,7 @@ namespace StockControl
         public decimal PCSUnit { get; set; }
 
         public string LocationItem { get; set; }
-
-        public decimal StockQty
-        {
-            get
-            {
-                return baseClass.StockQty(ItemNo, "Warehouse");
-            }
-        }
-        public DateTime ReqDate { get; set; }
-
+        
         public string GroupType { get; set; }
         public string Type { get; set; }
         public string InvGroup { get; set; } //Inventory Group
@@ -283,14 +274,18 @@ namespace StockControl
                 this.InvGroup = t.InventoryGroup;
                 this.VendorNo = t.VendorNo;
                 this.VendorName = t.VendorName;
-
-
+                
                 this.Routeid = t.Routing;
             }
 
         }
 
     }
+    public class CstmPO_Plan
+    {
+
+    }
+
     public class WorkLoad
     {
         public DateTime Date { get; set; }
