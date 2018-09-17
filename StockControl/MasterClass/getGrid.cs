@@ -86,6 +86,20 @@ namespace StockControl
         public mh_CustomerPO POHd { get; set; }
         public mh_CustomerPODT PODt { get; set; }
     }
+    public class listforPlanning
+    {
+        public int DocId { get; set; }
+        public string DocNo { get; set; }
+        public DateTime DocDate { get; set; }
+        public string ItemNo { get; set; }
+        public string ItemName { get; set; }
+        public ReplenishmentType RepType { get; set; }
+        public DateTime ReqDate { get; set; }
+        public decimal ReqQty { get; set; }
+        public decimal PCSUnit { get; set; }
+        public string UOM { get; set; }
+        public bool alreadyJob { get; set; } = false;
+    }
 
     public class grid_CustomerPO
     {
@@ -211,8 +225,7 @@ namespace StockControl
         public string Item { get; set; }
         public string ItemName { get; set; }
     }
-
-
+    
 
     public class ItemData
     {
@@ -329,16 +342,6 @@ namespace StockControl
             }
         }
     }
-    public class WorkLoad_Item
-    {
-        public int id { get; set; }
-        public int idWorkCenterID { get; set; }
-        public string DocNo { get; set; }
-        public int DocId { get; set; }
-        public DateTime Date { get; set; }
-        public decimal Capacity { get; set; }
-        public decimal CapacityX { get; set; }
-    }
     public class CalendarLoad
     {
         public int id { get; set; }
@@ -354,6 +357,20 @@ namespace StockControl
     }
 
 
+    public class calPartData
+    {
+        public string ItemNo { get; set; }
+        public decimal ReqQty { get; set; }
+        public string UOM { get; set; }
+        public decimal PCSUnit { get; set; }
+        public DateTime ReqDate { get; set; }
+        public string DocNo { get; set; }
+        public int DocId { get; set; }
+        public ReplenishmentType repType { get; set; }
+
+        public int mainNo { get; set; } = 0;
+        public bool alreadyJob { get; set; } = false;
+    }
 
     public enum ReplenishmentType
     {

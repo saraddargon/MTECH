@@ -226,6 +226,7 @@
             gridViewDateTimeColumn8.Width = 135;
             gridViewDecimalColumn3.EnableExpressionEditor = false;
             gridViewDecimalColumn3.FieldName = "Qty";
+            gridViewDecimalColumn3.FormatString = "{0:N2}";
             gridViewDecimalColumn3.HeaderText = "Order Q\'ty";
             gridViewDecimalColumn3.Name = "Qty";
             gridViewDecimalColumn3.Width = 73;

@@ -47,7 +47,6 @@ namespace StockControl
         public List<WorkLoad> workLoads = new List<WorkLoad>();
         public List<mh_CapacityLoad> capacityLoad = new List<mh_CapacityLoad>(); //เชื่อมกับ mh_CapacityLoad_TEMP
         public List<mh_CalendarLoad> calLoad = new List<mh_CalendarLoad>(); //เชื่อมกับ mh_CalendarLoad_TEMP
-        private DateTime? PDDate = null;
         int mainNo = 0;
         void calE()
         {
@@ -57,11 +56,11 @@ namespace StockControl
                 itemDatas.Clear();
                 workLoads.Clear();
                 capacityLoad.Clear();
-                PDDate = null;
                 mainNo = 0;
 
                 changeLabel("Finding Docno for plan...");
-                var cstmPO_List = new List<CustomerPOCal>();
+                //var cstmPO_List = new List<CustomerPOCal>();
+                var listForPlan = new List<listforPlanning>();
                 using (var db = new DataClasses1DataContext())
                 {
                     //1.Get Customer P/O (OutPlan) and SaleOrder (OutPlan) [Only not customer P/O]
@@ -83,12 +82,49 @@ namespace StockControl
                                 && x.Active).FirstOrDefault();
                         if (pohd == null) continue;
 
-                        cstmPO_List.Add(new CustomerPOCal
+                        //cstmPO_List.Add(new CustomerPOCal
+                        //{
+                        //    POHd = pohd,
+                        //    PODt = dt
+                        //});
+                        listForPlan.Add(new listforPlanning
                         {
-                            POHd = pohd,
-                            PODt = dt
+                            DocId = dt.id,
+                            DocNo = pohd.CustomerPONo,
+                            DocDate = pohd.OrderDate,
+                            ItemNo = dt.ItemNo,
+                            RepType = baseClass.getRepType(dt.ReplenishmentType),
+                            ReqDate = dt.ReqDate,
+                            ReqQty = dt.Qty,
+                            PCSUnit = dt.PCSUnit,
+                            UOM = dt.UOM,
                         });
                     }
+                    //1.0.1 get Planning Not P/R
+                    var jobs = db.mh_ProductionOrders.Where(x => x.Active && x.OutQty > 0).ToList();
+                    //.Join(db.mh_ProductionOrderRMs.Where(x => x.Active)
+                    //, hd => hd.JobNo
+                    //, dt => dt.JobNo
+                    //, (hd, dt) => new { hd, dt }).ToList();
+                    foreach (var item in jobs)
+                    {
+                        listForPlan.Add(new listforPlanning
+                        {
+                            DocId = item.RefDocId,
+                            DocNo = item.RefDocNo,
+                            DocDate = item.JobDate,
+                            ItemName = item.FGName,
+                            ItemNo = item.FGNo,
+                            PCSUnit = item.PCSUnit,
+                            RepType = ReplenishmentType.Production,
+                            ReqDate = item.ReqDate,
+                            ReqQty = item.OutQty,
+                            UOM = item.UOM,
+                            alreadyJob = true,
+                        });
+                    }
+
+
 
                     changeLabel("Prepare Working Day(Capacity Loaded).\n");
                     ////1.1 Get work load for prepare Calculation
@@ -102,23 +138,39 @@ namespace StockControl
                     calLoad = db.mh_CalendarLoads.Where(x => x.Date >= dFrom && x.Date <= dTo).ToList();
 
                     //2.Loop order by Due date (Dt) then Order date (Hd) then Order id (Hd)
-                    cstmPO_List = cstmPO_List.OrderBy(x => x.PODt.ReqDate)
-                        .ThenBy(x => x.POHd.OrderDate).ThenBy(x => x.POHd.id).ToList();
-                    foreach (var item in cstmPO_List)
+                    //cstmPO_List = cstmPO_List.OrderBy(x => x.PODt.ReqDate)
+                    //    .ThenBy(x => x.POHd.OrderDate).ThenBy(x => x.POHd.id).ToList();
+                    listForPlan = listForPlan.OrderBy(x => x.ReqDate).ThenBy(x => x.DocDate)
+                        .ThenBy(x => x.DocId).ToList();
+                    //foreach (var item in cstmPO_List)
+                    foreach (var item in listForPlan)
                     {
-                        var m = PDDate;
-                        changeLabel($"Calculating... Doc no.{item.POHd.CustomerPONo} : [{item.PODt.ItemNo}] {item.PODt.ItemName}");
+                        //changeLabel($"Calculating... Doc no.{item.POHd.CustomerPONo} : [{item.PODt.ItemNo}] {item.PODt.ItemName}");
+                        //var gPlan = calPart_new(new calPartData
+                        //{
+                        //    DocId = item.PODt.id,
+                        //    DocNo = item.POHd.CustomerPONo,
+                        //    ItemNo = item.PODt.ItemNo,
+                        //    repType = baseClass.getRepType(item.PODt.ReplenishmentType),
+                        //    ReqDate = item.PODt.ReqDate,
+                        //    ReqQty = item.PODt.OutPlan,
+                        //    mainNo = mainNo,
+                        //    PCSUnit = item.PODt.PCSUnit,
+                        //    UOM = item.PODt.UOM,
+                        //});
+                        changeLabel($"Calculating... Doc no.{item.DocNo} : [{item.ItemNo}] {item.ItemName}");
                         var gPlan = calPart_new(new calPartData
                         {
-                            DocId = item.PODt.id,
-                            DocNo = item.POHd.CustomerPONo,
-                            ItemNo = item.PODt.ItemNo,
-                            repType = baseClass.getRepType(item.PODt.ReplenishmentType),
-                            ReqDate = item.PODt.ReqDate,
-                            ReqQty = item.PODt.OutPlan,
+                            DocId = item.DocId,
+                            DocNo = item.DocNo,
+                            ItemNo = item.ItemNo,
+                            repType = item.RepType,
+                            ReqDate = item.ReqDate,
+                            ReqQty = item.ReqQty,
                             mainNo = mainNo,
-                            PCSUnit = item.PODt.PCSUnit,
-                            UOM = item.PODt.UOM,
+                            PCSUnit = item.PCSUnit,
+                            UOM = item.UOM,
+                            alreadyJob = item.alreadyJob,
                         });
                         if (gPlan == null)
                             continue;
@@ -248,22 +300,25 @@ namespace StockControl
                         itemDatas.Add(tdata);
                     }
 
-                    //Find Backorder ref id Customer in mh_PuchaseOrderDT
+                    //Find Backorder ref id Customer in mh_PuchaseOrderDT (ถ้าเปิด PO แล้ว) หรือ จาก mh_PurchaseReqeustLine(ถ้ายังไม่เปิด P/O)
                     decimal sumBackOrder = 0.00m;
-                    var prAll = db.mh_PurchaseRequestLines.Where(x => x.SS == 1 && x.idCstmPODt == data.DocId)
+                    var prAll = db.mh_PurchaseRequestLines.Where(x => x.SS == 1 && x.CodeNo == data.ItemNo && x.idCstmPODt == data.DocId)
                         .Join(db.mh_PurchaseRequests.Where(x => x.Status != "Cancel")
                         , dt => dt.PRNo
                         , hd => hd.PRNo
                         , (dt, hd) => new { hd, dt }).ToList();
-                    foreach(var pr in prAll)
+                    foreach (var pr in prAll)
                     {
                         var poAll = db.mh_PurchaseOrderDetails.Where(x => x.SS == 1 && x.PRItem == pr.dt.id)
-                            .Join(db.mh_PurchaseOrders.Where(x=>x.Status != "Cancel")
+                            .Join(db.mh_PurchaseOrders.Where(x => x.Status != "Cancel")
                             , dt => dt.PONo
                             , hd => hd.PONo
                             , (dt, hd) => new { hd, dt })
                             .ToList();
-                        sumBackOrder += poAll.Sum(x => x.dt.BackOrder.ToDecimal());
+                        if (poAll.Count > 0)
+                            sumBackOrder += poAll.Sum(x => Math.Round(x.dt.BackOrder.ToDecimal() * x.dt.PCSUnit.ToDecimal(), 2));
+                        else
+                            sumBackOrder += Math.Round(pr.dt.OrderQty * pr.dt.PCSUOM, 2);
                     }
 
                     //3.Find Stock is enought ? ---> only stock q'ty not for JOB/Customer P/O
@@ -332,6 +387,8 @@ namespace StockControl
                             };
                             calPart_new(cd);
                         }
+
+                        if (data.alreadyJob) return null;
 
                         //BEgin Production
                         var rmList = gridPlans.Where(x => x.idRef == gPlan.idRef).ToList();
@@ -718,17 +775,4 @@ namespace StockControl
     //1 Job --> 1 Customer P/O or 1 Sale Order, 1 FG
     //RM รวมกันได้
 
-    public class calPartData
-    {
-        public string ItemNo { get; set; }
-        public decimal ReqQty { get; set; }
-        public string UOM { get; set; }
-        public decimal PCSUnit { get; set; }
-        public DateTime ReqDate { get; set; }
-        public string DocNo { get; set; }
-        public int DocId { get; set; }
-        public ReplenishmentType repType { get; set; }
-
-        public int mainNo { get; set; } = 0;
-    }
 }

@@ -516,38 +516,49 @@ namespace StockControl
                         //Dt
                         //**Component**
                         int mainNo = item.Cells["mainNo"].Value.ToInt(); //find all component of Item
-                        var rowDt = dgvData.Rows.Where(x => x.Cells["idRef"].Value.ToInt() == m.RefDocId
-                            && x.Cells["refNo"].Value.ToInt() == mainNo).ToList();
-                        foreach (var r in rowDt)
+                        var rowDt = db.tb_BomDTs.Where(x => x.PartNo == m.FGNo).ToList();
+                        foreach(var r in rowDt)
                         {
+                            var itemA = db.mh_Items.Where(x => x.InternalNo == r.Component).FirstOrDefault();
+                            if (itemA == null) continue;
                             var dt = new mh_ProductionOrderRM
                             {
                                 Active = true,
-                                GroupType = r.Cells["GroupType"].Value.ToSt(),
-                                InvGroup = r.Cells["InvGroup"].Value.ToSt(),
-                                ItemName = r.Cells["ItemName"].Value.ToSt(),
-                                ItemNo = r.Cells["ItemNo"].Value.ToSt(),
+                                GroupType = itemA.GroupType,
+                                InvGroup = itemA.InventoryGroup,
+                                ItemName = itemA.InternalName,
+                                ItemNo = itemA.InternalNo,
                                 JobNo = m.JobNo,
-                                PCSUnit = r.Cells["PCSUnit"].Value.ToDecimal(),
-                                Qty = r.Cells["Qty"].Value.ToDecimal(),
-                                RemQty = Math.Round(r.Cells["Qty"].Value.ToDecimal()),
-                                Type = r.Cells["Type"].Value.ToSt(),
-                                UOM = r.Cells["UOM"].Value.ToSt(),
+                                PCSUnit = r.PCSUnit.ToDecimal(),
+                                Qty = m.Qty *  r.Qty,
+                                RemQty = m.Qty * r.Qty,
+                                Type = itemA.Type,
+                                UOM = r.Unit,
                             };
                             db.mh_ProductionOrderRMs.InsertOnSubmit(dt);
                             db.SubmitChanges();
                         }
-                        ////save idJob to CapaTEMP, CalendarTEMP
-                        //db.mh_CapacityLoad_TEMPs.Where(x => x.DocId == mainNo).ToList().ForEach(x =>
+                        //var rowDt = dgvData.Rows.Where(x => x.Cells["idRef"].Value.ToInt() == m.RefDocId
+                        //    && x.Cells["refNo"].Value.ToInt() == mainNo).ToList();
+                        //foreach (var r in rowDt)
                         //{
-                        //    x.DocId = m.id;
-                        //    x.DocNo = m.JobNo;
-                        //});
-                        //db.mh_CalendarLoad_TEMPs.Where(x => x.idJob == mainNo).ToList().ForEach(x =>
-                        //{
-                        //    x.idJob = m.id;
-                        //});
-                        //db.SubmitChanges();
+                        //    var dt = new mh_ProductionOrderRM
+                        //    {
+                        //        Active = true,
+                        //        GroupType = r.Cells["GroupType"].Value.ToSt(),
+                        //        InvGroup = r.Cells["InvGroup"].Value.ToSt(),
+                        //        ItemName = r.Cells["ItemName"].Value.ToSt(),
+                        //        ItemNo = r.Cells["ItemNo"].Value.ToSt(),
+                        //        JobNo = m.JobNo,
+                        //        PCSUnit = r.Cells["PCSUnit"].Value.ToDecimal(),
+                        //        Qty = r.Cells["Qty"].Value.ToDecimal(),
+                        //        RemQty = Math.Round(r.Cells["Qty"].Value.ToDecimal()),
+                        //        Type = r.Cells["Type"].Value.ToSt(),
+                        //        UOM = r.Cells["UOM"].Value.ToSt(),
+                        //    };
+                        //    db.mh_ProductionOrderRMs.InsertOnSubmit(dt);
+                        //    db.SubmitChanges();
+                        //}
 
                         //save Capacity Load --mh_CapacityLoad_TEMP <---> mh_CapacityLoad
                         var capaList = db.mh_CapacityLoad_TEMPs.Where(x => x.DocId == mainNo && x.DocNo == null).ToList();
