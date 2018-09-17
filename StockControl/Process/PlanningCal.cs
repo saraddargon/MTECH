@@ -165,14 +165,13 @@ namespace StockControl
                 {
                     dgvData.DataSource = null;
                     dgvData.AutoGenerateColumns = false;
-                    dgvData.DataSource = ps.gridPlans.Where(x => ((ft.MRP && x.PlanningType == "Purchase")
-                                    || (ft.MPS && x.PlanningType == "Production"))
-                                    && (ft.locationItem == "" || x.LocationItem == ft.locationItem)
-                                    ).OrderBy(x => x.ReqDate).ToList();
+                    dgvData.DataSource = ps.gridPlans.OrderBy(x => x.ReqDate);
 
                     SavePlan(ps.gridPlans, ft.dateFrom, ft.dateTo);
                     SaveCapacity_TEMP(ps.capacityLoad);
                     SaveCalendar_TEMP(ps.calLoad);
+                    
+                    FilterE(ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
                 }
             }
         }
@@ -191,90 +190,7 @@ namespace StockControl
                 ft.ShowDialog();
                 if (ft.okFilter)
                 {
-                    DateTime dFrom = ft.dateFrom.Date;
-                    DateTime dTo = ft.dateTo.Date.AddDays(1).AddMinutes(-1);
-                    string ItemNo = ft.ItemNo;
-                    string LocationItem = ft.locationItem;
-                    List<int> idA = new List<int>();
-                    foreach (var item in dgvData.Rows)
-                    {
-                        //Date
-                        var ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value;
-                        if (ReqDate < dFrom || ReqDate > dTo)
-                        {
-                            item.IsVisible = false;
-                            continue;
-                        }
-                        else
-                            item.IsVisible = true;
-                        //Location
-                        var Lo = item.Cells["LocationItem"].Value.ToSt();
-                        if (LocationItem == "") { }
-                        else
-                        {
-                            if (LocationItem != Lo)
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-                            else
-                                item.IsVisible = true;
-                        }
-                        //MPS MRP
-                        if (ft.MPS && ft.MRP) { }
-                        else
-                        {
-                            string pType = item.Cells["PlanningType"].Value.ToSt();
-                            if (ft.MPS && pType == "Production")
-                                item.IsVisible = true;
-                            else if (ft.MPS && pType == "Purchase")
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-                            else if (!ft.MPS && pType == "Production")
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-                            else if (ft.MRP && pType == "Purchase")
-                                item.IsVisible = true;
-                            else if (ft.MRP && pType == "Production")
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-                            else if (!ft.MRP && pType == "Purchase")
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-
-                        }
-                        //Item
-                        var FGNo = item.Cells["ItemNo"].Value.ToSt();
-                        int idRef = item.Cells["idRef"].Value.ToInt();
-                        if (ItemNo == "") { }
-                        else
-                        {
-                            if (FGNo != ItemNo)
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-                            else if (!idA.Any(x => x == idRef))
-                            {
-                                idA.Add(idRef);
-                            }
-                        }
-                    }
-
-                    //find idRef
-                    foreach (var item in dgvData.Rows.Where(x => !x.IsVisible))
-                    {
-                        int idRef = item.Cells["idRef"].Value.ToInt();
-                        item.IsVisible = idA.Any(x => x == idRef);
-                    }
+                    FilterE(ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
                 }
             }
             catch (Exception ex)
@@ -284,6 +200,93 @@ namespace StockControl
             finally
             {
                 this.Cursor = Cursors.Default;
+            }
+        }
+        void FilterE(DateTime dateFrom, DateTime dateTo, bool MRP, bool MPS, string _itemNo, string _locationItem)
+        {
+            DateTime dFrom = dateFrom.Date;
+            DateTime dTo = dateTo.Date.AddDays(1).AddMinutes(-1);
+            string ItemNo = _itemNo;
+            string LocationItem = _locationItem;
+            List<int> idA = new List<int>();
+            foreach (var item in dgvData.Rows)
+            {
+                //Date
+                var ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value;
+                if (ReqDate < dFrom || ReqDate > dTo)
+                {
+                    item.IsVisible = false;
+                    continue;
+                }
+                else
+                    item.IsVisible = true;
+                //Location
+                var Lo = item.Cells["LocationItem"].Value.ToSt();
+                if (LocationItem == "") { }
+                else
+                {
+                    if (LocationItem != Lo)
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+                    else
+                        item.IsVisible = true;
+                }
+                //MPS MRP
+                if (MPS && MRP) { }
+                else
+                {
+                    string pType = item.Cells["PlanningType"].Value.ToSt();
+                    if (MPS && pType == "Production")
+                        item.IsVisible = true;
+                    else if (MPS && pType == "Purchase")
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+                    else if (!MPS && pType == "Production")
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+                    else if (MRP && pType == "Purchase")
+                        item.IsVisible = true;
+                    else if (MRP && pType == "Production")
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+                    else if (!MRP && pType == "Purchase")
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+
+                }
+                //Item
+                var FGNo = item.Cells["ItemNo"].Value.ToSt();
+                int idRef = item.Cells["idRef"].Value.ToInt();
+                if (ItemNo == "") { }
+                else
+                {
+                    if (FGNo != ItemNo)
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+                    else if (!idA.Any(x => x == idRef))
+                    {
+                        idA.Add(idRef);
+                    }
+                }
+            }
+
+            //find idRef
+            foreach (var item in dgvData.Rows.Where(x => !x.IsVisible))
+            {
+                int idRef = item.Cells["idRef"].Value.ToInt();
+                item.IsVisible = idA.Any(x => x == idRef);
             }
         }
 
@@ -511,6 +514,7 @@ namespace StockControl
                         }
 
                         //Dt
+                        //**Component**
                         int mainNo = item.Cells["mainNo"].Value.ToInt(); //find all component of Item
                         var rowDt = dgvData.Rows.Where(x => x.Cells["idRef"].Value.ToInt() == m.RefDocId
                             && x.Cells["refNo"].Value.ToInt() == mainNo).ToList();
@@ -533,6 +537,61 @@ namespace StockControl
                             db.mh_ProductionOrderRMs.InsertOnSubmit(dt);
                             db.SubmitChanges();
                         }
+                        ////save idJob to CapaTEMP, CalendarTEMP
+                        //db.mh_CapacityLoad_TEMPs.Where(x => x.DocId == mainNo).ToList().ForEach(x =>
+                        //{
+                        //    x.DocId = m.id;
+                        //    x.DocNo = m.JobNo;
+                        //});
+                        //db.mh_CalendarLoad_TEMPs.Where(x => x.idJob == mainNo).ToList().ForEach(x =>
+                        //{
+                        //    x.idJob = m.id;
+                        //});
+                        //db.SubmitChanges();
+
+                        //save Capacity Load --mh_CapacityLoad_TEMP <---> mh_CapacityLoad
+                        var capaList = db.mh_CapacityLoad_TEMPs.Where(x => x.DocId == mainNo && x.DocNo == null).ToList();
+                        foreach(var c in capaList)
+                        {
+                            if (c.DocNo.ToSt() != "") continue;
+
+                            var cc = new mh_CapacityLoad
+                            {
+                                Active=true,
+                                Capacity = c.Capacity,
+                                CapacityX = c.CapacityX,
+                                Date = c.Date,
+                                DocId = m.id,//idJob
+                                DocNo = m.JobNo,
+                                WorkCenterID = c.WorkCenterID,
+                            };
+                            db.mh_CapacityLoads.InsertOnSubmit(cc);
+                            c.DocId = m.id;
+                            c.DocNo = m.JobNo;
+                        }
+                        db.SubmitChanges();
+
+                        //save Calendar Load --mh_CalendarLoad_TEMP <---> mh_CalendarLoad
+                        var calList = db.mh_CalendarLoad_TEMPs.Where(x => x.idJob == mainNo && x.idAbs == -1).ToList();
+                        foreach (var c in calList)
+                        {
+                            var cc = new mh_CalendarLoad
+                            {
+                                Date = c.Date,
+                                EndingTime = c.EndingTime,
+                                idAbs = (c.idAbs >= 0) ? c.idAbs : 0,
+                                idCal = c.idCal,
+                                idHol = c.idHol,
+                                idJob = m.id, //idJob
+                                idRoute = c.idRoute,
+                                idWorkcenter = c.idWorkcenter,
+                                StartingTime = c.StartingTime,
+                            };
+                            db.mh_CalendarLoads.InsertOnSubmit(cc);
+                            c.idJob = m.id;
+                            c.idAbs = 0;
+                        }
+                        db.SubmitChanges();
                     }
                     DataLoad();
 
@@ -583,11 +642,13 @@ namespace StockControl
                         byte[] b = null;
                         int idRef = item.Cells["idRef"].Value.ToInt();
                         var poDt = db.mh_CustomerPODTs.Where(x => x.id == idRef).FirstOrDefault();
-                        int idPoHd = poDt.idCustomerPO;
+                        int idPoHd = 0;
+                        if(poDt != null)
+                            idPoHd = poDt.idCustomerPO;
                         string CstmPoNo = item.Cells["RefDocNo"].Value.ToSt();
 
                         var hd = new mh_PurchaseRequest();
-                        if(_dt.Rows.Cast<DataRow>().Where(x=>x["idCstmPO"].ToInt() == idPoHd).Count() > 0)
+                        if (_dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idPoHd).Count() > 0)
                         {
                             var row = _dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idPoHd).First();
                             string prNo = row["PRNo"].ToSt();
