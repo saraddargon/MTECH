@@ -100,31 +100,29 @@ namespace StockControl
                             UOM = dt.UOM,
                         });
                     }
-                    //1.0.1 get Planning Not P/R
-                    var jobs = db.mh_ProductionOrders.Where(x => x.Active && x.OutQty > 0).ToList();
-                    //.Join(db.mh_ProductionOrderRMs.Where(x => x.Active)
-                    //, hd => hd.JobNo
-                    //, dt => dt.JobNo
-                    //, (hd, dt) => new { hd, dt }).ToList();
-                    foreach (var item in jobs)
-                    {
-                        listForPlan.Add(new listforPlanning
-                        {
-                            DocId = item.RefDocId,
-                            DocNo = item.RefDocNo,
-                            DocDate = item.JobDate,
-                            ItemName = item.FGName,
-                            ItemNo = item.FGNo,
-                            PCSUnit = item.PCSUnit,
-                            RepType = ReplenishmentType.Production,
-                            ReqDate = item.ReqDate,
-                            ReqQty = item.OutQty,
-                            UOM = item.UOM,
-                            alreadyJob = true,
-                        });
-                    }
-
-
+                    ////1.0.1 get Planning Not P/R
+                    //var jobs = db.mh_ProductionOrders.Where(x => x.Active && x.OutQty > 0).ToList();
+                    ////.Join(db.mh_ProductionOrderRMs.Where(x => x.Active)
+                    ////, hd => hd.JobNo
+                    ////, dt => dt.JobNo
+                    ////, (hd, dt) => new { hd, dt }).ToList();
+                    //foreach (var item in jobs)
+                    //{
+                    //    listForPlan.Add(new listforPlanning
+                    //    {
+                    //        DocId = item.RefDocId,
+                    //        DocNo = item.RefDocNo,
+                    //        DocDate = item.JobDate,
+                    //        ItemName = item.FGName,
+                    //        ItemNo = item.FGNo,
+                    //        PCSUnit = item.PCSUnit,
+                    //        RepType = ReplenishmentType.Production,
+                    //        ReqDate = item.ReqDate,
+                    //        ReqQty = item.OutQty,
+                    //        UOM = item.UOM,
+                    //        alreadyJob = true,
+                    //    });
+                    //}
 
                     changeLabel("Prepare Working Day(Capacity Loaded).\n");
                     ////1.1 Get work load for prepare Calculation
@@ -318,7 +316,7 @@ namespace StockControl
 
                     //Find Backorder ref id Customer in mh_PuchaseOrderDT (ถ้าเปิด PO แล้ว) หรือ จาก mh_PurchaseReqeustLine(ถ้ายังไม่เปิด P/O)
                     decimal sumBackOrder = findQtyBackorder(tdata, data.DocId);
-                    
+
                     //3.Find Stock is enought ? ---> only stock q'ty not for JOB/Customer P/O
                     if (data.ReqQty <= tdata.QtyOnHand + sumBackOrder) //3.1 Stock is enought
                     {
@@ -371,7 +369,7 @@ namespace StockControl
                         if (boms.Count == 0)
                             RMready = false;
                         //เช็คว่าทุก RM มีของพอจริงไหม
-                        foreach(var b in boms)
+                        foreach (var b in boms)
                         {
                             //จะผลิตได้ก็ต่อเมื่อมี component พร้อมเท่านั้น
                             var t = itemDatas.Where(x => x.ItemNo == b.Component).FirstOrDefault();
@@ -396,7 +394,7 @@ namespace StockControl
                                     UOM = b.Unit,
                                     PCSUnit = b.PCSUnit.ToDecimal(),
                                 };
-                                calPart_new(cd);
+                                calPart(cd);
                                 RMready = false;
                             }
                         }
@@ -448,9 +446,18 @@ namespace StockControl
                                     && x.idWorkCenter == idWorkCenter).OrderBy(x => x.Date).FirstOrDefault();
                                 if (wl == null)
                                 {
-                                    string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
-                                    baseClass.Warning(mssg);
-                                    throw new Exception(mssg);
+                                    var w = baseClass.getWorkLoad(tempStarting.Date, tempStarting.Date).FirstOrDefault();
+                                    if (w == null)
+                                    {
+                                        string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
+                                        baseClass.Warning(mssg);
+                                        throw new Exception(mssg);
+                                    }
+                                    else
+                                    {
+                                        workLoads.Add(w);
+                                        wl = w;
+                                    }
                                 }
                                 if (tempStarting == null || wl.Date.Date > tempStarting.Date)
                                     tempStarting = wl.Date.Date;

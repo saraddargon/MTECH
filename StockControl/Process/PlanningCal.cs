@@ -470,22 +470,22 @@ namespace StockControl
 
                 using (var db = new DataClasses1DataContext())
                 {
-                    foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
-                    {
-                        int idPO = item.Cells["idRef"].Value.ToInt();
-                        string PONo = item.Cells["RefDocNo"].Value.ToSt();
-                        //find PR refer PO
-                        var pr = db.mh_PurchaseRequestLines.Where(x => x.Status != "Cancel" && x.idCstmPODt == idPO)
-                            .Join(db.mh_PurchaseRequests.Where(x => x.Status != "Cancel")
-                            , dt => dt.PRNo
-                            , hd => hd.PRNo
-                            , (dt, hd) => new { hd, dt }).ToList();
-                        if(pr.Count < 1)
-                        {
-                            baseClass.Warning($"Please generate P/R for Document No. [{PONo}] before Generate JOB.\n");
-                            return;
-                        }
-                    }
+                    //foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
+                    //{
+                    //    int idPO = item.Cells["idRef"].Value.ToInt();
+                    //    string PONo = item.Cells["RefDocNo"].Value.ToSt();
+                    //    //find PR refer PO
+                    //    var pr = db.mh_PurchaseRequestLines.Where(x => x.Status != "Cancel" && x.idCstmPODt == idPO)
+                    //        .Join(db.mh_PurchaseRequests.Where(x => x.Status != "Cancel")
+                    //        , dt => dt.PRNo
+                    //        , hd => hd.PRNo
+                    //        , (dt, hd) => new { hd, dt }).ToList();
+                    //    if(pr.Count < 1)
+                    //    {
+                    //        baseClass.Warning($"Please generate P/R for Document No. [{PONo}] before Generate JOB.\n");
+                    //        return;
+                    //    }
+                    //}
 
                     foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
                     {
