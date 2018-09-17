@@ -170,7 +170,7 @@ namespace StockControl
                     SavePlan(ps.gridPlans, ft.dateFrom, ft.dateTo);
                     SaveCapacity_TEMP(ps.capacityLoad);
                     SaveCalendar_TEMP(ps.calLoad);
-                    
+
                     FilterE(ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
                 }
             }
@@ -467,8 +467,26 @@ namespace StockControl
                     return;
                 }
 
+
                 using (var db = new DataClasses1DataContext())
                 {
+                    foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
+                    {
+                        int idPO = item.Cells["idRef"].Value.ToInt();
+                        string PONo = item.Cells["RefDocNo"].Value.ToSt();
+                        //find PR refer PO
+                        var pr = db.mh_PurchaseRequestLines.Where(x => x.Status != "Cancel" && x.idCstmPODt == idPO)
+                            .Join(db.mh_PurchaseRequests.Where(x => x.Status != "Cancel")
+                            , dt => dt.PRNo
+                            , hd => hd.PRNo
+                            , (dt, hd) => new { hd, dt }).ToList();
+                        if(pr.Count < 1)
+                        {
+                            baseClass.Warning($"Please generate P/R for Document No. [{PONo}] before Generate JOB.\n");
+                            return;
+                        }
+                    }
+
                     foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
                     {
                         //Hd
@@ -517,7 +535,7 @@ namespace StockControl
                         //**Component**
                         int mainNo = item.Cells["mainNo"].Value.ToInt(); //find all component of Item
                         var rowDt = db.tb_BomDTs.Where(x => x.PartNo == m.FGNo).ToList();
-                        foreach(var r in rowDt)
+                        foreach (var r in rowDt)
                         {
                             var itemA = db.mh_Items.Where(x => x.InternalNo == r.Component).FirstOrDefault();
                             if (itemA == null) continue;
@@ -530,7 +548,7 @@ namespace StockControl
                                 ItemNo = itemA.InternalNo,
                                 JobNo = m.JobNo,
                                 PCSUnit = r.PCSUnit.ToDecimal(),
-                                Qty = m.Qty *  r.Qty,
+                                Qty = m.Qty * r.Qty,
                                 RemQty = m.Qty * r.Qty,
                                 Type = itemA.Type,
                                 UOM = r.Unit,
@@ -538,37 +556,15 @@ namespace StockControl
                             db.mh_ProductionOrderRMs.InsertOnSubmit(dt);
                             db.SubmitChanges();
                         }
-                        //var rowDt = dgvData.Rows.Where(x => x.Cells["idRef"].Value.ToInt() == m.RefDocId
-                        //    && x.Cells["refNo"].Value.ToInt() == mainNo).ToList();
-                        //foreach (var r in rowDt)
-                        //{
-                        //    var dt = new mh_ProductionOrderRM
-                        //    {
-                        //        Active = true,
-                        //        GroupType = r.Cells["GroupType"].Value.ToSt(),
-                        //        InvGroup = r.Cells["InvGroup"].Value.ToSt(),
-                        //        ItemName = r.Cells["ItemName"].Value.ToSt(),
-                        //        ItemNo = r.Cells["ItemNo"].Value.ToSt(),
-                        //        JobNo = m.JobNo,
-                        //        PCSUnit = r.Cells["PCSUnit"].Value.ToDecimal(),
-                        //        Qty = r.Cells["Qty"].Value.ToDecimal(),
-                        //        RemQty = Math.Round(r.Cells["Qty"].Value.ToDecimal()),
-                        //        Type = r.Cells["Type"].Value.ToSt(),
-                        //        UOM = r.Cells["UOM"].Value.ToSt(),
-                        //    };
-                        //    db.mh_ProductionOrderRMs.InsertOnSubmit(dt);
-                        //    db.SubmitChanges();
-                        //}
-
                         //save Capacity Load --mh_CapacityLoad_TEMP <---> mh_CapacityLoad
                         var capaList = db.mh_CapacityLoad_TEMPs.Where(x => x.DocId == mainNo && x.DocNo == null).ToList();
-                        foreach(var c in capaList)
+                        foreach (var c in capaList)
                         {
                             if (c.DocNo.ToSt() != "") continue;
 
                             var cc = new mh_CapacityLoad
                             {
-                                Active=true,
+                                Active = true,
                                 Capacity = c.Capacity,
                                 CapacityX = c.CapacityX,
                                 Date = c.Date,
@@ -654,7 +650,7 @@ namespace StockControl
                         int idRef = item.Cells["idRef"].Value.ToInt();
                         var poDt = db.mh_CustomerPODTs.Where(x => x.id == idRef).FirstOrDefault();
                         int idPoHd = 0;
-                        if(poDt != null)
+                        if (poDt != null)
                             idPoHd = poDt.idCustomerPO;
                         string CstmPoNo = item.Cells["RefDocNo"].Value.ToSt();
 
