@@ -1933,6 +1933,7 @@
       <Column Name="UpdateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="ApproveBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="ApproveDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="HoldJob" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">

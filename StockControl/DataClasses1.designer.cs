@@ -41646,6 +41646,8 @@ namespace StockControl
 		
 		private System.Nullable<System.DateTime> _ApproveDate;
 		
+		private bool _HoldJob;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -41694,6 +41696,8 @@ namespace StockControl
     partial void OnApproveByChanged();
     partial void OnApproveDateChanging(System.Nullable<System.DateTime> value);
     partial void OnApproveDateChanged();
+    partial void OnHoldJobChanging(bool value);
+    partial void OnHoldJobChanged();
     #endregion
 		
 		public mh_ProductionOrder()
@@ -42137,6 +42141,26 @@ namespace StockControl
 					this._ApproveDate = value;
 					this.SendPropertyChanged("ApproveDate");
 					this.OnApproveDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HoldJob", DbType="Bit NOT NULL")]
+		public bool HoldJob
+		{
+			get
+			{
+				return this._HoldJob;
+			}
+			set
+			{
+				if ((this._HoldJob != value))
+				{
+					this.OnHoldJobChanging(value);
+					this.SendPropertyChanging();
+					this._HoldJob = value;
+					this.SendPropertyChanged("HoldJob");
+					this.OnHoldJobChanged();
 				}
 			}
 		}

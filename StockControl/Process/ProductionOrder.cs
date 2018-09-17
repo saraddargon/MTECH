@@ -350,12 +350,25 @@ namespace StockControl
             if (txtFGNo.Text == "") return;
             if (Math.Round(txtFGQty.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal())
             {
-                baseClass.Warning("Status Process cannot Delete.\n");
+                baseClass.Warning("- Cannot Delete because Status is 'Process'.\n");
                 return;
             }
+            else if (txtJobNo.Text != "")
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.mh_ProductionOrders.Where(x => x.JobNo == txtJobNo.Text).FirstOrDefault();
+                    if (m.ApproveDate != null)
+                    {
+                        baseClass.Warning("- Cannot Delete because Status is 'Approved'.\n");
+                        return;
+                    }
+                }
+            }
+
             if (dgvData.Rows.Where(x => x.Cells["Qty"].Value.ToDecimal() != x.Cells["RemQty"].Value.ToDecimal()).Count() > 0)
             {
-                baseClass.Warning("RM or SEMI alreday shipped into this 'Job', Please cancel shipping RM.\n");
+                baseClass.Warning("- RM or SEMI alreday shipped into this 'Job', Please cancel shipping RM.\n");
                 return;
             }
 
@@ -403,8 +416,23 @@ namespace StockControl
                 //if (txtCodeNo.Text.Equals(""))
                 //    err += " “รหัสพาร์ท:” เป็นค่าว่าง \n";
 
+                if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
+                    err += "Cannot Save because Status is 'Process'.\n";
+                else if(txtJobNo.Text != "")
+                {
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        var m = db.mh_ProductionOrders.Where(x => x.JobNo == txtJobNo.Text).FirstOrDefault();
+                        if(m.ApproveDate != null)
+                        {
+                            err += "- Cannot Save because Status is 'Approved'.\n";
+                        }
+                    }
+                }
+
+
                 if (!err.Equals(""))
-                    MessageBox.Show(err);
+                    baseClass.Error(err);
                 else
                     re = false;
             }

@@ -467,6 +467,8 @@ namespace StockControl
                     return;
                 }
 
+                if (!baseClass.Question("Do you want to 'Generate Job Order Sheet' ?"))
+                    return;
 
                 using (var db = new DataClasses1DataContext())
                 {
@@ -516,6 +518,7 @@ namespace StockControl
                         m.UOM = item.Cells["UOM"].Value.ToSt();
                         m.UpdateBy = ClassLib.Classlib.User;
                         m.UpdateDate = DateTime.Now;
+                        m.HoldJob = false;
                         db.mh_ProductionOrders.InsertOnSubmit(m);
                         //Update Customer P/O
                         if (item.Cells["root"].Value.ToBool())
@@ -637,6 +640,10 @@ namespace StockControl
                     baseClass.Warning("Please select PlanningType: Purchase.\n");
                     return;
                 }
+
+
+                if (!baseClass.Question("Do you want to 'Generate Purchase Request (P/R)' ?"))
+                    return;
 
                 DataTable _dt = new DataTable();
                 _dt.Columns.Add("idCstmPO", typeof(int));
