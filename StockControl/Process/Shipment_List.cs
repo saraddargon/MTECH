@@ -76,10 +76,10 @@ namespace StockControl
             });
 
             dgvData.AutoGenerateColumns = false;
-            //DataLoad();
+            DataLoad();
 
 
-            demo();
+           // demo();
         }
         private void DataLoad()
         {
@@ -91,7 +91,7 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-
+                    dgvData.DataSource = db.mh_Shipments.ToList();
                 }
 
 
@@ -103,43 +103,43 @@ namespace StockControl
 
         void demo()
         {
-            dgvData.DataSource = null;
-            dgvData.Rows.Clear();
+            //dgvData.DataSource = null;
+            //dgvData.Rows.Clear();
 
-            demorow("Waiting", "SP1809-001", "I0001", "Item A", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-001");
-            demorow("Waiting", "SP1809-001", "I0002", "Item B", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-002");
-            demorow("Waiting", "SP1809-002", "I0003", "Item C", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-003");
-            demorow("Waiting", "SP1809-002", "I0004", "Item D", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-004");
-            demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
-            demorow("Waiting", "SP1809-001", "I0001", "Item A", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-001");
-            demorow("Waiting", "SP1809-001", "I0002", "Item B", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-002");
-            demorow("Waiting", "SP1809-002", "I0003", "Item C", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-003");
-            demorow("Waiting", "SP1809-002", "I0004", "Item D", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-004");
-            demorow("Waiting", "SP1809-001", "I0001", "Item A", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-001");
-            demorow("Waiting", "SP1809-001", "I0002", "Item B", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-002");
-            demorow("Waiting", "SP1809-002", "I0003", "Item C", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-003");
-            demorow("Waiting", "SP1809-002", "I0004", "Item D", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-004");
-            demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
-            demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
-            demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
+            //demorow("Waiting", "SP1809-001", "I0001", "Item A", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-001");
+            //demorow("Waiting", "SP1809-001", "I0002", "Item B", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-002");
+            //demorow("Waiting", "SP1809-002", "I0003", "Item C", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-003");
+            //demorow("Waiting", "SP1809-002", "I0004", "Item D", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-004");
+            //demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
+            //demorow("Waiting", "SP1809-001", "I0001", "Item A", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-001");
+            //demorow("Waiting", "SP1809-001", "I0002", "Item B", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-002");
+            //demorow("Waiting", "SP1809-002", "I0003", "Item C", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-003");
+            //demorow("Waiting", "SP1809-002", "I0004", "Item D", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-004");
+            //demorow("Waiting", "SP1809-001", "I0001", "Item A", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-001");
+            //demorow("Waiting", "SP1809-001", "I0002", "Item B", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-002");
+            //demorow("Waiting", "SP1809-002", "I0003", "Item C", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-003");
+            //demorow("Waiting", "SP1809-002", "I0004", "Item D", 100, 0, 100, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-004");
+            //demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
+            //demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
+            //demorow("Completed", "SP1809-002", "I0005", "Item E", 100, 100, 0, "PCS", "C00001", "TT FUJI TOOL SUPPORT CO., LTD", "SO1809-001", "JOB1809-005");
 
         }
         void demorow(string SS, string ShipmentNo, string ItemNo, string ItemName, decimal ShipQty, decimal InvQty, decimal RemainQty
             , string Unit, string CustomerNo, string CustomerName, string RefDocNo, string ProductionNo)
         {
-            var rowe = dgvData.Rows.AddNew();
-            rowe.Cells["SS"].Value = SS;
-            rowe.Cells["ShipmentNo"].Value = "SP1809-" + (rowe.Index + 1).ToString("000");
-            rowe.Cells["ItemNo"].Value = ItemNo;
-            rowe.Cells["ItemName"].Value = ItemName;
-            rowe.Cells["ShipQty"].Value = ShipQty;
-            rowe.Cells["InvQty"].Value = InvQty;
-            rowe.Cells["RemainQty"].Value = ShipQty;
-            rowe.Cells["Unit"].Value = Unit;
-            rowe.Cells["CustomerNo"].Value = CustomerNo;
-            rowe.Cells["CustomerName"].Value = CustomerName;
-            rowe.Cells["RefDocNo"].Value = RefDocNo;
-            rowe.Cells["ProductionNo"].Value = ProductionNo;
+            //var rowe = dgvData.Rows.AddNew();
+            //rowe.Cells["SS"].Value = SS;
+            //rowe.Cells["ShipmentNo"].Value = "SP1809-" + (rowe.Index + 1).ToString("000");
+            //rowe.Cells["ItemNo"].Value = ItemNo;
+            //rowe.Cells["ItemName"].Value = ItemName;
+            //rowe.Cells["ShipQty"].Value = ShipQty;
+            //rowe.Cells["InvQty"].Value = InvQty;
+            //rowe.Cells["RemainQty"].Value = ShipQty;
+            //rowe.Cells["Unit"].Value = Unit;
+            //rowe.Cells["CustomerNo"].Value = CustomerNo;
+            //rowe.Cells["CustomerName"].Value = CustomerName;
+            //rowe.Cells["RefDocNo"].Value = RefDocNo;
+            //rowe.Cells["ProductionNo"].Value = ProductionNo;
         }
         //
 
@@ -187,15 +187,25 @@ namespace StockControl
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            //DataLoad();
-            demo();
+            DataLoad();
+          //  demo();
         }
 
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
             //selRow();
-            demo();
+            // demo();
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    Shipment sh = new Shipment(dgvData.Rows[e.RowIndex].Cells["ShipmentNo"].Value.ToSt());
+                    sh.ShowDialog();
+                    DataLoad();
+                }
+
+            }catch { }
 
         }
         void selRow()
@@ -223,6 +233,16 @@ namespace StockControl
         {
             //select Item for Print
             //throw new NotImplementedException();
+            try
+            {
+                Report.Reportx1.Value = new string[2];
+                Report.Reportx1.Value[0] = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["ShipmentNo"].Value.ToSt();
+                Report.Reportx1.Value[1] = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["ShipmentNo"].Value.ToSt();
+                Report.Reportx1.WReport = "Shipment";
+                Report.Reportx1 op = new Report.Reportx1("ReportDelivery.rpt");
+                op.Show();
+            }
+            catch { }
         }
 
 

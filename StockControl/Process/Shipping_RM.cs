@@ -177,16 +177,16 @@ namespace StockControl
                             DateTime? temp_date = null;
                             txtRemark.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Remark);
                             
-                            txtTempJobCard.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TempJobCard);
+                            //txtTempJobCard.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TempJobCard);
                             txtJobCard.Text = StockControl.dbClss.TSt(g.FirstOrDefault().JobCard);
                             //txtLocation.Text = dbClss.TSt(g.FirstOrDefault().ToLocation);
 
-                            if (txtTempJobCard.Text != "")
+                            if (txtJobCard.Text != "")
                             {
                                 cbShipforJob.Checked = true;
-                                var p = (from ix in db.mh_ProductsOrders select ix)
+                                var p = (from ix in db.mh_ProductionOrders select ix)
                                     .Where
-                                    (a => a.DocumentNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Status != "Cancel"
+                                    (a => a.JobNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Active==true
                                     ).ToList();
                                         if (p.Count > 0)
                                         {
@@ -305,8 +305,8 @@ namespace StockControl
                                     if (s != null)
                                     {
                                         x.Cells["RemainQty"].Value = Convert.ToDecimal(s.RemainQty);
-                                        x.Cells["StandardCost"].Value = Convert.ToDecimal(s.UnitCost);
-                                        x.Cells["Amount"].Value = Math.Abs(Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QTY"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
+                                        x.Cells["UnitCost"].Value = Convert.ToDecimal(s.UnitCost);
+                                        x.Cells["Amount"].Value = Math.Abs(Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QtyShip"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
                                     }
                                 }
                             }
@@ -345,7 +345,7 @@ namespace StockControl
         {
             cbShipforJob.Checked = true;
             txtJobCard.Text = "";
-            txtTempJobCard.Text = "";
+            //txtTempJobCard.Text = "";
             txtRefidJobNo.Text = "0";
             txtLocation.Text = "Production";
             txtJobCard.ReadOnly = false;
@@ -437,13 +437,13 @@ namespace StockControl
                 {
                     if (txtJobCard.Text.Equals(""))
                         err += "- “DocumentNo:” เป็นค่าว่าง \n";
-                    if (txtTempJobCard.Text.Equals(""))
-                        err += "- “เลขที่อ้างอิง TempNo:” เป็นค่าว่าง \n";
+                    //if (txtTempJobCard.Text.Equals(""))
+                    //    err += "- “เลขที่อ้างอิง TempNo:” เป็นค่าว่าง \n";
                 }
                 else
                 {
                     txtJobCard.Text = "";
-                    txtTempJobCard.Text = "";
+                    //txtTempJobCard.Text = "";
                     txtRefidJobNo.Text = "0";
                 }
 
@@ -581,11 +581,11 @@ namespace StockControl
                             gg.JobCard = txtJobCard.Text;                            
                             dbClss.AddHistory(this.Name, "แก้ไขการเบิก", "แก้ไข JobCard [" + txtJobCard.Text.Trim() + " เดิม :" + row["JobCard"].ToString() + "]", txtSHNo.Text);
                         }
-                        if (!txtTempJobCard.Text.Trim().Equals(row["TempJobCard"].ToString()))
-                        {
-                            gg.TempJobCard = txtTempJobCard.Text;
-                            dbClss.AddHistory(this.Name, "แก้ไขการเบิก", "แก้ไข TempJobCard [" + txtTempJobCard.Text.Trim() + " เดิม :" + row["TempJobCard"].ToString() + "]", txtSHNo.Text);
-                        }
+                        //if (!txtTempJobCard.Text.Trim().Equals(row["TempJobCard"].ToString()))
+                        //{
+                        //    gg.TempJobCard = txtTempJobCard.Text;
+                        //    dbClss.AddHistory(this.Name, "แก้ไขการเบิก", "แก้ไข TempJobCard [" + txtTempJobCard.Text.Trim() + " เดิม :" + row["TempJobCard"].ToString() + "]", txtSHNo.Text);
+                        //}
 
                         if (!txtRemark.Text.Trim().Equals(row["Remark"].ToString()))
                         {
@@ -642,7 +642,7 @@ namespace StockControl
                     gg.ShipName = txtSHName.Text;
                     gg.Remark = txtRemark.Text;
                     gg.JobCard = txtJobCard.Text.Trim();
-                    gg.TempJobCard = txtTempJobCard.Text;
+                    gg.TempJobCard = "";
                     gg.BarCode = barcode;
                     gg.Status = "Completed";
                     gg.ToLocation = txtLocation.Text;
@@ -686,7 +686,7 @@ namespace StockControl
                                     , StockControl.dbClss.TSt(g.Cells["SerialNo"].Value), StockControl.dbClss.TSt(g.Cells["LotNo"].Value)
                                     , "Completed", ClassLib.Classlib.User
                                     , txtJobCard.Text.Trim()
-                                    , txtTempJobCard.Text.Trim()
+                                    , ""//txtTempJobCard.Text.Trim()
                                     , RefidJobNo
                                     , dbClss.TSt(g.Cells["Location"].Value)
                                     , txtLocation.Text
@@ -1472,14 +1472,14 @@ namespace StockControl
             {
 
                 string JobCard = txtJobCard.Text;
-                string TempJob = txtTempJobCard.Text;
+                //string TempJob = txtTempJobCard.Text;
                 string  Refid = txtRefidJobNo.Text  ;
                 //string loca = txtLocation.Text;
 
                 btnNew_Click(null, null);
                 txtJobCard.Text = JobCard;
 
-                txtTempJobCard.Text = TempJob;
+                //txtTempJobCard.Text = TempJob;
                 txtRefidJobNo.Text = Refid;
                 //txtLocation.Text = loca;
 
@@ -1790,23 +1790,23 @@ namespace StockControl
         {
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                var p = (from ix in db.mh_ProductsOrders select ix)
+                var p = (from ix in db.mh_ProductionOrderRMs select ix)
                      .Where
-                     (a => a.DocumentNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Status != "Cancel"
+                     (a => a.JobNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Active == true
 
                      ).ToList();
                 if (p.Count > 0)
                 {
-                    if (dbClss.TSt(p.FirstOrDefault().Status) != "Completed")
+                    if (dbClss.TBo(p.FirstOrDefault().Active) == true)
                     {
-                        txtTempJobCard.Text = dbClss.TSt(p.FirstOrDefault().TempNo);
+                        //txtTempJobCard.Text = dbClss.TSt(p.FirstOrDefault().TempNo);
                         txtRefidJobNo.Text = dbClss.TSt(p.FirstOrDefault().id);
                         //txtLocation.Text = dbClss.TSt(p.FirstOrDefault().Location);
                         Insert_data_New_Location();
                     }
-                    else if (dbClss.TSt(p.FirstOrDefault().Status) != "Completed")
+                    else if (dbClss.TBo(p.FirstOrDefault().Active) == false)
                     {
-                        txtTempJobCard.Text = "";
+                        //txtTempJobCard.Text = "";
                         txtJobCard.Text = "";
                         txtRefidJobNo.Text = "0";
                         //txtLocation.Text = "";
@@ -1817,7 +1817,7 @@ namespace StockControl
                 else
                 {
                     txtJobCard.Text = "";
-                    txtTempJobCard.Text = "";
+                    //txtTempJobCard.Text = "";
                     txtRefidJobNo.Text = "0";
                     //txtLocation.Text = "";
                 }
@@ -1849,7 +1849,7 @@ namespace StockControl
             {
                 txtJobCard.ReadOnly = true;
                 txtJobCard.Text = "";
-                txtTempJobCard.Text = "";
+                //txtTempJobCard.Text = "";
                 txtRefidJobNo.Text = "0";
             }
         }

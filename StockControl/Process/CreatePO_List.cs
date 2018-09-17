@@ -344,42 +344,6 @@ namespace StockControl
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
-        private void btn_PrintPR_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                
-                //dt_ShelfTag.Rows.Clear();
-                string PRNo = "";
-                if(radGridView1.Rows.Count > 0)
-                    PRNo = StockControl.dbClss.TSt(radGridView1.CurrentRow.Cells["PONo"].Value);
-
-                PrintPR a = new PrintPR(PRNo, PRNo,"PO");
-                a.ShowDialog();
-
-            
-
-                //using (DataClasses1DataContext db = new DataClasses1DataContext())
-                //{
-                //    var g = (from ix in db.sp_R002_ReportPR(PRNo, DateTime.Now) select ix).ToList();
-                //    if (g.Count() > 0)
-                //    {
-
-                //        Report.Reportx1.Value = new string[2];
-                //        Report.Reportx1.Value[0] = PRNo;
-                //        Report.Reportx1.WReport = "ReportPR";
-                //        Report.Reportx1 op = new Report.Reportx1("ReportPR.rpt");
-                //        op.Show();
-
-                //    }
-                //    else
-                //        MessageBox.Show("not found.");
-                //}
-
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }
-
         private void radButtonElement2_Click(object sender, EventArgs e)
         {
             try
@@ -461,6 +425,15 @@ namespace StockControl
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void btn_PrintPR_Click_1(object sender, EventArgs e)
+        {
+            //Report.Reportx1.Value = new string[1];
+            //Report.Reportx1.Value[0] = ddlTypePart.Text;
+            //Report.Reportx1.WReport = "ItemList";
+            //Report.Reportx1 op = new Report.Reportx1("ReportItemList.rpt");
+            //op.Show();
         }
     }
 }

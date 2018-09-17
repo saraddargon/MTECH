@@ -506,86 +506,7 @@ namespace StockControl
 
         private void btnImport_Click(object sender, EventArgs e)
         {
-            OpenFileDialog op = new OpenFileDialog();
-            op.Filter = "Spread Sheet files (*.csv)|*.csv|All files (*.csv)|*.csv";
-            if (op.ShowDialog() == DialogResult.OK)
-            {
 
-
-                using (TextFieldParser parser = new TextFieldParser(op.FileName))
-                {
-                    dt.Rows.Clear();
-                    parser.TextFieldType = FieldType.Delimited;
-                    parser.SetDelimiters(",");
-                    int a = 0;
-                    int c = 0;
-                    while (!parser.EndOfData)
-                    {
-                        //Processing row
-                        a += 1;
-                        DataRow rd = dt.NewRow();
-                        // MessageBox.Show(a.ToString());
-                        string[] fields = parser.ReadFields();
-                        c = 0;
-                        foreach (string field in fields)
-                        {
-                            c += 1;
-                            //TODO: Process field
-                            //MessageBox.Show(field);
-                            if (a > 1)
-                            {
-                                if (c == 1)
-                                    rd["VendorNo"] = Convert.ToString(field);
-                                else if (c == 2)
-                                    rd["VendorName"] = Convert.ToString(field);
-                                else if (c == 3)
-                                    rd["Address"] = Convert.ToString(field);
-                                else if (c == 4)
-                                    rd["CRRNCY"] = Convert.ToString(field);
-                                else if (c == 5)
-                                    rd["Remark"] = Convert.ToString(field);
-                                else if (c == 6)
-                                    rd["Active"] = Convert.ToBoolean(field);
-
-                            }
-                            else
-                            {
-                                if (c == 1)
-                                    rd["VendorNo"] = "";
-                                else if (c == 2)
-                                    rd["VendorName"] = "";
-                                else if (c == 3)
-                                    rd["Address"] = "";
-                                else if (c == 4)
-                                    rd["CRRNCY"] = "";
-                                else if (c == 5)
-                                    rd["Remark"] = "";
-                                else if (c == 6)
-                                    rd["Active"] = false;
-
-
-
-
-                            }
-
-                            //
-                            //rd[""] = "";
-                            //rd[""]
-                        }
-                        dt.Rows.Add(rd);
-
-                    }
-                }
-                if (dt.Rows.Count > 0)
-                {
-                    dbClss.AddHistory(this.Name, "Import", "Import file CSV in to System", "");
-                    ImportData();
-                    MessageBox.Show("Import Completed.");
-
-                    DataLoad();
-                }
-
-            }
         }
 
         private void ImportData()
@@ -764,6 +685,13 @@ namespace StockControl
             }
         }
 
-
+        private void btnImport_Click_1(object sender, EventArgs e)
+        {
+            Report.Reportx1.Value = new string[1];
+            Report.Reportx1.Value[0] = "";
+            Report.Reportx1.WReport = "ALLReport2";
+            Report.Reportx1 op = new Report.Reportx1("WorkCenterList.rpt");
+            op.Show();
+        }
     }
 }

@@ -1698,7 +1698,7 @@ namespace StockControl
                                     int OrderQty = 0;                                  
                                     decimal PCSUnit = dbClss.Con_UOM(CodeNo, StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM));
                                     string UnitBuy = StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM);
-                                    decimal StandardCost = 0;
+                                    decimal StandardCost = dbClss.TDe(g.FirstOrDefault().StandardCost);
                                     string Status = "Adding";
                                     string PRNO = "";
                                     int Refid = 0;
@@ -2631,7 +2631,7 @@ namespace StockControl
                     //int OrderQty = 0;
                     decimal PCSUnit = dbClss.Con_UOM(CodeNo, StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM));                    
                     string UnitBuy = StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM);
-                    decimal StandardCost = 0;//StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost);
+                    decimal StandardCost =StockControl.dbClss.TDe(g.FirstOrDefault().StandardCost);
                     
                     string Status = "Adding";
                     string PRNO = "";

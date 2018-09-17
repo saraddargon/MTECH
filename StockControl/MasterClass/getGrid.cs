@@ -26,6 +26,25 @@ namespace StockControl
                         {
                             if (Item != "" && dt.ItemNo != Item) continue;
                             var tool = db.mh_Items.Where(x => x.InternalNo == dt.ItemNo).FirstOrDefault();
+                            var shipQ = 0.00m;
+                            var s = db.mh_SaleOrderDTs.Join(db.mh_SaleOrders,
+                                    dtShip => dtShip.SONo,
+                                    hdShip => hdShip.SONo,
+                                    (dtShip, hdShip) => new { dtShip, hdShip }
+                                )
+                                .Where(x => x.dtShip.RefId == dt.id && x.hdShip.Active && x.dtShip.Active).ToList();
+                            foreach (var mm in s)
+                            {
+                                //find Shipment
+                                var ss = db.mh_ShipmentDTs.Join(db.mh_Shipments,
+                                    dtSS => dtSS.SSNo,
+                                    hdSS => hdSS.SSNo,
+                                    (dtSS, hdSS) => new { dtSS, hdSS })
+                                    .Where(x => x.hdSS.Active.Value && x.dtSS.Active && x.dtSS.RefId == mm.dtShip.id).ToList();
+                                if (ss.Count > 0)
+                                    shipQ += ss.Sum(x => x.dtSS.Qty).ToDecimal();
+                            }
+
                             l.Add(new grid_CustomerPO
                             {
                                 Status = dt.Status,
@@ -47,7 +66,8 @@ namespace StockControl
                                 InvGroup = tool.InventoryGroup,
                                 Type = tool.Type,
                                 VendorNo = tool.VendorNo,
-                                VendorName = tool.VendorName
+                                VendorName = tool.VendorName,
+                                Shipped = shipQ,//
                             });
                         }
                     }
@@ -96,17 +116,13 @@ namespace StockControl
         {
             get
             {
-                return 0;
-                //not imprement
-                //----Remain cut by Shipment
+                return (Qty) - Shipped;
             }
         }
+        private decimal _ship = -1.00m;
         public decimal Shipped
         {
-            get
-            {
-                return Qty - Remain;
-            }
+            get; set;
         }
         public bool Plan
         {
@@ -145,7 +161,7 @@ namespace StockControl
         {
             get
             {
-                if (EndingDate.Value.Date > ReqDate.Date)
+                if (DueDate.Date > ReqDate.Date)
                     return "Over Due";
                 else
                     return "OK";
@@ -173,6 +189,10 @@ namespace StockControl
         public decimal TotalCost { get; set; } = 0.00m;
 
         public string LocationItem { get; set; }
+
+        public bool root { get; set; } = false;
+        public int mainNo { get; set; } = 0;
+        public int refNo { get; set; } = 0;
     }
 
 
@@ -210,16 +230,7 @@ namespace StockControl
         public decimal PCSUnit { get; set; }
 
         public string LocationItem { get; set; }
-
-        public decimal StockQty
-        {
-            get
-            {
-                return baseClass.StockQty(ItemNo, "Warehouse");
-            }
-        }
-        public DateTime ReqDate { get; set; }
-
+        
         public string GroupType { get; set; }
         public string Type { get; set; }
         public string InvGroup { get; set; } //Inventory Group
@@ -239,7 +250,10 @@ namespace StockControl
 
                 this.ItemName = t.InternalName;
                 this.ReorderType = baseClass.getReorderType(t.ReorderType);
-                this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
+                //this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
+                var a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneJob", 0, "Warehouse");
+                if (a != null)
+                    this.QtyOnHand = a.Value.ToDecimal();
                 this.SafetyStock = t.SafetyStock;
                 this.ReorderPoint = t.ReorderPoint.ToDecimal();
                 this.ReorderQty = t.ReorderQty.ToDecimal();
@@ -263,20 +277,22 @@ namespace StockControl
                 this.InvGroup = t.InventoryGroup;
                 this.VendorNo = t.VendorNo;
                 this.VendorName = t.VendorName;
-
-
+                
                 this.Routeid = t.Routing;
             }
 
         }
 
     }
+
+
     public class WorkLoad
     {
         public DateTime Date { get; set; }
         public int idWorkCenter { get; set; }
         public decimal CapacityAvailable { get; set; } = 0.00m;
         public decimal CapacityAlocate { get; set; } = 0.00m;
+        public decimal CapacityAlocateX { get; set; } = 0.00m;
         public decimal CapacityAfter
         {
             get
@@ -284,39 +300,36 @@ namespace StockControl
                 return CapacityAvailable - CapacityAlocate;
             }
         }
+        public decimal CapacityAfterX
+        {
+            get
+            {
+                return CapacityAvailable - CapacityAlocateX;
+            }
+        }
     }
-    public class PlanData
+    public class WorkLoad_Item
     {
-        public string ItemNo { get; set; }
-        public string ItemName { get; set; }
-        public DateTime DueDate { get; set; }
-        public DateTime StartingDate { get; set; }
-        public DateTime EndingDate { get; set; }
-        public decimal Qty { get; set; }
-        public ReplenishmentType repType { get; set; }
-        public string PlanningType
-        {
-            get
-            {
-                if (repType == ReplenishmentType.Production)
-                    return "MPS";
-                else
-                    return "MRP";
-            }
-        }
-        public string RefOrderType
-        {
-            get
-            {
-                return repType.ToSt();
-            }
-        }
-
-        public PlanData(string ItemNo, string ItemName)
-        {
-            this.ItemNo = ItemNo;
-            this.ItemName = ItemName;
-        }
+        public int id { get; set; }
+        public int idWorkCenterID { get; set; }
+        public string DocNo { get; set; }
+        public int DocId { get; set; }
+        public DateTime Date { get; set; }
+        public decimal Capacity { get; set; }
+        public decimal CapacityX { get; set; }
+    }
+    public class CalendarLoad
+    {
+        public int id { get; set; }
+        public int idJob { get; set; } = 0;
+        public int idRoute { get; set; } = 0;
+        public int idCal { get; set; } = 0;
+        public int idWorkcenter { get; set; } = 0;
+        public int idHol { get; set; } = 0;
+        public int idAbs { get; set; } = 0;
+        public DateTime Date { get; set; }
+        public TimeSpan StartingTime { get; set; }
+        public TimeSpan EndingTime { get; set; }
     }
 
 

@@ -166,6 +166,7 @@ namespace StockControl
                     }
 
                     //save
+                    set_lbStatus("Calculate completed -- Saving....");
                     db.SubmitChanges();
                 }
 

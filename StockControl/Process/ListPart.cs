@@ -676,5 +676,14 @@ namespace StockControl
             Calculate_Movement a = new Calculate_Movement();
             a.Show();
         }
+
+        private void radButtonElement5_Click(object sender, EventArgs e)
+        {
+            Report.Reportx1.Value = new string[1];
+            Report.Reportx1.Value[0] = ddlTypePart.Text;
+            Report.Reportx1.WReport = "ItemList";
+            Report.Reportx1 op = new Report.Reportx1("ReportItemList.rpt");
+            op.Show();
+        }
     }
 }

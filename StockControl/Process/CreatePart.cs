@@ -98,7 +98,9 @@ namespace StockControl
             dt_Part.Columns.Add(new DataColumn("Location", typeof(string)));
             dt_Part.Columns.Add(new DataColumn("Taking", typeof(bool)));
             dt_Part.Columns.Add(new DataColumn("ShelfNo", typeof(bool)));
-
+            dt_Part.Columns.Add(new DataColumn("StandardPrice", typeof(decimal)));
+            dt_Part.Columns.Add(new DataColumn("StandardCost", typeof(decimal)));
+         
             //dt_Import
             dt_Import = new DataTable();
             dt_Import.Columns.Add(new DataColumn("id", typeof(int)));
@@ -143,6 +145,8 @@ namespace StockControl
             dt_Import.Columns.Add(new DataColumn("Location", typeof(string)));
             dt_Import.Columns.Add(new DataColumn("Taking", typeof(bool)));
             dt_Import.Columns.Add(new DataColumn("ShelfNo", typeof(bool)));
+            dt_Import.Columns.Add(new DataColumn("StandardPrice", typeof(decimal)));
+            dt_Import.Columns.Add(new DataColumn("StandardCost", typeof(bool)));
 
 
             dt_HD_Bom.Columns.Add(new DataColumn("id", typeof(string)));
@@ -247,6 +251,8 @@ namespace StockControl
                 cboBOM.Enabled = ss;
                 txtVersion.Enabled = ss;
                 cboRouting.Enabled = ss;
+                seStandardPrice.Enabled = ss;
+                seStandardCost.Enabled = ss;
 
                 btnAddDWG.Enabled = ss;
                 btnDeleteDWG.Enabled = ss;
@@ -292,6 +298,8 @@ namespace StockControl
                 cboBOM.Enabled = ss;
                 txtVersion.Enabled = ss;
                 cboRouting.Enabled = ss;
+                seStandardPrice.Enabled = ss;
+                seStandardCost.Enabled = ss;
 
                 btnAddDWG.Enabled = ss;
                 btnDeleteDWG.Enabled = ss;
@@ -336,6 +344,8 @@ namespace StockControl
                 cboBOM.Enabled = ss;
                 txtVersion.Enabled = ss;
                 cboRouting.Enabled = ss;
+                seStandardPrice.Enabled = ss;
+                seStandardCost.Enabled = ss;
 
                 btnAddDWG.Enabled = ss;
                 btnDeleteDWG.Enabled = ss;
@@ -541,6 +551,8 @@ namespace StockControl
                         seTimebucket.Value = StockControl.dbClss.TInt(g.FirstOrDefault().Timebucket);
                         cbTakingLot.Checked = dbClss.TBo(g.FirstOrDefault().TakingLot);
                         txtShelfNo.Text = dbClss.TSt(g.FirstOrDefault().ShelfNo);
+                        seStandardCost.Value = dbClss.TDe(g.FirstOrDefault().StandardCost);
+                        seStandardPrice.Value = dbClss.TDe(g.FirstOrDefault().StandardPrice);
 
                         if (dbClss.TInt(g.FirstOrDefault().Routing)>0)
                         {
@@ -759,7 +771,8 @@ namespace StockControl
                         u.TakingLot = dbClss.TBo(cbTakingLot.Checked);
                         u.Location = cboLocation.Text;
                         u.ShelfNo = txtShelfNo.Text.Trim();
-
+                        u.StandardCost = dbClss.TDe(seStandardCost.Value);
+                        u.StandardPrice = dbClss.TDe(seStandardPrice.Value);
                         ///Save Drawing
                         if (chkDWG.Checked)
                         {
@@ -895,7 +908,19 @@ namespace StockControl
                                     gg.InternalLeadTime = InternalLeadTime;
                                     dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขระยะเวลาเคลื่อนย้าย [ เดิม : " + row["InternalLeadTime"].ToString() + " ใหม่ : " + InternalLeadTime.ToString() + "]", txtInternalNo.Text);
                                 }
-                                
+                                if (!seStandardCost.Text.Trim().Equals(row["StandardCost"].ToString()))
+                                {
+                                    decimal StandardCost = dbClss.TDe(seStandardCost.Value);
+                                    gg.StandardCost = StandardCost;
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข StandardCost [ เดิม : " + row["StandardCost"].ToString() + " ใหม่ : " + seStandardCost.ToString() + "]", txtInternalNo.Text);
+                                }
+                                if (!seStandardPrice.Text.Trim().Equals(row["StandardPrice"].ToString()))
+                                {
+                                    decimal StandardPrice = dbClss.TDe(seStandardPrice.Value);
+                                    gg.StandardPrice = StandardPrice;
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข StandardPrice [ เดิม : " + row["StandardPrice"].ToString() + " ใหม่ : " + seStandardPrice.ToString() + "]", txtInternalNo.Text);
+                                }
+                               
                                 if (!cbTakingLot.Checked.Equals(row["TakingLot"].ToString()))
                                 {
                                     gg.TakingLot = dbClss.TBo(cbTakingLot.Checked);
@@ -1485,6 +1510,8 @@ namespace StockControl
             dgvBom.Rows.Clear();
             txtidRouting.Text = "0";
             txtidBOM.Text = "0";
+            seStandardCost.Value = 0;
+            seStandardPrice.Value = 0;
 
             txtCreateby.Text = ClassLib.Classlib.User;
             txtCreateDate.Text = Convert.ToDateTime( DateTime.Now,new CultureInfo("en-US")).ToString("dd/MMM/yyyy");
@@ -3424,7 +3451,7 @@ namespace StockControl
 
         private void radButtonElement3_Click(object sender, EventArgs e)
         {
-            Bom a = new Bom(txtInternalNo.Text, cboBOM.Text);
+            Bom_List a = new Bom_List();
             a.ShowDialog();
 
         }

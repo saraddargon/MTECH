@@ -115,11 +115,15 @@ namespace StockControl
         {
             return RadMessageBox.Show(Mssg, Caption, MessageBoxButtons.YesNo, RadMessageIcon.Question) == DialogResult.Yes;
         }
-        public static bool IsSave(string Mssg = "ต้องการบันทึก ?")
+        public static bool IsSave(string Mssg = "Do you want to 'Save' ?")
         {
             return Question(Mssg, "บันทึก");
         }
-        public static bool IsDel(string Mssg = "ต้องการลบ ?")
+        public static bool IsSendApprove(string Mssg = "Do you want to 'Send Approve' ?")
+        {
+            return Question(Mssg, "Send Approve");
+        }
+        public static bool IsDel(string Mssg = "Do you want to 'Delete' ?")
         {
             return Question(Mssg, "ลบ");
         }
@@ -161,12 +165,16 @@ namespace StockControl
                 case DayOfWeek.Wednesday: return 2;
                 case DayOfWeek.Thursday: return 3;
                 case DayOfWeek.Friday: return 4;
-                default: return 5; //Saturday
+                case DayOfWeek.Saturday: return 5;
+                default: return -1; //not have day
             }
         }
         public static TimeSpan setTimeSpan(string TimeText)
         {
             TimeSpan t = new TimeSpan();
+            //00:00
+            TimeText = TimeText.Substring(0, 5);
+            t = new TimeSpan(TimeText.Substring(0, 2).ToInt(), TimeText.Substring(3).ToInt(), 0);
             return t;
         }
         public static ReorderType getReorderType(string ReorderTypeSt)
@@ -207,19 +215,22 @@ namespace StockControl
             }
         }
 
-        public static List<WorkLoad> getWorkLoad(DateTime beginDate)
+        public static List<WorkLoad> getWorkLoad(DateTime beginDate, DateTime? dTo)
         {
             var workLoads = new List<WorkLoad>();
             using (var db = new DataClasses1DataContext())
             {
-                var d = db.mh_CapacityAvailables.Where(x => x.Date >= beginDate).ToList();
+                var d = db.mh_CapacityAvailables.Where(x => x.Date >= beginDate
+                    && (dTo == null || x.Date <= dTo)).ToList();
                 foreach (var dd in d)
                 {
                     var m = db.mh_CapacityLoads.Where(x => x.Date == dd.Date
                             && x.WorkCenterID == dd.WorkCenterID && x.Active).ToList();
                     decimal loadCapa = 0.00m;
-                    if (m.Count > 0)
-                        loadCapa = m.Sum(x => x.Capacity);
+                    decimal loadCapaX = 0.00m;
+                    //if (m.Count > 0)
+                    loadCapa = m.Sum(x => x.Capacity);
+                    loadCapaX = m.Sum(x => x.CapacityX);
                     var wl = workLoads.Where(x => x.Date == dd.Date
                         && x.idWorkCenter == dd.WorkCenterID).FirstOrDefault();
                     if (wl == null)
@@ -231,8 +242,45 @@ namespace StockControl
                     wl.Date = dd.Date.Date;
                     wl.CapacityAvailable = dd.Capacity.ToDecimal();
                     wl.CapacityAlocate += loadCapa;
+                    wl.CapacityAlocateX += loadCapaX;
                 }
                 return workLoads;
+            }
+        }
+        public static List<CalendarLoad> getCalendarLoad(DateTime beginDate)
+        {
+            var calLoad = new List<CalendarLoad>();
+            using (var db = new DataClasses1DataContext())
+            {
+                var d = db.mh_CalendarLoads.Where(x => x.Date >= beginDate).ToList();
+                foreach (var dd in d)
+                {
+                    calLoad.Add(new CalendarLoad
+                    {
+                        Date = dd.Date,
+                        StartingTime = dd.StartingTime,
+                        EndingTime = dd.EndingTime,
+                        idJob = dd.idJob,
+                        idRoute = dd.idRoute,
+                        idWorkcenter = dd.idWorkcenter,
+                        id = dd.id,
+                        idAbs = dd.idAbs,
+                        idCal = dd.idCal,
+                        idHol = dd.idHol,
+                    });
+                }
+                return calLoad;
+            }
+        }
+        public static void getStartingWork(ref DateTime d, int idWorkcenter)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
         public static DateTime setWorkTime(DateTime d, int idWorkCenter, decimal CapaLoad)
@@ -266,7 +314,19 @@ namespace StockControl
             return d;
         }
 
-
+        //Customer P/O Status
+        public static string setCustomerPOStatus(mh_CustomerPODT dt)
+        {
+            var fullQty = dt.Qty * dt.PCSUnit;
+            if (dt.OutPlan == fullQty && dt.OutSO == fullQty)
+                return "Waiting";
+            else if (dt.OutPlan == 0 && dt.OutSO == 0)
+                return "Completed";
+            else if (dt.OutPlan != fullQty || dt.OutSO != fullQty)
+                return "Process";
+            else
+                return "Waiting";
+        }
     }
 
 

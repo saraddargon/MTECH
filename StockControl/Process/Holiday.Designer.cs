@@ -413,7 +413,7 @@
             gridViewDateTimeColumn1.FieldName = "StartingDate";
             gridViewDateTimeColumn1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             gridViewDateTimeColumn1.FormatString = "{0:dd/MM/yyyy}";
-            gridViewDateTimeColumn1.HeaderText = "Starting Date";
+            gridViewDateTimeColumn1.HeaderText = "Date";
             gridViewDateTimeColumn1.Name = "StartDate";
             gridViewDateTimeColumn1.Width = 103;
             gridViewDateTimeColumn2.CustomFormat = "dd/MM/yyyy";
@@ -422,6 +422,7 @@
             gridViewDateTimeColumn2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             gridViewDateTimeColumn2.FormatString = "{0:dd/MM/yyyy}";
             gridViewDateTimeColumn2.HeaderText = "Ending Date";
+            gridViewDateTimeColumn2.IsVisible = false;
             gridViewDateTimeColumn2.Name = "EndDate";
             gridViewDateTimeColumn2.Width = 98;
             gridViewMaskBoxColumn1.EnableExpressionEditor = false;

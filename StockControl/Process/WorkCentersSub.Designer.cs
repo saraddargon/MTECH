@@ -33,13 +33,13 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn2 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn5 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn6 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn6 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
@@ -411,26 +411,26 @@
             gridViewTextBoxColumn3.Name = "No";
             gridViewTextBoxColumn3.ReadOnly = true;
             gridViewTextBoxColumn3.Width = 41;
-            gridViewComboBoxColumn1.EnableExpressionEditor = false;
-            gridViewComboBoxColumn1.FieldName = "SubWorkNo";
-            gridViewComboBoxColumn1.HeaderText = "Sub-Work No";
-            gridViewComboBoxColumn1.Name = "SubWorkNo";
-            gridViewComboBoxColumn1.Width = 82;
             gridViewTextBoxColumn4.EnableExpressionEditor = false;
-            gridViewTextBoxColumn4.FieldName = "SubWorkName";
-            gridViewTextBoxColumn4.HeaderText = "Sub-Work Name";
-            gridViewTextBoxColumn4.Name = "SubWorkName";
-            gridViewTextBoxColumn4.Width = 159;
-            gridViewComboBoxColumn2.EnableExpressionEditor = false;
-            gridViewComboBoxColumn2.FieldName = "WType";
-            gridViewComboBoxColumn2.HeaderText = "Worker Type";
-            gridViewComboBoxColumn2.Name = "WType";
-            gridViewComboBoxColumn2.Width = 84;
+            gridViewTextBoxColumn4.FieldName = "SubWorkNo";
+            gridViewTextBoxColumn4.HeaderText = "Sub-Work No";
+            gridViewTextBoxColumn4.Name = "SubWorkNo";
+            gridViewTextBoxColumn4.Width = 90;
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
-            gridViewTextBoxColumn5.FieldName = "Description";
-            gridViewTextBoxColumn5.HeaderText = "Description";
-            gridViewTextBoxColumn5.Name = "Description";
-            gridViewTextBoxColumn5.Width = 211;
+            gridViewTextBoxColumn5.FieldName = "SubWorkName";
+            gridViewTextBoxColumn5.HeaderText = "Sub-Work Name";
+            gridViewTextBoxColumn5.Name = "SubWorkName";
+            gridViewTextBoxColumn5.Width = 159;
+            gridViewComboBoxColumn1.EnableExpressionEditor = false;
+            gridViewComboBoxColumn1.FieldName = "WType";
+            gridViewComboBoxColumn1.HeaderText = "Worker Type";
+            gridViewComboBoxColumn1.Name = "WType";
+            gridViewComboBoxColumn1.Width = 84;
+            gridViewTextBoxColumn6.EnableExpressionEditor = false;
+            gridViewTextBoxColumn6.FieldName = "Description";
+            gridViewTextBoxColumn6.HeaderText = "Description";
+            gridViewTextBoxColumn6.Name = "Description";
+            gridViewTextBoxColumn6.Width = 211;
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "CostPerUOM";
             gridViewDecimalColumn1.HeaderText = "Cost/UOM";
@@ -441,22 +441,22 @@
             gridViewDecimalColumn2.HeaderText = "Capacity";
             gridViewDecimalColumn2.Name = "Capacity";
             gridViewDecimalColumn2.Width = 77;
-            gridViewTextBoxColumn6.EnableExpressionEditor = false;
-            gridViewTextBoxColumn6.FieldName = "id";
-            gridViewTextBoxColumn6.HeaderText = "id";
-            gridViewTextBoxColumn6.IsVisible = false;
-            gridViewTextBoxColumn6.Name = "id";
+            gridViewTextBoxColumn7.EnableExpressionEditor = false;
+            gridViewTextBoxColumn7.FieldName = "id";
+            gridViewTextBoxColumn7.HeaderText = "id";
+            gridViewTextBoxColumn7.IsVisible = false;
+            gridViewTextBoxColumn7.Name = "id";
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
             gridViewTextBoxColumn3,
-            gridViewComboBoxColumn1,
             gridViewTextBoxColumn4,
-            gridViewComboBoxColumn2,
             gridViewTextBoxColumn5,
+            gridViewComboBoxColumn1,
+            gridViewTextBoxColumn6,
             gridViewDecimalColumn1,
             gridViewDecimalColumn2,
-            gridViewTextBoxColumn6});
+            gridViewTextBoxColumn7});
             this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.dgvData.Name = "dgvData";

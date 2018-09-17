@@ -692,10 +692,12 @@ namespace StockControl
                                 int RefidJobNo = dbClss.TInt(txtRefidJobNo.Text);
                                 string BaseUOM = dbClss.TSt(g.Cells["BaseUOM"].Value);
                                 decimal BasePCSUOM  = dbClss.Con_UOM(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), BaseUOM);
-                             
+                                decimal QTY = dbClss.TDe(g.Cells["QTY"].Value);
+                               
+                                
                                 db.sp_024_tb_Shipping_ADD(txtSHNo.Text.Trim(), StockControl.dbClss.TSt(g.Cells["CodeNo"].Value)
-                                    ,0
-                                    , StockControl.dbClss.TDe(g.Cells["QTY"].Value), StockControl.dbClss.TSt(g.Cells["Remark"].Value)
+                                    ,QTY
+                                    , QTY, StockControl.dbClss.TSt(g.Cells["Remark"].Value)
                                     , StockControl.dbClss.TSt(g.Cells["LineName"].Value), StockControl.dbClss.TSt(g.Cells["MachineName"].Value)
                                     , StockControl.dbClss.TSt(g.Cells["SerialNo"].Value), StockControl.dbClss.TSt(g.Cells["LotNo"].Value)
                                     , "Completed", ClassLib.Classlib.User

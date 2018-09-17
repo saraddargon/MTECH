@@ -270,8 +270,18 @@ namespace StockControl
             {
                 if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
                 {
-                    //var so = new SaleOrder(0);
-                    //so.ShowDialog();
+                    List<int> idList = new List<int>();
+                    var a = new List<int>();
+                    foreach (var ix in dgvData.Rows)
+                    {
+                        if (dbClss.TBo(ix.Cells["S"].Value))
+                        {
+                            a.Add(dbClss.TInt(ix.Cells["id"].Value));
+                            break;
+                        }
+                    }
+                    var so = new SaleOrder(a);
+                    so.ShowDialog();
                 }
                 else
                 {
@@ -345,6 +355,15 @@ namespace StockControl
                 dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
                 baseClass.Info("Delete complete.\n");
             }
+        }
+
+        private void btn_PrintPR_Click_1(object sender, EventArgs e)
+        {
+            Report.Reportx1.Value = new string[1];
+            Report.Reportx1.Value[0] = "";
+            Report.Reportx1.WReport = "CustomerList";
+            Report.Reportx1 op = new Report.Reportx1("ReportCustomerList.rpt");
+            op.Show();
         }
     }
 

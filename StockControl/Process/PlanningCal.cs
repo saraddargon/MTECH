@@ -62,6 +62,30 @@ namespace StockControl
                     dgvData.DataSource = null;
                     dgvData.AutoGenerateColumns = false;
                     dgvData.DataSource = m;
+
+                    var rowList = new List<GridViewRowInfo>();
+                    foreach (var item in dgvData.Rows)
+                    {
+                        int idRef = item.Cells["idRef"].Value.ToInt();
+                        if (item.Cells["PlanningType"].Value.ToSt() == "Production")
+                        {
+                            var d = db.mh_ProductionOrders.Where(x => x.RefDocId == idRef && x.Active).ToList();
+                            if (d.Count > 0) //already on job
+                                rowList.Add(item);
+                        }
+                        else //Purchase
+                        {
+                            var p = db.mh_PurchaseRequestLines.Where(x => x.idCstmPODt == idRef && x.SS == 1).ToList();
+                            if (p.Count > 0) //already on P/R
+                                rowList.Add(item);
+                        }
+                    }
+
+                    //remove row
+                    rowList.ForEach(x =>
+                    {
+                        dgvData.Rows.Remove(x);
+                    });
                 }
             }
             catch (Exception ex)
@@ -147,6 +171,8 @@ namespace StockControl
                                     ).OrderBy(x => x.ReqDate).ToList();
 
                     SavePlan(ps.gridPlans, ft.dateFrom, ft.dateTo);
+                    SaveCapacity_TEMP(ps.capacityLoad);
+                    SaveCalendar_TEMP(ps.calLoad);
                 }
             }
         }
@@ -213,12 +239,12 @@ namespace StockControl
                             }
                             else if (ft.MRP && pType == "Purchase")
                                 item.IsVisible = true;
-                            else if(ft.MRP && pType == "Production")
+                            else if (ft.MRP && pType == "Production")
                             {
                                 item.IsVisible = false;
                                 continue;
                             }
-                            else if(!ft.MRP && pType == "Purchase")
+                            else if (!ft.MRP && pType == "Purchase")
                             {
                                 item.IsVisible = false;
                                 continue;
@@ -262,25 +288,6 @@ namespace StockControl
         }
 
 
-
-        private void btnGenerate_Click(object sender, EventArgs e)
-        {
-            dgvData.EndEdit();
-            GenE();
-        }
-        void GenE()
-        {
-            if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList().Count > 0)
-            {
-                if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool() && x.Cells["SS"].Value.ToSt() == "Over Due").Count() > 0)
-                    return;
-                this.Cursor = Cursors.WaitCursor;
-                Thread.Sleep(3000);
-                baseClass.Info("Generate to Production/Purchase complete.!!");
-                this.Cursor = Cursors.Default;
-            }
-        }
-
         private void MasterTemplate_CellBeginEdit(object sender, GridViewCellCancelEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -305,6 +312,8 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     db.mh_Planning_TEMPs.DeleteAllOnSubmit(db.mh_Planning_TEMPs);
+                    db.mh_CapacityLoad_TEMPs.DeleteAllOnSubmit(db.mh_CapacityLoad_TEMPs);
+                    db.mh_CalendarLoad_TEMPs.DeleteAllOnSubmit(db.mh_CalendarLoad_TEMPs);
                     db.SubmitChanges();
 
                     dgvData.DataSource = null;
@@ -357,6 +366,9 @@ namespace StockControl
                             VendorName = g.VendorName,
                             VendorNo = g.VendorNo,
                             LocationItem = g.LocationItem,
+                            root = g.root,
+                            mainNo = g.mainNo,
+                            refNo = g.refNo,
                         };
                         db.mh_Planning_TEMPs.InsertOnSubmit(p);
                     }
@@ -372,6 +384,53 @@ namespace StockControl
                 this.Cursor = Cursors.Default;
             }
         }
+        void SaveCapacity_TEMP(List<mh_CapacityLoad> capas)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                foreach (var item in capas)
+                {
+                    if (item.id == 0)
+                    {
+                        var a = new mh_CapacityLoad_TEMP();
+                        db.mh_CapacityLoad_TEMPs.InsertOnSubmit(a);
+
+                        a.Active = true;
+                        a.Capacity = item.Capacity;
+                        a.CapacityX = item.CapacityX;
+                        a.DocId = item.DocId;
+                        a.Date = item.Date;
+                        a.DocNo = item.DocNo;
+                        a.WorkCenterID = item.WorkCenterID;
+                    }
+                }
+                db.SubmitChanges();
+            }
+        }
+        void SaveCalendar_TEMP(List<mh_CalendarLoad> calens)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                foreach (var item in calens)
+                {
+                    if (item.idAbs < 0)
+                    {
+                        var a = new mh_CalendarLoad_TEMP();
+                        db.mh_CalendarLoad_TEMPs.InsertOnSubmit(a);
+                        a.Date = item.Date;
+                        a.EndingTime = item.EndingTime;
+                        a.idAbs = item.idAbs;
+                        a.idCal = item.idCal;
+                        a.idHol = item.idHol;
+                        a.idJob = item.idJob;
+                        a.idRoute = item.idRoute;
+                        a.idWorkcenter = item.idWorkcenter;
+                        a.StartingTime = item.StartingTime;
+                    }
+                }
+                db.SubmitChanges();
+            }
+        }
 
         private void radButtonElement1_Click(object sender, EventArgs e)
         {
@@ -381,6 +440,237 @@ namespace StockControl
         private void radButtonElement2_Click(object sender, EventArgs e)
         {
             dgvData.EnableFiltering = false;
+        }
+
+        private void btnGenJob_Click(object sender, EventArgs e)
+        {
+            dgvData.EndEdit();
+            GenJob();
+        }
+        void GenJob()
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                var rowS = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
+                if (rowS.Count < 1)
+                {
+                    baseClass.Warning("Please select data.!");
+                    return;
+                }
+                if (rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production").Count() < 1)
+                {
+                    baseClass.Warning("Please select PlanningType: Production.\n");
+                    return;
+                }
+
+                using (var db = new DataClasses1DataContext())
+                {
+                    foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
+                    {
+                        //Hd
+                        var m = new mh_ProductionOrder();
+                        m.CreateBy = ClassLib.Classlib.User;
+                        m.CreateDate = DateTime.Now;
+                        m.JobDate = DateTime.Now.Date;
+                        m.JobNo = dbClss.GetNo(29, 2);
+                        //
+                        m.Active = true;
+                        m.EndingDate = item.Cells["EndingDate"].Value.ToDateTime().Value;
+                        m.FGName = item.Cells["ItemName"].Value.ToSt();
+                        m.FGNo = item.Cells["ItemNo"].Value.ToSt();
+                        m.ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value;
+                        var reqDate = m.ReqDate.Date;
+                        var lot = db.mh_LotFGs.Where(x => x.LotDate == reqDate).FirstOrDefault();
+                        if (lot != null)
+                            m.LotNo = lot.LotNo;
+                        else
+                            m.LotNo = "";
+                        m.Qty = item.Cells["Qty"].Value.ToDecimal();
+                        m.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
+                        m.OutQty = m.Qty;
+                        m.RefDocId = item.Cells["idRef"].Value.ToInt();
+                        m.RefDocNo = item.Cells["RefDocNo"].Value.ToSt();
+                        m.StartingDate = item.Cells["StartingDate"].Value.ToDateTime().Value;
+                        m.UOM = item.Cells["UOM"].Value.ToSt();
+                        m.UpdateBy = ClassLib.Classlib.User;
+                        m.UpdateDate = DateTime.Now;
+                        db.mh_ProductionOrders.InsertOnSubmit(m);
+                        //Update Customer P/O
+                        if (item.Cells["root"].Value.ToBool())
+                        {
+                            var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                            if (po != null)
+                            {
+                                //po.OutPlan -= m.OutQty;
+                                po.OutPlan = 0;//Full Ref Customer P/O
+                                po.Status = baseClass.setCustomerPOStatus(po);
+                                db.SubmitChanges();
+                            }
+                            db.SubmitChanges();
+                        }
+
+                        //Dt
+                        int mainNo = item.Cells["mainNo"].Value.ToInt(); //find all component of Item
+                        var rowDt = dgvData.Rows.Where(x => x.Cells["idRef"].Value.ToInt() == m.RefDocId
+                            && x.Cells["refNo"].Value.ToInt() == mainNo).ToList();
+                        foreach (var r in rowDt)
+                        {
+                            var dt = new mh_ProductionOrderRM
+                            {
+                                Active = true,
+                                GroupType = r.Cells["GroupType"].Value.ToSt(),
+                                InvGroup = r.Cells["InvGroup"].Value.ToSt(),
+                                ItemName = r.Cells["ItemName"].Value.ToSt(),
+                                ItemNo = r.Cells["ItemNo"].Value.ToSt(),
+                                JobNo = m.JobNo,
+                                PCSUnit = r.Cells["PCSUnit"].Value.ToDecimal(),
+                                Qty = r.Cells["Qty"].Value.ToDecimal(),
+                                RemQty = Math.Round(r.Cells["Qty"].Value.ToDecimal()),
+                                Type = r.Cells["Type"].Value.ToSt(),
+                                UOM = r.Cells["UOM"].Value.ToSt(),
+                            };
+                            db.mh_ProductionOrderRMs.InsertOnSubmit(dt);
+                            db.SubmitChanges();
+                        }
+                    }
+                    DataLoad();
+
+                    baseClass.Info("Generate Job Order Sheet complete.\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        private void btnGenPR_Click(object sender, EventArgs e)
+        {
+            dgvData.EndEdit();
+            GenPR();
+        }
+        void GenPR()
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+
+                var rowS = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
+                if (rowS.Count < 1)
+                {
+                    baseClass.Warning("Please select data.!");
+                    return;
+                }
+                if (rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Purchase").Count() < 1)
+                {
+                    baseClass.Warning("Please select PlanningType: Purchase.\n");
+                    return;
+                }
+
+                DataTable _dt = new DataTable();
+                _dt.Columns.Add("idCstmPO", typeof(int));
+                _dt.Columns.Add("PRNo", typeof(string));
+                using (var db = new DataClasses1DataContext())
+                {
+                    foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Purchase"))
+                    {//Purchase
+                        //Hd
+                        byte[] b = null;
+                        int idRef = item.Cells["idRef"].Value.ToInt();
+                        var poDt = db.mh_CustomerPODTs.Where(x => x.id == idRef).FirstOrDefault();
+                        int idPoHd = poDt.idCustomerPO;
+                        string CstmPoNo = item.Cells["RefDocNo"].Value.ToSt();
+
+                        var hd = new mh_PurchaseRequest();
+                        if(_dt.Rows.Cast<DataRow>().Where(x=>x["idCstmPO"].ToInt() == idPoHd).Count() > 0)
+                        {
+                            var row = _dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idPoHd).First();
+                            string prNo = row["PRNo"].ToSt();
+                            hd = db.mh_PurchaseRequests.Where(x => x.PRNo == prNo).FirstOrDefault();
+                        }
+                        else
+                        {
+                            //New PR
+                            hd = new mh_PurchaseRequest
+                            {
+                                Barcode = b,
+                                ClearBill = false,
+                                CreateBy = ClassLib.Classlib.User,
+                                CreateDate = DateTime.Now,
+                                Department = "Planing",
+                                HDRemark = "",
+                                idCstmPO = idPoHd,
+                                LocationRunning = null,
+                                PRNo = dbClss.GetNo(12, 2),
+                                RefDocument = CstmPoNo, //Customer PoNo
+                                RequestBy = ClassLib.Classlib.User,
+                                RequestDate = DateTime.Now,
+                                Status = "Waiting",
+                                TEMPNo = dbClss.GetNo(3, 2),
+                                Total = 0,//update
+                                UpdateBy = ClassLib.Classlib.User,
+                                UpdateDate = DateTime.Now,
+                            };
+                            db.mh_PurchaseRequests.InsertOnSubmit(hd);
+                            _dt.Rows.Add(idPoHd, hd.PRNo);
+                        }
+                        db.SubmitChanges();
+
+                        //Dt
+                        string itemNo = item.Cells["ItemNo"].Value.ToSt();
+                        var tool = db.mh_Items.Where(x => x.InternalNo == itemNo).FirstOrDefault();
+                        var amnt = Math.Round(item.Cells["Qty"].Value.ToDecimal() * tool.StandardCost, 2);
+                        var dt = new mh_PurchaseRequestLine
+                        {
+                            Amount = amnt,
+                            CodeNo = itemNo,
+                            Cost = tool.StandardCost,
+                            GroupCode = tool.GroupType,
+                            idCstmPODt = idRef, //idPODt
+                            ItemDesc = item.Cells["ItemName"].Value.ToSt(),
+                            ItemName = item.Cells["ItemName"].Value.ToSt(),
+                            OrderQty = item.Cells["Qty"].Value.ToDecimal(),
+                            PCSUOM = item.Cells["PCSUnit"].Value.ToDecimal(),
+                            PRNo = hd.PRNo,
+                            SS = 1,
+                            Status = "Waiting",
+                            TempNo = hd.TEMPNo,
+                            UOM = item.Cells["UOM"].Value.ToSt(),
+                            VATType = tool.VatType,
+                            VendorName = tool.VendorName,
+                            VendorNo = tool.VendorNo,
+                        };
+                        db.mh_PurchaseRequestLines.InsertOnSubmit(dt);
+                        hd.Total += amnt;
+                        db.SubmitChanges();
+                    }
+
+                    DataLoad();
+                    baseClass.Info("Generate Purchase Request complete.\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally { this.Cursor = Cursors.Default; }
+        }
+
+        private void btnLinkToJob_Click(object sender, EventArgs e)
+        {
+            var j = new ProductionOrder_List();
+            j.ShowDialog();
+        }
+
+        private void btnLinkToPR_Click(object sender, EventArgs e)
+        {
+            var j = new CreatePR_List();
+            j.ShowDialog();
         }
     }
 

@@ -281,7 +281,7 @@
             this.btn_PrintPR.Name = "btn_PrintPR";
             this.btn_PrintPR.Text = "พิมพ์เอกสาร";
             this.btn_PrintPR.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btn_PrintPR.Click += new System.EventHandler(this.btn_PrintPR_Click);
+            this.btn_PrintPR.Click += new System.EventHandler(this.radButtonElement2_Click);
             // 
             // btn_Print_Barcode
             // 

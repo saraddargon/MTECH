@@ -55,7 +55,7 @@ namespace StockControl
             }
 
             dgvData.AutoGenerateColumns = false;
-            //DataLoad();
+            DataLoad();
 
             dgvData.Columns.ToList().ForEach(x =>
             {
@@ -63,9 +63,7 @@ namespace StockControl
                     x.ReadOnly = true;
             });
 
-
-            //
-            DemoData();
+            
         }
         private void DataLoad()
         {
@@ -74,10 +72,22 @@ namespace StockControl
             try
             {
                 dgvData.DataSource = null;
+                dgvData.Rows.Clear();
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
+                    string jobNo = txtJobNo.Text.Trim();
+                    string FGNo = cbbItem.SelectedValue.ToSt();
+                    DateTime? dFrom = (cbChkDate.Checked) ? (DateTime?)dtFrom.Value.Date : null;
+                    DateTime? dTo = (cbChkDate.Checked) ? (DateTime?)dtTo.Value.Date.AddDays(1).AddMinutes(-1) : null;
+                    var m = db.mh_ProductionOrders.Where(x => x.Active
+                            && (jobNo == "" || x.JobNo == jobNo)
+                            && (FGNo == "" || x.FGNo == FGNo)
+                            && (dFrom == null || (x.ReqDate.Date >= dFrom && x.ReqDate.Date <= dTo))
+                    ).ToList();
+                    dgvData.DataSource = m;
 
+                    setStatus();
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -87,55 +97,18 @@ namespace StockControl
             //    radGridView1.DataSource = dt;
         }
         
-
-        void DemoData()
+        void setStatus()
         {
-            try
+            foreach (var item in dgvData.Rows)
             {
-                dgvData.DataSource = null;
-                dgvData.Rows.Clear();
-
-                demoadd("On Plan", "JOB1809-001", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-001");
-                demoadd("Delay", "JOB1809-002", new DateTime(2018, 9, 8), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-002");
-                demoadd("On Plan", "JOB1809-003", new DateTime(2018, 9, 30), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-003");
-                demoadd("On Plan", "JOB1809-004", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-004");
-                demoadd("On Plan", "JOB1809-005", new DateTime(2018, 9, 30), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-005");
-                demoadd("Delay", "JOB1809-006", new DateTime(2018, 9, 8), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-006");
-                demoadd("On Plan", "JOB1809-001", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-001");
-                demoadd("Delay", "JOB1809-002", new DateTime(2018, 9, 8), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-002");
-                demoadd("On Plan", "JOB1809-003", new DateTime(2018, 9, 30), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-003");
-                demoadd("On Plan", "JOB1809-004", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-004");
-                demoadd("On Plan", "JOB1809-005", new DateTime(2018, 9, 30), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-005");
-                demoadd("Delay", "JOB1809-006", new DateTime(2018, 9, 8), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-006");
-                demoadd("Delay", "JOB1809-001", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-001");
-                demoadd("Delay", "JOB1809-002", new DateTime(2018, 9, 8), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-002");
-                demoadd("On Plan", "JOB1809-003", new DateTime(2018, 9, 30), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-003");
-                demoadd("On Plan", "JOB1809-004", new DateTime(2018, 9, 30), "I0001", "FG 1", 100, "PCS", new DateTime(2018, 09, 10), new DateTime(2018, 09, 20), "CSTMPO1809-004");
-                demoadd("On Plan", "JOB1809-005", new DateTime(2018, 9, 30), "I0002", "FG 2", 50, "PCS", new DateTime(2018, 09, 1), new DateTime(2018, 09, 7), "CSTMPO1809-005");
-                demoadd("Delay", "JOB1809-006", new DateTime(2018, 9, 8), "I0003", "FG 3", 10, "PCS", new DateTime(2018, 09, 9), new DateTime(2018, 09, 15), "CSTMPO1809-006");
-
-            }
-            catch (Exception ex)
-            {
-                baseClass.Warning(ex.Message);
+                if (item.Cells["OutQty"].Value.ToDecimal() == 0)
+                    item.Cells["Status"].Value = "Completed";
+                else if (DateTime.Today <= item.Cells["ReqDate"].Value.ToDateTime().Value.Date)
+                    item.Cells["Status"].Value = "On Plan";
+                else
+                    item.Cells["Status"].Value = "Delay";
             }
         }
-        void demoadd(string SS, string ProductionNo, DateTime DueDate, string ItemNo, string ItemName
-            , decimal Qty, string Unit, DateTime StartingDate, DateTime EndingDate, string RefDocNo)
-        {
-            var row = dgvData.Rows.AddNew();
-            row.Cells["SS"].Value = SS;
-            row.Cells["ProductionNo"].Value = "JOB1809-" + (row.Index + 1).ToString("000");
-            row.Cells["DueDate"].Value = DueDate;
-            row.Cells["Item"].Value = ItemNo;
-            row.Cells["ItemName"].Value = ItemName;
-            row.Cells["Qty"].Value = Qty;
-            row.Cells["Unit"].Value = Unit;
-            row.Cells["StartingDate"].Value = StartingDate;
-            row.Cells["EndingDate"].Value = EndingDate;
-            row.Cells["RefDocNo"].Value = RefDocNo;
-        }
-        
 
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -172,7 +145,7 @@ namespace StockControl
             //select Item
             if (sType == 1)
             {
-                var t = new CustomerPO();
+                var t = new ProductionOrder();
                 t.ShowDialog();
             }
             else
@@ -181,35 +154,19 @@ namespace StockControl
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            //DataLoad();
-            DemoData();
+            DataLoad();
         }
 
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
-            //selRow();
-            var ee = new ProductionOrder(true);
-            ee.ShowDialog();
+            selRow();
         }
         void selRow()
         {
             if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
-                var rowe = dgvData.CurrentCell.RowInfo;
-                PONo = rowe.Cells["PONo"].Value.ToSt();
-                CstmNo = rowe.Cells["CustomerNo"].Value.ToSt();
 
-                if (sType == 1)
-                {
-                    //var p = new CustomerPO(PONo, CstmNo);
-                    //p.ShowDialog();
-                    //DataLoad();
-                    //PONo = "";
-                    //CstmNo = "";
-                }
-                else
-                    this.Close();
             }
         }
 
@@ -217,6 +174,15 @@ namespace StockControl
         {
             //select Item for Print
             //throw new NotImplementedException();
+            if (dgvData.CurrentCell.RowIndex >= 0)
+            {
+                string JobNo= dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
+                Report.Reportx1.Value = new string[1];
+                Report.Reportx1.Value[0] = JobNo;
+                Report.Reportx1.WReport = "JOBNoList";
+                Report.Reportx1 op = new Report.Reportx1("JobOrderSheet3.rpt");
+                op.Show();
+            }
         }
 
 
@@ -314,6 +280,113 @@ namespace StockControl
             {
                 baseClass.Warning(ex.Message);
             }
+        }
+
+        //View
+        private void radButtonElement2_Click(object sender, EventArgs e)
+        {
+            dgvData.EndEdit();
+            if (dgvData.CurrentCell == null) return;
+
+            string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
+            var p = new ProductionOrder(jobNo);
+            p.ShowDialog();
+            DataLoad();
+        }
+        //Edit
+        private void radButtonElement3_Click(object sender, EventArgs e)
+        {
+            dgvData.EndEdit();
+            if (dgvData.CurrentCell == null) return;
+
+            string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
+            var p = new ProductionOrder(jobNo);
+            p.ShowDialog();
+            DataLoad();
+        }
+        //Delete
+        bool chkDelE()
+        {
+            bool ret = true;
+            string mssg = "";
+
+            var c = dgvData.CurrentCell.RowInfo;
+            var s = Math.Round(c.Cells["Qty"].Value.ToDecimal() * c.Cells["PCSUnit"].Value.ToDecimal(), 2);
+            var s2 = c.Cells["OutQty"].Value.ToDecimal();
+
+            if(s != s2)
+            {
+                mssg += "- Cannot delete because FG is already receive.\n";
+            }
+
+            if (mssg != "")
+            {
+                baseClass.Warning(mssg);
+                ret = false;
+            }
+            return ret;
+        }
+        private void radButtonElement4_Click(object sender, EventArgs e)
+        {
+            dgvData.EndEdit();
+            if (dgvData.CurrentCell == null) return;
+
+            if (chkDelE() && baseClass.IsDel())
+                DeleteE();
+
+        }
+        void DeleteE()
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                using (var d = new DataClasses1DataContext())
+                {
+                    string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo && x.Active).FirstOrDefault();
+                        if (m != null)
+                        {
+                            m.Active = false;
+                            m.UpdateDate = DateTime.Now;
+                            m.UpdateBy = ClassLib.Classlib.User;
+
+                            var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                            if (po != null)
+                            {
+                                //po.OutPlan += (m.Qty * m.PCSUnit) - m.OutQty;
+                                po.OutPlan = Math.Round(m.Qty * m.PCSUnit, 3); //Full Return Qty
+                                po.Status = baseClass.setCustomerPOStatus(po);
+                                db.SubmitChanges();
+
+                                DataLoad();
+                                baseClass.Info("Delete complete.\n");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        private void radButtonElement5_Click(object sender, EventArgs e)
+        {
+            
+              //  string JobNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
+                Report.Reportx1.Value = new string[1];
+                Report.Reportx1.Value[0] = "";
+                Report.Reportx1.WReport = "ProductionList";
+                Report.Reportx1 op = new Report.Reportx1("ReportProductionList.rpt");
+                op.Show();
+            
         }
     }
 

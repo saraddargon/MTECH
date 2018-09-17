@@ -207,9 +207,9 @@ namespace StockControl
                     {
                         if (Convert.ToString(g.Cells["dgvC"].Value).Equals("T"))
                         {
+                            var t = new mh_CapacityAbsence();
                             if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
                             {
-                                var t = new mh_CapacityAbsence();
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
                                 t.Date = g.Cells["Date"].Value.ToDateTime().Value.Date;
                                 t.StartingTime = g.Cells["StartTime"].Value.ToSt();
@@ -227,7 +227,7 @@ namespace StockControl
                             }
                             else
                             {
-                                var t = db.mh_CapacityAbsences.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
+                                t = db.mh_CapacityAbsences.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
                                 t.Date = g.Cells["Date"].Value.ToDateTime().Value.Date;
                                 t.StartingTime = g.Cells["StartTime"].Value.ToSt();
                                 t.EndingTime = g.Cells["EndTime"].Value.ToSt();
@@ -241,6 +241,26 @@ namespace StockControl
                                 dbClss.AddHistory(this.Name, "แก้ไขวันหยุดงาน", $"แก้ไขวันหยุดงาน [{t.Date.ToDtString()}]", "");
 
                             }
+
+                            //Calendar Load
+                            var calLoad = db.mh_CalendarLoads.Where(x => x.idAbs == t.id).FirstOrDefault();
+                            //save CalendarLoad
+                            var m = db.mh_CalendarLoads.Where(x => x.idHol == t.id).FirstOrDefault();
+                            if (m == null)
+                            {
+                                m = new mh_CalendarLoad();
+                                db.mh_CalendarLoads.InsertOnSubmit(m);
+                            }
+                            m.idAbs = t.id;
+                            m.idCal = 0;
+                            m.idHol = 0;
+                            m.idJob = 0;
+                            m.idRoute = 0;
+                            m.idWorkcenter = t.idWorkCenters;
+                            m.StartingTime = baseClass.setTimeSpan(t.StartingTime);
+                            m.EndingTime = baseClass.setTimeSpan(t.EndingTime);
+                            m.Date = t.Date;
+                            db.SubmitChanges();
                         }
                     }
                 }
@@ -280,10 +300,15 @@ namespace StockControl
                                     d.Active = false;
                                     //db.mh_CapacityAbsences.DeleteOnSubmit(d);
                                     dbClss.AddHistory(this.Name, "ลบวันหยุดงาน", $"Delete HoliDay [{d.Date.ToDtString()}]", "");
+
+                                    //Delete Calendar Load
+                                    var calLoad = db.mh_CalendarLoads.Where(x => x.idAbs == d.id).FirstOrDefault();
+                                    if(calLoad != null)
+                                    {
+                                        db.mh_CalendarLoads.DeleteOnSubmit(calLoad);
+                                    }
                                 }
                                 C += 1;
-
-
 
                                 db.SubmitChanges();
                             }

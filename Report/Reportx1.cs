@@ -152,6 +152,72 @@ namespace Report
 
             switch (WReport)
             {
+                case "ALLReport":
+                    {
+
+                        rptDc.SetParameterValue("@DocumentNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+
+                    }
+                    break;
+                case "ALLReport2":
+                    {
+
+                       // rptDc.SetParameterValue("@DocumentNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+
+                    }
+                    break;
+                case "ItemList":
+                    {
+
+                        rptDc.SetParameterValue("@InventoryGroup", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+
+                    }
+                    break;
+                case "JOBNoList":
+                    {
+
+                        rptDc.SetParameterValue("@JobNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+
+                    }
+                    break;
+                case "CustomerList":
+                    {
+
+                        rptDc.SetParameterValue("@Status", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+
+                    }
+                    break;
+                case "ProductionList":
+                    {
+
+                        rptDc.SetParameterValue("@Status", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+
+                    }
+                    break;
+                case "Invoice":
+                    {
+
+                        rptDc.SetParameterValue("@InvNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@InvNo2", Convert.ToString(Value[1].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+
+                    }
+                    break;
+                case "Shipment":
+                    {
+
+                        rptDc.SetParameterValue("@ShippingNo1", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@ShippingNo2", Convert.ToString(Value[1].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+
+                    }
+                    break;
                 case "001_Kanban_Part":
                     {
 
