@@ -257,54 +257,59 @@ namespace StockControl
                             DocNo = dbClss.TSt(rd.Cells["ApproveDocuNo"].Value);
                             Type = dbClss.TSt(rd.Cells["ApproveType"].Value);
                             id = dbClss.TInt(rd.Cells["id"].Value);
-                            var g = (from ix in db.mh_ApproveLists
-                                     where ix.id == id && ix.Status == "Waiting"
-                                     select ix).ToList();
-                            if (g.Count > 0)
-                            {
-                                var gg = (from ix in db.mh_ApproveLists
-                                          where ix.id == id && ix.Status == "Waiting"
-                                          select ix).First();
-                                gg.Status = "Approved";
-                                gg.ApproveBy = ClassLib.Classlib.User;
-                                gg.ApproveDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-                                Seq = dbClss.TInt(gg.Seq);
 
-                                db.SubmitChanges();
+                            db.sp_064_mh_ApproveList_Update2(id, DocNo, Type, ClassLib.Classlib.User, "", "Approve");
+                            ////Old-------------------------
+                            //var g = (from ix in db.mh_ApproveLists
+                            //         where ix.id == id && ix.Status == "Waiting"
+                            //         select ix).ToList();
+                            //if (g.Count > 0)
+                            //{
+                            //    var gg = (from ix in db.mh_ApproveLists
+                            //              where ix.id == id && ix.Status == "Waiting"
+                            //              select ix).First();
+                            //    gg.Status = "Approved";
+                            //    gg._By = ClassLib.Classlib.User;
+                            //    gg._Date = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                            //    Seq = dbClss.TInt(gg.Seq);
 
-                                //คนที่อยู่ลำดับเดียวกัน
-                                var u = (from ix in db.mh_ApproveLists
-                                         where ix.Seq == Seq && ix.Status == "Waiting"
-                                         && ix.ApproveDocuNo == DocNo
-                                         select ix).ToList();
-                                if (u.Count > 0) 
-                                {
-                                    foreach(var uu in u)
-                                    {
-                                        uu.Status = "Approved";
-                                        db.SubmitChanges();
-                                    }
-                                }
-                                db.SubmitChanges();
+                            //    db.SubmitChanges();
+
+                            //    //คนที่อยู่ลำดับเดียวกัน
+                            //    var u = (from ix in db.mh_ApproveLists
+                            //             where ix.Seq == Seq && ix.Status == "Waiting"
+                            //             && ix.ApproveDocuNo == DocNo
+                            //             select ix).ToList();
+                            //    if (u.Count > 0) 
+                            //    {
+                            //        foreach(var uu in u)
+                            //        {
+                            //            uu.Status = "Approved";
+                            //            db.SubmitChanges();
+                            //        }
+                            //    }
+                            //    db.SubmitChanges();
 
 
-                                var a = (from ix in db.mh_ApproveLists
-                                         where ix.Status == "Cancel"
-                                          && ix.ApproveDocuNo == DocNo
-                                         select ix).ToList();
-                                if (a.Count>0)  //มีรายการในระบบ
-                                {
-                                    var c_approve = a.Where(ab => ab.Status == "Approved").ToList().Count();
-                                    var c_Waiting = a.Where(ab => ab.Status == "Waiting").ToList().Count();
-                                    if(c_Waiting<=0 && c_approve>0)
-                                        Update_Status(Type, DocNo);
-                                }
+                            //    var a = (from ix in db.mh_ApproveLists
+                            //             where ix.Status == "Cancel"
+                            //              && ix.ApproveDocuNo == DocNo
+                            //             select ix).ToList();
+                            //    if (a.Count>0)  //มีรายการในระบบ
+                            //    {
+                            //        var c_approve = a.Where(ab => ab.Status == "Approved").ToList().Count();
+                            //        var c_Waiting = a.Where(ab => ab.Status == "Waiting").ToList().Count();
+                            //        if(c_Waiting<=0 && c_approve>0)
+                            //            Update_Status(Type, DocNo);
+                            //    }
 
-                                dbClss.AddHistory(this.Name, "อนุมัติ Approve", "สร้าง Approve [" + DocNo + "]", DocNo);
-                                baseClass.Info("Delete invoice complete.");
-                            }
+                            //    dbClss.AddHistory(this.Name, "อนุมัติ Approve", "สร้าง Approve [" + DocNo + "]", DocNo);
+                            //    baseClass.Info("Delete invoice complete.");
+                            //}
+
+                            ////Old-------------------------
                         }
-                        
+
                     }
                 }
             }
@@ -395,32 +400,32 @@ namespace StockControl
        
         private void btn_Print_Barcode_Click(object sender, EventArgs e)
         {
-            try
-            {
-                dt_Kanban.Rows.Clear();
+            //try
+            //{
+            //    dt_Kanban.Rows.Clear();
 
-                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                {
-                    var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == txtType.Text).ToList();
-                    if (g.Count() > 0)
-                    {
-                        foreach (var gg in g)
-                        {
-                            dt_Kanban.Rows.Add(gg.CodeNo, gg.ItemNo, gg.ItemDescription, gg.ShelfNo, gg.Leadtime, gg.VendorItemName, gg.GroupCode, gg.Toollife, gg.MaximumStock, gg.MinimumStock, gg.ReOrderPoint, gg.BarCode);
-                        }
-                        //DataTable DT =  StockControl.dbClss.LINQToDataTable(g);
-                        //Reportx1 po = new Reportx1("Report_PurchaseRequest_Content1.rpt", DT, "FromDT");
-                        //po.Show();
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == txtType.Text).ToList();
+            //        if (g.Count() > 0)
+            //        {
+            //            foreach (var gg in g)
+            //            {
+            //                dt_Kanban.Rows.Add(gg.CodeNo, gg.ItemNo, gg.ItemDescription, gg.ShelfNo, gg.Leadtime, gg.VendorItemName, gg.GroupCode, gg.Toollife, gg.MaximumStock, gg.MinimumStock, gg.ReOrderPoint, gg.BarCode);
+            //            }
+            //            //DataTable DT =  StockControl.dbClss.LINQToDataTable(g);
+            //            //Reportx1 po = new Reportx1("Report_PurchaseRequest_Content1.rpt", DT, "FromDT");
+            //            //po.Show();
 
-                        Report.Reportx1 op = new Report.Reportx1("001_Kanban_Part.rpt", dt_Kanban, "FromDL");
-                        op.Show();
-                    }
-                    else
-                        MessageBox.Show("not found.");
-                }
+            //            Report.Reportx1 op = new Report.Reportx1("001_Kanban_Part.rpt", dt_Kanban, "FromDL");
+            //            op.Show();
+            //        }
+            //        else
+            //            MessageBox.Show("not found.");
+            //    }
 
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void btn_PrintPR_Click(object sender, EventArgs e)
