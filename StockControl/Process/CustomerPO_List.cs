@@ -37,6 +37,7 @@ namespace StockControl
             //radGridView1.ReadOnly = true;
             LoadDef();
             dgvData.AutoGenerateColumns = false;
+            cbbStatus.SelectedIndex = 1; //Waiting
             DataLoad();
 
             dgvData.Columns.ToList().ForEach(x =>
@@ -94,7 +95,7 @@ namespace StockControl
                     DateTime? dFrom = (cbChkDate.Checked) ? (DateTime?)dtFrom.Value.Date : null;
                     DateTime? dTo = (cbChkDate.Checked) ? (DateTime?)dtTo.Value.Date.AddDays(1).AddMinutes(-1) : null;
                     var m = getGrid.GetGrid_CustomerPO(txtPONo.Text.Trim(), txtCSTMNo.Text.Trim()
-                        , cbbItem.SelectedValue.ToSt(), dFrom, dTo);
+                        , cbbItem.SelectedValue.ToSt(), dFrom, dTo, cbbStatus.Text);
 
                     dgvData.DataSource = m;
                 }

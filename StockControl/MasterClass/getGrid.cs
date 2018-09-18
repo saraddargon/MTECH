@@ -8,7 +8,8 @@ namespace StockControl
     public static class getGrid
     {
         public static List<grid_CustomerPO> GetGrid_CustomerPO(string CustomerPO = ""
-            , string CSTMNo = "", string Item = "", DateTime? dFrom = null, DateTime? dTo = null)
+            , string CSTMNo = "", string Item = "", DateTime? dFrom = null, DateTime? dTo = null
+            , string Status = "")
         {
             var l = new List<grid_CustomerPO>();
             using (var db = new DataClasses1DataContext())
@@ -21,7 +22,8 @@ namespace StockControl
                         && (dFrom == null || (x.OrderDate >= dFrom && x.OrderDate <= dTo))).ToList();
                     foreach (var hd in m)
                     {
-                        var t = db.mh_CustomerPODTs.Where(x => x.Active && x.idCustomerPO == hd.id).ToList();
+                        var t = db.mh_CustomerPODTs.Where(x => x.Active && x.idCustomerPO == hd.id
+                            && (Status == "" || x.Status == Status)).ToList();
                         foreach (var dt in t)
                         {
                             if (Item != "" && dt.ItemNo != Item) continue;
@@ -47,7 +49,7 @@ namespace StockControl
 
                             //find Job
                             string JobNo = "";
-                            if(dt.OutPlan == 0)
+                            if (dt.OutPlan == 0)
                             {
                                 var q = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == dt.id).FirstOrDefault();
                                 if (q != null) JobNo = q.JobNo;
@@ -236,7 +238,7 @@ namespace StockControl
         public string Item { get; set; }
         public string ItemName { get; set; }
     }
-    
+
 
     public class ItemData
     {
