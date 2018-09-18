@@ -813,5 +813,15 @@ namespace StockControl
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+
+        private void btnDeleteRow_Click(object sender, EventArgs e)
+        {
+            if(dgvData.CurrentCell != null)
+            {
+                dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
+            }
+        }
+
+
     }
 }
