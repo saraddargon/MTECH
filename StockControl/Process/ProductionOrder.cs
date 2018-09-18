@@ -1027,6 +1027,13 @@ namespace StockControl
                     workLoads = baseClass.getWorkLoad(dFrom, dTo);
                     calLoad = db.mh_CalendarLoads.Where(x => x.Date >= dFrom && x.Date <= dTo).ToList();
 
+                    //manu Unit Time
+                    decimal manuTime = 1;
+                    var manuUnit = db.mh_ManufacturingSetups.Select(x => x.ShowCapacityInUOM).FirstOrDefault();
+                    if (manuUnit == 2)
+                        manuTime = 60;
+                    else if (manuUnit == 3)
+                        manuTime = (24 * 60);
                     //**Routeing
                     var t_StartingDate = (DateTime?)null;
                     var t_EndingDate = (DateTime?)null;
@@ -1045,10 +1052,10 @@ namespace StockControl
                             tempStarting = t_EndingDate.Value;
                         int idWorkCenter = r.idWorkCenter;
                         var totalCapa_All = 0.00m;
-                        var SetupTime = r.SetupTime;
-                        var RunTime = r.RunTime;
+                        var SetupTime = r.SetupTime * manuTime;
+                        var RunTime = r.RunTime * manuTime;
                         var RunTimeCapa = Math.Round(((RunTime * txtFGQty.Text.ToDecimal()) / r.workcenter.Capacity), 2);
-                        var WaitingTime = r.WaitTime;
+                        var WaitingTime = r.WaitTime * manuTime;
                         totalCapa_All = SetupTime + RunTimeCapa + r.WaitTime;
                         var CapaUseX = 0.00m;
                         CapaUseX = totalCapa_All;

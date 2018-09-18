@@ -363,6 +363,13 @@ namespace StockControl
                     //set Production or Purchase
                     if (tdata.RepType_enum == ReplenishmentType.Production)
                     {
+                        //manu Unit Time
+                        decimal manuTime = 1;
+                        var manuUnit = db.mh_ManufacturingSetups.Select(x => x.ShowCapacityInUOM).FirstOrDefault();
+                        if (manuUnit == 2)
+                            manuTime = 60;
+                        else if (manuUnit == 3)
+                            manuTime = (24 * 60);
                         //Prodction
                         //find BOM
                         var boms = db.tb_BomDTs.Where(x => x.PartNo == gPlan.ItemNo).ToList();
@@ -430,10 +437,10 @@ namespace StockControl
                                 tempStarting = t_EndingDate.Value;
                             int idWorkCenter = r.idWorkCenter;
                             var totalCapa_All = 0.00m;
-                            var SetupTime = r.SetupTime;
-                            var RunTime = r.RunTime;
+                            var SetupTime = r.SetupTime * manuTime;
+                            var RunTime = r.RunTime * manuTime;
                             var RunTimeCapa = Math.Round(((RunTime * gPlan.Qty) / r.workcenter.Capacity), 2);
-                            var WaitingTime = r.WaitTime;
+                            var WaitingTime = r.WaitTime * manuTime;
                             totalCapa_All = SetupTime + RunTimeCapa + r.WaitTime;
                             var CapaUseX = 0.00m;
                             CapaUseX = totalCapa_All;
