@@ -86,6 +86,20 @@ namespace StockControl
         public mh_CustomerPO POHd { get; set; }
         public mh_CustomerPODT PODt { get; set; }
     }
+    public class listforPlanning
+    {
+        public int DocId { get; set; }
+        public string DocNo { get; set; }
+        public DateTime DocDate { get; set; }
+        public string ItemNo { get; set; }
+        public string ItemName { get; set; }
+        public ReplenishmentType RepType { get; set; }
+        public DateTime ReqDate { get; set; }
+        public decimal ReqQty { get; set; }
+        public decimal PCSUnit { get; set; }
+        public string UOM { get; set; }
+        public bool alreadyJob { get; set; } = false;
+    }
 
     public class grid_CustomerPO
     {
@@ -97,8 +111,7 @@ namespace StockControl
         public string CustomerNo { get; set; }
         public string CustomerName
         {
-            get
-            {
+            get {
                 using (var db = new DataClasses1DataContext())
                 {
                     var c = db.mh_Customers.Where(x => x.Active && x.No == CustomerNo).FirstOrDefault();
@@ -114,8 +127,7 @@ namespace StockControl
         public decimal Qty { get; set; } = 0;
         public decimal Remain
         {
-            get
-            {
+            get {
                 return (Qty) - Shipped;
             }
         }
@@ -126,16 +138,14 @@ namespace StockControl
         }
         public bool Plan
         {
-            get
-            {
+            get {
                 return (Qty * PCSUnit != OutPlan);
                 //find from JobNo
             }
         }
         public bool SaleOrder
         {
-            get
-            {
+            get {
                 return (Qty * PCSUnit != OutSO);
                 //find in SaleOrder
             }
@@ -159,8 +169,7 @@ namespace StockControl
     {
         public string Status
         {
-            get
-            {
+            get {
                 if (DueDate.Date > ReqDate.Date)
                     return "Over Due";
                 else
@@ -174,6 +183,7 @@ namespace StockControl
         public DateTime? StartingDate { get; set; }
         public DateTime? EndingDate { get; set; }
         public decimal Qty { get; set; }
+        public decimal UseQty { get; set; }
         public string PlanningType { get; set; }
         public int idRef { get; set; }
         public string RefDocNo { get; set; }
@@ -181,6 +191,13 @@ namespace StockControl
         public string GroupType { get; set; }
         public string Type { get; set; }
         public string InvGroup { get; set; }
+        public ReorderType ReorderTypeEnum { get; set; }
+        public string ReorderTypeText
+        {
+            get {
+                return baseClass.getReorderTypeText(ReorderTypeEnum);
+            }
+        }
         public string VendorNo { get; set; }
         public string VendorName { get; set; }
         public string UOM { get; set; }
@@ -193,6 +210,8 @@ namespace StockControl
         public bool root { get; set; } = false;
         public int mainNo { get; set; } = 0;
         public int refNo { get; set; } = 0;
+
+        public ItemData itemData { get; set; }
     }
 
 
@@ -206,8 +225,7 @@ namespace StockControl
         public string Item { get; set; }
         public string ItemName { get; set; }
     }
-
-
+    
 
     public class ItemData
     {
@@ -215,6 +233,7 @@ namespace StockControl
         public string ItemName { get; set; }
         public ReorderType ReorderType { get; set; }
         public decimal QtyOnHand { get; set; }
+        public decimal QtyOnHand_Backup { get; private set; }
         public decimal SafetyStock { get; set; }
         public decimal ReorderPoint { get; set; }
         public decimal ReorderQty { get; set; }
@@ -230,7 +249,7 @@ namespace StockControl
         public decimal PCSUnit { get; set; }
 
         public string LocationItem { get; set; }
-        
+
         public string GroupType { get; set; }
         public string Type { get; set; }
         public string InvGroup { get; set; } //Inventory Group
@@ -238,6 +257,12 @@ namespace StockControl
         public string VendorName { get; set; }
 
         public int Routeid { get; set; }
+
+        public string BaseUOM { get; set; }
+        public decimal PCSUnit_BaseUOM { get; set; }
+        public string PurchaseUOM { get; set; }
+        public decimal PCSUnit_PurchaseUOM { get; set; }
+        public decimal StandardCost { get; set; }
 
         public ItemData(string ItemNo, string ItemName = "")
         {
@@ -253,7 +278,10 @@ namespace StockControl
                 //this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
                 var a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneJob", 0, "Warehouse");
                 if (a != null)
+                {
                     this.QtyOnHand = a.Value.ToDecimal();
+                    this.QtyOnHand_Backup = a.Value.ToDecimal();
+                }
                 this.SafetyStock = t.SafetyStock;
                 this.ReorderPoint = t.ReorderPoint.ToDecimal();
                 this.ReorderQty = t.ReorderQty.ToDecimal();
@@ -266,7 +294,7 @@ namespace StockControl
                 this.InvGroup_enum = baseClass.getInventoryGroup(t.InventoryGroup);
 
                 this.UOM = t.BaseUOM;
-                var u = db.mh_ItemUOMs.Where(x => x.ItemNo == this.ItemNo).FirstOrDefault();
+                var u = db.mh_ItemUOMs.Where(x => x.ItemNo == this.ItemNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
                 if (u != null) this.PCSUnit = u.QuantityPer.ToDecimal();
                 else this.PCSUnit = 1;
 
@@ -277,8 +305,16 @@ namespace StockControl
                 this.InvGroup = t.InventoryGroup;
                 this.VendorNo = t.VendorNo;
                 this.VendorName = t.VendorName;
-                
+
                 this.Routeid = t.Routing;
+
+                this.BaseUOM = t.BaseUOM;
+                this.PCSUnit_BaseUOM = this.PCSUnit;
+                this.PurchaseUOM = t.PurchaseUOM;
+                var u2 = db.mh_ItemUOMs.Where(x => x.ItemNo == this.ItemNo && x.UOMCode == t.PurchaseUOM).FirstOrDefault();
+                if (u2 != null) this.PCSUnit_PurchaseUOM = u2.QuantityPer.ToDecimal();
+                else this.PCSUnit_PurchaseUOM = 1;
+                this.StandardCost = t.StandardCost;
             }
 
         }
@@ -295,28 +331,16 @@ namespace StockControl
         public decimal CapacityAlocateX { get; set; } = 0.00m;
         public decimal CapacityAfter
         {
-            get
-            {
+            get {
                 return CapacityAvailable - CapacityAlocate;
             }
         }
         public decimal CapacityAfterX
         {
-            get
-            {
+            get {
                 return CapacityAvailable - CapacityAlocateX;
             }
         }
-    }
-    public class WorkLoad_Item
-    {
-        public int id { get; set; }
-        public int idWorkCenterID { get; set; }
-        public string DocNo { get; set; }
-        public int DocId { get; set; }
-        public DateTime Date { get; set; }
-        public decimal Capacity { get; set; }
-        public decimal CapacityX { get; set; }
     }
     public class CalendarLoad
     {
@@ -333,6 +357,20 @@ namespace StockControl
     }
 
 
+    public class calPartData
+    {
+        public string ItemNo { get; set; }
+        public decimal ReqQty { get; set; }
+        public string UOM { get; set; }
+        public decimal PCSUnit { get; set; }
+        public DateTime ReqDate { get; set; }
+        public string DocNo { get; set; }
+        public int DocId { get; set; }
+        public ReplenishmentType repType { get; set; }
+
+        public int mainNo { get; set; } = 0;
+        public bool alreadyJob { get; set; } = false;
+    }
 
     public enum ReplenishmentType
     {

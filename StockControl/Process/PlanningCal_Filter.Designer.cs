@@ -198,6 +198,7 @@
             this.cbbLocation.Size = new System.Drawing.Size(183, 20);
             this.cbbLocation.TabIndex = 7;
             this.cbbLocation.ThemeName = "Office2010Blue";
+            this.cbbLocation.Visible = false;
             // 
             // cbbItem
             // 
@@ -256,6 +257,7 @@
             this.radLabel4.Size = new System.Drawing.Size(49, 18);
             this.radLabel4.TabIndex = 1;
             this.radLabel4.Text = "Location";
+            this.radLabel4.Visible = false;
             // 
             // radLabel3
             // 

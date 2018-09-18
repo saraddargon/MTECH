@@ -100,10 +100,18 @@ namespace StockControl
                         txtReqDate.Text = t.ReqDate.ToDtString();
                         txtUOM.Text = t.UOM;
                         txtPCSUnit.Value = t.PCSUnit;
+                        txtFGQty.Value = t.Qty;
                         txtOutQty.Value = t.OutQty;
                         txtCreateDate.Text = t.CreateDate.ToDtString();
                         txtCreateBy.Text = t.CreateBy;
                         txtLotNo.Text = t.LotNo;
+                        cbHoldJob.Checked = t.HoldJob;
+                        txtidJob.Text = t.id.ToSt();
+
+                        if (t.ApproveDate != null)
+                            txtStatus.Text = "Approved";
+                        else
+                            txtStatus.Text = "Waiting";
 
                         //dt
                         var dts = db.mh_ProductionOrderRMs.Where(x => x.JobNo == t.JobNo && x.Active).ToList();
@@ -268,6 +276,9 @@ namespace StockControl
             txtLotNo.Text = "";
             txtCreateBy.Text = Classlib.User;
             txtCreateDate.Text = DateTime.Now.ToDtString();
+            cbHoldJob.Checked = false;
+            txtStatus.Text = "Waiting";
+            txtidJob.Text = "";
 
             using (var db = new DataClasses1DataContext())
             {
@@ -295,7 +306,7 @@ namespace StockControl
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
 
-            dgvData.ReadOnly = false;
+            //dgvData.ReadOnly = false;
 
             ClearData();
             Enable_Status(true, "New");
@@ -318,10 +329,11 @@ namespace StockControl
             btnDel_Item.Enabled = false;
             btnAddPart.Enabled = false;
 
-            dgvData.ReadOnly = true;
+            //dgvData.ReadOnly = true;
 
             Enable_Status(false, "View");
             lblStatus.Text = "View";
+            lblStatus.Text = txtStatus.Text;
             Ac = "View";
         }
 
@@ -337,7 +349,7 @@ namespace StockControl
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
 
-            dgvData.ReadOnly = false;
+            //dgvData.ReadOnly = false;
 
             Enable_Status(true, "Edit");
             lblStatus.Text = "Edit";
@@ -350,12 +362,18 @@ namespace StockControl
             if (txtFGNo.Text == "") return;
             if (Math.Round(txtFGQty.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal())
             {
-                baseClass.Warning("Status Process cannot Delete.\n");
+                baseClass.Warning("- Cannot Delete because Status is 'Process'.\n");
                 return;
             }
-            if (dgvData.Rows.Where(x => x.Cells["Qty"].Value.ToDecimal() != x.Cells["RemQty"].Value.ToDecimal()).Count() > 0)
+            else if (txtStatus.Text == "Approved")
             {
-                baseClass.Warning("RM or SEMI alreday shipped into this 'Job', Please cancel shipping RM.\n");
+                baseClass.Warning("- Cannot Delete because Status is 'Approved'.\n");
+                return;
+            }
+
+            if (dgvData.Rows.Where(x => x.Cells["Qty"].Value.ToDecimal() != x.Cells["OutShip"].Value.ToDecimal()).Count() > 0)
+            {
+                baseClass.Warning("- RM or SEMI alreday shipped into this 'Job', Please cancel shipping RM.\n");
                 return;
             }
 
@@ -385,7 +403,18 @@ namespace StockControl
                             po.Status = baseClass.setCustomerPOStatus(po);
                             db.SubmitChanges();
 
+                            //remove capa
+                            int idJob = txtidJob.Text.ToInt();
+                            var capa = db.mh_CapacityLoads.Where(x => x.DocId == idJob).ToList();
+                            db.mh_CapacityLoads.DeleteAllOnSubmit(capa);
+                            //remove calendar
+                            var cal = db.mh_CalendarLoads.Where(x => x.idJob == idJob).ToList();
+                            db.mh_CalendarLoads.DeleteAllOnSubmit(cal);
+
+                            db.SubmitChanges();
+
                             baseClass.Info("Delete complete.\n");
+                            this.Close();
                         }
                     }
                 }
@@ -403,8 +432,14 @@ namespace StockControl
                 //if (txtCodeNo.Text.Equals(""))
                 //    err += " “รหัสพาร์ท:” เป็นค่าว่าง \n";
 
+                if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
+                    err += "- Cannot Save because Status is 'Process'.\n";
+                else if (txtStatus.Text == "Approved")
+                    err += "- Cannot Save because Status is 'Approved'.\n";
+
+
                 if (!err.Equals(""))
-                    MessageBox.Show(err);
+                    baseClass.Error(err);
                 else
                     re = false;
             }
@@ -529,62 +564,62 @@ namespace StockControl
                 dgvData.EndEdit();
                 if (e.RowIndex >= -1)
                 {
-                    var itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
-                    if (e.Column.Name.Equals("Amount") || e.Column.Name.Equals("Qty"))
-                    {
-                        if (e.Row.Cells["Qty"].Value.ToDecimal() > 0)
-                        {
-                            var m = Math.Round(e.Row.Cells["Amount"].Value.ToDecimal() / e.Row.Cells["Qty"].Value.ToDecimal(), 2);
-                            dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = m;
-                        }
-                        else
-                            dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = 0;
+                    //var itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
+                    //if (e.Column.Name.Equals("Amount") || e.Column.Name.Equals("Qty"))
+                    //{
+                    //    if (e.Row.Cells["Qty"].Value.ToDecimal() > 0)
+                    //    {
+                    //        var m = Math.Round(e.Row.Cells["Amount"].Value.ToDecimal() / e.Row.Cells["Qty"].Value.ToDecimal(), 2);
+                    //        dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = m;
+                    //    }
+                    //    else
+                    //        dgvData.Rows[e.RowIndex].Cells["PricePerUnit"].Value = 0;
 
-                    }
-                    else if (e.Column.Name.Equals("ItemNo"))
-                    {
-                        using (var db = new DataClasses1DataContext())
-                        {
-                            var t = db.mh_Items.Where(x => x.InternalNo.Equals(itemNo)).FirstOrDefault();
-                            if (t == null)
-                            {
-                                baseClass.Warning($"Item no. ({itemNo}) not found.!!");
-                                e.Row.Cells["ItemNo"].Value = beginItem;
-                                return;
-                            }
-                            var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == t.InternalNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
-                            var pcsunit = (tU != null) ? tU.QuantityPer : 1;
+                    //}
+                    //else if (e.Column.Name.Equals("ItemNo"))
+                    //{
+                    //    using (var db = new DataClasses1DataContext())
+                    //    {
+                    //        var t = db.mh_Items.Where(x => x.InternalNo.Equals(itemNo)).FirstOrDefault();
+                    //        if (t == null)
+                    //        {
+                    //            baseClass.Warning($"Item no. ({itemNo}) not found.!!");
+                    //            e.Row.Cells["ItemNo"].Value = beginItem;
+                    //            return;
+                    //        }
+                    //        var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == t.InternalNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
+                    //        var pcsunit = (tU != null) ? tU.QuantityPer : 1;
 
-                            //set Tool
-                            if (beginItem == "")
-                            {
-                                //addRow(e.RowIndex
-                                //    , DateTime.Now, t.InternalNo, t.InternalName
-                                //    , 1, t.BaseUOM, pcsunit, 0, 0
-                                //    , 1, 1, "", 0, "Waiting");
-                            }
-                            else
-                            {
-                                e.Row.Cells["ItemName"].Value = t.InternalName;
-                                e.Row.Cells["Unit"].Value = t.BaseUOM;
-                                e.Row.Cells["PCSUnit"].Value = pcsunit;
-                            }
+                    //        //set Tool
+                    //        if (beginItem == "")
+                    //        {
+                    //            //addRow(e.RowIndex
+                    //            //    , DateTime.Now, t.InternalNo, t.InternalName
+                    //            //    , 1, t.BaseUOM, pcsunit, 0, 0
+                    //            //    , 1, 1, "", 0, "Waiting");
+                    //        }
+                    //        else
+                    //        {
+                    //            e.Row.Cells["ItemName"].Value = t.InternalName;
+                    //            e.Row.Cells["Unit"].Value = t.BaseUOM;
+                    //            e.Row.Cells["PCSUnit"].Value = pcsunit;
+                    //        }
 
-                            //
-                            SetRowNo1(dgvData);
-                        }
-                    }
-                    else if (e.Column.Name.Equals("Unit"))
-                    {
-                        var unit = e.Row.Cells["Unit"].Value.ToSt();
-                        using (var db = new DataClasses1DataContext())
-                        {
-                            var u = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == unit).FirstOrDefault();
-                            var pcsunit = (u != null) ? u.QuantityPer : 1;
+                    //        //
+                    //        SetRowNo1(dgvData);
+                    //    }
+                    //}
+                    //else if (e.Column.Name.Equals("Unit"))
+                    //{
+                    //    var unit = e.Row.Cells["Unit"].Value.ToSt();
+                    //    using (var db = new DataClasses1DataContext())
+                    //    {
+                    //        var u = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == unit).FirstOrDefault();
+                    //        var pcsunit = (u != null) ? u.QuantityPer : 1;
 
-                            e.Row.Cells["PCSUnit"].Value = pcsunit;
-                        }
-                    }
+                    //        e.Row.Cells["PCSUnit"].Value = pcsunit;
+                    //    }
+                    //}
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -593,27 +628,25 @@ namespace StockControl
         {
             if (e.RowIndex >= -1)
             {
-                string itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
-                if (e.Column.Name.Equals("Unit"))
-                {
-                    using (var db = new DataClasses1DataContext())
-                    {
-                        var unit = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo).ToList();
-                        unit = unit.Where(x => x.Active.ToBool()).ToList();
-                        var c1 = dgvData.Columns["Unit"] as GridViewComboBoxColumn;
-                        c1.ValueMember = "UOMCode";
-                        c1.DisplayMember = "UOMCode";
-                        c1.DataSource = unit;
-                    }
-                }
-                else if (e.Column.Name.Equals("ItemNo"))
-                {
-                    beginItem = itemNo;
-                }
+                //string itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
+                //if (e.Column.Name.Equals("Unit"))
+                //{
+                //    using (var db = new DataClasses1DataContext())
+                //    {
+                //        var unit = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo).ToList();
+                //        unit = unit.Where(x => x.Active.ToBool()).ToList();
+                //        var c1 = dgvData.Columns["Unit"] as GridViewComboBoxColumn;
+                //        c1.ValueMember = "UOMCode";
+                //        c1.DisplayMember = "UOMCode";
+                //        c1.DataSource = unit;
+                //    }
+                //}
+                //else if (e.Column.Name.Equals("ItemNo"))
+                //{
+                //    beginItem = itemNo;
+                //}
             }
         }
-
-
 
 
         private void radGridView1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -839,9 +872,107 @@ namespace StockControl
             }
         }
 
+        bool chkRecalE()
+        {
+            bool ret = true;
+            string mssg = "";
+
+
+            if (mssg != "")
+            {
+                baseClass.Warning(mssg);
+                ret = false;
+            }
+            return ret;
+        }
         private void btnRecal_Click(object sender, EventArgs e)
         {
-            baseClass.Info("Comming Soon...");
+            if (chkRecalE() && baseClass.Question("Do you want to 'Recal' ?"))
+                Recal();
         }
+        void Recal()
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                //baseClass.Info("Comming soon...");
+                MoveJobToLast();
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        bool ChkHoldJob()
+        {
+            bool ret = true;
+            string mssg = "";
+
+
+            if (txtJobNo.Text.Trim() == "")
+                mssg += "- Please Save job before Hold Job.\n";
+            if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
+                mssg += "- Cannot Hold Job because FG Already Received.\n";
+
+            if (mssg != "")
+            {
+                ret = false;
+                baseClass.Warning(mssg);
+            }
+            return ret;
+        }
+        private void btnHoldJob_Click(object sender, EventArgs e)
+        {
+            if (ChkHoldJob() && baseClass.Question("Do you want to 'Hold Job' ?"))
+                HoldJob();
+        }
+        void HoldJob()
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                string jobno = txtJobNo.Text.Trim();
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobno).FirstOrDefault();
+                    if (m != null)
+                    {
+                        if (m.HoldJob)
+                            m.HoldJob = true;
+                        else
+                        {
+                            m.HoldJob = false;
+                            //หาว่าวันที่ Cancel Hold Job มากกว่าหรือเท่ากับ StartingDate ไหม ถ้าใช่ให้ move Capacity ไปไว้ท้ายสุดเลย
+                            if (DateTime.Now.Date > txtStartingDate.Text.ToDateTime().Value.Date)
+                            {
+                                MoveJobToLast();
+                            }
+                        }
+                        m.UpdateBy = Classlib.User;
+                        m.UpdateDate = DateTime.Now;
+                        db.SubmitChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        void MoveJobToLast()
+        {
+
+        }
+
     }
 }

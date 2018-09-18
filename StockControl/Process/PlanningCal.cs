@@ -165,12 +165,13 @@ namespace StockControl
                 {
                     dgvData.DataSource = null;
                     dgvData.AutoGenerateColumns = false;
-                    dgvData.DataSource = ps.gridPlans.Where(x => ((ft.MRP && x.PlanningType == "Purchase")
-                                    || (ft.MPS && x.PlanningType == "Production"))
-                                    && (ft.locationItem == "" || x.LocationItem == ft.locationItem)
-                                    ).OrderBy(x => x.ReqDate).ToList();
+                    dgvData.DataSource = ps.gridPlans.OrderBy(x => x.ReqDate);
 
                     SavePlan(ps.gridPlans, ft.dateFrom, ft.dateTo);
+                    SaveCapacity_TEMP(ps.capacityLoad);
+                    SaveCalendar_TEMP(ps.calLoad);
+
+                    FilterE(ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
                 }
             }
         }
@@ -189,90 +190,7 @@ namespace StockControl
                 ft.ShowDialog();
                 if (ft.okFilter)
                 {
-                    DateTime dFrom = ft.dateFrom.Date;
-                    DateTime dTo = ft.dateTo.Date.AddDays(1).AddMinutes(-1);
-                    string ItemNo = ft.ItemNo;
-                    string LocationItem = ft.locationItem;
-                    List<int> idA = new List<int>();
-                    foreach (var item in dgvData.Rows)
-                    {
-                        //Date
-                        var ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value;
-                        if (ReqDate < dFrom || ReqDate > dTo)
-                        {
-                            item.IsVisible = false;
-                            continue;
-                        }
-                        else
-                            item.IsVisible = true;
-                        //Location
-                        var Lo = item.Cells["LocationItem"].Value.ToSt();
-                        if (LocationItem == "") { }
-                        else
-                        {
-                            if (LocationItem != Lo)
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-                            else
-                                item.IsVisible = true;
-                        }
-                        //MPS MRP
-                        if (ft.MPS && ft.MRP) { }
-                        else
-                        {
-                            string pType = item.Cells["PlanningType"].Value.ToSt();
-                            if (ft.MPS && pType == "Production")
-                                item.IsVisible = true;
-                            else if (ft.MPS && pType == "Purchase")
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-                            else if (!ft.MPS && pType == "Production")
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-                            else if (ft.MRP && pType == "Purchase")
-                                item.IsVisible = true;
-                            else if (ft.MRP && pType == "Production")
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-                            else if (!ft.MRP && pType == "Purchase")
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-
-                        }
-                        //Item
-                        var FGNo = item.Cells["ItemNo"].Value.ToSt();
-                        int idRef = item.Cells["idRef"].Value.ToInt();
-                        if (ItemNo == "") { }
-                        else
-                        {
-                            if (FGNo != ItemNo)
-                            {
-                                item.IsVisible = false;
-                                continue;
-                            }
-                            else if (!idA.Any(x => x == idRef))
-                            {
-                                idA.Add(idRef);
-                            }
-                        }
-                    }
-
-                    //find idRef
-                    foreach (var item in dgvData.Rows.Where(x => !x.IsVisible))
-                    {
-                        int idRef = item.Cells["idRef"].Value.ToInt();
-                        item.IsVisible = idA.Any(x => x == idRef);
-                    }
+                    FilterE(ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
                 }
             }
             catch (Exception ex)
@@ -282,6 +200,93 @@ namespace StockControl
             finally
             {
                 this.Cursor = Cursors.Default;
+            }
+        }
+        void FilterE(DateTime dateFrom, DateTime dateTo, bool MRP, bool MPS, string _itemNo, string _locationItem)
+        {
+            DateTime dFrom = dateFrom.Date;
+            DateTime dTo = dateTo.Date.AddDays(1).AddMinutes(-1);
+            string ItemNo = _itemNo;
+            string LocationItem = _locationItem;
+            List<int> idA = new List<int>();
+            foreach (var item in dgvData.Rows)
+            {
+                //Date
+                var ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value;
+                if (ReqDate < dFrom || ReqDate > dTo)
+                {
+                    item.IsVisible = false;
+                    continue;
+                }
+                else
+                    item.IsVisible = true;
+                //Location
+                var Lo = item.Cells["LocationItem"].Value.ToSt();
+                if (LocationItem == "") { }
+                else
+                {
+                    if (LocationItem != Lo)
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+                    else
+                        item.IsVisible = true;
+                }
+                //MPS MRP
+                if (MPS && MRP) { }
+                else
+                {
+                    string pType = item.Cells["PlanningType"].Value.ToSt();
+                    if (MPS && pType == "Production")
+                        item.IsVisible = true;
+                    else if (MPS && pType == "Purchase")
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+                    else if (!MPS && pType == "Production")
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+                    else if (MRP && pType == "Purchase")
+                        item.IsVisible = true;
+                    else if (MRP && pType == "Production")
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+                    else if (!MRP && pType == "Purchase")
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+
+                }
+                //Item
+                var FGNo = item.Cells["ItemNo"].Value.ToSt();
+                int idRef = item.Cells["idRef"].Value.ToInt();
+                if (ItemNo == "") { }
+                else
+                {
+                    if (FGNo != ItemNo)
+                    {
+                        item.IsVisible = false;
+                        continue;
+                    }
+                    else if (!idA.Any(x => x == idRef))
+                    {
+                        idA.Add(idRef);
+                    }
+                }
+            }
+
+            //find idRef
+            foreach (var item in dgvData.Rows.Where(x => !x.IsVisible))
+            {
+                int idRef = item.Cells["idRef"].Value.ToInt();
+                item.IsVisible = idA.Any(x => x == idRef);
             }
         }
 
@@ -310,7 +315,8 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     db.mh_Planning_TEMPs.DeleteAllOnSubmit(db.mh_Planning_TEMPs);
-                    
+                    db.mh_CapacityLoad_TEMPs.DeleteAllOnSubmit(db.mh_CapacityLoad_TEMPs);
+                    db.mh_CalendarLoad_TEMPs.DeleteAllOnSubmit(db.mh_CalendarLoad_TEMPs);
                     db.SubmitChanges();
 
                     dgvData.DataSource = null;
@@ -381,6 +387,53 @@ namespace StockControl
                 this.Cursor = Cursors.Default;
             }
         }
+        void SaveCapacity_TEMP(List<mh_CapacityLoad> capas)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                foreach (var item in capas)
+                {
+                    if (item.id == 0)
+                    {
+                        var a = new mh_CapacityLoad_TEMP();
+                        db.mh_CapacityLoad_TEMPs.InsertOnSubmit(a);
+
+                        a.Active = true;
+                        a.Capacity = item.Capacity;
+                        a.CapacityX = item.CapacityX;
+                        a.DocId = item.DocId;
+                        a.Date = item.Date;
+                        a.DocNo = item.DocNo;
+                        a.WorkCenterID = item.WorkCenterID;
+                    }
+                }
+                db.SubmitChanges();
+            }
+        }
+        void SaveCalendar_TEMP(List<mh_CalendarLoad> calens)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                foreach (var item in calens)
+                {
+                    if (item.idAbs < 0)
+                    {
+                        var a = new mh_CalendarLoad_TEMP();
+                        db.mh_CalendarLoad_TEMPs.InsertOnSubmit(a);
+                        a.Date = item.Date;
+                        a.EndingTime = item.EndingTime;
+                        a.idAbs = item.idAbs;
+                        a.idCal = item.idCal;
+                        a.idHol = item.idHol;
+                        a.idJob = item.idJob;
+                        a.idRoute = item.idRoute;
+                        a.idWorkcenter = item.idWorkcenter;
+                        a.StartingTime = item.StartingTime;
+                    }
+                }
+                db.SubmitChanges();
+            }
+        }
 
         private void radButtonElement1_Click(object sender, EventArgs e)
         {
@@ -414,8 +467,28 @@ namespace StockControl
                     return;
                 }
 
+                if (!baseClass.Question("Do you want to 'Generate Job Order Sheet' ?"))
+                    return;
+
                 using (var db = new DataClasses1DataContext())
                 {
+                    //foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
+                    //{
+                    //    int idPO = item.Cells["idRef"].Value.ToInt();
+                    //    string PONo = item.Cells["RefDocNo"].Value.ToSt();
+                    //    //find PR refer PO
+                    //    var pr = db.mh_PurchaseRequestLines.Where(x => x.Status != "Cancel" && x.idCstmPODt == idPO)
+                    //        .Join(db.mh_PurchaseRequests.Where(x => x.Status != "Cancel")
+                    //        , dt => dt.PRNo
+                    //        , hd => hd.PRNo
+                    //        , (dt, hd) => new { hd, dt }).ToList();
+                    //    if(pr.Count < 1)
+                    //    {
+                    //        baseClass.Warning($"Please generate P/R for Document No. [{PONo}] before Generate JOB.\n");
+                    //        return;
+                    //    }
+                    //}
+
                     foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
                     {
                         //Hd
@@ -445,6 +518,7 @@ namespace StockControl
                         m.UOM = item.Cells["UOM"].Value.ToSt();
                         m.UpdateBy = ClassLib.Classlib.User;
                         m.UpdateDate = DateTime.Now;
+                        m.HoldJob = false;
                         db.mh_ProductionOrders.InsertOnSubmit(m);
                         //Update Customer P/O
                         if (item.Cells["root"].Value.ToBool())
@@ -461,28 +535,73 @@ namespace StockControl
                         }
 
                         //Dt
+                        //**Component**
                         int mainNo = item.Cells["mainNo"].Value.ToInt(); //find all component of Item
-                        var rowDt = dgvData.Rows.Where(x => x.Cells["idRef"].Value.ToInt() == m.RefDocId
-                            && x.Cells["refNo"].Value.ToInt() == mainNo).ToList();
+                        var rowDt = db.tb_BomDTs.Where(x => x.PartNo == m.FGNo).ToList();
                         foreach (var r in rowDt)
                         {
+                            var itemA = db.mh_Items.Where(x => x.InternalNo == r.Component).FirstOrDefault();
+                            if (itemA == null) continue;
                             var dt = new mh_ProductionOrderRM
                             {
                                 Active = true,
-                                GroupType = r.Cells["GroupType"].Value.ToSt(),
-                                InvGroup = r.Cells["InvGroup"].Value.ToSt(),
-                                ItemName = r.Cells["ItemName"].Value.ToSt(),
-                                ItemNo = r.Cells["ItemNo"].Value.ToSt(),
+                                GroupType = itemA.GroupType,
+                                InvGroup = itemA.InventoryGroup,
+                                ItemName = itemA.InternalName,
+                                ItemNo = itemA.InternalNo,
                                 JobNo = m.JobNo,
-                                PCSUnit = r.Cells["PCSUnit"].Value.ToDecimal(),
-                                Qty = r.Cells["Qty"].Value.ToDecimal(),
-                                RemQty = Math.Round(r.Cells["Qty"].Value.ToDecimal()),
-                                Type = r.Cells["Type"].Value.ToSt(),
-                                UOM = r.Cells["UOM"].Value.ToSt(),
+                                PCSUnit = r.PCSUnit.ToDecimal(),
+                                Qty = m.Qty * r.Qty,
+                                RemQty = m.Qty * r.Qty,
+                                Type = itemA.Type,
+                                UOM = r.Unit,
                             };
                             db.mh_ProductionOrderRMs.InsertOnSubmit(dt);
                             db.SubmitChanges();
                         }
+                        //save Capacity Load --mh_CapacityLoad_TEMP <---> mh_CapacityLoad
+                        var capaList = db.mh_CapacityLoad_TEMPs.Where(x => x.DocId == mainNo && x.DocNo == null).ToList();
+                        foreach (var c in capaList)
+                        {
+                            if (c.DocNo.ToSt() != "") continue;
+
+                            var cc = new mh_CapacityLoad
+                            {
+                                Active = true,
+                                Capacity = c.Capacity,
+                                CapacityX = c.CapacityX,
+                                Date = c.Date,
+                                DocId = m.id,//idJob
+                                DocNo = m.JobNo,
+                                WorkCenterID = c.WorkCenterID,
+                            };
+                            db.mh_CapacityLoads.InsertOnSubmit(cc);
+                            c.DocId = m.id;
+                            c.DocNo = m.JobNo;
+                        }
+                        db.SubmitChanges();
+
+                        //save Calendar Load --mh_CalendarLoad_TEMP <---> mh_CalendarLoad
+                        var calList = db.mh_CalendarLoad_TEMPs.Where(x => x.idJob == mainNo && x.idAbs == -1).ToList();
+                        foreach (var c in calList)
+                        {
+                            var cc = new mh_CalendarLoad
+                            {
+                                Date = c.Date,
+                                EndingTime = c.EndingTime,
+                                idAbs = (c.idAbs >= 0) ? c.idAbs : 0,
+                                idCal = c.idCal,
+                                idHol = c.idHol,
+                                idJob = m.id, //idJob
+                                idRoute = c.idRoute,
+                                idWorkcenter = c.idWorkcenter,
+                                StartingTime = c.StartingTime,
+                            };
+                            db.mh_CalendarLoads.InsertOnSubmit(cc);
+                            c.idJob = m.id;
+                            c.idAbs = 0;
+                        }
+                        db.SubmitChanges();
                     }
                     DataLoad();
 
@@ -522,6 +641,10 @@ namespace StockControl
                     return;
                 }
 
+
+                if (!baseClass.Question("Do you want to 'Generate Purchase Request (P/R)' ?"))
+                    return;
+
                 DataTable _dt = new DataTable();
                 _dt.Columns.Add("idCstmPO", typeof(int));
                 _dt.Columns.Add("PRNo", typeof(string));
@@ -533,11 +656,13 @@ namespace StockControl
                         byte[] b = null;
                         int idRef = item.Cells["idRef"].Value.ToInt();
                         var poDt = db.mh_CustomerPODTs.Where(x => x.id == idRef).FirstOrDefault();
-                        int idPoHd = poDt.idCustomerPO;
+                        int idPoHd = 0;
+                        if (poDt != null)
+                            idPoHd = poDt.idCustomerPO;
                         string CstmPoNo = item.Cells["RefDocNo"].Value.ToSt();
 
                         var hd = new mh_PurchaseRequest();
-                        if(_dt.Rows.Cast<DataRow>().Where(x=>x["idCstmPO"].ToInt() == idPoHd).Count() > 0)
+                        if (_dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idPoHd).Count() > 0)
                         {
                             var row = _dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idPoHd).First();
                             string prNo = row["PRNo"].ToSt();

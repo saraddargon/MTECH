@@ -35,6 +35,8 @@ namespace StockControl
 
         private void Unit_Load(object sender, EventArgs e)
         {
+            dtFrom.Value = DateTime.Now;
+            dtTo.Value = DateTime.Now;
             //radGridView1.ReadOnly = true;
             using (var db = new DataClasses1DataContext())
             {
@@ -164,9 +166,13 @@ namespace StockControl
         }
         void selRow()
         {
+            dgvData.EndEdit();
             if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
-
+                string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
+                var p = new ProductionOrder(jobNo);
+                p.ShowDialog();
+                DataLoad();
             }
         }
 
