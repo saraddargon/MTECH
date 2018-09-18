@@ -446,7 +446,7 @@ namespace StockControl
                                     && x.idWorkCenter == idWorkCenter).OrderBy(x => x.Date).FirstOrDefault();
                                 if (wl == null)
                                 {
-                                    var w = baseClass.getWorkLoad(tempStarting.Date, tempStarting.Date).FirstOrDefault();
+                                    var w = baseClass.getWorkLoad(tempStarting.Date, null).Where(x => x.CapacityAfterX > 0 && x.idWorkCenter == idWorkCenter).FirstOrDefault();
                                     if (w == null)
                                     {
                                         string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
@@ -487,8 +487,21 @@ namespace StockControl
                                     int idCalendar = wd.First().hd.Calendar;
                                     //หาว่าเวาลาเริ่มของ Work center นี้ใช้ไปหรือยัง หรือเป็นวันหยุดหรือวันลาหรือไม่
                                     var calLoads = calLoad.Where(x => x.Date == tempStarting.Date
+                                            && ((x.idCal == idCalendar && x.idWorkcenter == 0) 
+                                                    || 
+                                                 x.idWorkcenter == wl.idWorkCenter && x.idCal == idCalendar)
+                                        ).OrderBy(x => x.StartingTime).ThenBy(x => x.EndingTime).ToList();
+                                    if (calLoads.Count == 0)
+                                    {
+                                        var cl = db.mh_CalendarLoads.Where(x => x.Date == tempStarting.Date
                                             && (x.idCal == idCalendar || x.idWorkcenter == wl.idWorkCenter)
                                         ).OrderBy(x => x.StartingTime).ThenBy(x => x.EndingTime).ToList();
+                                        if (cl.Count > 0)
+                                        {
+                                            calLoads = cl;
+                                            calLoad.AddRange(calLoads);
+                                        }
+                                    }
                                     if (calLoads.Count > 0)
                                     {
                                         bool foundTime = false;
@@ -546,7 +559,9 @@ namespace StockControl
                                         } while (calLoad.Where(x => x.id == autoid).Count() > 0);
                                         //
                                         var cal = calLoad.Where(x => x.Date == tempStarting
-                                                 && (x.idCal == idCalendar || x.idWorkcenter == wl.idWorkCenter)
+                                                && ((x.idCal == idCalendar && x.idWorkcenter == 0)
+                                                        ||
+                                                     x.idWorkcenter == wl.idWorkCenter && x.idCal == idCalendar)
                                                  && x.StartingTime >= meTime
                                              ).OrderBy(x => x.StartingTime).ThenBy(x => x.EndingTime).ToList();
                                         if (cal.Count > 0)
@@ -618,6 +633,7 @@ namespace StockControl
                                                         id = autoid,
                                                         idRoute = r.id,
                                                         idWorkcenter = r.idWorkCenter,
+                                                        idCal = idCalendar,
                                                         Date = tempStarting.Date,
                                                         StartingTime = meTime,
                                                         EndingTime = meTime2,
@@ -676,6 +692,7 @@ namespace StockControl
                                                 id = autoid,
                                                 idRoute = r.id,
                                                 idWorkcenter = r.idWorkCenter,
+                                                idCal = idCalendar,
                                                 Date = tempStarting.Date,
                                                 StartingTime = meTime,
                                                 EndingTime = meTime2,

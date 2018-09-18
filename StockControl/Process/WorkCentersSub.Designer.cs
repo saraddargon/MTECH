@@ -380,7 +380,7 @@
             this.dgvData.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.dgvData.ForeColor = System.Drawing.Color.Black;
             this.dgvData.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dgvData.Location = new System.Drawing.Point(0, 126);
+            this.dgvData.Location = new System.Drawing.Point(0, 96);
             // 
             // 
             // 
@@ -463,7 +463,7 @@
             this.radContextMenuManager1.SetRadContextMenu(this.dgvData, this.radContextMenu1);
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(845, 323);
+            this.dgvData.Size = new System.Drawing.Size(845, 353);
             this.dgvData.TabIndex = 2;
             this.dgvData.ThemeName = "Office2010Blue";
             this.dgvData.CellEndEdit += new Telerik.WinControls.UI.GridViewCellEventHandler(this.dgvData_CellEndEdit);
@@ -484,13 +484,13 @@
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(845, 126);
+            this.radPanel1.Size = new System.Drawing.Size(845, 96);
             this.radPanel1.TabIndex = 1;
             // 
             // cbbCalendar
             // 
             this.cbbCalendar.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            this.cbbCalendar.Location = new System.Drawing.Point(555, 55);
+            this.cbbCalendar.Location = new System.Drawing.Point(534, 29);
             this.cbbCalendar.Name = "cbbCalendar";
             this.cbbCalendar.Size = new System.Drawing.Size(217, 20);
             this.cbbCalendar.TabIndex = 2;
@@ -499,15 +499,16 @@
             // cbbUOM
             // 
             this.cbbUOM.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            this.cbbUOM.Location = new System.Drawing.Point(555, 28);
+            this.cbbUOM.Location = new System.Drawing.Point(534, 6);
             this.cbbUOM.Name = "cbbUOM";
             this.cbbUOM.Size = new System.Drawing.Size(125, 20);
             this.cbbUOM.TabIndex = 2;
             this.cbbUOM.ThemeName = "Office2010Blue";
+            this.cbbUOM.Visible = false;
             // 
             // radLabel4
             // 
-            this.radLabel4.Location = new System.Drawing.Point(35, 81);
+            this.radLabel4.Location = new System.Drawing.Point(427, 56);
             this.radLabel4.Name = "radLabel4";
             this.radLabel4.Size = new System.Drawing.Size(63, 18);
             this.radLabel4.TabIndex = 1;
@@ -515,7 +516,7 @@
             // 
             // lbLL
             // 
-            this.lbLL.Location = new System.Drawing.Point(427, 55);
+            this.lbLL.Location = new System.Drawing.Point(427, 29);
             this.lbLL.Name = "lbLL";
             this.lbLL.Size = new System.Drawing.Size(50, 18);
             this.lbLL.TabIndex = 1;
@@ -531,11 +532,12 @@
             // 
             // radLabel3
             // 
-            this.radLabel3.Location = new System.Drawing.Point(427, 28);
+            this.radLabel3.Location = new System.Drawing.Point(406, 6);
             this.radLabel3.Name = "radLabel3";
             this.radLabel3.Size = new System.Drawing.Size(88, 18);
             this.radLabel3.TabIndex = 1;
             this.radLabel3.Text = "Unit Of Measure";
+            this.radLabel3.Visible = false;
             // 
             // radLabel1
             // 
@@ -548,7 +550,7 @@
             // txtDescription
             // 
             this.txtDescription.BackColor = System.Drawing.Color.White;
-            this.txtDescription.Location = new System.Drawing.Point(147, 80);
+            this.txtDescription.Location = new System.Drawing.Point(534, 55);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(216, 20);
             this.txtDescription.TabIndex = 0;

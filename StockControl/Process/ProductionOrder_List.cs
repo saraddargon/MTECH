@@ -38,6 +38,7 @@ namespace StockControl
             dtFrom.Value = DateTime.Now;
             dtTo.Value = DateTime.Now;
             //radGridView1.ReadOnly = true;
+            cbbStatus.SelectedIndex = 1; //Waiting
             using (var db = new DataClasses1DataContext())
             {
 
@@ -87,6 +88,15 @@ namespace StockControl
                             && (FGNo == "" || x.FGNo == FGNo)
                             && (dFrom == null || (x.ReqDate.Date >= dFrom && x.ReqDate.Date <= dTo))
                     ).ToList();
+                    if (cbbStatus.Text.Equals("Waiting"))
+                        m = m.Where(x => x.ApproveDate == null).ToList();
+                    else if (cbbStatus.Text.Equals("Approved"))
+                        m = m.Where(x => x.ApproveDate != null && x.OutQty == x.Qty).ToList();
+                    else if (cbbStatus.Text.Equals("Process"))
+                        m = m.Where(x => x.OutQty != x.Qty && x.OutQty > 0).ToList();
+                    else if (cbbStatus.Text.Equals("Completed"))
+                        m = m.Where(x => x.OutQty == 0).ToList();
+
                     dgvData.DataSource = m;
 
                     setStatus();

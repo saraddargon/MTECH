@@ -247,6 +247,11 @@ namespace StockControl
                                 return;
                             }
 
+                            if (!baseClass.Question("Do you want to 'Delete' ?"))
+                            {
+                                return;
+                            }
+
                             m.Active = false;
                             m.UpdateDate = DateTime.Now;
                             m.UpdateBy = Classlib.User;
@@ -330,7 +335,7 @@ namespace StockControl
             {
                 if (Ac.Equals("New") || Ac.Equals("Edit"))
                 {
-                    if (!Check_Save())
+                    if (!Check_Save() && baseClass.Question("Do you want to 'Save' ?"))
                         SaveE();
                 }
                 else
@@ -453,7 +458,7 @@ namespace StockControl
                                 e.Row.Cells["ItemNo"].Value = beginItem;
                                 return;
                             }
-                            var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == t.InternalNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
+                            var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == t.InternalNo && x.UOMCode == t.SalesUOM).FirstOrDefault();
                             var pcsunit = (tU != null) ? tU.QuantityPer : 1;
 
                             //set Tool
@@ -462,7 +467,7 @@ namespace StockControl
                                 decimal outso = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
                                 var outplan = outso;
                                 addRow(e.RowIndex, 0, DateTime.Now, t.InternalNo, t.InternalName
-                                    , 1, t.BaseUOM, pcsunit, 0, "", t.ReplenishmentType, outso, outplan
+                                    , 1, t.SalesUOM, pcsunit, t.StandardPrice, "", t.ReplenishmentType, outso, outplan
                                     , "Waiting");
                             }
                             else
@@ -958,7 +963,7 @@ namespace StockControl
                             return;
                         }
 
-                        var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
+                        var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == t.SalesUOM).FirstOrDefault();
                         decimal u = (tU != null) ? tU.QuantityPer : 1;
 
                         var rowE = dgvData.Rows.AddNew();
@@ -968,7 +973,7 @@ namespace StockControl
                         var outso = 1 * u;
                         var outplan = 1 * u;
                         addRow(rowE.Index, 0, DateTime.Now, itemNo, t.InternalName
-                            , 1, t.BaseUOM, u, 0, "", t.ReplenishmentType, outso, outplan
+                            , 1, t.SalesUOM, u, t.StandardPrice, "", t.ReplenishmentType, outso, outplan
                             , "Waiting");
                     }
                     SetRowNo1(dgvData);

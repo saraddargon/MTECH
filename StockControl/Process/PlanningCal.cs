@@ -63,29 +63,29 @@ namespace StockControl
                     dgvData.AutoGenerateColumns = false;
                     dgvData.DataSource = m;
 
-                    var rowList = new List<GridViewRowInfo>();
-                    foreach (var item in dgvData.Rows)
-                    {
-                        int idRef = item.Cells["idRef"].Value.ToInt();
-                        if (item.Cells["PlanningType"].Value.ToSt() == "Production")
-                        {
-                            var d = db.mh_ProductionOrders.Where(x => x.RefDocId == idRef && x.Active).ToList();
-                            if (d.Count > 0) //already on job
-                                rowList.Add(item);
-                        }
-                        else //Purchase
-                        {
-                            var p = db.mh_PurchaseRequestLines.Where(x => x.idCstmPODt == idRef && x.SS == 1).ToList();
-                            if (p.Count > 0) //already on P/R
-                                rowList.Add(item);
-                        }
-                    }
+                    //var rowList = new List<GridViewRowInfo>();
+                    //foreach (var item in dgvData.Rows)
+                    //{
+                    //    int idRef = item.Cells["idRef"].Value.ToInt();
+                    //    if (item.Cells["PlanningType"].Value.ToSt() == "Production")
+                    //    {
+                    //        var d = db.mh_ProductionOrders.Where(x => x.RefDocId == idRef && x.Active).ToList();
+                    //        if (d.Count > 0) //already on job
+                    //            rowList.Add(item);
+                    //    }
+                    //    else //Purchase
+                    //    {
+                    //        var p = db.mh_PurchaseRequestLines.Where(x => x.idCstmPODt == idRef && x.SS == 1).ToList();
+                    //        if (p.Count > 0) //already on P/R
+                    //            rowList.Add(item);
+                    //    }
+                    //}
 
-                    //remove row
-                    rowList.ForEach(x =>
-                    {
-                        dgvData.Rows.Remove(x);
-                    });
+                    ////remove row
+                    //rowList.ForEach(x =>
+                    //{
+                    //    dgvData.Rows.Remove(x);
+                    //});
                 }
             }
             catch (Exception ex)
@@ -165,11 +165,13 @@ namespace StockControl
                 {
                     dgvData.DataSource = null;
                     dgvData.AutoGenerateColumns = false;
-                    dgvData.DataSource = ps.gridPlans.OrderBy(x => x.ReqDate);
+                    //dgvData.DataSource = ps.gridPlans.OrderBy(x => x.ReqDate);
 
                     SavePlan(ps.gridPlans, ft.dateFrom, ft.dateTo);
                     SaveCapacity_TEMP(ps.capacityLoad);
                     SaveCalendar_TEMP(ps.calLoad);
+
+                    DataLoad();
 
                     FilterE(ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
                 }
@@ -602,6 +604,15 @@ namespace StockControl
                             c.idAbs = 0;
                         }
                         db.SubmitChanges();
+
+                        //delete gridPlan
+                        int id = item.Cells["id"].Value.ToInt();
+                        var d = db.mh_Planning_TEMPs.Where(x => x.id == id).ToList();
+                        if(d.Count > 0)
+                        {
+                            db.mh_Planning_TEMPs.DeleteAllOnSubmit(d);
+                            db.SubmitChanges();
+                        }
                     }
                     DataLoad();
 
@@ -723,6 +734,15 @@ namespace StockControl
                         db.mh_PurchaseRequestLines.InsertOnSubmit(dt);
                         hd.Total += amnt;
                         db.SubmitChanges();
+
+                        //delete gridPlan
+                        int id = item.Cells["id"].Value.ToInt();
+                        var d = db.mh_Planning_TEMPs.Where(x => x.id == id).ToList();
+                        if (d.Count > 0)
+                        {
+                            db.mh_Planning_TEMPs.DeleteAllOnSubmit(d);
+                            db.SubmitChanges();
+                        }
                     }
 
                     DataLoad();
