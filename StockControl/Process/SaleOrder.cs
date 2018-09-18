@@ -395,15 +395,14 @@ namespace StockControl
                     {
                         //Status
                         //Waiting
-                        //Waiting Approve
-                        //Approved
-                        //Process-- > Shipment Partial
+                        //Process
+                        //Partial-- > Shipment Partial
                         //Complete --> Shipment Full
 
                         using (var db = new DataClasses1DataContext())
                         {
                             var p = db.mh_SaleOrders.Where(x => x.SONo == poNo && x.Active).ToList();
-                            if (p.Where(x => x.Active ==true && (x.Status.ToSt()=="Waiting" || x.Status.ToSt() == "Waiting Approve")).Count() >0)
+                            if (p.Where(x => x.Active ==true && (x.Status.ToSt()=="Waiting" || x.Status.ToSt() == "Process")).Count() >0)
                             {
                                 foreach (var pp in p)
                                 {
@@ -1094,19 +1093,19 @@ namespace StockControl
         {
             try
             {
-                //if (txtCSTMNo.Text == "")
-                //{
-                //    baseClass.Warning("Please select Customers first.\n");
-                //    return;
-                //}
-
-                if(dgvData.Rows.Count>0)
+                if (txtCSTMNo.Text == "")
                 {
+                    baseClass.Warning("Please select Customers first.\n");
                     return;
                 }
 
+                //if(dgvData.Rows.Count>0)
+                //{
+                //    return;
+                //}
+
                 List<GridViewRowInfo> dgvRow_List = new List<GridViewRowInfo>();
-                var selP = new SaleOrder_ADD(dgvRow_List);
+                var selP = new SaleOrder_ADD(dgvRow_List,txtCSTMNo.Text,cbbCSTM.Text);
                 selP.ShowDialog();
                 if (dgvRow_List.Count > 0)
                 {
@@ -1248,14 +1247,14 @@ namespace StockControl
                             {
                                 foreach (var pp in p)
                                 {
-                                    pp.Status = "Waiting Approve";
+                                    pp.Status = "Process";
                                     pp.UpdateBy = Classlib.User;
                                     pp.UpdateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                                 }
 
                                 db.SubmitChanges();
 
-                                baseClass.Info("Send Approve complete.");
+                                baseClass.Info("Approve complete.");
 
                             }
                         }
@@ -1263,6 +1262,14 @@ namespace StockControl
                 }
             }
             catch(Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void radButtonElement3_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 
