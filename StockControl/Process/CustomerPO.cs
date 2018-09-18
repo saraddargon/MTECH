@@ -109,6 +109,28 @@ namespace StockControl
                         dgvData.AutoGenerateColumns = false;
                         dgvData.DataSource = m;
 
+                        bool foundSO = false;
+                        dgvData.Rows.ToList().ForEach(x =>
+                        {
+                            int idDt = x.Cells["id"].Value.ToInt();
+                            var j = db.mh_ProductionOrders.Where(q => q.Active && q.RefDocId == idDt).FirstOrDefault();
+                            if (j != null) x.Cells["JobNo"].Value = j.JobNo;
+
+                            if (!foundSO)
+                            {
+                                var so = db.mh_SaleOrderDTs.Where(q => q.RefId == idDt && q.Active)
+                                    .Join(db.mh_SaleOrders.Where(q => q.Active)
+                                    , dt => dt.SONo
+                                    , hd => hd.SONo
+                                    , (dt, hd) => new { hd, dt }).ToList();
+                                if (so.Count > 0)
+                                {
+                                    btnHistoryOrder.Enabled = true;
+                                    foundSO = true;
+                                }
+                            }
+                        });
+
                         SetRowNo1(dgvData);
                         CallTotal();
 
@@ -165,6 +187,8 @@ namespace StockControl
             dtOrderDate.ReadOnly = false;
             txtRemark.ReadOnly = false;
 
+            btnHistoryOrder.Enabled = false;
+
             dgvData.ReadOnly = false;
 
             ClearData();
@@ -213,7 +237,7 @@ namespace StockControl
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
-
+            
             cbbCSTM.Enabled = true;
             txtPONo.ReadOnly = false;
             dtOrderDate.ReadOnly = false;
@@ -244,6 +268,11 @@ namespace StockControl
                             if (dt.Where(x => x.Status != "Waiting").Count() > 0)
                             {
                                 baseClass.Warning("Status cannot Delete.\n");
+                                return;
+                            }
+
+                            if (!baseClass.Question("Do you want to 'Delete' ?"))
+                            {
                                 return;
                             }
 
@@ -310,6 +339,8 @@ namespace StockControl
                             break;
                     }
                 }
+                if (dgvData.Rows.Where(x => x.IsVisible && x.Cells["Status"].Value.ToSt() != "" && x.Cells["Status"].Value.ToSt() != "Waiting").Count() > 0)
+                    err += " “Status:” cannot Save \n";
 
                 if (!err.Equals(""))
                     MessageBox.Show(err);
@@ -330,7 +361,7 @@ namespace StockControl
             {
                 if (Ac.Equals("New") || Ac.Equals("Edit"))
                 {
-                    if (!Check_Save())
+                    if (!Check_Save() && baseClass.Question("Do you want to 'Save' ?"))
                         SaveE();
                 }
                 else
@@ -453,7 +484,7 @@ namespace StockControl
                                 e.Row.Cells["ItemNo"].Value = beginItem;
                                 return;
                             }
-                            var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == t.InternalNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
+                            var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == t.InternalNo && x.UOMCode == t.SalesUOM).FirstOrDefault();
                             var pcsunit = (tU != null) ? tU.QuantityPer : 1;
 
                             //set Tool
@@ -462,7 +493,7 @@ namespace StockControl
                                 decimal outso = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
                                 var outplan = outso;
                                 addRow(e.RowIndex, 0, DateTime.Now, t.InternalNo, t.InternalName
-                                    , 1, t.BaseUOM, pcsunit, 0, "", t.ReplenishmentType, outso, outplan
+                                    , 1, t.SalesUOM, pcsunit, t.StandardPrice, "", t.ReplenishmentType, outso, outplan
                                     , "Waiting");
                             }
                             else
@@ -687,11 +718,12 @@ namespace StockControl
                 var pol = new CustomerPO_List(2);
                 this.Cursor = Cursors.Default;
                 pol.ShowDialog();
-                if (pol.PONo != "" && pol.CstmNo != "")
+                if (pol.idCustomerPO > 0)
                 {
                     //t_PONo = pol.PONo;
                     //t_CustomerNo = pol.CstmNo;
                     //LoadData
+                    t_idCSTMPO = pol.idCustomerPO;
                     DataLoad();
                 }
 
@@ -958,7 +990,7 @@ namespace StockControl
                             return;
                         }
 
-                        var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
+                        var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == t.SalesUOM).FirstOrDefault();
                         decimal u = (tU != null) ? tU.QuantityPer : 1;
 
                         var rowE = dgvData.Rows.AddNew();
@@ -968,7 +1000,7 @@ namespace StockControl
                         var outso = 1 * u;
                         var outplan = 1 * u;
                         addRow(rowE.Index, 0, DateTime.Now, itemNo, t.InternalName
-                            , 1, t.BaseUOM, u, 0, "", t.ReplenishmentType, outso, outplan
+                            , 1, t.SalesUOM, u, t.StandardPrice, "", t.ReplenishmentType, outso, outplan
                             , "Waiting");
                     }
                     SetRowNo1(dgvData);
@@ -1014,5 +1046,49 @@ namespace StockControl
                 DataLoad();
             }
         }
+
+        private void lbJobNo_DoubleClick(object sender, EventArgs e)
+        {
+            OpenJobOrder();
+        }
+        private void btnLinkJob_Click(object sender, EventArgs e)
+        {
+            OpenJobOrder();
+        }
+        void OpenJobOrder()
+        {
+
+        }
+
+        private void MasterTemplate_CellDoubleClick(object sender, GridViewCellEventArgs e)
+        {
+            if(e.RowIndex >= 0)
+            {
+                if (e.Column.Name.Equals("JobNo"))
+                {
+                    string JobNo = e.Row.Cells["JobNo"].Value.ToSt();
+                    linkToJob(JobNo);
+                }
+            }
+        }
+        void linkToJob(string JobNo)
+        {
+            if (JobNo == "") return;
+            var j = new ProductionOrder(JobNo);
+            j.ShowDialog();
+        }
+
+        private void btnHistoryOrder_Click(object sender, EventArgs e)
+        {
+            OpenSaleorderList();
+        }
+        void OpenSaleorderList()
+        {
+            string cstmPO = txtPONo.Text.Trim();
+            string cstmNo = cbbCSTM.SelectedValue.ToSt();
+            var so = new SaleOrder_List2(cstmPO, cstmNo);
+            so.ShowDialog();
+        }
+
     }
 }

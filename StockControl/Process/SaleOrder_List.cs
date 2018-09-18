@@ -14,7 +14,7 @@ namespace StockControl
         public string PONo { get; private set; } = "";
         public string CstmNo { get; private set; } = "";
 
-        //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
+        //sType = 1 : btnNew to Create Sale ORder,,, 2: btnNew to Select Sale Order
         int sType = 1;
 
         public SaleOrder_List(int sType = 1)
@@ -36,6 +36,15 @@ namespace StockControl
         private void Unit_Load(object sender, EventArgs e)
         {
             //radGridView1.ReadOnly = true;
+            LoadDefault();
+            dgvData.AutoGenerateColumns = false;
+            DataLoad();
+
+        }
+
+        private void LoadDefault()
+        {
+
             using (var db = new DataClasses1DataContext())
             {
                 var cust = db.mh_Customers.Where(x => x.Active)
@@ -66,7 +75,6 @@ namespace StockControl
                 cbbItem.DataSource = item;
                 cbbItem.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
-
             dgvData.Columns.ToList().ForEach(x =>
             {
                 if (x.Name == "S")
@@ -74,12 +82,8 @@ namespace StockControl
                 else
                     x.ReadOnly = true;
             });
-
-            dgvData.AutoGenerateColumns = false;
-            //DataLoad();
-
-            demo();
         }
+
         private void DataLoad()
         {
 
@@ -100,51 +104,6 @@ namespace StockControl
 
         }
 
-        void demo()
-        {
-            dgvData.DataSource = null;
-            dgvData.Rows.Clear();
-
-            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
-            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
-            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
-            demorow("Waiting", "SO1809-004", "I0001", "Item D", 50, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002");
-            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
-            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
-            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
-            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
-            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
-            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
-            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
-            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
-            demorow("Waiting", "SO1809-004", "I0001", "Item D", 50, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002");
-            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
-            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
-            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
-            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
-            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
-            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
-            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
-            demorow("Waiting", "SO1809-004", "I0001", "Item D", 50, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002");
-
-        }
-        void demorow(string SS, string SONo, string ItemNo, string ItemName, decimal Stock, decimal Qty, decimal ShipQty
-            , string Unit, string CustomerNo, string CustomerName, string RefDocNo, string ProductionNo)
-        {
-            var rowe = dgvData.Rows.AddNew();
-            rowe.Cells["SS"].Value = SS;
-            rowe.Cells["SONo"].Value = "SO1809-" + (rowe.Index + 1).ToString("000");
-            rowe.Cells["ItemNo"].Value = ItemNo;
-            rowe.Cells["ItemName"].Value = ItemName;
-            rowe.Cells["Stock"].Value = Stock;
-            rowe.Cells["Qty"].Value = Qty;
-            rowe.Cells["ShipQty"].Value = ShipQty;
-            rowe.Cells["Unit"].Value = Unit;
-            rowe.Cells["CustomerNo"].Value = CustomerNo;
-            rowe.Cells["CustomerName"].Value = CustomerName;
-            rowe.Cells["RefDocNo"].Value = RefDocNo;
-            rowe.Cells["ProductionNo"].Value = ProductionNo;
-        }
         //
 
 
@@ -191,15 +150,13 @@ namespace StockControl
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            //DataLoad();
-            demo();
+            DataLoad();
         }
 
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
-            //selRow();
-            demo();
+            selRow();
 
         }
         void selRow()

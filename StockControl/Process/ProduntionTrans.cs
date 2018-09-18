@@ -482,13 +482,13 @@ namespace StockControl
                 var pol = new CustomerPO_List(2);
                 this.Cursor = Cursors.Default;
                 pol.ShowDialog();
-                if (pol.PONo != "" && pol.CstmNo != "")
-                {
-                    t_PONo = pol.PONo;
-                    t_CustomerNo = pol.CstmNo;
-                    //LoadData
-                    DataLoad();
-                }
+                //if (pol.PONo != "" && pol.CstmNo != "")
+                //{
+                //    t_PONo = pol.PONo;
+                //    t_CustomerNo = pol.CstmNo;
+                //    //LoadData
+                //    DataLoad();
+                //}
 
 
                 GC.Collect();

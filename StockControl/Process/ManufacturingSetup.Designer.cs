@@ -255,7 +255,6 @@
             this.cbbShowCapa.Size = new System.Drawing.Size(100, 20);
             this.cbbShowCapa.TabIndex = 2;
             this.cbbShowCapa.ThemeName = "Office2010Blue";
-            this.cbbShowCapa.Visible = false;
             // 
             // txtEndingTime
             // 
@@ -288,7 +287,6 @@
             this.radLabel3.Size = new System.Drawing.Size(109, 18);
             this.radLabel3.TabIndex = 0;
             this.radLabel3.Text = "Show Capacity UOM";
-            this.radLabel3.Visible = false;
             // 
             // radLabel2
             // 

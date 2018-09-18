@@ -2163,18 +2163,18 @@ namespace StockControl
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_054_SaleOrder_List")]
-		public ISingleResult<sp_054_SaleOrder_ListResult> sp_054_SaleOrder_List([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SONo", DbType="VarChar(50)")] string sONo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CSTMName", DbType="VarChar(100)")] string cSTMName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ItemNo", DbType="VarChar(100)")] string itemNo, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(8)")] string dt1, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(8)")] string dt2, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="VarChar(100)")] string status)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sONo, cSTMName, itemNo, dt1, dt2, status);
-			return ((ISingleResult<sp_054_SaleOrder_ListResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_056_SaleOrder_List")]
 		public ISingleResult<sp_056_SaleOrder_ListResult> sp_056_SaleOrder_List([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SONo", DbType="VarChar(50)")] string sONo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CSTMName", DbType="VarChar(100)")] string cSTMName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ItemNo", DbType="VarChar(100)")] string itemNo, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(8)")] string dt1, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(8)")] string dt2)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sONo, cSTMName, itemNo, dt1, dt2);
 			return ((ISingleResult<sp_056_SaleOrder_ListResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_054_SaleOrder_List")]
+		public ISingleResult<sp_054_SaleOrder_ListResult> sp_054_SaleOrder_List([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SONo", DbType="VarChar(50)")] string sONo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CSTMName", DbType="VarChar(100)")] string cSTMName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ItemNo", DbType="VarChar(100)")] string itemNo, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(8)")] string dt1, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(8)")] string dt2, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="VarChar(100)")] string status, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CSTMNo", DbType="NVarChar(50)")] string cSTMNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PONo", DbType="NVarChar(50)")] string pONo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sONo, cSTMName, itemNo, dt1, dt2, status, cSTMNo, pONo);
+			return ((ISingleResult<sp_054_SaleOrder_ListResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -69290,338 +69290,6 @@ namespace StockControl
 		}
 	}
 	
-	public partial class sp_054_SaleOrder_ListResult
-	{
-		
-		private string _SS;
-		
-		private string _SONo;
-		
-		private System.Nullable<System.DateTime> _SODate;
-		
-		private string _ItemNo;
-		
-		private string _ItemName;
-		
-		private string _Description;
-		
-		private System.Nullable<decimal> _Stock;
-		
-		private decimal _Qty;
-		
-		private System.Nullable<decimal> _ShipQty;
-		
-		private int _InvQty;
-		
-		private string _Unit;
-		
-		private string _CustomerNo;
-		
-		private string _CustomerName;
-		
-		private string _temp;
-		
-		private string _RefDocNo;
-		
-		private string _ProductionNo;
-		
-		private int _id;
-		
-		private int _RefId;
-		
-		public sp_054_SaleOrder_ListResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SS", DbType="VarChar(9) NOT NULL", CanBeNull=false)]
-		public string SS
-		{
-			get
-			{
-				return this._SS;
-			}
-			set
-			{
-				if ((this._SS != value))
-				{
-					this._SS = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SONo", DbType="NVarChar(50)")]
-		public string SONo
-		{
-			get
-			{
-				return this._SONo;
-			}
-			set
-			{
-				if ((this._SONo != value))
-				{
-					this._SONo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SODate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> SODate
-		{
-			get
-			{
-				return this._SODate;
-			}
-			set
-			{
-				if ((this._SODate != value))
-				{
-					this._SODate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50)")]
-		public string ItemNo
-		{
-			get
-			{
-				return this._ItemNo;
-			}
-			set
-			{
-				if ((this._ItemNo != value))
-				{
-					this._ItemNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(100)")]
-		public string ItemName
-		{
-			get
-			{
-				return this._ItemName;
-			}
-			set
-			{
-				if ((this._ItemName != value))
-				{
-					this._ItemName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(200)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this._Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stock", DbType="Decimal(18,6)")]
-		public System.Nullable<decimal> Stock
-		{
-			get
-			{
-				return this._Stock;
-			}
-			set
-			{
-				if ((this._Stock != value))
-				{
-					this._Stock = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Qty
-		{
-			get
-			{
-				return this._Qty;
-			}
-			set
-			{
-				if ((this._Qty != value))
-				{
-					this._Qty = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShipQty", DbType="Decimal(19,2)")]
-		public System.Nullable<decimal> ShipQty
-		{
-			get
-			{
-				return this._ShipQty;
-			}
-			set
-			{
-				if ((this._ShipQty != value))
-				{
-					this._ShipQty = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InvQty", DbType="Int NOT NULL")]
-		public int InvQty
-		{
-			get
-			{
-				return this._InvQty;
-			}
-			set
-			{
-				if ((this._InvQty != value))
-				{
-					this._InvQty = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="NVarChar(50)")]
-		public string Unit
-		{
-			get
-			{
-				return this._Unit;
-			}
-			set
-			{
-				if ((this._Unit != value))
-				{
-					this._Unit = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerNo", DbType="NVarChar(50)")]
-		public string CustomerNo
-		{
-			get
-			{
-				return this._CustomerNo;
-			}
-			set
-			{
-				if ((this._CustomerNo != value))
-				{
-					this._CustomerNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="NVarChar(100)")]
-		public string CustomerName
-		{
-			get
-			{
-				return this._CustomerName;
-			}
-			set
-			{
-				if ((this._CustomerName != value))
-				{
-					this._CustomerName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_temp", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string temp
-		{
-			get
-			{
-				return this._temp;
-			}
-			set
-			{
-				if ((this._temp != value))
-				{
-					this._temp = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefDocNo", DbType="NVarChar(50)")]
-		public string RefDocNo
-		{
-			get
-			{
-				return this._RefDocNo;
-			}
-			set
-			{
-				if ((this._RefDocNo != value))
-				{
-					this._RefDocNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductionNo", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string ProductionNo
-		{
-			get
-			{
-				return this._ProductionNo;
-			}
-			set
-			{
-				if ((this._ProductionNo != value))
-				{
-					this._ProductionNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this._id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefId", DbType="Int NOT NULL")]
-		public int RefId
-		{
-			get
-			{
-				return this._RefId;
-			}
-			set
-			{
-				if ((this._RefId != value))
-				{
-					this._RefId = value;
-				}
-			}
-		}
-	}
-	
 	public partial class sp_056_SaleOrder_ListResult
 	{
 		
@@ -70003,6 +69671,338 @@ namespace StockControl
 				if ((this._UnitPrice != value))
 				{
 					this._UnitPrice = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_054_SaleOrder_ListResult
+	{
+		
+		private string _SS;
+		
+		private string _SONo;
+		
+		private System.Nullable<System.DateTime> _SODate;
+		
+		private string _ItemNo;
+		
+		private string _ItemName;
+		
+		private string _Description;
+		
+		private System.Nullable<decimal> _Stock;
+		
+		private decimal _Qty;
+		
+		private System.Nullable<decimal> _ShipQty;
+		
+		private int _InvQty;
+		
+		private string _Unit;
+		
+		private string _CustomerNo;
+		
+		private string _CustomerName;
+		
+		private string _temp;
+		
+		private string _RefDocNo;
+		
+		private string _ProductionNo;
+		
+		private int _id;
+		
+		private int _RefId;
+		
+		public sp_054_SaleOrder_ListResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SS", DbType="VarChar(9) NOT NULL", CanBeNull=false)]
+		public string SS
+		{
+			get
+			{
+				return this._SS;
+			}
+			set
+			{
+				if ((this._SS != value))
+				{
+					this._SS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SONo", DbType="NVarChar(50)")]
+		public string SONo
+		{
+			get
+			{
+				return this._SONo;
+			}
+			set
+			{
+				if ((this._SONo != value))
+				{
+					this._SONo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SODate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> SODate
+		{
+			get
+			{
+				return this._SODate;
+			}
+			set
+			{
+				if ((this._SODate != value))
+				{
+					this._SODate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50)")]
+		public string ItemNo
+		{
+			get
+			{
+				return this._ItemNo;
+			}
+			set
+			{
+				if ((this._ItemNo != value))
+				{
+					this._ItemNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(100)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this._ItemName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(200)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this._Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stock", DbType="Decimal(18,6)")]
+		public System.Nullable<decimal> Stock
+		{
+			get
+			{
+				return this._Stock;
+			}
+			set
+			{
+				if ((this._Stock != value))
+				{
+					this._Stock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Qty
+		{
+			get
+			{
+				return this._Qty;
+			}
+			set
+			{
+				if ((this._Qty != value))
+				{
+					this._Qty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShipQty", DbType="Decimal(19,2)")]
+		public System.Nullable<decimal> ShipQty
+		{
+			get
+			{
+				return this._ShipQty;
+			}
+			set
+			{
+				if ((this._ShipQty != value))
+				{
+					this._ShipQty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InvQty", DbType="Int NOT NULL")]
+		public int InvQty
+		{
+			get
+			{
+				return this._InvQty;
+			}
+			set
+			{
+				if ((this._InvQty != value))
+				{
+					this._InvQty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="NVarChar(50)")]
+		public string Unit
+		{
+			get
+			{
+				return this._Unit;
+			}
+			set
+			{
+				if ((this._Unit != value))
+				{
+					this._Unit = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerNo", DbType="NVarChar(50)")]
+		public string CustomerNo
+		{
+			get
+			{
+				return this._CustomerNo;
+			}
+			set
+			{
+				if ((this._CustomerNo != value))
+				{
+					this._CustomerNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="NVarChar(100)")]
+		public string CustomerName
+		{
+			get
+			{
+				return this._CustomerName;
+			}
+			set
+			{
+				if ((this._CustomerName != value))
+				{
+					this._CustomerName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_temp", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string temp
+		{
+			get
+			{
+				return this._temp;
+			}
+			set
+			{
+				if ((this._temp != value))
+				{
+					this._temp = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefDocNo", DbType="NVarChar(50)")]
+		public string RefDocNo
+		{
+			get
+			{
+				return this._RefDocNo;
+			}
+			set
+			{
+				if ((this._RefDocNo != value))
+				{
+					this._RefDocNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductionNo", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string ProductionNo
+		{
+			get
+			{
+				return this._ProductionNo;
+			}
+			set
+			{
+				if ((this._ProductionNo != value))
+				{
+					this._ProductionNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefId", DbType="Int NOT NULL")]
+		public int RefId
+		{
+			get
+			{
+				return this._RefId;
+			}
+			set
+			{
+				if ((this._RefId != value))
+				{
+					this._RefId = value;
 				}
 			}
 		}

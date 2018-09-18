@@ -4360,34 +4360,6 @@
     <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.sp_054_SaleOrder_List" Method="sp_054_SaleOrder_List">
-    <Parameter Name="SONo" Parameter="sONo" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="CSTMName" Parameter="cSTMName" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="ItemNo" Parameter="itemNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="dt1" Type="System.String" DbType="VarChar(8)" />
-    <Parameter Name="dt2" Type="System.String" DbType="VarChar(8)" />
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="VarChar(100)" />
-    <ElementType Name="sp_054_SaleOrder_ListResult">
-      <Column Name="SS" Type="System.String" DbType="VarChar(9) NOT NULL" CanBeNull="false" />
-      <Column Name="SONo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SODate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="Stock" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="ShipQty" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
-      <Column Name="InvQty" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Unit" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CustomerNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CustomerName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="temp" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="RefDocNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ProductionNo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="RefId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.sp_056_SaleOrder_List" Method="sp_056_SaleOrder_List">
     <Parameter Name="SONo" Parameter="sONo" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="CSTMName" Parameter="cSTMName" Type="System.String" DbType="VarChar(100)" />
@@ -4416,6 +4388,36 @@
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="refNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="UnitPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_054_SaleOrder_List" Method="sp_054_SaleOrder_List">
+    <Parameter Name="SONo" Parameter="sONo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="CSTMName" Parameter="cSTMName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="ItemNo" Parameter="itemNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="dt1" Type="System.String" DbType="VarChar(8)" />
+    <Parameter Name="dt2" Type="System.String" DbType="VarChar(8)" />
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="CSTMNo" Parameter="cSTMNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="PONo" Parameter="pONo" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="sp_054_SaleOrder_ListResult">
+      <Column Name="SS" Type="System.String" DbType="VarChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="SONo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SODate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Stock" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="ShipQty" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Column Name="InvQty" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Unit" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="temp" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="RefDocNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ProductionNo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RefId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>

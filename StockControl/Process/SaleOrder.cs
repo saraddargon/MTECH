@@ -211,6 +211,7 @@ namespace StockControl
                                         , dbClss.TSt(t.FirstOrDefault().ReplenishmentType)
                                         , "T");
 
+                                    cbbCSTM.Enabled = false;
                                 }
                             }
                         }

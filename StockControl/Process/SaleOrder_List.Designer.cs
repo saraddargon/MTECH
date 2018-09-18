@@ -107,6 +107,8 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
+            this.txtCstmPO = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -131,6 +133,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCstmPO)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -357,7 +361,7 @@
             this.dgvData.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.dgvData.ForeColor = System.Drawing.Color.Black;
             this.dgvData.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dgvData.Location = new System.Drawing.Point(0, 144);
+            this.dgvData.Location = new System.Drawing.Point(0, 174);
             // 
             // 
             // 
@@ -581,7 +585,7 @@
             this.dgvData.Name = "dgvData";
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(1032, 433);
+            this.dgvData.Size = new System.Drawing.Size(1032, 403);
             this.dgvData.TabIndex = 2;
             this.dgvData.ThemeName = "Office2010Blue";
             this.dgvData.CellDoubleClick += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellDoubleClick);
@@ -634,16 +638,18 @@
             this.radPanel1.Controls.Add(this.cbbItem);
             this.radPanel1.Controls.Add(this.cbbCSTM);
             this.radPanel1.Controls.Add(this.txtCSTMNo);
+            this.radPanel1.Controls.Add(this.txtCstmPO);
             this.radPanel1.Controls.Add(this.txtPONo);
             this.radPanel1.Controls.Add(this.cbChkDate);
             this.radPanel1.Controls.Add(this.radLabel3);
+            this.radPanel1.Controls.Add(this.radLabel5);
             this.radPanel1.Controls.Add(this.radLabel2);
             this.radPanel1.Controls.Add(this.radLabel1);
             this.radPanel1.Controls.Add(this.btnSearch);
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(1032, 144);
+            this.radPanel1.Size = new System.Drawing.Size(1032, 174);
             this.radPanel1.TabIndex = 1;
             this.radPanel1.ThemeName = "Office2010Blue";
             // 
@@ -651,7 +657,7 @@
             // 
             this.dtTo.CustomFormat = "dd/MM/yyyy";
             this.dtTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtTo.Location = new System.Drawing.Point(333, 107);
+            this.dtTo.Location = new System.Drawing.Point(333, 134);
             this.dtTo.Name = "dtTo";
             this.dtTo.Size = new System.Drawing.Size(100, 20);
             this.dtTo.TabIndex = 12;
@@ -662,7 +668,7 @@
             // 
             // radLabel4
             // 
-            this.radLabel4.Location = new System.Drawing.Point(297, 109);
+            this.radLabel4.Location = new System.Drawing.Point(297, 136);
             this.radLabel4.Name = "radLabel4";
             this.radLabel4.Size = new System.Drawing.Size(17, 18);
             this.radLabel4.TabIndex = 7;
@@ -672,7 +678,7 @@
             // 
             this.dtFrom.CustomFormat = "dd/MM/yyyy";
             this.dtFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtFrom.Location = new System.Drawing.Point(182, 107);
+            this.dtFrom.Location = new System.Drawing.Point(182, 134);
             this.dtFrom.Name = "dtFrom";
             this.dtFrom.Size = new System.Drawing.Size(100, 20);
             this.dtFrom.TabIndex = 12;
@@ -704,7 +710,7 @@
             this.cbbItem.EditorControl.ShowGroupPanel = false;
             this.cbbItem.EditorControl.Size = new System.Drawing.Size(240, 150);
             this.cbbItem.EditorControl.TabIndex = 0;
-            this.cbbItem.Location = new System.Drawing.Point(182, 79);
+            this.cbbItem.Location = new System.Drawing.Point(182, 106);
             this.cbbItem.Name = "cbbItem";
             this.cbbItem.Size = new System.Drawing.Size(186, 22);
             this.cbbItem.TabIndex = 11;
@@ -758,7 +764,7 @@
             // 
             // cbChkDate
             // 
-            this.cbChkDate.Location = new System.Drawing.Point(78, 109);
+            this.cbChkDate.Location = new System.Drawing.Point(78, 136);
             this.cbChkDate.Name = "cbChkDate";
             this.cbChkDate.Size = new System.Drawing.Size(76, 18);
             this.cbChkDate.TabIndex = 8;
@@ -774,7 +780,7 @@
             // 
             // radLabel2
             // 
-            this.radLabel2.Location = new System.Drawing.Point(78, 78);
+            this.radLabel2.Location = new System.Drawing.Point(78, 105);
             this.radLabel2.Name = "radLabel2";
             this.radLabel2.Size = new System.Drawing.Size(29, 18);
             this.radLabel2.TabIndex = 7;
@@ -834,6 +840,21 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
+            // radLabel5
+            // 
+            this.radLabel5.Location = new System.Drawing.Point(78, 80);
+            this.radLabel5.Name = "radLabel5";
+            this.radLabel5.Size = new System.Drawing.Size(93, 18);
+            this.radLabel5.TabIndex = 7;
+            this.radLabel5.Text = "Customer PO No.";
+            // 
+            // txtCstmPO
+            // 
+            this.txtCstmPO.Location = new System.Drawing.Point(182, 79);
+            this.txtCstmPO.Name = "txtCstmPO";
+            this.txtCstmPO.Size = new System.Drawing.Size(186, 20);
+            this.txtCstmPO.TabIndex = 9;
+            // 
             // SaleOrder_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -878,6 +899,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCstmPO)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -931,5 +954,7 @@
         private Telerik.WinControls.UI.RadLabel radLabel4;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup6;
         private Telerik.WinControls.UI.RadButtonElement btnCreateShipment;
+        private Telerik.WinControls.UI.RadTextBox txtCstmPO;
+        private Telerik.WinControls.UI.RadLabel radLabel5;
     }
 }
