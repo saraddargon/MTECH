@@ -111,8 +111,9 @@ namespace StockControl
                         else
                             btnHoldJob.Text = "Hold Job";
                         txtidJob.Text = t.id.ToSt();
+                        txtSeqStatus.Text = t.SeqStatus.ToSt();
 
-                        if (t.ApproveDate != null)
+                        if (txtSeqStatus.Text.ToInt() == 2)
                             txtStatus.Text = "Approved";
                         else
                             txtStatus.Text = "Waiting";
@@ -283,6 +284,7 @@ namespace StockControl
             cbHoldJob.Checked = false;
             txtStatus.Text = "Waiting";
             txtidJob.Text = "";
+            txtSeqStatus.Text = "";
 
             using (var db = new DataClasses1DataContext())
             {
@@ -369,7 +371,7 @@ namespace StockControl
                 baseClass.Warning("- Cannot Delete because Status is 'Process'.\n");
                 return;
             }
-            else if (txtStatus.Text == "Approved")
+            else if (txtSeqStatus.Text.ToInt() > 0)
             {
                 baseClass.Warning("- Cannot Delete because Status is 'Approved'.\n");
                 return;
@@ -438,7 +440,9 @@ namespace StockControl
 
                 if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
                     err += "- Cannot Save because Status is 'Process'.\n";
-                else if (txtStatus.Text == "Approved")
+                //else if (txtStatus.Text == "Approved")
+                //    err += "- Cannot Save because Status is 'Approved'.\n";
+                else if (txtStatus.Text.ToInt() > 0)
                     err += "- Cannot Save because Status is 'Approved'.\n";
 
 
@@ -490,6 +494,7 @@ namespace StockControl
                         m.CreateDate = DateTime.Now;
                         m.JobDate = DateTime.Now.Date;
                         m.JobNo = dbClss.GetNo(29, 2);
+                        m.SeqStatus = 0;
                         db.mh_ProductionOrders.InsertOnSubmit(m);
                         newJob = true;
                         dbClss.AddHistory(this.Name, "Job Order Sheet", $"Edit Job Order Sheet : {m.JobNo}", m.JobNo);
