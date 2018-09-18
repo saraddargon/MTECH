@@ -259,7 +259,8 @@ namespace StockControl
                             Type = dbClss.TSt(rd.Cells["ApproveType"].Value);
                             id = dbClss.TInt(rd.Cells["id"].Value);
 
-                            db.sp_064_mh_ApproveList_Update2(id, DocNo, Type, ClassLib.Classlib.User, "", "Approve");
+                            if ((dbClss.TSt(rd.Cells["Status"].Value)=="Waiting") || (dbClss.TSt(rd.Cells["Status"].Value) == "Reject"))
+                                 db.sp_064_mh_ApproveList_Update2(id, DocNo, Type, ClassLib.Classlib.User, "", "Approve");
                             ////Old-------------------------
                             //var g = (from ix in db.mh_ApproveLists
                             //         where ix.id == id && ix.Status == "Waiting"
@@ -312,6 +313,8 @@ namespace StockControl
                         }
 
                     }
+                    DataLoad();
+                    baseClass.Info("Approve complete.");
                 }
             }
 
@@ -550,7 +553,7 @@ namespace StockControl
         {
             this.Cursor = Cursors.WaitCursor;
             radGridView1.EndEdit();
-            if (baseClass.IsApprove())
+            if (baseClass.IsReject())
             {
                 using (var db = new DataClasses1DataContext())
                 {
@@ -570,11 +573,13 @@ namespace StockControl
                                 DocNo = dbClss.TSt(rd.Cells["ApproveDocuNo"].Value);
                                 Type = dbClss.TSt(rd.Cells["ApproveType"].Value);
                                 id = dbClss.TInt(rd.Cells["id"].Value);
-
-                                db.sp_064_mh_ApproveList_Update2(id, DocNo, Type, ClassLib.Classlib.User, GetMarkup, "Reject");
+                                if ((dbClss.TSt(rd.Cells["Status"].Value) == "Waiting") || (dbClss.TSt(rd.Cells["Status"].Value) == "Completed") || (dbClss.TSt(rd.Cells["Status"].Value) == "Approved"))
+                                    db.sp_064_mh_ApproveList_Update2(id, DocNo, Type, ClassLib.Classlib.User, GetMarkup, "Reject");
                             }
 
                         }
+                        DataLoad();
+                        baseClass.Info("Reject complete.");
                     }
                 }
             }

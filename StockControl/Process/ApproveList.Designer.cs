@@ -47,6 +47,7 @@
             Telerik.WinControls.UI.RadListDataItem radListDataItem4 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem5 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem6 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem7 = new Telerik.WinControls.UI.RadListDataItem();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApproveList));
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
@@ -207,7 +208,7 @@
             gridViewTextBoxColumn5.ReadOnly = true;
             gridViewTextBoxColumn5.Width = 106;
             gridViewTextBoxColumn6.EnableExpressionEditor = false;
-            gridViewTextBoxColumn6.FieldName = "Status";
+            gridViewTextBoxColumn6.FieldName = "S_Status";
             gridViewTextBoxColumn6.HeaderText = "สถานะ";
             gridViewTextBoxColumn6.Name = "Status";
             gridViewTextBoxColumn6.ReadOnly = true;
@@ -230,7 +231,7 @@
             gridViewTextBoxColumn8.Name = "id";
             gridViewTextBoxColumn8.ReadOnly = true;
             gridViewTextBoxColumn9.EnableExpressionEditor = false;
-            gridViewTextBoxColumn9.FieldName = "RemarkReject";
+            gridViewTextBoxColumn9.FieldName = "RemarkReject1";
             gridViewTextBoxColumn9.HeaderText = "เหตุผล ยกเลิก";
             gridViewTextBoxColumn9.Name = "RemarkReject";
             gridViewTextBoxColumn9.ReadOnly = true;
@@ -334,9 +335,11 @@
             // ddlStatus
             // 
             radListDataItem5.Text = "Waiting";
-            radListDataItem6.Text = "Completed";
+            radListDataItem6.Text = "Approved";
+            radListDataItem7.Text = "Reject";
             this.ddlStatus.Items.Add(radListDataItem5);
             this.ddlStatus.Items.Add(radListDataItem6);
+            this.ddlStatus.Items.Add(radListDataItem7);
             this.ddlStatus.Location = new System.Drawing.Point(314, 10);
             this.ddlStatus.Name = "ddlStatus";
             this.ddlStatus.Size = new System.Drawing.Size(95, 20);

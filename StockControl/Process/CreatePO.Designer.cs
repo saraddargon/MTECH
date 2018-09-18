@@ -192,6 +192,7 @@
             this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup10 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnSendApprove = new Telerik.WinControls.UI.RadButtonElement();
+            this.txtSeqStatus = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -280,6 +281,7 @@
             this.radGroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -1176,6 +1178,7 @@
             this.radPanel1.Controls.Add(this.radGroupBox2);
             this.radPanel1.Controls.Add(this.radGroupBox1);
             this.radPanel1.Controls.Add(this.radLabel9);
+            this.radPanel1.Controls.Add(this.txtSeqStatus);
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.radPanel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
@@ -1971,6 +1974,18 @@
             this.btnSendApprove.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnSendApprove.Click += new System.EventHandler(this.btnSendApprove_Click);
             // 
+            // txtSeqStatus
+            // 
+            this.txtSeqStatus.BackColor = System.Drawing.Color.White;
+            this.txtSeqStatus.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSeqStatus.Location = new System.Drawing.Point(769, 120);
+            this.txtSeqStatus.Name = "txtSeqStatus";
+            this.txtSeqStatus.Size = new System.Drawing.Size(57, 19);
+            this.txtSeqStatus.TabIndex = 5;
+            this.txtSeqStatus.Visible = false;
+            ((Telerik.WinControls.UI.RadTextBoxItem)(this.txtSeqStatus.GetChildAt(0).GetChildAt(0))).BackColor = System.Drawing.Color.White;
+            ((Telerik.WinControls.UI.RadTextBoxItem)(this.txtSeqStatus.GetChildAt(0).GetChildAt(0))).Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            // 
             // CreatePO
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2084,6 +2099,7 @@
             this.radGroupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2213,5 +2229,6 @@
         private Telerik.WinControls.UI.RadMultiColumnComboBox cboVatType;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup10;
         private Telerik.WinControls.UI.RadButtonElement btnSendApprove;
+        private Telerik.WinControls.UI.RadTextBox txtSeqStatus;
     }
 }

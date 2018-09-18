@@ -353,6 +353,7 @@ namespace StockControl
                         txtAfterDiscount.Text = StockControl.dbClss.TDe(g.FirstOrDefault().AfterDiscount).ToString("##,###,##0.00");
                         lbOrderSubtotal.Text = StockControl.dbClss.TDe(g.FirstOrDefault().Total).ToString("##,###,##0.00");
                         txtVat.Text = StockControl.dbClss.TDe(g.FirstOrDefault().vat).ToString("##,###,##0.00");
+                        txtSeqStatus.Text = dbClss.TInt(g.FirstOrDefault().SeqStatus).ToSt();
 
                         cbvatDetail.Checked = StockControl.dbClss.TBo(g.FirstOrDefault().VatDetail);
                         if (StockControl.dbClss.TDe(txtVat.Text) > 0)
@@ -472,10 +473,17 @@ namespace StockControl
                         CallTotal();
                         btnCal_Click(null, null);                        
                         if (cbvatDetail.Checked)
-                            getTotal();                        
+                            getTotal();
+
+                        string Status = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
+                        int SeqStatus = 0;
+                        SeqStatus = dbClss.TInt(txtSeqStatus.Text);
+
+                        if (Status == "Waiting" && SeqStatus == 1)
+                            Status = "Waiting Approve";
 
                         //lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
-                        if (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Cancel"))
+                        if (Status.Equals("Cancel"))
                         {
                             //ddlFactory.Enabled = false;
                             btnNew.Enabled = true;
@@ -491,8 +499,9 @@ namespace StockControl
                             btnDel_Item.Enabled = false;
                         }
                         else if
-                            (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Completed")
-                            || StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Process")
+                            (Status.Equals("Completed")
+                            || Status.Equals("Process")
+                            || Status.Equals("Waiting Approve")
                             )
                         {
                             //ddlFactory.Enabled = false;
@@ -501,7 +510,7 @@ namespace StockControl
                             btnView.Enabled = false;
                             btnEdit.Enabled = false;
                             btnNew.Enabled = true;
-                            lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
+                            lblStatus.Text = Status;// StockControl.dbClss.TSt(g.FirstOrDefault().Status);
                             dgvData.ReadOnly = true;
                             btnAdd_Item.Enabled = false;
                             btnAdd_Part.Enabled = false;
@@ -512,8 +521,8 @@ namespace StockControl
                             {
                                 btnDiscon.Enabled = true;
                                 btnDiscon_Item.Enabled = true;
-                            }
-                        }
+                            }                            
+                        }                       
                         else
                         {
                             //ddlFactory.Enabled = false;
@@ -522,14 +531,13 @@ namespace StockControl
                             btnDelete.Enabled = true;
                             btnView.Enabled = false;
                             btnEdit.Enabled = true;
-                            lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
+                            lblStatus.Text = Status;//StockControl.dbClss.TSt(g.FirstOrDefault().Status);
                             dgvData.ReadOnly = false;
                             btnAdd_Item.Enabled = false;
                             btnAdd_Part.Enabled = false;
                             btnAdd_Row.Enabled = false;
                             btnDel_Item.Enabled = false;
                         }
-
                         foreach (var x in dgvData.Rows)
                         {
                             if (row >= 0 && row == ck && dgvData.Rows.Count>0)
@@ -778,7 +786,7 @@ namespace StockControl
                     gg.Discpct = StockControl.dbClss.TDe(txtLessPoDiscountAmountPersen.Text);                    
                     gg.VatTax = StockControl.dbClss.TDe(txtVattax.Text);
                     gg.Usefixunit = StockControl.dbClss.TBo(cbUsefixunit.Checked);
-
+                    
                     DateTime? Duedate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     if (!dtDuedate.Text.Equals(""))
                         Duedate = dtDuedate.Value;
@@ -791,6 +799,7 @@ namespace StockControl
                     gg.CRRNCY = ddlCurrency.Text.Trim();
                     gg.Status = "Waiting";
                     gg.CHStatus = "Waiting";
+                    gg.SeqStatus = 0;
 
                     db.mh_PurchaseOrders.InsertOnSubmit(gg);
                     db.SubmitChanges();
@@ -1155,6 +1164,7 @@ namespace StockControl
         private void ClearData()
         {
             //ddlFactory.Text = "";
+            txtSeqStatus.Text = "0";
             txtPONo.Text = "";
             cboVendorName.Text = "";
             txtTempNo.Text = "";
@@ -1280,7 +1290,7 @@ namespace StockControl
                         return;
                     }
                    
-                    if (lblStatus.Text != "Completed" && lblStatus.Text != "Process")
+                    if (lblStatus.Text != "Completed" && lblStatus.Text != "Process" && lblStatus.Text != "Waiting Approve")
                     {
                         lblStatus.Text = "Delete";
                         Ac = "Del";
@@ -1291,7 +1301,7 @@ namespace StockControl
                             var g = (from ix in db.mh_PurchaseOrders
                                      where ix.TempPNo.Trim() == txtTempNo.Text.Trim()
                                      && ix.Status != "Cancel" && ix.Status != "Completed" && ix.Status != "Process"
-                                     //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
+                                     && ix.SeqStatus ==0
                                      select ix).ToList();
                             if (g.Count > 0)  //มีรายการในระบบ
                             {
@@ -2870,7 +2880,7 @@ namespace StockControl
         {
             try
             {
-                if (lblStatus.Text != "Completed")
+                if (lblStatus.Text != "Completed" && lblStatus.Text != "Waiting Approve")
                 {
                     lblStatus.Text = "Discon";
                     Ac = "Discon";

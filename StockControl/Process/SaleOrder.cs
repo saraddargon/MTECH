@@ -396,7 +396,7 @@ namespace StockControl
                     {
                         //Status
                         //Waiting
-                        //Process
+                        //Process  --Approved
                         //Partial-- > Shipment Partial
                         //Complete --> Shipment Full
 
