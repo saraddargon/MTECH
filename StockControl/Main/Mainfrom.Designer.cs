@@ -31,17 +31,18 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainfrom));
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Charts View");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Part Setting");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Bill of Material (Bom)");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Purchase Request");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Purchase Order");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Receive Part");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Shipping Part");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Stock Balance");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Sale");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Production Plan");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Planning");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Production");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Approve");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Part Setting");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Bill of Material (Bom)");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Purchase Request");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Purchase Order");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Receive Part");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Shipping Part");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Stock Balance");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Sale");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Production Plan");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Planning");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Production");
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
@@ -622,28 +623,30 @@
             this.TreeManu.Name = "TreeManu";
             treeNode1.Name = "ChartsView";
             treeNode1.Text = "Charts View";
-            treeNode2.Name = "PartSetting";
-            treeNode2.Text = "Part Setting";
-            treeNode3.Name = "Bom";
-            treeNode3.Text = "Bill of Material (Bom)";
-            treeNode4.Name = "PurchaseReq";
-            treeNode4.Text = "Purchase Request";
-            treeNode5.Name = "PurchaseOrder";
-            treeNode5.Text = "Purchase Order";
-            treeNode6.Name = "Receive";
-            treeNode6.Text = "Receive Part";
-            treeNode7.Name = "Shipping";
-            treeNode7.Text = "Shipping Part";
-            treeNode8.Name = "Stock";
-            treeNode8.Text = "Stock Balance";
-            treeNode9.Name = "Sale";
-            treeNode9.Text = "Sale";
-            treeNode10.Name = "ProductionPlan";
-            treeNode10.Text = "Production Plan";
-            treeNode11.Name = "Planning";
-            treeNode11.Text = "Planning";
-            treeNode12.Name = "Production";
-            treeNode12.Text = "Production";
+            treeNode2.Name = "Approve";
+            treeNode2.Text = "Approve";
+            treeNode3.Name = "PartSetting";
+            treeNode3.Text = "Part Setting";
+            treeNode4.Name = "Bom";
+            treeNode4.Text = "Bill of Material (Bom)";
+            treeNode5.Name = "PurchaseReq";
+            treeNode5.Text = "Purchase Request";
+            treeNode6.Name = "PurchaseOrder";
+            treeNode6.Text = "Purchase Order";
+            treeNode7.Name = "Receive";
+            treeNode7.Text = "Receive Part";
+            treeNode8.Name = "Shipping";
+            treeNode8.Text = "Shipping Part";
+            treeNode9.Name = "Stock";
+            treeNode9.Text = "Stock Balance";
+            treeNode10.Name = "Sale";
+            treeNode10.Text = "Sale";
+            treeNode11.Name = "ProductionPlan";
+            treeNode11.Text = "Production Plan";
+            treeNode12.Name = "Planning";
+            treeNode12.Text = "Planning";
+            treeNode13.Name = "Production";
+            treeNode13.Text = "Production";
             this.TreeManu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
@@ -656,7 +659,8 @@
             treeNode9,
             treeNode10,
             treeNode11,
-            treeNode12});
+            treeNode12,
+            treeNode13});
             this.TreeManu.SelectedImageIndex = 4;
             this.TreeManu.ShowNodeToolTips = true;
             this.TreeManu.Size = new System.Drawing.Size(212, 486);
