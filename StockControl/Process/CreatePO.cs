@@ -1314,7 +1314,6 @@ namespace StockControl
 
                                             ss.SS = 0;
                                             db.SubmitChanges();
-
                                             //update Stock backorder
                                             db.sp_010_Update_StockItem(Convert.ToString(ss.CodeNo), "BackOrder");
                                         }
@@ -1376,6 +1375,7 @@ namespace StockControl
                     foreach (var p in s)
                     {
                         p.Status = "Waiting";
+                        
                         //p.RemainQty = p.OrderQty;
                         p.PoNo = "";
                         p.RefPOid = 0;
