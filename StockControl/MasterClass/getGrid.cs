@@ -45,6 +45,14 @@ namespace StockControl
                                     shipQ += ss.Sum(x => x.dtSS.Qty).ToDecimal();
                             }
 
+                            //find Job
+                            string JobNo = "";
+                            if(dt.OutPlan == 0)
+                            {
+                                var q = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == dt.id).FirstOrDefault();
+                                if (q != null) JobNo = q.JobNo;
+                            }
+
                             l.Add(new grid_CustomerPO
                             {
                                 Status = dt.Status,
@@ -68,6 +76,7 @@ namespace StockControl
                                 VendorNo = tool.VendorNo,
                                 VendorName = tool.VendorName,
                                 Shipped = shipQ,//
+                                JobNo = JobNo,
                             });
                         }
                     }
@@ -164,6 +173,8 @@ namespace StockControl
         public string InvGroup { get; set; }
         public string VendorNo { get; set; }
         public string VendorName { get; set; }
+
+        public string JobNo { get; set; }
     }
     public class grid_Planning
     {

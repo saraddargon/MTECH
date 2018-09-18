@@ -11,8 +11,7 @@ namespace StockControl
 {
     public partial class CustomerPO_List : Telerik.WinControls.UI.RadRibbonForm
     {
-        public string PONo { get; private set; } = "";
-        public string CstmNo { get; private set; } = "";
+        public int idCustomerPO { get; set; }
 
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
@@ -105,7 +104,7 @@ namespace StockControl
             {
                 this.Cursor = Cursors.Default;
             }
-            
+
         }
 
 
@@ -159,7 +158,7 @@ namespace StockControl
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
-            //selRow();
+            selRow();
 
         }
         void selRow()
@@ -167,19 +166,27 @@ namespace StockControl
             if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
                 var rowe = dgvData.CurrentCell.RowInfo;
-                PONo = rowe.Cells["PONo"].Value.ToSt();
-                CstmNo = rowe.Cells["CustomerNo"].Value.ToSt();
+                idCustomerPO = rowe.Cells["idCustomerPO"].Value.ToInt();
 
-                if (sType == 1)
+                if (dgvData.CurrentCell.ColumnInfo.Name.Equals("JobNo"))
                 {
-                    //var p = new CustomerPO(PONo, CstmNo);
-                    //p.ShowDialog();
-                    //DataLoad();
-                    //PONo = "";
-                    //CstmNo = "";
+                    string jobNo = rowe.Cells["JobNo"].Value.ToSt();
+                    if (!baseClass.Question("Do you want to open 'Job Order sheet' ?"))
+                        return;
+                    var m = new ProductionOrder(jobNo);
+                    m.ShowDialog();
                 }
                 else
-                    this.Close();
+                {
+                    if (sType == 1)
+                    {
+                        var p = new CustomerPO(idCustomerPO);
+                        p.ShowDialog();
+                        DataLoad();
+                    }
+                    else
+                        this.Close();
+                }
             }
         }
 

@@ -109,6 +109,28 @@ namespace StockControl
                         dgvData.AutoGenerateColumns = false;
                         dgvData.DataSource = m;
 
+                        bool foundSO = false;
+                        dgvData.Rows.ToList().ForEach(x =>
+                        {
+                            int idDt = x.Cells["id"].Value.ToInt();
+                            var j = db.mh_ProductionOrders.Where(q => q.Active && q.RefDocId == idDt).FirstOrDefault();
+                            if (j != null) x.Cells["JobNo"].Value = j.JobNo;
+
+                            if (!foundSO)
+                            {
+                                var so = db.mh_SaleOrderDTs.Where(q => q.RefId == idDt && q.Active)
+                                    .Join(db.mh_SaleOrders.Where(q => q.Active)
+                                    , dt => dt.SONo
+                                    , hd => hd.SONo
+                                    , (dt, hd) => new { hd, dt }).ToList();
+                                if (so.Count > 0)
+                                {
+                                    btnHistoryOrder.Enabled = true;
+                                    foundSO = true;
+                                }
+                            }
+                        });
+
                         SetRowNo1(dgvData);
                         CallTotal();
 
@@ -165,6 +187,8 @@ namespace StockControl
             dtOrderDate.ReadOnly = false;
             txtRemark.ReadOnly = false;
 
+            btnHistoryOrder.Enabled = false;
+
             dgvData.ReadOnly = false;
 
             ClearData();
@@ -213,7 +237,7 @@ namespace StockControl
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
-
+            
             cbbCSTM.Enabled = true;
             txtPONo.ReadOnly = false;
             dtOrderDate.ReadOnly = false;
@@ -315,6 +339,8 @@ namespace StockControl
                             break;
                     }
                 }
+                if (dgvData.Rows.Where(x => x.IsVisible && x.Cells["Status"].Value.ToSt() != "" && x.Cells["Status"].Value.ToSt() != "Waiting").Count() > 0)
+                    err += " “Status:” cannot Save \n";
 
                 if (!err.Equals(""))
                     MessageBox.Show(err);
@@ -692,11 +718,12 @@ namespace StockControl
                 var pol = new CustomerPO_List(2);
                 this.Cursor = Cursors.Default;
                 pol.ShowDialog();
-                if (pol.PONo != "" && pol.CstmNo != "")
+                if (pol.idCustomerPO > 0)
                 {
                     //t_PONo = pol.PONo;
                     //t_CustomerNo = pol.CstmNo;
                     //LoadData
+                    t_idCSTMPO = pol.idCustomerPO;
                     DataLoad();
                 }
 
@@ -1019,5 +1046,49 @@ namespace StockControl
                 DataLoad();
             }
         }
+
+        private void lbJobNo_DoubleClick(object sender, EventArgs e)
+        {
+            OpenJobOrder();
+        }
+        private void btnLinkJob_Click(object sender, EventArgs e)
+        {
+            OpenJobOrder();
+        }
+        void OpenJobOrder()
+        {
+
+        }
+
+        private void MasterTemplate_CellDoubleClick(object sender, GridViewCellEventArgs e)
+        {
+            if(e.RowIndex >= 0)
+            {
+                if (e.Column.Name.Equals("JobNo"))
+                {
+                    string JobNo = e.Row.Cells["JobNo"].Value.ToSt();
+                    linkToJob(JobNo);
+                }
+            }
+        }
+        void linkToJob(string JobNo)
+        {
+            if (JobNo == "") return;
+            var j = new ProductionOrder(JobNo);
+            j.ShowDialog();
+        }
+
+        private void btnHistoryOrder_Click(object sender, EventArgs e)
+        {
+            OpenSaleorderList();
+        }
+        void OpenSaleorderList()
+        {
+            string cstmPO = txtPONo.Text.Trim();
+            string cstmNo = cbbCSTM.SelectedValue.ToSt();
+            var so = new SaleOrder_List2(cstmPO, cstmNo);
+            so.ShowDialog();
+        }
+
     }
 }
