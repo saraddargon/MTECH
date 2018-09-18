@@ -190,6 +190,8 @@
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup10 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnSendApprove = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -325,7 +327,8 @@
             this.radRibbonBarGroup4,
             this.radRibbonBarGroup6,
             this.radRibbonBarGroup8,
-            this.radRibbonBarGroup9});
+            this.radRibbonBarGroup9,
+            this.radRibbonBarGroup10});
             this.ribbonTab1.Name = "ribbonTab1";
             this.ribbonTab1.Text = "Action";
             this.ribbonTab1.UseMnemonic = false;
@@ -1952,6 +1955,22 @@
             this.radButtonElement2.Text = "รายการ";
             this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // radRibbonBarGroup10
+            // 
+            this.radRibbonBarGroup10.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnSendApprove});
+            this.radRibbonBarGroup10.Name = "radRibbonBarGroup10";
+            this.radRibbonBarGroup10.Text = "Send Approve";
+            // 
+            // btnSendApprove
+            // 
+            this.btnSendApprove.Image = ((System.Drawing.Image)(resources.GetObject("btnSendApprove.Image")));
+            this.btnSendApprove.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnSendApprove.Name = "btnSendApprove";
+            this.btnSendApprove.Text = "ส่งอนุมัติ";
+            this.btnSendApprove.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSendApprove.Click += new System.EventHandler(this.btnSendApprove_Click);
+            // 
             // CreatePO
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2192,5 +2211,7 @@
         private Telerik.WinControls.UI.RadMultiColumnComboBox cboVendorName;
         private Telerik.WinControls.UI.RadMultiColumnComboBox cboVatGroup;
         private Telerik.WinControls.UI.RadMultiColumnComboBox cboVatType;
+        private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup10;
+        private Telerik.WinControls.UI.RadButtonElement btnSendApprove;
     }
 }

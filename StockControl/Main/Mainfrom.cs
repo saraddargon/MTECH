@@ -724,5 +724,24 @@ namespace StockControl
             GanttCharts_Job a = new GanttCharts_Job();
             a.ShowDialog();
         }
+
+        private void radMenuItem20_Click_1(object sender, EventArgs e)
+        {
+            if (StockControl.dbClss.Permisstion("", "tb_Master_ApproveSetup", ClassLib.Classlib.User) || ClassLib.Classlib.User.ToUpper().Trim() == "ADMIN")
+            {
+                this.Cursor = Cursors.WaitCursor;
+                var sc = new tb_Master_ApproveSetup();
+                this.Cursor = Cursors.Default;
+                sc.ShowDialog();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+                ClassLib.Memory.Heap();
+            }
+            else
+            {
+                dbClss.WarningIT("No Permisstion.");
+            }
+        }
     }
 }

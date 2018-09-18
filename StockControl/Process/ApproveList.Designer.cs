@@ -550,6 +550,7 @@
             this.radButtonElement2.Name = "radButtonElement2";
             this.radButtonElement2.Text = "ยกเลิก";
             this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.radButtonElement2.Click += new System.EventHandler(this.radButtonElement2_Click_1);
             // 
             // radRibbonBarGroup4
             // 

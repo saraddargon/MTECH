@@ -319,6 +319,12 @@
     <Compile Include="Process\Shipping_RM.Designer.cs">
       <DependentUpon>Shipping_RM.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\tb_Master_ApproveSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\tb_Master_ApproveSetup.Designer.cs">
+      <DependentUpon>tb_Master_ApproveSetup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\WorkCentersDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1153,6 +1159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Shipping_RM.resx">
       <DependentUpon>Shipping_RM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\tb_Master_ApproveSetup.resx">
+      <DependentUpon>tb_Master_ApproveSetup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\WorkCentersDetail.resx">
       <DependentUpon>WorkCentersDetail.cs</DependentUpon>

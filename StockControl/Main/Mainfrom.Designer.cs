@@ -108,6 +108,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
+            this.radMenuItem20 = new Telerik.WinControls.UI.RadMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
@@ -344,6 +345,7 @@
             this.btnVat,
             this.btnCurrency,
             this.btnPermisstion,
+            this.radMenuItem20,
             this.radMenuSeparatorItem4,
             this.radMenuItem21,
             this.radMenuItem22});
@@ -730,6 +732,13 @@
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(4)))), ((int)(((byte)(129)))));
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ClipDrawing = false;
             // 
+            // radMenuItem20
+            // 
+            this.radMenuItem20.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem20.Image")));
+            this.radMenuItem20.Name = "radMenuItem20";
+            this.radMenuItem20.Text = "Master Approve";
+            this.radMenuItem20.Click += new System.EventHandler(this.radMenuItem20_Click_1);
+            // 
             // Mainfrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -840,5 +849,6 @@
         private Telerik.WinControls.UI.RadMenuItem radMenuItem29;
         private Telerik.WinControls.UI.RadMenuItem btnCurrency;
         private Telerik.WinControls.UI.RadMenu radMenu1;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem20;
     }
 }

@@ -98,8 +98,11 @@
             this.radLabel14 = new Telerik.WinControls.UI.RadLabel();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radRibbonBarButtonGroup2 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
+            this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -125,15 +128,12 @@
             this.btnListItem = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup9 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnApprove = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup10 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.radButtonElement3 = new Telerik.WinControls.UI.RadButtonElement();
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
-            this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
-            this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarGroup10 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.radButtonElement3 = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -637,7 +637,7 @@
             this.dtSODate.Size = new System.Drawing.Size(142, 20);
             this.dtSODate.TabIndex = 4;
             this.dtSODate.TabStop = false;
-            this.dtSODate.Text = "09/04/2018";
+            this.dtSODate.Text = "04/09/2018";
             this.dtSODate.Value = new System.DateTime(2018, 9, 4, 18, 42, 59, 380);
             // 
             // txtSONo
@@ -842,6 +842,20 @@
             this.radRibbonBarButtonGroup2.ShowBackColor = false;
             this.radRibbonBarButtonGroup2.Text = "radRibbonBarButtonGroup2";
             // 
+            // btnFilter
+            // 
+            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Text = "Filter";
+            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // Unfilter
+            // 
+            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
+            this.Unfilter.Name = "Unfilter";
+            this.Unfilter.Text = "Un Filter";
+            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
             // radRibbonBarButtonGroup5
             // 
             this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
@@ -860,6 +874,14 @@
             this.radRibbonBarGroup7.MinSize = new System.Drawing.Size(0, 0);
             this.radRibbonBarGroup7.Name = "radRibbonBarGroup7";
             this.radRibbonBarGroup7.Text = "List Item";
+            // 
+            // radButtonElement2
+            // 
+            this.radButtonElement2.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement2.Image")));
+            this.radButtonElement2.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radButtonElement2.Name = "radButtonElement2";
+            this.radButtonElement2.Text = "รายการ";
+            this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // radRibbonBar1
             // 
@@ -1108,6 +1130,22 @@
             this.btnApprove.Text = "อนุมัติ";
             this.btnApprove.Click += new System.EventHandler(this.btnSendApprove_Click);
             // 
+            // radRibbonBarGroup10
+            // 
+            this.radRibbonBarGroup10.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radButtonElement3});
+            this.radRibbonBarGroup10.Name = "radRibbonBarGroup10";
+            this.radRibbonBarGroup10.Text = "Send Approve";
+            // 
+            // radButtonElement3
+            // 
+            this.radButtonElement3.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement3.Image")));
+            this.radButtonElement3.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radButtonElement3.Name = "radButtonElement3";
+            this.radButtonElement3.Text = "ส่งอนุมัติ";
+            this.radButtonElement3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.radButtonElement3.Click += new System.EventHandler(this.radButtonElement3_Click_1);
+            // 
             // radMenuItem1
             // 
             this.radMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem1.Image")));
@@ -1128,28 +1166,6 @@
             this.radMenuItem2.Text = "History View";
             this.radMenuItem2.Click += new System.EventHandler(this.radMenuItem2_Click);
             // 
-            // btnFilter
-            // 
-            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
-            this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Text = "Filter";
-            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            // 
-            // Unfilter
-            // 
-            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
-            this.Unfilter.Name = "Unfilter";
-            this.Unfilter.Text = "Un Filter";
-            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            // 
-            // radButtonElement2
-            // 
-            this.radButtonElement2.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement2.Image")));
-            this.radButtonElement2.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radButtonElement2.Name = "radButtonElement2";
-            this.radButtonElement2.Text = "รายการ";
-            this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
             // radButtonElement1
             // 
             this.radButtonElement1.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement1.Image")));
@@ -1157,22 +1173,6 @@
             this.radButtonElement1.Name = "radButtonElement1";
             this.radButtonElement1.Text = "รายการ";
             this.radButtonElement1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // radRibbonBarGroup10
-            // 
-            this.radRibbonBarGroup10.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radButtonElement3});
-            this.radRibbonBarGroup10.Name = "radRibbonBarGroup10";
-            this.radRibbonBarGroup10.Text = "Send Approve";
-            // 
-            // radButtonElement3
-            // 
-            this.radButtonElement3.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement3.Image")));
-            this.radButtonElement3.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radButtonElement3.Name = "radButtonElement3";
-            this.radButtonElement3.Text = "ส่งอนุมัติ";
-            this.radButtonElement3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.radButtonElement3.Click += new System.EventHandler(this.radButtonElement3_Click_1);
             // 
             // SaleOrder
             // 

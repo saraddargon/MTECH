@@ -1240,7 +1240,7 @@ namespace StockControl
                 {
                     if (lblStatus.Text == "Waiting")
                     {
-                        if (baseClass.IsSendApprove())
+                        if (baseClass.IsApprove())
                         {
                             var p = db.mh_SaleOrders.Where(x => x.SONo == txtSONo.Text && x.Active).ToList();
                             if (p.Where(x => x.Active == true && (x.Status.ToSt() == "Waiting")).Count() > 0)
@@ -1268,8 +1268,19 @@ namespace StockControl
         {
             try
             {
-
-            }catch(Exception ex) { MessageBox.Show(ex.Message); }
+                using (var db = new DataClasses1DataContext())
+                {
+                    if (lblStatus.Text == "Waiting")
+                    {
+                        if (baseClass.IsSendApprove())
+                        {
+                            db.sp_062_mh_ApproveList_Add(txtSONo.Text.Trim(), "Sale Order", Classlib.User);
+                            MessageBox.Show("Send complete.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 
