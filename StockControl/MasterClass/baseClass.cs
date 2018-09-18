@@ -123,6 +123,10 @@ namespace StockControl
         {
             return Question(Mssg, "Approve");
         }
+        public static bool IsReject(string Mssg = "Do you want to 'Reject' ?")
+        {
+            return Question(Mssg, "Reject");
+        }
         public static bool IsSendApprove(string Mssg = "Do you want to 'Send Approve' ?")
         {
             return Question(Mssg, "Send Approve");

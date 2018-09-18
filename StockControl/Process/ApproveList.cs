@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using System.Globalization;
 using ClassLib;
+using Microsoft.VisualBasic;
 
 namespace StockControl
 {
@@ -331,9 +332,9 @@ namespace StockControl
                         {
                             foreach (var pp in p)
                             {
-                                pp.Status = "Process";
-                                pp.UpdateBy = Classlib.User;
-                                pp.UpdateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                //pp.Status = "Process";
+                                pp.ApproveBy = Classlib.User;
+                                pp.ApproveDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                             }
                             db.SubmitChanges();
 
@@ -543,6 +544,44 @@ namespace StockControl
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void radButtonElement2_Click_1(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            radGridView1.EndEdit();
+            if (baseClass.IsApprove())
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    int id = 0;
+                    string DocNo = "";
+                    string Type = "";
+                    int Seq = 0;
+                    List<string> AppList = new List<string>();
+
+                    string GetMarkup = Interaction.InputBox("Reason For Reject", "Reason : ", "", 400, 250);
+                    if (!GetMarkup.Trim().Equals(""))
+                    {
+                        foreach (var rd in radGridView1.Rows)
+                        {
+                            if (dbClss.TBo(rd.Cells["S"].Value))
+                            {
+                                DocNo = dbClss.TSt(rd.Cells["ApproveDocuNo"].Value);
+                                Type = dbClss.TSt(rd.Cells["ApproveType"].Value);
+                                id = dbClss.TInt(rd.Cells["id"].Value);
+
+                                db.sp_064_mh_ApproveList_Update2(id, DocNo, Type, ClassLib.Classlib.User, GetMarkup, "Reject");
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            this.Cursor = Cursors.Default;
+            ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+            ClassLib.Memory.Heap();
         }
     }
 }

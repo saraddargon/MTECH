@@ -3506,5 +3506,24 @@ namespace StockControl
             }
             catch { }
         }
+
+        private void btnSendApprove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    if (lblStatus.Text == "Waiting")
+                    {
+                        if (baseClass.IsSendApprove())
+                        {
+                            db.sp_062_mh_ApproveList_Add(txtPONo.Text.Trim(), "Purchase Order", ClassLib.Classlib.User);
+                            MessageBox.Show("Send complete.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
     }
 }
