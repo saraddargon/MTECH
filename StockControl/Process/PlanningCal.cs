@@ -554,7 +554,7 @@ namespace StockControl
                                 JobNo = m.JobNo,
                                 PCSUnit = r.PCSUnit.ToDecimal(),
                                 Qty = m.Qty * r.Qty,
-                                RemQty = m.Qty * r.Qty,
+                                OutQty = m.Qty * r.Qty,
                                 Type = itemA.Type,
                                 UOM = r.Unit,
                             };

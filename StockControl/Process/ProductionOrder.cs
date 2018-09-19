@@ -123,7 +123,7 @@ namespace StockControl
                         foreach (var dt in dts)
                         {
                             addRow(dt.id, dt.ItemNo, dt.ItemName, dt.Qty, dt.UOM, dt.PCSUnit
-                                , dt.RemQty, dt.GroupType, dt.Type, dt.InvGroup);
+                                , dt.OutQty, dt.GroupType, dt.Type, dt.InvGroup);
                         }
 
                         //Load Pr in Job
@@ -143,7 +143,7 @@ namespace StockControl
         }
 
         private void addRow(int id, string itemNo, string itemName, decimal qty, string uOM, decimal pCSUnit
-            , decimal remQty, string groupType, string type, string invGroup)
+            , decimal outQty, string groupType, string type, string invGroup)
         {
             var rowe = dgvData.Rows.AddNew();
             rowe.Cells["RNo"].Value = rowe.Index + 1;
@@ -157,22 +157,24 @@ namespace StockControl
             rowe.Cells["Type"].Value = type;
             rowe.Cells["InvGroup"].Value = invGroup;
             rowe.Cells["dgvC"].Value = "T";
+            rowe.Cells["OutShip"].Value = outQty;
+            rowe.Cells["Shipped"].Value = qty - outQty;
 
-            //find Shipped
-            if (txtJobNo.Text != "")
-            {
-                using (var db = new DataClasses1DataContext())
-                {
-                    var m = db.Get_ShipQty(itemNo, txtJobNo.Text);
-                    rowe.Cells["Shipped"].Value = m.ToDecimal();
-                    rowe.Cells["OutShip"].Value = qty - m.ToDecimal();
-                }
-            }
-            else
-            {
-                rowe.Cells["Shipped"].Value = 0.00m;
-                rowe.Cells["OutShip"].Value = qty;
-            }
+            ////find Shipped
+            //if (txtJobNo.Text != "")
+            //{
+            //    using (var db = new DataClasses1DataContext())
+            //    {
+            //        var m = db.Get_ShipQty(itemNo, txtJobNo.Text);
+            //        rowe.Cells["Shipped"].Value = m.ToDecimal();
+            //        rowe.Cells["OutShip"].Value = qty - m.ToDecimal();
+            //    }
+            //}
+            //else
+            //{
+            //    rowe.Cells["Shipped"].Value = 0.00m;
+            //    rowe.Cells["OutShip"].Value = qty;
+            //}
         }
 
         void LoadPRwithJob(int idCustomerPoDt)
@@ -551,7 +553,7 @@ namespace StockControl
                         d.Qty = item.Cells["Qty"].Value.ToDecimal();
                         d.UOM = item.Cells["UOM"].Value.ToSt();
                         d.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
-                        d.RemQty = item.Cells["RemQty"].Value.ToDecimal();
+                        d.OutQty = item.Cells["OutShip"].Value.ToDecimal();
                         d.GroupType = item.Cells["GroupType"].Value.ToSt();
                         d.Type = item.Cells["Type"].Value.ToSt();
                         d.InvGroup = item.Cells["InvGroup"].Value.ToSt();
@@ -1022,6 +1024,8 @@ namespace StockControl
                 var workLoads = new List<WorkLoad>();
                 var calLoad = new List<mh_CalendarLoad>();
                 //***ก๊อปมาจาก PlanningCal_Status
+                var costOverHead = 0.00m;
+                var capaUseX_All = 0.00m;
                 using (var db = new DataClasses1DataContext())
                 {
                     var tdata = new ItemData(txtFGNo.Text);
@@ -1066,6 +1070,11 @@ namespace StockControl
                         totalCapa_All = SetupTime + RunTimeCapa + r.WaitTime;
                         var CapaUseX = 0.00m;
                         CapaUseX = totalCapa_All;
+                        var costPerU = r.hd.UnitCost;
+                        costPerU = Math.Round(costPerU / manuTime, 2);
+
+                        capaUseX_All += CapaUseX;
+                        costOverHead += Math.Round(costPerU * CapaUseX, 2);
 
                         //find capacity Available (Workcenter) on date
                         do
@@ -1102,12 +1111,12 @@ namespace StockControl
                                 {
                                     hd,
                                     dt,
-                                    StartingTime = baseClass.setTimeSpan(dt.StartingTime)
-                                ,
+                                    StartingTime = baseClass.setTimeSpan(dt.StartingTime),
                                     EndingTime = baseClass.setTimeSpan(dt.EndingTime)
                                 }).ToList();
                             if (wd.Count > 0)
                             {
+                                //
                                 var sTime = wd.Min(x => x.StartingTime); //Starting Time of Working Day
                                 if (sTime < tempStarting.TimeOfDay)
                                     sTime = tempStarting.TimeOfDay;
@@ -1131,6 +1140,7 @@ namespace StockControl
                                         calLoad.AddRange(calLoads);
                                     }
                                 }
+                                //
                                 if (calLoads.Count > 0)
                                 {
                                     bool foundTime = false;
@@ -1330,8 +1340,8 @@ namespace StockControl
                                         };
                                         calLoad.Add(cl);
 
-                                        t_EndingDate = tempStarting.Date.AddHours(meTime2.Hours).AddMinutes(meTime2.Minutes);
                                     }
+                                    t_EndingDate = tempStarting.Date.AddHours(meTime2.Hours).AddMinutes(meTime2.Minutes);
                                 }
                             }
                             else
@@ -1365,6 +1375,8 @@ namespace StockControl
                         m.UpdateDate = DateTime.Now;
                         m.StartingDate = StartingDate.Value;
                         m.EndingDate = EndingDate.Value;
+                        m.CostOverhead = costOverHead;
+                        m.CapacityUseX = capaUseX_All;
                         //ลบ Capacity เก่า
                         var capa = db.mh_CapacityLoads.Where(x => x.DocId == idJob).ToList();
                         db.mh_CapacityLoads.DeleteAllOnSubmit(capa);
@@ -1392,6 +1404,7 @@ namespace StockControl
                         foreach (var c in calLoad)
                         {
                             if (c.idAbs >= 0) continue;
+                            if (c.idAbs == -99) continue; // ช่วงเวลา Break ระหว่างวัน ไม่ต้องบันทึก
 
                             var cc = new mh_CalendarLoad
                             {

@@ -709,7 +709,7 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 //Contact ct = new Contact(Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value),
                 //    Convert.ToString(radGridView1.Rows[row].Cells["VendorName"].Value));
-                var ct = new WorkingDay(radGridView1.Rows[row].Cells["Code"].Value.ToInt());
+                var ct = new WorkingDay(radGridView1.Rows[row].Cells["dgvCodetemp"].Value.ToInt());
                 this.Cursor = Cursors.Default;
                 ct.ShowDialog();
                 GC.Collect();
@@ -728,7 +728,7 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 //Contact ct = new Contact(Convert.ToString(radGridView1.Rows[row].Cells["VendorNo"].Value),
                 //    Convert.ToString(radGridView1.Rows[row].Cells["VendorName"].Value));
-                var ct = new Holiday(radGridView1.Rows[row].Cells["Code"].Value.ToInt());
+                var ct = new Holiday(radGridView1.Rows[row].Cells["dgvCodetemp"].Value.ToInt());
                 this.Cursor = Cursors.Default;
                 ct.ShowDialog();
                 GC.Collect();
