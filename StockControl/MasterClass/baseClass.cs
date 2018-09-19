@@ -468,6 +468,36 @@ namespace StockControl
 
         }
 
+        //For TempCal Plan
+        public static mh_CapacityLoad newCapaLoad(decimal CapaUseX, decimal Capacity, DateTime Date, int DocId, int id, int idWorkCenter)
+        {
+            return new mh_CapacityLoad
+            {
+                Active = true,
+                Capacity = Capacity,
+                CapacityX = CapaUseX,
+                Date = Date,
+                DocId = DocId,
+                id = id,
+                WorkCenterID = idWorkCenter
+            };
+        }
+        public static mh_CalendarLoad newCalendar(int id, int idRoute, int idWorkCenter, int idCalendar, DateTime Date, TimeSpan StartingTIme, TimeSpan EndingTime, int idJob, int idAbs)
+        {
+            return new mh_CalendarLoad
+            {
+                id = id,
+                idRoute = idRoute,
+                idWorkcenter = idWorkCenter,
+                idCal = idCalendar,
+                Date = Date,
+                StartingTime = StartingTIme,
+                EndingTime = EndingTime,
+                idJob = idJob,
+                idAbs = idAbs,
+            };
+        }
+
     }
 
 
