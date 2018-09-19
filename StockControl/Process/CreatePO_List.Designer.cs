@@ -50,6 +50,8 @@
             Telerik.WinControls.UI.RadListDataItem radListDataItem2 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem3 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem4 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem5 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem6 = new Telerik.WinControls.UI.RadListDataItem();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -84,7 +86,7 @@
             this.dtDateFrom = new Telerik.WinControls.UI.RadDateTimePicker();
             this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
             this.btnSearch = new Telerik.WinControls.UI.RadButton();
-            this.txtPRNo = new Telerik.WinControls.UI.RadTextBox();
+            this.txtPONo = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
             this.txtVendorName = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
@@ -112,7 +114,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtDateFrom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSearch)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPRNo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPONo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtVendorName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
@@ -369,7 +371,7 @@
             gridViewCheckBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewCheckBoxColumn1.Width = 51;
             gridViewTextBoxColumn2.EnableExpressionEditor = false;
-            gridViewTextBoxColumn2.FieldName = "Status";
+            gridViewTextBoxColumn2.FieldName = "Status_S";
             gridViewTextBoxColumn2.HeaderText = "สถานะ";
             gridViewTextBoxColumn2.Name = "Status";
             gridViewTextBoxColumn2.ReadOnly = true;
@@ -532,7 +534,7 @@
             this.radPanel1.Controls.Add(this.dtDateFrom);
             this.radPanel1.Controls.Add(this.radLabel4);
             this.radPanel1.Controls.Add(this.btnSearch);
-            this.radPanel1.Controls.Add(this.txtPRNo);
+            this.radPanel1.Controls.Add(this.txtPONo);
             this.radPanel1.Controls.Add(this.radLabel2);
             this.radPanel1.Controls.Add(this.txtVendorName);
             this.radPanel1.Controls.Add(this.radLabel3);
@@ -550,12 +552,16 @@
             // ddlStatus
             // 
             radListDataItem1.Text = "Waiting";
-            radListDataItem2.Text = "Process";
-            radListDataItem3.Text = "Completed";
+            radListDataItem2.Text = "Waiting Approve";
+            radListDataItem3.Text = "Approved";
+            radListDataItem4.Text = "Process";
+            radListDataItem5.Text = "Completed";
             this.ddlStatus.Items.Add(radListDataItem1);
             this.ddlStatus.Items.Add(radListDataItem2);
             this.ddlStatus.Items.Add(radListDataItem3);
             this.ddlStatus.Items.Add(radListDataItem4);
+            this.ddlStatus.Items.Add(radListDataItem5);
+            this.ddlStatus.Items.Add(radListDataItem6);
             this.ddlStatus.Location = new System.Drawing.Point(116, 56);
             this.ddlStatus.Name = "ddlStatus";
             this.ddlStatus.Size = new System.Drawing.Size(124, 20);
@@ -629,14 +635,14 @@
             this.btnSearch.ThemeName = "Office2010Blue";
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // txtPRNo
+            // txtPONo
             // 
-            this.txtPRNo.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPRNo.Location = new System.Drawing.Point(116, 10);
-            this.txtPRNo.Name = "txtPRNo";
-            this.txtPRNo.Size = new System.Drawing.Size(124, 19);
-            this.txtPRNo.TabIndex = 5;
-            this.txtPRNo.ThemeName = "Office2010Blue";
+            this.txtPONo.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPONo.Location = new System.Drawing.Point(116, 10);
+            this.txtPONo.Name = "txtPONo";
+            this.txtPONo.Size = new System.Drawing.Size(124, 19);
+            this.txtPONo.TabIndex = 5;
+            this.txtPONo.ThemeName = "Office2010Blue";
             // 
             // radLabel2
             // 
@@ -771,7 +777,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtDateFrom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSearch)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPRNo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPONo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtVendorName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
@@ -811,7 +817,7 @@
         private Telerik.WinControls.UI.RadButtonElement radButtonElement1;
         private Telerik.WinControls.UI.RadGridView radGridView1;
         private Telerik.WinControls.UI.RadPanel radPanel1;
-        private Telerik.WinControls.UI.RadTextBox txtPRNo;
+        private Telerik.WinControls.UI.RadTextBox txtPONo;
         private Telerik.WinControls.UI.RadLabel radLabel2;
         private Telerik.WinControls.UI.RadTextBox txtTempNo;
         private Telerik.WinControls.UI.RadLabel radLabel1;

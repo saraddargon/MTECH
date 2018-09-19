@@ -107,24 +107,38 @@ namespace StockControl
                     //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
                     //radGridView1.DataSource = db.tb_Histories.Where(s => s.ScreenName == ScreenSearch).OrderBy(o => o.CreateDate).ToList();
                     int c = 0;
-                  
-                    DateTime inclusiveStart = dtDateFrom.Value.Date;
-                    // Include the *whole* of the day indicated by searchEndDate
-                    DateTime exclusiveEnd = dtDateTo.Value.Date.AddDays(1);
 
-                    var g = (from ix in db.mh_PurchaseOrders select ix)
-                        .Where(a => a.VendorNo.Contains(txtVendorNo.Text)
-                        && (a.Status != "Cancel")
-                        && a.TempPNo.Contains(txtTempNo.Text)
-                        && a.PONo.Contains(txtPRNo.Text)
-                        && a.VendorName.Contains(txtVendorName.Text)
-                        && a.Status.Contains(ddlStatus.Text)
-                        //&& a.LocationRunning.Contains(ddlFactory.Text)
-                        && (((a.CreateDate >= inclusiveStart
-                                   && a.CreateDate < exclusiveEnd)
-                                   && cbDate.Checked == true)
-                         || (cbDate.Checked == false)
-                                   )).ToList();
+                    //DateTime inclusiveStart = dtDateFrom.Value.Date;
+                    //// Include the *whole* of the day indicated by searchEndDate
+                    //DateTime exclusiveEnd = dtDateTo.Value.Date.AddDays(1);
+
+                    //var g = (from ix in db.mh_PurchaseOrders select ix)
+                    //    .Where(a => a.VendorNo.Contains(txtVendorNo.Text)
+                    //    && (a.Status != "Cancel")
+                    //    && a.TempPNo.Contains(txtTempNo.Text)
+                    //    && a.PONo.Contains(txtPRNo.Text)
+                    //    && a.VendorName.Contains(txtVendorName.Text)
+                    //    //&& a.Status.Contains(ddlStatus.Text)
+                    //    && (((ddlStatus.Text =="Waiting" && a.Status.Equals("Waiting"))
+                    //        || (ddlStatus.Text == "Waiting Approve"  &&  Convert.ToInt16(a.SeqStatus) == 1 && a.Status.Equals("Waiting"))
+                    //        || (ddlStatus.Text == "Approved" && Convert.ToInt16(a.SeqStatus) == 2 && a.Status.Equals("Waiting"))
+                    //        ) || a.Status.Contains(ddlStatus.Text)
+                    //        )
+                    //    && (((a.CreateDate >= inclusiveStart
+                    //               && a.CreateDate < exclusiveEnd)
+                    //               && cbDate.Checked == true)
+                    //     || (cbDate.Checked == false)
+                    //               )).ToList();
+                    string dt1 = "";
+                    string dt2 = "";
+                    if(cbDate.Checked)
+                    {
+                        dt1 = Convert.ToDateTime(dtDateFrom.Value).ToString("yyyyMMdd");
+                        dt2 = Convert.ToDateTime(dtDateTo.Value).ToString("yyyyMMdd");
+                    }
+              
+                    var g = db.sp_066_PO_List(txtPONo.Text, txtTempNo.Text, txtVendorNo.Text
+                             , txtVendorName.Text, ddlStatus.Text, dt1, dt2).ToList();
                     if (g.Count > 0)
                     {
 

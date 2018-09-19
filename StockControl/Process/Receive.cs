@@ -2099,6 +2099,7 @@ namespace StockControl
                     var g = (from ix in db.mh_PurchaseOrders select ix)
                         .Where(a => a.PONo == txtDocNo.Text.Trim()
                         && a.Status != "Cancel"
+                        && Convert.ToInt16(a.SeqStatus)==2
                         ).ToList();
                     if (g.Count() > 0)
                     {
@@ -2204,7 +2205,8 @@ namespace StockControl
                         }
                         duppicate_vendor = 0;
                     }
-
+                    else
+                        MessageBox.Show("ไม่พบรายการ เช็คสถานะ");
                 }
             }
         }
