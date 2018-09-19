@@ -481,7 +481,8 @@ namespace StockControl
 
                         if (Status == "Waiting" && SeqStatus == 1)
                             Status = "Waiting Approve";
-
+                        else if (Status == "Waiting" && SeqStatus == 2)
+                            Status = "Approved";
                         //lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
                         if (Status.Equals("Cancel"))
                         {
@@ -497,11 +498,13 @@ namespace StockControl
                             btnAdd_Part.Enabled = false;
                             btnAdd_Row.Enabled = false;
                             btnDel_Item.Enabled = false;
+                            btnSendApprove.Enabled = false;
                         }
                         else if
                             (Status.Equals("Completed")
                             || Status.Equals("Process")
                             || Status.Equals("Waiting Approve")
+                            || Status.Equals("Approved")
                             )
                         {
                             //ddlFactory.Enabled = false;
@@ -516,11 +519,12 @@ namespace StockControl
                             btnAdd_Part.Enabled = false;
                             btnAdd_Row.Enabled = false;
                             btnDel_Item.Enabled = false;
+                            btnSendApprove.Enabled = false;
 
                             if (lblStatus.Text == "Process")
                             {
                                 btnDiscon.Enabled = true;
-                                btnDiscon_Item.Enabled = true;
+                                btnDiscon_Item.Enabled = true;                                
                             }                            
                         }                       
                         else
@@ -537,6 +541,7 @@ namespace StockControl
                             btnAdd_Part.Enabled = false;
                             btnAdd_Row.Enabled = false;
                             btnDel_Item.Enabled = false;
+                            btnSendApprove.Enabled = true;
                         }
                         foreach (var x in dgvData.Rows)
                         {
@@ -1210,6 +1215,7 @@ namespace StockControl
             btnDelete.Enabled = true;
             btnDiscon.Enabled = false;
             btnDiscon_Item.Enabled = false;
+            btnSendApprove.Enabled = true;
             ClearData();
             Enable_Status(true, "New");
             lblStatus.Text = "New";
@@ -1290,7 +1296,9 @@ namespace StockControl
                         return;
                     }
                    
-                    if (lblStatus.Text != "Completed" && lblStatus.Text != "Process" && lblStatus.Text != "Waiting Approve")
+                    if (lblStatus.Text != "Completed" && lblStatus.Text != "Process"
+                        && lblStatus.Text != "Approved"
+                        && lblStatus.Text != "Waiting Approve")
                     {
                         lblStatus.Text = "Delete";
                         Ac = "Del";
@@ -2880,7 +2888,9 @@ namespace StockControl
         {
             try
             {
-                if (lblStatus.Text != "Completed" && lblStatus.Text != "Waiting Approve")
+                if (lblStatus.Text != "Completed"
+                    && lblStatus.Text != "Approved"
+                    && lblStatus.Text != "Waiting Approve")
                 {
                     lblStatus.Text = "Discon";
                     Ac = "Discon";

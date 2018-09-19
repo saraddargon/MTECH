@@ -39,6 +39,7 @@
             Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject4 = new Telerik.WinControls.UI.ConditionalFormattingObject();
             Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject5 = new Telerik.WinControls.UI.ConditionalFormattingObject();
             Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject6 = new Telerik.WinControls.UI.ConditionalFormattingObject();
+            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject7 = new Telerik.WinControls.UI.ConditionalFormattingObject();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewDateTimeColumn gridViewDateTimeColumn1 = new Telerik.WinControls.UI.GridViewDateTimeColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
@@ -69,6 +70,7 @@
             Telerik.WinControls.UI.RadListDataItem radListDataItem3 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem4 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem5 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem6 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition2 = new Telerik.WinControls.UI.TableViewDefinition();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition3 = new Telerik.WinControls.UI.TableViewDefinition();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SaleOrder_List2));
@@ -89,10 +91,12 @@
             this.cbbItem = new Telerik.WinControls.UI.RadMultiColumnComboBox();
             this.cbbCSTM = new Telerik.WinControls.UI.RadMultiColumnComboBox();
             this.txtCSTMNo = new Telerik.WinControls.UI.RadTextBox();
+            this.txtCstmPO = new Telerik.WinControls.UI.RadTextBox();
             this.txtPONo = new Telerik.WinControls.UI.RadTextBox();
             this.cbChkDate = new Telerik.WinControls.UI.RadCheckBox();
             this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel6 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.btnSearch = new Telerik.WinControls.UI.RadButton();
@@ -119,8 +123,6 @@
             this.radRibbonBarGroup6 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnCreateShipment = new Telerik.WinControls.UI.RadButtonElement();
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
-            this.radLabel6 = new Telerik.WinControls.UI.RadLabel();
-            this.txtCstmPO = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -139,16 +141,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl.MasterTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCSTMNo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCstmPO)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPONo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbChkDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtCstmPO)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -192,7 +194,7 @@
             this.dgvData.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.dgvData.ForeColor = System.Drawing.Color.Black;
             this.dgvData.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dgvData.Location = new System.Drawing.Point(0, 195);
+            this.dgvData.Location = new System.Drawing.Point(0, 175);
             // 
             // 
             // 
@@ -242,22 +244,22 @@
             conditionalFormattingObject2.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             conditionalFormattingObject2.RowForeColor = System.Drawing.Color.Empty;
             conditionalFormattingObject2.TValue1 = "Waiting";
-            conditionalFormattingObject3.CellBackColor = System.Drawing.Color.Moccasin;
+            conditionalFormattingObject3.CellBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             conditionalFormattingObject3.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             conditionalFormattingObject3.CellForeColor = System.Drawing.Color.Black;
-            conditionalFormattingObject3.Name = "Process";
+            conditionalFormattingObject3.Name = "Waiting Approve";
             conditionalFormattingObject3.RowBackColor = System.Drawing.Color.Empty;
             conditionalFormattingObject3.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             conditionalFormattingObject3.RowForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject3.TValue1 = "Process";
-            conditionalFormattingObject4.CellBackColor = System.Drawing.Color.DarkGreen;
+            conditionalFormattingObject3.TValue1 = "Waiting Approve";
+            conditionalFormattingObject4.CellBackColor = System.Drawing.Color.Moccasin;
             conditionalFormattingObject4.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject4.CellForeColor = System.Drawing.Color.White;
-            conditionalFormattingObject4.Name = "Completed";
+            conditionalFormattingObject4.CellForeColor = System.Drawing.Color.Black;
+            conditionalFormattingObject4.Name = "Process";
             conditionalFormattingObject4.RowBackColor = System.Drawing.Color.Empty;
             conditionalFormattingObject4.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             conditionalFormattingObject4.RowForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject4.TValue1 = "Completed";
+            conditionalFormattingObject4.TValue1 = "Process";
             conditionalFormattingObject5.CellBackColor = System.Drawing.Color.PaleTurquoise;
             conditionalFormattingObject5.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             conditionalFormattingObject5.CellForeColor = System.Drawing.Color.Black;
@@ -268,18 +270,27 @@
             conditionalFormattingObject5.TValue1 = "Partial";
             conditionalFormattingObject6.CellBackColor = System.Drawing.Color.DarkGreen;
             conditionalFormattingObject6.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject6.CellForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject6.Name = "Full";
+            conditionalFormattingObject6.CellForeColor = System.Drawing.Color.White;
+            conditionalFormattingObject6.Name = "Completed";
             conditionalFormattingObject6.RowBackColor = System.Drawing.Color.Empty;
             conditionalFormattingObject6.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             conditionalFormattingObject6.RowForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject6.TValue1 = "Full";
+            conditionalFormattingObject6.TValue1 = "Completed";
+            conditionalFormattingObject7.CellBackColor = System.Drawing.Color.DarkGreen;
+            conditionalFormattingObject7.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject7.CellForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject7.Name = "Full";
+            conditionalFormattingObject7.RowBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject7.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject7.RowForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject7.TValue1 = "Full";
             gridViewTextBoxColumn2.ConditionalFormattingObjectList.Add(conditionalFormattingObject1);
             gridViewTextBoxColumn2.ConditionalFormattingObjectList.Add(conditionalFormattingObject2);
             gridViewTextBoxColumn2.ConditionalFormattingObjectList.Add(conditionalFormattingObject3);
             gridViewTextBoxColumn2.ConditionalFormattingObjectList.Add(conditionalFormattingObject4);
             gridViewTextBoxColumn2.ConditionalFormattingObjectList.Add(conditionalFormattingObject5);
             gridViewTextBoxColumn2.ConditionalFormattingObjectList.Add(conditionalFormattingObject6);
+            gridViewTextBoxColumn2.ConditionalFormattingObjectList.Add(conditionalFormattingObject7);
             gridViewTextBoxColumn2.EnableExpressionEditor = false;
             gridViewTextBoxColumn2.FieldName = "SS";
             gridViewTextBoxColumn2.Name = "SS";
@@ -458,7 +469,7 @@
             this.dgvData.Name = "dgvData";
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(1032, 382);
+            this.dgvData.Size = new System.Drawing.Size(1032, 402);
             this.dgvData.TabIndex = 2;
             this.dgvData.ThemeName = "Office2010Blue";
             this.dgvData.CellDoubleClick += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellDoubleClick);
@@ -524,21 +535,23 @@
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(1032, 195);
+            this.radPanel1.Size = new System.Drawing.Size(1032, 175);
             this.radPanel1.TabIndex = 1;
             this.radPanel1.ThemeName = "Office2010Blue";
             // 
             // ddlStatus
             // 
             radListDataItem2.Text = "Waiting";
-            radListDataItem3.Text = "Process";
-            radListDataItem4.Text = "Partial";
-            radListDataItem5.Text = "Completed";
+            radListDataItem3.Text = "Waiting Approve";
+            radListDataItem4.Text = "Process";
+            radListDataItem5.Text = "Partial";
+            radListDataItem6.Text = "Completed";
             this.ddlStatus.Items.Add(radListDataItem1);
             this.ddlStatus.Items.Add(radListDataItem2);
             this.ddlStatus.Items.Add(radListDataItem3);
             this.ddlStatus.Items.Add(radListDataItem4);
             this.ddlStatus.Items.Add(radListDataItem5);
+            this.ddlStatus.Items.Add(radListDataItem6);
             this.ddlStatus.Location = new System.Drawing.Point(182, 122);
             this.ddlStatus.Name = "ddlStatus";
             this.ddlStatus.Size = new System.Drawing.Size(125, 20);
@@ -646,6 +659,13 @@
             this.txtCSTMNo.Size = new System.Drawing.Size(87, 20);
             this.txtCSTMNo.TabIndex = 9;
             // 
+            // txtCstmPO
+            // 
+            this.txtCstmPO.Location = new System.Drawing.Point(182, 70);
+            this.txtCstmPO.Name = "txtCstmPO";
+            this.txtCstmPO.Size = new System.Drawing.Size(186, 20);
+            this.txtCstmPO.TabIndex = 9;
+            // 
             // txtPONo
             // 
             this.txtPONo.Location = new System.Drawing.Point(182, 18);
@@ -676,6 +696,14 @@
             this.radLabel5.Size = new System.Drawing.Size(37, 18);
             this.radLabel5.TabIndex = 7;
             this.radLabel5.Text = "Status";
+            // 
+            // radLabel6
+            // 
+            this.radLabel6.Location = new System.Drawing.Point(78, 71);
+            this.radLabel6.Name = "radLabel6";
+            this.radLabel6.Size = new System.Drawing.Size(93, 18);
+            this.radLabel6.TabIndex = 7;
+            this.radLabel6.Text = "Customer PO No.";
             // 
             // radLabel2
             // 
@@ -922,21 +950,6 @@
             this.radMenuItem1.Text = "Exit";
             this.radMenuItem1.Click += new System.EventHandler(this.radMenuItem1_Click);
             // 
-            // radLabel6
-            // 
-            this.radLabel6.Location = new System.Drawing.Point(78, 71);
-            this.radLabel6.Name = "radLabel6";
-            this.radLabel6.Size = new System.Drawing.Size(93, 18);
-            this.radLabel6.TabIndex = 7;
-            this.radLabel6.Text = "Customer PO No.";
-            // 
-            // txtCstmPO
-            // 
-            this.txtCstmPO.Location = new System.Drawing.Point(182, 70);
-            this.txtCstmPO.Name = "txtCstmPO";
-            this.txtCstmPO.Size = new System.Drawing.Size(186, 20);
-            this.txtCstmPO.TabIndex = 9;
-            // 
             // SaleOrder_List2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -976,16 +989,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCSTMNo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCstmPO)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPONo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbChkDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtCstmPO)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

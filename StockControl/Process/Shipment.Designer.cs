@@ -220,7 +220,7 @@
             this.dgvData.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.dgvData.ForeColor = System.Drawing.Color.Black;
             this.dgvData.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dgvData.Location = new System.Drawing.Point(0, 251);
+            this.dgvData.Location = new System.Drawing.Point(0, 232);
             // 
             // 
             // 
@@ -356,7 +356,7 @@
             this.dgvData.Name = "dgvData";
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(1008, 241);
+            this.dgvData.Size = new System.Drawing.Size(1008, 260);
             this.dgvData.TabIndex = 12;
             this.dgvData.ThemeName = "Office2010Blue";
             this.dgvData.CellBeginEdit += new Telerik.WinControls.UI.GridViewCellCancelEventHandler(this.MasterTemplate_CellBeginEdit);
@@ -547,14 +547,14 @@
             this.radPanel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(1008, 251);
+            this.radPanel1.Size = new System.Drawing.Size(1008, 232);
             this.radPanel1.TabIndex = 0;
             this.radPanel1.ThemeName = "Office2010Blue";
             this.radPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.radPanel1_Paint);
             // 
             // txtSelectCode
             // 
-            this.txtSelectCode.Location = new System.Drawing.Point(337, 223);
+            this.txtSelectCode.Location = new System.Drawing.Point(238, 203);
             this.txtSelectCode.Name = "txtSelectCode";
             this.txtSelectCode.Size = new System.Drawing.Size(100, 20);
             this.txtSelectCode.TabIndex = 18;
@@ -562,7 +562,7 @@
             // 
             // radButton2
             // 
-            this.radButton2.Location = new System.Drawing.Point(139, 221);
+            this.radButton2.Location = new System.Drawing.Point(22, 199);
             this.radButton2.Name = "radButton2";
             this.radButton2.Size = new System.Drawing.Size(102, 24);
             this.radButton2.TabIndex = 17;
@@ -571,7 +571,7 @@
             // 
             // radButton1
             // 
-            this.radButton1.Location = new System.Drawing.Point(14, 221);
+            this.radButton1.Location = new System.Drawing.Point(130, 199);
             this.radButton1.Name = "radButton1";
             this.radButton1.Size = new System.Drawing.Size(102, 24);
             this.radButton1.TabIndex = 17;
@@ -605,27 +605,27 @@
             this.radGroupBox3.HeaderText = "Shipment";
             this.radGroupBox3.Location = new System.Drawing.Point(12, 16);
             this.radGroupBox3.Name = "radGroupBox3";
-            this.radGroupBox3.Size = new System.Drawing.Size(643, 199);
+            this.radGroupBox3.Size = new System.Drawing.Size(643, 177);
             this.radGroupBox3.TabIndex = 16;
             this.radGroupBox3.Text = "Shipment";
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(476, 156);
+            this.txtEmail.Location = new System.Drawing.Point(476, 143);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(122, 20);
             this.txtEmail.TabIndex = 7;
             // 
             // txtFax
             // 
-            this.txtFax.Location = new System.Drawing.Point(303, 157);
+            this.txtFax.Location = new System.Drawing.Point(303, 144);
             this.txtFax.Name = "txtFax";
             this.txtFax.Size = new System.Drawing.Size(122, 20);
             this.txtFax.TabIndex = 7;
             // 
             // txtTel
             // 
-            this.txtTel.Location = new System.Drawing.Point(128, 157);
+            this.txtTel.Location = new System.Drawing.Point(128, 144);
             this.txtTel.Name = "txtTel";
             this.txtTel.Size = new System.Drawing.Size(122, 20);
             this.txtTel.TabIndex = 7;
@@ -633,7 +633,7 @@
             // txtAddress
             // 
             this.txtAddress.AutoSize = false;
-            this.txtAddress.Location = new System.Drawing.Point(128, 104);
+            this.txtAddress.Location = new System.Drawing.Point(128, 94);
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(471, 46);
@@ -641,7 +641,7 @@
             // 
             // cboCustomer
             // 
-            this.cboCustomer.Location = new System.Drawing.Point(127, 48);
+            this.cboCustomer.Location = new System.Drawing.Point(127, 45);
             this.cboCustomer.Name = "cboCustomer";
             this.cboCustomer.Size = new System.Drawing.Size(227, 20);
             this.cboCustomer.TabIndex = 5;
@@ -662,7 +662,7 @@
             // txtContactName
             // 
             this.txtContactName.BackColor = System.Drawing.Color.White;
-            this.txtContactName.Location = new System.Drawing.Point(128, 78);
+            this.txtContactName.Location = new System.Drawing.Point(128, 69);
             this.txtContactName.Name = "txtContactName";
             this.txtContactName.Size = new System.Drawing.Size(227, 20);
             this.txtContactName.TabIndex = 3;
@@ -682,7 +682,7 @@
             // 
             this.txtCSTMNo.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtCSTMNo.Enabled = false;
-            this.txtCSTMNo.Location = new System.Drawing.Point(452, 47);
+            this.txtCSTMNo.Location = new System.Drawing.Point(452, 44);
             this.txtCSTMNo.Name = "txtCSTMNo";
             this.txtCSTMNo.ReadOnly = true;
             this.txtCSTMNo.Size = new System.Drawing.Size(129, 20);
@@ -735,7 +735,7 @@
             // 
             // radLabel15
             // 
-            this.radLabel15.Location = new System.Drawing.Point(441, 158);
+            this.radLabel15.Location = new System.Drawing.Point(441, 145);
             this.radLabel15.Name = "radLabel15";
             this.radLabel15.Size = new System.Drawing.Size(33, 18);
             this.radLabel15.TabIndex = 0;
@@ -744,7 +744,7 @@
             // radLabel3
             // 
             this.radLabel3.ForeColor = System.Drawing.Color.Red;
-            this.radLabel3.Location = new System.Drawing.Point(107, 49);
+            this.radLabel3.Location = new System.Drawing.Point(107, 46);
             this.radLabel3.Name = "radLabel3";
             this.radLabel3.Size = new System.Drawing.Size(11, 18);
             this.radLabel3.TabIndex = 0;
@@ -752,7 +752,7 @@
             // 
             // radLabel14
             // 
-            this.radLabel14.Location = new System.Drawing.Point(274, 159);
+            this.radLabel14.Location = new System.Drawing.Point(274, 146);
             this.radLabel14.Name = "radLabel14";
             this.radLabel14.Size = new System.Drawing.Size(23, 18);
             this.radLabel14.TabIndex = 0;
@@ -760,7 +760,7 @@
             // 
             // radLabel2
             // 
-            this.radLabel2.Location = new System.Drawing.Point(10, 47);
+            this.radLabel2.Location = new System.Drawing.Point(10, 44);
             this.radLabel2.Name = "radLabel2";
             this.radLabel2.Size = new System.Drawing.Size(88, 18);
             this.radLabel2.TabIndex = 0;
@@ -768,7 +768,7 @@
             // 
             // radLabel11
             // 
-            this.radLabel11.Location = new System.Drawing.Point(100, 159);
+            this.radLabel11.Location = new System.Drawing.Point(100, 146);
             this.radLabel11.Name = "radLabel11";
             this.radLabel11.Size = new System.Drawing.Size(21, 18);
             this.radLabel11.TabIndex = 0;
@@ -776,7 +776,7 @@
             // 
             // radLabel10
             // 
-            this.radLabel10.Location = new System.Drawing.Point(72, 102);
+            this.radLabel10.Location = new System.Drawing.Point(72, 92);
             this.radLabel10.Name = "radLabel10";
             this.radLabel10.Size = new System.Drawing.Size(46, 18);
             this.radLabel10.TabIndex = 0;
@@ -784,7 +784,7 @@
             // 
             // radLabel1
             // 
-            this.radLabel1.Location = new System.Drawing.Point(73, 80);
+            this.radLabel1.Location = new System.Drawing.Point(73, 71);
             this.radLabel1.Name = "radLabel1";
             this.radLabel1.Size = new System.Drawing.Size(45, 18);
             this.radLabel1.TabIndex = 0;
