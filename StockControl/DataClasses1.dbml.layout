@@ -650,10 +650,10 @@
         <elementListCompartment Id="c647559f-1bb2-4ef7-b985-d8ad2284a8a6" absoluteBounds="9.39, 21.085, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ebbfb173-ad77-4af2-bf17-1012867c72ff" isExpanded="false" absoluteBounds="0.5, 20.25, 2, 0.45">
+    <classShape Id="43d96771-0403-45e4-85e3-bbaad28f63aa" isExpanded="false" absoluteBounds="0.5, 21, 2, 0.45">
       <DataClassMoniker Name="/DataClasses1DataContext/mh_PurchaseOrder" />
       <nestedChildShapes>
-        <elementListCompartment Id="c6ae5c02-4dd8-4005-967d-211703806791" absoluteBounds="0.51499999999999968, 20.71, 1.9700000000000002, 11.979777018229166" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="8cd62004-b1a1-4a68-9d9a-52832aea5471" absoluteBounds="0.51500000000000012, 21.46, 1.9700000000000002, 11.979777018229166" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

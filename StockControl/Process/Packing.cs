@@ -97,6 +97,8 @@ namespace StockControl
                     txtPackingNo.Text = pk;
                     DataLoad();
                 }
+
+                txtJobNo.Focus();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -185,6 +187,7 @@ namespace StockControl
             dt_RCD.Rows.Clear();
             dt_RCH.Rows.Clear();
             txtTotal.Text = "";
+            txtJobNo.Focus();
         }
         private void Enable_Status(bool ss, string Condition)
         {
@@ -1752,6 +1755,7 @@ namespace StockControl
                     AddJob(txtJobNo.Text);
                     txtJobNo.Text = "";
                     setRowNo();
+                    txtJobNo.Focus();
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -1761,11 +1765,28 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
+                if(dgvData.Rows.Where(x=>x.Cells["RefNo"].Value.ToSt().Equals(JobNo)).Count() > 0)
+                {
+                    baseClass.Warning($"- Job no {JobNo} is already in list.\n");
+                    return;
+                }
+
                 using (var db = new DataClasses1DataContext())
                 {
-                    var m = db.mh_ProductionOrders.Where(x => x.Active && x.OutQty > 0 && x.JobNo == JobNo).FirstOrDefault();
+                    var m = db.mh_ProductionOrders.Where(x => x.Active && x.JobNo == JobNo).FirstOrDefault();
                     if (m != null)
                     {
+                        if(m.SeqStatus != 2)
+                        {
+                            baseClass.Warning($"- Job no {JobNo} status not Approved.\n");
+                            return;
+                        }
+                        if(m.OutQty <= 0)
+                        {
+                            baseClass.Warning($"- Job no {JobNo} is already Completed.\n");
+                            return;
+                        }
+
                         var tool = db.mh_Items.Where(x => x.InternalNo == m.FGNo).FirstOrDefault();
                         var podt = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
                         var pohd = db.mh_CustomerPOs.Where(x => x.id == podt.idCustomerPO).FirstOrDefault();
@@ -1773,7 +1794,10 @@ namespace StockControl
                             , m.LotNo, "Warehouse", tool.ShelfNo, "", JobNo, pohd.CustomerPONo
                             , m.id, m.RefDocId);
                         setRowNo();
+                        calAmnt();
                     }
+                    else
+                        baseClass.Warning($"- Job no {JobNo} not found.\n");
                 }
             }
             catch (Exception ex)
@@ -1812,6 +1836,15 @@ namespace StockControl
             {
                 item.Cells["dgvNo"].Value = item.Index + 1;
             }
+        }
+        void calAmnt()
+        {
+            var amnt = 0.00m;
+            dgvData.Rows.ToList().ForEach(x =>
+            {
+                amnt += x.Cells["Amount"].Value.ToDecimal();
+            });
+            txtTotal.Text = amnt.ToDecimal().ToString("#,0.00");
         }
 
         private void Insert_data_PR()
@@ -2638,57 +2671,15 @@ namespace StockControl
             }
         }
 
-        private void openPRToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void btnDeleteRow_Click(object sender, EventArgs e)
         {
-            try
+            if(dgvData.CurrentCell != null)
             {
-                if (dgvData.Rows.Count <= 0)
-                    return;
-
-                string TempNo1 = dbClss.TSt(dgvData.CurrentRow.Cells["TempNo"].Value);
-
-                if (dbClss.TSt(dgvData.CurrentRow.Cells["PRNo"].Value) != "") //&& ddlTypeReceive.Text =="PR")
-                {
-                    //string TEmpPR = "";
-                    //using (DataClasses1DataContext db = new DataClasses1DataContext())
-                    //{
-                    //    var g = (from ix in db.tb_PurchaseRequests select ix)
-                    //   .Where(a => a.PRNo == dbClss.TSt(dgvData.CurrentRow.Cells["PRNo"].Value)
-                    //    && (a.Status != "Cancel")
-                    //    ).ToList();
-                    //    if (g.Count() > 0)
-                    //    {
-                    //        TEmpPR = dbClss.TSt(g.FirstOrDefault().TEMPNo);
-                    //    }
-                    //}
-                    if (TempNo1 != "")
-                    {
-                        CreatePR op = new CreatePR(TempNo1);
-                        op.ShowDialog();
-                    }
-                }
-                else if (dbClss.TSt(dgvData.CurrentRow.Cells["PRNo"].Value) != "")// && ddlTypeReceive.Text == "PO")
-                {
-                    //string TEmpPR = "";
-                    //using (DataClasses1DataContext db = new DataClasses1DataContext())
-                    //{
-                    //    var g = (from ix in db.tb_PurchaseOrders select ix)
-                    //   .Where(a => a.PONo == dbClss.TSt(dgvData.CurrentRow.Cells["PRNo"].Value)
-                    //    && (a.Status != "Cancel")
-                    //    ).ToList();
-                    //    if (g.Count() > 0)
-                    //    {
-                    //        TEmpPR = dbClss.TSt(g.FirstOrDefault().TempPNo);
-                    //    }
-                    //}
-                    if (TempNo1 != "")
-                    {
-                        CreatePO op = new CreatePO(TempNo1);
-                        op.ShowDialog();
-                    }
-                }
+                dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
+                setRowNo();
+                calAmnt();
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }

@@ -107,7 +107,7 @@ namespace StockControl
                         txtLotNo.Text = t.LotNo;
                         cbHoldJob.Checked = t.HoldJob;
                         if (cbHoldJob.Checked)
-                            btnHoldJob.Text = "Unholdd Job";
+                            btnHoldJob.Text = "Unhold Job";
                         else
                             btnHoldJob.Text = "Hold Job";
                         txtidJob.Text = t.id.ToSt();
@@ -514,6 +514,8 @@ namespace StockControl
                     m.UOM = txtUOM.Text;
                     m.UpdateBy = ClassLib.Classlib.User;
                     m.UpdateDate = DateTime.Now;
+
+                    db.sp_062_mh_ApproveList_Add(m.JobNo, "Job_Req", ClassLib.Classlib.User);
 
                     //update Customer P/O [Only New Job] - Out Plan
                     if (newJob)
