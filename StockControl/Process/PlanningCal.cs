@@ -541,6 +541,7 @@ namespace StockControl
                                 OutQty = m.Qty * r.Qty,
                                 Type = itemA.Type,
                                 UOM = r.Unit,
+                                CostOverall = 0.00m,
                             };
                             db.mh_ProductionOrderRMs.InsertOnSubmit(dt);
                             db.SubmitChanges();
