@@ -340,6 +340,7 @@ namespace StockControl
         public DateTime Date { get; set; }
         public int idWorkCenter { get; set; }
         public decimal CapacityAvailable { get; set; } = 0.00m;
+        public decimal CapacityAvailableX { get; set; } = 0.00m;
         public decimal CapacityAlocate { get; set; } = 0.00m;
         public decimal CapacityAlocateX { get; set; } = 0.00m;
         public decimal CapacityAfter
@@ -351,7 +352,7 @@ namespace StockControl
         public decimal CapacityAfterX
         {
             get {
-                return CapacityAvailable - CapacityAlocateX;
+                return CapacityAvailableX - CapacityAlocateX;
             }
         }
     }
@@ -367,6 +368,13 @@ namespace StockControl
         public DateTime Date { get; set; }
         public TimeSpan StartingTime { get; set; }
         public TimeSpan EndingTime { get; set; }
+    }
+    public class CalOverhead
+    {
+        public int idDoc { get; set; }
+        public int idWorkcenter { get; set; }
+        public int idRoute { get; set; } = 0;
+        public decimal CapacityX { get; set; } = 0.00m;
     }
 
 

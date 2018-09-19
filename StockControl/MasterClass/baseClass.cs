@@ -269,6 +269,7 @@ namespace StockControl
                     wl.idWorkCenter = dd.WorkCenterID;
                     wl.Date = dd.Date.Date;
                     wl.CapacityAvailable = dd.Capacity.ToDecimal();
+                    wl.CapacityAvailableX = dd.CapacityX.ToDecimal();
                     wl.CapacityAlocate += loadCapa; //Capa ในวัน
                     wl.CapacityAlocateX += loadCapaX; //เวลาในวัน
                 }
@@ -340,6 +341,12 @@ namespace StockControl
                 throw ex;
             }
             return d;
+        }
+        public static DateTime SetTimeToDate(this DateTime d, TimeSpan Ts)
+        {
+            //
+            return d.AddHours(Ts.Hours).AddMinutes(Ts.Minutes).AddSeconds(Ts.Seconds).AddMilliseconds(Ts.Milliseconds);
+            //return DateTime.Now;
         }
 
         //Customer P/O Status

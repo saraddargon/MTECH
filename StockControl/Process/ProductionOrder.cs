@@ -1322,7 +1322,7 @@ namespace StockControl
                                             };
                                             capacityLoad.Add(capaLoad);
                                             CapaUseX -= wl.CapacityAlocateX;
-                                            wl.CapacityAlocateX = wl.CapacityAvailable;
+                                            wl.CapacityAlocateX = wl.CapacityAvailableX;
                                             //wl.CapacityAlocate += (wl.CapacityAlocate - CapaUse);
                                         }
 

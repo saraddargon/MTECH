@@ -140,6 +140,8 @@ namespace StockControl
                     //    .ThenBy(x => x.POHd.OrderDate).ThenBy(x => x.POHd.id).ToList();
                     listForPlan = listForPlan.OrderBy(x => x.ReqDate).ThenBy(x => x.DocDate)
                         .ThenBy(x => x.DocId).ToList();
+                    int currItem = 1;
+                    int allItem = listForPlan.Count;
                     //foreach (var item in cstmPO_List)
                     foreach (var item in listForPlan)
                     {
@@ -171,7 +173,7 @@ namespace StockControl
                         //    alreadyJob = item.alreadyJob,
                         //});
 
-                        changeLabel($"Calculating... Doc no.{item.DocNo} : [{item.ItemNo}] {item.ItemName}");
+                        changeLabel($"Calculating (&{currItem++}&/&{allItem})... Doc no.{item.DocNo} : [{item.ItemNo}] {item.ItemName}");
                         //var gPlan = calPart(new calPartData
                         //{
                         //    DocId = item.DocId,
@@ -707,7 +709,7 @@ namespace StockControl
                                                 };
                                                 capacityLoad.Add(capaLoad);
                                                 CapaUseX -= wl.CapacityAlocateX;
-                                                wl.CapacityAlocateX = wl.CapacityAvailable;
+                                                wl.CapacityAlocateX = wl.CapacityAvailableX;
                                                 //wl.CapacityAlocate += (wl.CapacityAlocate - CapaUse);
                                             }
 
@@ -1158,7 +1160,7 @@ namespace StockControl
                                                 };
                                                 capacityLoad.Add(capaLoad);
                                                 CapaUseX -= wl.CapacityAlocateX;
-                                                wl.CapacityAlocateX = wl.CapacityAvailable;
+                                                wl.CapacityAlocateX = wl.CapacityAvailableX;
                                                 //wl.CapacityAlocate += (wl.CapacityAlocate - CapaUse);
                                             }
 
@@ -1427,7 +1429,7 @@ namespace StockControl
                             UOM = b.Unit,
                             PCSUnit = b.PCSUnit.ToDecimal(),
                         };
-                        calPart(cd);
+                        calPart_19(cd);
                         RMready = false;
                     }
                 }
@@ -1579,7 +1581,8 @@ namespace StockControl
                                     continue;
                                 }
                                 else //เป็นช่วงเวลาที่ใช้ได้จริงๆ <<<<****>>>>
-                                    tempStarting = tempStarting.Value.Date.AddHours(sTime.Hours).AddMinutes(sTime.Minutes);
+                                    tempStarting = tempStarting.Value.Date.SetTimeToDate(sTime);
+                                //tempStarting = tempStarting.Value.Date.AddHours(sTime.Hours).AddMinutes(sTime.Minutes).AddMilliseconds(sTime.Milliseconds);
                             }
                             else //ไม่อยู่ในช่วงเวลาทำงาน
                             {
@@ -1708,8 +1711,8 @@ namespace StockControl
                                 }
                             }
 
-
-                            tempStarting = tempStarting.Value.Date.AddHours(timeEnd.Hours).AddMinutes(timeEnd.Minutes);
+                            tempStarting = tempStarting.Value.Date.SetTimeToDate(timeEnd);
+                            //tempStarting = tempStarting.Value.Date.AddHours(timeEnd.Hours).AddMinutes(timeEnd.Minutes).AddMilliseconds(timeEnd.Milliseconds);
                             finalEndingDate = tempStarting.Value;
                         }
                         else //วันดังกล่าวไม่ใช่ Working Day
