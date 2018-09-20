@@ -261,6 +261,7 @@ namespace StockControl
 
                                 st.RefDocNo = rd.Cells["SONo"].Value.ToSt();
                                 st.RefId = Convert.ToInt32(rd.Cells["id"].Value);
+                                st.VatType = dbClss.TSt(rd.Cells["VatType"].Value);
                                 db.mh_ShipmentDTTemps.InsertOnSubmit(st);
                                 db.SubmitChanges();
                             }

@@ -7,6 +7,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
+using Telerik.WinControls.UI;
+using System.Globalization;
+
 namespace StockControl
 {
     public partial class Shipment_List : Telerik.WinControls.UI.RadRibbonForm
@@ -22,6 +25,13 @@ namespace StockControl
             InitializeComponent();
             this.sType = sType;
         }
+        List<GridViewRowInfo> RetDT;
+        public Shipment_List(List<GridViewRowInfo> RetDT)
+        {
+            InitializeComponent();
+            this.RetDT = RetDT;
+            sType = 2;
+        }
         public Shipment_List()
         {
             InitializeComponent();
@@ -35,6 +45,8 @@ namespace StockControl
 
         private void Unit_Load(object sender, EventArgs e)
         {
+            dtFrom.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            dtTo.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             //radGridView1.ReadOnly = true;
             using (var db = new DataClasses1DataContext())
             {
@@ -91,9 +103,16 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    dgvData.DataSource = db.mh_Shipments.ToList();
+                    string dt1 = "";
+                    string dt2 = "";
+                    if (cbChkDate.Checked)
+                    {
+                        dt1 = Convert.ToDateTime(dtFrom.Value).ToString("yyyyMMdd");
+                        dt2 = Convert.ToDateTime(dtTo.Value).ToString("yyyyMMdd");
+                    }
+                    dgvData.DataSource = db.sp_068_Shipment_List(txtSSNo.Text, "", cbbItem.Text, dt1, dt2, ddlStatus.Text, cbbCSTM.SelectedValue.ToSt());
+                    dbClss.SetRowNo1(dgvData);
                 }
-
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -175,14 +194,40 @@ namespace StockControl
 
         private void radButtonElement1_Click(object sender, EventArgs e)
         {
-            //select Item
-            if (sType == 1)
+            try
             {
-                var t = new SaleOrder();
-                t.ShowDialog();
+                if (dgvData.Rows.Count <= 0)
+                    return;
+
+                if (sType == 1)
+                {
+                    
+                        Shipment sh = new Shipment(dgvData.CurrentRow.Cells["ShipmentNo"].Value.ToSt());
+                        sh.ShowDialog();
+                        DataLoad();
+                    
+                }
+                else if (sType == 2)
+                {
+                    dgvData.EndEdit();
+                    foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                    {
+                        RetDT.Add(rowinfo);
+                    }
+                    this.Close();
+                }
+
             }
-            else
-                selRow();
+            catch { }
+
+            ////select Item
+            //if (sType == 1)
+            //{
+            //    var t = new SaleOrder();
+            //    t.ShowDialog();
+            //}
+            //else
+            //    selRow();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -198,11 +243,23 @@ namespace StockControl
             // demo();
             try
             {
-                if (e.RowIndex >= 0)
+                if (sType == 1)
                 {
-                    Shipment sh = new Shipment(dgvData.Rows[e.RowIndex].Cells["ShipmentNo"].Value.ToSt());
-                    sh.ShowDialog();
-                    DataLoad();
+                    if (e.RowIndex >= 0)
+                    {
+                        Shipment sh = new Shipment(dgvData.Rows[e.RowIndex].Cells["ShipmentNo"].Value.ToSt());
+                        sh.ShowDialog();
+                        DataLoad();
+                    }
+                }
+                else if (sType == 2)
+                {
+                    dgvData.EndEdit();
+                    foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                    {
+                        RetDT.Add(rowinfo);
+                    }
+                    this.Close();
                 }
 
             }catch { }
@@ -318,8 +375,8 @@ namespace StockControl
 
         void CreateInvoice()
         {
-            var inv = new Invoice(true);
-            inv.ShowDialog();
+            //var inv = new Invoice(true);
+            //inv.ShowDialog();
         }
         private void btnCreateInvoice_Click(object sender, EventArgs e)
         {

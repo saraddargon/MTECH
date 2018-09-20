@@ -630,7 +630,7 @@ namespace StockControl
                     gg.Amount = dbClss.TDe(ix.Cells["Amount"].Value);
                     gg.Description = dbClss.TSt(ix.Cells["Description"].Value);
                     gg.Active = true;
-
+                    
 
                     db.mh_SaleOrderDTs.InsertOnSubmit(gg);
                     db.SubmitChanges();
@@ -1009,7 +1009,7 @@ namespace StockControl
                 ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
                 ClassLib.Memory.Heap();
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError("CreatePart", ex.Message + " : radButtonElement1_Click", this.Name); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError(this.Name, ex.Message + " : btnListItem_Click", this.Name); }
             finally { this.Cursor = Cursors.Default; }
 
 

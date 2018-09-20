@@ -61,6 +61,9 @@ namespace StockControl
 
         private void Unit_Load(object sender, EventArgs e)
         {
+            dtFrom.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            dtTo.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+
             //radGridView1.ReadOnly = true;
             LoadDefault();
             txtCstmPO.Text = this.PONo;
@@ -327,8 +330,8 @@ namespace StockControl
 
         void CreateShipment()
         {
-            var sm = new Shipment(true);
-            sm.ShowDialog();
+            //var sm = new Shipment(true);
+            //sm.ShowDialog();
         }
         private void btnCreateShipment_Click(object sender, EventArgs e)
         {
