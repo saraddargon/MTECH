@@ -813,8 +813,10 @@ namespace StockControl
             btnEdit.Enabled = true;
             btnView.Enabled = false;
             btnNew.Enabled = true;
+            var tj = t_JobNo;
             ClearData();
             Enable_Status(false, "View");
+            t_JobNo = tj;
             DataLoad();
             Ac = "View";
         }
@@ -1445,8 +1447,7 @@ namespace StockControl
                                 co.idRoute = c.idRoute;
                         }
                         db.SubmitChanges();
-
-
+                        
                         //save Cost Overhead
                         var manuTime = 1;
                         var manu = db.mh_ManufacturingSetups.FirstOrDefault();
