@@ -133,6 +133,7 @@ namespace StockControl
                         SetRowNo1(dgvData);
                         SetRowNo1(dgvPurchase);
                         btnView_Click(null, null);
+                        txtJobNo.ReadOnly = true;
                     }
                     else if (warningMssg)
                         baseClass.Warning("Job Orders not found.!!");
@@ -287,18 +288,21 @@ namespace StockControl
             txtStatus.Text = "Waiting";
             txtidJob.Text = "";
             txtSeqStatus.Text = "";
+            txtJobNo.ReadOnly = false;
 
-            using (var db = new DataClasses1DataContext())
-            {
-                var d = DateTime.Now.Date;
-                var m = db.mh_LotFGs.Where(x => x.LotDate == d).FirstOrDefault();
-                if (m != null)
-                    txtLotNo.Text = m.LotNo;
-            }
+            //using (var db = new DataClasses1DataContext())
+            //{
+            //    var d = DateTime.Now.Date;
+            //    var m = db.mh_LotFGs.Where(x => x.LotDate == d).FirstOrDefault();
+            //    if (m != null)
+            //        txtLotNo.Text = m.LotNo;
+            //}
             //
 
             dgvData.DataSource = null;
             dgvData.Rows.Clear();
+            dgvPurchase.DataSource = null;
+            dgvPurchase.Rows.Clear();
 
             t_JobNo = "";
         }
@@ -444,12 +448,12 @@ namespace StockControl
                     err += "- Cannot Save because Status is 'Process'.\n";
                 //else if (txtStatus.Text == "Approved")
                 //    err += "- Cannot Save because Status is 'Approved'.\n";
-                else if (txtStatus.Text.ToInt() > 0)
+                else if (txtSeqStatus.Text.ToInt() > 0)
                     err += "- Cannot Save because Status is 'Approved'.\n";
 
 
                 if (!err.Equals(""))
-                    baseClass.Error(err);
+                    baseClass.Warning(err);
                 else
                     re = false;
             }
@@ -517,7 +521,7 @@ namespace StockControl
                     m.UpdateBy = ClassLib.Classlib.User;
                     m.UpdateDate = DateTime.Now;
 
-                    db.sp_062_mh_ApproveList_Add(m.JobNo, "Job_Req", ClassLib.Classlib.User);
+                    db.sp_062_mh_ApproveList_Add(m.JobNo, "Job Req", ClassLib.Classlib.User);
 
                     //update Customer P/O [Only New Job] - Out Plan
                     if (newJob)
@@ -1410,5 +1414,13 @@ namespace StockControl
             }
         }
 
+        private void txtJobNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                t_JobNo = txtJobNo.Text.Trim();
+                DataLoad(true);
+            }
+        }
     }
 }
