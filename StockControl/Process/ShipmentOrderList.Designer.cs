@@ -177,7 +177,7 @@
             this.dgvData.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.dgvData.ForeColor = System.Drawing.Color.Black;
             this.dgvData.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dgvData.Location = new System.Drawing.Point(0, 144);
+            this.dgvData.Location = new System.Drawing.Point(0, 128);
             // 
             // 
             // 
@@ -235,6 +235,7 @@
             gridViewTextBoxColumn2.FieldName = "SS";
             gridViewTextBoxColumn2.HeaderText = "Status";
             gridViewTextBoxColumn2.Name = "SS";
+            gridViewTextBoxColumn2.ReadOnly = true;
             gridViewTextBoxColumn2.Width = 83;
             gridViewTextBoxColumn3.EnableExpressionEditor = false;
             gridViewTextBoxColumn3.FieldName = "SONo";
@@ -255,11 +256,13 @@
             gridViewTextBoxColumn4.FieldName = "ItemNo";
             gridViewTextBoxColumn4.HeaderText = "Item";
             gridViewTextBoxColumn4.Name = "ItemNo";
+            gridViewTextBoxColumn4.ReadOnly = true;
             gridViewTextBoxColumn4.Width = 77;
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
             gridViewTextBoxColumn5.FieldName = "ItemName";
             gridViewTextBoxColumn5.HeaderText = "Name";
             gridViewTextBoxColumn5.Name = "ItemName";
+            gridViewTextBoxColumn5.ReadOnly = true;
             gridViewTextBoxColumn5.Width = 139;
             gridViewTextBoxColumn6.EnableExpressionEditor = false;
             gridViewTextBoxColumn6.FieldName = "Description";
@@ -273,6 +276,7 @@
             gridViewDecimalColumn1.FormatString = "{0:N2}";
             gridViewDecimalColumn1.HeaderText = "Stock";
             gridViewDecimalColumn1.Name = "Stock";
+            gridViewDecimalColumn1.ReadOnly = true;
             gridViewDecimalColumn1.Width = 64;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "Qty";
@@ -285,6 +289,7 @@
             gridViewTextBoxColumn7.FormatString = "{0:N2}";
             gridViewTextBoxColumn7.HeaderText = "Remain Qty";
             gridViewTextBoxColumn7.Name = "Remain";
+            gridViewTextBoxColumn7.ReadOnly = true;
             gridViewTextBoxColumn7.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
             gridViewTextBoxColumn7.Width = 100;
             gridViewDecimalColumn3.EnableExpressionEditor = false;
@@ -297,12 +302,14 @@
             gridViewDecimalColumn4.FieldName = "InvQty";
             gridViewDecimalColumn4.FormatString = "{0:N2}";
             gridViewDecimalColumn4.HeaderText = "Inv. Qty";
+            gridViewDecimalColumn4.IsVisible = false;
             gridViewDecimalColumn4.Name = "InvQty";
             gridViewDecimalColumn4.Width = 58;
             gridViewTextBoxColumn8.EnableExpressionEditor = false;
             gridViewTextBoxColumn8.FieldName = "Unit";
             gridViewTextBoxColumn8.HeaderText = "Unit";
             gridViewTextBoxColumn8.Name = "Unit";
+            gridViewTextBoxColumn8.ReadOnly = true;
             gridViewTextBoxColumn8.Width = 65;
             gridViewDecimalColumn5.EnableExpressionEditor = false;
             gridViewDecimalColumn5.FieldName = "PCSUnit";
@@ -337,11 +344,13 @@
             gridViewTextBoxColumn10.FieldName = "CustomerNo";
             gridViewTextBoxColumn10.HeaderText = "Customer No";
             gridViewTextBoxColumn10.Name = "CustomerNo";
+            gridViewTextBoxColumn10.ReadOnly = true;
             gridViewTextBoxColumn10.Width = 79;
             gridViewTextBoxColumn11.EnableExpressionEditor = false;
             gridViewTextBoxColumn11.FieldName = "CustomerName";
             gridViewTextBoxColumn11.HeaderText = "Customer Name";
             gridViewTextBoxColumn11.Name = "CustomerName";
+            gridViewTextBoxColumn11.ReadOnly = true;
             gridViewTextBoxColumn11.Width = 179;
             gridViewDateTimeColumn2.EnableExpressionEditor = false;
             gridViewDateTimeColumn2.FieldName = "CreateDate";
@@ -422,7 +431,7 @@
             this.dgvData.Name = "dgvData";
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(1032, 433);
+            this.dgvData.Size = new System.Drawing.Size(1032, 449);
             this.dgvData.TabIndex = 2;
             this.dgvData.ThemeName = "Office2010Blue";
             this.dgvData.CellDoubleClick += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellDoubleClick);
@@ -484,7 +493,7 @@
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(1032, 144);
+            this.radPanel1.Size = new System.Drawing.Size(1032, 128);
             this.radPanel1.TabIndex = 1;
             this.radPanel1.ThemeName = "Office2010Blue";
             // 
@@ -492,7 +501,7 @@
             // 
             this.dtTo.CustomFormat = "dd/MM/yyyy";
             this.dtTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtTo.Location = new System.Drawing.Point(333, 107);
+            this.dtTo.Location = new System.Drawing.Point(333, 87);
             this.dtTo.Name = "dtTo";
             this.dtTo.Size = new System.Drawing.Size(100, 20);
             this.dtTo.TabIndex = 12;
@@ -503,7 +512,7 @@
             // 
             // radLabel4
             // 
-            this.radLabel4.Location = new System.Drawing.Point(297, 109);
+            this.radLabel4.Location = new System.Drawing.Point(297, 89);
             this.radLabel4.Name = "radLabel4";
             this.radLabel4.Size = new System.Drawing.Size(17, 18);
             this.radLabel4.TabIndex = 7;
@@ -513,7 +522,7 @@
             // 
             this.dtFrom.CustomFormat = "dd/MM/yyyy";
             this.dtFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtFrom.Location = new System.Drawing.Point(182, 107);
+            this.dtFrom.Location = new System.Drawing.Point(182, 87);
             this.dtFrom.Name = "dtFrom";
             this.dtFrom.Size = new System.Drawing.Size(100, 20);
             this.dtFrom.TabIndex = 12;
@@ -545,7 +554,7 @@
             this.cbbItem.EditorControl.ShowGroupPanel = false;
             this.cbbItem.EditorControl.Size = new System.Drawing.Size(240, 150);
             this.cbbItem.EditorControl.TabIndex = 0;
-            this.cbbItem.Location = new System.Drawing.Point(182, 79);
+            this.cbbItem.Location = new System.Drawing.Point(182, 62);
             this.cbbItem.Name = "cbbItem";
             this.cbbItem.Size = new System.Drawing.Size(186, 22);
             this.cbbItem.TabIndex = 11;
@@ -575,7 +584,7 @@
             this.cbbCSTM.EditorControl.ShowGroupPanel = false;
             this.cbbCSTM.EditorControl.Size = new System.Drawing.Size(240, 150);
             this.cbbCSTM.EditorControl.TabIndex = 0;
-            this.cbbCSTM.Location = new System.Drawing.Point(182, 51);
+            this.cbbCSTM.Location = new System.Drawing.Point(182, 36);
             this.cbbCSTM.Name = "cbbCSTM";
             this.cbbCSTM.Size = new System.Drawing.Size(186, 22);
             this.cbbCSTM.TabIndex = 10;
@@ -585,21 +594,21 @@
             // txtCSTMNo
             // 
             this.txtCSTMNo.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtCSTMNo.Location = new System.Drawing.Point(374, 53);
+            this.txtCSTMNo.Location = new System.Drawing.Point(374, 38);
             this.txtCSTMNo.Name = "txtCSTMNo";
             this.txtCSTMNo.Size = new System.Drawing.Size(87, 20);
             this.txtCSTMNo.TabIndex = 9;
             // 
             // txtPONo
             // 
-            this.txtPONo.Location = new System.Drawing.Point(182, 23);
+            this.txtPONo.Location = new System.Drawing.Point(182, 12);
             this.txtPONo.Name = "txtPONo";
             this.txtPONo.Size = new System.Drawing.Size(186, 20);
             this.txtPONo.TabIndex = 9;
             // 
             // cbChkDate
             // 
-            this.cbChkDate.Location = new System.Drawing.Point(78, 109);
+            this.cbChkDate.Location = new System.Drawing.Point(78, 89);
             this.cbChkDate.Name = "cbChkDate";
             this.cbChkDate.Size = new System.Drawing.Size(76, 18);
             this.cbChkDate.TabIndex = 8;
@@ -607,7 +616,7 @@
             // 
             // radLabel3
             // 
-            this.radLabel3.Location = new System.Drawing.Point(78, 51);
+            this.radLabel3.Location = new System.Drawing.Point(78, 36);
             this.radLabel3.Name = "radLabel3";
             this.radLabel3.Size = new System.Drawing.Size(55, 18);
             this.radLabel3.TabIndex = 7;
@@ -615,7 +624,7 @@
             // 
             // radLabel2
             // 
-            this.radLabel2.Location = new System.Drawing.Point(78, 78);
+            this.radLabel2.Location = new System.Drawing.Point(78, 61);
             this.radLabel2.Name = "radLabel2";
             this.radLabel2.Size = new System.Drawing.Size(29, 18);
             this.radLabel2.TabIndex = 7;
@@ -623,7 +632,7 @@
             // 
             // radLabel1
             // 
-            this.radLabel1.Location = new System.Drawing.Point(78, 24);
+            this.radLabel1.Location = new System.Drawing.Point(78, 13);
             this.radLabel1.Name = "radLabel1";
             this.radLabel1.Size = new System.Drawing.Size(77, 18);
             this.radLabel1.TabIndex = 7;

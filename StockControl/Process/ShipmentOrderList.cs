@@ -229,6 +229,7 @@ namespace StockControl
                                 decimal.TryParse(rd.Cells["Qty"].Value.ToString(), out Qty);
                                 decimal.TryParse(rd.Cells["UnitPrice"].Value.ToString(), out UnitPrice);
                                 decimal.TryParse(rd.Cells["PCSUnit"].Value.ToString(), out Pcsunit);
+                                //decimal ShipQty = dbClss.TDe(rd.Cells["ShipQty"].Value);
 
                                 if (UnitPrice == 0)
                                     UnitPrice = im.StandardPrice;
@@ -252,6 +253,7 @@ namespace StockControl
                                 st.UnitPrice = UnitPrice;
                                 st.Amount = UnitPrice * Qty;
                                 st.Active = true;
+                                st.OutShip = Qty;
                                 if (!Convert.ToString(rd.Cells["Unit"].Value.ToSt()).Equals(""))
                                     st.UOM = rd.Cells["Unit"].Value.ToSt();
                                 else

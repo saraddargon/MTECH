@@ -391,39 +391,58 @@ namespace StockControl
                 string cstmNo = txtCSTMNo.Text.Trim();
                 if (poNo != "" && cstmNo != "")
                 {
-                   
-                    if (baseClass.IsDel($"Do you want to Delete Sale Order: {poNo} ?"))
+                    using (var db = new DataClasses1DataContext())
                     {
-                        //Status
-                        //Waiting
-                        //Process  --Approved
-                        //Partial-- > Shipment Partial
-                        //Complete --> Shipment Full
-
-                        using (var db = new DataClasses1DataContext())
+                        int Temp = 0;
+                        var ck = db.mh_SaleOrderDTs.Where(x => x.SONo == poNo && x.Active).ToList();
+                        if (ck.Where(x => x.Active == true && x.OutShip != x.Qty).Count() > 0)
                         {
+                            foreach (var pp in ck)
+                            {
+                                Temp = 1;
+                                break;
+                            }
+                        }
+
+                        if(Temp==1)
+                        {
+                            baseClass.Warning("Sale Order Status cannot Delete.");
+                            return;
+                        }
+
+
+                        if (baseClass.IsDel($"Do you want to Delete Sale Order: {poNo} ?"))
+                        {
+                            //Status
+                            //Waiting
+                            //Process  --Approved
+                            //Partial-- > Shipment Partial
+                            //Complete --> Shipment Full
+
+
                             var p = db.mh_SaleOrders.Where(x => x.SONo == poNo && x.Active).ToList();
-                            if (p.Where(x => x.Active ==true && (x.Status.ToSt()=="Waiting" || x.Status.ToSt() == "Process")).Count() >0)
+                            if (p.Where(x => x.Active == true && (x.Status.ToSt() == "Waiting"
+                            || x.Status.ToSt() == "Process")).Count() > 0)
                             {
                                 foreach (var pp in p)
                                 {
                                     pp.Active = false;
                                     pp.Status = "Cancel";
                                     pp.UpdateBy = Classlib.User;
-                                    pp.UpdateDate = Convert.ToDateTime( DateTime.Now,new CultureInfo("en-US"));
+                                    pp.UpdateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                                 }
-                                
+
                                 var d = db.mh_SaleOrderDTs.Where(x => x.SONo == poNo && x.Active).ToList();
-                                if (d.Where(x => x.Active == true && x.OutShip==x.Qty ).Count() > 0)
+                                if (d.Where(x => x.Active == true && x.OutShip == x.Qty).Count() > 0)
                                 {
                                     foreach (var pp in d)
                                         pp.Active = false;
                                 }
 
                                 db.SubmitChanges();
-                                
-                                updateOutSO();
-                              
+
+                                updateOutSO_Customer();
+
                                 baseClass.Info("Delete Sale Order complete.");
                                 ClearData();
                                 btnNew_Click(null, null);
@@ -527,9 +546,9 @@ namespace StockControl
 
                         t_SONo = sono;
                         t_CustomerNo = cstmNo;
-                       
 
-                        updateOutSO();
+
+                        updateOutSO_Customer();
                     }
                 }
 
@@ -596,7 +615,7 @@ namespace StockControl
                     gg.ItemName = dbClss.TSt(ix.Cells["ItemName"].Value);
                     gg.LocationItem = dbClss.TSt(ix.Cells["LocationItem"].Value);
                     gg.OutPlan = dbClss.TDe(ix.Cells["OutPlan"].Value);
-                    gg.OutShip = dbClss.TDe(ix.Cells["OutShip"].Value);
+                    gg.OutShip = dbClss.TDe(ix.Cells["Qty"].Value);//dbClss.TDe(ix.Cells["OutShip"].Value);
                     gg.PCSUnit = dbClss.TDe(ix.Cells["PCSUnit"].Value);
                     gg.PriceIncVat = cbVat.Checked;
                     gg.Qty = dbClss.TDe(ix.Cells["Qty"].Value);
@@ -620,7 +639,7 @@ namespace StockControl
                 }
             }
         }
-        private void updateOutSO()
+        private void updateOutSO_Customer()
         {
 
             using (var db = new DataClasses1DataContext())
