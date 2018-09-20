@@ -634,6 +634,10 @@ namespace StockControl
                             db.mh_Planning_TEMPs.DeleteAllOnSubmit(d);
                             db.SubmitChanges();
                         }
+
+
+                        //Send to Approve
+                        db.sp_062_mh_ApproveList_Add(m.JobNo, "Job Req", ClassLib.Classlib.User);
                     }
                     DataLoad();
 
