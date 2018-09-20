@@ -1302,6 +1302,11 @@ namespace StockControl
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+
+        private void radButton2_Click(object sender, EventArgs e)
+        {
+            btnAddPart_Click(null, null);
+        }
     }
 
 

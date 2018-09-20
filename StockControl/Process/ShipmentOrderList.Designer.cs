@@ -860,6 +860,7 @@
             this.btnCreateShipment.Name = "btnCreateShipment";
             this.btnCreateShipment.Text = "<html><p>Create</p><p>Shipment</p></html>";
             this.btnCreateShipment.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCreateShipment.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnCreateShipment.Click += new System.EventHandler(this.btnCreateShipment_Click);
             // 
             // radMenuItem1

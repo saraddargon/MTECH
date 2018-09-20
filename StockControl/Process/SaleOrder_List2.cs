@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
+using System.Globalization;
 
 namespace StockControl
 {
@@ -332,6 +333,34 @@ namespace StockControl
         {
             //var sm = new Shipment(true);
             //sm.ShowDialog();
+            List<int> idList = new List<int>();
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                {
+                    if (dbClss.TSt(rowinfo.Cells["SS"].Value) == "Partial" || dbClss.TSt(rowinfo.Cells["SS"].Value) == "Process")
+                    {
+                        idList.Add(dbClss.TInt(rowinfo.Cells["id"].Value));
+                    }
+                    else
+                    {
+                        MessageBox.Show("สถานะบางรายการไม่สามารถ สร้างรายการเบิกได้");
+                        break;
+                    }
+
+                    if(idList.Count>0)
+                    {
+                        Shipment a = new Shipment(idList);
+                        a.ShowDialog();
+                        DataLoad();
+                    }
+                }
+                
+
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { this.Cursor = Cursors.Default; }
         }
         private void btnCreateShipment_Click(object sender, EventArgs e)
         {

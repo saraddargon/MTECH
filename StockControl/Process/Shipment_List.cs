@@ -377,6 +377,35 @@ namespace StockControl
         {
             //var inv = new Invoice(true);
             //inv.ShowDialog();
+
+            dgvData.EndEdit();
+            try
+            {
+                List<int> idList = new List<int>();
+                foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                {
+                    if (dbClss.TSt(rowinfo.Cells["SS"].Value) == "Waiting" || dbClss.TSt(rowinfo.Cells["SS"].Value) == "Process")
+                    {
+                        idList.Add(dbClss.TInt(rowinfo.Cells["id"].Value));
+                    }
+                    else
+                    {
+                        MessageBox.Show("สถานะบางรายการไม่สามารถทำรายการได้");
+                        break;
+                    }
+
+                    if (idList.Count > 0)
+                    {
+                        Invoice_2 a = new Invoice_2(idList);
+                        a.ShowDialog();
+                        DataLoad();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Warning(ex.Message);
+            }
         }
         private void btnCreateInvoice_Click(object sender, EventArgs e)
         {
