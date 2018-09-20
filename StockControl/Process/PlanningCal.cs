@@ -474,23 +474,6 @@ namespace StockControl
 
                 using (var db = new DataClasses1DataContext())
                 {
-                    //foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
-                    //{
-                    //    int idPO = item.Cells["idRef"].Value.ToInt();
-                    //    string PONo = item.Cells["RefDocNo"].Value.ToSt();
-                    //    //find PR refer PO
-                    //    var pr = db.mh_PurchaseRequestLines.Where(x => x.Status != "Cancel" && x.idCstmPODt == idPO)
-                    //        .Join(db.mh_PurchaseRequests.Where(x => x.Status != "Cancel")
-                    //        , dt => dt.PRNo
-                    //        , hd => hd.PRNo
-                    //        , (dt, hd) => new { hd, dt }).ToList();
-                    //    if(pr.Count < 1)
-                    //    {
-                    //        baseClass.Warning($"Please generate P/R for Document No. [{PONo}] before Generate JOB.\n");
-                    //        return;
-                    //    }
-                    //}
-
                     foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
                     {
                         //Hd
@@ -536,6 +519,7 @@ namespace StockControl
                             db.SubmitChanges();
                         }
 
+                        var calOvers = new List<CalOverhead>();
                         //Dt
                         //**Component**
                         int mainNo = item.Cells["mainNo"].Value.ToInt(); //find all component of Item
@@ -554,9 +538,10 @@ namespace StockControl
                                 JobNo = m.JobNo,
                                 PCSUnit = r.PCSUnit.ToDecimal(),
                                 Qty = m.Qty * r.Qty,
-                                RemQty = m.Qty * r.Qty,
+                                OutQty = m.Qty * r.Qty,
                                 Type = itemA.Type,
                                 UOM = r.Unit,
+                                CostOverall = 0.00m,
                             };
                             db.mh_ProductionOrderRMs.InsertOnSubmit(dt);
                             db.SubmitChanges();
@@ -580,6 +565,18 @@ namespace StockControl
                             db.mh_CapacityLoads.InsertOnSubmit(cc);
                             c.DocId = m.id;
                             c.DocNo = m.JobNo;
+                            m.CapacityUseX += c.CapacityX;
+
+                            var co = calOvers.Where(x => x.idDoc == c.DocId && x.idWorkcenter == c.WorkCenterID).FirstOrDefault();
+                            if (co == null)
+                                calOvers.Add(new CalOverhead
+                                {
+                                    CapacityX = c.CapacityX,
+                                    idDoc = c.DocId,
+                                    idWorkcenter = c.WorkCenterID
+                                });
+                            else
+                                co.CapacityX += c.CapacityX;
                         }
                         db.SubmitChanges();
 
@@ -602,13 +599,37 @@ namespace StockControl
                             db.mh_CalendarLoads.InsertOnSubmit(cc);
                             c.idJob = m.id;
                             c.idAbs = 0;
+
+                            var co = calOvers.Where(x => x.idWorkcenter == c.idWorkcenter && x.idDoc == c.idJob && x.idRoute == 0).FirstOrDefault();
+                            if (co != null)
+                                co.idRoute = c.idRoute;
                         }
                         db.SubmitChanges();
+
+                        //save Cost Overhead
+                        var manuTime = 1;
+                        var manu = db.mh_ManufacturingSetups.FirstOrDefault();
+                        if(manu != null)
+                        {
+                            if (manu.ShowCapacityInUOM == 2) //Hour
+                                manuTime = 60;
+                            else if (manu.ShowCapacityInUOM == 3) //Day
+                                manuTime = (24 * 60);
+                        }
+                        foreach(var co in calOvers)
+                        {
+                            var rt = db.mh_RoutingDTs.Where(x => x.id == co.idRoute && x.idWorkCenter == co.idWorkcenter && x.Active).FirstOrDefault();
+                            if(rt != null)
+                            {
+                                var costAll = Math.Round(rt.UnitCost / manuTime, 2);
+                                m.CostOverhead += Math.Round(costAll * co.CapacityX, 2);
+                            }
+                        }
 
                         //delete gridPlan
                         int id = item.Cells["id"].Value.ToInt();
                         var d = db.mh_Planning_TEMPs.Where(x => x.id == id).ToList();
-                        if(d.Count > 0)
+                        if (d.Count > 0)
                         {
                             db.mh_Planning_TEMPs.DeleteAllOnSubmit(d);
                             db.SubmitChanges();

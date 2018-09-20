@@ -232,11 +232,22 @@ namespace StockControl
             }
         }
 
-        public static List<WorkLoad> getWorkLoad(DateTime beginDate, DateTime? dTo)
+        public static List<WorkLoad> getWorkLoad(DateTime beginDate, DateTime? dTo, int idWorkcenter = 0)
         {
             var workLoads = new List<WorkLoad>();
             using (var db = new DataClasses1DataContext())
             {
+                if (idWorkcenter > 0)
+                {
+                    var bDate = beginDate.Date;
+                    var tDate = (dTo != null) ? dTo.Value.Date : beginDate.Date;
+                    while(bDate <= tDate)
+                    {
+                        CalCapacity_WorkCenter(idWorkcenter, beginDate);
+                        bDate = bDate.AddDays(1);
+                    }
+                }
+                //
                 var d = db.mh_CapacityAvailables.Where(x => x.Date >= beginDate
                     && (dTo == null || x.Date <= dTo)).ToList();
                 foreach (var dd in d)
@@ -258,8 +269,9 @@ namespace StockControl
                     wl.idWorkCenter = dd.WorkCenterID;
                     wl.Date = dd.Date.Date;
                     wl.CapacityAvailable = dd.Capacity.ToDecimal();
-                    wl.CapacityAlocate += loadCapa;
-                    wl.CapacityAlocateX += loadCapaX;
+                    wl.CapacityAvailableX = dd.CapacityX.ToDecimal();
+                    wl.CapacityAlocate += loadCapa; //Capa ในวัน
+                    wl.CapacityAlocateX += loadCapaX; //เวลาในวัน
                 }
                 return workLoads;
             }
@@ -330,6 +342,12 @@ namespace StockControl
             }
             return d;
         }
+        public static DateTime SetTimeToDate(this DateTime d, TimeSpan Ts)
+        {
+            //
+            return d.AddHours(Ts.Hours).AddMinutes(Ts.Minutes).AddSeconds(Ts.Seconds).AddMilliseconds(Ts.Milliseconds);
+            //return DateTime.Now;
+        }
 
         //Customer P/O Status
         public static string setCustomerPOStatus(mh_CustomerPODT dt)
@@ -359,6 +377,7 @@ namespace StockControl
                 var abs = db.mh_CapacityAbsences.Where(x => x.Active && x.idWorkCenters == t.id).ToList(); //Absence
 
                 decimal minWork = 0.00m;
+                decimal minWorkCapa = 0.00m;
                 //not day of work
                 if (!dow.Select(x => GetDayOfWeek(x.Day)).Contains(dTemp.DayOfWeek))
                 {
@@ -372,6 +391,7 @@ namespace StockControl
                         var sTime = new TimeSpan(d.StartingTime.Substring(0, 2).ToInt(), d.StartingTime.Substring(3).ToInt(), 0);
                         var eTime = new TimeSpan(d.EndingTime.Substring(0, 2).ToInt(), d.EndingTime.Substring(3).ToInt(), 0);
                         minWork += (eTime - sTime).TotalMinutes.ToDecimal() * t.Capacity;
+                        minWorkCapa += (eTime - sTime).TotalMinutes.ToDecimal();
                     }
 
                     //chk hol
@@ -382,11 +402,15 @@ namespace StockControl
                             var sTime = new TimeSpan(h.StartTime.Substring(0, 2).ToInt(), h.StartTime.Substring(3).ToInt(), 0);
                             var eTime = new TimeSpan(h.EndingTime.Substring(0, 2).ToInt(), h.EndingTime.Substring(3).ToInt(), 0);
                             if (eTime > new TimeSpan(0, 0, 0))
-                                minWork -= ((eTime - sTime).TotalMinutes).ToDecimal() * t.Capacity;
+                            {
+                                minWork -= (eTime - sTime).TotalMinutes.ToDecimal() * t.Capacity;
+                                minWorkCapa -= (eTime - sTime).TotalMinutes.ToDecimal();
+                            }
                             else
                             {
                                 eTime = new TimeSpan(23, 59, 0);
                                 minWork -= ((eTime - sTime).TotalMinutes + 1).ToDecimal() * t.Capacity;
+                                minWorkCapa -= ((eTime - sTime).TotalMinutes + 1).ToDecimal();
                             }
                             if (minWork < 0)
                                 break;
@@ -401,6 +425,7 @@ namespace StockControl
                             var sTime = new TimeSpan(a.StartingTime.Substring(0, 2).ToInt(), a.StartingTime.Substring(3).ToInt(), 0);
                             var eTime = new TimeSpan(a.EndingTime.Substring(0, 2).ToInt(), a.EndingTime.Substring(3).ToInt(), 0);
                             minWork -= (eTime - sTime).TotalMinutes.ToDecimal() * a.Capacity;
+                            minWorkCapa -= (eTime - sTime).TotalMinutes.ToDecimal();
 
                             if (minWork < 0)
                                 break;
@@ -411,8 +436,12 @@ namespace StockControl
                 //find capa
                 //Minwork * capa
                 decimal? totalCapa = null;
+                decimal? totalMinWork = null;
                 if (minWork > 0)
+                {
                     totalCapa = minWork.ToDecimal();
+                    totalMinWork = minWorkCapa.ToDecimal();
+                }
                 var mh = db.mh_CapacityAvailables.Where(x => x.WorkCenterID == t.id && x.Date == dTemp).FirstOrDefault();
                 if (mh == null)
                 {
@@ -421,8 +450,8 @@ namespace StockControl
                 }
                 mh.Date = dTemp;
                 mh.Capacity = totalCapa;
+                mh.CapacityX = totalMinWork;
                 mh.WorkCenterID = t.id;
-
                 db.SubmitChanges();
             }
         }
@@ -437,6 +466,36 @@ namespace StockControl
             else return DayOfWeek.Sunday;
 
 
+        }
+
+        //For TempCal Plan
+        public static mh_CapacityLoad newCapaLoad(decimal CapaUseX, decimal Capacity, DateTime Date, int DocId, int id, int idWorkCenter)
+        {
+            return new mh_CapacityLoad
+            {
+                Active = true,
+                Capacity = Capacity,
+                CapacityX = CapaUseX,
+                Date = Date,
+                DocId = DocId,
+                id = id,
+                WorkCenterID = idWorkCenter
+            };
+        }
+        public static mh_CalendarLoad newCalendar(int id, int idRoute, int idWorkCenter, int idCalendar, DateTime Date, TimeSpan StartingTIme, TimeSpan EndingTime, int idJob, int idAbs)
+        {
+            return new mh_CalendarLoad
+            {
+                id = id,
+                idRoute = idRoute,
+                idWorkcenter = idWorkCenter,
+                idCal = idCalendar,
+                Date = Date,
+                StartingTime = StartingTIme,
+                EndingTime = EndingTime,
+                idJob = idJob,
+                idAbs = idAbs,
+            };
         }
 
     }

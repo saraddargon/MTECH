@@ -159,7 +159,8 @@ namespace StockControl
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
-            selRow();
+            if(e.RowIndex >= 0)
+                selRow();
 
         }
         void selRow()

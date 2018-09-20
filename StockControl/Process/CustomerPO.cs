@@ -707,12 +707,12 @@ namespace StockControl
             ////DataLoad();
             try
             {
-                btnEdit.Enabled = true;
-                btnView.Enabled = false;
-                btnNew.Enabled = true;
-                ClearData();
-                Ac = "View";
-                Enable_Status(false, "View");
+                //btnEdit.Enabled = true;
+                //btnView.Enabled = false;
+                //btnNew.Enabled = true;
+                //ClearData();
+                //Ac = "View";
+                //Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
                 var pol = new CustomerPO_List(2);

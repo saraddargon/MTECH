@@ -123,7 +123,7 @@ namespace StockControl
                         foreach (var dt in dts)
                         {
                             addRow(dt.id, dt.ItemNo, dt.ItemName, dt.Qty, dt.UOM, dt.PCSUnit
-                                , dt.RemQty, dt.GroupType, dt.Type, dt.InvGroup);
+                                , dt.OutQty, dt.GroupType, dt.Type, dt.InvGroup);
                         }
 
                         //Load Pr in Job
@@ -143,7 +143,7 @@ namespace StockControl
         }
 
         private void addRow(int id, string itemNo, string itemName, decimal qty, string uOM, decimal pCSUnit
-            , decimal remQty, string groupType, string type, string invGroup)
+            , decimal outQty, string groupType, string type, string invGroup)
         {
             var rowe = dgvData.Rows.AddNew();
             rowe.Cells["RNo"].Value = rowe.Index + 1;
@@ -157,22 +157,24 @@ namespace StockControl
             rowe.Cells["Type"].Value = type;
             rowe.Cells["InvGroup"].Value = invGroup;
             rowe.Cells["dgvC"].Value = "T";
+            rowe.Cells["OutShip"].Value = outQty;
+            rowe.Cells["Shipped"].Value = qty - outQty;
 
-            //find Shipped
-            if (txtJobNo.Text != "")
-            {
-                using (var db = new DataClasses1DataContext())
-                {
-                    var m = db.Get_ShipQty(itemNo, txtJobNo.Text);
-                    rowe.Cells["Shipped"].Value = m.ToDecimal();
-                    rowe.Cells["OutShip"].Value = qty - m.ToDecimal();
-                }
-            }
-            else
-            {
-                rowe.Cells["Shipped"].Value = 0.00m;
-                rowe.Cells["OutShip"].Value = qty;
-            }
+            ////find Shipped
+            //if (txtJobNo.Text != "")
+            //{
+            //    using (var db = new DataClasses1DataContext())
+            //    {
+            //        var m = db.Get_ShipQty(itemNo, txtJobNo.Text);
+            //        rowe.Cells["Shipped"].Value = m.ToDecimal();
+            //        rowe.Cells["OutShip"].Value = qty - m.ToDecimal();
+            //    }
+            //}
+            //else
+            //{
+            //    rowe.Cells["Shipped"].Value = 0.00m;
+            //    rowe.Cells["OutShip"].Value = qty;
+            //}
         }
 
         void LoadPRwithJob(int idCustomerPoDt)
@@ -551,7 +553,7 @@ namespace StockControl
                         d.Qty = item.Cells["Qty"].Value.ToDecimal();
                         d.UOM = item.Cells["UOM"].Value.ToSt();
                         d.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
-                        d.RemQty = item.Cells["RemQty"].Value.ToDecimal();
+                        d.OutQty = item.Cells["OutShip"].Value.ToDecimal();
                         d.GroupType = item.Cells["GroupType"].Value.ToSt();
                         d.Type = item.Cells["Type"].Value.ToSt();
                         d.InvGroup = item.Cells["InvGroup"].Value.ToSt();
@@ -1022,6 +1024,8 @@ namespace StockControl
                 var workLoads = new List<WorkLoad>();
                 var calLoad = new List<mh_CalendarLoad>();
                 //***ก๊อปมาจาก PlanningCal_Status
+                var costOverHead = 0.00m;
+                var capaUseX_All = 0.00m;
                 using (var db = new DataClasses1DataContext())
                 {
                     var tdata = new ItemData(txtFGNo.Text);
@@ -1042,10 +1046,10 @@ namespace StockControl
                     else if (manuUnit == 3)
                         manuTime = (24 * 60);
                     //**Routeing
-                    var t_StartingDate = (DateTime?)null;
-                    var t_EndingDate = (DateTime?)null;
-                    bool firstStart = false;
-                    DateTime tempStarting = maxDateJob;
+                    DateTime? finalStartingDate = null; //วันเริ่มงานจริงๆ
+                    DateTime? finalEndingDate = null; //วันสิ้นสุด
+
+                    DateTime? tempStarting = maxDateJob;
                     var rt = db.mh_RoutingDTs.Where(x => x.RoutingId == tdata.Routeid)
                         .Join(db.mh_WorkCenters.Where(x => x.Active)
                         , hd => hd.idWorkCenter
@@ -1055,45 +1059,59 @@ namespace StockControl
                         .ToList();
                     foreach (var r in rt)
                     {
-                        if (t_EndingDate != null)
-                            tempStarting = t_EndingDate.Value;
+                        //cal capa
+                        if (workLoads.Where(x => x.idWorkCenter == r.idWorkCenter).Count() < 1)
+                        {
+                            var wls = baseClass.getWorkLoad(dFrom.Date, dTo.Date, r.idWorkCenter);
+                        }
+                    }
+                    //
+                    decimal FGQty = txtFGQty.Text.ToDecimal();
+                    decimal FGPCSUnit = txtPCSUnit.Text.ToDecimal();
+                    decimal UseQty = Math.Round(FGQty * FGPCSUnit, 2);
+                    foreach (var r in rt)
+                    {
                         int idWorkCenter = r.idWorkCenter;
+                        decimal CapacityOfWorkCenter = r.workcenter.Capacity;
                         var totalCapa_All = 0.00m;
-                        var SetupTime = r.SetupTime * manuTime;
+                        var SetupTime = r.SetupTime * manuTime; //แปลงเป็นนาทีเสมอ
                         var RunTime = r.RunTime * manuTime;
-                        var RunTimeCapa = Math.Round(((RunTime * txtFGQty.Text.ToDecimal()) / r.workcenter.Capacity), 2);
+                        var RunTimeCapa = Math.Round(((RunTime * UseQty) / r.workcenter.Capacity), 2);
                         var WaitingTime = r.WaitTime * manuTime;
                         totalCapa_All = SetupTime + RunTimeCapa + r.WaitTime;
                         var CapaUseX = 0.00m;
-                        CapaUseX = totalCapa_All;
+                        var CapaUse = 0.00m; //Capacity ไม่รวม WaitTime
+                        CapaUseX = totalCapa_All; //เวลาการทำงานที่ถูกใช้ทั้งหมดใน Workcenter นี้
+                        CapaUse = SetupTime + Math.Round(RunTime * UseQty, 2);
 
-                        //find capacity Available (Workcenter) on date
+
+                        //หาว่า Capacity จากต้องใช้ Starting - Ending ใด โดยวนไปจนกว่า CapaUseX จะเป็น 0
                         do
                         {
-                            //1. หาว่าเวลาเริ่มสามารถใช้ได้ไหม
-                            var wl = workLoads.Where(x => x.Date >= tempStarting.Date && x.CapacityAfterX > 0
+                            //หาวันที่เริ่มต้นที่สามารถจะใช้ได้จาก mh_CapacityAvailable join mh_CapacityLoad
+                            var wl = workLoads.Where(x => x.Date >= tempStarting.Value.Date && x.CapacityAfterX > 0
                                 && x.idWorkCenter == idWorkCenter).OrderBy(x => x.Date).FirstOrDefault();
-                            if (wl == null)
+                            if (wl == null) //ถ้า WorkLoad เป็น Null ให้ไปหาใหม่จาก Db ตรงๆ
                             {
-                                var w = baseClass.getWorkLoad(tempStarting.Date, null).Where(x => x.CapacityAfterX > 0 && x.idWorkCenter == idWorkCenter).FirstOrDefault();
-                                if (w == null)
+                                var w = baseClass.getWorkLoad(tempStarting.Value.Date, null, idWorkCenter).Where(x => x.CapacityAfterX > 0).FirstOrDefault();
+                                if (w == null) //ไม่มีจริงๆ แสดงว่า Capacity หมด ต้องกลับไปคำนวนใหม่
                                 {
                                     string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
                                     baseClass.Warning(mssg);
                                     throw new Exception(mssg);
                                 }
-                                else
+                                else // เจอแล้ว Add ใส่ list ไว้เช็คในรอบถัดไป
                                 {
                                     workLoads.Add(w);
                                     wl = w;
                                 }
                             }
-                            if (tempStarting == null || wl.Date.Date > tempStarting.Date)
+                            //กรณีที่ วันที่หามาได้จาก WorkLoad มากกว่าวันปัจจุบันให้เปลี่ยนเป็นเริ่ม Start
+                            if (wl.Date.Date > tempStarting.Value.Date)
                                 tempStarting = wl.Date.Date;
 
-                            //set Starting
-                            int dow = baseClass.getDayOfWeek(tempStarting.DayOfWeek);
-                            //
+                            int dow = baseClass.getDayOfWeek(tempStarting.Value.DayOfWeek);
+                            //หาช่วงเวลาทำงานใน mh_WorkingDay
                             var wd = db.mh_WorkCenters.Where(x => x.id == wl.idWorkCenter)
                                 .Join(db.mh_WorkingDays.Where(x => x.Day == dow && x.Active)
                                 , hd => hd.Calendar
@@ -1108,251 +1126,219 @@ namespace StockControl
                                 }).ToList();
                             if (wd.Count > 0)
                             {
-                                var sTime = wd.Min(x => x.StartingTime); //Starting Time of Working Day
-                                if (sTime < tempStarting.TimeOfDay)
-                                    sTime = tempStarting.TimeOfDay;
-                                var eTime = wd.Max(x => x.EndingTime); //Ending Time of Working Day
-                                var meTime = sTime; //for starting Time
+                                //เตรียมเวลาเริ่ม(sTime) - สิ้นสุด(eTime)
+                                var sTime = wd.Min(x => x.StartingTime);
+                                var eTime = wd.Max(x => x.EndingTime);
+
+                                //ถ้าต่อจาก work ก่อนหน้าให้ใส่เวลา work ก่อนหน้าใน sTime
+                                if (tempStarting != null && sTime < tempStarting.Value.TimeOfDay)
+                                    sTime = tempStarting.Value.TimeOfDay;
+
                                 int idCalendar = wd.First().hd.Calendar;
-                                //หาว่าเวาลาเริ่มของ Work center นี้ใช้ไปหรือยัง หรือเป็นวันหยุดหรือวันลาหรือไม่
-                                var calLoads = calLoad.Where(x => x.Date == tempStarting.Date
-                                        && ((x.idCal == idCalendar && x.idWorkcenter == 0)
-                                                ||
-                                             x.idWorkcenter == wl.idWorkCenter && x.idCal == idCalendar)
+                                //หาวันลา(Abs), วันหยุดงาน(Holiday), ช่วงที่ Workcenter ทำงานไปแล้ว (Workcenter)
+                                var calendars = calLoad.Where(x => x.Date == tempStarting.Value.Date
+                                    && ((x.idCal == idCalendar && x.idWorkcenter == 0)
+                                         || (x.idWorkcenter == idWorkCenter && x.idCal == idCalendar)
+                                         || (x.idAbs > 0 && x.idWorkcenter == idWorkCenter)
+                                        )
                                     ).OrderBy(x => x.StartingTime).ThenBy(x => x.EndingTime).ToList();
-                                if (calLoads.Count == 0)
+                                if (calendars.Count == 0) //ถ้าไม่มีให้ค้นจาก Db
                                 {
-                                    var cl = db.mh_CalendarLoads.Where(x => x.Date == tempStarting.Date
-                                        && (x.idCal == idCalendar || x.idWorkcenter == wl.idWorkCenter)
+                                    calendars = db.mh_CalendarLoads.Where(x => x.Date == tempStarting.Value.Date
+                                    && ((x.idCal == idCalendar && x.idWorkcenter == 0)
+                                         || (x.idWorkcenter == idWorkCenter && x.idCal == idCalendar)
+                                         || (x.idAbs > 0 && x.idWorkcenter == idWorkCenter)
+                                        )
                                     ).OrderBy(x => x.StartingTime).ThenBy(x => x.EndingTime).ToList();
-                                    if (cl.Count > 0)
-                                    {
-                                        calLoads = cl;
-                                        calLoad.AddRange(calLoads);
-                                    }
+                                    if (calendars.Count > 0) //ถ้าค้นเจอใน Db
+                                        calLoad.AddRange(calendars);
                                 }
-                                if (calLoads.Count > 0)
+                                //
+                                //หาเวลาเริ่มต้น Starting Time
+                                bool foundTime = false; //เจอเวลา Starting ที่ใช้ได้หรือป่าว
+                                                        //หาว่าไปทับกับช่วงเวลาไหนไหม
+                                if (calendars.Count > 0)
                                 {
-                                    bool foundTime = false;
-                                    List<int> idCal = new List<int>();
-                                    while (meTime < eTime)
+                                    var idCal = new List<int>();
+                                    while (sTime < eTime) //วนจนกว่าจะหมดวัน
                                     {
-                                        var ww = calLoads.Where(x => meTime >= x.StartingTime
-                                            && meTime <= x.EndingTime && !idCal.Any(q => q == x.id)).FirstOrDefault();
+                                        var ww = calendars.Where(x => !idCal.Any(q => q == x.id)
+                                            && sTime >= x.StartingTime && sTime <= x.EndingTime).FirstOrDefault();
                                         if (ww != null)
                                         {
+                                            sTime = ww.EndingTime;
                                             idCal.Add(ww.id);
-                                            meTime = ww.EndingTime;
-                                            //ถ้าเป็นช่วงเวลาที่ไม่ใช่เวลาทำงาน
-                                            if (wd.Where(x => meTime >= x.StartingTime
-                                                 && meTime <= x.EndingTime).ToList().Count < 1)
-                                            {
-                                                //หาเวลาที่น้อยที่สุดที่มากกว่า meTime
-                                                var a = wd.Where(x => meTime < x.StartingTime).FirstOrDefault();
-                                                if (a != null)
-                                                    meTime = a.StartingTime;
-                                            }
-                                            //ถ้าเป็นช่วงเวลาทำงานปกติ ต้องเช็คต่อว่ายังมีเวลา CalendarLoad เหลือให้เช็คอีกไหม และ
-                                            //ถ้าไม่เหลือแล้ว และน้อยกว่า Ending Time WorkingDay
-                                            else if (idCal.Count == calLoads.Count()
-                                                && meTime < eTime)
-                                            {
-                                                foundTime = true;
-                                                break;
-                                            }
                                         }
                                         else
                                         {
-                                            foundTime = true;
+                                            if (sTime < eTime)
+                                                foundTime = true;
                                             break;
                                         }
-
-                                        if (foundTime)
-                                            break;
                                     }
-                                    if (foundTime)
-                                        t_StartingDate = tempStarting.Date.AddHours(meTime.Hours).AddMinutes(meTime.Minutes);
                                 }
-                                else
-                                    t_StartingDate = tempStarting.Date.AddHours(meTime.Hours).AddMinutes(meTime.Minutes);
+                                else //ไม่มีวันลา วันหยุด หรือการทำงานที่เวลาดังกล่าวแสดงว่าใช้เวลานี้ได้
+                                    foundTime = true;
 
-                                var meTime2 = meTime; //for ending time
-                                                      //Find Ending Date-Time
-                                if (t_StartingDate != null)
+                                //เช็คว่าเวลาที่หามาได้นั้นอยู่ในช่วงเวลาทำงานจริงๆ และไม่ใช่เวลา break
+                                if (foundTime && wd.Where(x => sTime >= x.StartingTime && sTime <= x.EndingTime).Count() > 0) //อยู่ในช่วงเวลาทำงานแน่ๆ แต่ต้องเช็คว่าเป็นเวลาสุดท้ายของวันทำงานหรือป่าว
                                 {
-                                    int autoid = 0;
-                                    do
+                                    if (sTime >= eTime) //เวลาที่หามาได้มีค่ามากกว่าหรือเท่ากับ เวลาสิ้นสุดการทำงานของวันนั้น ให้ข้ามไปวันถัดไป
                                     {
-                                        var rd = new Random();
-                                        autoid = rd.Next(1, 99999999);
-                                    } while (calLoad.Where(x => x.id == autoid).Count() > 0);
-                                    //
-                                    var cal = calLoad.Where(x => x.Date == tempStarting
-                                            && ((x.idCal == idCalendar && x.idWorkcenter == 0)
-                                                    ||
-                                             x.idWorkcenter == wl.idWorkCenter && x.idCal == idCalendar)
-                                             && x.StartingTime >= meTime
-                                         ).OrderBy(x => x.StartingTime).ThenBy(x => x.EndingTime).ToList();
-                                    if (cal.Count > 0)
-                                    {
-                                        var tempcal = new List<mh_CalendarLoad>();
-                                        cal.ForEach(x =>
-                                        {
-                                            tempcal.Add(x);
-                                        });
-                                        //var t_meTime = meTime;
-                                        var t_meTime2 = meTime2;
-                                        var isNull = false;
-                                        while (wl.CapacityAfterX > 0)
-                                        {
-                                            var aTime = tempcal.FirstOrDefault();
-                                            bool AddC = false;
-                                            if (aTime == null)
-                                            {
-                                                if (eTime > meTime)
-                                                {
-                                                    wl.CapacityAlocateX += (eTime - t_meTime2).TotalMinutes.ToDecimal();
-                                                    var capaLoad = new mh_CapacityLoad
-                                                    {
-                                                        Active = true,
-                                                        CapacityX = (eTime - t_meTime2).TotalMinutes.ToDecimal(),
-                                                        Capacity = 0,
-                                                        Date = tempStarting.Date,
-                                                        DocId = idJob,
-                                                        id = 0,
-                                                        WorkCenterID = r.idWorkCenter,
-                                                    };
-                                                    capacityLoad.Add(capaLoad);
-                                                    CapaUseX -= (eTime - t_meTime2).TotalMinutes.ToDecimal();
-                                                    AddC = true;
-                                                }
-                                                t_meTime2 = eTime;
-                                                meTime2 = t_meTime2;
-                                                isNull = true;
-                                            }
-                                            else
-                                            {
-                                                var minStartingTime = aTime.StartingTime;
-                                                if (minStartingTime > meTime)
-                                                {
-                                                    wl.CapacityAlocateX += (minStartingTime - meTime2).TotalMinutes.ToDecimal();
-                                                    var capaLoad = new mh_CapacityLoad
-                                                    {
-                                                        Active = true,
-                                                        CapacityX = (minStartingTime - meTime2).TotalMinutes.ToDecimal(),
-                                                        Capacity = 0,
-                                                        Date = tempStarting.Date,
-                                                        DocId = idJob,
-                                                        id = 0,
-                                                        WorkCenterID = r.idWorkCenter,
-                                                    };
-                                                    capacityLoad.Add(capaLoad);
-                                                    CapaUseX -= (minStartingTime - meTime2).TotalMinutes.ToDecimal();
-                                                    AddC = true;
-                                                }
-                                                meTime2 = minStartingTime;
-                                                t_meTime2 = aTime.EndingTime;
-                                                tempcal.Remove(tempcal.FirstOrDefault());
-                                            }
-
-                                            if (AddC)
-                                            {
-                                                var cl = new mh_CalendarLoad
-                                                {
-                                                    id = autoid,
-                                                    idRoute = r.id,
-                                                    idWorkcenter = r.idWorkCenter,
-                                                    idCal = idCalendar,
-                                                    Date = tempStarting.Date,
-                                                    StartingTime = meTime,
-                                                    EndingTime = meTime2,
-                                                    idJob = idJob,
-                                                    idAbs = -1,
-                                                };
-                                                calLoad.Add(cl);
-                                            }
-                                            meTime = t_meTime2;
-                                            if (isNull)
-                                                break;
-                                        }
+                                        tempStarting = tempStarting.Value.Date.AddDays(1);
+                                        continue;
                                     }
-                                    else
-                                    {//ไม่มี Calendar Load เลย
-                                        if (wl.CapacityAfterX >= CapaUseX)
+                                    else //เป็นช่วงเวลาที่ใช้ได้จริงๆ <<<<****>>>>
+                                        tempStarting = tempStarting.Value.Date.SetTimeToDate(sTime);
+                                    //tempStarting = tempStarting.Value.Date.AddHours(sTime.Hours).AddMinutes(sTime.Minutes).AddMilliseconds(sTime.Milliseconds);
+                                }
+                                else //ไม่อยู่ในช่วงเวลาทำงาน
+                                {
+                                    tempStarting = tempStarting.Value.Date.AddDays(1);
+                                    continue;
+                                }
+
+                                //**ใส่ Starting Date
+                                if (finalStartingDate == null)
+                                    finalStartingDate = tempStarting.Value;
+
+
+                                //*******************************
+                                //หาเวลาสิ้นสุด EndingTime
+                                foundTime = false;
+                                var timeStart = tempStarting.Value.TimeOfDay; //เริ่มนับจากเวลาที่หาได้ใน Starting
+                                var timeEnd = eTime;
+                                int autoid = 0;
+
+                                do
+                                {
+                                    var rd = new Random();
+                                    autoid = rd.Next(-999999, -100);
+                                } while (calLoad.Where(x => x.id == autoid).Count() > 0);
+
+                                //ดึงปฏิทินเฉพาะเวลาที่มากกว่า timeStart
+                                var calendars2 = calendars.Where(x => x.StartingTime >= timeStart).OrderBy(x => x.StartingTime).ToList();
+                                if (calendars2.Count > 0) //หาว่าไปตรงกับปฏิทินวันลา, วันหยุด, วันที่ถูกทำงานไปแล้วหรือไม่
+                                {
+                                    var idCal = new List<int>();
+                                    var t_timeEnd = timeEnd;
+                                    while (wl.CapacityAfterX > 0) //วนไปจนกว่า Capacity Time ของวันนั้นจะหมด หรือ CapaUseX = 0
+                                    {
+                                        do
                                         {
-                                            meTime2 = meTime.Add(TimeSpan.FromMinutes(CapaUseX.ToDouble()));
+                                            var rd = new Random();
+                                            autoid = rd.Next(-999999, -100);
+                                        } while (calLoad.Where(x => x.id == autoid).Count() > 0);
+
+                                        //วนเวลาที่ถูกใช้ทีละอัน
+                                        var aTime = calendars2.Where(x => !idCal.Any(q => q == x.id)).FirstOrDefault();
+                                        if (aTime == null)
+                                        {
+                                            timeEnd = eTime;
+                                        }
+                                        else
+                                        {
+                                            timeEnd = aTime.StartingTime;
+                                            t_timeEnd = aTime.EndingTime;
+                                            idCal.Add(aTime.id);
+                                        }
+
+                                        //หาว่าเป็นเวลาที่อยู่ในช่วงเวลาทำงานไหม
+                                        //ถ้าไม่ใช่ช่วงเวลาทำงาน
+                                        if (wd.Where(x => timeStart >= x.StartingTime && timeStart <= x.EndingTime
+                                                     && timeEnd >= x.StartingTime && timeEnd <= x.EndingTime).Count() < 1)
+                                            timeEnd = wd.Where(x => timeStart >= x.StartingTime && timeStart <= x.EndingTime).First().EndingTime;
+
+                                        //คำนวน Capacity Time
+                                        decimal diffTime = (timeEnd - timeStart).TotalMinutes.ToDecimal();
+                                        if (diffTime >= CapaUseX) //ถ้าเวลาที่หามาได้มากกว่าเวลาที่ ต้องใช้จริงๆ จะต้องปรับให้ เวลาสิ้นสุดเป็นเวลาจริง = CapaUseX
+                                        {
+                                            timeEnd = timeStart.Add(TimeSpan.FromMinutes(CapaUseX.ToDouble()));
+
+                                            var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, idJob, 0, idWorkCenter);
+                                            capacityLoad.Add(capaLoad);
+
                                             wl.CapacityAlocateX += CapaUseX;
-                                            var capaLoad = new mh_CapacityLoad
-                                            {
-                                                Active = true,
-                                                CapacityX = CapaUseX,
-                                                Capacity = 0,
-                                                Date = tempStarting.Date,
-                                                DocId = idJob,
-                                                id = 0,
-                                                WorkCenterID = r.idWorkCenter,
-                                            };
-                                            capacityLoad.Add(capaLoad);
+                                            wl.CapacityAlocate += CapaUse;
                                             CapaUseX = 0;
-                                            //CapaUse = 0;
-                                            //wl.CapacityAlocate += CapaUse;
+                                            CapaUse = 0;
+
+                                            var cl = baseClass.newCalendar(autoid, r.id, idWorkCenter, idCalendar, tempStarting.Value.Date, timeStart, timeEnd, idJob, -1);
+                                            calLoad.Add(cl);
+                                            break; //CapaUseX หมดแล้ว ออกได้เลย
                                         }
-                                        else //CapacityAfterX < CapaUseX
+                                        else
                                         {
-                                            meTime2 = meTime.Add(TimeSpan.FromMinutes(wl.CapacityAfterX.ToDouble()));
-                                            var capaLoad = new mh_CapacityLoad
-                                            {
-                                                Active = true,
-                                                CapacityX = wl.CapacityAfterX,
-                                                Capacity = 0,
-                                                Date = tempStarting.Date,
-                                                DocId = idJob,
-                                                id = 0,
-                                                WorkCenterID = r.idWorkCenter,
-                                            };
+                                            var capaLoad = baseClass.newCapaLoad(diffTime, diffTime * CapacityOfWorkCenter, tempStarting.Value.Date, idJob, 0, idWorkCenter);
                                             capacityLoad.Add(capaLoad);
-                                            CapaUseX -= wl.CapacityAlocateX;
-                                            wl.CapacityAlocateX = wl.CapacityAvailable;
-                                            //wl.CapacityAlocate += (wl.CapacityAlocate - CapaUse);
+
+                                            wl.CapacityAlocateX += diffTime;
+                                            wl.CapacityAlocate += diffTime * CapacityOfWorkCenter;
+                                            CapaUseX -= diffTime;
+                                            CapaUse -= (diffTime * CapacityOfWorkCenter);
+
+                                            var cl = baseClass.newCalendar(autoid, r.id, idWorkCenter, idCalendar, tempStarting.Value.Date, timeStart, timeEnd, idJob, -1);
+                                            calLoad.Add(cl);
                                         }
 
-                                        var cl = new mh_CalendarLoad
-                                        {
-                                            id = autoid,
-                                            idRoute = r.id,
-                                            idWorkcenter = r.idWorkCenter,
-                                            idCal = idCalendar,
-                                            Date = tempStarting.Date,
-                                            StartingTime = meTime,
-                                            EndingTime = meTime2,
-                                            idJob = idJob,
-                                            idAbs = -1,
-                                        };
-                                        calLoad.Add(cl);
-
-                                        t_EndingDate = tempStarting.Date.AddHours(meTime2.Hours).AddMinutes(meTime2.Minutes);
+                                        timeStart = t_timeEnd;
                                     }
                                 }
+                                else //ไม่ตรงกับเวลาที่ถูกใช้งานใดๆ ให้ลด Capacity
+                                {
+                                    if (wl.CapacityAfterX >= CapaUseX) //กรณีที่เหลือเวลา Capacity ในวันนั้นเพียงพอ
+                                    {
+                                        timeEnd = timeStart.Add(TimeSpan.FromMinutes(CapaUseX.ToDouble()));
+
+                                        var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, idJob, 0, idWorkCenter);
+                                        capacityLoad.Add(capaLoad);
+
+                                        wl.CapacityAlocateX += CapaUseX;
+                                        wl.CapacityAlocate += CapaUse;
+                                        CapaUseX = 0;
+                                        CapaUse = 0;
+                                        foundTime = true;
+                                    }
+                                    else //กรณีที่ในวันนั้น Capaciy ไม่เพียงพอ
+                                    {
+                                        timeEnd = eTime; //ตั้งเป็นเวลาสิ้นสุดทำงานได้เลย
+                                        var diffTime = (timeEnd - timeStart).TotalMinutes.ToDecimal();
+
+                                        var capaload = baseClass.newCapaLoad(diffTime, (diffTime * CapacityOfWorkCenter), tempStarting.Value.Date, idJob, 0, idWorkCenter);
+                                        capacityLoad.Add(capaload);
+
+                                        wl.CapacityAlocateX += diffTime;
+                                        wl.CapacityAlocate += diffTime * CapacityOfWorkCenter;
+                                        CapaUseX -= diffTime;
+                                        CapaUse -= (diffTime * CapacityOfWorkCenter);
+                                        foundTime = true;
+                                    }
+
+                                    if (foundTime)
+                                    {
+                                        var cl = baseClass.newCalendar(autoid, r.id, idWorkCenter, idCalendar, tempStarting.Value.Date, timeStart, timeEnd, idJob, -1);
+                                        calLoad.Add(cl);
+                                    }
+                                }
+
+                                tempStarting = tempStarting.Value.Date.SetTimeToDate(timeEnd);
+                                //tempStarting = tempStarting.Value.Date.AddHours(timeEnd.Hours).AddMinutes(timeEnd.Minutes).AddMilliseconds(timeEnd.Milliseconds);
+                                finalEndingDate = tempStarting.Value;
                             }
-                            else
+                            else //วันดังกล่าวไม่ใช่ Working Day
                             {
                                 string mssg = "Work center not having Working days.!!!\n";
                                 baseClass.Warning(mssg);
                                 throw new Exception(mssg);
                             }
 
-                            if (CapaUseX > 0)
-                                tempStarting = tempStarting.AddDays(1).Date;
                         } while (CapaUseX > 0);
 
-                        if (!firstStart)
-                            StartingDate = t_StartingDate;
-                        EndingDate = t_EndingDate;
-                        firstStart = true;
+                        StartingDate = finalStartingDate;
+                        EndingDate = finalEndingDate;
                     }
 
                 }
-
 
                 //**Starting Date (Time) - Ending Date (Time)
                 if (StartingDate != null && EndingDate != null)
@@ -1365,6 +1351,8 @@ namespace StockControl
                         m.UpdateDate = DateTime.Now;
                         m.StartingDate = StartingDate.Value;
                         m.EndingDate = EndingDate.Value;
+                        m.CostOverhead = costOverHead;
+                        m.CapacityUseX = capaUseX_All;
                         //ลบ Capacity เก่า
                         var capa = db.mh_CapacityLoads.Where(x => x.DocId == idJob).ToList();
                         db.mh_CapacityLoads.DeleteAllOnSubmit(capa);
