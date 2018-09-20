@@ -31,7 +31,7 @@ namespace StockControl
         public Invoice_2(string SHNo)
         {
             InitializeComponent();
-            txtSONo.Text = SHNo;
+            txtIVNo.Text = SHNo;
             t_SONo = SHNo;
         }
         public Invoice_2(string PONo, string CustomerNo)
@@ -168,7 +168,7 @@ namespace StockControl
                 int ck = 0;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    mh_InvoiceHD mh = db.mh_InvoiceHDs.Where(s => s.IVNo == txtSONo.Text).FirstOrDefault();
+                    mh_InvoiceHD mh = db.mh_InvoiceHDs.Where(s => s.IVNo == txtIVNo.Text).FirstOrDefault();
                     if(mh!=null)
                     {
                         txtTel.Text = mh.Tel;
@@ -190,46 +190,14 @@ namespace StockControl
                             Type_Button = 2;
                         else if (mh.Type.ToSt() == "3")
                             Type_Button = 3;
-
-                        var deletTemp = db.mh_InvoiceDTTemps.Where(t =>  t.IVNo == txtSONo.Text).ToList();
-                        if(deletTemp.Count>0)
-                        {
-                            db.mh_InvoiceDTTemps.DeleteAllOnSubmit(deletTemp);
-                        }
-
-                        int rows1 = 0;
-
-                        var list1 = db.mh_InvoiceDTs.Where(w => w.IVNo == txtSONo.Text && !w.Status.Equals("Cancel")).ToList();
+                        
+                        var list1 = db.mh_InvoiceDTs.Where(w => w.IVNo == txtIVNo.Text && !w.Status.Equals("Cancel")).ToList();
                         if (list1.Count > 0)
                         {
-                            foreach (var rd in list1)
-                            {
-                                mh_Item im = db.mh_Items.Where(m => m.InternalNo == rd.ItemNo).FirstOrDefault();
-                                if (im != null)
-                                {
-                                    rows1 += 1;
-                                    mh_InvoiceDTTemp st = new mh_InvoiceDTTemp();
-                                    st.RNo = rows1;
-                                    st.IVNo = txtSONo.Text;
-                                    //st.UserID = ClassLib.Classlib.User;
-                                    st.ItemNo = rd.ItemNo;
-                                    st.ItemName = rd.ItemName;
-                                    st.Description = rd.Description;
-                                    st.Qty = rd.Qty;
-                                    st.PCSUnit = rd.PCSUnit;
-                                    st.LocationItem = rd.LocationItem;
-                                    st.UnitPrice = rd.UnitPrice;
-                                    st.Amount = rd.Amount;
-                                    st.Active = true;
-                                    st.UOM = rd.UOM;
-                                    db.mh_InvoiceDTTemps.InsertOnSubmit(st);
-                                    db.SubmitChanges();
-                                }
-                            }
-                            LoadShipment();
+                            dgvData.DataSource = list1;
                         }
-                            
-                        
+                        btnSave.Enabled = false;
+                        SetRowNo1(dgvData);
                     }
                 }
             }
@@ -310,12 +278,44 @@ namespace StockControl
         {
             if (Condition.Equals("-") || Condition.Equals("New"))
             {
+                cboCustomer.Enabled = ss;
+                txtAddress.Enabled = ss;
+                dtSODate.Enabled = ss;
+                dgvData.ReadOnly = false;
+                txtRemark.Enabled = ss;
+                cbVat.Enabled = ss;
+                txtVatA.Enabled = ss;
+                txtContactName.Enabled = ss;
+                txtEmail.Enabled = ss;
+                txtFax.Enabled = ss;
+                txtTel.Enabled = ss;
             }
             else if (Condition.Equals("View"))
             {
+                cboCustomer.Enabled = ss;
+                txtAddress.Enabled = ss;
+                dtSODate.Enabled = ss;
+                dgvData.ReadOnly = true;
+                txtRemark.Enabled = ss;
+                cbVat.Enabled = ss;
+                txtVatA.Enabled = ss;
+                txtEmail.Enabled = ss;
+                txtFax.Enabled = ss;
+                txtTel.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
+                cboCustomer.Enabled = ss;
+                txtAddress.Enabled = ss;
+                dtSODate.Enabled = ss;
+                dgvData.ReadOnly = false;
+                txtRemark.Enabled = ss;
+                cbVat.Enabled = ss;
+                txtVatA.Enabled = ss;
+                txtEmail.Enabled = ss;
+                txtFax.Enabled = ss;
+                txtTel.Enabled = ss;
+
             }
         }
 
@@ -323,14 +323,14 @@ namespace StockControl
         {
             // txtCSTMNo.Text = "";
             dtSODate.Value = DateTime.Now;
-            txtSONo.Text = "";
+            txtIVNo.Text = "";
             txtCSTMNo.Text = "";
             dtSODate.Value = DateTime.Today;
             dgvData.Rows.Clear();
             dgvData.DataSource = null;
             txtRemark.Text = "";
             txtTotal.Text = (0).ToMoney();
-            txtSONo.Text = dbClss.GetNo(31, 0);
+            txtIVNo.Text = dbClss.GetNo(31, 0);
 
             Type_Button = 0;
             radButton1.Enabled = true;
@@ -366,11 +366,10 @@ namespace StockControl
                 row = 0;
             //getมาไว้ก่อน แต่ยังไมได้ save 
             //txtTempNo.Text = StockControl.dbClss.GetNo(10, 0);
-            txtSONo.Text = dbClss.GetNo(31, 0);
+            txtIVNo.Text = dbClss.GetNo(31, 0);
 
             idList.Clear();
             //potoso.Clear();
-
         }
         private void btnView_Click(object sender, EventArgs e)
         {
@@ -419,34 +418,33 @@ namespace StockControl
         {
             try
             {
-                string poNo = txtSONo.Text.Trim();
+                string poNo = txtIVNo.Text.Trim();
                 string cstmNo = txtCSTMNo.Text.Trim();
                 if (poNo != "" && cstmNo != "")
                 {
-                   
-
-                    if (baseClass.IsDel($"Do you want to Delete Sale Order: {poNo} ?"))
+                    if (baseClass.IsDel($"Do you want to Delete invoice: {poNo} ?"))
                     {
                         using (var db = new DataClasses1DataContext())
                         {
-                            var g = (from ix in db.mh_SaleOrders
-                                     where ix.SONo == txtSONo.Text && ix.Active==true
+                            var g = (from ix in db.mh_InvoiceHDs
+                                     where ix.IVNo == txtIVNo.Text && ix.Active==true
                                      select ix).ToList();
                             if (g.Count > 0)  //มีรายการในระบบ
                             {
-                                var gg = (from ix in db.mh_SaleOrders
-                                          where ix.SONo == txtSONo.Text && ix.Active == true
+                                var gg = (from ix in db.mh_InvoiceHDs
+                                          where ix.IVNo == txtIVNo.Text && ix.Active == true
                                           select ix).First();
 
                                 try
                                 {
-                                    var s = (from ix in db.mh_SaleOrderDTs
-                                             where ix.SONo.Trim() == txtSONo.Text && ix.Active == true
+                                    var s = (from ix in db.mh_InvoiceDTs
+                                             where ix.IVNo.Trim() == txtIVNo.Text && ix.Active == true
                                              select ix).ToList();
                                     if (s.Count > 0)
                                     {
                                         foreach (var ss in s)
                                         {
+                                            ss.Status = "Cancel";
                                             ss.Active = false;
                                             db.SubmitChanges();
                                         }
@@ -456,22 +454,21 @@ namespace StockControl
                                 catch (Exception ex) { MessageBox.Show(ex.Message); }
                                 //----------------------//
 
-
+                                gg.StatusHD = "Cancel";
                                 gg.Active = false;
                                 gg.UpdateBy = Classlib.User;
                                 gg.UpdateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
 
-                                dbClss.AddHistory(this.Name, "ลบ Invoice", "Delete Invoice [" + txtSONo.Text.Trim() + "]", txtSONo.Text);
+                                dbClss.AddHistory(this.Name, "ลบ Invoice", "Delete Invoice [" + txtIVNo.Text.Trim() + "]", txtIVNo.Text);
                                 updateOutSO();
 
                                 baseClass.Info("Delete invoice complete.");
-                                ClearData();
+                           
                                 btnNew_Click(null, null);
                             }
                             else
-                                baseClass.Warning("Sale Order Status cannot Delete.");
-
-
+                                baseClass.Warning("Invoice Status cannot Delete.");
+                            
                         }
                     }
                 }
@@ -564,8 +561,8 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                txtSONo.Text = dbClss.GetNo(31, 2);
-                string sono = txtSONo.Text;
+                txtIVNo.Text = dbClss.GetNo(31, 2);
+                string sono = txtIVNo.Text;
                 string cstmNo = txtContactName.Text;
                 CallTotal();
 
@@ -588,7 +585,7 @@ namespace StockControl
                         decimal.TryParse(txtVatA.Text, out vatA);
 
                         mh_InvoiceHD sh1 = new mh_InvoiceHD();
-                        sh1.IVNo = txtSONo.Text;
+                        sh1.IVNo = txtIVNo.Text;
                         sh1.Remark = txtRemark.Text;
                         sh1.SSDate = dtSODate.Value;
                         sh1.Tel = txtTel.Text;
@@ -635,17 +632,18 @@ namespace StockControl
                             nd.Description = Convert.ToString(rd.Cells["Description"].Value);
                             nd.UnitPrice = Convert.ToDecimal(rd.Cells["UnitPrice"].Value.ToSt());
                             nd.PCSUnit = Convert.ToDecimal(rd.Cells["PCSUnit"].Value.ToSt());
-                            nd.IVNo = txtSONo.Text;
+                            nd.IVNo = txtIVNo.Text;
                             nd.Status = "Process";
                             nd.RefId = Convert.ToInt16(rd.Cells["RefId"].Value);
                             nd.Active = Convert.ToBoolean(true);
+                            
                             db.mh_InvoiceDTs.InsertOnSubmit(nd);
                             db.SubmitChanges();
 
 
-                            //Cut Stock
-                            if (Type_Button == 1)
-                            {
+                            ////Cut Stock
+                            //if (Type_Button == 1)
+                            //{
                                 var v = (from ix in db.mh_ShipmentDTs
                                          where
                                                    ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
@@ -668,7 +666,7 @@ namespace StockControl
                                     db.SubmitChanges();
 
                                 }
-                            }
+                            //}
                             //else if (Type_Button == 2)
                             //{
                             //    int id = Convert.ToInt16(rd.Cells["RefId"].Value.ToSt());
@@ -690,40 +688,40 @@ namespace StockControl
                             //    }
                             //    db.SubmitChanges();
                             //}
-                            else if (Type_Button == 3)
-                            {
-                                decimal Qty = Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
-                                decimal PCSUnit = dbClss.TDe(rd.Cells["PCSUnit"].Value);
-                                string BaseUOM = "";//dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
-                                decimal BasePCSUOM = 0;
+                            //else if (Type_Button == 3)
+                            //{
+                            //    decimal Qty = Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
+                            //    decimal PCSUnit = dbClss.TDe(rd.Cells["PCSUnit"].Value);
+                            //    string BaseUOM = "";//dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
+                            //    decimal BasePCSUOM = 0;
 
 
-                                var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == rd.Cells["ItemNo"].Value.ToSt()).ToList();
-                                if (g.Count() > 0)
-                                {
-                                    BaseUOM = dbClss.TSt(g.FirstOrDefault().BaseUOM);
-                                    BasePCSUOM = dbClss.Con_UOM(rd.Cells["ItemNo"].Value.ToSt(), BaseUOM);
-                                }
+                            //    var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == rd.Cells["ItemNo"].Value.ToSt()).ToList();
+                            //    if (g.Count() > 0)
+                            //    {
+                            //        BaseUOM = dbClss.TSt(g.FirstOrDefault().BaseUOM);
+                            //        BasePCSUOM = dbClss.Con_UOM(rd.Cells["ItemNo"].Value.ToSt(), BaseUOM);
+                            //    }
 
 
-                                decimal RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(rd.Cells["ItemNo"].Value), "Invoice", 0, Convert.ToString(rd.Cells["LocationItem"].Value))));//decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["RemainQty"].Value), out RemainQty);
-                                if (BasePCSUOM <= 0)
-                                    BasePCSUOM = 1;
+                            //    decimal RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(rd.Cells["ItemNo"].Value), "Invoice", 0, Convert.ToString(rd.Cells["LocationItem"].Value))));//decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["RemainQty"].Value), out RemainQty);
+                            //    if (BasePCSUOM <= 0)
+                            //        BasePCSUOM = 1;
 
-                                decimal Temp = 0;
-                                Temp = Math.Round((BasePCSUOM * PCSUnit * Qty), 2);
+                            //    decimal Temp = 0;
+                            //    Temp = Math.Round((BasePCSUOM * PCSUnit * Qty), 2);
 
 
-                                db.sp_057_Cut_Stock(txtSONo.Text, rd.Cells["ItemNo"].Value.ToSt()
-                                , Temp, ClassLib.Classlib.User
-                                , Convert.ToString(rd.Cells["RefDocNo"].Value), "", 0
-                                , Convert.ToString(rd.Cells["LocationItem"].Value), "Shipping", "Shipping", 3);
+                            //    db.sp_057_Cut_Stock(txtSONo.Text, rd.Cells["ItemNo"].Value.ToSt()
+                            //    , Temp, ClassLib.Classlib.User
+                            //    , Convert.ToString(rd.Cells["RefDocNo"].Value), "", 0
+                            //    , Convert.ToString(rd.Cells["LocationItem"].Value), "Shipping", "Shipping", 3);
 
-                                dbClss.AddHistory(this.Name, "ปรับ Stock Item ", "Shipping Item : " + (rd.Cells["Qty"].Value.ToSt())
-                                    + " Item :" + Convert.ToString(rd.Cells["ItemNo"].Value)
-                                    + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["ItemNo"].Value));
+                            //    dbClss.AddHistory(this.Name, "ปรับ Stock Item ", "Shipping Item : " + (rd.Cells["Qty"].Value.ToSt())
+                            //        + " Item :" + Convert.ToString(rd.Cells["ItemNo"].Value)
+                            //        + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["ItemNo"].Value));
 
-                            }
+                            //}
                         }
                     }
                 }
@@ -732,7 +730,7 @@ namespace StockControl
                     baseClass.Info("Save complete(s).");
                 ClearData();
                 //txtContactName.Text = t_CustomerNo;
-                txtSONo.Text = sono;
+                txtIVNo.Text = sono;
                 DataLoad();
             }
             catch (Exception ex)
@@ -747,8 +745,8 @@ namespace StockControl
             using (var db = new DataClasses1DataContext())
             {//Update Customer P/O (Out Sale Order Q'ty)
 
-                if (Type_Button == 1)
-                {
+                //if (Type_Button == 1)
+                //{
                     foreach (GridViewRowInfo rd in dgvData.Rows)
                     {
                         var v = (from ix in db.mh_ShipmentDTs
@@ -774,148 +772,148 @@ namespace StockControl
 
                         }
                     }
-                }
-                else if (Type_Button == 2)
-                {
-                    foreach (GridViewRowInfo rd in dgvData.Rows)
-                    {
+                //}
+                //else if (Type_Button == 2)
+                //{
+                //    foreach (GridViewRowInfo rd in dgvData.Rows)
+                //    {
 
-                        int id = Convert.ToInt16(rd.Cells["RefId"].Value.ToSt());
-                        if (id != 0)
-                        {
-                            mh_SaleOrderDT sd = db.mh_SaleOrderDTs.Where(ss => ss.id == id).FirstOrDefault();
-                            if (sd != null)
-                            {
-                                sd.OutShip = sd.OutShip + Math.Round(Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt()) * Convert.ToDecimal(rd.Cells["PCSUnit"].Value), 2);
-                                if (sd.Qty < sd.OutShip)
-                                    sd.OutShip = sd.Qty;
+                //        int id = Convert.ToInt16(rd.Cells["RefId"].Value.ToSt());
+                //        if (id != 0)
+                //        {
+                //            mh_SaleOrderDT sd = db.mh_SaleOrderDTs.Where(ss => ss.id == id).FirstOrDefault();
+                //            if (sd != null)
+                //            {
+                //                sd.OutShip = sd.OutShip + Math.Round(Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt()) * Convert.ToDecimal(rd.Cells["PCSUnit"].Value), 2);
+                //                if (sd.Qty < sd.OutShip)
+                //                    sd.OutShip = sd.Qty;
 
-                                dbClss.AddHistory(this.Name, "ปรับสถานะ mh_SaleOrderDTs ", "ปรับ OutShip เพราะลบ Invoice : " + (rd.Cells["Qty"].Value.ToSt())
-                            + " SaleOrder :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
-                            + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
+                //                dbClss.AddHistory(this.Name, "ปรับสถานะ mh_SaleOrderDTs ", "ปรับ OutShip เพราะลบ Invoice : " + (rd.Cells["Qty"].Value.ToSt())
+                //            + " SaleOrder :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
+                //            + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
 
-                            }
-                        }
-                        db.SubmitChanges();
-                    }
-                }
-                else if (Type_Button == 3)
-                {
-                    DateTime? CalDate = null;
-                    DateTime? AppDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-                    int Seq = 0;
-                    string Type = "รับด้วยใบ Invoice";
-                    string Category = "Invoice";
-                    int Flag_ClearTemp = 0;
-                    string Type_in_out = "In";
-                    decimal RemainQty = 0;
-                    decimal Amount = 0;
-                    decimal RemainAmount = 0;
-                    decimal RemainUnitCost = 0;
-                    //decimal Avg = 0;
-                    decimal UnitCost = 0;
-                    decimal sum_Remain = 0;
-                    decimal sum_Qty = 0;
-                    decimal BasePCSUnit = 0;
+                //            }
+                //        }
+                //        db.SubmitChanges();
+                //    }
+                //}
+                //else if (Type_Button == 3)
+                //{
+                //    DateTime? CalDate = null;
+                //    DateTime? AppDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                //    int Seq = 0;
+                //    string Type = "รับด้วยใบ Invoice";
+                //    string Category = "Invoice";
+                //    int Flag_ClearTemp = 0;
+                //    string Type_in_out = "In";
+                //    decimal RemainQty = 0;
+                //    decimal Amount = 0;
+                //    decimal RemainAmount = 0;
+                //    decimal RemainUnitCost = 0;
+                //    //decimal Avg = 0;
+                //    decimal UnitCost = 0;
+                //    decimal sum_Remain = 0;
+                //    decimal sum_Qty = 0;
+                //    decimal BasePCSUnit = 0;
                    
 
-                    foreach (GridViewRowInfo rd in dgvData.Rows)
-                    {
-                        //db.sp_057_Cut_Stock(txtSONo.Text, rd.Cells["ItemNo"].Value.ToSt()
-                        //, Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt()), ClassLib.Classlib.User
-                        //, Convert.ToString(rd.Cells["RefDocNo"].Value), "", 0
-                        //, Convert.ToString(rd.Cells["LocationItem"].Value), "Shipping", "Shipping", 3);
+                //    foreach (GridViewRowInfo rd in dgvData.Rows)
+                //    {
+                //        //db.sp_057_Cut_Stock(txtSONo.Text, rd.Cells["ItemNo"].Value.ToSt()
+                //        //, Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt()), ClassLib.Classlib.User
+                //        //, Convert.ToString(rd.Cells["RefDocNo"].Value), "", 0
+                //        //, Convert.ToString(rd.Cells["LocationItem"].Value), "Shipping", "Shipping", 3);
 
-                        string Unit = dbClss.TSt(rd.Cells["Unit"].Value);
-                        string CodeNo = dbClss.TSt(rd.Cells["ItemNo"].Value);
+                //        string Unit = dbClss.TSt(rd.Cells["Unit"].Value);
+                //        string CodeNo = dbClss.TSt(rd.Cells["ItemNo"].Value);
 
 
-                        decimal PCSUnit = dbClss.TDe(rd.Cells["PCSUnit"].Value);
-                        string BaseUOM = "";//dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
-                        decimal CostPerUnit = dbClss.TDe(rd.Cells["UnitPrice"].Value);
-                        decimal QTY = dbClss.TDe(rd.Cells["Qty"].Value);
-                         Amount = dbClss.TDe(rd.Cells["Amount"].Value);
-                        string Location = dbClss.TSt(rd.Cells["LocationItem"].Value);
-                        string ShelfNo = "";
-                        var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == CodeNo).ToList();
-                        if (g.Count() > 0)
-                        {
-                            BaseUOM = dbClss.TSt(g.FirstOrDefault().BaseUOM);
-                            BasePCSUnit = dbClss.Con_UOM(CodeNo, BaseUOM);
-                            ShelfNo = dbClss.TSt(g.FirstOrDefault().ShelfNo);
-                        }
+                //        decimal PCSUnit = dbClss.TDe(rd.Cells["PCSUnit"].Value);
+                //        string BaseUOM = "";//dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
+                //        decimal CostPerUnit = dbClss.TDe(rd.Cells["UnitPrice"].Value);
+                //        decimal QTY = dbClss.TDe(rd.Cells["Qty"].Value);
+                //         Amount = dbClss.TDe(rd.Cells["Amount"].Value);
+                //        string Location = dbClss.TSt(rd.Cells["LocationItem"].Value);
+                //        string ShelfNo = "";
+                //        var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == CodeNo).ToList();
+                //        if (g.Count() > 0)
+                //        {
+                //            BaseUOM = dbClss.TSt(g.FirstOrDefault().BaseUOM);
+                //            BasePCSUnit = dbClss.Con_UOM(CodeNo, BaseUOM);
+                //            ShelfNo = dbClss.TSt(g.FirstOrDefault().ShelfNo);
+                //        }
 
                         
-                            //Amount = Math.Round((QTY * CostPerUnit), 2);
-                        UnitCost = CostPerUnit;//Math.Round((Amount / (QTY * PCSUnit * BasePCSUnit)), 2);
-                        //แบบที่ 1 จะไป sum ใหม่
-                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0, Location)));
-                        sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount", Location))
-                            + Amount;
+                //            //Amount = Math.Round((QTY * CostPerUnit), 2);
+                //        UnitCost = CostPerUnit;//Math.Round((Amount / (QTY * PCSUnit * BasePCSUnit)), 2);
+                //        //แบบที่ 1 จะไป sum ใหม่
+                //        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0, Location)));
+                //        sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount", Location))
+                //            + Amount;
 
-                        sum_Qty = RemainQty + Math.Round(((QTY * PCSUnit) * BasePCSUnit), 2);
+                //        sum_Qty = RemainQty + Math.Round(((QTY * PCSUnit) * BasePCSUnit), 2);
                      
-                        RemainAmount = sum_Remain;
-                        if (sum_Qty <= 0)
-                            RemainUnitCost = 0;
-                        else
-                            RemainUnitCost = Math.Round((Math.Abs(RemainAmount) / Math.Abs(sum_Qty)), 2);
+                //        RemainAmount = sum_Remain;
+                //        if (sum_Qty <= 0)
+                //            RemainUnitCost = 0;
+                //        else
+                //            RemainUnitCost = Math.Round((Math.Abs(RemainAmount) / Math.Abs(sum_Qty)), 2);
 
-                        tb_Stock gg = new tb_Stock();
-                        gg.AppDate = AppDate;
-                        gg.Seq = Seq;
-                        gg.App = "Receive";
-                        gg.Appid = Seq;
-                        gg.CreateBy = ClassLib.Classlib.User;
-                        gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-                        gg.DocNo =txtSONo.Text;
-                        gg.RefNo = txtSONo.Text;
-                        gg.CodeNo = CodeNo;
-                        gg.Type = Type;
-                        gg.QTY = Math.Round(((QTY * PCSUnit) * BasePCSUnit), 2);
-                        gg.Inbound = Math.Round(((QTY * PCSUnit) * BasePCSUnit), 2);
-                        gg.Outbound = 0;
-                        gg.Type_i = 1;  //Receive = 1,Cancel Receive 2,Shipping = 3,Cancel Shipping = 4,Adjust stock = 5,ClearTemp = 6
-                        gg.Category = Category;
-                        gg.Refid = dbClss.TInt(rd.Cells["RefId"].Value);
-                        gg.Type_in_out = Type_in_out;
-                        gg.AmountCost = Amount;
-                        gg.UnitCost = UnitCost;
-                        gg.RemainQty = sum_Qty;
-                        gg.RemainUnitCost = RemainUnitCost;
-                        gg.RemainAmount = RemainAmount;
-                        gg.Avg = 0;// Avg;
-                        gg.CalDate = CalDate;
-                        gg.Status = "Active";
-                        gg.Flag_ClearTemp = Flag_ClearTemp;   //0 คือ invoice,1 คือ Temp , 2 คือ clear temp แล้ว
-                        gg.TLCost = Amount;
-                        gg.TLQty = Math.Round(((QTY * PCSUnit) * BasePCSUnit), 2);
-                        gg.ShipQty = 0;
-                        gg.Location = Location;
-                        gg.ShelfNo = ShelfNo;
-                        gg.RefJobCode = dbClss.TSt(rd.Cells["RefDocNo"].Value);
+                //        tb_Stock gg = new tb_Stock();
+                //        gg.AppDate = AppDate;
+                //        gg.Seq = Seq;
+                //        gg.App = "Receive";
+                //        gg.Appid = Seq;
+                //        gg.CreateBy = ClassLib.Classlib.User;
+                //        gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                //        gg.DocNo =txtSONo.Text;
+                //        gg.RefNo = txtSONo.Text;
+                //        gg.CodeNo = CodeNo;
+                //        gg.Type = Type;
+                //        gg.QTY = Math.Round(((QTY * PCSUnit) * BasePCSUnit), 2);
+                //        gg.Inbound = Math.Round(((QTY * PCSUnit) * BasePCSUnit), 2);
+                //        gg.Outbound = 0;
+                //        gg.Type_i = 1;  //Receive = 1,Cancel Receive 2,Shipping = 3,Cancel Shipping = 4,Adjust stock = 5,ClearTemp = 6
+                //        gg.Category = Category;
+                //        gg.Refid = dbClss.TInt(rd.Cells["RefId"].Value);
+                //        gg.Type_in_out = Type_in_out;
+                //        gg.AmountCost = Amount;
+                //        gg.UnitCost = UnitCost;
+                //        gg.RemainQty = sum_Qty;
+                //        gg.RemainUnitCost = RemainUnitCost;
+                //        gg.RemainAmount = RemainAmount;
+                //        gg.Avg = 0;// Avg;
+                //        gg.CalDate = CalDate;
+                //        gg.Status = "Active";
+                //        gg.Flag_ClearTemp = Flag_ClearTemp;   //0 คือ invoice,1 คือ Temp , 2 คือ clear temp แล้ว
+                //        gg.TLCost = Amount;
+                //        gg.TLQty = Math.Round(((QTY * PCSUnit) * BasePCSUnit), 2);
+                //        gg.ShipQty = 0;
+                //        gg.Location = Location;
+                //        gg.ShelfNo = ShelfNo;
+                //        gg.RefJobCode = dbClss.TSt(rd.Cells["RefDocNo"].Value);
 
-                        //ต้องไม่ใช่ Item ที่มีในระบบ
-                        var c = (from ix in db.mh_Items
-                                 where ix.InternalNo.Trim().ToUpper() == CodeNo.Trim().ToUpper() && ix.Active == true
-                                 select ix).ToList();
-                        if (c.Count <= 0)
-                        {
-                            gg.TLQty = 0;
-                            gg.ShipQty = Math.Round(((QTY * PCSUnit) * BasePCSUnit), 2);
-                        }
+                //        //ต้องไม่ใช่ Item ที่มีในระบบ
+                //        var c = (from ix in db.mh_Items
+                //                 where ix.InternalNo.Trim().ToUpper() == CodeNo.Trim().ToUpper() && ix.Active == true
+                //                 select ix).ToList();
+                //        if (c.Count <= 0)
+                //        {
+                //            gg.TLQty = 0;
+                //            gg.ShipQty = Math.Round(((QTY * PCSUnit) * BasePCSUnit), 2);
+                //        }
 
-                        db.tb_Stocks.InsertOnSubmit(gg);
-                        db.SubmitChanges();
+                //        db.tb_Stocks.InsertOnSubmit(gg);
+                //        db.SubmitChanges();
 
-                        //update Stock เข้า item
-                        db.sp_010_Update_StockItem(CodeNo, "");
+                //        //update Stock เข้า item
+                //        db.sp_010_Update_StockItem(CodeNo, "");
 
-                        dbClss.AddHistory(this.Name, "ปรับ Stock Item ", "Cancel invoice : " + (rd.Cells["Qty"].Value.ToSt())
-                            + " Item :" + Convert.ToString(rd.Cells["ItemNo"].Value)
-                            + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["ItemNo"].Value));
-                    }
-                }
+                //        dbClss.AddHistory(this.Name, "ปรับ Stock Item ", "Cancel invoice : " + (rd.Cells["Qty"].Value.ToSt())
+                //            + " Item :" + Convert.ToString(rd.Cells["ItemNo"].Value)
+                //            + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["ItemNo"].Value));
+                //    }
+                //}
 
 
                
@@ -1502,11 +1500,10 @@ namespace StockControl
                     foreach (GridViewRowInfo ee in dgvRow_List)
                     {
                         SONo = dbClss.TSt(ee.Cells["IVNo"].Value);
-                        
-
+                        break;
                     }
 
-                    txtSONo.Text = SONo;
+                    txtIVNo.Text = SONo;
                     DataLoad();
                 }
 
@@ -1517,7 +1514,7 @@ namespace StockControl
                 ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
                 ClassLib.Memory.Heap();
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError("CreatePart", ex.Message + " : radButtonElement1_Click", this.Name); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError(this.Name, ex.Message + " : btnListItem_Click", this.Name); }
             finally { this.Cursor = Cursors.Default; }
 
 
@@ -1656,7 +1653,7 @@ namespace StockControl
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (txtSONo.Text.Trim() == "")
+                if (txtIVNo.Text.Trim() == "")
                 {
                     baseClass.Warning("Please enter Sale Order no.");
                     return;
@@ -1667,7 +1664,7 @@ namespace StockControl
                     return;
                 }
 
-                t_SONo = txtSONo.Text;
+                t_SONo = txtIVNo.Text;
                 t_CustomerNo = txtContactName.Text;
                 ClearData();
                 DataLoad();
@@ -1785,7 +1782,7 @@ namespace StockControl
             {
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var ShipList = db.mh_InvoiceDTTemps.Where(s => s.IVNo == txtSONo.Text).ToList();
+                    var ShipList = db.mh_InvoiceDTTemps.Where(s => s.IVNo == txtIVNo.Text).ToList();
                     if (ShipList.Count > 0)
                     {
                         dgvData.DataSource = ShipList;
@@ -1807,7 +1804,7 @@ namespace StockControl
                         }
                     }
 
-                    var inv = db.mh_InvoiceDTTemps.Where(s => s.IVNo == txtSONo.Text).ToList();
+                    var inv = db.mh_InvoiceDTTemps.Where(s => s.IVNo == txtIVNo.Text).ToList();
                     if (inv.Count>0)
                     {
                         foreach(var gg in inv)

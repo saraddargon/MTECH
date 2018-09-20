@@ -513,7 +513,10 @@ namespace StockControl
                                 if (d.Where(x => x.Active == true && x.OutShip == x.Qty).Count() > 0)
                                 {
                                     foreach (var pp in d)
+                                    {
                                         pp.Active = false;
+                                        pp.Status = "Cancel";
+                                    }
                                 }
 
                                 db.SubmitChanges();

@@ -81,7 +81,7 @@
             this.cboCustomer = new Telerik.WinControls.UI.RadDropDownList();
             this.dtSODate = new Telerik.WinControls.UI.RadDateTimePicker();
             this.txtContactName = new Telerik.WinControls.UI.RadTextBox();
-            this.txtSONo = new Telerik.WinControls.UI.RadTextBox();
+            this.txtIVNo = new Telerik.WinControls.UI.RadTextBox();
             this.txtCSTMNo = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel9 = new Telerik.WinControls.UI.RadLabel();
@@ -160,7 +160,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cboCustomer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtSODate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtContactName)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSONo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtIVNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCSTMNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
@@ -378,13 +378,13 @@
             this.toolStripSeparator2,
             this.btnDel_Item});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 98);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(151, 76);
             // 
             // btnAddPart
             // 
             this.btnAddPart.Enabled = false;
             this.btnAddPart.Name = "btnAddPart";
-            this.btnAddPart.Size = new System.Drawing.Size(152, 22);
+            this.btnAddPart.Size = new System.Drawing.Size(150, 22);
             this.btnAddPart.Text = "Add";
             this.btnAddPart.Click += new System.EventHandler(this.btnAddPart_Click);
             // 
@@ -393,7 +393,7 @@
             this.btnAdd_Row.BackColor = System.Drawing.Color.Transparent;
             this.btnAdd_Row.Enabled = false;
             this.btnAdd_Row.Name = "btnAdd_Row";
-            this.btnAdd_Row.Size = new System.Drawing.Size(152, 22);
+            this.btnAdd_Row.Size = new System.Drawing.Size(150, 22);
             this.btnAdd_Row.Text = "Add New Item";
             this.btnAdd_Row.Visible = false;
             this.btnAdd_Row.Click += new System.EventHandler(this.btnAdd_Row_Click);
@@ -401,7 +401,7 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(147, 6);
             this.toolStripSeparator2.Visible = false;
             // 
             // btnDel_Item
@@ -409,7 +409,7 @@
             this.btnDel_Item.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnDel_Item.Enabled = false;
             this.btnDel_Item.Name = "btnDel_Item";
-            this.btnDel_Item.Size = new System.Drawing.Size(152, 22);
+            this.btnDel_Item.Size = new System.Drawing.Size(150, 22);
             this.btnDel_Item.Text = "Delete";
             this.btnDel_Item.Click += new System.EventHandler(this.ลบพารทToolStripMenuItem_Click);
             // 
@@ -607,7 +607,7 @@
             this.radGroupBox3.Controls.Add(this.cboCustomer);
             this.radGroupBox3.Controls.Add(this.dtSODate);
             this.radGroupBox3.Controls.Add(this.txtContactName);
-            this.radGroupBox3.Controls.Add(this.txtSONo);
+            this.radGroupBox3.Controls.Add(this.txtIVNo);
             this.radGroupBox3.Controls.Add(this.txtCSTMNo);
             this.radGroupBox3.Controls.Add(this.radLabel4);
             this.radGroupBox3.Controls.Add(this.radLabel9);
@@ -687,15 +687,15 @@
             this.txtContactName.TabIndex = 3;
             this.txtContactName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPONo_KeyDown);
             // 
-            // txtSONo
+            // txtIVNo
             // 
-            this.txtSONo.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtSONo.Location = new System.Drawing.Point(127, 21);
-            this.txtSONo.Name = "txtSONo";
-            this.txtSONo.ReadOnly = true;
-            this.txtSONo.Size = new System.Drawing.Size(227, 20);
-            this.txtSONo.TabIndex = 3;
-            this.txtSONo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPONo_KeyDown);
+            this.txtIVNo.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.txtIVNo.Location = new System.Drawing.Point(127, 21);
+            this.txtIVNo.Name = "txtIVNo";
+            this.txtIVNo.ReadOnly = true;
+            this.txtIVNo.Size = new System.Drawing.Size(227, 20);
+            this.txtIVNo.TabIndex = 3;
+            this.txtIVNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPONo_KeyDown);
             // 
             // txtCSTMNo
             // 
@@ -1174,7 +1174,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cboCustomer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtSODate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtContactName)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSONo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtIVNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCSTMNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
@@ -1249,7 +1249,7 @@
         private Telerik.WinControls.UI.RadLabel radLabel2;
         private Telerik.WinControls.UI.RadLabel radLabel4;
         private Telerik.WinControls.UI.RadLabel radLabel3;
-        private Telerik.WinControls.UI.RadTextBox txtSONo;
+        private Telerik.WinControls.UI.RadTextBox txtIVNo;
         private Telerik.WinControls.UI.RadLabel radLabel7;
         private Telerik.WinControls.UI.RadLabel radLabel5;
         private Telerik.WinControls.UI.RadDateTimePicker dtSODate;
