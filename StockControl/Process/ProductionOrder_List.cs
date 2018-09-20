@@ -13,6 +13,7 @@ namespace StockControl
     {
         public string PONo { get; private set; } = "";
         public string CstmNo { get; private set; } = "";
+        bool openForm = true;
 
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
@@ -38,7 +39,7 @@ namespace StockControl
             dtFrom.Value = DateTime.Now;
             dtTo.Value = DateTime.Now;
             //radGridView1.ReadOnly = true;
-            cbbStatus.SelectedIndex = 1; //Waiting
+            cbbStatus.SelectedIndex = 0; //None
             using (var db = new DataClasses1DataContext())
             {
 
@@ -83,24 +84,28 @@ namespace StockControl
                     string FGNo = cbbItem.SelectedValue.ToSt();
                     DateTime? dFrom = (cbChkDate.Checked) ? (DateTime?)dtFrom.Value.Date : null;
                     DateTime? dTo = (cbChkDate.Checked) ? (DateTime?)dtTo.Value.Date.AddDays(1).AddMinutes(-1) : null;
-                    var m = db.mh_ProductionOrders.Where(x => x.Active
-                            && (jobNo == "" || x.JobNo == jobNo)
-                            && (FGNo == "" || x.FGNo == FGNo)
-                            && (dFrom == null || (x.ReqDate.Date >= dFrom && x.ReqDate.Date <= dTo))
-                    ).ToList();
-                    if (cbbStatus.Text.Equals("Waiting"))
-                        m = m.Where(x => x.ApproveDate == null).ToList();
-                    else if (cbbStatus.Text.Equals("Approved"))
-                        m = m.Where(x => x.ApproveDate != null && x.OutQty == x.Qty).ToList();
-                    else if (cbbStatus.Text.Equals("Process"))
-                        m = m.Where(x => x.OutQty != x.Qty && x.OutQty > 0).ToList();
-                    else if (cbbStatus.Text.Equals("Completed"))
-                        m = m.Where(x => x.OutQty == 0).ToList();
+                    string Status = (openForm) ? "OpenForm" : cbbStatus.Text;
+                    //var m = db.mh_ProductionOrders.Where(x => x.Active
+                    //        && (jobNo == "" || x.JobNo == jobNo)
+                    //        && (FGNo == "" || x.FGNo == FGNo)
+                    //        && (dFrom == null || (x.ReqDate.Date >= dFrom && x.ReqDate.Date <= dTo))
+                    //).ToList();
+                    //if (cbbStatus.Text.Equals("Waiting"))
+                    //    m = m.Where(x => x.ApproveDate == null).ToList();
+                    //else if (cbbStatus.Text.Equals("Approved"))
+                    //    m = m.Where(x => x.ApproveDate != null && x.OutQty == x.Qty).ToList();
+                    //else if (cbbStatus.Text.Equals("Process"))
+                    //    m = m.Where(x => x.OutQty != x.Qty && x.OutQty > 0).ToList();
+                    //else if (cbbStatus.Text.Equals("Completed"))
+                    //    m = m.Where(x => x.OutQty == 0).ToList();
+
+                    var m = db.sp_067_ProductionOrder_Search(jobNo, FGNo, dFrom, dTo, Status).ToList();
 
                     dgvData.DataSource = m;
 
-                    setStatus();
+                    //setStatus();
                 }
+                openForm = false;
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             this.Cursor = Cursors.Default;

@@ -240,10 +240,10 @@ namespace StockControl
                 if (idWorkcenter > 0)
                 {
                     var bDate = beginDate.Date;
-                    var tDate = (dTo != null) ? dTo.Value.Date : beginDate.Date;
+                    var tDate = (dTo != null) ? dTo.Value.Date : beginDate.Date.AddDays(7);
                     while(bDate <= tDate)
                     {
-                        CalCapacity_WorkCenter(idWorkcenter, beginDate);
+                        CalCapacity_WorkCenter(idWorkcenter, bDate);
                         bDate = bDate.AddDays(1);
                     }
                 }

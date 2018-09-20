@@ -1028,8 +1028,6 @@ namespace StockControl
                 var workLoads = new List<WorkLoad>();
                 var calLoad = new List<mh_CalendarLoad>();
                 //***ก๊อปมาจาก PlanningCal_Status
-                var costOverHead = 0.00m;
-                var capaUseX_All = 0.00m;
                 using (var db = new DataClasses1DataContext())
                 {
                     var tdata = new ItemData(txtFGNo.Text);
@@ -1076,7 +1074,7 @@ namespace StockControl
                     foreach (var r in rt)
                     {
                         int idWorkCenter = r.idWorkCenter;
-                        decimal CapacityOfWorkCenter = r.workcenter.Capacity;
+                        //decimal CapacityOfWorkCenter = r.workcenter.Capacity;
                         var totalCapa_All = 0.00m;
                         var SetupTime = r.SetupTime * manuTime; //แปลงเป็นนาทีเสมอ
                         var RunTime = r.RunTime * manuTime;
@@ -1166,6 +1164,7 @@ namespace StockControl
                                     var idCal = new List<int>();
                                     while (sTime < eTime) //วนจนกว่าจะหมดวัน
                                     {
+                                        //หาว่าเวลาเริ่มต้นอยู่ในช่วงเวลาทำงานปกติไหม
                                         var ww = calendars.Where(x => !idCal.Any(q => q == x.id)
                                             && sTime >= x.StartingTime && sTime <= x.EndingTime).FirstOrDefault();
                                         if (ww != null)
@@ -1191,6 +1190,11 @@ namespace StockControl
                                     {
                                         tempStarting = tempStarting.Value.Date.AddDays(1);
                                         continue;
+                                    }
+                                    else if (wd.Where(x => sTime >= x.StartingTime && sTime == x.EndingTime).Count() > 0) //เวลาที่หามาได้เท่ากับเวลาสิ้นสุดของช่วงเวลานั้นไม่ได้ต้องปรับเป็นเวลาแรกที่ใกล้ที่สุดที่มากกว่า sTime
+                                    {
+                                        sTime = wd.Where(x => sTime < x.StartingTime).FirstOrDefault().StartingTime;
+                                        tempStarting = tempStarting.Value.Date.SetTimeToDate(sTime);
                                     }
                                     else //เป็นช่วงเวลาที่ใช้ได้จริงๆ <<<<****>>>>
                                         tempStarting = tempStarting.Value.Date.SetTimeToDate(sTime);
@@ -1273,13 +1277,18 @@ namespace StockControl
                                         }
                                         else
                                         {
-                                            var capaLoad = baseClass.newCapaLoad(diffTime, diffTime * CapacityOfWorkCenter, tempStarting.Value.Date, idJob, 0, idWorkCenter);
-                                            capacityLoad.Add(capaLoad);
-
                                             wl.CapacityAlocateX += diffTime;
-                                            wl.CapacityAlocate += diffTime * CapacityOfWorkCenter;
+                                            wl.CapacityAlocate += diffTime;
                                             CapaUseX -= diffTime;
-                                            CapaUse -= (diffTime * CapacityOfWorkCenter);
+                                            CapaUse -= diffTime;
+                                            var tCapa = diffTime;
+                                            if (CapaUse < 0)
+                                            {
+                                                tCapa = tCapa + CapaUse; // a + (-b)
+                                                CapaUse = 0;
+                                            }
+                                            var capaLoad = baseClass.newCapaLoad(diffTime, tCapa, tempStarting.Value.Date, idJob, 0, idWorkCenter);
+                                            capacityLoad.Add(capaLoad);
 
                                             var cl = baseClass.newCalendar(autoid, r.id, idWorkCenter, idCalendar, tempStarting.Value.Date, timeStart, timeEnd, idJob, -1);
                                             calLoad.Add(cl);
@@ -1293,7 +1302,38 @@ namespace StockControl
                                     if (wl.CapacityAfterX >= CapaUseX) //กรณีที่เหลือเวลา Capacity ในวันนั้นเพียงพอ
                                     {
                                         timeEnd = timeStart.Add(TimeSpan.FromMinutes(CapaUseX.ToDouble()));
+                                    }
+                                    else //กรณีที่ในวันนั้น Capaciy ไม่เพียงพอ
+                                    {
+                                        timeEnd = eTime; //ตั้งเป็นเวลาสิ้นสุดทำงานได้เลย
+                                    }
 
+                                    //เช็คว่าเวลาที่หามาได้นั้นอยู่ในช่วงเวลาทำงานจริงๆ และไม่ใช่เวลา break
+                                    if (wd.Where(x => timeStart >= x.StartingTime && timeEnd <= x.EndingTime).Count() < 1) //ไม่อยู่ในช่วงเวลาทำงานแน่ๆ
+                                    {
+                                        //ต้องหาว่าอยู่เกินช่วงไหนโดยเอาเวลา Start ไปหา
+                                        var f = wd.Where(x => timeStart >= x.StartingTime && timeStart <= x.EndingTime).FirstOrDefault();
+                                        timeEnd = f.EndingTime;
+
+                                        var diffTime = (timeEnd - timeStart).TotalMinutes.ToDecimal();
+
+                                        wl.CapacityAlocateX += diffTime;
+                                        wl.CapacityAlocate += diffTime;
+                                        CapaUseX -= diffTime;
+                                        CapaUse -= diffTime;
+                                        var tCapa = diffTime;
+                                        if (CapaUse < 0)
+                                        {
+                                            tCapa = tCapa + CapaUse; // a + (-b)
+                                            CapaUse = 0;
+                                        }
+                                        foundTime = true;
+
+                                        var capaload = baseClass.newCapaLoad(diffTime, tCapa, tempStarting.Value.Date, idJob, 0, idWorkCenter);
+                                        capacityLoad.Add(capaload);
+                                    }
+                                    else
+                                    {
                                         var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, idJob, 0, idWorkCenter);
                                         capacityLoad.Add(capaLoad);
 
@@ -1301,20 +1341,6 @@ namespace StockControl
                                         wl.CapacityAlocate += CapaUse;
                                         CapaUseX = 0;
                                         CapaUse = 0;
-                                        foundTime = true;
-                                    }
-                                    else //กรณีที่ในวันนั้น Capaciy ไม่เพียงพอ
-                                    {
-                                        timeEnd = eTime; //ตั้งเป็นเวลาสิ้นสุดทำงานได้เลย
-                                        var diffTime = (timeEnd - timeStart).TotalMinutes.ToDecimal();
-
-                                        var capaload = baseClass.newCapaLoad(diffTime, (diffTime * CapacityOfWorkCenter), tempStarting.Value.Date, idJob, 0, idWorkCenter);
-                                        capacityLoad.Add(capaload);
-
-                                        wl.CapacityAlocateX += diffTime;
-                                        wl.CapacityAlocate += diffTime * CapacityOfWorkCenter;
-                                        CapaUseX -= diffTime;
-                                        CapaUse -= (diffTime * CapacityOfWorkCenter);
                                         foundTime = true;
                                     }
 
@@ -1355,14 +1381,16 @@ namespace StockControl
                         m.UpdateDate = DateTime.Now;
                         m.StartingDate = StartingDate.Value;
                         m.EndingDate = EndingDate.Value;
-                        m.CostOverhead = costOverHead;
-                        m.CapacityUseX = capaUseX_All;
+                        m.CapacityUseX = 0;
+                        m.CostOverhead = 0;
                         //ลบ Capacity เก่า
                         var capa = db.mh_CapacityLoads.Where(x => x.DocId == idJob).ToList();
                         db.mh_CapacityLoads.DeleteAllOnSubmit(capa);
                         //ลบ Calendar เก่า
                         var cal = db.mh_CalendarLoads.Where(x => x.idJob == idJob).ToList();
                         db.mh_CalendarLoads.DeleteAllOnSubmit(cal);
+
+                        var calOvers = new List<CalOverhead>();
                         //ใส่ Capacity ใหม่
                         foreach (var c in capacityLoad)
                         {
@@ -1379,7 +1407,20 @@ namespace StockControl
                                 WorkCenterID = c.WorkCenterID,
                             };
                             db.mh_CapacityLoads.InsertOnSubmit(cc);
+                            m.CapacityUseX += c.CapacityX;
+
+                            var co = calOvers.Where(x => x.idDoc == c.DocId && x.idWorkcenter == c.WorkCenterID).FirstOrDefault();
+                            if (co == null)
+                                calOvers.Add(new CalOverhead
+                                {
+                                    CapacityX = c.CapacityX,
+                                    idDoc = c.DocId,
+                                    idWorkcenter = c.WorkCenterID
+                                });
+                            else
+                                co.CapacityX += c.CapacityX;
                         }
+                        db.SubmitChanges();
                         //ใส่ Calendar ใหม่
                         foreach (var c in calLoad)
                         {
@@ -1398,8 +1439,33 @@ namespace StockControl
                                 StartingTime = c.StartingTime,
                             };
                             db.mh_CalendarLoads.InsertOnSubmit(cc);
-                        }
 
+                            var co = calOvers.Where(x => x.idWorkcenter == c.idWorkcenter && x.idDoc == c.idJob && x.idRoute == 0).FirstOrDefault();
+                            if (co != null)
+                                co.idRoute = c.idRoute;
+                        }
+                        db.SubmitChanges();
+
+
+                        //save Cost Overhead
+                        var manuTime = 1;
+                        var manu = db.mh_ManufacturingSetups.FirstOrDefault();
+                        if (manu != null)
+                        {
+                            if (manu.ShowCapacityInUOM == 2) //Hour
+                                manuTime = 60;
+                            else if (manu.ShowCapacityInUOM == 3) //Day
+                                manuTime = (24 * 60);
+                        }
+                        foreach (var co in calOvers)
+                        {
+                            var rt = db.mh_RoutingDTs.Where(x => x.id == co.idRoute && x.idWorkCenter == co.idWorkcenter && x.Active).FirstOrDefault();
+                            if (rt != null)
+                            {
+                                var costAll = Math.Round(rt.UnitCost / manuTime, 2);
+                                m.CostOverhead += Math.Round(costAll * co.CapacityX, 2);
+                            }
+                        }
                         db.SubmitChanges();
 
                         dbClss.AddHistory(this.Name, "Job Order Sheet", $"Recalculate Job {txtStartingDate.Text}-{txtEndingDate.Text} to {StartingDate.Value.ToDtTimeString()}-{EndingDate.Value.ToDtTimeString()}", JobNo);
