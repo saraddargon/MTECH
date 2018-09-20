@@ -336,6 +336,7 @@ namespace StockControl
             List<int> idList = new List<int>();
             try
             {
+                int t = 0;
                 this.Cursor = Cursors.WaitCursor;
                 foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
                 {
@@ -345,18 +346,23 @@ namespace StockControl
                     }
                     else
                     {
+                        t = 1;
                         MessageBox.Show("สถานะบางรายการไม่สามารถ สร้างรายการเบิกได้");
                         break;
                     }
 
-                    if(idList.Count>0)
-                    {
-                        Shipment a = new Shipment(idList);
-                        a.ShowDialog();
-                        DataLoad();
-                    }
+                   
                 }
-                
+                if (t == 1)
+                    return;
+
+                if (idList.Count > 0)
+                {
+                    Shipment a = new Shipment(idList);
+                    a.ShowDialog();
+                    DataLoad();
+                }
+
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }

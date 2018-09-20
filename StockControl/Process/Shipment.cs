@@ -264,7 +264,7 @@ namespace StockControl
                                     , dbClss.TSt(gg.Description), dbClss.TDe(gg.Qty), dbClss.TDe(gg.Qty)
                                     , dbClss.TSt(gg.UOM), dbClss.TDe(gg.PCSUnit)
                                     , dbClss.TDe(gg.UnitPrice), dbClss.TDe(gg.Amount), "",
-                                    dbClss.TSt(gg.RefDocNo), dbClss.TDe(gg.Qty), "", 0, dbClss.TInt(gg.id)
+                                    dbClss.TSt(gg.SONo), dbClss.TDe(gg.Qty), "", 0, dbClss.TInt(gg.id)
                                     ,dbClss.TSt(gg.LocationItem),dbClss.TSt(gg.VatType), dbClss.TSt(gg.ReplenishmentType), "Adding");
                             }
                     }
@@ -544,11 +544,12 @@ namespace StockControl
             try
             {
                 if (cboCustomer.SelectedValue.ToSt() == "" || txtCSTMNo.Text == "")
-                    err += " “Customer:” is empty \n";         
+                    err += " “Customer:” is empty \n";
+                if (dtSODate.Text == "")
+                    err += " “Delivery Date:” is empty \n";
                 if (dgvData.Rows.Where(x => x.IsVisible).Count() < 1)
                     err += " “Items:” is empty \n";
-                if(dtSODate.Text=="")
-                    err += " “Delivery Date:” is empty \n";
+              
                 if (err == "")
                 {
                     foreach (var item in dgvData.Rows.Where(x => x.IsVisible))
@@ -1563,7 +1564,7 @@ namespace StockControl
                                     , dbClss.TSt(gg.Description), dbClss.TDe(gg.Qty), dbClss.TDe(gg.Qty)
                                     , dbClss.TSt(gg.UOM), dbClss.TDe(gg.PCSUnit)
                                     , dbClss.TDe(gg.UnitPrice), dbClss.TDe(gg.Amount), "",
-                                    dbClss.TSt(gg.RefDocNo), dbClss.TDe(gg.Qty), "", 0, dbClss.TInt(gg.id)
+                                    dbClss.TSt(gg.SONo), dbClss.TDe(gg.Qty), "", 0, dbClss.TInt(gg.id)
                                     ,dbClss.TSt(gg.LocationItem),dbClss.TSt(gg.VatType), dbClss.TSt(gg.ReplenishmentType), "Adding");
                             }
                         int No1 = 0;

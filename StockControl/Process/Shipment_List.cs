@@ -381,6 +381,7 @@ namespace StockControl
             dgvData.EndEdit();
             try
             {
+                int t = 0;
                 List<int> idList = new List<int>();
                 foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
                 {
@@ -390,16 +391,21 @@ namespace StockControl
                     }
                     else
                     {
+                        t = 1;
                         MessageBox.Show("สถานะบางรายการไม่สามารถทำรายการได้");
                         break;
+                        
                     }
+                }
 
-                    if (idList.Count > 0)
-                    {
-                        Invoice_2 a = new Invoice_2(idList);
-                        a.ShowDialog();
-                        DataLoad();
-                    }
+                if (t == 1)
+                    return;
+
+                if (idList.Count > 0)
+                {
+                    Invoice_2 a = new Invoice_2(idList);
+                    a.ShowDialog();
+                    DataLoad();
                 }
             }
             catch (Exception ex)
