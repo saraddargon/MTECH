@@ -1517,12 +1517,9 @@ namespace StockControl
                                     else
                                   
                                             txtPONo.Text = StockControl.dbClss.GetNo(11, 2);                                   
-                                        txtTempNo.Text = StockControl.dbClss.GetNo(10, 2);
-                               
-
+                                        txtTempNo.Text = StockControl.dbClss.GetNo(10, 2);                               
                                 }
-
-
+                                
                                 var ggg = (from ix in db.mh_PurchaseOrders
                                            where ix.TempPNo.Trim() == txtTempNo.Text.Trim() //&& ix.Status != "Cancel"
                                            //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
