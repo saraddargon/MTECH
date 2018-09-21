@@ -233,8 +233,10 @@
             // cbMPS
             // 
             this.cbMPS.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbMPS.Enabled = false;
             this.cbMPS.Location = new System.Drawing.Point(207, 19);
             this.cbMPS.Name = "cbMPS";
+            this.cbMPS.ReadOnly = true;
             this.cbMPS.Size = new System.Drawing.Size(43, 18);
             this.cbMPS.TabIndex = 5;
             this.cbMPS.Text = "MPS";
@@ -243,8 +245,10 @@
             // cbMRP
             // 
             this.cbMRP.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbMRP.Enabled = false;
             this.cbMRP.Location = new System.Drawing.Point(125, 19);
             this.cbMRP.Name = "cbMRP";
+            this.cbMRP.ReadOnly = true;
             this.cbMRP.Size = new System.Drawing.Size(43, 18);
             this.cbMRP.TabIndex = 5;
             this.cbMRP.Text = "MRP";

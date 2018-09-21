@@ -360,7 +360,7 @@ namespace StockControl
                             s.CreateBy = ClassLib.Classlib.User;
                             s.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                             s.DocNo = txtPackingNo.Text;
-                            s.RefNo = dt.idJob.ToSt(); //id Job --> mh_ProductionOrder
+                            s.RefNo = job.JobNo; //JobNo --> mh_ProductionOrder
                             s.CodeNo = item.Cells["ItemNo"].Value.ToSt();
                             s.Type = "Receive By Job";
                             s.QTY = Math.Round(item.Cells["Qty"].Value.ToDecimal() * item.Cells["PCSUnit"].Value.ToDecimal(), 2);
@@ -684,34 +684,20 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                var sc = new Packing_List();
+                var sc = new Packing_List(2);
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
 
+                if(sc.t_PackingNo != "")
+                {
+                    txtPackingNo.Text = sc.t_PackingNo;
+                    DataLoad();
+                }
+
                 ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
                 ClassLib.Memory.Heap();
-                //LoadData
-
-                string PRNo = txtJobNo.Text;
-                string RCNo = txtPackingNo.Text;
-                if (!txtPackingNo.Text.Equals(""))
-                {
-                    txtJobNo.Text = "";
-
-                    DataLoad();
-                    Ac = "View";
-                }
-                else
-                {
-
-                    btnNew_Click(null, null);
-                    txtJobNo.Text = PRNo;
-
-                    txtJobNo.Text = "";
-
-                }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError("CreatePart", ex.Message + " : radButtonElement1_Click", this.Name); }
 

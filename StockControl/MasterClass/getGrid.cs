@@ -288,13 +288,6 @@ namespace StockControl
 
                 this.ItemName = t.InternalName;
                 this.ReorderType = baseClass.getReorderType(t.ReorderType);
-                //this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
-                var a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneJob", 0, "Warehouse");
-                if (a != null)
-                {
-                    this.QtyOnHand = a.Value.ToDecimal();
-                    this.QtyOnHand_Backup = a.Value.ToDecimal();
-                }
                 this.SafetyStock = t.SafetyStock;
                 this.ReorderPoint = t.ReorderPoint.ToDecimal();
                 this.ReorderQty = t.ReorderQty.ToDecimal();
@@ -305,6 +298,18 @@ namespace StockControl
                 this.LeadTime = t.InternalLeadTime.ToInt();
                 this.RepType_enum = baseClass.getRepType(t.ReplenishmentType);
                 this.InvGroup_enum = baseClass.getInventoryGroup(t.InventoryGroup);
+                //this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
+                decimal? a = null;
+                if (InvGroup_enum == InventoryGroup.FG)
+                    a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneJob", 0, "Warehouse");
+                else
+                    a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneCstmPO", 0, "Warehouse");
+                if (a != null)
+                {
+                    this.QtyOnHand = a.Value.ToDecimal();
+                    this.QtyOnHand_Backup = a.Value.ToDecimal();
+                }
+
 
                 this.UOM = t.BaseUOM;
                 var u = db.mh_ItemUOMs.Where(x => x.ItemNo == this.ItemNo && x.UOMCode == t.BaseUOM).FirstOrDefault();

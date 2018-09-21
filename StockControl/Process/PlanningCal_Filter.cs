@@ -22,9 +22,13 @@ namespace StockControl
         public bool MRP { get;private set; } = false;
         public bool MPS { get; private set; } = false;
 
-        public PlanningCal_Filter()
+        public PlanningCal_Filter(bool MRP, bool MPS)
         {
             InitializeComponent();
+            //this.MRP = MRP;
+            //this.MPS = MPS;
+            cbMRP.Checked = MRP;
+            cbMPS.Checked = MPS;
         }
 
         private void radMenuItem1_Click(object sender, EventArgs e)

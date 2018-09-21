@@ -11,8 +11,7 @@ namespace StockControl
 {
     public partial class ProductionOrder_List : Telerik.WinControls.UI.RadRibbonForm
     {
-        public string PONo { get; private set; } = "";
-        public string CstmNo { get; private set; } = "";
+        public string t_JobNo = "";
         bool openForm = true;
 
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
@@ -67,7 +66,7 @@ namespace StockControl
                     x.ReadOnly = true;
             });
 
-            
+
         }
         private void DataLoad()
         {
@@ -113,7 +112,7 @@ namespace StockControl
 
             //    radGridView1.DataSource = dt;
         }
-        
+
         void setStatus()
         {
             foreach (var item in dgvData.Rows)
@@ -177,17 +176,23 @@ namespace StockControl
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
-            selRow();
+            if (e.RowIndex >= 0)
+                selRow();
         }
         void selRow()
         {
             dgvData.EndEdit();
             if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
-                string jobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
-                var p = new ProductionOrder(jobNo);
-                p.ShowDialog();
-                DataLoad();
+                t_JobNo = dgvData.CurrentCell.RowInfo.Cells["JobNo"].Value.ToSt();
+                if (sType == 1)
+                {
+                    var p = new ProductionOrder(t_JobNo);
+                    p.ShowDialog();
+                    DataLoad();
+                }
+                else
+                    this.Close();
             }
         }
 
@@ -197,7 +202,7 @@ namespace StockControl
             //throw new NotImplementedException();
             if (dgvData.CurrentCell.RowIndex >= 0)
             {
-                string JobNo= dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
+                string JobNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
                 Report.Reportx1.Value = new string[1];
                 Report.Reportx1.Value[0] = JobNo;
                 Report.Reportx1.WReport = "JOBNoList";
@@ -335,7 +340,7 @@ namespace StockControl
             var s = Math.Round(c.Cells["Qty"].Value.ToDecimal() * c.Cells["PCSUnit"].Value.ToDecimal(), 2);
             var s2 = c.Cells["OutQty"].Value.ToDecimal();
 
-            if(s != s2)
+            if (s != s2)
             {
                 mssg += "- Cannot delete because FG is already receive.\n";
             }
@@ -400,14 +405,14 @@ namespace StockControl
 
         private void radButtonElement5_Click(object sender, EventArgs e)
         {
-            
-              //  string JobNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
-                Report.Reportx1.Value = new string[1];
-                Report.Reportx1.Value[0] = "";
-                Report.Reportx1.WReport = "ProductionList";
-                Report.Reportx1 op = new Report.Reportx1("ReportProductionList.rpt");
-                op.Show();
-            
+
+            //  string JobNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
+            Report.Reportx1.Value = new string[1];
+            Report.Reportx1.Value[0] = "";
+            Report.Reportx1.WReport = "ProductionList";
+            Report.Reportx1 op = new Report.Reportx1("ReportProductionList.rpt");
+            op.Show();
+
         }
     }
 

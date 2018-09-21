@@ -783,16 +783,14 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                var pd = new ProductionOrder_List();
+                var pd = new ProductionOrder_List(2);
                 this.Cursor = Cursors.Default;
                 pd.ShowDialog();
-                //if (pol.PONo != "" && pol.CstmNo != "")
-                //{
-                //    t_PONo = pol.PONo;
-                //    t_CustomerNo = pol.CstmNo;
-                //    //LoadData
-                //    DataLoad();
-                //}
+                if(pd.t_JobNo != "")
+                {
+                    this.t_JobNo = pd.t_JobNo;
+                    DataLoad();
+                }
 
 
                 GC.Collect();

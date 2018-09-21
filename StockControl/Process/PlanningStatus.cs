@@ -189,8 +189,8 @@ namespace StockControl
 
         void Recalculate()
         {
-            var pc = new PlanningCal_Status();
-            pc.ShowDialog();
+            //var pc = new PlanningCal_Status();
+            //pc.ShowDialog();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

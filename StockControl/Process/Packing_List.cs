@@ -11,8 +11,7 @@ namespace StockControl
 {
     public partial class Packing_List : Telerik.WinControls.UI.RadRibbonForm
     {
-        public string PONo { get; private set; } = "";
-        public string CstmNo { get; private set; } = "";
+        public string t_PackingNo = "";
 
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
@@ -56,9 +55,9 @@ namespace StockControl
 
             dgvData.AutoGenerateColumns = false;
             DataLoad();
-            
 
-            
+
+
         }
         private void DataLoad()
         {
@@ -66,6 +65,7 @@ namespace StockControl
             //dt.Rows.Clear();
             try
             {
+                dgvData.AutoGenerateColumns = false;
                 dgvData.DataSource = null;
                 dgvData.Rows.Clear();
                 this.Cursor = Cursors.WaitCursor;
@@ -75,38 +75,12 @@ namespace StockControl
                     string itemno = cbbItem.SelectedValue.ToSt();
                     DateTime? dFrom = (cbChkDate.Checked) ? (DateTime?)dtFrom.Value.Date : null;
                     DateTime? dTo = (cbChkDate.Checked) ? (DateTime?)dtTo.Value.Date.AddDays(1).AddMinutes(-1) : null;
-                    var m = db.mh_PackingDts
-                        .Where(x => x.Active
-                            && (pk == "" || x.PackingNo == pk)
-                            && (itemno == "" || x.ItemNo == itemno)
-                            //&& (dFrom == null || (x.ReqDate.Date >= dFrom && x.ReqDate.Date <= dTo))
-                            && x.Active
-                    ).ToList();
-                    //dgvData.DataSource = m;
-                    foreach(var item in m)   
-                    {
-                        var hd = db.mh_Packings.Where(x => x.PackingNo == item.PackingNo).FirstOrDefault();
-                        if(hd != null)
-                        {
-                            if (dFrom != null && hd.PackingDate >= dFrom && hd.PackingDate <= dTo)
-                            { }
-                            else if(dFrom != null) { continue; }
+                    string CustomerPONo = txtCustomerPONo.Text.Trim();
+                    string JobNo = txtJobNo.Text.Trim();
+                    string Status = cbbStatus.Text.Trim();
 
-                            var row = dgvData.Rows.AddNew();
-                            row.Cells["PackingNo"].Value = hd.PackingNo;
-                            row.Cells["PackingDate"].Value = hd.PackingDate;
-                            row.Cells["ItemNo"].Value = item.ItemNo;
-                            row.Cells["ItemName"].Value = item.ItemName;
-                            row.Cells["Qty"].Value = item.Qty;
-                            row.Cells["UOM"].Value = item.UOM;
-                            row.Cells["PCSUnit"].Value = item.PCSUnit;
-                            row.Cells["RefNo"].Value = item.RefNo;
-                            row.Cells["CustomerPONo"].Value = item.CustomerPONo;
-                            row.Cells["LotNo"].Value = item.LotNo;
-                        }
-                    }
-
-                    //setStatus();
+                    var m = db.sp_070_PackingList_Search(pk, itemno, CustomerPONo, JobNo, dFrom, dTo, Status).ToList();
+                    dgvData.DataSource = m;
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -115,7 +89,7 @@ namespace StockControl
 
             //    radGridView1.DataSource = dt;
         }
-        
+
         void setStatus()
         {
             foreach (var item in dgvData.Rows)
@@ -178,13 +152,34 @@ namespace StockControl
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
-            //selRow();
+            if (e.RowIndex >= 0)
+                selRow();
         }
         void selRow()
         {
             if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
+                var row = dgvData.CurrentCell.RowInfo;
+                t_PackingNo = row.Cells["PackingNo"].Value.ToSt();
+                if(sType == 1)
+                {
+                    string status = row.Cells["Status"].Value.ToSt();
+                    if(status == "Active")
+                    {
+                        var pk = new Packing(t_PackingNo);
+                        pk.ShowDialog();
+                    }
+                    else
+                    {
+                        //packing cancel
 
+                    }
+                    DataLoad();
+                }
+                else
+                {
+                    this.Close();
+                }
             }
         }
 
@@ -323,7 +318,7 @@ namespace StockControl
             var s = Math.Round(c.Cells["Qty"].Value.ToDecimal() * c.Cells["PCSUnit"].Value.ToDecimal(), 2);
             var s2 = c.Cells["OutQty"].Value.ToDecimal();
 
-            if(s != s2)
+            if (s != s2)
             {
                 mssg += "- Cannot delete because FG is already receive.\n";
             }

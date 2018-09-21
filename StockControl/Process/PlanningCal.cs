@@ -147,7 +147,7 @@ namespace StockControl
 
         private void btnRecal_Click(object sender, EventArgs e)
         {
-            var ft = new PlanningCal_Filter();
+            var ft = new PlanningCal_Filter(true, false);
             ft.ShowDialog();
             if (ft.okFilter)
             {
@@ -155,11 +155,11 @@ namespace StockControl
 
                 radLabelElement1.Text = $"Filter date : {ft.dateFrom.ToDtString()}-{ft.dateTo.ToDtString()}";
                 //LoadData(true, ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
-                var ps = new PlanningCal_Status();
-                ps.dFrom = ft.dateFrom;
-                ps.dTo = ft.dateTo;
-                ps.ItemNo = ft.ItemNo;
-                ps.LocationItem = ft.locationItem;
+                var ps = new PlanningCal_Status(ft.dateFrom, ft.dateTo, ft.ItemNo, ft.locationItem, ft.MRP, ft.MPS);
+                //ps.dFrom = ft.dateFrom;
+                //ps.dTo = ft.dateTo;
+                //ps.ItemNo = ft.ItemNo;
+                //ps.LocationItem = ft.locationItem;
                 ps.ShowDialog();
                 if (ps.calComplete)
                 {
@@ -173,7 +173,7 @@ namespace StockControl
 
                     DataLoad();
 
-                    FilterE(ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
+                    //FilterE(ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
                 }
             }
         }
@@ -188,7 +188,7 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                var ft = new PlanningCal_Filter();
+                var ft = new PlanningCal_Filter(false, false);
                 ft.ShowDialog();
                 if (ft.okFilter)
                 {
