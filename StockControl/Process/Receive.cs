@@ -702,6 +702,7 @@ namespace StockControl
                 foreach (var g in dgvData.Rows)
                 {
                     string SS = "";
+                    string LotNo = "";
                     if (g.IsVisible.Equals(true))
                     {
                         if (StockControl.dbClss.TInt(g.Cells["QTY"].Value) != (0)) // เอาเฉพาะรายการที่ไม่เป็น 0 
@@ -712,7 +713,11 @@ namespace StockControl
                                 string PRNo = ""; ;
                                 int PRID = 0;
                                 decimal RemainQty = 0;
-                                
+                                LotNo = StockControl.dbClss.TSt(g.Cells["LotNo"].Value);
+                                if(LotNo=="")
+                                {
+                                    LotNo = dbClss.Get_Lot(DateTime.Now.ToString("yyyyMMdd"));
+                                }
                                 Seq += 1;
                                 tb_Receive u = new tb_Receive();
                                 u.PRNo = StockControl.dbClss.TSt(g.Cells["PRNo"].Value);
@@ -727,7 +732,7 @@ namespace StockControl
                                 u.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);
                                 u.Unit = StockControl.dbClss.TSt(g.Cells["Unit"].Value);
                                 u.Remark = StockControl.dbClss.TSt(g.Cells["Remark"].Value);
-                                u.LotNo = StockControl.dbClss.TSt(g.Cells["LotNo"].Value);
+                                u.LotNo = LotNo; //StockControl.dbClss.TSt(g.Cells["LotNo"].Value);
                                 u.SerialNo = StockControl.dbClss.TSt(g.Cells["SerialNo"].Value);
                                 u.CRRNCY = StockControl.dbClss.TSt(g.Cells["CRRNCY"].Value);
                                 u.RCNo = RCNo;                               
@@ -810,6 +815,7 @@ namespace StockControl
                 }
             }
         }
+       
         private int Get_RCid(string TypeReceive,int RefPRPO_id,string RefPRPO)
         {
             int re = 0;
@@ -1098,7 +1104,7 @@ namespace StockControl
                             gg.ShipQty = 0;
                             gg.Location = vv.Location;
                             gg.ShelfNo = vv.ShelfNo;
-
+                            gg.LotNo = vv.LotNo;
                             //ต้องไม่ใช่ Item ที่มีในระบบ
                             var c = (from ix in db.mh_Items
                                      where ix.InternalNo.Trim().ToUpper() == vv.CodeNo.Trim().ToUpper() && ix.Active ==true

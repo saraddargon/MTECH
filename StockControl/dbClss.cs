@@ -378,7 +378,26 @@ namespace StockControl
             }
             return PCSUOM;
         }
-    public static  bool Permisstion(string RootNode, string Screen,string UserID)
+        public static string Get_Lot(string Date)
+        {
+            string re = "";
+            try
+            {
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    var v = (from ix in db.mh_LotRMs
+                             where ix.LotDate.ToString() == Date //20180131
+                             select ix).OrderByDescending(a => a.LotNo).ToList();
+                    if (v.Count > 0)
+                    {
+                        re = dbClss.TSt(v.FirstOrDefault().LotNo);
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            return re;
+        }
+        public static  bool Permisstion(string RootNode, string Screen,string UserID)
         {
             bool re = false;
             try

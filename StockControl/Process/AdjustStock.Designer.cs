@@ -433,7 +433,6 @@
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
             gridViewTextBoxColumn5.FieldName = "LotNo";
             gridViewTextBoxColumn5.HeaderText = "เลข LotNo";
-            gridViewTextBoxColumn5.IsVisible = false;
             gridViewTextBoxColumn5.Name = "LotNo";
             gridViewTextBoxColumn5.Width = 90;
             gridViewTextBoxColumn6.EnableExpressionEditor = false;
