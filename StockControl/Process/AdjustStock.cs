@@ -728,6 +728,7 @@ namespace StockControl
                                 gg.RefidJobCode = vv.RefidJobCard;
                                 gg.RefJobCode = vv.RefJobCard;
                                 gg.RefTempJobCode = vv.RefTempJobCard;
+                                gg.LotNo = vv.LotNo;
 
                                 db.tb_Stocks.InsertOnSubmit(gg);
                                 db.SubmitChanges();
@@ -927,6 +928,7 @@ namespace StockControl
                 RequireDate = dtRequire.Value;
             int Seq = 0;
             DateTime? UpdateDate = null;
+            string LotNo = "";
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 foreach (var g in dgvData.Rows)
@@ -938,7 +940,13 @@ namespace StockControl
                         {
                             if (StockControl.dbClss.TInt(g.Cells["id"].Value) <= 0)  //New ใหม่
                             {
-                               
+
+                                LotNo = StockControl.dbClss.TSt(g.Cells["LotNo"].Value);
+                                if (LotNo == "")
+                                {
+                                    dbClss.Get_Lot(DateTime.Now.ToString("yyyyMMdd"));
+                                }
+
                                 Seq += 1;
                                 tb_StockAdjust u = new tb_StockAdjust();
                                 u.AdjustNo = txtADNo.Text;
@@ -950,8 +958,8 @@ namespace StockControl
                                 u.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);
                                 u.Unit = StockControl.dbClss.TSt(g.Cells["Unit"].Value);
                                 u.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
-                                u.Reason = StockControl.dbClss.TSt(g.Cells["Remark"].Value);                              
-                                u.LotNo = StockControl.dbClss.TSt(g.Cells["LotNo"].Value);                               
+                                u.Reason = StockControl.dbClss.TSt(g.Cells["Remark"].Value);
+                                u.LotNo = LotNo;                               
                                 //u.RCDate = RequireDate;
                                 u.Seq = Seq;
                                 u.Status = "Completed";

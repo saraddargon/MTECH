@@ -614,7 +614,7 @@ namespace StockControl
                                     u.TempRemain = vvd.TempRemain;
                                     u.TempShip = vvd.TempShip;
                                     u.Location = vvd.Location;
-
+                                    u.LotNo = vvd.LotNo;
                                     db.tb_Receive_Dels.InsertOnSubmit(u);
 
                                     seq += 1;
@@ -622,7 +622,8 @@ namespace StockControl
 
 
                                     //New Stock
-                                    InsertStock_new_2(seq, Convert.ToInt32(vvd.ID), vvd.RCNo, CRNo, vvd.InvoiceNo, Type, vvd.Location, vvd.ShelfNo);
+                                    InsertStock_new_2(seq, Convert.ToInt32(vvd.ID), vvd.RCNo, CRNo, vvd.InvoiceNo
+                                        , Type, vvd.Location, vvd.ShelfNo, vvd.LotNo);
 
 
                                     //var aa = (from ix in db.tb_ReceiveHs
@@ -1237,7 +1238,8 @@ namespace StockControl
         //    }
         //    catch (Exception ex) { MessageBox.Show(ex.Message); }
         //}
-        private void InsertStock_new_2(int seq, int id, string RCNo, string CRNo, string inv, string Type,string Location,string ShelfNo)
+        private void InsertStock_new_2(int seq, int id, string RCNo, string CRNo, string inv
+            , string Type,string Location,string ShelfNo,string LotNo)
         {
             try
             {
@@ -1358,6 +1360,7 @@ namespace StockControl
                                     gg.RefShipid = 0;
                                     gg.Location = Location;
                                     gg.ShelfNo = ShelfNo;
+                                    gg.LotNo = LotNo;
                                     //gg.RefidJobCode = null;
                                     //gg.RefJobCode = null;
 
