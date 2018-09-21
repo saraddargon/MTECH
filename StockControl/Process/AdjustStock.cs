@@ -628,7 +628,10 @@ namespace StockControl
                             if (Convert.ToDecimal(vv.Qty) < 0)
                             {
                                 //Ship out Stock
-                                db.sp_041_tb_Adjust_Stock(txtADNo.Text, vv.CodeNo, Math.Abs(Math.Round((Convert.ToDecimal(vv.Qty) * dbClss.TDe(vv.PCSUnit)), 2)), ClassLib.Classlib.User, vv.RefJobCard, vv.RefTempJobCard, vv.RefidJobCard,vv.Location);
+                                db.sp_041_tb_Adjust_Stock(txtADNo.Text, vv.CodeNo
+                                    , Math.Abs(Math.Round((Convert.ToDecimal(vv.Qty) * dbClss.TDe(vv.PCSUnit)), 2))
+                                    , ClassLib.Classlib.User, vv.RefJobCard, vv.RefTempJobCard, vv.RefidJobCard
+                                    ,vv.Location,dbClss.TInt(vv.idCSTMPODt));
                             }
                             else
                             {
@@ -685,11 +688,11 @@ namespace StockControl
                                     UnitCost = Math.Round((Amount / (Convert.ToDecimal(vv.Qty)*dbClss.TDe(vv.PCSUnit))),2);
 
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,0)));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
 
-                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))
                                         + Amount;
 
                                     sum_Qty = RemainQty + Math.Round((Convert.ToDecimal(vv.Qty) * dbClss.TDe(vv.PCSUnit)),2);
@@ -729,6 +732,7 @@ namespace StockControl
                                 gg.RefJobCode = vv.RefJobCard;
                                 gg.RefTempJobCode = vv.RefTempJobCard;
                                 gg.LotNo = vv.LotNo;
+                                gg.idCSTMPODt = vv.idCSTMPODt;
 
                                 db.tb_Stocks.InsertOnSubmit(gg);
                                 db.SubmitChanges();
@@ -973,7 +977,8 @@ namespace StockControl
                                 u.RefidJobCard = StockControl.dbClss.TInt(g.Cells["RefidJobCard"].Value);
                                 u.RefJobCard = StockControl.dbClss.TSt(g.Cells["RefJobCard"].Value);
                                 u.RefTempJobCard = StockControl.dbClss.TSt(g.Cells["RefTempJobCard"].Value);
-                                
+                                u.idCSTMPODt = dbClss.TInt(g.Cells["idCSTMPODt"].Value);
+
                                 db.tb_StockAdjusts.InsertOnSubmit(u);
                                 db.SubmitChanges();
 
@@ -1030,12 +1035,14 @@ namespace StockControl
                                 {
                                     //e.Row.Cells["RefTempJobCard"].Value = dbClss.TSt(g.FirstOrDefault().TempNo);
                                     e.Row.Cells["RefidJobCard"].Value = dbClss.TInt(g.FirstOrDefault().id);
+                                    e.Row.Cells["idCSTMPODt"].Value = dbClss.TInt(g.FirstOrDefault().RefDocId);
                                 }
                                 else
                                 {
                                     e.Row.Cells["RefJobCard"].Value = "";
                                     e.Row.Cells["RefTempJobCard"].Value = "";
                                     e.Row.Cells["RefidJobCard"].Value = 0;
+                                    e.Row.Cells["idCSTMPODt"].Value = 0;
                                 }
                             }
                         }
@@ -1044,6 +1051,7 @@ namespace StockControl
                             e.Row.Cells["RefJobCard"].Value = "";
                             e.Row.Cells["RefTempJobCard"].Value = "";
                             e.Row.Cells["RefidJobCard"].Value = 0;
+                            e.Row.Cells["idCSTMPODt"].Value = 0;
                         }
                     }
                     else if (dgvData.Columns["ShelfNo"].Index == e.ColumnIndex)
@@ -1081,7 +1089,8 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value), 0)));
+                            int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
                         }
                     }
                     else if (dgvData.Columns["Unit"].Index == e.ColumnIndex)

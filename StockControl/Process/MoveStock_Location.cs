@@ -1336,10 +1336,10 @@ namespace StockControl
                                     Amount = (-Qty_Cancel) * UnitCost;
 
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,0)));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
                                         + Amount;
 
                                     sum_Qty = RemainQty + (-Qty_Cancel);
@@ -1383,6 +1383,7 @@ namespace StockControl
                                     gg.ShipQty = Math.Abs(Qty_Cancel);
                                     gg.RefShipid = 0;
                                     gg.Location = Location;
+                                    gg.idCSTMPODt = vv.idCSTMPODt;
 
                                     db.tb_Stocks.InsertOnSubmit(gg);
                                     db.SubmitChanges();

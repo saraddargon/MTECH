@@ -186,13 +186,13 @@ namespace StockControl
                                 cbShipforJob.Checked = true;
                                 var p = (from ix in db.mh_ProductionOrders select ix)
                                     .Where
-                                    (a => a.JobNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Active==true
+                                    (a => a.JobNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Active == true
                                     ).ToList();
-                                        if (p.Count > 0)
-                                        {
-                                            txtRefidJobNo.Text = dbClss.TSt(p.FirstOrDefault().id);
-                                        }
-                                    }
+                                if (p.Count > 0)
+                                {
+                                    txtRefidJobNo.Text = dbClss.TSt(p.FirstOrDefault().id);
+                                }
+                            }
                             else
                                 cbShipforJob.Checked = false;
 
@@ -360,6 +360,7 @@ namespace StockControl
             lblStatus.Text = "-";
             dgvData.Rows.Clear();
             txtTotal.Text = "0.00";
+            
         }
       private void Enable_Status(bool ss,string Condition)
         {
@@ -692,9 +693,9 @@ namespace StockControl
                                     , txtLocation.Text
                                     , BaseUOM
                                     , BasePCSUOM
-                                    ,dbClss.TSt(g.Cells["UnitShip"].Value)
+                                    , dbClss.TSt(g.Cells["UnitShip"].Value)
                                     , StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
-                                    
+                                    , dbClss.TInt(g.Cells["idCSTMPODt"].Value)
                                     );
 
                                 //รับเข้า PD
@@ -843,7 +844,7 @@ namespace StockControl
                     decimal UnitCost = 0;
                     decimal sum_Remain = 0;
                     decimal sum_Qty = 0;
-
+                    int idCSTMPODt = 0;
                     //string CNNo = CNNo = StockControl.dbClss.GetNo(6, 2);
                     var g = (from ix in db.tb_Shippings
                                  //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
@@ -876,10 +877,10 @@ namespace StockControl
                                     Amount = (-QTY) * UnitCost;
 
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,0)));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))
                                         + Amount;
 
                                     sum_Qty = RemainQty + (-QTY);
@@ -935,12 +936,12 @@ namespace StockControl
                                     //    UnitCost = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "Avg"));
                                     
                                     Amount = (-QTY) * UnitCost;
-
+                                    
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,0)));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))
                                         + Amount;
 
                                     sum_Qty = RemainQty + (-QTY);
@@ -1150,7 +1151,10 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value), 0)));
+                            int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
+
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value)
+                                , "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
 
 
                             string dgvUOM = dbClss.TSt(e.Row.Cells["UnitShip"].Value);
@@ -1482,7 +1486,7 @@ namespace StockControl
                 //txtTempJobCard.Text = TempJob;
                 txtRefidJobNo.Text = Refid;
                 //txtLocation.Text = loca;
-
+                
                 int dgvNo = 0;
                 var r = (from ix in db.sp_051_Job_list(JobCard)
                          select ix).ToList();
@@ -1496,11 +1500,13 @@ namespace StockControl
                         //if (PCSBaseUOM <= 0)
                         //    PCSBaseUOM = 1;
                         //AC_PCSUnit = dbClss.TDe(vv.PCSUnit) * PCSBaseUOM;
+                       
                         Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescriptioin
                                         , dbClss.TDe( vv.RemainQty), vv.QtyPlan, vv.QtyShip, vv.UnitShip, dbClss.TDe(vv.PCSUnit)
                                         , dbClss.TDe(vv.UnitCost)
                                         , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, vv.id
-                                        , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM),dbClss.TDe(vv.QtyUsed),vv.GroupType,vv.Type);
+                                        , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM),dbClss.TDe(vv.QtyUsed)
+                                        ,vv.GroupType,vv.Type, dbClss.TInt(vv.idCSTMPODt));
 
                     }
                 }
@@ -1512,7 +1518,7 @@ namespace StockControl
             , string ItemDescription,decimal RemainQty, decimal QtyPlan, decimal QtyShip, string UnitShip, decimal PCSUnit
            , decimal StandardCost,decimal Amount,string LotNo,string SerialNo,string MachineName,string LineName
             ,string Remark,int id,string Location,string BaseUOM,decimal BasePCSUOM
-            ,decimal QtyUsed,string GroupType,string Type
+            ,decimal QtyUsed,string GroupType,string Type, int idCSTMPODt
             )
         {
             
@@ -1552,6 +1558,8 @@ namespace StockControl
                 ee.Cells["QtyUsed"].Value = QtyUsed;
                 ee.Cells["GroupType"].Value = GroupType;
                 ee.Cells["Type"].Value = Type;
+                ee.Cells["idCSTMPODt"].Value = idCSTMPODt;
+
                 //if (GroupCode != "Other")
                 //{
                 //    ee.Cells["dgvCodeNo"].ReadOnly = true;

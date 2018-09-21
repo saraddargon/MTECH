@@ -741,7 +741,7 @@ namespace StockControl
                                 u.TypeReceive = StockControl.dbClss.TSt(g.Cells["TypeReceive"].Value);
                                 u.Location = StockControl.dbClss.TSt(g.Cells["Location"].Value);
                                 u.Rate = dbClss.TDe(g.Cells["Rate"].Value);
-                                
+                                u.idCSTMPODt = dbClss.TInt(g.Cells["idCSTMPODt"].Value);
 
                                 string BaseUOM = "";
                                 decimal BasePCSUnit = 1;
@@ -1052,10 +1052,10 @@ namespace StockControl
 
                             }
                             //แบบที่ 1 จะไป sum ใหม่
-                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,0)));
+                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0, vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                             //แบบที่ 2 จะไปดึงล่าสุดมา
                             //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                            sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                            sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
                                 + Amount;
 
                             sum_Qty = RemainQty + Math.Round(((Convert.ToDecimal(vv.QTY)* Convert.ToDecimal(vv.PCSUnit) * BasePCSUnit)),2);
@@ -1105,6 +1105,8 @@ namespace StockControl
                             gg.Location = vv.Location;
                             gg.ShelfNo = vv.ShelfNo;
                             gg.LotNo = vv.LotNo;
+                            gg.idCSTMPODt = vv.idCSTMPODt;
+
                             //ต้องไม่ใช่ Item ที่มีในระบบ
                             var c = (from ix in db.mh_Items
                                      where ix.InternalNo.Trim().ToUpper() == vv.CodeNo.Trim().ToUpper() && ix.Active ==true
@@ -1204,10 +1206,10 @@ namespace StockControl
                                 Amount = (QTY) * UnitCost;
 
                                 //แบบที่ 1 จะไป sum ใหม่
-                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,0)));
+                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
                                 //แบบที่ 2 จะไปดึงล่าสุดมา
                                 //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
                                     + Amount;
 
                                 sum_Qty = RemainQty + (QTY * Convert.ToDecimal(vv.PCSUnit));
@@ -1241,7 +1243,7 @@ namespace StockControl
                                 u.Seq = Seq;
                                 u.Status = "Completed";
                                 u.UnitCost = UnitCost;
-                                
+                                u.idCSTMPODt = vv.idCSTMPODt;
                                 db.tb_Shippings.InsertOnSubmit(u);
                                 db.SubmitChanges();
 
@@ -1281,6 +1283,7 @@ namespace StockControl
                                 gg.RefShipid = 0;
                                 gg.Location = vv.Location;
                                 gg.ShelfNo = vv.ShelfNo;
+                                gg.idCSTMPODt = vv.idCSTMPODt;
 
                                 var ab = (from ix in db.tb_Shippings
                                          where ix.ShippingNo.Trim().ToUpper() == SHNo.Trim().ToUpper() && ix.Status != "Cancel"
@@ -1384,10 +1387,10 @@ namespace StockControl
 
                                 Amount = (QTY) * UnitCost ;
                                 //แบบที่ 1 จะไป sum ใหม่
-                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,0)));
+                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
                                 //แบบที่ 2 จะไปดึงล่าสุดมา
                                 //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
                                     + Amount;
 
                                 sum_Qty = RemainQty + Math.Round(((QTY*dbClss.TDe(vv.PCSUnit) * BasePCSUnit)),2);
@@ -1423,7 +1426,7 @@ namespace StockControl
                                 u.Location = vv.Location;
                                 u.BasePCSUOM = vv.PCSUnit_Base;
                                 u.BaseUOM = vv.BaseUOM;
-                               
+                                u.idCSTMPODt = vv.idCSTMPODt;
 
                                 db.tb_Shippings.InsertOnSubmit(u);
                                 db.SubmitChanges();
@@ -1463,6 +1466,7 @@ namespace StockControl
                                 gg.RefShipid = 0;
                                 gg.Location = vv.Location;
                                 gg.ShelfNo = vv.ShelfNo;
+                                gg.idCSTMPODt = vv.idCSTMPODt;
 
                                 var ab = (from ix in db.tb_Shippings
                                           where ix.ShippingNo.Trim().ToUpper() == SHNo.Trim().ToUpper() && ix.Status != "Cancel"
@@ -2099,8 +2103,9 @@ namespace StockControl
                     string ShelfNo = "";
                     string Location = "";
                     decimal Rate = 1;
+                    int idCSTMPODt = 0;
 
-                   
+
 
                     var g = (from ix in db.mh_PurchaseOrders select ix)
                         .Where(a => a.PONo == txtDocNo.Text.Trim()
@@ -2174,6 +2179,7 @@ namespace StockControl
                                         PRNo = txtDocNo.Text;
                                         RCNo = "";
                                         PRID = StockControl.dbClss.TInt(gg.id);
+                                        idCSTMPODt = dbClss.TInt(gg.idCSTMPODt);
 
                                         if (StockControl.dbClss.TDe(gg.OrderQty)
                                                 == StockControl.dbClss.TDe(gg.BackOrder))
@@ -2203,6 +2209,7 @@ namespace StockControl
                                            , SerialNo, ShelfNo, Location, Remark, TempNo, PRNo, RCNo, InvoiceNo
                                            , ID.ToString(), PRID.ToString(), ""//ddlTypeReceive.Text
                                            ,Rate
+                                           , idCSTMPODt
                                            );
                                     }
                                 }
@@ -2220,7 +2227,7 @@ namespace StockControl
            , string ItemDescription, decimal QTY, decimal RemainQty, string Unit, decimal PCSUnit
           , decimal CostPerUnit, decimal Amount, string CRRNCY, string LotNo, string SerialNo
           ,string ShelfNo,string Location, string Remark,string TempNo,string PRNo,string RCNo
-          ,string InvoiceNo,string ID,string PRID,string TypeReceive,decimal Rate
+          ,string InvoiceNo,string ID,string PRID,string TypeReceive,decimal Rate,int idCSTMPODt
            )                     
         {
             try
@@ -2259,6 +2266,7 @@ namespace StockControl
                 ee.Cells["PRID"].Value = PRID;
                 ee.Cells["TypeReceive"].Value = TypeReceive;
                 ee.Cells["Rate"].Value = Rate;
+                ee.Cells["idCSTMPODt"].Value = idCSTMPODt;
 
                 //if (GroupCode != "Other")
                 //{

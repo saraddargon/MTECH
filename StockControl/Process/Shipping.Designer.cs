@@ -115,6 +115,7 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.txtidCSTMPODt = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -160,6 +161,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSHName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCodeNo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtidCSTMPODt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -660,6 +662,7 @@
             // 
             this.radPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(237)))), ((int)(((byte)(250)))));
             this.radPanel1.Controls.Add(this.ddlLocation);
+            this.radPanel1.Controls.Add(this.txtidCSTMPODt);
             this.radPanel1.Controls.Add(this.radLabel16);
             this.radPanel1.Controls.Add(this.radLabel15);
             this.radPanel1.Controls.Add(this.radGroupBox2);
@@ -1013,6 +1016,19 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
+            // txtidCSTMPODt
+            // 
+            this.txtidCSTMPODt.AcceptsReturn = true;
+            this.txtidCSTMPODt.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.txtidCSTMPODt.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtidCSTMPODt.Location = new System.Drawing.Point(676, 109);
+            this.txtidCSTMPODt.Name = "txtidCSTMPODt";
+            this.txtidCSTMPODt.ReadOnly = true;
+            this.txtidCSTMPODt.Size = new System.Drawing.Size(33, 19);
+            this.txtidCSTMPODt.TabIndex = 4;
+            this.txtidCSTMPODt.TabStop = false;
+            this.txtidCSTMPODt.Visible = false;
+            // 
             // Shipping
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1081,6 +1097,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSHName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCodeNo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtidCSTMPODt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1155,5 +1172,6 @@
         private Telerik.WinControls.UI.RadLabel radLabel15;
         private Telerik.WinControls.UI.RadDropDownList ddlLocation;
         private Telerik.WinControls.UI.RadButtonElement radButtonElement1;
+        private Telerik.WinControls.UI.RadTextBox txtidCSTMPODt;
     }
 }
