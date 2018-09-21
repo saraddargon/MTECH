@@ -1975,6 +1975,7 @@
       <Column Name="ShelfNo" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="RemarkLocation" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
       <Column Name="LotNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">

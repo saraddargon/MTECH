@@ -42197,6 +42197,8 @@ namespace StockControl
 		
 		private string _LotNo;
 		
+		private System.Nullable<int> _idCSTMPODt;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -42285,6 +42287,8 @@ namespace StockControl
     partial void OnRemarkLocationChanged();
     partial void OnLotNoChanging(string value);
     partial void OnLotNoChanged();
+    partial void OnidCSTMPODtChanging(System.Nullable<int> value);
+    partial void OnidCSTMPODtChanged();
     #endregion
 		
 		public tb_Stock()
@@ -43128,6 +43132,26 @@ namespace StockControl
 					this._LotNo = value;
 					this.SendPropertyChanged("LotNo");
 					this.OnLotNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCSTMPODt", DbType="Int")]
+		public System.Nullable<int> idCSTMPODt
+		{
+			get
+			{
+				return this._idCSTMPODt;
+			}
+			set
+			{
+				if ((this._idCSTMPODt != value))
+				{
+					this.OnidCSTMPODtChanging(value);
+					this.SendPropertyChanging();
+					this._idCSTMPODt = value;
+					this.SendPropertyChanged("idCSTMPODt");
+					this.OnidCSTMPODtChanged();
 				}
 			}
 		}
