@@ -489,7 +489,7 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    string jobNo = txtJobNo.Text;
+                    string jobNo = (txtidJob.Text.ToInt() > 0) ? txtJobNo.Text : "";
                     bool newJob = false;
                     //Hd
                     var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo).FirstOrDefault();

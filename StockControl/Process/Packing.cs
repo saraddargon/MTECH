@@ -93,7 +93,7 @@ namespace StockControl
 
                             dgvData.DataSource = null;
                             dgvData.Rows.Clear();
-                            var dt = db.mh_PackingDts.Where(x => x.PackingNo == pk).ToList();
+                            var dt = db.mh_PackingDts.Where(x => x.Active && x.PackingNo == pk).ToList();
                             foreach (var item in dt)
                             {
                                 addRow(item.id, item.ItemNo, item.ItemName, item.Qty, item.UOM, item.PCSUnit
@@ -101,6 +101,9 @@ namespace StockControl
                                     , item.CustomerPONo, item.idJob, item.idCstmPODt);
                             }
                             setRowNo();
+
+                            if (!m.Active)
+                                lblStatus.Text = "Cancel";
 
                             btnSave.Enabled = false;
                             btnDelete.Enabled = true;
@@ -134,6 +137,7 @@ namespace StockControl
             dtInvoiceDate.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             dgvData.Rows.Clear();
             dgvData.DataSource = null;
+            txtidPk.Text = "";
 
             txtTotal.Text = "";
             txtJobNo.Focus();
@@ -268,7 +272,8 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    var m = db.mh_Packings.Where(x => x.PackingNo == txtPackingNo.Text).FirstOrDefault();
+                    string PKNo = (txtidPk.Text.ToInt() > 0) ? txtPackingNo.Text.Trim() : "";
+                    var m = db.mh_Packings.Where(x => x.PackingNo == PKNo).FirstOrDefault();
                     if (m == null)
                     {
                         m = new mh_Packing();
@@ -355,7 +360,7 @@ namespace StockControl
                             s.CreateBy = ClassLib.Classlib.User;
                             s.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                             s.DocNo = txtPackingNo.Text;
-                            s.RefNo = dt.id.ToSt(); //id Packing
+                            s.RefNo = dt.idJob.ToSt(); //id Job --> mh_ProductionOrder
                             s.CodeNo = item.Cells["ItemNo"].Value.ToSt();
                             s.Type = "Receive By Job";
                             s.QTY = Math.Round(item.Cells["Qty"].Value.ToDecimal() * item.Cells["PCSUnit"].Value.ToDecimal(), 2);
@@ -363,7 +368,7 @@ namespace StockControl
                             s.Outbound = 0;
                             s.Type_i = 1;
                             s.Category = "Invoice";
-                            s.Refid = m.id;
+                            s.Refid = dt.id; //id mh_PackingDt
                             s.Type_in_out = "In";
                             s.AmountCost = dt.Amount;
                             if (s.AmountCost > 0)
@@ -412,8 +417,6 @@ namespace StockControl
                         db.SubmitChanges();
                     }
 
-                    
-                    txtPackingNo.Text = m.PackingNo;
                     ClearData();
                     txtPackingNo.Text = m.PackingNo;
                     DataLoad();
@@ -936,23 +939,77 @@ namespace StockControl
         {
             if (dgvData.CurrentCell != null)
             {
-                if(dgvData.CurrentCell.RowInfo.Cells["id"].Value.ToInt() == 0)
+                if (dgvData.CurrentCell.RowInfo.Cells["id"].Value.ToInt() == 0)
                 {
                     dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
                     setRowNo();
                     calAmnt();
                 }
+                else
+                    baseClass.Error("Status Cannot Delete.\n");
             }
         }
 
+        bool chkDelE()
+        {
+            bool ret = true;
+            string mssg = "";
+
+            using (var db = new DataClasses1DataContext())
+            {
+                foreach (var item in dgvData.Rows)
+                {
+                    int id = item.Cells["id"].Value.ToInt();
+                    //var m = db.tb_Stocks.Where(x=>x.Refid == id && x.RefNo == txtPackingNo.Text).tol)
+                }
+            }
+
+            if(mssg != "")
+            {
+                ret = false;
+                baseClass.Warning(mssg);
+            }
+            return ret;
+        }
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            baseClass.Warning("Comming soon...");
+            if (chkDelE() && baseClass.Question("Do you want to 'Delete' ?"))
+                DeleteE();
         }
         void DeleteE()
         {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
 
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
         }
 
+        private void txtPackingNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string pk = txtPackingNo.Text;
+                ClearData();
+                txtPackingNo.Text = pk;
+                DataLoad();
+            }
+        }
+
+        private void lblStatus_TextChanged(object sender, EventArgs e)
+        {
+            if (lblStatus.Text == "Cancel")
+                lblStatus.ForeColor = Color.Red;
+            else
+                lblStatus.ForeColor = Color.FromArgb(0, 192, 0);
+        }
     }
 }
