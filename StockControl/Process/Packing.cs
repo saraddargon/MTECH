@@ -369,6 +369,7 @@ namespace StockControl
                             s.Type_i = 1;
                             s.Category = "Invoice";
                             s.Refid = dt.id; //id mh_PackingDt
+                            s.idCSTMPODt = job.RefDocId; //idCstmPODt
                             s.Type_in_out = "In";
                             s.AmountCost = dt.Amount;
                             if (s.AmountCost > 0)

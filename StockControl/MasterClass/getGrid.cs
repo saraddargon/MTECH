@@ -300,10 +300,10 @@ namespace StockControl
                 this.InvGroup_enum = baseClass.getInventoryGroup(t.InventoryGroup);
                 //this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
                 decimal? a = null;
-                if (InvGroup_enum == InventoryGroup.FG)
-                    a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneJob", 0, "Warehouse", 0);
-                else
-                    a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneCstmPO", 0, "Warehouse", 0);
+                if (InvGroup_enum == InventoryGroup.FG || InvGroup_enum == InventoryGroup.SEMI) //FG,SEMI กรณีไม่ได้เปิดจากเพื่อ Customer PO ใดๆ
+                    a = db.Cal_QTY_Remain_Location(this.ItemNo, "FGPlan", 0, "Warehouse", 0);
+                else //RM ที่สั่งซื้อเพื่อ Customer P/O แต่ Job สำหรับ Customer P/O Item นั้นๆถูกปิดไปแล้ว
+                    a = db.Cal_QTY_Remain_Location(this.ItemNo, "RMPlan", 0, "Warehouse", 0);
                 if (a != null)
                 {
                     this.QtyOnHand = a.Value.ToDecimal();
