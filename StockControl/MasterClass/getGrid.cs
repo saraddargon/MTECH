@@ -301,9 +301,9 @@ namespace StockControl
                 //this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
                 decimal? a = null;
                 if (InvGroup_enum == InventoryGroup.FG)
-                    a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneJob", 0, "Warehouse");
+                    a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneJob", 0, "Warehouse", 0);
                 else
-                    a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneCstmPO", 0, "Warehouse");
+                    a = db.Cal_QTY_Remain_Location(this.ItemNo, "NoneCstmPO", 0, "Warehouse", 0);
                 if (a != null)
                 {
                     this.QtyOnHand = a.Value.ToDecimal();

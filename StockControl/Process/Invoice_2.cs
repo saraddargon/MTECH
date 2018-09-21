@@ -1631,7 +1631,7 @@ namespace StockControl
 
                         //}
                         decimal RemainQty = 0;
-                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(itemNo, "Invoice", 0, t.Location)));
+                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(itemNo, "Invoice", 0, t.Location,0)));
                         if (RemainQty > 0)
                         {
                             var rowE = dgvData.Rows.AddNew();
@@ -1914,7 +1914,7 @@ namespace StockControl
                                     decimal PCSUnit = Convert.ToDecimal(im.PCSUnit);//dbClss.Con_UOM(itemNo, UOM);
                                     decimal StandardPrice = Convert.ToDecimal(im.UnitPrice);
 
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(itemNo, "Invoice", 0, Location)));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(itemNo, "Invoice", 0, Location,0)));
                                     if (RemainQty > 0)
                                     {
                                         var rowE = dgvData.Rows.AddNew();

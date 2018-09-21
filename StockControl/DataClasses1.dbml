@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dbMTECH" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=1.179.133.222,2018;Initial Catalog=dbMTECH;Persist Security Info=True;User ID=sa" SettingsObjectName="StockControl.Properties.Settings" SettingsPropertyName="dbStockControlConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=1.179.133.222,2018;Initial Catalog=dbMTECH;User ID=sa" SettingsObjectName="StockControl.Properties.Settings" SettingsPropertyName="dbStockControlConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.ErrorLog" Member="ErrorLogs">
     <Type Name="ErrorLog">
       <Column Name="ErrorLogNo" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -4729,6 +4729,7 @@
     <Parameter Name="Category" Parameter="category" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="Type_i" Parameter="type_i" Type="System.Int32" DbType="Int" />
     <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="CSTMID" Parameter="cSTMID" Type="System.Int32" DbType="Int" />
     <Return Type="System.Decimal" />
   </Function>
 </Database>

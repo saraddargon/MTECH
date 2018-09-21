@@ -2221,9 +2221,9 @@ namespace StockControl
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Cal_QTY_Remain_Location", IsComposable=true)]
-		public System.Nullable<decimal> Cal_QTY_Remain_Location([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="VarChar(50)")] string codeNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Category", DbType="VarChar(50)")] string category, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type_i", DbType="Int")] System.Nullable<int> type_i, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location)
+		public System.Nullable<decimal> Cal_QTY_Remain_Location([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="VarChar(50)")] string codeNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Category", DbType="VarChar(50)")] string category, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type_i", DbType="Int")] System.Nullable<int> type_i, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CSTMID", DbType="Int")] System.Nullable<int> cSTMID)
 		{
-			return ((System.Nullable<decimal>)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), codeNo, category, type_i, location).ReturnValue));
+			return ((System.Nullable<decimal>)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), codeNo, category, type_i, location, cSTMID).ReturnValue));
 		}
 	}
 	

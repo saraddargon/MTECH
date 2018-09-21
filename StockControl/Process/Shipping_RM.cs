@@ -876,7 +876,7 @@ namespace StockControl
                                     Amount = (-QTY) * UnitCost;
 
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location)));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,0)));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
                                     sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
@@ -937,7 +937,7 @@ namespace StockControl
                                     Amount = (-QTY) * UnitCost;
 
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location)));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,0)));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
                                     sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
@@ -1150,7 +1150,7 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value))));
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value), 0)));
 
 
                             string dgvUOM = dbClss.TSt(e.Row.Cells["UnitShip"].Value);

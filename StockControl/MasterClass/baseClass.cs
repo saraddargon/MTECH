@@ -158,7 +158,7 @@ namespace StockControl
         {
             using (var db = new DataClasses1DataContext())
             {
-                var g = db.Cal_QTY_Remain_Location(ItemNo, "", 0, LocationCode).Value.ToDecimal();
+                var g = db.Cal_QTY_Remain_Location(ItemNo, "", 0, LocationCode, 0).Value.ToDecimal();
                 return g;
             }
         }

@@ -376,7 +376,7 @@ namespace StockControl
                             else
                                 s.UnitCost = 0;
 
-                            decimal RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(s.CodeNo, "", 0, "Warehouse")));
+                            decimal RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(s.CodeNo, "", 0, "Warehouse", 0)));
                             decimal sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(s.CodeNo, "", "", "RemainAmount", "Warehouse")) + s.AmountCost.ToDecimal();
                             decimal sum_Qty = RemainQty.ToDecimal() + s.QTY.ToDecimal();
                             var RemainAmount = sum_Remain;

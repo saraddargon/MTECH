@@ -660,7 +660,7 @@ namespace StockControl
                         {
                             //Seq += 1;
                             string Location = dbClss.TSt(vv.Location);
-                            decimal Qty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,Location)));
+                            decimal Qty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,Location,0)));
                             if (Qty > 0 && Location != "")
                             {
                                 db.sp_041_tb_Adjust_Stock(txtADNo.Text, vv.CodeNo, Qty, ClassLib.Classlib.User,"","",0, Location);
@@ -795,7 +795,7 @@ namespace StockControl
                                 UnitCost = Math.Round((Amount / (Convert.ToDecimal(vv.Qty) * dbClss.TDe(vv.PCSUnit))),2);
 
                                 //แบบที่ 1 จะไป sum ใหม่
-                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location)));
+                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,0)));
                                 //แบบที่ 2 จะไปดึงล่าสุดมา
                                 //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
 
@@ -1182,7 +1182,7 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value))));
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value),0)));
                         }
                     }
                     else if (dgvData.Columns["Unit"].Index == e.ColumnIndex)
@@ -1361,7 +1361,7 @@ namespace StockControl
 
                             ItemNo = d.InternalName;
                             ItemDescription = d.InternalName;
-                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Invoice", 0, Convert.ToString(d.Location))));//Convert.ToDecimal(d.StockInv);
+                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Invoice", 0, Convert.ToString(d.Location),0)));//Convert.ToDecimal(d.StockInv);
                             Unit = d.PurchaseUOM;
                             PCSUnit = dbClss.Con_UOM(CodeNo, d.PurchaseUOM);
                             CostPerUnit = 0;// Convert.ToDecimal(d.StandardCost); // Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "Avg"));//Convert.ToDecimal(d.StandardCost);

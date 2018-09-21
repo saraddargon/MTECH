@@ -376,7 +376,7 @@ namespace StockControl
                     Amount = Convert.ToDecimal(txtQTY.Text) * UnitCost;
 
                     //แบบที่ 1 จะไป sum ใหม่
-                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(g.CodeNo, "", 0, dbClss.TSt(g.Location))));
+                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(g.CodeNo, "", 0, dbClss.TSt(g.Location),0)));
                     //แบบที่ 2 จะไปดึงล่าสุดมา
                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
 
@@ -598,7 +598,7 @@ namespace StockControl
                 Amount = Convert.ToDecimal(g.QTY) * UnitCost;
 
                 //แบบที่ 1 จะไป sum ใหม่
-                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(g.CodeNo, "", 0,dbClss.TSt(g.Location))));
+                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(g.CodeNo, "", 0,dbClss.TSt(g.Location),0)));
                 //แบบที่ 2 จะไปดึงล่าสุดมา
                 //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
 

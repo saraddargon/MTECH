@@ -1066,7 +1066,7 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value))));
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value),0)));
                         }
                     }
                     else if (dgvData.Columns["Unit"].Index == e.ColumnIndex)
@@ -1344,7 +1344,7 @@ namespace StockControl
 
                             ItemNo = d.InternalName;
                             ItemDescription = d.InternalDescription;
-                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Invoice", 0, "Warehouse")));//Convert.ToDecimal(d.StockInv);
+                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Invoice", 0, "Warehouse",0)));//Convert.ToDecimal(d.StockInv);
                             Unit = d.PurchaseUOM;
                             PCSUnit = dbClss.Con_UOM(CodeNo, d.PurchaseUOM);
                             CostPerUnit = 0; // Convert.ToDecimal(d.StandardCost); // Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "Avg"));//Convert.ToDecimal(d.StandardCost);
