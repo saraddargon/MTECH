@@ -496,7 +496,7 @@ namespace StockControl
                             gg.id = g.FirstOrDefault().id;
                             gg.TypeReceive = g.FirstOrDefault().TypeReceive;
                             gg.InvoiceDate = g.FirstOrDefault().InvoiceDate;
-                            
+                         
                             db.tb_ReceiveH_Dels.InsertOnSubmit(gg);
                             db.SubmitChanges();
 

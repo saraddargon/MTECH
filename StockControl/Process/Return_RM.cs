@@ -1051,8 +1051,10 @@ namespace StockControl
                             //    }
 
                             if (QTY > 0)
-                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value));
-
+                            {
+                                int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
+                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt);
+                            }
 
 
                         }
@@ -1180,12 +1182,12 @@ namespace StockControl
             return re;
         }
 
-        private decimal Get_UnitCostFIFO(string CodeNo, decimal Qty, string Location)
+        private decimal Get_UnitCostFIFO(string CodeNo, decimal Qty, string Location, int idCSTMPODt)
         {
             decimal re = 0;
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                re = dbClss.TDe(db.Get_AvgCost_FIFO(CodeNo, Qty, Location));
+                re = dbClss.TDe(db.Get_AvgCost_FIFO(CodeNo, Qty, Location,idCSTMPODt));
             }
             return re;
         }

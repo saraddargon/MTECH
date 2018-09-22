@@ -743,6 +743,19 @@ namespace StockControl
                                 u.Rate = dbClss.TDe(g.Cells["Rate"].Value);
                                 u.idCSTMPODt = dbClss.TInt(g.Cells["idCSTMPODt"].Value);
 
+                                if (rdoDL.IsChecked)
+                                {
+                                    u.InvoiceNo = txtDLNo.Text;
+                                    u.TempInvNo = txtDLNo.Text;
+                                    u.CostPerUnit = 0;
+                                    u.Amount = 0;
+                                }
+                                else if (rdoInvoice.IsChecked)
+                                {
+                                    u.InvoiceNo = txtInvoiceNo.Text;
+                                    u.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
+                                    u.CostPerUnit = StockControl.dbClss.TDe(g.Cells["CostPerUnit"].Value);
+                                }
                                 string BaseUOM = "";
                                 decimal BasePCSUnit = 1;
                                     var be = (from ix in db.mh_Items select ix)
@@ -751,6 +764,11 @@ namespace StockControl
                                         ).ToList();
                                 if (be.Count > 0)
                                 {
+                                    var ins = (from ix in db.mh_Items select ix)
+                                        .Where(a => a.InternalNo.Trim().ToUpper().Equals(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value).Trim().ToUpper())
+                                        ).FirstOrDefault();
+                                    ins.StandardCost = dbClss.TDe(u.CostPerUnit);
+
                                     BaseUOM = dbClss.TSt(be.FirstOrDefault().BaseUOM);
                                     BasePCSUnit = dbClss.Con_UOM((StockControl.dbClss.TSt(g.Cells["CodeNo"].Value).Trim().ToUpper()), BaseUOM);
                                 }
@@ -762,19 +780,6 @@ namespace StockControl
 
                                 u.PCSUnit_Base = BasePCSUnit;
                                 u.BaseUOM = BaseUOM;
-                                if (rdoDL.IsChecked)
-                                {
-                                    u.InvoiceNo =txtDLNo.Text;
-                                    u.TempInvNo = txtDLNo.Text;
-                                    u.CostPerUnit = 0;
-                                    u.Amount = 0;                                   
-                                }
-                                else if (rdoInvoice.IsChecked)
-                                {
-                                    u.InvoiceNo = txtInvoiceNo.Text;
-                                    u.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
-                                    u.CostPerUnit = StockControl.dbClss.TDe(g.Cells["CostPerUnit"].Value);
-                                }
                                 u.RCDate = RequireDate;
                                 u.Seq = Seq;
 
