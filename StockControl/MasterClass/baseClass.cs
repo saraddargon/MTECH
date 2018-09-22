@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -241,7 +242,7 @@ namespace StockControl
                 {
                     var bDate = beginDate.Date;
                     var tDate = (dTo != null) ? dTo.Value.Date : beginDate.Date.AddDays(7);
-                    while(bDate <= tDate)
+                    while (bDate <= tDate)
                     {
                         CalCapacity_WorkCenter(idWorkcenter, bDate);
                         bDate = bDate.AddDays(1);
@@ -274,6 +275,44 @@ namespace StockControl
                     wl.CapacityAlocateX += loadCapaX; //เวลาในวัน
                 }
                 return workLoads;
+            }
+        }
+        public static WorkLoad getWorkLoad_From(DateTime beginDate, int idWorkcenter)
+        {
+            var wl = new WorkLoad();
+            using (var db = new DataClasses1DataContext())
+            {
+                if (idWorkcenter > 0)
+                {
+                    var bDate = beginDate.Date;
+                    bool findE = true;
+                    while (findE)
+                    {
+                        var av = CalCapacity_WorkCenter(idWorkcenter, bDate);
+                        var m = db.mh_CapacityLoads.Where(x => x.Date == av.Date
+                                && x.WorkCenterID == av.WorkCenterID && x.Active).ToList();
+
+                        decimal loadCapa = 0.00m;
+                        decimal loadCapaX = 0.00m;
+                        loadCapa = m.Sum(x => x.Capacity);
+                        loadCapaX = m.Sum(x => x.CapacityX);
+
+                        if (av.CapacityX - loadCapaX > 0)
+                        {
+                            wl.idWorkCenter = av.WorkCenterID;
+                            wl.Date = av.Date.Date;
+                            wl.CapacityAvailable = av.Capacity.ToDecimal();
+                            wl.CapacityAvailableX = av.CapacityX.ToDecimal();
+                            wl.CapacityAlocate += loadCapa; //Capa ในวัน
+                            wl.CapacityAlocateX += loadCapaX; //เวลาในวัน
+                            findE = false;
+                        }
+                        //
+                        bDate = bDate.AddDays(1);
+                    }
+                }
+                //
+                return wl;
             }
         }
         public static List<CalendarLoad> getCalendarLoad(DateTime beginDate)
@@ -363,9 +402,85 @@ namespace StockControl
                 return "Waiting";
         }
 
+        //move reserve stock 
+        public static void moveReserveStock(int idCstmPODt_Free, int idCstmPODt
+            , int id_tb_Stock, decimal ReserveQty)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                var tbst = db.tb_Stocks.Where(x => x.id == id_tb_Stock).FirstOrDefault();
+
+                //เขียน ShipQty ออกจาก Job
+
+                //Stock ใส่ Customer PODt id ใบใหม่
+                var amntCost = Math.Round(tbst.UnitCost.ToDecimal() * ReserveQty.ToDecimal(), 2);
+                var s = new tb_Stock();
+                s.AppDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                s.Seq = 1;
+                s.App = "Receive";
+                s.Appid = 1;
+                s.CreateBy = ClassLib.Classlib.User;
+                s.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                s.DocNo = dbClss.GetNo(33, 2); //MOS -- Move stock free to new CustomerPO
+                s.RefNo = id_tb_Stock.ToSt(); //Refer id tb_Stock ของ stock free Customer PO เก่า
+                s.CodeNo = tbst.CodeNo;
+                s.Type = "Move Stock Free to New CustomerPO";
+                s.QTY = ReserveQty;
+                s.Inbound = s.QTY;
+                s.Outbound = 0;
+                s.Type_i = 1;
+                s.Category = "Invoice";
+                s.Refid = idCstmPODt_Free; //old idCstmPODt ---> Free Stock
+                s.idCSTMPODt = idCstmPODt; //new idCstmPODt
+                s.Type_in_out = "In";
+                s.AmountCost = amntCost;
+                if (s.AmountCost > 0)
+                    s.UnitCost = Math.Round(s.QTY.ToDecimal() / s.AmountCost.ToDecimal(), 2);
+                else
+                    s.UnitCost = 0;
+
+                decimal RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(s.CodeNo, "", 0, "Warehouse", 0)));
+                decimal sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(s.CodeNo, "", "", "RemainAmount", "Warehouse")) + s.AmountCost.ToDecimal();
+                decimal sum_Qty = RemainQty.ToDecimal() + s.QTY.ToDecimal();
+                var RemainAmount = sum_Remain;
+                decimal RemainUnitCost = 0.00m;
+                if (sum_Qty <= 0)
+                    RemainUnitCost = 0;
+                else
+                    RemainUnitCost = Math.Round((Math.Abs(RemainAmount) / Math.Abs(sum_Qty)), 2);
+                s.RemainQty = sum_Qty;
+                s.RemainUnitCost = RemainUnitCost;
+                s.RemainAmount = RemainAmount;
+                s.Avg = 0;
+                s.CalDate = null;
+                s.Status = "Active";
+                s.Flag_ClearTemp = 0;
+                s.TLCost = s.AmountCost;
+                s.TLQty = s.QTY;
+                s.ShipQty = 0;
+                s.Location = "Warehouse";
+                s.ShelfNo = tbst.ShelfNo;
+                //ต้องไม่ใช่ Item ที่มีในระบบ
+                var c = (from ix in db.mh_Items
+                         where ix.InternalNo.Trim().ToUpper() == s.CodeNo.Trim().ToUpper() && ix.Active
+                         select ix).ToList();
+                if (c.Count <= 0)
+                {
+                    s.TLQty = 0;
+                    s.ShipQty = s.QTY;
+                }
+
+                db.tb_Stocks.InsertOnSubmit(s);
+                db.SubmitChanges();
+
+                //update Stock เข้า item
+                db.sp_010_Update_StockItem(Convert.ToString(s.CodeNo), "");
+            }
+        }
+
 
         //Calculate Capacity Available
-        public static void CalCapacity_WorkCenter(int idWorkCenter, DateTime dTemp)
+        public static mh_CapacityAvailable CalCapacity_WorkCenter(int idWorkCenter, DateTime dTemp)
         {
             using (var db = new DataClasses1DataContext())
             {
@@ -453,6 +568,8 @@ namespace StockControl
                 mh.CapacityX = totalMinWork;
                 mh.WorkCenterID = t.id;
                 db.SubmitChanges();
+
+                return mh;
             }
         }
         public static DayOfWeek GetDayOfWeek(int id)

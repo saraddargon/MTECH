@@ -122,7 +122,8 @@ namespace StockControl
         public string CustomerNo { get; set; }
         public string CustomerName
         {
-            get {
+            get
+            {
                 using (var db = new DataClasses1DataContext())
                 {
                     var c = db.mh_Customers.Where(x => x.Active && x.No == CustomerNo).FirstOrDefault();
@@ -138,7 +139,8 @@ namespace StockControl
         public decimal Qty { get; set; } = 0;
         public decimal Remain
         {
-            get {
+            get
+            {
                 return (Qty) - Shipped;
             }
         }
@@ -149,14 +151,16 @@ namespace StockControl
         }
         public bool Plan
         {
-            get {
+            get
+            {
                 return (Qty * PCSUnit != OutPlan);
                 //find from JobNo
             }
         }
         public bool SaleOrder
         {
-            get {
+            get
+            {
                 return (Qty * PCSUnit != OutSO);
                 //find in SaleOrder
             }
@@ -182,7 +186,8 @@ namespace StockControl
     {
         public string Status
         {
-            get {
+            get
+            {
                 if (DueDate.Date > ReqDate.Date)
                     return "Over Due";
                 else
@@ -207,7 +212,8 @@ namespace StockControl
         public ReorderType ReorderTypeEnum { get; set; }
         public string ReorderTypeText
         {
-            get {
+            get
+            {
                 return baseClass.getReorderTypeText(ReorderTypeEnum);
             }
         }
@@ -245,8 +251,8 @@ namespace StockControl
         public string ItemNo { get; set; }
         public string ItemName { get; set; }
         public ReorderType ReorderType { get; set; }
-        public decimal QtyOnHand { get; set; }
-        public decimal QtyOnHand_Backup { get; private set; }
+        public decimal QtyOnHand { get; set; } //Stock Free
+        public decimal QtyOnHand_Backup { get; private set; } //Stock Free
         public decimal SafetyStock { get; set; }
         public decimal ReorderPoint { get; set; }
         public decimal ReorderQty { get; set; }
@@ -310,7 +316,6 @@ namespace StockControl
                     this.QtyOnHand_Backup = a.Value.ToDecimal();
                 }
 
-
                 this.UOM = t.BaseUOM;
                 var u = db.mh_ItemUOMs.Where(x => x.ItemNo == this.ItemNo && x.UOMCode == t.BaseUOM).FirstOrDefault();
                 if (u != null) this.PCSUnit = u.QuantityPer.ToDecimal();
@@ -333,12 +338,241 @@ namespace StockControl
                 if (u2 != null) this.PCSUnit_PurchaseUOM = u2.QuantityPer.ToDecimal();
                 else this.PCSUnit_PurchaseUOM = 1;
                 this.StandardCost = t.StandardCost;
+
+                if (this.ItemNo == "PLG-P-001")
+                { }
+                //**Stock Customer P/O --> BackOrder Q'ty for Customer P/O, Receive stock Q'ty for Customer P/O
+                //find Received stock Q'ty for Customer P/O idDt ,,, reserve or not reserve(if job closed)
+                var st = db.tb_Stocks.Where(x => x.CodeNo == this.ItemNo
+                    && x.idCSTMPODt != null && x.idCSTMPODt > 0 && x.TLQty > 0).OrderBy(x => x.id).ToList();
+                foreach (var s in st)
+                {
+                    if (this.InvGroup_enum != InventoryGroup.RM) break;
+                    var j = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == s.idCSTMPODt).FirstOrDefault();
+                    //cstmPO job ยังไม่ปิด หรือ เปิดแล้วแต่ยังรับเข้าไม่ครบแสดงว่ายังไม่ปิด ซึ่งแสดงว่าเป็น Stock ปกติ
+                    if (j == null || (j != null && j.OutQty > 0))
+                    {//CustomerPO ยังไม่เปิด Job หรือ เปิดแล้วแต่ยังไม่ปิด Job
+                        var s1 = stockCustomerPO.Where(x => x.idCstmPODt == s.idCSTMPODt).FirstOrDefault();
+                        if (s1 == null)
+                        {
+                            s1 = new stockForCustomerDt();
+                            s1.ItemNo = s.CodeNo;
+                            stockCustomerPO.Add(s1);
+                        }
+                        s1.idCstmPODt = s.idCSTMPODt.ToInt();
+                        s1.StockQty += s.TLQty.ToDecimal();
+                        s1.StockAll += s.TLQty.ToDecimal();
+                    }
+                    else
+                    {//ปิดแล้วแสดงว่าเป็น Free Stock
+                        //ดูว่าเป็น Free stock ที๋โดนจองไปหรือยัง(โดนจองไปแล้วและไอ้ตัวที่มาจองมันจะต้องไม่ปิดจ๊อบด้วย) ?
+                        var freeStock = s.TLQty.ToDecimal();
+                        var rs = db.mh_StockReserves.Where(x => x.idCstmPODt_Free == s.idCSTMPODt
+                            //&& !x.closeJob 
+                            && x.ItemNo == s.CodeNo).ToList();
+                        if (rs.Count > 0)
+                        {//โดนจองไปแล้ว(และยังไม่ปิด Job) ต้องดูว่าโดนจองกี่ตัว
+                            foreach (var r in rs)
+                            {
+                                freeStock -= r.ReserveQty;
+                                var ss = stockCustomerPO.Where(x => x.idCstmPODt == r.idCstmPODt).FirstOrDefault();
+                                if(ss == null)
+                                {
+                                    ss = new stockForCustomerDt();
+                                    ss.ItemNo = s.CodeNo;
+                                    stockCustomerPO.Add(ss);
+                                }
+                                ss.idCstmPODt = r.idCstmPODt;
+                                ss.StockQty += r.ReserveQty;
+                                ss.StockAll += r.ReserveQty;
+                            }
+                        }
+                        //จำนวนคงเหลือของ freeStock > 0 แสดงว่ายังมีบางส่วนยังไม่โดนจอง
+                        if (freeStock > 0)
+                        {
+                            //free stock รอการจองจาก Customer PO อื่นๆ
+                            var sf = stockFree_List.Where(x => x.idCstmPODt_Free == s.idCSTMPODt.ToInt()
+                                && x.id_tb_Stock == s.id).FirstOrDefault();
+                            if(sf == null)
+                            {
+                                sf = new stockFree();
+                                stockFree_List.Add(sf);
+                            }
+                            //new stockFree();
+                            sf.id_tb_Stock = s.id;
+                            sf.ItemNo = s.CodeNo;
+                            sf.idCstmPODt_Free = s.idCSTMPODt.ToInt();
+                            sf.QtyFree = freeStock;
+                            sf.QtyFree_Backup = freeStock;
+                        }
+                    }
+                }
+                //find Back order Q'ty from P/R(Qty) ถ้าเปิด P/O แล้วให้เอา BackOrder P/O
+                var pr = db.mh_PurchaseRequestLines.Where(x => x.SS == 1 && x.CodeNo == this.ItemNo && x.idCstmPODt != null && x.idCstmPODt > 0)
+                    .Join(db.mh_PurchaseRequests.Where(x => x.Status != "Cancel")
+                    , dt => dt.PRNo
+                    , hd => hd.PRNo
+                    , (dt, hd) => new { hd, dt }).ToList();
+                foreach (var p in pr)
+                {
+                    var s1 = stockCustomerPO.Where(x => x.idCstmPODt == p.dt.idCstmPODt.ToInt()).FirstOrDefault();
+                    if (s1 == null)
+                    {
+                        s1 = new stockForCustomerDt();
+                        s1.ItemNo = p.dt.CodeNo;
+                        s1.idCstmPODt = p.dt.idCstmPODt.ToInt();
+                        stockCustomerPO.Add(s1);
+                    }
+
+                    //already Create P/O
+                    if (p.dt.RefPOid > 0)
+                    {
+                        var po = db.mh_PurchaseOrderDetails.Where(x => x.id == p.dt.RefPOid && x.SS == 1)
+                            .Join(db.mh_PurchaseOrders.Where(x => x.Status != "Cancel")
+                            , dt => dt.PONo
+                            , hd => hd.PONo
+                            , (dt, hd) => new { hd, dt }).ToList();
+                        if (po.Count > 0)
+                        {
+                            var aa = po.Sum(x => Math.Round(x.dt.BackOrder.ToDecimal() * x.dt.PCSUnit.ToDecimal(), 2));
+                            s1.BackOrder += aa;
+                            s1.StockAll += aa;
+                        }
+                        else
+                        {//not found P/O
+                            var aa = Math.Round(p.dt.OrderQty.ToDecimal() * p.dt.PCSUOM.ToDecimal(), 2);
+                            s1.BackOrder += aa;
+                            s1.StockAll += aa;
+                        }
+                    }
+                    //not Create P/O
+                    else
+                    {
+                        var aa = Math.Round(p.dt.OrderQty.ToDecimal() * p.dt.PCSUOM.ToDecimal(), 2);
+                        s1.BackOrder += aa;
+                        s1.StockAll += aa;
+                    }
+                }
+
             }
 
         }
 
+        public List<stockForCustomerDt> stockCustomerPO { get; set; } = new List<stockForCustomerDt>();
+        public List<stockFree> stockFree_List { get; set; } = new List<stockFree>();
+
+
+        public decimal findStock_CustomerPO(int idCstmPODt)
+        {
+            var ret = 0.00m;
+            var a = stockCustomerPO.Where(x => x.idCstmPODt == idCstmPODt && x.StockAll > 0).ToList();
+            if (a.Count > 0)
+                ret = a.Sum(x => x.StockAll);
+            return ret;
+        }
+        public decimal findStock_Free()
+        {
+            var ret = 0.00m;
+            var a = stockFree_List.Where(x => x.QtyFree > 0).ToList();
+            if (a.Count > 0)
+                ret = a.Sum(x => x.QtyFree);
+            return ret;
+        }
+
+        public void cutStock_CstmPO(int idCstmPODt, ref decimal useQty)
+        {
+            var a = stockCustomerPO.Where(x => x.idCstmPODt == idCstmPODt && x.StockAll > 0).FirstOrDefault();
+            if (a != null)
+            {
+                if (useQty >= a.StockAll)
+                {
+                    useQty -= a.StockAll;
+                    a.StockAll = 0;
+                }
+                else
+                {
+                    a.StockAll -= useQty;
+                    useQty = 0;
+                }
+            }
+        }
+        public void cutStock_Free(int idCstmPODt, ref decimal useQty, ref List<stockReserve> sReserve)
+        {
+            var a = stockFree_List.Where(x => x.QtyFree > 0).ToList();
+            foreach (var aa in a)
+            {
+                var sr = sReserve.Where(x => x.ItemNo == this.ItemNo && x.idCstmPODt == idCstmPODt
+                    && x.idCstmPODt_Free == aa.idCstmPODt_Free && x.id_tb_Stock == aa.id_tb_Stock).FirstOrDefault();
+                if (sr == null)
+                {
+                    sr = new stockReserve();
+                    sr.ItemNo = this.ItemNo;
+                    sr.idCstmPODt = idCstmPODt;
+                    sr.idCstmPODt_Free = aa.idCstmPODt_Free;
+                    sr.id_tb_Stock = aa.id_tb_Stock;
+                    if (useQty >= aa.QtyFree)
+                    {
+                        sr.ReserveQty = aa.QtyFree;
+                        useQty -= aa.QtyFree;
+                        aa.QtyFree = 0;
+                    }
+                    else
+                    {
+                        sr.ReserveQty = useQty;
+                        aa.QtyFree -= useQty;
+                        useQty = 0;
+                    }
+                    sReserve.Add(sr);
+                }
+                else
+                {
+                    if (useQty >= aa.QtyFree)
+                    {
+                        sr.ReserveQty += aa.QtyFree;
+                        useQty -= aa.QtyFree;
+                        aa.QtyFree = 0;
+                    }
+                    else
+                    {
+                        sr.ReserveQty += useQty;
+                        aa.QtyFree -= useQty;
+                        useQty = 0;
+                    }
+                }
+
+
+                if (useQty <= 0)
+                    break;
+            }
+        }
+
     }
 
+    public class stockForCustomerDt
+    {//Stock ที่ถูกรับเข้ามาเพื่อ CustomerPO
+        public int idCstmPODt { get; set; }
+        public string ItemNo { get; set; }
+        public decimal StockQty { get; set; } = 0.00m;
+        public decimal BackOrder { get; set; } = 0.00m;
+        public decimal StockAll { get; set; } = 0.00m; //StockQty + BackOrder
+    }
+    public class stockFree
+    {//Stock ที่ CUstomerPO(Job) ถูกปิดไปแล้ว และยังไม่ถูกจองจะกลายเป็น Freestock
+        public int id_tb_Stock { get; set; }
+        public string ItemNo { get; set; }
+        public int idCstmPODt_Free { get; set; }
+        public decimal QtyFree { get; set; } = 0.00m;
+        public decimal QtyFree_Backup { get; set; } = 0.00m;
+    }
+    public class stockReserve
+    {
+        public int id { get; set; } = 0;
+        public int id_tb_Stock { get; set; }
+        public string ItemNo { get; set; }
+        public int idCstmPODt { get; set; }
+        public int idCstmPODt_Free { get; set; }
+        public decimal ReserveQty { get; set; }
+    }
 
     public class WorkLoad
     {
@@ -350,13 +584,15 @@ namespace StockControl
         public decimal CapacityAlocateX { get; set; } = 0.00m;
         public decimal CapacityAfter
         {
-            get {
+            get
+            {
                 return CapacityAvailable - CapacityAlocate;
             }
         }
         public decimal CapacityAfterX
         {
-            get {
+            get
+            {
                 return CapacityAvailableX - CapacityAlocateX;
             }
         }
@@ -387,6 +623,7 @@ namespace StockControl
     {
         public string ItemNo { get; set; }
         public decimal ReqQty { get; set; }
+        //public decimal UseQty { get; set; }
         public string UOM { get; set; }
         public decimal PCSUnit { get; set; }
         public DateTime ReqDate { get; set; }

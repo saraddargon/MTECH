@@ -157,6 +157,12 @@
     <Compile Include="Process\GanttCharts_Job.Designer.cs">
       <DependentUpon>GanttCharts_Job.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\PlanningCalMPS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\PlanningCalMPS.Designer.cs">
+      <DependentUpon>PlanningCalMPS.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\PrintFGCard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1084,6 +1090,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\GanttCharts_Job.resx">
       <DependentUpon>GanttCharts_Job.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\PlanningCalMPS.resx">
+      <DependentUpon>PlanningCalMPS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\PrintFGCard.resx">
       <DependentUpon>PrintFGCard.cs</DependentUpon>

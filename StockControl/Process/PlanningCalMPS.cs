@@ -13,10 +13,10 @@ using System.Threading;
 
 namespace StockControl
 {
-    public partial class PlanningCal : Telerik.WinControls.UI.RadRibbonForm
+    public partial class PlanningCalMPS : Telerik.WinControls.UI.RadRibbonForm
     {
         bool openFilter = true;
-        public PlanningCal()
+        public PlanningCalMPS()
         {
             InitializeComponent();
             openFilter = false;
@@ -58,7 +58,7 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    var m = db.mh_Planning_TEMPs.ToList();
+                    var m = db.mh_PlanningMPS_TEMPs.ToList();
                     dgvData.DataSource = null;
                     dgvData.AutoGenerateColumns = false;
                     dgvData.DataSource = m;
@@ -147,7 +147,7 @@ namespace StockControl
 
         private void btnRecal_Click(object sender, EventArgs e)
         {
-            var ft = new PlanningCal_Filter(true, false);
+            var ft = new PlanningCal_Filter(false, true);
             ft.ShowDialog();
             if (ft.okFilter)
             {
@@ -168,12 +168,11 @@ namespace StockControl
                     //dgvData.DataSource = ps.gridPlans.OrderBy(x => x.ReqDate);
 
                     SavePlan(ps.gridPlans, ft.dateFrom, ft.dateTo);
-                    //SaveCapacity_TEMP(ps.capacityLoad);
-                    //SaveCalendar_TEMP(ps.calLoad);
-                    SaveReserve(ps.sReserve);
+                    SaveCapacity_TEMP(ps.capacityLoad);
+                    SaveCalendar_TEMP(ps.calLoad);
+                    //SaveReserve(ps.sReserve);
 
                     DataLoad();
-                    dFrom = ps.dFrom;
 
                     //FilterE(ft.dateFrom, ft.dateTo, ft.MRP, ft.MPS, ft.ItemNo, ft.locationItem);
                 }
@@ -294,7 +293,7 @@ namespace StockControl
             }
         }
 
-        DateTime dFrom = DateTime.Now;
+
         private void MasterTemplate_CellBeginEdit(object sender, GridViewCellCancelEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -318,10 +317,11 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    db.mh_Planning_TEMPs.DeleteAllOnSubmit(db.mh_Planning_TEMPs);
-                    //db.mh_CapacityLoad_TEMPs.DeleteAllOnSubmit(db.mh_CapacityLoad_TEMPs);
-                    //db.mh_CalendarLoad_TEMPs.DeleteAllOnSubmit(db.mh_CalendarLoad_TEMPs);
-                    db.mh_StockReserves.DeleteAllOnSubmit(db.mh_StockReserves);
+                    //db.mh_Planning_TEMPs.DeleteAllOnSubmit(db.mh_Planning_TEMPs);
+                    db.mh_PlanningMPS_TEMPs.DeleteAllOnSubmit(db.mh_PlanningMPS_TEMPs);
+                    db.mh_CapacityLoad_TEMPs.DeleteAllOnSubmit(db.mh_CapacityLoad_TEMPs);
+                    db.mh_CalendarLoad_TEMPs.DeleteAllOnSubmit(db.mh_CalendarLoad_TEMPs);
+                    //db.mh_StockReserves.DeleteAllOnSubmit(db.mh_StockReserves);
                     db.SubmitChanges();
 
                     dgvData.DataSource = null;
@@ -350,7 +350,7 @@ namespace StockControl
                 {
                     foreach (var g in gPlans)
                     {
-                        var p = new mh_Planning_TEMP
+                        var p = new mh_PlanningMPS_TEMP
                         {
                             DueDate = g.DueDate,
                             EndingDate = g.EndingDate.Value,
@@ -378,7 +378,7 @@ namespace StockControl
                             mainNo = g.mainNo,
                             refNo = g.refNo,
                         };
-                        db.mh_Planning_TEMPs.InsertOnSubmit(p);
+                        db.mh_PlanningMPS_TEMPs.InsertOnSubmit(p);
                     }
                     db.SubmitChanges();
                 }
@@ -647,6 +647,14 @@ namespace StockControl
                             }
                         }
 
+                        //move stock reserve from old CustomerPO -> new CustomerPO
+                        int idCstmPODt = item.Cells["idRef"].Value.ToInt();
+                        var sr = db.mh_StockReserves.Where(x => x.idCstmPODt == idCstmPODt).ToList();
+                        foreach (var s in sr)
+                        {
+                            baseClass.moveReserveStock(s.idCstmPODt_Free, s.idCstmPODt, s.id_tb_Stock, s.ReserveQty);
+                        }
+
                         //delete gridPlan
                         int id = item.Cells["id"].Value.ToInt();
                         var d = db.mh_Planning_TEMPs.Where(x => x.id == id).ToList();
@@ -673,135 +681,6 @@ namespace StockControl
             {
                 this.Cursor = Cursors.Default;
             }
-        }
-
-        private void btnGenPR_Click(object sender, EventArgs e)
-        {
-            dgvData.EndEdit();
-            GenPR();
-        }
-        void GenPR()
-        {
-            this.Cursor = Cursors.WaitCursor;
-            try
-            {
-
-                var rowS = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
-                if (rowS.Count < 1)
-                {
-                    baseClass.Warning("Please select data.!");
-                    return;
-                }
-                if (rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Purchase").Count() < 1)
-                {
-                    baseClass.Warning("Please select PlanningType: Purchase.\n");
-                    return;
-                }
-
-
-                if (!baseClass.Question("Do you want to 'Generate Purchase Request (P/R)' ?"))
-                    return;
-
-                DataTable _dt = new DataTable();
-                _dt.Columns.Add("idCstmPO", typeof(int));
-                _dt.Columns.Add("PRNo", typeof(string));
-                using (var db = new DataClasses1DataContext())
-                {
-                    foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Purchase"))
-                    {//Purchase
-                        //Hd
-                        byte[] b = null;
-                        int idRef = item.Cells["idRef"].Value.ToInt();
-                        var poDt = db.mh_CustomerPODTs.Where(x => x.id == idRef).FirstOrDefault();
-                        int idPoHd = 0;
-                        if (poDt != null)
-                            idPoHd = poDt.idCustomerPO;
-                        string CstmPoNo = item.Cells["RefDocNo"].Value.ToSt();
-
-                        var hd = new mh_PurchaseRequest();
-                        if (_dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idPoHd).Count() > 0)
-                        {
-                            var row = _dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idPoHd).First();
-                            string prNo = row["PRNo"].ToSt();
-                            hd = db.mh_PurchaseRequests.Where(x => x.PRNo == prNo).FirstOrDefault();
-                        }
-                        else
-                        {
-                            //New PR
-                            hd = new mh_PurchaseRequest
-                            {
-                                Barcode = b,
-                                ClearBill = false,
-                                CreateBy = ClassLib.Classlib.User,
-                                CreateDate = DateTime.Now,
-                                Department = "Planing",
-                                HDRemark = "",
-                                idCstmPO = idPoHd,
-                                LocationRunning = null,
-                                PRNo = dbClss.GetNo(12, 2),
-                                RefDocument = CstmPoNo, //Customer PoNo
-                                RequestBy = ClassLib.Classlib.User,
-                                RequestDate = DateTime.Now,
-                                Status = "Waiting",
-                                TEMPNo = dbClss.GetNo(3, 2),
-                                Total = 0,//update
-                                UpdateBy = ClassLib.Classlib.User,
-                                UpdateDate = DateTime.Now,
-                            };
-                            db.mh_PurchaseRequests.InsertOnSubmit(hd);
-                            _dt.Rows.Add(idPoHd, hd.PRNo);
-                        }
-                        db.SubmitChanges();
-
-                        //Dt
-                        string itemNo = item.Cells["ItemNo"].Value.ToSt();
-                        var tool = db.mh_Items.Where(x => x.InternalNo == itemNo).FirstOrDefault();
-                        var amnt = Math.Round(item.Cells["Qty"].Value.ToDecimal() * tool.StandardCost, 2);
-                        var vn = db.mh_Vendors.Where(x => x.No == tool.VendorNo).FirstOrDefault();
-                        var dt = new mh_PurchaseRequestLine
-                        {
-                            Amount = amnt,
-                            CodeNo = itemNo,
-                            Cost = tool.StandardCost,
-                            GroupCode = tool.GroupType,
-                            idCstmPODt = idRef, //idPODt
-                            ItemDesc = item.Cells["ItemName"].Value.ToSt(),
-                            ItemName = item.Cells["ItemName"].Value.ToSt(),
-                            OrderQty = item.Cells["Qty"].Value.ToDecimal(),
-                            PCSUOM = item.Cells["PCSUnit"].Value.ToDecimal(),
-                            PRNo = hd.PRNo,
-                            SS = 1,
-                            Status = "Waiting",
-                            TempNo = hd.TEMPNo,
-                            UOM = item.Cells["UOM"].Value.ToSt(),
-                            VATType = tool.VatType,
-                            VendorName = tool.VendorName,
-                            VendorNo = tool.VendorNo,
-                            DeliveryDate = item.Cells["DueDate"].Value.ToDateTime().Value.Date
-                        };
-                        db.mh_PurchaseRequestLines.InsertOnSubmit(dt);
-                        hd.Total += amnt;
-                        db.SubmitChanges();
-
-                        //delete gridPlan
-                        int id = item.Cells["id"].Value.ToInt();
-                        var d = db.mh_Planning_TEMPs.Where(x => x.id == id).ToList();
-                        if (d.Count > 0)
-                        {
-                            db.mh_Planning_TEMPs.DeleteAllOnSubmit(d);
-                            db.SubmitChanges();
-                        }
-                    }
-
-                    DataLoad();
-                    baseClass.Info("Generate Purchase Request complete.\n");
-                }
-            }
-            catch (Exception ex)
-            {
-                baseClass.Error(ex.Message);
-            }
-            finally { this.Cursor = Cursors.Default; }
         }
 
         private void btnLinkToJob_Click(object sender, EventArgs e)

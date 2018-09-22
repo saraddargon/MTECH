@@ -195,9 +195,6 @@ namespace StockControl
     partial void Inserttb_Claim(tb_Claim instance);
     partial void Updatetb_Claim(tb_Claim instance);
     partial void Deletetb_Claim(tb_Claim instance);
-    partial void Insertmh_PurchaseOrderDetail(mh_PurchaseOrderDetail instance);
-    partial void Updatemh_PurchaseOrderDetail(mh_PurchaseOrderDetail instance);
-    partial void Deletemh_PurchaseOrderDetail(mh_PurchaseOrderDetail instance);
     partial void Insertmh_ProductsOrderDetail(mh_ProductsOrderDetail instance);
     partial void Updatemh_ProductsOrderDetail(mh_ProductsOrderDetail instance);
     partial void Deletemh_ProductsOrderDetail(mh_ProductsOrderDetail instance);
@@ -252,9 +249,6 @@ namespace StockControl
     partial void Insertmh_Item(mh_Item instance);
     partial void Updatemh_Item(mh_Item instance);
     partial void Deletemh_Item(mh_Item instance);
-    partial void Insertmh_CustomerPODT(mh_CustomerPODT instance);
-    partial void Updatemh_CustomerPODT(mh_CustomerPODT instance);
-    partial void Deletemh_CustomerPODT(mh_CustomerPODT instance);
     partial void Insertmh_Planning_TEMP(mh_Planning_TEMP instance);
     partial void Updatemh_Planning_TEMP(mh_Planning_TEMP instance);
     partial void Deletemh_Planning_TEMP(mh_Planning_TEMP instance);
@@ -345,6 +339,21 @@ namespace StockControl
     partial void Inserttb_Stock(tb_Stock instance);
     partial void Updatetb_Stock(tb_Stock instance);
     partial void Deletetb_Stock(tb_Stock instance);
+    partial void Insertmh_CustomerPODT(mh_CustomerPODT instance);
+    partial void Updatemh_CustomerPODT(mh_CustomerPODT instance);
+    partial void Deletemh_CustomerPODT(mh_CustomerPODT instance);
+    partial void Insertmh_PurchaseOrderDetail(mh_PurchaseOrderDetail instance);
+    partial void Updatemh_PurchaseOrderDetail(mh_PurchaseOrderDetail instance);
+    partial void Deletemh_PurchaseOrderDetail(mh_PurchaseOrderDetail instance);
+    partial void Insertmh_StockReserve_TEMP(mh_StockReserve_TEMP instance);
+    partial void Updatemh_StockReserve_TEMP(mh_StockReserve_TEMP instance);
+    partial void Deletemh_StockReserve_TEMP(mh_StockReserve_TEMP instance);
+    partial void Insertmh_StockReserve(mh_StockReserve instance);
+    partial void Updatemh_StockReserve(mh_StockReserve instance);
+    partial void Deletemh_StockReserve(mh_StockReserve instance);
+    partial void Insertmh_PlanningMPS_TEMP(mh_PlanningMPS_TEMP instance);
+    partial void Updatemh_PlanningMPS_TEMP(mh_PlanningMPS_TEMP instance);
+    partial void Deletemh_PlanningMPS_TEMP(mh_PlanningMPS_TEMP instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -849,14 +858,6 @@ namespace StockControl
 			}
 		}
 		
-		public System.Data.Linq.Table<mh_PurchaseOrderDetail> mh_PurchaseOrderDetails
-		{
-			get
-			{
-				return this.GetTable<mh_PurchaseOrderDetail>();
-			}
-		}
-		
 		public System.Data.Linq.Table<mh_ProductsOrderDetail> mh_ProductsOrderDetails
 		{
 			get
@@ -998,14 +999,6 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<mh_Item>();
-			}
-		}
-		
-		public System.Data.Linq.Table<mh_CustomerPODT> mh_CustomerPODTs
-		{
-			get
-			{
-				return this.GetTable<mh_CustomerPODT>();
 			}
 		}
 		
@@ -1246,6 +1239,46 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<tb_Stock>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_CustomerPODT> mh_CustomerPODTs
+		{
+			get
+			{
+				return this.GetTable<mh_CustomerPODT>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_PurchaseOrderDetail> mh_PurchaseOrderDetails
+		{
+			get
+			{
+				return this.GetTable<mh_PurchaseOrderDetail>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_StockReserve_TEMP> mh_StockReserve_TEMPs
+		{
+			get
+			{
+				return this.GetTable<mh_StockReserve_TEMP>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_StockReserve> mh_StockReserves
+		{
+			get
+			{
+				return this.GetTable<mh_StockReserve>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_PlanningMPS_TEMP> mh_PlanningMPS_TEMPs
+		{
+			get
+			{
+				return this.GetTable<mh_PlanningMPS_TEMP>();
 			}
 		}
 		
@@ -18573,1268 +18606,6 @@ namespace StockControl
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_PurchaseOrderDetail")]
-	public partial class mh_PurchaseOrderDetail : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _TempPNo;
-		
-		private string _PONo;
-		
-		private string _PRNo;
-		
-		private string _CodeNo;
-		
-		private string _ItemName;
-		
-		private string _ItemDesc;
-		
-		private string _GroupCode;
-		
-		private string _Unit;
-		
-		private System.Nullable<decimal> _OrderQty;
-		
-		private System.Nullable<decimal> _BackOrder;
-		
-		private System.Nullable<decimal> _Cost;
-		
-		private System.Nullable<decimal> _Rate;
-		
-		private System.Nullable<decimal> _Discon;
-		
-		private System.Nullable<decimal> _Discount;
-		
-		private System.Nullable<decimal> _DiscountAmount;
-		
-		private System.Nullable<decimal> _ExtendedCost;
-		
-		private System.Nullable<decimal> _Amount;
-		
-		private System.Nullable<int> _DF;
-		
-		private System.Nullable<int> _PRItem;
-		
-		private System.Nullable<System.DateTime> _DeliveryDate;
-		
-		private System.Nullable<int> _SS;
-		
-		private string _Remark;
-		
-		private System.Nullable<decimal> _PCSUnit;
-		
-		private System.Nullable<bool> _ShipTo;
-		
-		private System.Nullable<decimal> _RealCost;
-		
-		private System.Nullable<decimal> _PointCM;
-		
-		private System.Nullable<decimal> _Freight;
-		
-		private System.Nullable<decimal> _CalCM;
-		
-		private System.Nullable<bool> _Free;
-		
-		private System.Nullable<double> _CostForCal;
-		
-		private System.Nullable<bool> _Urgent;
-		
-		private System.Nullable<bool> _Faxed;
-		
-		private System.Nullable<bool> _Servics;
-		
-		private System.Nullable<int> _RNo;
-		
-		private System.Nullable<bool> _Asset;
-		
-		private System.Nullable<bool> _Chemical;
-		
-		private System.Nullable<decimal> _FxQty;
-		
-		private string _FxUnit;
-		
-		private System.Nullable<decimal> _FxCost;
-		
-		private string _LineName;
-		
-		private string _MCName;
-		
-		private string _SerialNo;
-		
-		private string _LotNo;
-		
-		private System.Nullable<int> _RefRCid;
-		
-		private string _RefRCNo;
-		
-		private string _CHNo;
-		
-		private System.Nullable<bool> _CHFlag;
-		
-		private System.Nullable<decimal> _CHUnitCost;
-		
-		private System.Nullable<decimal> _CHCost;
-		
-		private System.Nullable<decimal> _CHTotal;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnTempPNoChanging(string value);
-    partial void OnTempPNoChanged();
-    partial void OnPONoChanging(string value);
-    partial void OnPONoChanged();
-    partial void OnPRNoChanging(string value);
-    partial void OnPRNoChanged();
-    partial void OnCodeNoChanging(string value);
-    partial void OnCodeNoChanged();
-    partial void OnItemNameChanging(string value);
-    partial void OnItemNameChanged();
-    partial void OnItemDescChanging(string value);
-    partial void OnItemDescChanged();
-    partial void OnGroupCodeChanging(string value);
-    partial void OnGroupCodeChanged();
-    partial void OnUnitChanging(string value);
-    partial void OnUnitChanged();
-    partial void OnOrderQtyChanging(System.Nullable<decimal> value);
-    partial void OnOrderQtyChanged();
-    partial void OnBackOrderChanging(System.Nullable<decimal> value);
-    partial void OnBackOrderChanged();
-    partial void OnCostChanging(System.Nullable<decimal> value);
-    partial void OnCostChanged();
-    partial void OnRateChanging(System.Nullable<decimal> value);
-    partial void OnRateChanged();
-    partial void OnDisconChanging(System.Nullable<decimal> value);
-    partial void OnDisconChanged();
-    partial void OnDiscountChanging(System.Nullable<decimal> value);
-    partial void OnDiscountChanged();
-    partial void OnDiscountAmountChanging(System.Nullable<decimal> value);
-    partial void OnDiscountAmountChanged();
-    partial void OnExtendedCostChanging(System.Nullable<decimal> value);
-    partial void OnExtendedCostChanged();
-    partial void OnAmountChanging(System.Nullable<decimal> value);
-    partial void OnAmountChanged();
-    partial void OnDFChanging(System.Nullable<int> value);
-    partial void OnDFChanged();
-    partial void OnPRItemChanging(System.Nullable<int> value);
-    partial void OnPRItemChanged();
-    partial void OnDeliveryDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnDeliveryDateChanged();
-    partial void OnSSChanging(System.Nullable<int> value);
-    partial void OnSSChanged();
-    partial void OnRemarkChanging(string value);
-    partial void OnRemarkChanged();
-    partial void OnPCSUnitChanging(System.Nullable<decimal> value);
-    partial void OnPCSUnitChanged();
-    partial void OnShipToChanging(System.Nullable<bool> value);
-    partial void OnShipToChanged();
-    partial void OnRealCostChanging(System.Nullable<decimal> value);
-    partial void OnRealCostChanged();
-    partial void OnPointCMChanging(System.Nullable<decimal> value);
-    partial void OnPointCMChanged();
-    partial void OnFreightChanging(System.Nullable<decimal> value);
-    partial void OnFreightChanged();
-    partial void OnCalCMChanging(System.Nullable<decimal> value);
-    partial void OnCalCMChanged();
-    partial void OnFreeChanging(System.Nullable<bool> value);
-    partial void OnFreeChanged();
-    partial void OnCostForCalChanging(System.Nullable<double> value);
-    partial void OnCostForCalChanged();
-    partial void OnUrgentChanging(System.Nullable<bool> value);
-    partial void OnUrgentChanged();
-    partial void OnFaxedChanging(System.Nullable<bool> value);
-    partial void OnFaxedChanged();
-    partial void OnServicsChanging(System.Nullable<bool> value);
-    partial void OnServicsChanged();
-    partial void OnRNoChanging(System.Nullable<int> value);
-    partial void OnRNoChanged();
-    partial void OnAssetChanging(System.Nullable<bool> value);
-    partial void OnAssetChanged();
-    partial void OnChemicalChanging(System.Nullable<bool> value);
-    partial void OnChemicalChanged();
-    partial void OnFxQtyChanging(System.Nullable<decimal> value);
-    partial void OnFxQtyChanged();
-    partial void OnFxUnitChanging(string value);
-    partial void OnFxUnitChanged();
-    partial void OnFxCostChanging(System.Nullable<decimal> value);
-    partial void OnFxCostChanged();
-    partial void OnLineNameChanging(string value);
-    partial void OnLineNameChanged();
-    partial void OnMCNameChanging(string value);
-    partial void OnMCNameChanged();
-    partial void OnSerialNoChanging(string value);
-    partial void OnSerialNoChanged();
-    partial void OnLotNoChanging(string value);
-    partial void OnLotNoChanged();
-    partial void OnRefRCidChanging(System.Nullable<int> value);
-    partial void OnRefRCidChanged();
-    partial void OnRefRCNoChanging(string value);
-    partial void OnRefRCNoChanged();
-    partial void OnCHNoChanging(string value);
-    partial void OnCHNoChanged();
-    partial void OnCHFlagChanging(System.Nullable<bool> value);
-    partial void OnCHFlagChanged();
-    partial void OnCHUnitCostChanging(System.Nullable<decimal> value);
-    partial void OnCHUnitCostChanged();
-    partial void OnCHCostChanging(System.Nullable<decimal> value);
-    partial void OnCHCostChanged();
-    partial void OnCHTotalChanging(System.Nullable<decimal> value);
-    partial void OnCHTotalChanged();
-    #endregion
-		
-		public mh_PurchaseOrderDetail()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TempPNo", DbType="VarChar(50)")]
-		public string TempPNo
-		{
-			get
-			{
-				return this._TempPNo;
-			}
-			set
-			{
-				if ((this._TempPNo != value))
-				{
-					this.OnTempPNoChanging(value);
-					this.SendPropertyChanging();
-					this._TempPNo = value;
-					this.SendPropertyChanged("TempPNo");
-					this.OnTempPNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PONo", DbType="VarChar(20)")]
-		public string PONo
-		{
-			get
-			{
-				return this._PONo;
-			}
-			set
-			{
-				if ((this._PONo != value))
-				{
-					this.OnPONoChanging(value);
-					this.SendPropertyChanging();
-					this._PONo = value;
-					this.SendPropertyChanged("PONo");
-					this.OnPONoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PRNo", DbType="VarChar(20)")]
-		public string PRNo
-		{
-			get
-			{
-				return this._PRNo;
-			}
-			set
-			{
-				if ((this._PRNo != value))
-				{
-					this.OnPRNoChanging(value);
-					this.SendPropertyChanging();
-					this._PRNo = value;
-					this.SendPropertyChanged("PRNo");
-					this.OnPRNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CodeNo", DbType="VarChar(10)")]
-		public string CodeNo
-		{
-			get
-			{
-				return this._CodeNo;
-			}
-			set
-			{
-				if ((this._CodeNo != value))
-				{
-					this.OnCodeNoChanging(value);
-					this.SendPropertyChanging();
-					this._CodeNo = value;
-					this.SendPropertyChanged("CodeNo");
-					this.OnCodeNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="VarChar(550)")]
-		public string ItemName
-		{
-			get
-			{
-				return this._ItemName;
-			}
-			set
-			{
-				if ((this._ItemName != value))
-				{
-					this.OnItemNameChanging(value);
-					this.SendPropertyChanging();
-					this._ItemName = value;
-					this.SendPropertyChanged("ItemName");
-					this.OnItemNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemDesc", DbType="VarChar(550)")]
-		public string ItemDesc
-		{
-			get
-			{
-				return this._ItemDesc;
-			}
-			set
-			{
-				if ((this._ItemDesc != value))
-				{
-					this.OnItemDescChanging(value);
-					this.SendPropertyChanging();
-					this._ItemDesc = value;
-					this.SendPropertyChanged("ItemDesc");
-					this.OnItemDescChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GroupCode", DbType="VarChar(50)")]
-		public string GroupCode
-		{
-			get
-			{
-				return this._GroupCode;
-			}
-			set
-			{
-				if ((this._GroupCode != value))
-				{
-					this.OnGroupCodeChanging(value);
-					this.SendPropertyChanging();
-					this._GroupCode = value;
-					this.SendPropertyChanged("GroupCode");
-					this.OnGroupCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="VarChar(30)")]
-		public string Unit
-		{
-			get
-			{
-				return this._Unit;
-			}
-			set
-			{
-				if ((this._Unit != value))
-				{
-					this.OnUnitChanging(value);
-					this.SendPropertyChanging();
-					this._Unit = value;
-					this.SendPropertyChanged("Unit");
-					this.OnUnitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderQty", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> OrderQty
-		{
-			get
-			{
-				return this._OrderQty;
-			}
-			set
-			{
-				if ((this._OrderQty != value))
-				{
-					this.OnOrderQtyChanging(value);
-					this.SendPropertyChanging();
-					this._OrderQty = value;
-					this.SendPropertyChanged("OrderQty");
-					this.OnOrderQtyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BackOrder", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> BackOrder
-		{
-			get
-			{
-				return this._BackOrder;
-			}
-			set
-			{
-				if ((this._BackOrder != value))
-				{
-					this.OnBackOrderChanging(value);
-					this.SendPropertyChanging();
-					this._BackOrder = value;
-					this.SendPropertyChanged("BackOrder");
-					this.OnBackOrderChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> Cost
-		{
-			get
-			{
-				return this._Cost;
-			}
-			set
-			{
-				if ((this._Cost != value))
-				{
-					this.OnCostChanging(value);
-					this.SendPropertyChanging();
-					this._Cost = value;
-					this.SendPropertyChanged("Cost");
-					this.OnCostChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rate", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> Rate
-		{
-			get
-			{
-				return this._Rate;
-			}
-			set
-			{
-				if ((this._Rate != value))
-				{
-					this.OnRateChanging(value);
-					this.SendPropertyChanging();
-					this._Rate = value;
-					this.SendPropertyChanged("Rate");
-					this.OnRateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Discon", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> Discon
-		{
-			get
-			{
-				return this._Discon;
-			}
-			set
-			{
-				if ((this._Discon != value))
-				{
-					this.OnDisconChanging(value);
-					this.SendPropertyChanging();
-					this._Discon = value;
-					this.SendPropertyChanged("Discon");
-					this.OnDisconChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Discount", DbType="Decimal(18,4)")]
-		public System.Nullable<decimal> Discount
-		{
-			get
-			{
-				return this._Discount;
-			}
-			set
-			{
-				if ((this._Discount != value))
-				{
-					this.OnDiscountChanging(value);
-					this.SendPropertyChanging();
-					this._Discount = value;
-					this.SendPropertyChanged("Discount");
-					this.OnDiscountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmount", DbType="Decimal(18,4)")]
-		public System.Nullable<decimal> DiscountAmount
-		{
-			get
-			{
-				return this._DiscountAmount;
-			}
-			set
-			{
-				if ((this._DiscountAmount != value))
-				{
-					this.OnDiscountAmountChanging(value);
-					this.SendPropertyChanging();
-					this._DiscountAmount = value;
-					this.SendPropertyChanged("DiscountAmount");
-					this.OnDiscountAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExtendedCost", DbType="Decimal(18,4)")]
-		public System.Nullable<decimal> ExtendedCost
-		{
-			get
-			{
-				return this._ExtendedCost;
-			}
-			set
-			{
-				if ((this._ExtendedCost != value))
-				{
-					this.OnExtendedCostChanging(value);
-					this.SendPropertyChanging();
-					this._ExtendedCost = value;
-					this.SendPropertyChanged("ExtendedCost");
-					this.OnExtendedCostChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,4)")]
-		public System.Nullable<decimal> Amount
-		{
-			get
-			{
-				return this._Amount;
-			}
-			set
-			{
-				if ((this._Amount != value))
-				{
-					this.OnAmountChanging(value);
-					this.SendPropertyChanging();
-					this._Amount = value;
-					this.SendPropertyChanged("Amount");
-					this.OnAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DF", DbType="Int")]
-		public System.Nullable<int> DF
-		{
-			get
-			{
-				return this._DF;
-			}
-			set
-			{
-				if ((this._DF != value))
-				{
-					this.OnDFChanging(value);
-					this.SendPropertyChanging();
-					this._DF = value;
-					this.SendPropertyChanged("DF");
-					this.OnDFChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PRItem", DbType="Int")]
-		public System.Nullable<int> PRItem
-		{
-			get
-			{
-				return this._PRItem;
-			}
-			set
-			{
-				if ((this._PRItem != value))
-				{
-					this.OnPRItemChanging(value);
-					this.SendPropertyChanging();
-					this._PRItem = value;
-					this.SendPropertyChanged("PRItem");
-					this.OnPRItemChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeliveryDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DeliveryDate
-		{
-			get
-			{
-				return this._DeliveryDate;
-			}
-			set
-			{
-				if ((this._DeliveryDate != value))
-				{
-					this.OnDeliveryDateChanging(value);
-					this.SendPropertyChanging();
-					this._DeliveryDate = value;
-					this.SendPropertyChanged("DeliveryDate");
-					this.OnDeliveryDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SS", DbType="Int")]
-		public System.Nullable<int> SS
-		{
-			get
-			{
-				return this._SS;
-			}
-			set
-			{
-				if ((this._SS != value))
-				{
-					this.OnSSChanging(value);
-					this.SendPropertyChanging();
-					this._SS = value;
-					this.SendPropertyChanged("SS");
-					this.OnSSChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(250)")]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this.OnRemarkChanging(value);
-					this.SendPropertyChanging();
-					this._Remark = value;
-					this.SendPropertyChanged("Remark");
-					this.OnRemarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> PCSUnit
-		{
-			get
-			{
-				return this._PCSUnit;
-			}
-			set
-			{
-				if ((this._PCSUnit != value))
-				{
-					this.OnPCSUnitChanging(value);
-					this.SendPropertyChanging();
-					this._PCSUnit = value;
-					this.SendPropertyChanged("PCSUnit");
-					this.OnPCSUnitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShipTo", DbType="Bit")]
-		public System.Nullable<bool> ShipTo
-		{
-			get
-			{
-				return this._ShipTo;
-			}
-			set
-			{
-				if ((this._ShipTo != value))
-				{
-					this.OnShipToChanging(value);
-					this.SendPropertyChanging();
-					this._ShipTo = value;
-					this.SendPropertyChanged("ShipTo");
-					this.OnShipToChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RealCost", DbType="Decimal(18,4)")]
-		public System.Nullable<decimal> RealCost
-		{
-			get
-			{
-				return this._RealCost;
-			}
-			set
-			{
-				if ((this._RealCost != value))
-				{
-					this.OnRealCostChanging(value);
-					this.SendPropertyChanging();
-					this._RealCost = value;
-					this.SendPropertyChanged("RealCost");
-					this.OnRealCostChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PointCM", DbType="Decimal(18,4)")]
-		public System.Nullable<decimal> PointCM
-		{
-			get
-			{
-				return this._PointCM;
-			}
-			set
-			{
-				if ((this._PointCM != value))
-				{
-					this.OnPointCMChanging(value);
-					this.SendPropertyChanging();
-					this._PointCM = value;
-					this.SendPropertyChanged("PointCM");
-					this.OnPointCMChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Freight", DbType="Decimal(18,4)")]
-		public System.Nullable<decimal> Freight
-		{
-			get
-			{
-				return this._Freight;
-			}
-			set
-			{
-				if ((this._Freight != value))
-				{
-					this.OnFreightChanging(value);
-					this.SendPropertyChanging();
-					this._Freight = value;
-					this.SendPropertyChanged("Freight");
-					this.OnFreightChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CalCM", DbType="Decimal(18,4)")]
-		public System.Nullable<decimal> CalCM
-		{
-			get
-			{
-				return this._CalCM;
-			}
-			set
-			{
-				if ((this._CalCM != value))
-				{
-					this.OnCalCMChanging(value);
-					this.SendPropertyChanging();
-					this._CalCM = value;
-					this.SendPropertyChanged("CalCM");
-					this.OnCalCMChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Free", DbType="Bit")]
-		public System.Nullable<bool> Free
-		{
-			get
-			{
-				return this._Free;
-			}
-			set
-			{
-				if ((this._Free != value))
-				{
-					this.OnFreeChanging(value);
-					this.SendPropertyChanging();
-					this._Free = value;
-					this.SendPropertyChanged("Free");
-					this.OnFreeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CostForCal", DbType="Float")]
-		public System.Nullable<double> CostForCal
-		{
-			get
-			{
-				return this._CostForCal;
-			}
-			set
-			{
-				if ((this._CostForCal != value))
-				{
-					this.OnCostForCalChanging(value);
-					this.SendPropertyChanging();
-					this._CostForCal = value;
-					this.SendPropertyChanged("CostForCal");
-					this.OnCostForCalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Urgent", DbType="Bit")]
-		public System.Nullable<bool> Urgent
-		{
-			get
-			{
-				return this._Urgent;
-			}
-			set
-			{
-				if ((this._Urgent != value))
-				{
-					this.OnUrgentChanging(value);
-					this.SendPropertyChanging();
-					this._Urgent = value;
-					this.SendPropertyChanged("Urgent");
-					this.OnUrgentChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Faxed", DbType="Bit")]
-		public System.Nullable<bool> Faxed
-		{
-			get
-			{
-				return this._Faxed;
-			}
-			set
-			{
-				if ((this._Faxed != value))
-				{
-					this.OnFaxedChanging(value);
-					this.SendPropertyChanging();
-					this._Faxed = value;
-					this.SendPropertyChanged("Faxed");
-					this.OnFaxedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Servics", DbType="Bit")]
-		public System.Nullable<bool> Servics
-		{
-			get
-			{
-				return this._Servics;
-			}
-			set
-			{
-				if ((this._Servics != value))
-				{
-					this.OnServicsChanging(value);
-					this.SendPropertyChanging();
-					this._Servics = value;
-					this.SendPropertyChanged("Servics");
-					this.OnServicsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RNo", DbType="Int")]
-		public System.Nullable<int> RNo
-		{
-			get
-			{
-				return this._RNo;
-			}
-			set
-			{
-				if ((this._RNo != value))
-				{
-					this.OnRNoChanging(value);
-					this.SendPropertyChanging();
-					this._RNo = value;
-					this.SendPropertyChanged("RNo");
-					this.OnRNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Asset", DbType="Bit")]
-		public System.Nullable<bool> Asset
-		{
-			get
-			{
-				return this._Asset;
-			}
-			set
-			{
-				if ((this._Asset != value))
-				{
-					this.OnAssetChanging(value);
-					this.SendPropertyChanging();
-					this._Asset = value;
-					this.SendPropertyChanged("Asset");
-					this.OnAssetChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Chemical", DbType="Bit")]
-		public System.Nullable<bool> Chemical
-		{
-			get
-			{
-				return this._Chemical;
-			}
-			set
-			{
-				if ((this._Chemical != value))
-				{
-					this.OnChemicalChanging(value);
-					this.SendPropertyChanging();
-					this._Chemical = value;
-					this.SendPropertyChanged("Chemical");
-					this.OnChemicalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FxQty", DbType="Decimal(18,4)")]
-		public System.Nullable<decimal> FxQty
-		{
-			get
-			{
-				return this._FxQty;
-			}
-			set
-			{
-				if ((this._FxQty != value))
-				{
-					this.OnFxQtyChanging(value);
-					this.SendPropertyChanging();
-					this._FxQty = value;
-					this.SendPropertyChanged("FxQty");
-					this.OnFxQtyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FxUnit", DbType="VarChar(50)")]
-		public string FxUnit
-		{
-			get
-			{
-				return this._FxUnit;
-			}
-			set
-			{
-				if ((this._FxUnit != value))
-				{
-					this.OnFxUnitChanging(value);
-					this.SendPropertyChanging();
-					this._FxUnit = value;
-					this.SendPropertyChanged("FxUnit");
-					this.OnFxUnitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FxCost", DbType="Decimal(18,4)")]
-		public System.Nullable<decimal> FxCost
-		{
-			get
-			{
-				return this._FxCost;
-			}
-			set
-			{
-				if ((this._FxCost != value))
-				{
-					this.OnFxCostChanging(value);
-					this.SendPropertyChanging();
-					this._FxCost = value;
-					this.SendPropertyChanged("FxCost");
-					this.OnFxCostChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LineName", DbType="NVarChar(50)")]
-		public string LineName
-		{
-			get
-			{
-				return this._LineName;
-			}
-			set
-			{
-				if ((this._LineName != value))
-				{
-					this.OnLineNameChanging(value);
-					this.SendPropertyChanging();
-					this._LineName = value;
-					this.SendPropertyChanged("LineName");
-					this.OnLineNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MCName", DbType="NVarChar(50)")]
-		public string MCName
-		{
-			get
-			{
-				return this._MCName;
-			}
-			set
-			{
-				if ((this._MCName != value))
-				{
-					this.OnMCNameChanging(value);
-					this.SendPropertyChanging();
-					this._MCName = value;
-					this.SendPropertyChanged("MCName");
-					this.OnMCNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SerialNo", DbType="NVarChar(20)")]
-		public string SerialNo
-		{
-			get
-			{
-				return this._SerialNo;
-			}
-			set
-			{
-				if ((this._SerialNo != value))
-				{
-					this.OnSerialNoChanging(value);
-					this.SendPropertyChanging();
-					this._SerialNo = value;
-					this.SendPropertyChanged("SerialNo");
-					this.OnSerialNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LotNo", DbType="NVarChar(20)")]
-		public string LotNo
-		{
-			get
-			{
-				return this._LotNo;
-			}
-			set
-			{
-				if ((this._LotNo != value))
-				{
-					this.OnLotNoChanging(value);
-					this.SendPropertyChanging();
-					this._LotNo = value;
-					this.SendPropertyChanged("LotNo");
-					this.OnLotNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefRCid", DbType="Int")]
-		public System.Nullable<int> RefRCid
-		{
-			get
-			{
-				return this._RefRCid;
-			}
-			set
-			{
-				if ((this._RefRCid != value))
-				{
-					this.OnRefRCidChanging(value);
-					this.SendPropertyChanging();
-					this._RefRCid = value;
-					this.SendPropertyChanged("RefRCid");
-					this.OnRefRCidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefRCNo", DbType="VarChar(50)")]
-		public string RefRCNo
-		{
-			get
-			{
-				return this._RefRCNo;
-			}
-			set
-			{
-				if ((this._RefRCNo != value))
-				{
-					this.OnRefRCNoChanging(value);
-					this.SendPropertyChanging();
-					this._RefRCNo = value;
-					this.SendPropertyChanged("RefRCNo");
-					this.OnRefRCNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHNo", DbType="VarChar(50)")]
-		public string CHNo
-		{
-			get
-			{
-				return this._CHNo;
-			}
-			set
-			{
-				if ((this._CHNo != value))
-				{
-					this.OnCHNoChanging(value);
-					this.SendPropertyChanging();
-					this._CHNo = value;
-					this.SendPropertyChanged("CHNo");
-					this.OnCHNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHFlag", DbType="Bit")]
-		public System.Nullable<bool> CHFlag
-		{
-			get
-			{
-				return this._CHFlag;
-			}
-			set
-			{
-				if ((this._CHFlag != value))
-				{
-					this.OnCHFlagChanging(value);
-					this.SendPropertyChanging();
-					this._CHFlag = value;
-					this.SendPropertyChanged("CHFlag");
-					this.OnCHFlagChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHUnitCost", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> CHUnitCost
-		{
-			get
-			{
-				return this._CHUnitCost;
-			}
-			set
-			{
-				if ((this._CHUnitCost != value))
-				{
-					this.OnCHUnitCostChanging(value);
-					this.SendPropertyChanging();
-					this._CHUnitCost = value;
-					this.SendPropertyChanged("CHUnitCost");
-					this.OnCHUnitCostChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHCost", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> CHCost
-		{
-			get
-			{
-				return this._CHCost;
-			}
-			set
-			{
-				if ((this._CHCost != value))
-				{
-					this.OnCHCostChanging(value);
-					this.SendPropertyChanging();
-					this._CHCost = value;
-					this.SendPropertyChanged("CHCost");
-					this.OnCHCostChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHTotal", DbType="Decimal(18,4)")]
-		public System.Nullable<decimal> CHTotal
-		{
-			get
-			{
-				return this._CHTotal;
-			}
-			set
-			{
-				if ((this._CHTotal != value))
-				{
-					this.OnCHTotalChanging(value);
-					this.SendPropertyChanging();
-					this._CHTotal = value;
-					this.SendPropertyChanged("CHTotal");
-					this.OnCHTotalChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_ProductsOrderDetail")]
 	public partial class mh_ProductsOrderDetail : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -26998,452 +25769,6 @@ namespace StockControl
 					this._StandardPrice = value;
 					this.SendPropertyChanged("StandardPrice");
 					this.OnStandardPriceChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CustomerPODT")]
-	public partial class mh_CustomerPODT : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private int _idCustomerPO;
-		
-		private System.DateTime _ReqDate;
-		
-		private System.Nullable<System.DateTime> _ReqReceiveDate;
-		
-		private string _ItemNo;
-		
-		private string _ItemName;
-		
-		private decimal _Qty;
-		
-		private string _UOM;
-		
-		private decimal _PCSUnit;
-		
-		private decimal _UnitPrice;
-		
-		private decimal _Amount;
-		
-		private string _Remark;
-		
-		private bool _Active;
-		
-		private string _ReplenishmentType;
-		
-		private decimal _OutSO;
-		
-		private decimal _OutPlan;
-		
-		private string _Status;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnidCustomerPOChanging(int value);
-    partial void OnidCustomerPOChanged();
-    partial void OnReqDateChanging(System.DateTime value);
-    partial void OnReqDateChanged();
-    partial void OnReqReceiveDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnReqReceiveDateChanged();
-    partial void OnItemNoChanging(string value);
-    partial void OnItemNoChanged();
-    partial void OnItemNameChanging(string value);
-    partial void OnItemNameChanged();
-    partial void OnQtyChanging(decimal value);
-    partial void OnQtyChanged();
-    partial void OnUOMChanging(string value);
-    partial void OnUOMChanged();
-    partial void OnPCSUnitChanging(decimal value);
-    partial void OnPCSUnitChanged();
-    partial void OnUnitPriceChanging(decimal value);
-    partial void OnUnitPriceChanged();
-    partial void OnAmountChanging(decimal value);
-    partial void OnAmountChanged();
-    partial void OnRemarkChanging(string value);
-    partial void OnRemarkChanged();
-    partial void OnActiveChanging(bool value);
-    partial void OnActiveChanged();
-    partial void OnReplenishmentTypeChanging(string value);
-    partial void OnReplenishmentTypeChanged();
-    partial void OnOutSOChanging(decimal value);
-    partial void OnOutSOChanged();
-    partial void OnOutPlanChanging(decimal value);
-    partial void OnOutPlanChanged();
-    partial void OnStatusChanging(string value);
-    partial void OnStatusChanged();
-    #endregion
-		
-		public mh_CustomerPODT()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCustomerPO", DbType="Int NOT NULL")]
-		public int idCustomerPO
-		{
-			get
-			{
-				return this._idCustomerPO;
-			}
-			set
-			{
-				if ((this._idCustomerPO != value))
-				{
-					this.OnidCustomerPOChanging(value);
-					this.SendPropertyChanging();
-					this._idCustomerPO = value;
-					this.SendPropertyChanged("idCustomerPO");
-					this.OnidCustomerPOChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReqDate", DbType="DateTime NOT NULL")]
-		public System.DateTime ReqDate
-		{
-			get
-			{
-				return this._ReqDate;
-			}
-			set
-			{
-				if ((this._ReqDate != value))
-				{
-					this.OnReqDateChanging(value);
-					this.SendPropertyChanging();
-					this._ReqDate = value;
-					this.SendPropertyChanged("ReqDate");
-					this.OnReqDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReqReceiveDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> ReqReceiveDate
-		{
-			get
-			{
-				return this._ReqReceiveDate;
-			}
-			set
-			{
-				if ((this._ReqReceiveDate != value))
-				{
-					this.OnReqReceiveDateChanging(value);
-					this.SendPropertyChanging();
-					this._ReqReceiveDate = value;
-					this.SendPropertyChanged("ReqReceiveDate");
-					this.OnReqReceiveDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50)")]
-		public string ItemNo
-		{
-			get
-			{
-				return this._ItemNo;
-			}
-			set
-			{
-				if ((this._ItemNo != value))
-				{
-					this.OnItemNoChanging(value);
-					this.SendPropertyChanging();
-					this._ItemNo = value;
-					this.SendPropertyChanged("ItemNo");
-					this.OnItemNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(100)")]
-		public string ItemName
-		{
-			get
-			{
-				return this._ItemName;
-			}
-			set
-			{
-				if ((this._ItemName != value))
-				{
-					this.OnItemNameChanging(value);
-					this.SendPropertyChanging();
-					this._ItemName = value;
-					this.SendPropertyChanged("ItemName");
-					this.OnItemNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Qty
-		{
-			get
-			{
-				return this._Qty;
-			}
-			set
-			{
-				if ((this._Qty != value))
-				{
-					this.OnQtyChanging(value);
-					this.SendPropertyChanging();
-					this._Qty = value;
-					this.SendPropertyChanged("Qty");
-					this.OnQtyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UOM", DbType="NVarChar(50)")]
-		public string UOM
-		{
-			get
-			{
-				return this._UOM;
-			}
-			set
-			{
-				if ((this._UOM != value))
-				{
-					this.OnUOMChanging(value);
-					this.SendPropertyChanging();
-					this._UOM = value;
-					this.SendPropertyChanged("UOM");
-					this.OnUOMChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2) NOT NULL")]
-		public decimal PCSUnit
-		{
-			get
-			{
-				return this._PCSUnit;
-			}
-			set
-			{
-				if ((this._PCSUnit != value))
-				{
-					this.OnPCSUnitChanging(value);
-					this.SendPropertyChanging();
-					this._PCSUnit = value;
-					this.SendPropertyChanged("PCSUnit");
-					this.OnPCSUnitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPrice", DbType="Decimal(18,2) NOT NULL")]
-		public decimal UnitPrice
-		{
-			get
-			{
-				return this._UnitPrice;
-			}
-			set
-			{
-				if ((this._UnitPrice != value))
-				{
-					this.OnUnitPriceChanging(value);
-					this.SendPropertyChanging();
-					this._UnitPrice = value;
-					this.SendPropertyChanged("UnitPrice");
-					this.OnUnitPriceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Amount
-		{
-			get
-			{
-				return this._Amount;
-			}
-			set
-			{
-				if ((this._Amount != value))
-				{
-					this.OnAmountChanging(value);
-					this.SendPropertyChanging();
-					this._Amount = value;
-					this.SendPropertyChanged("Amount");
-					this.OnAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(200)")]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this.OnRemarkChanging(value);
-					this.SendPropertyChanging();
-					this._Remark = value;
-					this.SendPropertyChanged("Remark");
-					this.OnRemarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
-		public bool Active
-		{
-			get
-			{
-				return this._Active;
-			}
-			set
-			{
-				if ((this._Active != value))
-				{
-					this.OnActiveChanging(value);
-					this.SendPropertyChanging();
-					this._Active = value;
-					this.SendPropertyChanged("Active");
-					this.OnActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReplenishmentType", DbType="NVarChar(50)")]
-		public string ReplenishmentType
-		{
-			get
-			{
-				return this._ReplenishmentType;
-			}
-			set
-			{
-				if ((this._ReplenishmentType != value))
-				{
-					this.OnReplenishmentTypeChanging(value);
-					this.SendPropertyChanging();
-					this._ReplenishmentType = value;
-					this.SendPropertyChanged("ReplenishmentType");
-					this.OnReplenishmentTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutSO", DbType="Decimal(18,2) NOT NULL")]
-		public decimal OutSO
-		{
-			get
-			{
-				return this._OutSO;
-			}
-			set
-			{
-				if ((this._OutSO != value))
-				{
-					this.OnOutSOChanging(value);
-					this.SendPropertyChanging();
-					this._OutSO = value;
-					this.SendPropertyChanged("OutSO");
-					this.OnOutSOChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutPlan", DbType="Decimal(18,2) NOT NULL")]
-		public decimal OutPlan
-		{
-			get
-			{
-				return this._OutPlan;
-			}
-			set
-			{
-				if ((this._OutPlan != value))
-				{
-					this.OnOutPlanChanging(value);
-					this.SendPropertyChanging();
-					this._OutPlan = value;
-					this.SendPropertyChanged("OutPlan");
-					this.OnOutPlanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this.OnStatusChanging(value);
-					this.SendPropertyChanging();
-					this._Status = value;
-					this.SendPropertyChanged("Status");
-					this.OnStatusChanged();
 				}
 			}
 		}
@@ -43152,6 +41477,2812 @@ namespace StockControl
 					this._idCSTMPODt = value;
 					this.SendPropertyChanged("idCSTMPODt");
 					this.OnidCSTMPODtChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_CustomerPODT")]
+	public partial class mh_CustomerPODT : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _idCustomerPO;
+		
+		private System.DateTime _ReqDate;
+		
+		private System.Nullable<System.DateTime> _ReqReceiveDate;
+		
+		private string _ItemNo;
+		
+		private string _ItemName;
+		
+		private decimal _Qty;
+		
+		private string _UOM;
+		
+		private decimal _PCSUnit;
+		
+		private decimal _UnitPrice;
+		
+		private decimal _Amount;
+		
+		private string _Remark;
+		
+		private bool _Active;
+		
+		private string _ReplenishmentType;
+		
+		private decimal _OutSO;
+		
+		private decimal _OutPlan;
+		
+		private string _Status;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnidCustomerPOChanging(int value);
+    partial void OnidCustomerPOChanged();
+    partial void OnReqDateChanging(System.DateTime value);
+    partial void OnReqDateChanged();
+    partial void OnReqReceiveDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnReqReceiveDateChanged();
+    partial void OnItemNoChanging(string value);
+    partial void OnItemNoChanged();
+    partial void OnItemNameChanging(string value);
+    partial void OnItemNameChanged();
+    partial void OnQtyChanging(decimal value);
+    partial void OnQtyChanged();
+    partial void OnUOMChanging(string value);
+    partial void OnUOMChanged();
+    partial void OnPCSUnitChanging(decimal value);
+    partial void OnPCSUnitChanged();
+    partial void OnUnitPriceChanging(decimal value);
+    partial void OnUnitPriceChanged();
+    partial void OnAmountChanging(decimal value);
+    partial void OnAmountChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnReplenishmentTypeChanging(string value);
+    partial void OnReplenishmentTypeChanged();
+    partial void OnOutSOChanging(decimal value);
+    partial void OnOutSOChanged();
+    partial void OnOutPlanChanging(decimal value);
+    partial void OnOutPlanChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    #endregion
+		
+		public mh_CustomerPODT()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCustomerPO", DbType="Int NOT NULL")]
+		public int idCustomerPO
+		{
+			get
+			{
+				return this._idCustomerPO;
+			}
+			set
+			{
+				if ((this._idCustomerPO != value))
+				{
+					this.OnidCustomerPOChanging(value);
+					this.SendPropertyChanging();
+					this._idCustomerPO = value;
+					this.SendPropertyChanged("idCustomerPO");
+					this.OnidCustomerPOChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReqDate", DbType="DateTime NOT NULL")]
+		public System.DateTime ReqDate
+		{
+			get
+			{
+				return this._ReqDate;
+			}
+			set
+			{
+				if ((this._ReqDate != value))
+				{
+					this.OnReqDateChanging(value);
+					this.SendPropertyChanging();
+					this._ReqDate = value;
+					this.SendPropertyChanged("ReqDate");
+					this.OnReqDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReqReceiveDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ReqReceiveDate
+		{
+			get
+			{
+				return this._ReqReceiveDate;
+			}
+			set
+			{
+				if ((this._ReqReceiveDate != value))
+				{
+					this.OnReqReceiveDateChanging(value);
+					this.SendPropertyChanging();
+					this._ReqReceiveDate = value;
+					this.SendPropertyChanged("ReqReceiveDate");
+					this.OnReqReceiveDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50)")]
+		public string ItemNo
+		{
+			get
+			{
+				return this._ItemNo;
+			}
+			set
+			{
+				if ((this._ItemNo != value))
+				{
+					this.OnItemNoChanging(value);
+					this.SendPropertyChanging();
+					this._ItemNo = value;
+					this.SendPropertyChanged("ItemNo");
+					this.OnItemNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(100)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this.OnItemNameChanging(value);
+					this.SendPropertyChanging();
+					this._ItemName = value;
+					this.SendPropertyChanged("ItemName");
+					this.OnItemNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Qty
+		{
+			get
+			{
+				return this._Qty;
+			}
+			set
+			{
+				if ((this._Qty != value))
+				{
+					this.OnQtyChanging(value);
+					this.SendPropertyChanging();
+					this._Qty = value;
+					this.SendPropertyChanged("Qty");
+					this.OnQtyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UOM", DbType="NVarChar(50)")]
+		public string UOM
+		{
+			get
+			{
+				return this._UOM;
+			}
+			set
+			{
+				if ((this._UOM != value))
+				{
+					this.OnUOMChanging(value);
+					this.SendPropertyChanging();
+					this._UOM = value;
+					this.SendPropertyChanged("UOM");
+					this.OnUOMChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2) NOT NULL")]
+		public decimal PCSUnit
+		{
+			get
+			{
+				return this._PCSUnit;
+			}
+			set
+			{
+				if ((this._PCSUnit != value))
+				{
+					this.OnPCSUnitChanging(value);
+					this.SendPropertyChanging();
+					this._PCSUnit = value;
+					this.SendPropertyChanged("PCSUnit");
+					this.OnPCSUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPrice", DbType="Decimal(18,2) NOT NULL")]
+		public decimal UnitPrice
+		{
+			get
+			{
+				return this._UnitPrice;
+			}
+			set
+			{
+				if ((this._UnitPrice != value))
+				{
+					this.OnUnitPriceChanging(value);
+					this.SendPropertyChanging();
+					this._UnitPrice = value;
+					this.SendPropertyChanged("UnitPrice");
+					this.OnUnitPriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this.OnAmountChanging(value);
+					this.SendPropertyChanging();
+					this._Amount = value;
+					this.SendPropertyChanged("Amount");
+					this.OnAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(200)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReplenishmentType", DbType="NVarChar(50)")]
+		public string ReplenishmentType
+		{
+			get
+			{
+				return this._ReplenishmentType;
+			}
+			set
+			{
+				if ((this._ReplenishmentType != value))
+				{
+					this.OnReplenishmentTypeChanging(value);
+					this.SendPropertyChanging();
+					this._ReplenishmentType = value;
+					this.SendPropertyChanged("ReplenishmentType");
+					this.OnReplenishmentTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutSO", DbType="Decimal(18,2) NOT NULL")]
+		public decimal OutSO
+		{
+			get
+			{
+				return this._OutSO;
+			}
+			set
+			{
+				if ((this._OutSO != value))
+				{
+					this.OnOutSOChanging(value);
+					this.SendPropertyChanging();
+					this._OutSO = value;
+					this.SendPropertyChanged("OutSO");
+					this.OnOutSOChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutPlan", DbType="Decimal(18,2) NOT NULL")]
+		public decimal OutPlan
+		{
+			get
+			{
+				return this._OutPlan;
+			}
+			set
+			{
+				if ((this._OutPlan != value))
+				{
+					this.OnOutPlanChanging(value);
+					this.SendPropertyChanging();
+					this._OutPlan = value;
+					this.SendPropertyChanged("OutPlan");
+					this.OnOutPlanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_PurchaseOrderDetail")]
+	public partial class mh_PurchaseOrderDetail : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _TempPNo;
+		
+		private string _PONo;
+		
+		private string _PRNo;
+		
+		private string _CodeNo;
+		
+		private string _ItemName;
+		
+		private string _ItemDesc;
+		
+		private string _GroupCode;
+		
+		private string _Unit;
+		
+		private System.Nullable<decimal> _OrderQty;
+		
+		private System.Nullable<decimal> _BackOrder;
+		
+		private System.Nullable<decimal> _Cost;
+		
+		private System.Nullable<decimal> _Rate;
+		
+		private System.Nullable<decimal> _Discon;
+		
+		private System.Nullable<decimal> _Discount;
+		
+		private System.Nullable<decimal> _DiscountAmount;
+		
+		private System.Nullable<decimal> _ExtendedCost;
+		
+		private System.Nullable<decimal> _Amount;
+		
+		private System.Nullable<int> _DF;
+		
+		private System.Nullable<int> _PRItem;
+		
+		private System.Nullable<System.DateTime> _DeliveryDate;
+		
+		private System.Nullable<int> _SS;
+		
+		private string _Remark;
+		
+		private System.Nullable<decimal> _PCSUnit;
+		
+		private System.Nullable<bool> _ShipTo;
+		
+		private System.Nullable<decimal> _RealCost;
+		
+		private System.Nullable<decimal> _PointCM;
+		
+		private System.Nullable<decimal> _Freight;
+		
+		private System.Nullable<decimal> _CalCM;
+		
+		private System.Nullable<bool> _Free;
+		
+		private System.Nullable<double> _CostForCal;
+		
+		private System.Nullable<bool> _Urgent;
+		
+		private System.Nullable<bool> _Faxed;
+		
+		private System.Nullable<bool> _Servics;
+		
+		private System.Nullable<int> _RNo;
+		
+		private System.Nullable<bool> _Asset;
+		
+		private System.Nullable<bool> _Chemical;
+		
+		private System.Nullable<decimal> _FxQty;
+		
+		private string _FxUnit;
+		
+		private System.Nullable<decimal> _FxCost;
+		
+		private string _LineName;
+		
+		private string _MCName;
+		
+		private string _SerialNo;
+		
+		private string _LotNo;
+		
+		private System.Nullable<int> _RefRCid;
+		
+		private string _RefRCNo;
+		
+		private string _CHNo;
+		
+		private System.Nullable<bool> _CHFlag;
+		
+		private System.Nullable<decimal> _CHUnitCost;
+		
+		private System.Nullable<decimal> _CHCost;
+		
+		private System.Nullable<decimal> _CHTotal;
+		
+		private System.Nullable<int> _idCSTMPODt;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnTempPNoChanging(string value);
+    partial void OnTempPNoChanged();
+    partial void OnPONoChanging(string value);
+    partial void OnPONoChanged();
+    partial void OnPRNoChanging(string value);
+    partial void OnPRNoChanged();
+    partial void OnCodeNoChanging(string value);
+    partial void OnCodeNoChanged();
+    partial void OnItemNameChanging(string value);
+    partial void OnItemNameChanged();
+    partial void OnItemDescChanging(string value);
+    partial void OnItemDescChanged();
+    partial void OnGroupCodeChanging(string value);
+    partial void OnGroupCodeChanged();
+    partial void OnUnitChanging(string value);
+    partial void OnUnitChanged();
+    partial void OnOrderQtyChanging(System.Nullable<decimal> value);
+    partial void OnOrderQtyChanged();
+    partial void OnBackOrderChanging(System.Nullable<decimal> value);
+    partial void OnBackOrderChanged();
+    partial void OnCostChanging(System.Nullable<decimal> value);
+    partial void OnCostChanged();
+    partial void OnRateChanging(System.Nullable<decimal> value);
+    partial void OnRateChanged();
+    partial void OnDisconChanging(System.Nullable<decimal> value);
+    partial void OnDisconChanged();
+    partial void OnDiscountChanging(System.Nullable<decimal> value);
+    partial void OnDiscountChanged();
+    partial void OnDiscountAmountChanging(System.Nullable<decimal> value);
+    partial void OnDiscountAmountChanged();
+    partial void OnExtendedCostChanging(System.Nullable<decimal> value);
+    partial void OnExtendedCostChanged();
+    partial void OnAmountChanging(System.Nullable<decimal> value);
+    partial void OnAmountChanged();
+    partial void OnDFChanging(System.Nullable<int> value);
+    partial void OnDFChanged();
+    partial void OnPRItemChanging(System.Nullable<int> value);
+    partial void OnPRItemChanged();
+    partial void OnDeliveryDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDeliveryDateChanged();
+    partial void OnSSChanging(System.Nullable<int> value);
+    partial void OnSSChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnPCSUnitChanging(System.Nullable<decimal> value);
+    partial void OnPCSUnitChanged();
+    partial void OnShipToChanging(System.Nullable<bool> value);
+    partial void OnShipToChanged();
+    partial void OnRealCostChanging(System.Nullable<decimal> value);
+    partial void OnRealCostChanged();
+    partial void OnPointCMChanging(System.Nullable<decimal> value);
+    partial void OnPointCMChanged();
+    partial void OnFreightChanging(System.Nullable<decimal> value);
+    partial void OnFreightChanged();
+    partial void OnCalCMChanging(System.Nullable<decimal> value);
+    partial void OnCalCMChanged();
+    partial void OnFreeChanging(System.Nullable<bool> value);
+    partial void OnFreeChanged();
+    partial void OnCostForCalChanging(System.Nullable<double> value);
+    partial void OnCostForCalChanged();
+    partial void OnUrgentChanging(System.Nullable<bool> value);
+    partial void OnUrgentChanged();
+    partial void OnFaxedChanging(System.Nullable<bool> value);
+    partial void OnFaxedChanged();
+    partial void OnServicsChanging(System.Nullable<bool> value);
+    partial void OnServicsChanged();
+    partial void OnRNoChanging(System.Nullable<int> value);
+    partial void OnRNoChanged();
+    partial void OnAssetChanging(System.Nullable<bool> value);
+    partial void OnAssetChanged();
+    partial void OnChemicalChanging(System.Nullable<bool> value);
+    partial void OnChemicalChanged();
+    partial void OnFxQtyChanging(System.Nullable<decimal> value);
+    partial void OnFxQtyChanged();
+    partial void OnFxUnitChanging(string value);
+    partial void OnFxUnitChanged();
+    partial void OnFxCostChanging(System.Nullable<decimal> value);
+    partial void OnFxCostChanged();
+    partial void OnLineNameChanging(string value);
+    partial void OnLineNameChanged();
+    partial void OnMCNameChanging(string value);
+    partial void OnMCNameChanged();
+    partial void OnSerialNoChanging(string value);
+    partial void OnSerialNoChanged();
+    partial void OnLotNoChanging(string value);
+    partial void OnLotNoChanged();
+    partial void OnRefRCidChanging(System.Nullable<int> value);
+    partial void OnRefRCidChanged();
+    partial void OnRefRCNoChanging(string value);
+    partial void OnRefRCNoChanged();
+    partial void OnCHNoChanging(string value);
+    partial void OnCHNoChanged();
+    partial void OnCHFlagChanging(System.Nullable<bool> value);
+    partial void OnCHFlagChanged();
+    partial void OnCHUnitCostChanging(System.Nullable<decimal> value);
+    partial void OnCHUnitCostChanged();
+    partial void OnCHCostChanging(System.Nullable<decimal> value);
+    partial void OnCHCostChanged();
+    partial void OnCHTotalChanging(System.Nullable<decimal> value);
+    partial void OnCHTotalChanged();
+    partial void OnidCSTMPODtChanging(System.Nullable<int> value);
+    partial void OnidCSTMPODtChanged();
+    #endregion
+		
+		public mh_PurchaseOrderDetail()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TempPNo", DbType="VarChar(50)")]
+		public string TempPNo
+		{
+			get
+			{
+				return this._TempPNo;
+			}
+			set
+			{
+				if ((this._TempPNo != value))
+				{
+					this.OnTempPNoChanging(value);
+					this.SendPropertyChanging();
+					this._TempPNo = value;
+					this.SendPropertyChanged("TempPNo");
+					this.OnTempPNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PONo", DbType="VarChar(20)")]
+		public string PONo
+		{
+			get
+			{
+				return this._PONo;
+			}
+			set
+			{
+				if ((this._PONo != value))
+				{
+					this.OnPONoChanging(value);
+					this.SendPropertyChanging();
+					this._PONo = value;
+					this.SendPropertyChanged("PONo");
+					this.OnPONoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PRNo", DbType="VarChar(20)")]
+		public string PRNo
+		{
+			get
+			{
+				return this._PRNo;
+			}
+			set
+			{
+				if ((this._PRNo != value))
+				{
+					this.OnPRNoChanging(value);
+					this.SendPropertyChanging();
+					this._PRNo = value;
+					this.SendPropertyChanged("PRNo");
+					this.OnPRNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CodeNo", DbType="VarChar(10)")]
+		public string CodeNo
+		{
+			get
+			{
+				return this._CodeNo;
+			}
+			set
+			{
+				if ((this._CodeNo != value))
+				{
+					this.OnCodeNoChanging(value);
+					this.SendPropertyChanging();
+					this._CodeNo = value;
+					this.SendPropertyChanged("CodeNo");
+					this.OnCodeNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="VarChar(550)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this.OnItemNameChanging(value);
+					this.SendPropertyChanging();
+					this._ItemName = value;
+					this.SendPropertyChanged("ItemName");
+					this.OnItemNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemDesc", DbType="VarChar(550)")]
+		public string ItemDesc
+		{
+			get
+			{
+				return this._ItemDesc;
+			}
+			set
+			{
+				if ((this._ItemDesc != value))
+				{
+					this.OnItemDescChanging(value);
+					this.SendPropertyChanging();
+					this._ItemDesc = value;
+					this.SendPropertyChanged("ItemDesc");
+					this.OnItemDescChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GroupCode", DbType="VarChar(50)")]
+		public string GroupCode
+		{
+			get
+			{
+				return this._GroupCode;
+			}
+			set
+			{
+				if ((this._GroupCode != value))
+				{
+					this.OnGroupCodeChanging(value);
+					this.SendPropertyChanging();
+					this._GroupCode = value;
+					this.SendPropertyChanged("GroupCode");
+					this.OnGroupCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="VarChar(30)")]
+		public string Unit
+		{
+			get
+			{
+				return this._Unit;
+			}
+			set
+			{
+				if ((this._Unit != value))
+				{
+					this.OnUnitChanging(value);
+					this.SendPropertyChanging();
+					this._Unit = value;
+					this.SendPropertyChanged("Unit");
+					this.OnUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderQty", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> OrderQty
+		{
+			get
+			{
+				return this._OrderQty;
+			}
+			set
+			{
+				if ((this._OrderQty != value))
+				{
+					this.OnOrderQtyChanging(value);
+					this.SendPropertyChanging();
+					this._OrderQty = value;
+					this.SendPropertyChanged("OrderQty");
+					this.OnOrderQtyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BackOrder", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> BackOrder
+		{
+			get
+			{
+				return this._BackOrder;
+			}
+			set
+			{
+				if ((this._BackOrder != value))
+				{
+					this.OnBackOrderChanging(value);
+					this.SendPropertyChanging();
+					this._BackOrder = value;
+					this.SendPropertyChanged("BackOrder");
+					this.OnBackOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Cost
+		{
+			get
+			{
+				return this._Cost;
+			}
+			set
+			{
+				if ((this._Cost != value))
+				{
+					this.OnCostChanging(value);
+					this.SendPropertyChanging();
+					this._Cost = value;
+					this.SendPropertyChanged("Cost");
+					this.OnCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rate", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Rate
+		{
+			get
+			{
+				return this._Rate;
+			}
+			set
+			{
+				if ((this._Rate != value))
+				{
+					this.OnRateChanging(value);
+					this.SendPropertyChanging();
+					this._Rate = value;
+					this.SendPropertyChanged("Rate");
+					this.OnRateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Discon", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Discon
+		{
+			get
+			{
+				return this._Discon;
+			}
+			set
+			{
+				if ((this._Discon != value))
+				{
+					this.OnDisconChanging(value);
+					this.SendPropertyChanging();
+					this._Discon = value;
+					this.SendPropertyChanged("Discon");
+					this.OnDisconChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Discount", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> Discount
+		{
+			get
+			{
+				return this._Discount;
+			}
+			set
+			{
+				if ((this._Discount != value))
+				{
+					this.OnDiscountChanging(value);
+					this.SendPropertyChanging();
+					this._Discount = value;
+					this.SendPropertyChanged("Discount");
+					this.OnDiscountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountAmount", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> DiscountAmount
+		{
+			get
+			{
+				return this._DiscountAmount;
+			}
+			set
+			{
+				if ((this._DiscountAmount != value))
+				{
+					this.OnDiscountAmountChanging(value);
+					this.SendPropertyChanging();
+					this._DiscountAmount = value;
+					this.SendPropertyChanged("DiscountAmount");
+					this.OnDiscountAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExtendedCost", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> ExtendedCost
+		{
+			get
+			{
+				return this._ExtendedCost;
+			}
+			set
+			{
+				if ((this._ExtendedCost != value))
+				{
+					this.OnExtendedCostChanging(value);
+					this.SendPropertyChanging();
+					this._ExtendedCost = value;
+					this.SendPropertyChanged("ExtendedCost");
+					this.OnExtendedCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this.OnAmountChanging(value);
+					this.SendPropertyChanging();
+					this._Amount = value;
+					this.SendPropertyChanged("Amount");
+					this.OnAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DF", DbType="Int")]
+		public System.Nullable<int> DF
+		{
+			get
+			{
+				return this._DF;
+			}
+			set
+			{
+				if ((this._DF != value))
+				{
+					this.OnDFChanging(value);
+					this.SendPropertyChanging();
+					this._DF = value;
+					this.SendPropertyChanged("DF");
+					this.OnDFChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PRItem", DbType="Int")]
+		public System.Nullable<int> PRItem
+		{
+			get
+			{
+				return this._PRItem;
+			}
+			set
+			{
+				if ((this._PRItem != value))
+				{
+					this.OnPRItemChanging(value);
+					this.SendPropertyChanging();
+					this._PRItem = value;
+					this.SendPropertyChanged("PRItem");
+					this.OnPRItemChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeliveryDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DeliveryDate
+		{
+			get
+			{
+				return this._DeliveryDate;
+			}
+			set
+			{
+				if ((this._DeliveryDate != value))
+				{
+					this.OnDeliveryDateChanging(value);
+					this.SendPropertyChanging();
+					this._DeliveryDate = value;
+					this.SendPropertyChanged("DeliveryDate");
+					this.OnDeliveryDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SS", DbType="Int")]
+		public System.Nullable<int> SS
+		{
+			get
+			{
+				return this._SS;
+			}
+			set
+			{
+				if ((this._SS != value))
+				{
+					this.OnSSChanging(value);
+					this.SendPropertyChanging();
+					this._SS = value;
+					this.SendPropertyChanged("SS");
+					this.OnSSChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(250)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> PCSUnit
+		{
+			get
+			{
+				return this._PCSUnit;
+			}
+			set
+			{
+				if ((this._PCSUnit != value))
+				{
+					this.OnPCSUnitChanging(value);
+					this.SendPropertyChanging();
+					this._PCSUnit = value;
+					this.SendPropertyChanged("PCSUnit");
+					this.OnPCSUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShipTo", DbType="Bit")]
+		public System.Nullable<bool> ShipTo
+		{
+			get
+			{
+				return this._ShipTo;
+			}
+			set
+			{
+				if ((this._ShipTo != value))
+				{
+					this.OnShipToChanging(value);
+					this.SendPropertyChanging();
+					this._ShipTo = value;
+					this.SendPropertyChanged("ShipTo");
+					this.OnShipToChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RealCost", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> RealCost
+		{
+			get
+			{
+				return this._RealCost;
+			}
+			set
+			{
+				if ((this._RealCost != value))
+				{
+					this.OnRealCostChanging(value);
+					this.SendPropertyChanging();
+					this._RealCost = value;
+					this.SendPropertyChanged("RealCost");
+					this.OnRealCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PointCM", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> PointCM
+		{
+			get
+			{
+				return this._PointCM;
+			}
+			set
+			{
+				if ((this._PointCM != value))
+				{
+					this.OnPointCMChanging(value);
+					this.SendPropertyChanging();
+					this._PointCM = value;
+					this.SendPropertyChanged("PointCM");
+					this.OnPointCMChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Freight", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> Freight
+		{
+			get
+			{
+				return this._Freight;
+			}
+			set
+			{
+				if ((this._Freight != value))
+				{
+					this.OnFreightChanging(value);
+					this.SendPropertyChanging();
+					this._Freight = value;
+					this.SendPropertyChanged("Freight");
+					this.OnFreightChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CalCM", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> CalCM
+		{
+			get
+			{
+				return this._CalCM;
+			}
+			set
+			{
+				if ((this._CalCM != value))
+				{
+					this.OnCalCMChanging(value);
+					this.SendPropertyChanging();
+					this._CalCM = value;
+					this.SendPropertyChanged("CalCM");
+					this.OnCalCMChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Free", DbType="Bit")]
+		public System.Nullable<bool> Free
+		{
+			get
+			{
+				return this._Free;
+			}
+			set
+			{
+				if ((this._Free != value))
+				{
+					this.OnFreeChanging(value);
+					this.SendPropertyChanging();
+					this._Free = value;
+					this.SendPropertyChanged("Free");
+					this.OnFreeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CostForCal", DbType="Float")]
+		public System.Nullable<double> CostForCal
+		{
+			get
+			{
+				return this._CostForCal;
+			}
+			set
+			{
+				if ((this._CostForCal != value))
+				{
+					this.OnCostForCalChanging(value);
+					this.SendPropertyChanging();
+					this._CostForCal = value;
+					this.SendPropertyChanged("CostForCal");
+					this.OnCostForCalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Urgent", DbType="Bit")]
+		public System.Nullable<bool> Urgent
+		{
+			get
+			{
+				return this._Urgent;
+			}
+			set
+			{
+				if ((this._Urgent != value))
+				{
+					this.OnUrgentChanging(value);
+					this.SendPropertyChanging();
+					this._Urgent = value;
+					this.SendPropertyChanged("Urgent");
+					this.OnUrgentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Faxed", DbType="Bit")]
+		public System.Nullable<bool> Faxed
+		{
+			get
+			{
+				return this._Faxed;
+			}
+			set
+			{
+				if ((this._Faxed != value))
+				{
+					this.OnFaxedChanging(value);
+					this.SendPropertyChanging();
+					this._Faxed = value;
+					this.SendPropertyChanged("Faxed");
+					this.OnFaxedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Servics", DbType="Bit")]
+		public System.Nullable<bool> Servics
+		{
+			get
+			{
+				return this._Servics;
+			}
+			set
+			{
+				if ((this._Servics != value))
+				{
+					this.OnServicsChanging(value);
+					this.SendPropertyChanging();
+					this._Servics = value;
+					this.SendPropertyChanged("Servics");
+					this.OnServicsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RNo", DbType="Int")]
+		public System.Nullable<int> RNo
+		{
+			get
+			{
+				return this._RNo;
+			}
+			set
+			{
+				if ((this._RNo != value))
+				{
+					this.OnRNoChanging(value);
+					this.SendPropertyChanging();
+					this._RNo = value;
+					this.SendPropertyChanged("RNo");
+					this.OnRNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Asset", DbType="Bit")]
+		public System.Nullable<bool> Asset
+		{
+			get
+			{
+				return this._Asset;
+			}
+			set
+			{
+				if ((this._Asset != value))
+				{
+					this.OnAssetChanging(value);
+					this.SendPropertyChanging();
+					this._Asset = value;
+					this.SendPropertyChanged("Asset");
+					this.OnAssetChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Chemical", DbType="Bit")]
+		public System.Nullable<bool> Chemical
+		{
+			get
+			{
+				return this._Chemical;
+			}
+			set
+			{
+				if ((this._Chemical != value))
+				{
+					this.OnChemicalChanging(value);
+					this.SendPropertyChanging();
+					this._Chemical = value;
+					this.SendPropertyChanged("Chemical");
+					this.OnChemicalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FxQty", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> FxQty
+		{
+			get
+			{
+				return this._FxQty;
+			}
+			set
+			{
+				if ((this._FxQty != value))
+				{
+					this.OnFxQtyChanging(value);
+					this.SendPropertyChanging();
+					this._FxQty = value;
+					this.SendPropertyChanged("FxQty");
+					this.OnFxQtyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FxUnit", DbType="VarChar(50)")]
+		public string FxUnit
+		{
+			get
+			{
+				return this._FxUnit;
+			}
+			set
+			{
+				if ((this._FxUnit != value))
+				{
+					this.OnFxUnitChanging(value);
+					this.SendPropertyChanging();
+					this._FxUnit = value;
+					this.SendPropertyChanged("FxUnit");
+					this.OnFxUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FxCost", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> FxCost
+		{
+			get
+			{
+				return this._FxCost;
+			}
+			set
+			{
+				if ((this._FxCost != value))
+				{
+					this.OnFxCostChanging(value);
+					this.SendPropertyChanging();
+					this._FxCost = value;
+					this.SendPropertyChanged("FxCost");
+					this.OnFxCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LineName", DbType="NVarChar(50)")]
+		public string LineName
+		{
+			get
+			{
+				return this._LineName;
+			}
+			set
+			{
+				if ((this._LineName != value))
+				{
+					this.OnLineNameChanging(value);
+					this.SendPropertyChanging();
+					this._LineName = value;
+					this.SendPropertyChanged("LineName");
+					this.OnLineNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MCName", DbType="NVarChar(50)")]
+		public string MCName
+		{
+			get
+			{
+				return this._MCName;
+			}
+			set
+			{
+				if ((this._MCName != value))
+				{
+					this.OnMCNameChanging(value);
+					this.SendPropertyChanging();
+					this._MCName = value;
+					this.SendPropertyChanged("MCName");
+					this.OnMCNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SerialNo", DbType="NVarChar(20)")]
+		public string SerialNo
+		{
+			get
+			{
+				return this._SerialNo;
+			}
+			set
+			{
+				if ((this._SerialNo != value))
+				{
+					this.OnSerialNoChanging(value);
+					this.SendPropertyChanging();
+					this._SerialNo = value;
+					this.SendPropertyChanged("SerialNo");
+					this.OnSerialNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LotNo", DbType="NVarChar(20)")]
+		public string LotNo
+		{
+			get
+			{
+				return this._LotNo;
+			}
+			set
+			{
+				if ((this._LotNo != value))
+				{
+					this.OnLotNoChanging(value);
+					this.SendPropertyChanging();
+					this._LotNo = value;
+					this.SendPropertyChanged("LotNo");
+					this.OnLotNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefRCid", DbType="Int")]
+		public System.Nullable<int> RefRCid
+		{
+			get
+			{
+				return this._RefRCid;
+			}
+			set
+			{
+				if ((this._RefRCid != value))
+				{
+					this.OnRefRCidChanging(value);
+					this.SendPropertyChanging();
+					this._RefRCid = value;
+					this.SendPropertyChanged("RefRCid");
+					this.OnRefRCidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefRCNo", DbType="VarChar(50)")]
+		public string RefRCNo
+		{
+			get
+			{
+				return this._RefRCNo;
+			}
+			set
+			{
+				if ((this._RefRCNo != value))
+				{
+					this.OnRefRCNoChanging(value);
+					this.SendPropertyChanging();
+					this._RefRCNo = value;
+					this.SendPropertyChanged("RefRCNo");
+					this.OnRefRCNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHNo", DbType="VarChar(50)")]
+		public string CHNo
+		{
+			get
+			{
+				return this._CHNo;
+			}
+			set
+			{
+				if ((this._CHNo != value))
+				{
+					this.OnCHNoChanging(value);
+					this.SendPropertyChanging();
+					this._CHNo = value;
+					this.SendPropertyChanged("CHNo");
+					this.OnCHNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHFlag", DbType="Bit")]
+		public System.Nullable<bool> CHFlag
+		{
+			get
+			{
+				return this._CHFlag;
+			}
+			set
+			{
+				if ((this._CHFlag != value))
+				{
+					this.OnCHFlagChanging(value);
+					this.SendPropertyChanging();
+					this._CHFlag = value;
+					this.SendPropertyChanged("CHFlag");
+					this.OnCHFlagChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHUnitCost", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> CHUnitCost
+		{
+			get
+			{
+				return this._CHUnitCost;
+			}
+			set
+			{
+				if ((this._CHUnitCost != value))
+				{
+					this.OnCHUnitCostChanging(value);
+					this.SendPropertyChanging();
+					this._CHUnitCost = value;
+					this.SendPropertyChanged("CHUnitCost");
+					this.OnCHUnitCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHCost", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> CHCost
+		{
+			get
+			{
+				return this._CHCost;
+			}
+			set
+			{
+				if ((this._CHCost != value))
+				{
+					this.OnCHCostChanging(value);
+					this.SendPropertyChanging();
+					this._CHCost = value;
+					this.SendPropertyChanged("CHCost");
+					this.OnCHCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHTotal", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> CHTotal
+		{
+			get
+			{
+				return this._CHTotal;
+			}
+			set
+			{
+				if ((this._CHTotal != value))
+				{
+					this.OnCHTotalChanging(value);
+					this.SendPropertyChanging();
+					this._CHTotal = value;
+					this.SendPropertyChanged("CHTotal");
+					this.OnCHTotalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCSTMPODt", DbType="Int")]
+		public System.Nullable<int> idCSTMPODt
+		{
+			get
+			{
+				return this._idCSTMPODt;
+			}
+			set
+			{
+				if ((this._idCSTMPODt != value))
+				{
+					this.OnidCSTMPODtChanging(value);
+					this.SendPropertyChanging();
+					this._idCSTMPODt = value;
+					this.SendPropertyChanged("idCSTMPODt");
+					this.OnidCSTMPODtChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_StockReserve_TEMP")]
+	public partial class mh_StockReserve_TEMP : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _id_tb_Stock;
+		
+		private string _ItemNo;
+		
+		private int _idCstmPODt;
+		
+		private int _idCstmPODt_Free;
+		
+		private decimal _ReserveQty;
+		
+		private int _idPR;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Onid_tb_StockChanging(int value);
+    partial void Onid_tb_StockChanged();
+    partial void OnItemNoChanging(string value);
+    partial void OnItemNoChanged();
+    partial void OnidCstmPODtChanging(int value);
+    partial void OnidCstmPODtChanged();
+    partial void OnidCstmPODt_FreeChanging(int value);
+    partial void OnidCstmPODt_FreeChanged();
+    partial void OnReserveQtyChanging(decimal value);
+    partial void OnReserveQtyChanged();
+    partial void OnidPRChanging(int value);
+    partial void OnidPRChanged();
+    #endregion
+		
+		public mh_StockReserve_TEMP()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id_tb_Stock", DbType="Int NOT NULL")]
+		public int id_tb_Stock
+		{
+			get
+			{
+				return this._id_tb_Stock;
+			}
+			set
+			{
+				if ((this._id_tb_Stock != value))
+				{
+					this.Onid_tb_StockChanging(value);
+					this.SendPropertyChanging();
+					this._id_tb_Stock = value;
+					this.SendPropertyChanged("id_tb_Stock");
+					this.Onid_tb_StockChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50)")]
+		public string ItemNo
+		{
+			get
+			{
+				return this._ItemNo;
+			}
+			set
+			{
+				if ((this._ItemNo != value))
+				{
+					this.OnItemNoChanging(value);
+					this.SendPropertyChanging();
+					this._ItemNo = value;
+					this.SendPropertyChanged("ItemNo");
+					this.OnItemNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCstmPODt", DbType="Int NOT NULL")]
+		public int idCstmPODt
+		{
+			get
+			{
+				return this._idCstmPODt;
+			}
+			set
+			{
+				if ((this._idCstmPODt != value))
+				{
+					this.OnidCstmPODtChanging(value);
+					this.SendPropertyChanging();
+					this._idCstmPODt = value;
+					this.SendPropertyChanged("idCstmPODt");
+					this.OnidCstmPODtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCstmPODt_Free", DbType="Int NOT NULL")]
+		public int idCstmPODt_Free
+		{
+			get
+			{
+				return this._idCstmPODt_Free;
+			}
+			set
+			{
+				if ((this._idCstmPODt_Free != value))
+				{
+					this.OnidCstmPODt_FreeChanging(value);
+					this.SendPropertyChanging();
+					this._idCstmPODt_Free = value;
+					this.SendPropertyChanged("idCstmPODt_Free");
+					this.OnidCstmPODt_FreeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReserveQty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal ReserveQty
+		{
+			get
+			{
+				return this._ReserveQty;
+			}
+			set
+			{
+				if ((this._ReserveQty != value))
+				{
+					this.OnReserveQtyChanging(value);
+					this.SendPropertyChanging();
+					this._ReserveQty = value;
+					this.SendPropertyChanged("ReserveQty");
+					this.OnReserveQtyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPR", DbType="Int NOT NULL")]
+		public int idPR
+		{
+			get
+			{
+				return this._idPR;
+			}
+			set
+			{
+				if ((this._idPR != value))
+				{
+					this.OnidPRChanging(value);
+					this.SendPropertyChanging();
+					this._idPR = value;
+					this.SendPropertyChanged("idPR");
+					this.OnidPRChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_StockReserve")]
+	public partial class mh_StockReserve : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _id_tb_Stock;
+		
+		private string _ItemNo;
+		
+		private int _idCstmPODt;
+		
+		private int _idCstmPODt_Free;
+		
+		private decimal _ReserveQty;
+		
+		private int _mainNo;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Onid_tb_StockChanging(int value);
+    partial void Onid_tb_StockChanged();
+    partial void OnItemNoChanging(string value);
+    partial void OnItemNoChanged();
+    partial void OnidCstmPODtChanging(int value);
+    partial void OnidCstmPODtChanged();
+    partial void OnidCstmPODt_FreeChanging(int value);
+    partial void OnidCstmPODt_FreeChanged();
+    partial void OnReserveQtyChanging(decimal value);
+    partial void OnReserveQtyChanged();
+    partial void OnmainNoChanging(int value);
+    partial void OnmainNoChanged();
+    #endregion
+		
+		public mh_StockReserve()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id_tb_Stock", DbType="Int NOT NULL")]
+		public int id_tb_Stock
+		{
+			get
+			{
+				return this._id_tb_Stock;
+			}
+			set
+			{
+				if ((this._id_tb_Stock != value))
+				{
+					this.Onid_tb_StockChanging(value);
+					this.SendPropertyChanging();
+					this._id_tb_Stock = value;
+					this.SendPropertyChanged("id_tb_Stock");
+					this.Onid_tb_StockChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50)")]
+		public string ItemNo
+		{
+			get
+			{
+				return this._ItemNo;
+			}
+			set
+			{
+				if ((this._ItemNo != value))
+				{
+					this.OnItemNoChanging(value);
+					this.SendPropertyChanging();
+					this._ItemNo = value;
+					this.SendPropertyChanged("ItemNo");
+					this.OnItemNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCstmPODt", DbType="Int NOT NULL")]
+		public int idCstmPODt
+		{
+			get
+			{
+				return this._idCstmPODt;
+			}
+			set
+			{
+				if ((this._idCstmPODt != value))
+				{
+					this.OnidCstmPODtChanging(value);
+					this.SendPropertyChanging();
+					this._idCstmPODt = value;
+					this.SendPropertyChanged("idCstmPODt");
+					this.OnidCstmPODtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCstmPODt_Free", DbType="Int NOT NULL")]
+		public int idCstmPODt_Free
+		{
+			get
+			{
+				return this._idCstmPODt_Free;
+			}
+			set
+			{
+				if ((this._idCstmPODt_Free != value))
+				{
+					this.OnidCstmPODt_FreeChanging(value);
+					this.SendPropertyChanging();
+					this._idCstmPODt_Free = value;
+					this.SendPropertyChanged("idCstmPODt_Free");
+					this.OnidCstmPODt_FreeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReserveQty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal ReserveQty
+		{
+			get
+			{
+				return this._ReserveQty;
+			}
+			set
+			{
+				if ((this._ReserveQty != value))
+				{
+					this.OnReserveQtyChanging(value);
+					this.SendPropertyChanging();
+					this._ReserveQty = value;
+					this.SendPropertyChanged("ReserveQty");
+					this.OnReserveQtyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mainNo", DbType="Int NOT NULL")]
+		public int mainNo
+		{
+			get
+			{
+				return this._mainNo;
+			}
+			set
+			{
+				if ((this._mainNo != value))
+				{
+					this.OnmainNoChanging(value);
+					this.SendPropertyChanging();
+					this._mainNo = value;
+					this.SendPropertyChanged("mainNo");
+					this.OnmainNoChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_PlanningMPS_TEMP")]
+	public partial class mh_PlanningMPS_TEMP : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.DateTime _PlanDateFrom;
+		
+		private System.DateTime _PlanDateTo;
+		
+		private string _Status;
+		
+		private string _ItemNo;
+		
+		private string _ItemName;
+		
+		private System.DateTime _ReqDate;
+		
+		private System.DateTime _DueDate;
+		
+		private System.DateTime _StartingDate;
+		
+		private System.DateTime _EndingDate;
+		
+		private decimal _Qty;
+		
+		private string _PlanningType;
+		
+		private int _idRef;
+		
+		private string _RefDocNo;
+		
+		private string _GroupType;
+		
+		private string _Type;
+		
+		private string _InvGroup;
+		
+		private string _VendorNo;
+		
+		private string _VendorName;
+		
+		private string _UOM;
+		
+		private decimal _PCSUnit;
+		
+		private decimal _TotalCost;
+		
+		private int _id;
+		
+		private string _LocationItem;
+		
+		private bool _root;
+		
+		private int _mainNo;
+		
+		private int _refNo;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPlanDateFromChanging(System.DateTime value);
+    partial void OnPlanDateFromChanged();
+    partial void OnPlanDateToChanging(System.DateTime value);
+    partial void OnPlanDateToChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnItemNoChanging(string value);
+    partial void OnItemNoChanged();
+    partial void OnItemNameChanging(string value);
+    partial void OnItemNameChanged();
+    partial void OnReqDateChanging(System.DateTime value);
+    partial void OnReqDateChanged();
+    partial void OnDueDateChanging(System.DateTime value);
+    partial void OnDueDateChanged();
+    partial void OnStartingDateChanging(System.DateTime value);
+    partial void OnStartingDateChanged();
+    partial void OnEndingDateChanging(System.DateTime value);
+    partial void OnEndingDateChanged();
+    partial void OnQtyChanging(decimal value);
+    partial void OnQtyChanged();
+    partial void OnPlanningTypeChanging(string value);
+    partial void OnPlanningTypeChanged();
+    partial void OnidRefChanging(int value);
+    partial void OnidRefChanged();
+    partial void OnRefDocNoChanging(string value);
+    partial void OnRefDocNoChanged();
+    partial void OnGroupTypeChanging(string value);
+    partial void OnGroupTypeChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnInvGroupChanging(string value);
+    partial void OnInvGroupChanged();
+    partial void OnVendorNoChanging(string value);
+    partial void OnVendorNoChanged();
+    partial void OnVendorNameChanging(string value);
+    partial void OnVendorNameChanged();
+    partial void OnUOMChanging(string value);
+    partial void OnUOMChanged();
+    partial void OnPCSUnitChanging(decimal value);
+    partial void OnPCSUnitChanged();
+    partial void OnTotalCostChanging(decimal value);
+    partial void OnTotalCostChanged();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnLocationItemChanging(string value);
+    partial void OnLocationItemChanged();
+    partial void OnrootChanging(bool value);
+    partial void OnrootChanged();
+    partial void OnmainNoChanging(int value);
+    partial void OnmainNoChanged();
+    partial void OnrefNoChanging(int value);
+    partial void OnrefNoChanged();
+    #endregion
+		
+		public mh_PlanningMPS_TEMP()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanDateFrom", DbType="DateTime NOT NULL")]
+		public System.DateTime PlanDateFrom
+		{
+			get
+			{
+				return this._PlanDateFrom;
+			}
+			set
+			{
+				if ((this._PlanDateFrom != value))
+				{
+					this.OnPlanDateFromChanging(value);
+					this.SendPropertyChanging();
+					this._PlanDateFrom = value;
+					this.SendPropertyChanged("PlanDateFrom");
+					this.OnPlanDateFromChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanDateTo", DbType="DateTime NOT NULL")]
+		public System.DateTime PlanDateTo
+		{
+			get
+			{
+				return this._PlanDateTo;
+			}
+			set
+			{
+				if ((this._PlanDateTo != value))
+				{
+					this.OnPlanDateToChanging(value);
+					this.SendPropertyChanging();
+					this._PlanDateTo = value;
+					this.SendPropertyChanged("PlanDateTo");
+					this.OnPlanDateToChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50)")]
+		public string ItemNo
+		{
+			get
+			{
+				return this._ItemNo;
+			}
+			set
+			{
+				if ((this._ItemNo != value))
+				{
+					this.OnItemNoChanging(value);
+					this.SendPropertyChanging();
+					this._ItemNo = value;
+					this.SendPropertyChanged("ItemNo");
+					this.OnItemNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(100)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this.OnItemNameChanging(value);
+					this.SendPropertyChanging();
+					this._ItemName = value;
+					this.SendPropertyChanged("ItemName");
+					this.OnItemNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReqDate", DbType="DateTime NOT NULL")]
+		public System.DateTime ReqDate
+		{
+			get
+			{
+				return this._ReqDate;
+			}
+			set
+			{
+				if ((this._ReqDate != value))
+				{
+					this.OnReqDateChanging(value);
+					this.SendPropertyChanging();
+					this._ReqDate = value;
+					this.SendPropertyChanged("ReqDate");
+					this.OnReqDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DueDate", DbType="DateTime NOT NULL")]
+		public System.DateTime DueDate
+		{
+			get
+			{
+				return this._DueDate;
+			}
+			set
+			{
+				if ((this._DueDate != value))
+				{
+					this.OnDueDateChanging(value);
+					this.SendPropertyChanging();
+					this._DueDate = value;
+					this.SendPropertyChanged("DueDate");
+					this.OnDueDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartingDate", DbType="DateTime NOT NULL")]
+		public System.DateTime StartingDate
+		{
+			get
+			{
+				return this._StartingDate;
+			}
+			set
+			{
+				if ((this._StartingDate != value))
+				{
+					this.OnStartingDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartingDate = value;
+					this.SendPropertyChanged("StartingDate");
+					this.OnStartingDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndingDate", DbType="DateTime NOT NULL")]
+		public System.DateTime EndingDate
+		{
+			get
+			{
+				return this._EndingDate;
+			}
+			set
+			{
+				if ((this._EndingDate != value))
+				{
+					this.OnEndingDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndingDate = value;
+					this.SendPropertyChanged("EndingDate");
+					this.OnEndingDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Qty
+		{
+			get
+			{
+				return this._Qty;
+			}
+			set
+			{
+				if ((this._Qty != value))
+				{
+					this.OnQtyChanging(value);
+					this.SendPropertyChanging();
+					this._Qty = value;
+					this.SendPropertyChanged("Qty");
+					this.OnQtyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlanningType", DbType="NVarChar(50)")]
+		public string PlanningType
+		{
+			get
+			{
+				return this._PlanningType;
+			}
+			set
+			{
+				if ((this._PlanningType != value))
+				{
+					this.OnPlanningTypeChanging(value);
+					this.SendPropertyChanging();
+					this._PlanningType = value;
+					this.SendPropertyChanged("PlanningType");
+					this.OnPlanningTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idRef", DbType="Int NOT NULL")]
+		public int idRef
+		{
+			get
+			{
+				return this._idRef;
+			}
+			set
+			{
+				if ((this._idRef != value))
+				{
+					this.OnidRefChanging(value);
+					this.SendPropertyChanging();
+					this._idRef = value;
+					this.SendPropertyChanged("idRef");
+					this.OnidRefChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefDocNo", DbType="NVarChar(50)")]
+		public string RefDocNo
+		{
+			get
+			{
+				return this._RefDocNo;
+			}
+			set
+			{
+				if ((this._RefDocNo != value))
+				{
+					this.OnRefDocNoChanging(value);
+					this.SendPropertyChanging();
+					this._RefDocNo = value;
+					this.SendPropertyChanged("RefDocNo");
+					this.OnRefDocNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GroupType", DbType="NVarChar(50)")]
+		public string GroupType
+		{
+			get
+			{
+				return this._GroupType;
+			}
+			set
+			{
+				if ((this._GroupType != value))
+				{
+					this.OnGroupTypeChanging(value);
+					this.SendPropertyChanging();
+					this._GroupType = value;
+					this.SendPropertyChanged("GroupType");
+					this.OnGroupTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="NVarChar(50)")]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InvGroup", DbType="NVarChar(50)")]
+		public string InvGroup
+		{
+			get
+			{
+				return this._InvGroup;
+			}
+			set
+			{
+				if ((this._InvGroup != value))
+				{
+					this.OnInvGroupChanging(value);
+					this.SendPropertyChanging();
+					this._InvGroup = value;
+					this.SendPropertyChanged("InvGroup");
+					this.OnInvGroupChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VendorNo", DbType="NVarChar(50)")]
+		public string VendorNo
+		{
+			get
+			{
+				return this._VendorNo;
+			}
+			set
+			{
+				if ((this._VendorNo != value))
+				{
+					this.OnVendorNoChanging(value);
+					this.SendPropertyChanging();
+					this._VendorNo = value;
+					this.SendPropertyChanged("VendorNo");
+					this.OnVendorNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VendorName", DbType="NVarChar(100)")]
+		public string VendorName
+		{
+			get
+			{
+				return this._VendorName;
+			}
+			set
+			{
+				if ((this._VendorName != value))
+				{
+					this.OnVendorNameChanging(value);
+					this.SendPropertyChanging();
+					this._VendorName = value;
+					this.SendPropertyChanged("VendorName");
+					this.OnVendorNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UOM", DbType="NVarChar(50)")]
+		public string UOM
+		{
+			get
+			{
+				return this._UOM;
+			}
+			set
+			{
+				if ((this._UOM != value))
+				{
+					this.OnUOMChanging(value);
+					this.SendPropertyChanging();
+					this._UOM = value;
+					this.SendPropertyChanged("UOM");
+					this.OnUOMChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2) NOT NULL")]
+		public decimal PCSUnit
+		{
+			get
+			{
+				return this._PCSUnit;
+			}
+			set
+			{
+				if ((this._PCSUnit != value))
+				{
+					this.OnPCSUnitChanging(value);
+					this.SendPropertyChanging();
+					this._PCSUnit = value;
+					this.SendPropertyChanged("PCSUnit");
+					this.OnPCSUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalCost", DbType="Decimal(18,2) NOT NULL")]
+		public decimal TotalCost
+		{
+			get
+			{
+				return this._TotalCost;
+			}
+			set
+			{
+				if ((this._TotalCost != value))
+				{
+					this.OnTotalCostChanging(value);
+					this.SendPropertyChanging();
+					this._TotalCost = value;
+					this.SendPropertyChanged("TotalCost");
+					this.OnTotalCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LocationItem", DbType="NVarChar(50)")]
+		public string LocationItem
+		{
+			get
+			{
+				return this._LocationItem;
+			}
+			set
+			{
+				if ((this._LocationItem != value))
+				{
+					this.OnLocationItemChanging(value);
+					this.SendPropertyChanging();
+					this._LocationItem = value;
+					this.SendPropertyChanged("LocationItem");
+					this.OnLocationItemChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_root", DbType="Bit NOT NULL")]
+		public bool root
+		{
+			get
+			{
+				return this._root;
+			}
+			set
+			{
+				if ((this._root != value))
+				{
+					this.OnrootChanging(value);
+					this.SendPropertyChanging();
+					this._root = value;
+					this.SendPropertyChanged("root");
+					this.OnrootChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mainNo", DbType="Int NOT NULL")]
+		public int mainNo
+		{
+			get
+			{
+				return this._mainNo;
+			}
+			set
+			{
+				if ((this._mainNo != value))
+				{
+					this.OnmainNoChanging(value);
+					this.SendPropertyChanging();
+					this._mainNo = value;
+					this.SendPropertyChanged("mainNo");
+					this.OnmainNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_refNo", DbType="Int NOT NULL")]
+		public int refNo
+		{
+			get
+			{
+				return this._refNo;
+			}
+			set
+			{
+				if ((this._refNo != value))
+				{
+					this.OnrefNoChanging(value);
+					this.SendPropertyChanging();
+					this._refNo = value;
+					this.SendPropertyChanged("refNo");
+					this.OnrefNoChanged();
 				}
 			}
 		}
