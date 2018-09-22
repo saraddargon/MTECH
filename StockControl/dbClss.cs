@@ -219,7 +219,7 @@ namespace StockControl
 
                 return No;
         }
-        public static string Get_Stock(string CodeNo, string Category,string Type_in_out,string Condition,string Location)
+        public static string Get_Stock(string CodeNo, string Category,string Type_in_out,string Condition,string Location,int idCSTMPODt)
         {
             string No = "0.00";
 
@@ -227,7 +227,7 @@ namespace StockControl
             {
                 if (!CodeNo.Equals(""))
                 {
-                    var g = (from ix in db.sp_008_Stock_Select(CodeNo, Category, Type_in_out, Location) select ix).OrderByDescending(ab => ab.id ).ToList();
+                    var g = (from ix in db.sp_008_Stock_Select(CodeNo, Category, Type_in_out, Location, idCSTMPODt) select ix).OrderByDescending(ab => ab.id ).ToList();
                     if (g.Count > 0)
                     {
                         if (Condition.Equals("RemainQty"))

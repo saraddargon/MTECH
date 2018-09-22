@@ -518,7 +518,8 @@ namespace StockControl
             {
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == txtInternalNo.Text).ToList();
+                    var g = (from ix in db.mh_Items select ix)
+                        .Where(a => a.InternalNo == txtInternalNo.Text).ToList();
                     if (g.Count() > 0)
                     {
                         txtInternalNo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().InternalNo);
@@ -605,6 +606,7 @@ namespace StockControl
                             btnView.Enabled = false;
                             btnEdit.Enabled = false;
                             lbStatus.Text = "InActive";
+                            btnNew.Enabled = true;
                         }
                         else
                         {
@@ -809,12 +811,14 @@ namespace StockControl
                         foreach (DataRow row in dt_Part.Rows)
                         {
                             var g = (from ix in db.mh_Items
-                                     where ix.InternalNo.Trim() == txtInternalNo.Text.Trim() && ix.Active == true
+                                     where ix.InternalNo.Trim() == txtInternalNo.Text.Trim() 
+                                     //&& ix.Active == true
                                      select ix).ToList();
                             if (g.Count > 0)  //มีรายการในระบบ
                             {
                                 var gg = (from ix in db.mh_Items
-                                          where ix.InternalNo.Trim() == txtInternalNo.Text.Trim() && ix.Active == true
+                                          where ix.InternalNo.Trim() == txtInternalNo.Text.Trim() 
+                                          //&& ix.Active == true
                                           select ix).First();
                                 //gg.Status = "Active";
 
@@ -832,7 +836,7 @@ namespace StockControl
                                 }
                                 if (!txtInternalDesc.Text.Trim().Equals(row["InternalDescription"].ToString()))
                                 {
-                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขชื่อทูล [ เดิม : " + row["InternalDescription"].ToString() + " ใหม่ : " + txtInternalDesc.Text.Trim() + "]", txtInternalNo.Text);
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขรายละเอียด [ เดิม : " + row["InternalDescription"].ToString() + " ใหม่ : " + txtInternalDesc.Text.Trim() + "]", txtInternalNo.Text);
                                     gg.InternalDescription = txtInternalDesc.Text.Trim();
                                 }
                                 
@@ -1041,13 +1045,13 @@ namespace StockControl
                           //&& 
                           //ix.id == Convert.ToInt16(g.Cells["id"].Value)
                           select ix).ToList();
-                if (g1.Count > 0)
+                if (g1.Count <= 0)
                 {
                     var gg = (from ix in db.mh_ItemUOMs
                               where ix.ItemNo.Trim().ToUpper() == ItemNo1.Trim().ToUpper()
                                 && ix.UOMCode.Trim().ToUpper() == UOM.Trim().ToUpper()
                               select ix).ToList();
-                    if (gg.Count > 0)
+                    if (gg.Count <= 0)
                     {
                         mh_ItemUOM u = new mh_ItemUOM();
                         u.QuantityPer = PCSUnit;
@@ -1074,6 +1078,24 @@ namespace StockControl
             {
                 if (txtInternalNo.Text.Trim().Equals(""))
                     err += " “รหัสทูล:” เป็นค่าว่าง \n";
+                else
+                {
+                    if (Ac.Equals("New"))  //New
+                    {
+                        if (!txtInternalNo.Text.Equals(""))
+                        {
+                            using (DataClasses1DataContext db = new DataClasses1DataContext())
+                            {
+                                var g = (from ix in db.mh_Items select ix)
+                                    .Where(a => a.InternalNo.Trim().ToUpper() == txtInternalNo.Text.Trim().ToUpper()).ToList();
+                                if (g.Count() > 0)
+                                {
+                                    err += " “รหัสทูล:” ซ้ำในระบบ \n";
+                                }
+                            }
+                        }
+                    }
+                }
                 if (txtInternalName.Text.Equals(""))
                     err += " “ชื่อทูล:” เป็นค่าว่าง \n";
                 if (txtInternalDesc.Text.Equals(""))
@@ -1199,6 +1221,28 @@ namespace StockControl
                     {
                         if (txtInternalNo.Text.Trim() == "")
                             return;
+                        //int temp_item = 0;
+                        //if (Ac.Equals("New"))  //New
+                        //{
+                        //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+                        //    {
+                        //        var g = (from ix in db.mh_Items
+                        //                 where ix.InternalNo.Trim().ToUpper() == txtInternalNo.Text.Trim().ToUpper()
+                        //                 select ix).ToList();
+                        //        {
+                        //            temp_item = 1; 
+                        //        }
+                        //    }
+                        //}
+                        //if (temp_item == 1)
+                        //{
+                        //    if (MessageBox.Show("รายการที่ทำการสร้างใหม่ เคยมีในระบบแล้วต้องการทีจะนำกลับมาใช้ใหม่ ใช่หรือไม่?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        //    {
+                        //        Ac = "Edit";
+                        //    }
+                        //    else
+                        //        return;
+                        //}
 
                         AddPart();
                        // AddBom();
