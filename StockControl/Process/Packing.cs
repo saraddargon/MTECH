@@ -104,7 +104,10 @@ namespace StockControl
 
                             if (!m.Active)
                                 lblStatus.Text = "Cancel";
+                            else
+                                lblStatus.Text = "Active";
 
+                            btnNew.Enabled = true;
                             btnSave.Enabled = false;
                             btnDelete.Enabled = true;
                         }

@@ -409,10 +409,49 @@ namespace StockControl
             using (var db = new DataClasses1DataContext())
             {
                 var tbst = db.tb_Stocks.Where(x => x.id == id_tb_Stock).FirstOrDefault();
+                //**เขียน ShipQty ออกจาก Job
+                //เขียน SHipping Header
+                tb_ShippingH gg = new tb_ShippingH();
+                string shipNo = dbClss.GetNo(5, 2);
+                gg.ShippingNo = shipNo;
+                gg.ShipDate = DateTime.Now;
+                gg.UpdateBy = ClassLib.Classlib.User;
+                gg.UpdateDate = DateTime.Now;
+                gg.CreateBy = ClassLib.Classlib.User;
+                gg.CreateDate = DateTime.Now;
+                gg.ShipName = ClassLib.Classlib.User;
+                var po = db.mh_CustomerPODTs.Where(x => x.id == idCstmPODt)
+                    .Join(db.mh_CustomerPOs
+                    , dt => dt.idCustomerPO
+                    , hd => hd.id
+                    , (dt, hd) => new { hd, dt }).FirstOrDefault();
+                string cstmPOno = (po != null && po.hd != null) ? po.hd.CustomerPONo : idCstmPODt.ToSt();
+                gg.Remark = $"Shipping for Move Stock to new CustomerPO ({cstmPOno})";
+                gg.JobCard = "";
+                gg.TempJobCard = "";
+                byte[] barcode = null;
+                gg.BarCode = barcode;
+                gg.Status = "Completed";
+                gg.ToLocation = "Warehouse";
+                db.tb_ShippingHs.InsertOnSubmit(gg);
+                db.SubmitChanges();
+                //Shipping ADD
+                var tool = db.mh_Items.Where(x => x.InternalNo == tbst.CodeNo).FirstOrDefault();
+                var uom = db.mh_ItemUOMs.Where(x => x.UOMCode == tool.BaseUOM && x.ItemNo == tbst.CodeNo).FirstOrDefault();
+                var pcsunit = 1.00m;
+                if (uom != null) pcsunit = uom.QuantityPer;
+                db.sp_024_tb_Shipping_ADD(shipNo, tbst.CodeNo
+                                    , ReserveQty //QtyPlan
+                                    , ReserveQty //QtyShip
+                                    , "", "", "", ""
+                                    , tbst.LotNo
+                                    , "Completed", ClassLib.Classlib.User
+                                    , "", ""//txtTempJobCard.Text.Trim()
+                                    , 0, tbst.Location, "Warehouse", tool.BaseUOM, pcsunit
+                                    , tool.BaseUOM, pcsunit, idCstmPODt_Free
+                                    );
 
-                //เขียน ShipQty ออกจาก Job
-
-                //Stock ใส่ Customer PODt id ใบใหม่
+                //**Stock Receive ใส่ Customer PODt id ใบใหม่
                 var amntCost = Math.Round(tbst.UnitCost.ToDecimal() * ReserveQty.ToDecimal(), 2);
                 var s = new tb_Stock();
                 s.AppDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));

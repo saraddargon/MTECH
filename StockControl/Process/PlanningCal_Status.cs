@@ -499,6 +499,14 @@ namespace StockControl
                             tempStarting = tdate;
                     }
                 }
+                //find Duedate from SEMI
+                var prod = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == data.DocId).ToList();
+                if(prod.Count > 0)
+                {
+                    var sDate = prod.Max(x => x.EndingDate).Date.AddDays(1);
+                    if (tempStarting < sDate)
+                        tempStarting = sDate;
+                }
 
                 //วน Routing ของ Item นั้น
                 var rt = db.mh_RoutingDTs.Where(x => x.RoutingId == tdata.Routeid)

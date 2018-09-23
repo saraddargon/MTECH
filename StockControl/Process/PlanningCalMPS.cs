@@ -657,10 +657,10 @@ namespace StockControl
 
                         //delete gridPlan
                         int id = item.Cells["id"].Value.ToInt();
-                        var d = db.mh_Planning_TEMPs.Where(x => x.id == id).ToList();
+                        var d = db.mh_PlanningMPS_TEMPs.Where(x => x.id == id).ToList();
                         if (d.Count > 0)
                         {
-                            db.mh_Planning_TEMPs.DeleteAllOnSubmit(d);
+                            db.mh_PlanningMPS_TEMPs.DeleteAllOnSubmit(d);
                             db.SubmitChanges();
                         }
 

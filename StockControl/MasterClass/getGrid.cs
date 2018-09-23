@@ -339,7 +339,7 @@ namespace StockControl
                 else this.PCSUnit_PurchaseUOM = 1;
                 this.StandardCost = t.StandardCost;
 
-                if (this.ItemNo == "PLG-P-001")
+                if (this.ItemNo == "TBK-T-0001")
                 { }
                 //**Stock Customer P/O --> BackOrder Q'ty for Customer P/O, Receive stock Q'ty for Customer P/O
                 //find Received stock Q'ty for Customer P/O idDt ,,, reserve or not reserve(if job closed)
@@ -376,7 +376,7 @@ namespace StockControl
                             {
                                 freeStock -= r.ReserveQty;
                                 var ss = stockCustomerPO.Where(x => x.idCstmPODt == r.idCstmPODt).FirstOrDefault();
-                                if(ss == null)
+                                if (ss == null)
                                 {
                                     ss = new stockForCustomerDt();
                                     ss.ItemNo = s.CodeNo;
@@ -393,7 +393,7 @@ namespace StockControl
                             //free stock รอการจองจาก Customer PO อื่นๆ
                             var sf = stockFree_List.Where(x => x.idCstmPODt_Free == s.idCSTMPODt.ToInt()
                                 && x.id_tb_Stock == s.id).FirstOrDefault();
-                            if(sf == null)
+                            if (sf == null)
                             {
                                 sf = new stockFree();
                                 stockFree_List.Add(sf);
@@ -451,6 +451,24 @@ namespace StockControl
                         var aa = Math.Round(p.dt.OrderQty.ToDecimal() * p.dt.PCSUOM.ToDecimal(), 2);
                         s1.BackOrder += aa;
                         s1.StockAll += aa;
+                    }
+                }
+                //**Item เป็น FG หรือ SEMI ที่เป็นลูกเพื่อไปใช้ใน FG จริงๆของ idCstmPODt
+                if (this.InvGroup_enum != InventoryGroup.RM)
+                {
+                    var prod = db.mh_ProductionOrders.Where(x => x.Active && x.FGNo == this.ItemNo).ToList();
+                    foreach (var s in prod)
+                    {
+                        var s1 = stockCustomerPO.Where(x => x.idCstmPODt == s.RefDocId).FirstOrDefault();
+                        if (s1 == null)
+                        {
+                            s1 = new stockForCustomerDt();
+                            s1.ItemNo = s.FGNo;
+                            stockCustomerPO.Add(s1);
+                        }
+                        s1.idCstmPODt = s.RefDocId.ToInt();
+                        s1.StockQty += s.Qty.ToDecimal();
+                        s1.StockAll += s.Qty.ToDecimal();
                     }
                 }
 
