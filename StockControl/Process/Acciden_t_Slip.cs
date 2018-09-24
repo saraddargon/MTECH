@@ -11,16 +11,17 @@ using Telerik.WinControls.UI;
 using System.Globalization;
 using Telerik.WinControls;
 using Telerik.WinControls.Data;
+using ClassLib;
 
 namespace StockControl
 {
-    public partial class Shipping_RM : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Acciden_t_Slip : Telerik.WinControls.UI.RadRibbonForm
     {
-        public Shipping_RM()
+        public Acciden_t_Slip()
         {
             InitializeComponent();
         }
-        public Shipping_RM(string SHNo,string CodeNo)
+        public Acciden_t_Slip(string SHNo,string CodeNo)
         {
             InitializeComponent();
             SHNo_t = SHNo;
@@ -400,6 +401,7 @@ namespace StockControl
         }
         private void btnNew_Click(object sender, EventArgs e)
         {
+           
             btnDel_Item.Enabled = true;
             btnNew.Enabled = false;
             btnSave.Enabled = true;
@@ -683,11 +685,12 @@ namespace StockControl
                                 decimal BasePCSUOM = dbClss.TDe(g.Cells["BasePCSUOM"].Value);//dbClss.Con_UOM(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), BaseUOM);
 
                                 //เบิกจาก WH
-                                db.sp_024_tb_Shipping_ADD(txtSHNo.Text.Trim(), StockControl.dbClss.TSt(g.Cells["CodeNo"].Value)
+                                db.sp_071_Accident_Slip(txtSHNo.Text.Trim(), StockControl.dbClss.TSt(g.Cells["CodeNo"].Value)
                                     , dbClss.TDe(g.Cells["QtyPlan"].Value)
                                     , StockControl.dbClss.TDe(g.Cells["QtyShip"].Value), StockControl.dbClss.TSt(g.Cells["Remark"].Value)
                                     , StockControl.dbClss.TSt(g.Cells["LineName"].Value), StockControl.dbClss.TSt(g.Cells["MachineName"].Value)
-                                    , StockControl.dbClss.TSt(g.Cells["SerialNo"].Value), StockControl.dbClss.TSt(g.Cells["LotNo"].Value)
+                                    , StockControl.dbClss.TSt(g.Cells["SerialNo"].Value)
+                                    , StockControl.dbClss.TSt(g.Cells["LotNo"].Value)
                                     , "Completed", ClassLib.Classlib.User
                                     , txtJobCard.Text.Trim()
                                     , ""//txtTempJobCard.Text.Trim()
@@ -701,9 +704,7 @@ namespace StockControl
                                     , dbClss.TInt(g.Cells["idCSTMPODt"].Value)
                                     , dbClss.TInt(g.Cells["idProductionOrderRM"].Value)
                                     );
-
-                                //รับเข้า PD
-
+                                
                             }
                         }
                     }
@@ -722,7 +723,7 @@ namespace StockControl
                         this.Cursor = Cursors.WaitCursor;
 
                         if (Ac.Equals("New"))
-                            txtSHNo.Text = StockControl.dbClss.GetNo(5, 2);
+                            txtSHNo.Text = StockControl.dbClss.GetNo(35, 2);
 
                     if (!txtSHNo.Text.Equals(""))
                     {
@@ -1494,7 +1495,7 @@ namespace StockControl
                 //txtLocation.Text = loca;
                 
                 int dgvNo = 0;
-                var r = (from ix in db.sp_051_Job_list(JobCard)
+                var r = (from ix in db.sp_051_Job_list_2(JobCard)
                          select ix).ToList();
                 if (r.Count > 0)
                 {
@@ -1738,7 +1739,7 @@ namespace StockControl
                 txtCodeNo.Text = "";
 
                 this.Cursor = Cursors.WaitCursor;
-                ShippingList sc = new ShippingList(txtSHNo, txtCodeNo,"Job");
+                ShippingList sc = new ShippingList(txtSHNo, txtCodeNo,"Accident_Slip");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -2003,6 +2004,39 @@ namespace StockControl
         {
             PrintPR a = new PrintPR(txtSHNo.Text, txtSHNo.Text, "ShippingToDay");
             a.ShowDialog();
+        }
+
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("ต้องการยกเลิกรายการ ( " + txtSHNo.Text + " ) หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    using (DataClasses1DataContext db = new DataClasses1DataContext())
+                    {
+
+                        MessageBox.Show("รอเช็คเรื่องการปิดจอบแล้วจะ ลบไมไม่ได้");
+                        return;
+
+                        var unit1 = (from ix in db.mh_ProductionOrders
+                                     where ix.Active == true
+                                        && ix.JobNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper()
+                                     select ix).ToList();
+                        foreach (var d in unit1)
+                        {
+                            string CancelNo = StockControl.dbClss.GetNo(36, 2);
+                            db.sp_073_Accident_Slip_Del(CancelNo, txtSHNo.Text, txtJobCard.Text, Classlib.User, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+
+                            baseClass.Info("Delete accident slip complete.");
+                            dbClss.AddHistory(this.Name, "Delete accident slip", "Delete accident slip : [" + txtSHNo.Text + "]", "");
+
+                            btnNew_Click(null, null);
+                        }
+
+
+                    }
+                }
+            }catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }

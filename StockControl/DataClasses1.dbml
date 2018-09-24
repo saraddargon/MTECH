@@ -2024,6 +2024,23 @@
       <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.mh_CheckStock_List" Member="mh_CheckStock_Lists">
+    <Type Name="mh_CheckStock_List">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CheckNo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CheckBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CheckDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CheckStatus" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="InternalNo" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="StockQty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CompareQty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="InputQty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">
     <ElementType Name="Sp_ADM03_OpenFormSelectResult">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -4790,6 +4807,72 @@
     <Parameter Name="idCSTMPODt" Type="System.Int32" DbType="Int" />
     <Parameter Name="LotNo" Parameter="lotNo" Type="System.String" DbType="NVarChar(512)" />
     <Parameter Name="idProductionOrderRM" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_051_Job_list_2" Method="sp_051_Job_list_2">
+    <Parameter Name="JobNo" Parameter="jobNo" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="sp_051_Job_list_2Result">
+      <Column Name="JobNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CodeNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ItemDescriptioin" Type="System.String" DbType="VarChar(512) NOT NULL" CanBeNull="false" />
+      <Column Name="QtyUsed" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="QtyPlan" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="QtyShip" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="RemainQty" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="UnitShip" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitCost" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="LotNo" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="SerialNo" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="MachineName" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="LineName" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="BaseUOM" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="BasePCSUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="GroupType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_071_Accident_Slip" Method="sp_071_Accident_Slip">
+    <Parameter Name="ShippingNo" Parameter="shippingNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="QTYPlan" Parameter="qTYPlan" Type="System.Decimal" DbType="Decimal(18,6)" />
+    <Parameter Name="QTY" Parameter="qTY" Type="System.Decimal" DbType="Decimal(18,6)" />
+    <Parameter Name="Remark" Parameter="remark" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="LineName" Parameter="lineName" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="MachineName" Parameter="machineName" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="SerialNo" Parameter="serialNo" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="LotNo" Parameter="lotNo" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefJobNo" Parameter="refJobNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefTempJobNo" Parameter="refTempJobNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefidJobNo" Parameter="refidJobNo" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="ToLocation" Parameter="toLocation" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="BaseUOM" Parameter="baseUOM" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="BasePCSUOM" Parameter="basePCSUOM" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="UnitShip" Parameter="unitShip" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="PCSUnit" Parameter="pCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="idCSTMPODt" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idProductionOrderRM" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_073_Accident_Slip_Del" Method="sp_073_Accident_Slip_Del">
+    <Parameter Name="ReturnNo" Parameter="returnNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="ReqNo" Parameter="reqNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="JobNo" Parameter="jobNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="CreateDate" Parameter="createDate" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_074_CheckStock_List" Method="sp_074_CheckStock_List">
+    <Parameter Name="CheckBy" Parameter="checkBy" Type="System.String" DbType="VarChar(50)" />
     <Return Type="System.Int32" />
   </Function>
 </Database>
