@@ -237,7 +237,7 @@ namespace StockControl
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
-            
+
             cbbCSTM.Enabled = true;
             txtPONo.ReadOnly = false;
             dtOrderDate.ReadOnly = false;
@@ -432,6 +432,7 @@ namespace StockControl
                         t.OutSO = item.Cells["OutSO"].Value.ToDecimal();
                         t.OutPlan = item.Cells["OutPlan"].Value.ToDecimal();
                         t.Status = item.Cells["Status"].Value.ToSt();
+                        t.OutQty = item.Cells["OutQty"].Value.ToDecimal();
                     }
 
                     t_idCSTMPO = hd.id;
@@ -471,6 +472,7 @@ namespace StockControl
 
                         e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                         e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
+                        e.Row.Cells["OutQty"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                         CallTotal();
                     }
                     else if (e.Column.Name.Equals("ItemNo"))
@@ -492,8 +494,9 @@ namespace StockControl
                             {
                                 decimal outso = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
                                 var outplan = outso;
+                                var outqty = outso;
                                 addRow(e.RowIndex, 0, DateTime.Now, t.InternalNo, t.InternalName
-                                    , 1, t.SalesUOM, pcsunit, t.StandardPrice, "", t.ReplenishmentType, outso, outplan
+                                    , 1, t.SalesUOM, pcsunit, t.StandardPrice, "", t.ReplenishmentType, outso, outplan, outqty
                                     , "Waiting");
                             }
                             else
@@ -503,6 +506,7 @@ namespace StockControl
                                 e.Row.Cells["PCSUnit"].Value = pcsunit;
                                 e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                                 e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
+                                e.Row.Cells["OutQty"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                             }
 
                             //
@@ -520,6 +524,7 @@ namespace StockControl
                             e.Row.Cells["PCSUnit"].Value = pcsunit;
                             e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                             e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
+                            e.Row.Cells["OutQty"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                         }
                     }
                 }
@@ -559,7 +564,7 @@ namespace StockControl
 
         void addRow(int rowIndex, int id, DateTime ReqDate, string ItemNo, string ItemName
             , decimal Qty, string UOM, decimal PCSUnit, decimal UnitPrice
-            , string Remark, string ReplenishmentType, decimal OutSO, decimal OutPlan, string Status)
+            , string Remark, string ReplenishmentType, decimal OutSO, decimal OutPlan, decimal OutQty, string Status)
         {
             var rowE = dgvData.Rows[rowIndex];
             try
@@ -577,6 +582,7 @@ namespace StockControl
                 rowE.Cells["ReplenishmentType"].Value = ReplenishmentType;
                 rowE.Cells["OutSO"].Value = OutSO;
                 rowE.Cells["OutPlan"].Value = OutPlan;
+                rowE.Cells["OutQty"].Value = OutQty;
                 rowE.Cells["Status"].Value = Status;
 
                 SetRowNo1(dgvData);
@@ -999,8 +1005,9 @@ namespace StockControl
                         //    , "", 0, "Waiting", "Waiting", t.ReplenishmentType);
                         var outso = 1 * u;
                         var outplan = 1 * u;
+                        var outqty = 1 * u;
                         addRow(rowE.Index, 0, DateTime.Now, itemNo, t.InternalName
-                            , 1, t.SalesUOM, u, t.StandardPrice, "", t.ReplenishmentType, outso, outplan
+                            , 1, t.SalesUOM, u, t.StandardPrice, "", t.ReplenishmentType, outso, outplan, outqty
                             , "Waiting");
                     }
                     SetRowNo1(dgvData);
@@ -1062,7 +1069,7 @@ namespace StockControl
 
         private void MasterTemplate_CellDoubleClick(object sender, GridViewCellEventArgs e)
         {
-            if(e.RowIndex >= 0)
+            if (e.RowIndex >= 0)
             {
                 if (e.Column.Name.Equals("JobNo"))
                 {

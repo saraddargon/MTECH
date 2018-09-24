@@ -422,7 +422,7 @@ namespace StockControl
                 gg.CreateDate = DateTime.Now;
                 gg.ShipName = ClassLib.Classlib.User;
                 var po = db.mh_CustomerPODTs.Where(x => x.id == idCstmPODt)
-                    .Join(db.mh_CustomerPOs
+                    .Join(db.mh_CustomerPOs.Where(x => x.DemandType == 0)
                     , dt => dt.idCustomerPO
                     , hd => hd.id
                     , (dt, hd) => new { hd, dt }).FirstOrDefault();

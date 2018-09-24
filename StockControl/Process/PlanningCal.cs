@@ -630,17 +630,17 @@ namespace StockControl
                         //save Cost Overhead
                         var manuTime = 1;
                         var manu = db.mh_ManufacturingSetups.FirstOrDefault();
-                        if(manu != null)
+                        if (manu != null)
                         {
                             if (manu.ShowCapacityInUOM == 2) //Hour
                                 manuTime = 60;
                             else if (manu.ShowCapacityInUOM == 3) //Day
                                 manuTime = (24 * 60);
                         }
-                        foreach(var co in calOvers)
+                        foreach (var co in calOvers)
                         {
                             var rt = db.mh_RoutingDTs.Where(x => x.id == co.idRoute && x.idWorkCenter == co.idWorkcenter && x.Active).FirstOrDefault();
-                            if(rt != null)
+                            if (rt != null)
                             {
                                 var costAll = Math.Round(rt.UnitCost / manuTime, 2);
                                 m.CostOverhead += Math.Round(costAll * co.CapacityX, 2);
@@ -751,6 +751,7 @@ namespace StockControl
                             db.mh_PurchaseRequests.InsertOnSubmit(hd);
                             _dt.Rows.Add(idPoHd, hd.PRNo);
                         }
+                        if (poDt != null) poDt.genPR = true;
                         db.SubmitChanges();
 
                         //Dt
@@ -758,28 +759,38 @@ namespace StockControl
                         var tool = db.mh_Items.Where(x => x.InternalNo == itemNo).FirstOrDefault();
                         var amnt = Math.Round(item.Cells["Qty"].Value.ToDecimal() * tool.StandardCost, 2);
                         var vn = db.mh_Vendors.Where(x => x.No == tool.VendorNo).FirstOrDefault();
-                        var dt = new mh_PurchaseRequestLine
+
+                        var dt = db.mh_PurchaseRequestLines.Where(x => x.PRNo == hd.PRNo && x.idCstmPODt == idRef && x.CodeNo == itemNo && x.SS == 1
+                                                            && x.PCSUOM == item.Cells["PCSUnit"].Value.ToDecimal() && x.UOM == item.Cells["UOM"].Value.ToSt()).FirstOrDefault();
+                        if (dt != null)
                         {
-                            Amount = amnt,
-                            CodeNo = itemNo,
-                            Cost = tool.StandardCost,
-                            GroupCode = tool.GroupType,
-                            idCstmPODt = idRef, //idPODt
-                            ItemDesc = item.Cells["ItemName"].Value.ToSt(),
-                            ItemName = item.Cells["ItemName"].Value.ToSt(),
-                            OrderQty = item.Cells["Qty"].Value.ToDecimal(),
-                            PCSUOM = item.Cells["PCSUnit"].Value.ToDecimal(),
-                            PRNo = hd.PRNo,
-                            SS = 1,
-                            Status = "Waiting",
-                            TempNo = hd.TEMPNo,
-                            UOM = item.Cells["UOM"].Value.ToSt(),
-                            VATType = tool.VatType,
-                            VendorName = tool.VendorName,
-                            VendorNo = tool.VendorNo,
-                            DeliveryDate = item.Cells["DueDate"].Value.ToDateTime().Value.Date
-                        };
-                        db.mh_PurchaseRequestLines.InsertOnSubmit(dt);
+                            dt.OrderQty += item.Cells["Qty"].Value.ToDecimal();
+                        }
+                        else
+                        { //new Item
+                            dt = new mh_PurchaseRequestLine
+                            {
+                                Amount = amnt,
+                                CodeNo = itemNo,
+                                Cost = tool.StandardCost,
+                                GroupCode = tool.GroupType,
+                                idCstmPODt = idRef, //idPODt
+                                ItemDesc = item.Cells["ItemName"].Value.ToSt(),
+                                ItemName = item.Cells["ItemName"].Value.ToSt(),
+                                OrderQty = item.Cells["Qty"].Value.ToDecimal(),
+                                PCSUOM = item.Cells["PCSUnit"].Value.ToDecimal(),
+                                PRNo = hd.PRNo,
+                                SS = 1,
+                                Status = "Waiting",
+                                TempNo = hd.TEMPNo,
+                                UOM = item.Cells["UOM"].Value.ToSt(),
+                                VATType = tool.VatType,
+                                VendorName = tool.VendorName,
+                                VendorNo = tool.VendorNo,
+                                DeliveryDate = item.Cells["DueDate"].Value.ToDateTime().Value.Date
+                            };
+                            db.mh_PurchaseRequestLines.InsertOnSubmit(dt);
+                        }
                         hd.Total += amnt;
                         db.SubmitChanges();
 

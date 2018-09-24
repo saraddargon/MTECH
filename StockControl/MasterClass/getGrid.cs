@@ -16,7 +16,7 @@ namespace StockControl
             {
                 try
                 {
-                    var m = db.mh_CustomerPOs.Where(x => x.Active
+                    var m = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 0
                         && (CustomerPO == "" || x.CustomerPONo == CustomerPO)
                         && (CSTMNo == "" || x.CustomerNo == CSTMNo)
                         && (dFrom == null || (x.OrderDate >= dFrom && x.OrderDate <= dTo))).ToList();
@@ -122,8 +122,7 @@ namespace StockControl
         public string CustomerNo { get; set; }
         public string CustomerName
         {
-            get
-            {
+            get {
                 using (var db = new DataClasses1DataContext())
                 {
                     var c = db.mh_Customers.Where(x => x.Active && x.No == CustomerNo).FirstOrDefault();
@@ -139,8 +138,7 @@ namespace StockControl
         public decimal Qty { get; set; } = 0;
         public decimal Remain
         {
-            get
-            {
+            get {
                 return (Qty) - Shipped;
             }
         }
@@ -151,16 +149,14 @@ namespace StockControl
         }
         public bool Plan
         {
-            get
-            {
+            get {
                 return (Qty * PCSUnit != OutPlan);
                 //find from JobNo
             }
         }
         public bool SaleOrder
         {
-            get
-            {
+            get {
                 return (Qty * PCSUnit != OutSO);
                 //find in SaleOrder
             }
@@ -186,8 +182,7 @@ namespace StockControl
     {
         public string Status
         {
-            get
-            {
+            get {
                 if (DueDate.Date > ReqDate.Date)
                     return "Over Due";
                 else
@@ -212,8 +207,7 @@ namespace StockControl
         public ReorderType ReorderTypeEnum { get; set; }
         public string ReorderTypeText
         {
-            get
-            {
+            get {
                 return baseClass.getReorderTypeText(ReorderTypeEnum);
             }
         }
@@ -408,7 +402,7 @@ namespace StockControl
                     }
                 }
                 //find Back order Q'ty from P/R(Qty) ถ้าเปิด P/O แล้วให้เอา BackOrder P/O
-                var pr = db.mh_PurchaseRequestLines.Where(x => x.SS == 1 && x.CodeNo == this.ItemNo && x.idCstmPODt != null && x.idCstmPODt > 0)
+                var pr = db.mh_PurchaseRequestLines.Where(x => x.SS == 1 && x.CodeNo == this.ItemNo && x.idCstmPODt != null)
                     .Join(db.mh_PurchaseRequests.Where(x => x.Status != "Cancel")
                     , dt => dt.PRNo
                     , hd => hd.PRNo
@@ -472,13 +466,27 @@ namespace StockControl
                     }
                 }
 
+                var m = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1)
+                    .Join(db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && x.genPR
+                        && x.ItemNo == this.ItemNo && x.OutQty > 0)
+                    , hd => hd.id
+                    , dt => dt.idCustomerPO
+                    , (hd, dt) => new { hd, dt }).ToList();
+                foreach (var mm in m)
+                {
+                    SafetyStockFG += mm.dt.OutQty;
+                    SafetyStockFG_Backup += mm.dt.OutQty;
+                }
             }
 
         }
 
         public List<stockForCustomerDt> stockCustomerPO { get; set; } = new List<stockForCustomerDt>();
         public List<stockFree> stockFree_List { get; set; } = new List<stockFree>();
-
+        public decimal SafetyStockFG { get; set; } = 0.00m;
+        public decimal SafetyStockFG_Backup { get; set; } = 0.00m;
+        public decimal SafetyStockPRPO { get; set; } = 0.00m;
+        public decimal SafetyStockPRPO_Backup { get; set; } = 0.00m;
 
         public decimal findStock_CustomerPO(int idCstmPODt)
         {
@@ -602,15 +610,13 @@ namespace StockControl
         public decimal CapacityAlocateX { get; set; } = 0.00m;
         public decimal CapacityAfter
         {
-            get
-            {
+            get {
                 return CapacityAvailable - CapacityAlocate;
             }
         }
         public decimal CapacityAfterX
         {
-            get
-            {
+            get {
                 return CapacityAvailableX - CapacityAlocateX;
             }
         }
