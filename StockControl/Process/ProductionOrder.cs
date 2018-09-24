@@ -1059,14 +1059,14 @@ namespace StockControl
                         , (hd, workcenter)
                         => new { hd, hd.idWorkCenter, hd.id, hd.SetupTime, hd.RunTime, hd.WaitTime, workcenter })
                         .ToList();
-                    foreach (var r in rt)
-                    {
-                        //cal capa
-                        if (workLoads.Where(x => x.idWorkCenter == r.idWorkCenter).Count() < 1)
-                        {
-                            var wls = baseClass.getWorkLoad(dFrom.Date, dTo.Date, r.idWorkCenter);
-                        }
-                    }
+                    //foreach (var r in rt)
+                    //{
+                    //    //cal capa
+                    //    if (workLoads.Where(x => x.idWorkCenter == r.idWorkCenter).Count() < 1)
+                    //    {
+                    //        var wls = baseClass.getWorkLoad(dFrom.Date, dTo.Date, r.idWorkCenter);
+                    //    }
+                    //}
                     //
                     decimal FGQty = txtFGQty.Text.ToDecimal();
                     decimal FGPCSUnit = txtPCSUnit.Text.ToDecimal();
@@ -1085,8 +1085,7 @@ namespace StockControl
                         var CapaUse = 0.00m; //Capacity ไม่รวม WaitTime
                         CapaUseX = totalCapa_All; //เวลาการทำงานที่ถูกใช้ทั้งหมดใน Workcenter นี้
                         CapaUse = SetupTime + Math.Round(RunTime * UseQty, 2);
-
-
+                        
                         //หาว่า Capacity จากต้องใช้ Starting - Ending ใด โดยวนไปจนกว่า CapaUseX จะเป็น 0
                         do
                         {
@@ -1095,7 +1094,8 @@ namespace StockControl
                                 && x.idWorkCenter == idWorkCenter).OrderBy(x => x.Date).FirstOrDefault();
                             if (wl == null) //ถ้า WorkLoad เป็น Null ให้ไปหาใหม่จาก Db ตรงๆ
                             {
-                                var w = baseClass.getWorkLoad(tempStarting.Value.Date, null, idWorkCenter).Where(x => x.CapacityAfterX > 0).FirstOrDefault();
+                                //var w = baseClass.getWorkLoad(tempStarting.Value.Date, null, idWorkCenter).Where(x => x.CapacityAfterX > 0).FirstOrDefault();
+                                var w = baseClass.getWorkLoad_From(tempStarting.Value.Date, idWorkCenter);
                                 if (w == null) //ไม่มีจริงๆ แสดงว่า Capacity หมด ต้องกลับไปคำนวนใหม่
                                 {
                                     string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
