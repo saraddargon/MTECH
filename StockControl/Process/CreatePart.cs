@@ -947,7 +947,7 @@ namespace StockControl
                                 }                               
                                 if (!seMaximum.Text.Trim().Equals(row["MaximumQty"].ToString()))
                                 {
-                                    decimal Maximum = 0; dbClss.TDe(seMaximum.Value);
+                                    decimal Maximum = dbClss.TDe(seMaximum.Value);
                                     gg.MaximumQty = Maximum;
                                     dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข MaximumStock [ เดิม : " + row["MaximumQty"].ToString() + " ใหม่ : " + Maximum.ToString() + "]", txtInternalNo.Text);
                                 }

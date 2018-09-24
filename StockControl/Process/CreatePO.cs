@@ -1348,11 +1348,14 @@ namespace StockControl
 
                                 dbClss.AddHistory(this.Name, "ลบ PO", "Delete PONo [" + txtPONo.Text.Trim() + "]", txtPONo.Text);
 
+                                dbClss.Delete_ApproveList(txtPONo.Text.Trim());
 
                                 db.SubmitChanges();
                                 btnNew_Click(null, null);
                                 Ac = "New";
                                 btnSave.Enabled = true;
+
+                               
                             }
                             else // ไม่มีในระบบ
                             {

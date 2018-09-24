@@ -2043,13 +2043,6 @@ namespace StockControl
 			return ((string)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), cSTMName).ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_057_Cut_Stock")]
-		public int sp_057_Cut_Stock([global::System.Data.Linq.Mapping.ParameterAttribute(Name="No", DbType="NVarChar(50)")] string no, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(50)")] string codeNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(50)")] string location, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="App", DbType="VarChar(10)")] string app, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type", DbType="VarChar(50)")] string type, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type_i", DbType="Int")] System.Nullable<int> type_i)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), no, codeNo, qTY, createBy, refJobNo, refTempJobNo, refidJobNo, location, app, type, type_i);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_058_Cal_SaleOrderHD_Status")]
 		public int sp_058_Cal_SaleOrderHD_Status([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SONo", DbType="NVarChar(50)")] string sONo)
 		{
@@ -2226,6 +2219,13 @@ namespace StockControl
 		public System.Nullable<decimal> Get_AvgCost_FIFO([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="VarChar(50)")] string codeNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Qty", DbType="Decimal(18,2)")] System.Nullable<decimal> qty, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(50)")] string location, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt)
 		{
 			return ((System.Nullable<decimal>)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), codeNo, qty, location, idCSTMPODt).ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_057_Cut_Stock")]
+		public int sp_057_Cut_Stock([global::System.Data.Linq.Mapping.ParameterAttribute(Name="No", DbType="NVarChar(50)")] string no, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(50)")] string codeNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(50)")] string location, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="App", DbType="VarChar(10)")] string app, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type", DbType="VarChar(50)")] string type, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type_i", DbType="Int")] System.Nullable<int> type_i, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ReceiveID", DbType="Int")] System.Nullable<int> receiveID, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), no, codeNo, qTY, createBy, refJobNo, refTempJobNo, refidJobNo, location, app, type, type_i, receiveID, idCSTMPODt, lotNo);
+			return ((int)(result.ReturnValue));
 		}
 	}
 	

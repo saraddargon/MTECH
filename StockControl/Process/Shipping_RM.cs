@@ -639,7 +639,7 @@ namespace StockControl
                     gg.UpdateBy = null;
                     gg.UpdateDate = UpdateDate;
                     gg.CreateBy = ClassLib.Classlib.User;
-                    gg.CreateDate = DateTime.Now;
+                    gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     gg.ShipName = txtSHName.Text;
                     gg.Remark = txtRemark.Text;
                     gg.JobCard = txtJobCard.Text.Trim();

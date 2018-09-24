@@ -438,6 +438,8 @@ namespace StockControl
                                     foreach (var pp in d)
                                         pp.Active = false;
                                 }
+                                //Cancel ListApprove
+                                dbClss.Delete_ApproveList(poNo);
 
                                 db.SubmitChanges();
 

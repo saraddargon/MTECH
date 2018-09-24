@@ -203,7 +203,6 @@ namespace StockControl
             }
             catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
-
         public static string GetNo(int ControlNo,int Ac)
         {
             string No = "";
@@ -428,7 +427,6 @@ namespace StockControl
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             return re;
         }
-
         public static DateTime ChangeFormat(string ds)
         {
             CultureInfo c = new CultureInfo("en-us", true);
@@ -506,7 +504,6 @@ namespace StockControl
             }
             catch { return ""; }
         }
-       
         public static decimal TDe(object Val)
         {
             try
@@ -845,6 +842,28 @@ namespace StockControl
         public static void WarningIT(string Message)
         {
             RadMessageBox.Show("ไม่พบข้อมูล '" + Message + "' โปรดติดต่อแผนก IT", "Warning", MessageBoxButtons.OK, RadMessageIcon.Exclamation);
+        }
+        public static bool Delete_ApproveList(string DocNo)
+        {
+            bool re = false;
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                var g = (from ix in db.mh_ApproveLists select ix)
+                    .Where(a => a.ApproveDocuNo.Trim().ToUpper().Equals(DocNo.Trim().ToUpper())
+                    ).ToList();
+                if (g.Count > 0)
+                {
+                    foreach (var ss in g)
+                    {
+                        ss.Status = "Cancel";
+                        db.SubmitChanges();
+                    }
+
+                    re = true;
+                    dbClss.AddHistory("dbClss", "Cancel Approve", "ลบรายการอนุมัติ เลขที่เอกสาร [" + DocNo + "]", DocNo);
+                }
+            }
+            return re;
         }
     }
 }

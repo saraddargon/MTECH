@@ -4164,20 +4164,6 @@
     <Parameter Name="CSTMName" Parameter="cSTMName" Type="System.String" DbType="NVarChar(100)" />
     <Return Type="System.String" />
   </Function>
-  <Function Name="dbo.sp_057_Cut_Stock" Method="sp_057_Cut_Stock">
-    <Parameter Name="No" Parameter="no" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="QTY" Parameter="qTY" Type="System.Decimal" DbType="Decimal(18,6)" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="RefJobNo" Parameter="refJobNo" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="RefTempJobNo" Parameter="refTempJobNo" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="RefidJobNo" Parameter="refidJobNo" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="App" Parameter="app" Type="System.String" DbType="VarChar(10)" />
-    <Parameter Name="Type" Parameter="type" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="Type_i" Parameter="type_i" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.sp_058_Cal_SaleOrderHD_Status" Method="sp_058_Cal_SaleOrderHD_Status">
     <Parameter Name="SONo" Parameter="sONo" Type="System.String" DbType="NVarChar(50)" />
     <Return Type="System.Int32" />
@@ -4745,5 +4731,22 @@
     <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="idCSTMPODt" Type="System.Int32" DbType="Int" />
     <Return Type="System.Decimal" />
+  </Function>
+  <Function Name="dbo.sp_057_Cut_Stock" Method="sp_057_Cut_Stock">
+    <Parameter Name="No" Parameter="no" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="QTY" Parameter="qTY" Type="System.Decimal" DbType="Decimal(18,6)" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefJobNo" Parameter="refJobNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefTempJobNo" Parameter="refTempJobNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefidJobNo" Parameter="refidJobNo" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="App" Parameter="app" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Type" Parameter="type" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Type_i" Parameter="type_i" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ReceiveID" Parameter="receiveID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idCSTMPODt" Type="System.Int32" DbType="Int" />
+    <Parameter Name="LotNo" Parameter="lotNo" Type="System.String" DbType="NVarChar(512)" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>

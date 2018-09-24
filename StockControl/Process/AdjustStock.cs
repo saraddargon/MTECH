@@ -285,6 +285,8 @@ namespace StockControl
                                          ,RefJobCard = d.RefJobCard
                                          ,RefTempJobCard = d.RefTempJobCard
                                          ,RefidJobCard = d.RefidJobCard
+                                         ,
+                                         idCSTMPODt =d.idCSTMPODt
                                      }
                             ).ToList();
                             if (r.Count > 0)
@@ -313,7 +315,12 @@ namespace StockControl
                                     //    ,vv.RefidJobCard
                                     //    );
 
-                                    Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription, vv.RemainQty, dbClss.TDe( vv.QTY), vv.Unit, dbClss.TDe(vv.PCSUnit), dbClss.TDe(vv.StandardCost), dbClss.TDe(vv.Amount), vv.LotNo, vv.Remark,vv.id.ToString(),vv.ShelfNo, vv.Location, vv.RefJobCard,vv.RefTempJobCard, vv.RefidJobCard.ToString());
+                                    Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription, vv.RemainQty
+                                        , dbClss.TDe( vv.QTY), vv.Unit, dbClss.TDe(vv.PCSUnit)
+                                        , dbClss.TDe(vv.StandardCost), dbClss.TDe(vv.Amount)
+                                        , vv.LotNo, vv.Remark,vv.id.ToString(),vv.ShelfNo, vv.Location
+                                        , vv.RefJobCard,vv.RefTempJobCard, vv.RefidJobCard.ToString()
+                                        , dbClss.TInt(vv.idCSTMPODt));
                                 }
 
                             }
@@ -608,6 +615,7 @@ namespace StockControl
                     decimal sum_Remain = 0;
                     decimal sum_Qty = 0;
                     decimal RemainUnitCost = 0;
+                    int idCSTMPODt = 0;
 
                     //string Type = "";
                     string Category = "Invoice"; //Temp,Invoice
@@ -624,6 +632,9 @@ namespace StockControl
                         foreach (var vv in g)
                         {
                             Seq += 1;
+                            idCSTMPODt = dbClss.TInt(vv.idCSTMPODt);
+                            //if (idCSTMPODt == 0)
+                            //    idCSTMPODt = -1;
 
                             if (Convert.ToDecimal(vv.Qty) < 0)
                             {
@@ -631,7 +642,7 @@ namespace StockControl
                                 db.sp_041_tb_Adjust_Stock(txtADNo.Text, vv.CodeNo
                                     , Math.Abs(Math.Round((Convert.ToDecimal(vv.Qty) * dbClss.TDe(vv.PCSUnit)), 2))
                                     , ClassLib.Classlib.User, vv.RefJobCard, vv.RefTempJobCard, vv.RefidJobCard
-                                    ,vv.Location,dbClss.TInt(vv.idCSTMPODt));
+                                    ,vv.Location, idCSTMPODt);
                             }
                             else
                             {
@@ -1279,7 +1290,9 @@ namespace StockControl
                             if (!check_Duppicate(CodeNo))
                             {
                               
-                                Add_Item(No, CodeNo, ItemNo, ItemDescription, RemainQty, QTY, Unit, PCSUnit, CostPerUnit, Amount, LotNo, Remark, "0", ShelfNo, Location, "", "", "0");
+                                Add_Item(No, CodeNo, ItemNo, ItemDescription, RemainQty, QTY, Unit
+                                    , PCSUnit, CostPerUnit, Amount, LotNo, Remark, "0"
+                                    , ShelfNo, Location, "", "", "0",0);
                             }
                         }
                     }
@@ -1291,7 +1304,8 @@ namespace StockControl
         private void Add_Item(int Row, string CodeNo, string ItemNo
             , string ItemDescription ,decimal RemainQty
            , decimal QTY, string Unit,decimal PCSUnit, decimal StandardCost,decimal Amount,string LotNo,string Remark
-            ,string id ,string ShelfNo,string Location,string RefJobCard,string RefTempJobCard,string RefidJobCard)
+            ,string id ,string ShelfNo,string Location,string RefJobCard,string RefTempJobCard,string RefidJobCard
+            ,int idCSTMPODt)
         {
 
             try
@@ -1324,6 +1338,7 @@ namespace StockControl
                 ee.Cells["RefTempJobCard"].Value = RefTempJobCard;
                 ee.Cells["RefidJobCard"].Value = RefidJobCard;
                 ee.Cells["ShelfNo"].Value = ShelfNo;
+                ee.Cells["idCSTMPODt"].Value = idCSTMPODt;
 
                 //dbclass.SetRowNo1(dgvData);
             }
