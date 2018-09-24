@@ -694,7 +694,7 @@ namespace StockControl
                                 string BaseUOM = dbClss.TSt(g.Cells["BaseUOM"].Value);
                                 decimal BasePCSUOM  = dbClss.Con_UOM(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), BaseUOM);
                                 decimal QTY = dbClss.TDe(g.Cells["QTY"].Value);
-
+                                int idProductionOrderRM = 0;
 
                                 db.sp_024_tb_Shipping_ADD(txtSHNo.Text.Trim(), StockControl.dbClss.TSt(g.Cells["CodeNo"].Value)
                                     , QTY
@@ -712,6 +712,7 @@ namespace StockControl
                                     , dbClss.TSt(g.Cells["UnitShip"].Value)
                                     , StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
                                     , dbClss.TInt(txtidCSTMPODt.Text)
+                                    , idProductionOrderRM
                                     );
 
                                 ////decimal RemainQty = 0;

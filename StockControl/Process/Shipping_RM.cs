@@ -81,6 +81,8 @@ namespace StockControl
             dt_d.Columns.Add(new DataColumn("BarCode", typeof(Image)));
             dt_d.Columns.Add(new DataColumn("Location", typeof(string)));
             dt_d.Columns.Add(new DataColumn("ToLocation", typeof(string)));
+            dt_d.Columns.Add(new DataColumn("idProductionOrderRM", typeof(string)));
+            
 
         }
 
@@ -696,6 +698,7 @@ namespace StockControl
                                     , dbClss.TSt(g.Cells["UnitShip"].Value)
                                     , StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
                                     , dbClss.TInt(g.Cells["idCSTMPODt"].Value)
+                                    , dbClss.TInt(g.Cells["idProductionOrderRM"].Value)
                                     );
 
                                 //รับเข้า PD
@@ -1506,9 +1509,9 @@ namespace StockControl
                         Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescriptioin
                                         , dbClss.TDe( vv.RemainQty), vv.QtyPlan, vv.QtyShip, vv.UnitShip, dbClss.TDe(vv.PCSUnit)
                                         , dbClss.TDe(vv.UnitCost)
-                                        , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, vv.id
+                                        , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark,0
                                         , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM),dbClss.TDe(vv.QtyUsed)
-                                        ,vv.GroupType,vv.Type, dbClss.TInt(vv.idCSTMPODt));
+                                        ,vv.GroupType,vv.Type, dbClss.TInt(vv.idCSTMPODt),dbClss.TInt(vv.id));
 
                     }
                 }
@@ -1520,7 +1523,7 @@ namespace StockControl
             , string ItemDescription,decimal RemainQty, decimal QtyPlan, decimal QtyShip, string UnitShip, decimal PCSUnit
            , decimal StandardCost,decimal Amount,string LotNo,string SerialNo,string MachineName,string LineName
             ,string Remark,int id,string Location,string BaseUOM,decimal BasePCSUOM
-            ,decimal QtyUsed,string GroupType,string Type, int idCSTMPODt
+            ,decimal QtyUsed,string GroupType,string Type, int idCSTMPODt,int idProductionOrderRM
             )
         {
             
@@ -1561,6 +1564,7 @@ namespace StockControl
                 ee.Cells["GroupType"].Value = GroupType;
                 ee.Cells["Type"].Value = Type;
                 ee.Cells["idCSTMPODt"].Value = idCSTMPODt;
+                ee.Cells["idProductionOrderRM"].Value = idProductionOrderRM;
 
                 //if (GroupCode != "Other")
                 //{

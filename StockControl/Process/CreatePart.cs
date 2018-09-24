@@ -3347,7 +3347,7 @@ namespace StockControl
             {
                 //if(Cath01==0)
                 //txtVenderName.Text = cboVendor.SelectedValue.ToString();
-                if (!cboVendorName.Text.Equals(""))
+                if (!cboRouting.Text.Equals(""))
                 {
                     using (DataClasses1DataContext db = new DataClasses1DataContext())
                     {

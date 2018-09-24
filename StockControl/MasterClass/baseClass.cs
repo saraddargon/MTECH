@@ -412,6 +412,7 @@ namespace StockControl
                 //**เขียน ShipQty ออกจาก Job
                 //เขียน SHipping Header
                 tb_ShippingH gg = new tb_ShippingH();
+                int idProductionOrderRM = 0;
                 string shipNo = dbClss.GetNo(5, 2);
                 gg.ShippingNo = shipNo;
                 gg.ShipDate = DateTime.Now;
@@ -449,6 +450,7 @@ namespace StockControl
                                     , "", ""//txtTempJobCard.Text.Trim()
                                     , 0, tbst.Location, "Warehouse", tool.BaseUOM, pcsunit
                                     , tool.BaseUOM, pcsunit, idCstmPODt_Free
+                                    , idProductionOrderRM
                                     );
 
                 //**Stock Receive ใส่ Customer PODt id ใบใหม่
