@@ -638,12 +638,6 @@
         <elementListCompartment Id="9ec203dd-1c82-40b0-9a1b-6a3632c59ff9" absoluteBounds="24.39, 17.21, 1.9700000000000002, 10.249064127604166" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="717b136b-2a1a-4e27-bbdd-97d2a9baebee" isExpanded="false" absoluteBounds="18.75, 14, 2, 0.45">
-      <DataClassMoniker Name="/DataClasses1DataContext/mh_StockReserve_TEMP" />
-      <nestedChildShapes>
-        <elementListCompartment Id="058bb150-cdc3-4e1d-bd02-eb1caca02df4" absoluteBounds="18.765, 14.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="ef7d45d4-3b4c-4014-8731-88d8b1410d4d" isExpanded="false" absoluteBounds="18.625, 14.625, 2, 0.45">
       <DataClassMoniker Name="/DataClasses1DataContext/mh_StockReserve" />
       <nestedChildShapes>

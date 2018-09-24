@@ -1832,17 +1832,6 @@
       <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_StockReserve_TEMP" Member="mh_StockReserve_TEMPs">
-    <Type Name="mh_StockReserve_TEMP">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="id_tb_Stock" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="idCstmPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="idCstmPODt_Free" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ReserveQty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="idPR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.mh_StockReserve" Member="mh_StockReserves">
     <Type Name="mh_StockReserve">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
