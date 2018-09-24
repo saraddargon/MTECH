@@ -65,7 +65,7 @@ namespace StockControl
                 sReserve.Clear();
                 mainNo = 0;
 
-                changeLabel("Finding Docno for plan...");
+                changeLabel("Finding Customer P/O for plan...");
                 //var cstmPO_List = new List<CustomerPOCal>();
                 var listForPlan = new List<listforPlanning>();
                 using (var db = new DataClasses1DataContext())
@@ -75,9 +75,6 @@ namespace StockControl
                         && x.ReqDate >= dFrom && x.ReqDate <= dTo
                         && x.OutPlan > 0
                     ).OrderBy(x => x.ReqDate).ToList();
-
-                    //if (dFrom < DateTime.Now.Date)
-                    //    dFrom = DateTime.Today;
                     foreach (var dt in poDt)
                     {
                         if (ItemNo != "" && dt.ItemNo != ItemNo) continue;
@@ -89,11 +86,6 @@ namespace StockControl
                                 && x.Active).FirstOrDefault();
                         if (pohd == null) continue;
 
-                        //cstmPO_List.Add(new CustomerPOCal
-                        //{
-                        //    POHd = pohd,
-                        //    PODt = dt
-                        //});
                         listForPlan.Add(new listforPlanning
                         {
                             DocId = dt.id,
@@ -105,6 +97,58 @@ namespace StockControl
                             ReqQty = dt.Qty,
                             PCSUnit = dt.PCSUnit,
                             UOM = dt.UOM,
+                        });
+                    }
+
+                    //1.1 Reorder Production สำหรับเก็บ Stock ตาม Safety Stock
+                    var tools1 = db.mh_Items.Where(x => x.Active).ToList();
+                    foreach (var item in tools1)
+                    {
+                        changeLabel($"Finding Tool(Reorder) for plan...");
+                        var tdata = new ItemData(item.InternalNo);
+                        if (tdata == null) continue;
+                        if (tdata.RepType_enum == ReplenishmentType.Purchase) continue;
+
+                        var reorderQty = 0.00m;
+                        if(tdata.ReorderType == ReorderType.Fixed)
+                        {
+                            bool comP = false;
+                            while (!comP)
+                            {
+                                if (tdata.QtyOnHand + reorderQty < tdata.SafetyStock)
+                                    reorderQty += tdata.ReorderQty;
+                                else
+                                    comP = true;
+                            }
+                        }
+                        else if(tdata.ReorderType == ReorderType.MinMax)
+                        {
+                            bool comP = false;
+                            while (!comP)
+                            {
+                                if (tdata.QtyOnHand + reorderQty <= tdata.MinQty)
+                                    reorderQty += tdata.MaxQty - tdata.QtyOnHand;
+                                else if (tdata.QtyOnHand + reorderQty < tdata.SafetyStock)
+                                    reorderQty += tdata.SafetyStock - tdata.QtyOnHand;
+                                else
+                                    comP = true;
+                            }
+                        }
+                        else
+                            reorderQty = tdata.SafetyStock - tdata.QtyOnHand;
+
+                        if (reorderQty == 0) continue;
+                        listForPlan.Add(new listforPlanning
+                        {
+                            DocId = -99,
+                            DocNo = "Reorder for Safety stock",
+                            DocDate = DateTime.Now.Date,
+                            ItemNo = tdata.ItemNo,
+                            RepType = tdata.RepType_enum,
+                            ReqDate = DateTime.Now.Date,
+                            ReqQty = reorderQty,
+                            PCSUnit = tdata.PCSUnit_BaseUOM,
+                            UOM = tdata.BaseUOM,
                         });
                     }
 
@@ -154,10 +198,11 @@ namespace StockControl
                         changeLabel($"Calculating... Reorder Stock");
                         //3 Find Purchase for Reorder Type
                         List<string> itemNoList = new List<string>();
-                        foreach (var gp in gridPlans.Where(x => x.PlanningType == "Purchase"))
+                        var tempGridplan = gridPlans.Where(x => x.PlanningType == "Purchase").ToList();
+                        foreach (var gp in tempGridplan)
                         {
+                            changeLabel($"Calculating... Reorder Stock Item : {gp.ItemNo}");
                             if (itemNoList.Any(x => x == gp.ItemNo)) continue;
-
                             itemNoList.Add(gp.ItemNo);
 
                             var qItem = gridPlans.Where(x => x.ItemNo == gp.ItemNo).ToList();
@@ -194,11 +239,10 @@ namespace StockControl
                                 bool comP = false;
                                 while (!comP)
                                 {
-                                    if ((QtyOnHand_Backup + sum_Reorder + ReorderQty) - sum_UseQty < itemData.SafetyStock
-                                        || (QtyOnHand_Backup + sum_Reorder + ReorderQty) - sum_UseQty < itemData.MaxQty)
-                                    {
-                                        ReorderQty += itemData.MaxQty - (QtyOnHand_Backup + sum_Reorder + ReorderQty) - sum_UseQty;
-                                    }
+                                    if ((QtyOnHand_Backup + sum_Reorder + ReorderQty) - sum_UseQty <= itemData.MinQty)
+                                        ReorderQty += itemData.MaxQty - (QtyOnHand_Backup + sum_Reorder + ReorderQty - sum_UseQty);
+                                    else if ((QtyOnHand_Backup + sum_Reorder + ReorderQty) - sum_UseQty < itemData.SafetyStock)
+                                        ReorderQty += itemData.SafetyStock - (QtyOnHand_Backup + sum_Reorder + ReorderQty - sum_UseQty);
                                     else
                                         comP = true;
                                 }
@@ -207,7 +251,7 @@ namespace StockControl
                             {//By Order
                                 if ((QtyOnHand_Backup + sum_Reorder) - sum_UseQty < itemData.SafetyStock)
                                 {
-                                    ReorderQty = itemData.SafetyStock - (QtyOnHand_Backup + sum_Reorder) - sum_UseQty;
+                                    ReorderQty = itemData.SafetyStock - (QtyOnHand_Backup + sum_Reorder - sum_UseQty);
                                 }
                             }
                             //แปลงเป็นหน่วยซื้อ
@@ -222,8 +266,78 @@ namespace StockControl
                             gp1.Qty = q;
 
                             gp1.DueDate = gp1.EndingDate.Value.Date.AddDays(1);
+                            gp1.ReqDate = gp1.DueDate.AddDays(1);
                             gridPlans.Add(gp1);
                         }
+                        //3.1 Find Purchase all items
+                        var tools = db.mh_Items.Where(x => x.Active).ToList();
+                        foreach (var item in tools)
+                        {
+                            changeLabel($"Calculating... Reorder Stock Item : {item.InternalNo}");
+                            string itemNo = item.InternalNo;
+                            if (item.ReplenishmentType == "Production") continue; //not production on MRP
+                            if (itemNoList.Any(x => x == itemNo)) continue; //not already Calculation
+                            itemNoList.Add(itemNo);
+
+                            var tdata = new ItemData(itemNo);
+                            if (tdata.ItemNo == "MET-T-001")
+                            { }
+                            if (tdata == null) continue;
+
+                            if (tdata.ReorderType == ReorderType.MinMax && tdata.MaxQty <= 0) continue;
+                            else if (tdata.SafetyStock <= 0) continue;
+
+                            var reorderQty = 0.00m;
+                            if (tdata.ReorderType == ReorderType.Fixed)
+                            {
+                                bool comP = false;
+                                while (!comP)
+                                {
+                                    if ((tdata.QtyOnHand + reorderQty) < tdata.SafetyStock
+                                       || (tdata.QtyOnHand + reorderQty) < tdata.ReorderPoint)
+                                        reorderQty += tdata.ReorderQty;
+                                    else
+                                        comP = true;
+                                }
+                            }
+                            else if (tdata.ReorderType == ReorderType.MinMax)
+                            {
+                                bool comP = false;
+                                while (!comP)
+                                {
+                                    if ((tdata.QtyOnHand + reorderQty) <= tdata.MinQty)
+                                        reorderQty += tdata.MaxQty - tdata.QtyOnHand;
+                                    else if ((tdata.QtyOnHand + reorderQty) < tdata.SafetyStock)
+                                        reorderQty += tdata.SafetyStock - tdata.QtyOnHand;
+                                    else
+                                        comP = true;
+                                }
+                            }
+                            else//by Order
+                            {
+                                if (tdata.QtyOnHand < tdata.SafetyStock)
+                                    reorderQty += tdata.SafetyStock - tdata.QtyOnHand;
+                            }
+
+                            if (reorderQty > 0)
+                            {
+                                var gp1 = newGridPlan_PurchaseAfter(this.dFrom, tdata);
+                                gp1.UseQty = reorderQty;
+                                gp1.UOM = tdata.PurchaseUOM;
+                                gp1.PCSUnit = Math.Round(tdata.PCSUnit_PurchaseUOM, 2);
+                                var q = Math.Round(reorderQty / gp1.PCSUnit, 2);
+                                if (q <= 0)
+                                    q = 1;
+                                else
+                                    q = Math.Ceiling(q);
+                                gp1.Qty = q;
+
+                                gp1.DueDate = gp1.EndingDate.Value.Date.AddDays(1);
+                                gp1.ReqDate = gp1.DueDate.AddDays(1);
+                                gridPlans.Add(gp1);
+                            }
+                        }
+
 
                         //remove MPS - Production
                         temp_gp.AddRange(gridPlans.Where(x => x.PlanningType == "Production").ToList());
@@ -314,7 +428,7 @@ namespace StockControl
                             return null;
                     }
                     //Purchase
-                    else if(this.MRP)
+                    else if (this.MRP)
                     {
                         //Purchase
                         gPlan.StartingDate = baseClass.setStandardTime(dFrom, true);
@@ -350,23 +464,23 @@ namespace StockControl
                                     OrderComp = true;
                             }
                         }
-                        else if (gPlan.ReorderTypeEnum == ReorderType.MinMax)
-                        {
-                            while (!OrderComp)
-                            {
-                                if ((StockQty + ReorderQty) - ReqQty < SafetyStock
-                                    || (StockQty + ReorderQty) - ReqQty < gPlan.itemData.MinQty)
-                                {
-                                    ReorderQty += gPlan.itemData.MaxQty - (StockQty + ReorderQty) - ReqQty;
-                                }
-                                else
-                                    OrderComp = true;
-                            }
-                        }
+                        //else if (gPlan.ReorderTypeEnum == ReorderType.MinMax)
+                        //{
+                        //    while (!OrderComp)
+                        //    {
+                        //        if ((StockQty + ReorderQty) - ReqQty <= gPlan.itemData.MinQty)
+                        //            ReorderQty += gPlan.itemData.MaxQty - (StockQty + ReorderQty);
+                        //        else if ((StockQty + ReorderQty) - ReqQty < SafetyStock)
+                        //            ReorderQty += gPlan.itemData.SafetyStock - (StockQty + ReorderQty);
+                        //        else
+                        //            OrderComp = true;
+                        //    }
+                        //}
                         else
                         {//By Order
                             ReorderQty += ReqQty - StockQty;
                         }
+
                         //แปลงเป็นหน่วยซื้อ
                         gPlan.UOM = PurchaseUOM;
                         gPlan.PCSUnit = Math.Round(gPlan.itemData.PCSUnit_PurchaseUOM, 2);
@@ -501,7 +615,7 @@ namespace StockControl
                 }
                 //find Duedate from SEMI
                 var prod = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == data.DocId).ToList();
-                if(prod.Count > 0)
+                if (prod.Count > 0)
                 {
                     var sDate = prod.Max(x => x.EndingDate).Date.AddDays(1);
                     if (tempStarting < sDate)
@@ -854,15 +968,41 @@ namespace StockControl
             gPlan.itemData = tdata;
             return gPlan;
         }
+        private grid_Planning newGridPlan_PurchaseAfter(DateTime ReqDate, ItemData itemData)
+
+        {
+            grid_Planning gp1 = new grid_Planning();
+            gp1.ReqDate = ReqDate.AddDays(1);
+            gp1.idRef = -99;
+            gp1.ItemNo = itemData.ItemNo;
+            gp1.ItemName = itemData.ItemName;
+            gp1.PlanningType = "Purchase";
+            gp1.RefDocNo = "Reorder for Safety stock";
+            gp1.GroupType = itemData.GroupType;
+            gp1.Type = itemData.Type;
+            gp1.InvGroup = itemData.InvGroup;
+            gp1.ReorderTypeEnum = itemData.ReorderType;
+            gp1.VendorNo = itemData.VendorNo;
+            gp1.VendorName = itemData.VendorName;
+            gp1.UOM = itemData.UOM;
+            gp1.PCSUnit = itemData.PCSUnit;
+            gp1.LocationItem = itemData.LocationItem;
+            gp1.refNo = 0;
+            gp1.mainNo = 0;
+            gp1.itemData = itemData;
+            gp1.StartingDate = baseClass.setStandardTime(gp1.ReqDate, true);
+            gp1.EndingDate = baseClass.setStandardTime(gp1.ReqDate, false);
+            return gp1;
+        }
         private grid_Planning newGridPlan_PurchaseAfter(grid_Planning gp, DateTime ReqDate, ItemData itemData)
         {
             grid_Planning gp1 = new grid_Planning();
             gp1.ReqDate = ReqDate.AddDays(1);
-            gp1.idRef = 0;
+            gp1.idRef = -98;
             gp1.ItemNo = gp.ItemNo;
             gp1.ItemName = gp.ItemName;
             gp1.PlanningType = "Purchase";
-            gp1.RefDocNo = "";
+            gp1.RefDocNo = "Reorder for Safety stock";
             gp1.GroupType = gp.GroupType;
             gp1.Type = gp.Type;
             gp1.InvGroup = gp.InvGroup;
@@ -879,6 +1019,7 @@ namespace StockControl
             gp1.EndingDate = baseClass.setStandardTime(gp1.ReqDate, false);
             return gp1;
         }
+
 
         void changeLabel(string lb)
         {
