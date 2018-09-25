@@ -321,7 +321,9 @@ namespace StockControl
                         if (dt.Qty == prod.OutQty)
                         {
                             var sumProd = db.mh_ProductionOrderRMs.Where(x => x.JobNo == jobNo && x.Active).Sum(x => x.CostOverall);
-                            sumProd += db.mh_ProductionOrderRM_2s.Where(x => x.JobNo == jobNo && x.Active).Sum(x => x.TotalCost);
+                            var temp = db.mh_ProductionOrderRM_2s.Where(x => x.JobNo == jobNo && x.Active).ToList();
+                            if (temp.Count > 0)
+                                sumProd += temp.Sum(x => x.TotalCost);
                             var costAll = prod.CostOverhead + sumProd; //Cost All in Job (Cost Overhead + RM Cost)
                             var costTaking = 0.00m;
                             var packall = db.mh_Packings.Where(x => x.Active)
@@ -341,6 +343,7 @@ namespace StockControl
                         dt.Remark = item.Cells["Remark"].Value.ToSt();
                         dt.RefNo = jobNo;
                         dt.CustomerPONo = item.Cells["CustomerPONo"].Value.ToSt();
+                        dt.CustomerPONo_TEMP = item.Cells["CustomerPONo_TEMP"].Value.ToSt();
                         dt.idJob = idJob;
                         dt.idCstmPODt = item.Cells["idCstmPODt"].Value.ToInt();
                         dt.Active = true;
@@ -365,7 +368,7 @@ namespace StockControl
                             s.Appid = item.Index + 1;
                             s.CreateBy = ClassLib.Classlib.User;
                             s.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-                            s.DocNo = txtPackingNo.Text;
+                            s.DocNo = m.PackingNo;
                             s.RefNo = job.JobNo; //JobNo --> mh_ProductionOrder
                             s.CodeNo = item.Cells["ItemNo"].Value.ToSt();
                             s.Type = "Receive By Job";
@@ -973,7 +976,14 @@ namespace StockControl
                 foreach (var item in dgvData.Rows)
                 {
                     int id = item.Cells["id"].Value.ToInt();
-                    //var m = db.tb_Stocks.Where(x=>x.Refid == id && x.RefNo == txtPackingNo.Text).tol)
+                    string itemNo = item.Cells["ItemNo"].Value.ToSt();
+                    var m = db.tb_Stocks.Where(x => x.Refid == id && x.DocNo == txtPackingNo.Text && x.TLQty == x.QTY).ToList();
+                    if(m.Count < 1)
+                    {
+                        mssg += $"- Cannot Delete Packing because Item {itemNo} is already Shipped.\n";
+                        break;
+                    }
+
                 }
             }
 

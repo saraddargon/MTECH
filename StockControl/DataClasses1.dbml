@@ -4634,36 +4634,6 @@
       <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.sp_070_PackingList_Search" Method="sp_070_PackingList_Search">
-    <Parameter Name="PKno" Parameter="pKno" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="ItemNo" Parameter="itemNo" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="CustomerPONo" Parameter="customerPONo" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="JobNo" Parameter="jobNo" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="dFrom" Type="System.DateTime" DbType="DateTime" />
-    <Parameter Name="dTo" Type="System.DateTime" DbType="DateTime" />
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <ElementType Name="sp_070_PackingList_SearchResult">
-      <Column Name="PackingNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PackingDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Status" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
-      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="RefNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CustomerPONo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="idJob" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="idCstmPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Location" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ShelfNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="LotNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="GroupType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="InvGroup" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.Cal_QTY_Remain_Location" Method="Cal_QTY_Remain_Location" IsComposable="true">
     <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="Category" Parameter="category" Type="System.String" DbType="VarChar(50)" />
@@ -4901,6 +4871,37 @@
       <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="GroupType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_070_PackingList_Search" Method="sp_070_PackingList_Search">
+    <Parameter Name="PKno" Parameter="pKno" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="ItemNo" Parameter="itemNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CustomerPONo" Parameter="customerPONo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="JobNo" Parameter="jobNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="dFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="dTo" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="sp_070_PackingList_SearchResult">
+      <Column Name="PackingNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PackingDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="RefNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerPONo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerPONo_TEMP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idJob" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idCstmPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Location" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ShelfNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LotNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="GroupType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="InvGroup" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>
