@@ -2069,6 +2069,23 @@
       <Column Name="idReceivedt" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.tb_Shipping_FG" Member="tb_Shipping_FGs">
+    <Type Name="tb_Shipping_FG">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ReqNo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="RefNo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Refid_H" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemNo" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ItemName" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalCost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Refid_dt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idReceive" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">
     <ElementType Name="Sp_ADM03_OpenFormSelectResult">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -4905,30 +4922,6 @@
       <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.sp_076_Shipping_FG_ADD" Method="sp_076_Shipping_FG_ADD">
-    <Parameter Name="ShippingNo" Parameter="shippingNo" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="QTYPlan" Parameter="qTYPlan" Type="System.Decimal" DbType="Decimal(18,6)" />
-    <Parameter Name="QTY" Parameter="qTY" Type="System.Decimal" DbType="Decimal(18,6)" />
-    <Parameter Name="Remark" Parameter="remark" Type="System.String" DbType="NVarChar(512)" />
-    <Parameter Name="LineName" Parameter="lineName" Type="System.String" DbType="NVarChar(512)" />
-    <Parameter Name="MachineName" Parameter="machineName" Type="System.String" DbType="NVarChar(512)" />
-    <Parameter Name="SerialNo" Parameter="serialNo" Type="System.String" DbType="NVarChar(512)" />
-    <Parameter Name="LotNo" Parameter="lotNo" Type="System.String" DbType="NVarChar(512)" />
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="RefNo" Parameter="refNo" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="Refid_H" Parameter="refid_H" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="ToLocation" Parameter="toLocation" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="BaseUOM" Parameter="baseUOM" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="BasePCSUOM" Parameter="basePCSUOM" Type="System.Decimal" DbType="Decimal(18,2)" />
-    <Parameter Name="UnitShip" Parameter="unitShip" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="PCSUnit" Parameter="pCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" />
-    <Parameter Name="Refid_dt" Parameter="refid_dt" Type="System.Int32" DbType="Int" />
-    <Parameter Name="idCSTMPODt" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.sp_075_Shipping_FG" Method="sp_075_Shipping_FG">
     <Parameter Name="SONo" Parameter="sONo" Type="System.String" DbType="VarChar(50)" />
     <ElementType Name="sp_075_Shipping_FGResult">
@@ -4958,5 +4951,29 @@
       <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Hid" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.sp_076_Shipping_FG_ADD" Method="sp_076_Shipping_FG_ADD">
+    <Parameter Name="ShippingNo" Parameter="shippingNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="QTYPlan" Parameter="qTYPlan" Type="System.Decimal" DbType="Decimal(18,6)" />
+    <Parameter Name="QTY" Parameter="qTY" Type="System.Decimal" DbType="Decimal(18,6)" />
+    <Parameter Name="Remark" Parameter="remark" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="LineName" Parameter="lineName" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="MachineName" Parameter="machineName" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="SerialNo" Parameter="serialNo" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="LotNo" Parameter="lotNo" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefNo" Parameter="refNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Refid_H" Parameter="refid_H" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="ToLocation" Parameter="toLocation" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="BaseUOM" Parameter="baseUOM" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="BasePCSUOM" Parameter="basePCSUOM" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="UnitShip" Parameter="unitShip" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="PCSUnit" Parameter="pCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="Refid_dt" Parameter="refid_dt" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idCSTMPODt" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>
