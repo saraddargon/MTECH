@@ -462,6 +462,7 @@
             gridViewTextBoxColumn8.EnableExpressionEditor = false;
             gridViewTextBoxColumn8.FieldName = "RefJobCard";
             gridViewTextBoxColumn8.HeaderText = "เลขที่อ้างอิงใบผลิต (Job card)";
+            gridViewTextBoxColumn8.IsVisible = false;
             gridViewTextBoxColumn8.Name = "RefJobCard";
             gridViewTextBoxColumn8.Width = 154;
             gridViewTextBoxColumn9.EnableExpressionEditor = false;

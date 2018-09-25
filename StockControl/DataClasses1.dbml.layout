@@ -674,5 +674,11 @@
         <elementListCompartment Id="ac47df37-5750-4e58-b9cc-6def955e69c3" absoluteBounds="24.265, 11.585, 1.9700000000000002, 4.095418294270833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="f1661800-45fb-4274-8ab7-bfe747ebf652" isExpanded="false" absoluteBounds="1, 3.625, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/mh_CheckStock_List" />
+      <nestedChildShapes>
+        <elementListCompartment Id="735b155b-6a17-4d91-bd2f-7fd07af31e91" absoluteBounds="1.0150000000000001, 4.085, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

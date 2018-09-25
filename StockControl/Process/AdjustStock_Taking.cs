@@ -180,8 +180,8 @@ namespace StockControl
         private void DataLoad()
         {
 
-            dt_ADH.Rows.Clear();
-            dt_ADD.Rows.Clear();
+            //dt_ADH.Rows.Clear();
+            //dt_ADD.Rows.Clear();
             dgvData.Rows.Clear();
             dgvData.DataSource = null;
             try
@@ -193,29 +193,29 @@ namespace StockControl
 
                     try
                     {
-                        var g = (from ix in db.tb_StockAdjustHs select ix).Where(a => a.ADNo == txtADNo.Text.Trim()).ToList();
+                        var g = (from ix in db.mh_CheckStock_Lists select ix).Where(a => a.CheckNo == txtADNo.Text.Trim()).ToList();
                         if (g.Count() > 0)
                         {
                             DateTime? temp_date = null;
                            
-                            txtRemark.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Remark);
-                            if (!StockControl.dbClss.TSt(g.FirstOrDefault().ADDate).Equals(""))
-                                dtRequire.Value = Convert.ToDateTime(g.FirstOrDefault().ADDate,new CultureInfo("en-US"));
+                            //txtRemark.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Remark);
+                            if (!StockControl.dbClss.TSt(g.FirstOrDefault().CheckDate).Equals(""))
+                                dtRequire.Value = Convert.ToDateTime(g.FirstOrDefault().CheckDate, new CultureInfo("en-US"));
                             else
                                 dtRequire.Value = Convert.ToDateTime(temp_date);
                            
 
-                            txtAdjustBy.Text = StockControl.dbClss.TSt(g.FirstOrDefault().ADBy);
-                            txtCreateBy.Text = StockControl.dbClss.TSt(g.FirstOrDefault().CreateBy);
-                            if (!StockControl.dbClss.TSt(g.FirstOrDefault().CreateDate).Equals(""))
+                            txtAdjustBy.Text = StockControl.dbClss.TSt(g.FirstOrDefault().CheckBy);
+                            txtCreateBy.Text = StockControl.dbClss.TSt(g.FirstOrDefault().CheckBy);
+                            if (!StockControl.dbClss.TSt(g.FirstOrDefault().CheckDate).Equals(""))
                             {
-                                    txtCreateDate.Text = Convert.ToDateTime(g.FirstOrDefault().CreateDate,new CultureInfo("en-US")).ToString("dd/MMM/yyyy");
+                                    txtCreateDate.Text = Convert.ToDateTime(g.FirstOrDefault().CheckDate, new CultureInfo("en-US")).ToString("dd/MMM/yyyy");
                             }
                             else
                                 txtCreateDate.Text = "";
 
                             //lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
-                            if (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Cancel"))
+                            if (StockControl.dbClss.TSt(g.FirstOrDefault().CheckDate).Equals("Cancel"))
                             {
                                 btnSave.Enabled = false;
                                 //btnDelete.Enabled = false;
@@ -227,7 +227,7 @@ namespace StockControl
                             }
                            
                             else if
-                                (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Completed")
+                                (StockControl.dbClss.TSt(g.FirstOrDefault().CheckDate).Equals("Completed")
                                 
                                 )
                             {
@@ -245,45 +245,45 @@ namespace StockControl
                                 //btnDelete.Enabled = true;
                                 //btnView.Enabled = true;
                                 //btnEdit.Enabled = true;
-                                lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
+                                lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().CheckDate);
                                 dgvData.ReadOnly = false;
                                 btnNew.Enabled = true;
                             }
-                            dt_ADH = StockControl.dbClss.LINQToDataTable(g);
+                            //dt_ADH = StockControl.dbClss.LINQToDataTable(g);
 
 
                             int dgvNo = 0;
                             //detail
-                            var r = (from d in db.tb_StockAdjusts
-                                     join i in db.mh_Items on d.CodeNo equals i.InternalNo
-                                     where d.AdjustNo == txtADNo.Text
-
-                                        && d.Status != "Cancel"
+                            var r = (from d in db.mh_CheckStock_Lists
+                                     join i in db.mh_Items on d.InternalNo equals i.InternalNo
+                                     where d.CheckNo == txtADNo.Text
+                                        && d.CheckStatus != "Cancel"
 
                                      select new
                                      {
-                                         CodeNo = d.CodeNo,
+                                         CodeNo = d.InternalNo,
                                          S = false,
-                                         ItemNo = d.ItemNo,
-                                         ItemDescription = d.ItemDescription,
-                                        
-                                         QTY = d.Qty,
-                                         
-                                         RemainQty = (Convert.ToDecimal(db.Cal_QTY(d.CodeNo, "", 0))),// i.StockInv,
-                                         Unit = d.Unit,
-                                         PCSUnit = d.PCSUnit,
-                                         MaxStock = i.MaximumQty,
-                                         MinStock = i.MinimumQty,
-                                         StandardCost = d.StandardCost,//i.StandardCost,
-                                         Amount =d.Amount,
-                                         LotNo = d.LotNo,
-                                         Remark = d.Reason,
+                                         ItemNo = i.InternalName,
+                                         ItemDescription = i.InternalDescription,
+                                         QTY = d.InputQty,
+                                         //RemainQty = (Convert.ToDecimal(db.Cal_QTY(d.CodeNo, "", 0))),// i.StockInv,
+                                         Unit = i.BaseUOM,
+                                         PCSUnit = dbClss.Con_UOM(d.InternalNo, StockControl.dbClss.TSt(i.BaseUOM))
+                                         //MaxStock = i.MaximumQty,
+                                         // MinStock = i.MinimumQty,
+                                         , StandardCost = i.StandardCost,//i.StandardCost,
+                                         Amount = d.Amount,
+                                         LotNo = "",
+                                         Remark = d.Remark,
                                          id = d.id,
-                                         Location = d.Location,
-                                         ShelfNo = d.ShelfNo
-                                         ,RefJobCard = d.RefJobCard
-                                         ,RefTempJobCard = d.RefTempJobCard
-                                         ,RefidJobCard = d.RefidJobCard
+                                         Location = i.Location,
+                                         ShelfNo = ""
+                                         ,RefJobCard = ""//d.RefJobCard
+                                         ,RefTempJobCard = ""//d.RefTempJobCard
+                                         ,RefidJobCard = 0//d.RefidJobCard
+                                         ,StockQty = d.StockQty
+                                         ,CompareQty = d.CompareQty
+                                         ,InputQty = d.InputQty
                                      }
                             ).ToList();
                             if (r.Count > 0)
@@ -292,27 +292,14 @@ namespace StockControl
 
                                 foreach (var vv in r)
                                 {
-                                    //dgvData.Rows.Add(dgvNo.ToString(),
-                                    //    vv.CodeNo,
-                                    //    vv.ItemNo,
-                                    //    vv.ItemDescription,
-                                    //    vv.RemainQty,
-                                    //    vv.QTY,
-                                    //    vv.Unit,
-                                    //    vv.PCSUnit,
-                                    //    vv.StandardCost,
-                                    //    vv.Amount,
-                                    //    vv.LotNo,
-                                    //    vv.Remark,
-                                    //    vv.id,
-                                    //    vv.ShelfNo,
-                                    //    vv.Location
-                                    //    ,vv.RefJobCard
-                                    //    ,vv.RefTempJobCard
-                                    //    ,vv.RefidJobCard
-                                    //    );
+                                   
 
-                                    Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription, vv.RemainQty, dbClss.TDe( vv.QTY), vv.Unit, dbClss.TDe(vv.PCSUnit), dbClss.TDe(vv.StandardCost), dbClss.TDe(vv.Amount), vv.LotNo, vv.Remark,vv.id.ToString(),vv.ShelfNo, vv.Location, vv.RefJobCard,vv.RefTempJobCard, vv.RefidJobCard.ToString());
+                                    Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
+                                        , dbClss.TDe( vv.QTY), vv.Unit, dbClss.TDe(vv.PCSUnit)
+                                        , dbClss.TDe(vv.StandardCost), dbClss.TDe(vv.Amount)
+                                        , vv.LotNo, vv.Remark,vv.id.ToString(),vv.ShelfNo
+                                        , vv.Location, vv.RefJobCard,vv.RefTempJobCard
+                                        , vv.RefidJobCard.ToString(),vv.StockQty, vv.CompareQty, vv.InputQty);
                                 }
 
                             }
@@ -1296,11 +1283,6 @@ namespace StockControl
 
         }
 
-        private void radTextBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void radLabel4_Click(object sender, EventArgs e)
         {
 
@@ -1373,7 +1355,9 @@ namespace StockControl
                             //if (!check_Duppicate(CodeNo))
                             {
 
-                                Add_Item(No, CodeNo, ItemNo, ItemDescription, RemainQty, QTY, Unit, PCSUnit, CostPerUnit, Amount, LotNo, Remark, "0", ShelfNo, Location, "", "", "0");
+                                Add_Item(No, CodeNo, ItemNo, ItemDescription
+                                    , QTY, Unit, PCSUnit, CostPerUnit, Amount, LotNo, Remark
+                                    , "0", ShelfNo, Location, "", "", "0",0,0,0);
                             }
                         }
                     }
@@ -1383,9 +1367,10 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
         }
         private void Add_Item(int Row, string CodeNo, string ItemNo
-            , string ItemDescription ,decimal RemainQty
+            , string ItemDescription 
            , decimal QTY, string Unit,decimal PCSUnit, decimal StandardCost,decimal Amount,string LotNo,string Remark
             ,string id ,string ShelfNo,string Location,string RefJobCard,string RefTempJobCard,string RefidJobCard
+            , decimal StockQty, decimal CompareQty, decimal InputQty
             )
         {
 
@@ -1405,7 +1390,7 @@ namespace StockControl
                 ee.Cells["CodeNo"].Value = CodeNo;
                 ee.Cells["ItemNo"].Value = ItemNo;
                 ee.Cells["ItemDescription"].Value = ItemDescription;
-                ee.Cells["RemainQty"].Value = RemainQty;
+                //ee.Cells["RemainQty"].Value = RemainQty;
                 ee.Cells["QTY"].Value = QTY;
                 ee.Cells["PCSUnit"].Value = PCSUnit;
                 ee.Cells["Unit"].Value = Unit;
@@ -1419,6 +1404,9 @@ namespace StockControl
                 ee.Cells["RefTempJobCard"].Value = RefTempJobCard;
                 ee.Cells["RefidJobCard"].Value = RefidJobCard;
                 ee.Cells["ShelfNo"].Value = ShelfNo;
+                ee.Cells["StockQty"].Value = StockQty;
+                ee.Cells["CompareQty"].Value = CompareQty;
+                ee.Cells["InputQty"].Value = InputQty;
 
                 //dbclass.SetRowNo1(dgvData);
             }
@@ -1856,6 +1844,47 @@ namespace StockControl
                 e.Editor = editor;
             }
 
+        }
+
+        private void txtADNo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar==13)
+            {
+                DataLoad();
+            }
+        }
+
+        private void radButtonElement2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    if (MessageBox.Show("ดึงรายการเช็คสต็อกสำเร็จ ?", "Check Stock", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        int Temp = 0;
+                        var ck = db.mh_CheckStock_Lists.Where(x => x.CheckStatus == "Waiting").ToList();
+                        if (ck.Count > 0)
+                        {
+                            if (MessageBox.Show("รายการเช็คสต็อกบางรายการยังไม่ถูกปิด ต้องการปิดและ แสดงรายการเช็คสต็อกใหม่หรือไม่ ?", "Check Stock", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                Temp = 0;
+                            }
+                            else
+                            {
+                                Temp = 1;
+                                return;
+                            }
+                        }
+                        if (Temp == 0)
+                        {
+                            db.sp_074_CheckStock_List(ClassLib.Classlib.User);
+                            MessageBox.Show("ดึงรายการเช็คสต็อกสำเร็จ.");
+                            DataLoad();
+                        }
+                    }
+                }
+                }catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }

@@ -325,6 +325,12 @@
     <Compile Include="Process\SaleOrder.Designer.cs">
       <DependentUpon>SaleOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Acciden_t_Slip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Acciden_t_Slip.Designer.cs">
+      <DependentUpon>Acciden_t_Slip.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Shipping_RM.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1174,6 +1180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\SaleOrder.resx">
       <DependentUpon>SaleOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Acciden_t_Slip.resx">
+      <DependentUpon>Acciden_t_Slip.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Shipping_RM.resx">
       <DependentUpon>Shipping_RM.cs</DependentUpon>

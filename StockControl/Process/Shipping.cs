@@ -757,7 +757,7 @@ namespace StockControl
                     }
                     else
                     {
-                        MessageBox.Show("ไม่สามารถโหลดเลขที่รับสินค้าได้ ติดต่อแผนก IT");
+                        MessageBox.Show("ไม่สามารถโหลดเลขที่เอกสารได้ ติดต่อแผนก IT");
                     }
                     }
                 }
@@ -1529,6 +1529,7 @@ namespace StockControl
                              where i.Active == true //&& d.verticalID == VerticalID
                                 && i.InternalNo.Trim().ToUpper() == txtCodeNo.Text.Trim().ToUpper()
                                 && s.TLQty > 0
+                                && Convert.ToInt16(s.idCSTMPODt)==0
                              && s.Location == ddlLocation.Text
                              //&& h.VendorNo.Contains(VendorNo_ss)
                              select new
