@@ -78,7 +78,7 @@ namespace StockControl
                     //1.Get Customer P/O (OutPlan) and SaleOrder (OutPlan) [Only not customer P/O]
                     var poDt = db.mh_CustomerPODTs.Where(x => x.Active
                         && x.ReqDate >= dFrom && x.ReqDate <= dTo
-                        && x.OutPlan > 0 && x.genPR
+                        && x.OutPlan > 0
                     ).OrderBy(x => x.ReqDate).ToList();
                     foreach (var dt in poDt)
                     {
@@ -91,8 +91,6 @@ namespace StockControl
                                 && x.Active).FirstOrDefault();
                         if (pohd == null) continue;
                         string docNo = pohd.CustomerPONo;
-                        if (pohd.DemandType == 1)//TEMP CustomerPO
-                            docNo = "Safety stock(Production)";
 
                         listForPlan.Add(new listforPlanning
                         {
@@ -197,7 +195,7 @@ namespace StockControl
                         listForPlan.Add(new listforPlanning
                         {
                             DocId = podt.id,
-                            DocNo = "Safety stock(Production)",
+                            DocNo = po.CustomerPONo,
                             DocDate = po.OrderDate,
                             ItemNo = tdata.ItemNo,
                             RepType = tdata.RepType_enum,

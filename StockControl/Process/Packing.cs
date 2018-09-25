@@ -98,7 +98,7 @@ namespace StockControl
                             {
                                 addRow(item.id, item.ItemNo, item.ItemName, item.Qty, item.UOM, item.PCSUnit
                                     , item.UnitPrice, item.LotNo, item.Location, item.ShelfNo, item.Remark, item.RefNo
-                                    , item.CustomerPONo, item.idJob, item.idCstmPODt);
+                                    , item.CustomerPONo, item.CustomerPONo_TEMP, item.idJob, item.idCstmPODt);
                             }
                             setRowNo();
 
@@ -295,6 +295,8 @@ namespace StockControl
                     //DT
                     foreach (var item in dgvData.Rows)
                     {
+                        if (item.Cells["Qty"].Value.ToDecimal() == 0) continue;
+
                         bool newItem = false;
                         int id = item.Cells["id"].Value.ToInt();
                         int idJob = item.Cells["idJob"].Value.ToInt();
@@ -372,7 +374,24 @@ namespace StockControl
                             s.Type_i = 1;
                             s.Category = "Invoice";
                             s.Refid = dt.id; //id mh_PackingDt
+
+                            //กรณีปกติจะบันทึก idCustomerPO Dt เพื่อระบุว่าของที่รับเข้าใช้สำหรับ Customer PO ใด
                             s.idCSTMPODt = job.RefDocId; //idCstmPODt
+                            //กรณี Safety Stock จะบันทึก idCStmPODt เป็น 0 แต่ถ้าเป็นการรับเพื่อไปผลิต FG Safety Stock จะใส่ id นั้นๆปกติ
+                            var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == job.RefDocId && x.forSafetyStock)
+                                .Join(db.mh_CustomerPOs.Where(x => x.DemandType == 1)
+                                , podt => podt.idCustomerPO
+                                , pohd => pohd.id
+                                , (podt, pohd) => new { pohd, podt }).FirstOrDefault();
+                            if (cstmpo != null)
+                            {
+                                //เช็คว่าเป็น FG ที่ผลิตเพื่อ Customer PO (Safety stock หรือไม่) :::: DemandType = 1 --> ผลิตเพื่อ Safety Stock
+                                if (cstmpo.podt.ItemNo == s.CodeNo) //เป็น FG ที่ผลิตเพื่อ Safety Stock ให้ใส่ idCstmPO =0
+                                    s.idCSTMPODt = 0;
+
+                                cstmpo.podt.OutQty -= s.QTY.ToDecimal();
+                            }
+
                             s.Type_in_out = "In";
                             s.AmountCost = dt.Amount;
                             if (s.AmountCost > 0)
@@ -547,11 +566,11 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                //if (dgvData.Rows.Where(x => x.Cells["RefNo"].Value.ToSt().Equals(JobNo)).Count() > 0)
-                //{
-                //    baseClass.Warning($"- Job no {JobNo} is already in list.\n");
-                //    return;
-                //}
+                if (dgvData.Rows.Where(x => x.Cells["RefNo"].Value.ToSt().Equals(JobNo)).Count() > 0)
+                {
+                    baseClass.Warning($"- Job no {JobNo} is already in list.\n");
+                    return;
+                }
 
                 using (var db = new DataClasses1DataContext())
                 {
@@ -579,7 +598,7 @@ namespace StockControl
                         var costPer = Math.Round(costAll / m.Qty, 2);
 
                         addRow(0, m.FGNo, m.FGName, 0, m.UOM, m.PCSUnit, costPer
-                            , m.LotNo, "Warehouse", tool.ShelfNo, "", JobNo, pohd.CustomerPONo
+                            , m.LotNo, "Warehouse", tool.ShelfNo, "", JobNo, pohd.CustomerPONo, m.RefDocNo_TEMP
                             , m.id, m.RefDocId);
                         setRowNo();
                         calAmnt();
@@ -597,7 +616,7 @@ namespace StockControl
         }
         private void addRow(int id, string itemNo, string itemName, decimal qty, string uOM, decimal pCSUnit
             , decimal costPer, string lotNo, string LocationItem, string shelfNo, string Remark
-            , string jobNo, string customerPONo, int idJob, int idCstmPOdt)
+            , string jobNo, string customerPONo, string customerPONo_TEMP, int idJob, int idCstmPOdt)
         {
             var row = dgvData.Rows.AddNew();
             row.Cells["id"].Value = id;
@@ -614,6 +633,7 @@ namespace StockControl
             row.Cells["Remark"].Value = Remark;
             row.Cells["RefNo"].Value = jobNo;
             row.Cells["CustomerPONo"].Value = customerPONo;
+            row.Cells["CustomerPONo_TEMP"].Value = customerPONo_TEMP;
             row.Cells["idJob"].Value = idJob;
             row.Cells["idCstmPOdt"].Value = idCstmPOdt;
 
