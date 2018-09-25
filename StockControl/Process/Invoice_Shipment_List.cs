@@ -129,8 +129,7 @@ namespace StockControl
                         dt1 = Convert.ToDateTime(dtFrom.Value).ToString("yyyyMMdd");
                         dt2 = Convert.ToDateTime(dtTo.Value).ToString("yyyyMMdd");
                     }
-                    dgvData.DataSource = db.sp_054_SaleOrder_List(txtPONo.Text, "", cbbItem.Text, dt1, dt2, ""
-                        , cbbCSTM.SelectedValue.ToSt(), txtCSTMNo.Text);
+                    dgvData.DataSource = db.sp_069_Shipment_List_2(txtPONo.Text,cbbCSTM.Text,cbbItem.Text, dt1, dt2, "", txtCSTMNo.Text);
 
                 }
             }

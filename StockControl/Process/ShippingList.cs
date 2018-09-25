@@ -83,9 +83,10 @@ namespace StockControl
             dtDate1.Value = DateTime.Now;
             dtDate2.Value = DateTime.Now;
 
-            DataLoad();
+            radButton1_Click_1(null, null);
 
-         
+
+
         }
         private void DefaultItem()
         {
