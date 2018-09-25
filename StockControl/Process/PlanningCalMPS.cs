@@ -365,6 +365,7 @@ namespace StockControl
                             PlanningType = g.PlanningType,
                             Qty = g.Qty,
                             RefDocNo = g.RefDocNo,
+                            RefDocNo_TEMP = g.RefDocNo_TEMP,
                             ReqDate = g.ReqDate,
                             StartingDate = g.StartingDate.Value,
                             Status = g.Status,
@@ -520,6 +521,7 @@ namespace StockControl
                         m.OutQty = m.Qty;
                         m.RefDocId = item.Cells["idRef"].Value.ToInt();
                         m.RefDocNo = item.Cells["RefDocNo"].Value.ToSt();
+                        m.RefDocNo_TEMP = item.Cells["RefDocNo_TEMP"].Value.ToSt();
                         m.StartingDate = item.Cells["StartingDate"].Value.ToDateTime().Value;
                         m.UOM = item.Cells["UOM"].Value.ToSt();
                         m.UpdateBy = ClassLib.Classlib.User;
@@ -663,7 +665,6 @@ namespace StockControl
                             db.mh_PlanningMPS_TEMPs.DeleteAllOnSubmit(d);
                             db.SubmitChanges();
                         }
-
 
                         //Send to Approve
                         db.sp_062_mh_ApproveList_Add(m.JobNo, "Job Req", ClassLib.Classlib.User);

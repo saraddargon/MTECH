@@ -200,6 +200,15 @@ namespace StockControl
         public string PlanningType { get; set; }
         public int idRef { get; set; }
         public string RefDocNo { get; set; }
+        public string RefDocNo_TEMP
+        {
+            get {
+                string a = RefDocNo;
+                if (a.Contains("FGTEMPJOB"))
+                    a = "Safety stock(Production)";
+                return a;
+            }
+        }
 
         public string GroupType { get; set; }
         public string Type { get; set; }
@@ -333,15 +342,15 @@ namespace StockControl
                 else this.PCSUnit_PurchaseUOM = 1;
                 this.StandardCost = t.StandardCost;
 
-                if (this.ItemNo == "TBK-T-0001")
+                if (this.ItemNo == "MET-T-001")
                 { }
                 //**Stock Customer P/O --> BackOrder Q'ty for Customer P/O, Receive stock Q'ty for Customer P/O
                 //find Received stock Q'ty for Customer P/O idDt ,,, reserve or not reserve(if job closed)
                 var st = db.tb_Stocks.Where(x => x.CodeNo == this.ItemNo
-                    && x.idCSTMPODt != null && x.idCSTMPODt > 0 && x.TLQty > 0).OrderBy(x => x.id).ToList();
+                    && x.idCSTMPODt != null && x.TLQty > 0).OrderBy(x => x.id).ToList();
                 foreach (var s in st)
                 {
-                    if (this.InvGroup_enum != InventoryGroup.RM) break;
+                    //if (this.InvGroup_enum != InventoryGroup.RM) break;
                     var j = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == s.idCSTMPODt).FirstOrDefault();
                     //cstmPO job ยังไม่ปิด หรือ เปิดแล้วแต่ยังรับเข้าไม่ครบแสดงว่ายังไม่ปิด ซึ่งแสดงว่าเป็น Stock ปกติ
                     if (j == null || (j != null && j.OutQty > 0))

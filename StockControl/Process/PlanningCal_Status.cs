@@ -87,14 +87,15 @@ namespace StockControl
                         if (t == null) continue;
                         if (LocationItem != "" && t.Location != LocationItem) continue;
 
-                        var pohd = db.mh_CustomerPOs.Where(x => x.id == dt.idCustomerPO && x.DemandType == 0
+                        var pohd = db.mh_CustomerPOs.Where(x => x.id == dt.idCustomerPO
                                 && x.Active).FirstOrDefault();
                         if (pohd == null) continue;
+                        string docNo = pohd.CustomerPONo;
 
                         listForPlan.Add(new listforPlanning
                         {
                             DocId = dt.id,
-                            DocNo = pohd.CustomerPONo,
+                            DocNo = docNo,
                             DocDate = pohd.OrderDate,
                             ItemNo = dt.ItemNo,
                             RepType = baseClass.getRepType(dt.ReplenishmentType),
@@ -194,7 +195,7 @@ namespace StockControl
                         listForPlan.Add(new listforPlanning
                         {
                             DocId = podt.id,
-                            DocNo = "Safety stock(Production)",
+                            DocNo = po.CustomerPONo,
                             DocDate = po.OrderDate,
                             ItemNo = tdata.ItemNo,
                             RepType = tdata.RepType_enum,

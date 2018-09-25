@@ -365,6 +365,7 @@ namespace StockControl
                             PlanningType = g.PlanningType,
                             Qty = g.Qty,
                             RefDocNo = g.RefDocNo,
+                            RefDocNo_TEMP = g.RefDocNo_TEMP,
                             ReqDate = g.ReqDate,
                             StartingDate = g.StartingDate.Value,
                             Status = g.Status,

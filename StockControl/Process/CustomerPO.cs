@@ -472,7 +472,7 @@ namespace StockControl
 
                         e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                         e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
-                        e.Row.Cells["OutQty"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
+                        e.Row.Cells["OutQty"].Value = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
                         CallTotal();
                     }
                     else if (e.Column.Name.Equals("ItemNo"))
@@ -506,7 +506,7 @@ namespace StockControl
                                 e.Row.Cells["PCSUnit"].Value = pcsunit;
                                 e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                                 e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
-                                e.Row.Cells["OutQty"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
+                                e.Row.Cells["OutQty"].Value = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
                             }
 
                             //
@@ -524,7 +524,7 @@ namespace StockControl
                             e.Row.Cells["PCSUnit"].Value = pcsunit;
                             e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
                             e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
-                            e.Row.Cells["OutQty"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
+                            e.Row.Cells["OutQty"].Value = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
                         }
                     }
                 }
