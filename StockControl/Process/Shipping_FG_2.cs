@@ -1528,7 +1528,7 @@ namespace StockControl
                                 Add_Item(dgvNo, vv.ItemNo, vv.ItemName, vv.Description
                                             , dbClss.TDe(vv.Stock), dbClss.TDe(vv.OutShip), vv.Unit, dbClss.TDe(vv.PCSUnit), dbClss.TDe(vv.UnitPrice)
                                             , vv.Amount, "", "", "", "", "", 0//--vv.id
-                                            , vv.LocationItem, dbClss.TDe(vv.Qty), dbClss.TDe(vv.OutShip), "PCS");
+                                            , vv.LocationItem, dbClss.TDe(vv.Qty), dbClss.TDe(vv.OutShip), vv.BaseUOM,vv.idCSTMPODt);
                             }
                         }
                         Cal_Amount();
@@ -1539,7 +1539,7 @@ namespace StockControl
         private void Add_Item(int Row, string CodeNo, string ItemNo
             , string ItemDescription,decimal RemainQty, decimal QTY,string UnitShip, decimal PCSUnit
            , decimal StandardCost,decimal Amount,string LotNo,string SerialNo,string MachineName,string LineName
-            ,string Remark,int id,string Location,decimal QTYPlan,decimal OutShip,string BaseUOM)
+            ,string Remark,int id,string Location,decimal QTYPlan,decimal OutShip,string BaseUOM,int idCSTMPODt)
         {
             
 
@@ -1575,6 +1575,7 @@ namespace StockControl
                 ee.Cells["QTYPlan"].Value = QTYPlan;
                 ee.Cells["OutShip"].Value = OutShip;
                 ee.Cells["BaseUOM"].Value = BaseUOM;
+                ee.Cells["idCSTMPODt"].Value = idCSTMPODt;
 
                 //if (GroupCode != "Other")
                 //{

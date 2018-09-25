@@ -113,7 +113,7 @@
     <Compile Include="DataClasses1.cs">
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </Compile>
-    <Compile Include="DataClasses11.designer.cs">
+    <Compile Include="DataClasses1.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses1.dbml</DependentUpon>

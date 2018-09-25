@@ -2651,40 +2651,6 @@
     <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.sp_021_PR_List" Method="sp_021_PR_List">
-    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="TempNo" Parameter="tempNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="PRNo" Parameter="pRNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="VendorNo" Parameter="vendorNo" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="VendorName" Parameter="vendorName" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="dt1" Type="System.String" DbType="VarChar(8)" />
-    <Parameter Name="dt2" Type="System.String" DbType="VarChar(8)" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="Factory" Parameter="factory" Type="System.String" DbType="VarChar(100)" />
-    <ElementType Name="sp_021_PR_ListResult">
-      <Column Name="TempNo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="PRNo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="CodeNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="ItemName" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
-      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
-      <Column Name="ItemDesc" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
-      <Column Name="GroupCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="OrderQty" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
-      <Column Name="UnitCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
-      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
-      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="VendorNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="VendorName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="ClearBill" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="RequestDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="VATType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.sp_022_POHD_Cal_Status" Method="sp_022_POHD_Cal_Status">
     <Parameter Name="TempPNo" Parameter="tempPNo" Type="System.String" DbType="VarChar(100)" />
     <Parameter Name="PONo" Parameter="pONo" Type="System.String" DbType="VarChar(100)" />
@@ -4902,6 +4868,95 @@
       <Column Name="GroupType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="InvGroup" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_021_PR_List" Method="sp_021_PR_List">
+    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="TempNo" Parameter="tempNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="PRNo" Parameter="pRNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="VendorNo" Parameter="vendorNo" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="VendorName" Parameter="vendorName" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="dt1" Type="System.String" DbType="VarChar(8)" />
+    <Parameter Name="dt2" Type="System.String" DbType="VarChar(8)" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Factory" Parameter="factory" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="sp_021_PR_ListResult">
+      <Column Name="TempNo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PRNo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="CodeNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
+      <Column Name="ItemDesc" Type="System.String" DbType="NVarChar(512)" CanBeNull="true" />
+      <Column Name="GroupCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OrderQty" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VendorNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="VendorName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="ClearBill" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="RequestDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="VATType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_076_Shipping_FG_ADD" Method="sp_076_Shipping_FG_ADD">
+    <Parameter Name="ShippingNo" Parameter="shippingNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="QTYPlan" Parameter="qTYPlan" Type="System.Decimal" DbType="Decimal(18,6)" />
+    <Parameter Name="QTY" Parameter="qTY" Type="System.Decimal" DbType="Decimal(18,6)" />
+    <Parameter Name="Remark" Parameter="remark" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="LineName" Parameter="lineName" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="MachineName" Parameter="machineName" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="SerialNo" Parameter="serialNo" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="LotNo" Parameter="lotNo" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefNo" Parameter="refNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Refid_H" Parameter="refid_H" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="ToLocation" Parameter="toLocation" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="BaseUOM" Parameter="baseUOM" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="BasePCSUOM" Parameter="basePCSUOM" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="UnitShip" Parameter="unitShip" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="PCSUnit" Parameter="pCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="Refid_dt" Parameter="refid_dt" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idCSTMPODt" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_075_Shipping_FG" Method="sp_075_Shipping_FG">
+    <Parameter Name="SONo" Parameter="sONo" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="sp_075_Shipping_FGResult">
+      <Column Name="SSNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SSDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Stock" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="ShipQty" Type="System.Decimal" DbType="Decimal(19,2)" CanBeNull="true" />
+      <Column Name="OutShip" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="OutInv" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Unit" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="temp" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="RefDocNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RefId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DL" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="UnitPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="LocationItem" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="BaseUOM" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Hid" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>
