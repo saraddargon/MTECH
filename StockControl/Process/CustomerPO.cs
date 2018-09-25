@@ -93,7 +93,7 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var t = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 0 && x.id == t_idCSTMPO).FirstOrDefault();
+                    var t = db.mh_CustomerPOs.Where(x => x.Active && x.id == t_idCSTMPO).FirstOrDefault();
                     if (t != null)
                     {
                         cbbCSTM.SelectedValue = t.CustomerNo;

@@ -259,7 +259,6 @@
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Text = "ลบรายการ";
             this.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnDelete.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // radRibbonBarGroup3
@@ -1069,14 +1068,14 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnDeleteRow});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(134, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
             // 
             // btnDeleteRow
             // 
             this.btnDeleteRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnDeleteRow.Image = global::StockControl.Properties.Resources.del;
             this.btnDeleteRow.Name = "btnDeleteRow";
-            this.btnDeleteRow.Size = new System.Drawing.Size(133, 22);
+            this.btnDeleteRow.Size = new System.Drawing.Size(180, 22);
             this.btnDeleteRow.Text = "Delete Row";
             this.btnDeleteRow.Click += new System.EventHandler(this.btnDeleteRow_Click);
             // 

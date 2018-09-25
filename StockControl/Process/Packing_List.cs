@@ -160,25 +160,46 @@ namespace StockControl
             if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
                 var row = dgvData.CurrentCell.RowInfo;
-                t_PackingNo = row.Cells["PackingNo"].Value.ToSt();
-                if(sType == 1)
+                if (dgvData.CurrentCell.ColumnInfo.Name == "RefNo") //JobNo
                 {
-                    string status = row.Cells["Status"].Value.ToSt();
-                    if(status == "Active")
+                    var j = new ProductionOrder(row.Cells["RefNo"].Value.ToSt());
+                    j.ShowDialog();
+                }
+                else if (dgvData.CurrentCell.ColumnInfo.Name == "CustomerPONo_TEMP")
+                {
+                    int idDt = row.Cells["idCstmPODt"].Value.ToInt();
+                    using (var db = new DataClasses1DataContext())
                     {
-                        var pk = new Packing(t_PackingNo);
-                        pk.ShowDialog();
+                        var hd = db.mh_CustomerPODTs.Where(x => x.id == idDt && !x.forSafetyStock).FirstOrDefault();
+                        if(hd != null)
+                        {
+                            var c = new CustomerPO(hd.idCustomerPO);
+                            c.ShowDialog();
+                        }
                     }
-                    else
-                    {
-                        //packing cancel
-
-                    }
-                    DataLoad();
                 }
                 else
                 {
-                    this.Close();
+                    t_PackingNo = row.Cells["PackingNo"].Value.ToSt();
+                    if (sType == 1)
+                    {
+                        string status = row.Cells["Status"].Value.ToSt();
+                        if (status == "Active")
+                        {
+                            var pk = new Packing(t_PackingNo);
+                            pk.ShowDialog();
+                        }
+                        else
+                        {
+                            //packing cancel
+
+                        }
+                        DataLoad();
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
                 }
             }
         }
