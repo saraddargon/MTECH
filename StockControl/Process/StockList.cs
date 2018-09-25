@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
+using Telerik.WinControls.Data;
+
 namespace StockControl
 {
     public partial class StockList : Telerik.WinControls.UI.RadRibbonForm
@@ -46,8 +48,9 @@ namespace StockControl
             dgvData.ReadOnly = true;
             dgvData.AutoGenerateColumns = false;
             DataLoad();
-
             LoadDefault();
+           
+
             //using (DataClasses1DataContext db = new DataClasses1DataContext())
             //{
 
@@ -92,6 +95,21 @@ namespace StockControl
                 a.Add("");
                 ddlLocation.DataSource = a;
 
+               
+
+                this.cboGroupType.AutoFilter = true;
+                FilterDescriptor filter = new FilterDescriptor();
+                filter.PropertyName = this.cboGroupType.DisplayMember;
+                filter.Operator = FilterOperator.Contains;
+                this.cboGroupType.AutoCompleteMode = AutoCompleteMode.Append;
+                this.cboGroupType.EditorControl.MasterTemplate.FilterDescriptors.Add(filter);
+                this.cboGroupType.BestFitColumns();
+                cboGroupType.DisplayMember = "GroupCode";
+                cboGroupType.ValueMember = "GroupCode";
+                cboGroupType.DataSource = db.mh_GroupTypes.Where(s => s.GroupActive == true).ToList();
+                cboGroupType.BestFitColumns();
+                cboGroupType.SelectedIndex = -1;
+                cboGroupType.Text = "";
             }
         }
 
@@ -194,7 +212,7 @@ namespace StockControl
                 {
                    
                     var g = (from ix in db.sp_047_List_Check_Stock(txtCodeNo.Text,txtItemNo.Text,txtItemDescription.Text
-                             ,"",txtVendorName.Text,"Active",ddlLocation.Text,ddlType.Text,ddlTypePart.Text) select ix).ToList();
+                             ,"",txtVendorName.Text,"Active",ddlLocation.Text,cboGroupType.Text,ddlTypePart.Text) select ix).ToList();
                     if (g.Count > 0)
                     {
                         //string Lo1 = dbClss.TSt(db.get_Location_No(1));
@@ -722,29 +740,31 @@ namespace StockControl
         {
             try
             {
-                //if (screen.Equals(1))
+                ////if (screen.Equals(1))
+                ////{
+                ////    if (!Convert.ToString(dgvData.CurrentRow.Cells["RCNo"].Value).Equals(""))
+                ////    {
+                ////        RCNo_tt.Text = Convert.ToString(dgvData.CurrentRow.Cells["RCNo"].Value);
+                ////        this.Close();
+                ////    }
+                ////    else
+                ////    {
+                ////        RCNo_tt.Text = Convert.ToString(dgvData.CurrentRow.Cells["RCNo"].Value);
+                ////        PRNo_tt.Text = Convert.ToString(dgvData.CurrentRow.Cells["PRNo"].Value);
+                ////        this.Close();
+                ////    }
+                ////}
+                ////else
+                //if(dgvData.Rows.Count>0)
                 //{
-                //    if (!Convert.ToString(dgvData.CurrentRow.Cells["RCNo"].Value).Equals(""))
-                //    {
-                //        RCNo_tt.Text = Convert.ToString(dgvData.CurrentRow.Cells["RCNo"].Value);
-                //        this.Close();
-                //    }
-                //    else
-                //    {
-                //        RCNo_tt.Text = Convert.ToString(dgvData.CurrentRow.Cells["RCNo"].Value);
-                //        PRNo_tt.Text = Convert.ToString(dgvData.CurrentRow.Cells["PRNo"].Value);
-                //        this.Close();
-                //    }
+                //    AdjustStock_Taking a = new AdjustStock_Taking("",
+                //        Convert.ToString(dgvData.CurrentRow.Cells["CodeNo"].Value)
+                //        ,"CheckStock");
+                //    a.ShowDialog();
+                //    //this.Close();
                 //}
-                //else
-                if(dgvData.Rows.Count>0)
-                {
-                    AdjustStock_Taking a = new AdjustStock_Taking("",
-                        Convert.ToString(dgvData.CurrentRow.Cells["CodeNo"].Value)
-                        ,"CheckStock");
-                    a.ShowDialog();
-                    //this.Close();
-                }
+                AdjustStock_Taking a = new AdjustStock_Taking();
+                a.ShowDialog();
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }

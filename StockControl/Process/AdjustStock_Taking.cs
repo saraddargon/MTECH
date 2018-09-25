@@ -408,7 +408,7 @@ namespace StockControl
             Ac = "New";
 
             //getมาไว้ก่อน แต่ยังไมได้ save 
-            txtADNo.Text = StockControl.dbClss.GetNo(7, 0);
+            //txtADNo.Text = StockControl.dbClss.GetNo(37, 0);
         }
         private void Enable_Status(bool ss, string Condition)
         {
@@ -480,7 +480,7 @@ namespace StockControl
                 //if (txtVendorNo.Text.Equals(""))
                 //    err += "- “รหัสผู้ขาย:” เป็นค่าว่าง \n";
                 if (dtRequire.Text.Equals(""))
-                    err += "- “วันที่รับสินค้า:” เป็นค่าว่าง \n";
+                    err += "- “วันที่ปรับปรุง:” เป็นค่าว่าง \n";
                
                 if (dgvData.Rows.Count <= 0)
                     err += "- “รายการ:” เป็นค่าว่าง \n";
@@ -495,8 +495,8 @@ namespace StockControl
 
                         if (StockControl.dbClss.TSt(rowInfo.Cells["CodeNo"].Value).Equals(""))
                             err += "- “รหัสพาร์ท:” เป็นค่าว่าง \n";
-                        if (StockControl.dbClss.TDe(rowInfo.Cells["QTY"].Value) <= 0)
-                            err += "- “จำนวนที่ต้องการ:” น้อยกว่า 0 \n";
+                        //if (StockControl.dbClss.TDe(rowInfo.Cells["QTY"].Value) <= 0)
+                        //    err += "- “จำนวนที่ต้องการ:” น้อยกว่า 0 \n";
                         if (StockControl.dbClss.TDe(rowInfo.Cells["Unit"].Value).Equals(""))
                             err += "- “หน่วย:” เป็นค่าว่าง \n";
                         if (StockControl.dbClss.TDe(rowInfo.Cells["PCSUnit"].Value) <= 0)
@@ -569,12 +569,12 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
 
                 if (Ac.Equals("New"))
-                    txtADNo.Text = StockControl.dbClss.GetNo(7, 2);
+                    txtADNo.Text = StockControl.dbClss.GetNo(37, 2);
 
                 if (!txtADNo.Text.Equals("")) //&& Ac.Equals("New"))
                 {
 
-                    SaveHerder();
+                    //SaveHerder();
                     SaveDetail();
                     string ADNo = txtADNo.Text;
                     ClearData();
@@ -1406,7 +1406,7 @@ namespace StockControl
                 ee.Cells["ShelfNo"].Value = ShelfNo;
                 ee.Cells["StockQty"].Value = StockQty;
                 ee.Cells["CompareQty"].Value = CompareQty;
-                ee.Cells["InputQty"].Value = InputQty;
+                //ee.Cells["InputQty"].Value = InputQty;
 
                 //dbclass.SetRowNo1(dgvData);
             }
@@ -1880,7 +1880,14 @@ namespace StockControl
                         {
                             db.sp_074_CheckStock_List(ClassLib.Classlib.User);
                             MessageBox.Show("ดึงรายการเช็คสต็อกสำเร็จ.");
-                            DataLoad();
+
+                            var g = (from ix in db.mh_CheckStock_Lists select ix)
+                                .Where(a => a.CheckStatus == "Waiting" ).OrderByDescending(ab=>ab.id).ToList();
+                            if (g.Count() > 0)
+                            {
+                                txtADNo.Text = dbClss.TSt(g.FirstOrDefault().CheckNo);
+                                DataLoad();
+                            }
                         }
                     }
                 }

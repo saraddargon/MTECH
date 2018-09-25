@@ -111,6 +111,8 @@ namespace StockControl
             dt_PODT.Columns.Add(new DataColumn("LotNo", typeof(string)));
             dt_PODT.Columns.Add(new DataColumn("Remark", typeof(string)));
             dt_PODT.Columns.Add(new DataColumn("SS", typeof(int)));
+            dt_PODT.Columns.Add(new DataColumn("idCSTMPODt", typeof(int)));
+
             
     }
         
@@ -870,6 +872,7 @@ namespace StockControl
 
                             u.DeliveryDate = DeliveryDate;
                             u.SS = 1;
+                            u.idCSTMPODt = dbClss.TInt(g.Cells["idCSTMPODt"].Value);
                             db.mh_PurchaseOrderDetails.InsertOnSubmit(u);
                             db.SubmitChanges();
                             //C += 1;
@@ -1004,7 +1007,7 @@ namespace StockControl
                                         else
                                             DeliveryDate = dtDuedate.Value;
                                         u.DeliveryDate = DeliveryDate;
-
+                                        u.idCSTMPODt = dbClss.TInt(g.Cells["idCSTMPODt"].Value);
 
                                         u.SS = 1;
                                         //C += 1;
@@ -2076,6 +2079,7 @@ namespace StockControl
                         int id = 0;
                         int Row = dgvData.Rows.Count() + 1;
                         DateTime? DeliveryDate = null;
+                        int idCSTMPODt = 0;
                         foreach (GridViewRowInfo ee in dgvRow_List)
                         {
                             CodeNo = Convert.ToString(ee.Cells["CodeNo"].Value).Trim();
@@ -2089,9 +2093,10 @@ namespace StockControl
                             PRNO = StockControl.dbClss.TSt(ee.Cells["TempNo"].Value);
                             Refid = StockControl.dbClss.TInt(ee.Cells["id"].Value);
                             //DeliveryDate = Convert.ToDateTime(ee.Cells["dgvDeliveryDate"].Value);
+                            idCSTMPODt = dbClss.TInt(ee.Cells["idCSTMPODt"].Value);
 
                             Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty
-                                , PCSUnit, Unit, Cost, PRNO, DeliveryDate, Status, Refid, id,true);
+                                , PCSUnit, Unit, Cost, PRNO, DeliveryDate, Status, Refid, id,true, idCSTMPODt);
                            
                         }
                        
@@ -2494,7 +2499,8 @@ namespace StockControl
                     int Refid = 0;
                     int id = 0;
                     DateTime? dgvDeliveryDate = null;
-                    Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty, PCSUnit, Unit, Cost,PRNO, dgvDeliveryDate, Status,Refid,id,false);
+                    Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty, PCSUnit
+                        , Unit, Cost,PRNO, dgvDeliveryDate, Status,Refid,id,false,0);
                     
                 }
                 else
@@ -2504,7 +2510,8 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
         }
         private void Add_Item(int Row, string CodeNo, string ItemNo, string ItemDescription, string GroupCode, decimal OrderQty, decimal PCSUnit
-           , string UnitBuy, decimal StandardCost,string PRNo,DateTime? DeliveryDate, string Status,int Refid,int id,bool Sys)
+           , string UnitBuy, decimal StandardCost,string PRNo,DateTime? DeliveryDate
+            , string Status,int Refid,int id,bool Sys,int idCSTMPODt)
         {
             try
             {
@@ -2533,8 +2540,9 @@ namespace StockControl
                 ee.Cells["dgvStatus"].Value = Status;
                 ee.Cells["dgvid"].Value = 0;
                 ee.Cells["dgvBackOrder"].Value = OrderQty;
+                ee.Cells["idCSTMPODt"].Value = idCSTMPODt;
 
-                if(dbClss.TSt(DeliveryDate) != "")
+                if (dbClss.TSt(DeliveryDate) != "")
                     ee.Cells["dgvDeliveryDate"].Value = DeliveryDate;
 
                 //if (!statuss.Equals("Completed") || !statuss.Equals("Process")) //|| (!dbclass.TBo(ApproveFlag) && dbclass.TSt(status) != "Reject"))
@@ -2658,7 +2666,7 @@ namespace StockControl
                     DateTime? dgvDeliveryDate = null;
                     
                     Add_Item(Row, CodeNo, ItemNo, ItemDescription, GroupCode, OrderQty
-                        , PCSUnit, UnitBuy, StandardCost, PRNO, dgvDeliveryDate,Status, Refid, id,true);
+                        , PCSUnit, UnitBuy, StandardCost, PRNO, dgvDeliveryDate,Status, Refid, id,true,0);
 
                 }
             }
