@@ -423,6 +423,8 @@ namespace StockControl
                             var cal = db.mh_CalendarLoads.Where(x => x.idJob == idJob).ToList();
                             db.mh_CalendarLoads.DeleteAllOnSubmit(cal);
 
+                            dbClss.Delete_ApproveList(jobNo);
+
                             db.SubmitChanges();
 
                             baseClass.Info("Delete complete.\n");

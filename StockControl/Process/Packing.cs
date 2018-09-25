@@ -321,6 +321,7 @@ namespace StockControl
                         if (dt.Qty == prod.OutQty)
                         {
                             var sumProd = db.mh_ProductionOrderRMs.Where(x => x.JobNo == jobNo && x.Active).Sum(x => x.CostOverall);
+                            sumProd += db.mh_ProductionOrderRM_2s.Where(x => x.JobNo == jobNo && x.Active).Sum(x => x.TotalCost);
                             var costAll = prod.CostOverhead + sumProd; //Cost All in Job (Cost Overhead + RM Cost)
                             var costTaking = 0.00m;
                             var packall = db.mh_Packings.Where(x => x.Active)
@@ -594,7 +595,9 @@ namespace StockControl
 
                         var costAll = m.CostOverhead;
                         var dt = db.mh_ProductionOrderRMs.Where(x => x.JobNo == m.JobNo && x.Active).ToList();
+                        var dt2 = db.mh_ProductionOrderRM_2s.Where(x => x.JobNo == m.JobNo && x.Active).ToList();
                         costAll += dt.Sum(x => x.CostOverall);
+                        costAll += dt2.Sum(x => x.TotalCost);
                         var costPer = Math.Round(costAll / m.Qty, 2);
 
                         addRow(0, m.FGNo, m.FGName, 0, m.UOM, m.PCSUnit, costPer
