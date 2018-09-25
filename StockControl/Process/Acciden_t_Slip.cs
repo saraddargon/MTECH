@@ -705,6 +705,7 @@ namespace StockControl
                                     , dbClss.TInt(g.Cells["idProductionOrderRM"].Value)
                                     );
                                 
+
                             }
                         }
                     }

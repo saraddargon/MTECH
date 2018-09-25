@@ -1140,7 +1140,7 @@ namespace StockControl
 
                         using (var db = new DataClasses1DataContext())
                         {
-                            var c = db.mh_CustomerPODTs.Where(x => x.id == id).ToList();
+                            var c = db.mh_CustomerPODTs.Where(x => x.id == id && Convert.ToBoolean(x.forSafetyStock)==false).ToList();
                             if (c.Count > 0)
                             {
                                 var dd = db.mh_CustomerPOs.Where(x => x.id == dbClss.TInt(c.FirstOrDefault().idCustomerPO)).ToList();
