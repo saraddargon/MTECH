@@ -103,13 +103,13 @@ namespace StockControl
                 Ac = "View";
                
             }
-            else if (!CodeNo_t.Equals(""))
-            {
-                btnNew.Enabled = true;
-                txtShipmentNo.Text = CodeNo_t;
-                Insert_data_New();
-                txtShipmentNo.Text = "";
-            }
+            //else if (!CodeNo_t.Equals(""))
+            //{
+            //    btnNew.Enabled = true;
+            //    txtShipmentNo.Text = CodeNo_t;
+            //    Insert_data_New();
+            //    txtShipmentNo.Text = "";
+            //}
 
         }
         private void DefaultItem()
@@ -226,7 +226,7 @@ namespace StockControl
                             if (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Cancel"))
                             {
                                 btnSave.Enabled = false;
-                                //btnDelete.Enabled = false;
+                                btnDel.Enabled = false;
                                 //btnView.Enabled = false;
                                 //btnEdit.Enabled = false;
                                 lblStatus.Text = "Cancel";
@@ -251,7 +251,7 @@ namespace StockControl
                                 
                             {
                                 btnSave.Enabled = false;
-                                //btnDelete.Enabled = false;
+                                btnDel.Enabled = true;
                                 //btnView.Enabled = false;
                                 //btnEdit.Enabled = false;
                                 lblStatus.Text = "Completed";
@@ -691,36 +691,59 @@ namespace StockControl
                         {
                             if (StockControl.dbClss.TInt(g.Cells["id"].Value) <= 0)  //New ใหม่
                             {
-                                
                                 string BaseUOM = dbClss.TSt(g.Cells["BaseUOM"].Value);
-                                decimal BasePCSUOM  = dbClss.Con_UOM(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), BaseUOM);
+                                decimal BasePCSUOM = dbClss.Con_UOM(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), BaseUOM);
                                 decimal QTY = dbClss.TDe(g.Cells["QTY"].Value);
                                 //int idProductionOrderRM = 0;
 
                                 db.sp_076_Shipping_FG_ADD(txtSHNo.Text.Trim()
                                     , StockControl.dbClss.TSt(g.Cells["CodeNo"].Value)
                                     , dbClss.TDe(g.Cells["OutShip"].Value)
-                                    ,QTY, StockControl.dbClss.TSt(g.Cells["Remark"].Value)
-                                    , StockControl.dbClss.TSt(g.Cells["LineName"].Value), StockControl.dbClss.TSt(g.Cells["MachineName"].Value)
-                                    , StockControl.dbClss.TSt(g.Cells["SerialNo"].Value), StockControl.dbClss.TSt(g.Cells["LotNo"].Value)
+                                    , QTY, StockControl.dbClss.TSt(g.Cells["Remark"].Value)
+                                    , StockControl.dbClss.TSt(g.Cells["LineName"].Value)
+                                    , StockControl.dbClss.TSt(g.Cells["MachineName"].Value)
+                                    , StockControl.dbClss.TSt(g.Cells["SerialNo"].Value)
+                                    , StockControl.dbClss.TSt(g.Cells["LotNo"].Value)
                                     , "Completed", ClassLib.Classlib.User
                                     , dbClss.TSt(g.Cells["RefNo"].Value)
                                     , dbClss.TInt(g.Cells["Refid_H"].Value)
                                     , dbClss.TSt(g.Cells["Location"].Value)
-                                    ,"Customer"
+                                    , "Customer"
                                     , BaseUOM
                                     , BasePCSUOM
                                     , dbClss.TSt(g.Cells["UnitShip"].Value)
                                     , dbClss.TDe(g.Cells["PCSUnit"].Value)
-                                    ,dbClss.TInt(g.Cells["Refid_dt"].Value)// StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
+                                    , dbClss.TInt(g.Cells["Refid_dt"].Value)// StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
                                     , dbClss.TInt(g.Cells["idCSTMPODt"].Value)
-                                    
+
                                     );
 
-                                ////decimal RemainQty = 0;
-                                ////UnitCost = StockControl.dbClss.TDe(g.Cells["StandardCost"].Value);
-                                //UnitCost = Convert.ToDecimal(dbClss.Get_Stock(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), "", "", "Avg"));
-                            
+                                //ปรับ OutShip ลง
+                                if (Convert.ToInt16(g.Cells["Refid_dt"].Value.ToSt()) > 0)
+                                {
+                                    var v = (from ix in db.mh_ShipmentDTs
+                                             where
+                                                       ix.id == Convert.ToInt16(g.Cells["Refid_dt"].Value.ToSt())
+                                             select ix).ToList();
+                                    if (v.Count > 0)
+                                    {
+                                        var p = (from ix in db.mh_ShipmentDTs
+                                                 where
+                                                    ix.id == Convert.ToInt16(g.Cells["Refid_dt"].Value.ToSt())
+                                                 select ix).First();
+
+                                        p.OutShip = p.OutShip - QTY;
+                                        if (p.OutShip <= 0)
+                                            p.OutShip = 0;
+
+                                        dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "ลบ OutShip : " + (QTY.ToSt())
+                                        + " ShippingFG :" + dbClss.TSt(g.Cells["RefNo"].Value)
+                                        + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", dbClss.TSt(g.Cells["RefNo"].Value));
+
+                                        db.SubmitChanges();
+
+                                    }
+                                }
                             }
                         }
                     }
@@ -1110,8 +1133,10 @@ namespace StockControl
                             //    }
                             //}
 
-                            decimal QTY = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["QTY"].Value), out QTY);
-                            decimal RemainQty = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["RemainQty"].Value), out RemainQty);
+                            decimal QTY = 0;
+                            decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["QTY"].Value), out QTY);
+                            decimal RemainQty = 0;
+                            decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["RemainQty"].Value), out RemainQty);
                             if (BasePCSUOM <= 0)
                                 BasePCSUOM = 1;
 
@@ -1528,10 +1553,19 @@ namespace StockControl
                                 //    PCSBaseUOM = 1;
                                 //AC_PCSUnit = dbClss.TDe(vv.PCSUnit) * PCSBaseUOM;
                                 Add_Item(dgvNo, vv.ItemNo, vv.ItemName, vv.Description
-                                            , dbClss.TDe(vv.Stock), dbClss.TDe(vv.OutShip), vv.Unit, dbClss.TDe(vv.PCSUnit), dbClss.TDe(vv.UnitPrice)
+                                            , dbClss.TDe(vv.Stock)
+                                            , dbClss.TDe(vv.OutShip)
+                                            , vv.Unit
+                                            , dbClss.TDe(vv.PCSUnit)
+                                            , dbClss.TDe(vv.UnitPrice)
                                             , vv.Amount, "", "", "", "", "", 0
-                                            , vv.LocationItem, dbClss.TDe(vv.Qty), dbClss.TDe(vv.OutShip)
-                                            , vv.BaseUOM,vv.idCSTMPODt,dbClss.TInt(vv.id),dbClss.TInt(vv.Hid)
+                                            , vv.LocationItem
+                                            , dbClss.TDe(vv.Qty)
+                                            , dbClss.TDe(vv.OutShip)
+                                            , vv.BaseUOM
+                                            ,vv.idCSTMPODt
+                                            ,dbClss.TInt(vv.id)
+                                            ,dbClss.TInt(vv.Hid)
                                             , vv.SSNo);
                             }
                         }
@@ -1751,7 +1785,7 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                ShippingList sc = new ShippingList(txtSHNo, txtShipmentNo);
+                ShippingList sc = new ShippingList(txtSHNo, txtShipmentNo, "ShipFG");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -2019,8 +2053,8 @@ namespace StockControl
                         DateTime? CalDate = null;
                         DateTime? AppDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                         int Seq = 0;
-                        string Type = "";
-                        string Category = "";
+                        string Type = "รับด้วยใบ Invoice";
+                        string Category = "Invoice";
                         int Flag_ClearTemp = 0;
                         string Type_in_out = "In";
                         decimal RemainQty = 0;
@@ -2031,17 +2065,21 @@ namespace StockControl
                         decimal UnitCost = 0;
                         decimal sum_Remain = 0;
                         decimal sum_Qty = 0;
-                        decimal BasePCSUnit = 0;
-                       
-                            Category = "Invoice";
-                            Type = "รับด้วยใบ Invoice";
-                            Flag_ClearTemp = 0;
-                        
+                        decimal BasePCSUnit = 1;
+                        string Location = "Warehouse";
+                        string ShelfNo = "";
+                        string LotNo = "";
+                        string DocNo = "";
+                        decimal PCSUnit = 1;
+                        string RefNo = "";
+                        int Refid = 0;
+                        int count = 0;
+                        decimal Qty = 0;
 
                         var g = (from ix in db.tb_Shipping_FGs
                                  where ix.RefNo == txtSHNo.Text && ix.Active == true
                                  select ix).ToList();
-                        if(g.Count>0)
+                        if (g.Count > 0)
                         {
                             foreach (var gg in g)
                             {
@@ -2055,95 +2093,142 @@ namespace StockControl
                                     break;
                                 }
                             }
-                            if(temp>0)
+                            if (temp > 0)
                             {
-                                MessageBox.Show("บางรายการถูกนำไปสร้างใบแจ้งหนี้ (Invoice) แล้ว ไม่สามารถทำรายการได้" );
+                                MessageBox.Show("บางรายการถูกนำไปสร้างใบแจ้งหนี้ (Invoice) แล้ว ไม่สามารถทำรายการได้");
                                 return;
                             }
                             else
                             {
-                                //foreach (var vv in g)
-                                //{
-                                //    Seq += 1;
+                                foreach (var vv in g)
+                                {
+                                    Seq += 1;
+                                    Qty = dbClss.TDe(vv.Qty);
 
-                                //    var s = db.tb_Shippings.Where(x => x.Status != "Cancel" && x.id == Convert.ToInt16(vv.idReceive)).ToList();
+                                    //var s = db.tb_Shippings.Where(x => x.Status != "Cancel" && x.id == Convert.ToInt16(vv.idReceive)).ToList();
+                                    var r = db.tb_Stocks.Where(x => x.Status != "Cancel" && x.id == Convert.ToInt16(vv.idReceive)).ToList();
+                                    if (r.Count > 0)
+                                    {
+                                        count = 1;
+                                        Location = dbClss.TSt(r.FirstOrDefault().Location);
+                                        ShelfNo = dbClss.TSt(r.FirstOrDefault().ShelfNo);
+                                        LotNo = dbClss.TSt(r.FirstOrDefault().LotNo);
+                                        DocNo = dbClss.TSt(r.FirstOrDefault().DocNo);
+                                        RefNo = dbClss.TSt(r.FirstOrDefault().RefNo);
+                                        Refid = dbClss.TInt(r.FirstOrDefault().Refid);
+                                        Category = dbClss.TSt(r.FirstOrDefault().Category);
+                                        Type = dbClss.TSt(r.FirstOrDefault().Type);
+                                        Flag_ClearTemp = dbClss.TInt(r.FirstOrDefault().Flag_ClearTemp);
 
-                                //    Amount = Math.Round((Convert.ToDecimal(vv.Qty) * Convert.ToDecimal(vv.Cost)), 2);
-                                //        UnitCost = Math.Round((Amount / (Convert.ToDecimal(vv.Qty) * Convert.ToDecimal(s.FirstOrDefault().PCSUnit) * BasePCSUnit)), 2);
 
-                                    
-                                //    //แบบที่ 1 จะไป sum ใหม่
-                                //    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.ItemNo, "", 0, vv.Location, dbClss.TInt(vv.idCSTMPODt))));
-                                //    //แบบที่ 2 จะไปดึงล่าสุดมา
-                                //    //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                //    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.ItemNo, "", "", "RemainAmount", vv.Location, dbClss.TInt(vv.idCSTMPODt)))
-                                //        + Amount;
+                                        Amount = Math.Round((Convert.ToDecimal(vv.Qty) * Convert.ToDecimal(vv.Cost)), 2);
+                                        UnitCost = Math.Round((Amount / (Convert.ToDecimal(vv.Qty) * PCSUnit * BasePCSUnit)), 2);
 
-                                //    sum_Qty = RemainQty + Math.Round(((Convert.ToDecimal(vv.Qty) * Convert.ToDecimal(vv.PCSUnit) * BasePCSUnit)), 2);
-                                  
-                                //    RemainAmount = sum_Remain;
-                                //    if (sum_Qty <= 0)
-                                //        RemainUnitCost = 0;
-                                //    else
-                                //        RemainUnitCost = Math.Round((Math.Abs(RemainAmount) / Math.Abs(sum_Qty)), 2);
 
-                                //    tb_Stock gg = new tb_Stock();
-                                //    gg.AppDate = AppDate;
-                                //    gg.Seq = Seq;
-                                //    gg.App = "Receive";
-                                //    gg.Appid = Seq;
-                                //    gg.CreateBy = ClassLib.Classlib.User;
-                                //    gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-                                //    gg.DocNo = txtRCNo.Text;
-                                //    gg.RefNo = vv.PRNo;
-                                //    gg.CodeNo = vv.CodeNo;
-                                //    gg.Type = Type;
-                                //    gg.QTY = Math.Round((Convert.ToDecimal(vv.QTY) * Convert.ToDecimal(vv.PCSUnit) * BasePCSUnit), 2);
-                                //    gg.Inbound = Math.Round((Convert.ToDecimal(vv.QTY) * Convert.ToDecimal(vv.PCSUnit) * BasePCSUnit), 2);
-                                //    gg.Outbound = 0;
-                                //    gg.Type_i = 1;  //Receive = 1,Cancel Receive 2,Shipping = 3,Cancel Shipping = 4,Adjust stock = 5,ClearTemp = 6
-                                //    gg.Category = Category;
-                                //    gg.Refid = vv.ID;
-                                //    gg.Type_in_out = Type_in_out;
-                                //    gg.AmountCost = Amount;
-                                //    gg.UnitCost = UnitCost;
-                                //    gg.RemainQty = sum_Qty;
-                                //    gg.RemainUnitCost = RemainUnitCost;
-                                //    gg.RemainAmount = RemainAmount;
-                                //    gg.Avg = 0;// Avg;
-                                //    gg.CalDate = CalDate;
-                                //    gg.Status = "Active";
-                                //    gg.Flag_ClearTemp = Flag_ClearTemp;   //0 คือ invoice,1 คือ Temp , 2 คือ clear temp แล้ว
-                                //    gg.TLCost = Amount;
-                                //    gg.TLQty = Math.Round((Convert.ToDecimal(vv.QTY) * Convert.ToDecimal(vv.PCSUnit) * BasePCSUnit), 2);
-                                //    gg.ShipQty = 0;
-                                //    gg.Location = vv.Location;
-                                //    gg.ShelfNo = vv.ShelfNo;
-                                //    gg.LotNo = vv.LotNo;
-                                //    gg.idCSTMPODt = vv.idCSTMPODt;
+                                        //แบบที่ 1 จะไป sum ใหม่
+                                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.ItemNo, "", 0, Location, dbClss.TInt(vv.idCSTMPODt))));
+                                        //แบบที่ 2 จะไปดึงล่าสุดมา
+                                        //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
+                                        sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.ItemNo, "", "", "RemainAmount", Location, dbClss.TInt(vv.idCSTMPODt)))
+                                            + Amount;
 
-                                //    //ต้องไม่ใช่ Item ที่มีในระบบ
-                                //    var c = (from ix in db.mh_Items
-                                //             where ix.InternalNo.Trim().ToUpper() == vv.CodeNo.Trim().ToUpper() && ix.Active == true
-                                //             select ix).ToList();
-                                //    if (c.Count <= 0)
-                                //    {
-                                //        gg.TLQty = 0;
-                                //        gg.ShipQty = Math.Round((Convert.ToDecimal(vv.QTY) * Convert.ToDecimal(vv.PCSUnit) * BasePCSUnit), 2);
-                                //    }
+                                        sum_Qty = RemainQty + Math.Round(((Convert.ToDecimal(vv.Qty) * PCSUnit * BasePCSUnit)), 2);
 
-                                //    db.tb_Stocks.InsertOnSubmit(gg);
-                                //    db.SubmitChanges();
+                                        RemainAmount = sum_Remain;
+                                        if (sum_Qty <= 0)
+                                            RemainUnitCost = 0;
+                                        else
+                                            RemainUnitCost = Math.Round((Math.Abs(RemainAmount) / Math.Abs(sum_Qty)), 2);
 
-                                //    //update Stock เข้า item
-                                //    db.sp_010_Update_StockItem(Convert.ToString(vv.CodeNo), "");
+                                        tb_Stock gg = new tb_Stock();
+                                        gg.AppDate = AppDate;
+                                        gg.Seq = Seq;
+                                        gg.App = "Receive";
+                                        gg.Appid = Seq;
+                                        gg.CreateBy = ClassLib.Classlib.User;
+                                        gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                        gg.DocNo = DocNo;
+                                        gg.RefNo = RefNo;
+                                        gg.Refid = Refid;
+                                        gg.CodeNo = vv.ItemNo;
+                                        gg.Type = Type;
+                                        gg.QTY = Math.Round((Qty * PCSUnit * BasePCSUnit), 2);
+                                        gg.Inbound = Math.Round((Qty * PCSUnit * BasePCSUnit), 2);
+                                        gg.Outbound = 0;
+                                        gg.Type_i = 1;  //Receive = 1,Cancel Receive 2,Shipping = 3,Cancel Shipping = 4,Adjust stock = 5,ClearTemp = 6
+                                        gg.Category = Category;
+                                        gg.Type_in_out = Type_in_out;
+                                        gg.AmountCost = Amount;
+                                        gg.UnitCost = UnitCost;
+                                        gg.RemainQty = sum_Qty;
+                                        gg.RemainUnitCost = RemainUnitCost;
+                                        gg.RemainAmount = RemainAmount;
+                                        gg.Avg = 0;// Avg;
+                                        gg.CalDate = CalDate;
+                                        gg.Status = "Active";
+                                        gg.Flag_ClearTemp = Flag_ClearTemp;   //0 คือ invoice,1 คือ Temp , 2 คือ clear temp แล้ว
+                                        gg.TLCost = Amount;
+                                        gg.TLQty = Math.Round((Qty * PCSUnit * BasePCSUnit), 2);
+                                        gg.ShipQty = 0;
+                                        gg.Location = Location;
+                                        gg.ShelfNo = ShelfNo;
+                                        gg.LotNo = LotNo;
+                                        gg.idCSTMPODt = vv.idCSTMPODt;
 
-                                //}
+                                        //ต้องไม่ใช่ Item ที่มีในระบบ
+                                        var c = (from ix in db.mh_Items
+                                                 where ix.InternalNo.Trim().ToUpper() == vv.ItemNo.Trim().ToUpper() && ix.Active == true
+                                                 select ix).ToList();
+                                        if (c.Count <= 0)
+                                        {
+                                            gg.TLQty = 0;
+                                            gg.ShipQty = Math.Round((Qty * PCSUnit * BasePCSUnit), 2);
+                                        }
+
+                                        db.tb_Stocks.InsertOnSubmit(gg);
+                                        db.SubmitChanges();
+
+                                        //update Stock เข้า item
+                                        db.sp_010_Update_StockItem(Convert.ToString(vv.ItemNo), "");
+
+                                        //ปรับ OutShip ลง
+                                        if (dbClss.TInt(vv.id) > 0)
+                                        {
+                                            var v = (from ix in db.mh_ShipmentDTs
+                                                     where
+                                                               ix.id == dbClss.TInt(vv.Refid_dt)
+                                                     select ix).ToList();
+                                            if (v.Count > 0)
+                                            {
+                                                var p = (from ix in db.mh_ShipmentDTs
+                                                         where
+                                                            ix.id == dbClss.TInt(vv.Refid_dt)
+                                                         select ix).First();
+
+                                                p.OutShip = p.OutShip + Qty;
+
+                                                dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "บวก OutShip เพราะลบ shipping FG  : " + (Qty.ToSt())
+                                                + " ShippingFG :" + dbClss.TSt(vv.RefNo)
+                                                + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", vv.RefNo);
+
+                                                db.SubmitChanges();
+
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (count == 1)
+                                {
+                                    baseClass.Info("Delete shipping FG complete.");
+                                    btnNew_Click(null, null);
+                                }
                             }
                         }
                     }
                 }
-                    }catch(Exception ex) { MessageBox.Show(ex.Message); }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }
