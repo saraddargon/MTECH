@@ -423,7 +423,10 @@ namespace StockControl
                             s.TLQty = s.QTY;
                             s.ShipQty = 0;
                             s.Location = "Warehouse";
+                            s.LotNo = dt.LotNo;
                             s.ShelfNo = item.Cells["ShelfNo"].Value.ToSt();
+                            s.RefTempJobCode = m.PackingNo;
+                            s.RefidJobCode = dt.id;
                             //ต้องไม่ใช่ Item ที่มีในระบบ
                             var c = (from ix in db.mh_Items
                                      where ix.InternalNo.Trim().ToUpper() == s.CodeNo.Trim().ToUpper() && ix.Active
@@ -443,6 +446,9 @@ namespace StockControl
 
                         db.SubmitChanges();
                     }
+
+
+                    dbClss.AddHistory(this.Name, "Packing", $"New Packing {m.PackingNo}", m.PackingNo);
 
                     ClearData();
                     txtPackingNo.Text = m.PackingNo;
@@ -973,12 +979,14 @@ namespace StockControl
 
             using (var db = new DataClasses1DataContext())
             {
+                string pkNo = txtPackingNo.Text.Trim();
                 foreach (var item in dgvData.Rows)
                 {
                     int id = item.Cells["id"].Value.ToInt();
                     string itemNo = item.Cells["ItemNo"].Value.ToSt();
-                    var m = db.tb_Stocks.Where(x => x.Refid == id && x.DocNo == txtPackingNo.Text && x.TLQty == x.QTY).ToList();
-                    if(m.Count < 1)
+                    var qty = item.Cells["Qty"].Value.ToDecimal();
+                    var m = db.tb_Stocks.Where(x => x.RefidJobCode == id && x.RefTempJobCode == pkNo && x.TLQty > 0).ToList();
+                    if (m.Count < 1 || m.Sum(x => x.TLQty) != qty)
                     {
                         mssg += $"- Cannot Delete Packing because Item {itemNo} is already Shipped.\n";
                         break;
@@ -1004,7 +1012,64 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
+                using (var db = new DataClasses1DataContext())
+                {
+                    string pkNo = txtPackingNo.Text.Trim();
+                    var m = db.mh_Packings.Where(x => x.Active && x.PackingNo == pkNo).FirstOrDefault();
+                    if (m != null)
+                    {
+                        //Shipping H
+                        var shipH = new tb_ShippingH();
+                        string shipNo = dbClss.GetNo(5, 2);
+                        shipH.ShippingNo = shipNo;
+                        shipH.ShipDate = DateTime.Now;
+                        shipH.UpdateBy = ClassLib.Classlib.User;
+                        shipH.UpdateDate = DateTime.Now;
+                        shipH.CreateBy = ClassLib.Classlib.User;
+                        shipH.CreateDate = DateTime.Now;
+                        shipH.ShipName = ClassLib.Classlib.User;
+                        shipH.Remark = $"Shipping for Canncel Packing stock {pkNo}.";
+                        shipH.JobCard = "";
+                        shipH.TempJobCard = "";
+                        byte[] barcode = null;
+                        shipH.BarCode = barcode;
+                        shipH.Status = "Completed";
+                        shipH.ToLocation = "Warehouse";
+                        db.tb_ShippingHs.InsertOnSubmit(shipH);
+                        db.SubmitChanges();
 
+                        var dt = db.mh_PackingDts.Where(x => x.Active && x.PackingNo == pkNo).ToList();
+                        foreach (var d in dt)
+                        {
+                            //tb_Stock --> Shipping
+                            var st = db.tb_Stocks.Where(x => x.RefidJobCode == d.id && x.RefTempJobCode == m.PackingNo
+                                && x.TLQty > 0).ToList();
+                            if (st == null) continue;
+                            var tool = db.mh_Items.Where(x => x.InternalNo == d.ItemNo).FirstOrDefault();
+                            var uom = db.mh_ItemUOMs.Where(x => x.ItemNo == d.ItemNo && x.UOMCode == tool.BaseUOM).FirstOrDefault();
+                            var pcsunit = 1.00m;
+                            if (uom != null) pcsunit = uom.QuantityPer;
+                            foreach(var ss in st)
+                            {
+                                //เขียน ship ออก จาก id tb_Stock
+                                db.sp_057_Cut_Stock(pkNo, ss.CodeNo, ss.TLQty, ClassLib.Classlib.User
+                                    , "", m.PackingNo, d.id, "Warehouse", "Shipping", "Shipping - Cancel Packing", 3
+                                    , ss.id, ss.idCSTMPODt, ss.LotNo, 0);
+                                
+                            }
+                        }
+
+                        m.UpdateDate = DateTime.Now;
+                        m.UpdateBy = ClassLib.Classlib.User;
+                        m.Active = false;
+
+                        dbClss.AddHistory(this.Name, "Packing", $"Cancel Packing {pkNo}", pkNo);
+
+                        db.SubmitChanges();
+
+                        baseClass.Info("Delete complete.\n");
+                    }
+                }
             }
             catch (Exception ex)
             {
