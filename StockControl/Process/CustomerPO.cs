@@ -280,6 +280,8 @@ namespace StockControl
                             m.UpdateDate = DateTime.Now;
                             m.UpdateBy = Classlib.User;
                             db.SubmitChanges();
+
+                            dbClss.AddHistory(this.Name, "Customer P/O", $"Cancel Customer P/O {m.CustomerPONo}", m.CustomerPONo);
                         }
                         else
                         {
@@ -295,7 +297,7 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
 
         }
-
+        
         private bool Check_Save()
         {
             bool re = true;
@@ -384,15 +386,26 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     //hd
+                    bool newDoc = false; 
                     var hd = db.mh_CustomerPOs.Where(x => x.Active && x.id == id).FirstOrDefault();
                     if (hd == null)
                     {
+                        newDoc = true;
                         hd = new mh_CustomerPO();
                         hd.CreateDate = DateTime.Now;
                         hd.CreateBy = Classlib.User;
                         db.mh_CustomerPOs.InsertOnSubmit(hd);
+                        dbClss.AddHistory(this.Name, "Customer P/O", $"Add Customer P/O {pono}", pono);
                     }
                     hd.DemandType = 0; //Customer P/O
+                    if (!newDoc)
+                    {//Edit Customer P/O
+                        if (hd.CustomerPONo != pono) dbClss.AddHistory(this.Name, "Customer P/O", $"P/O No. from {hd.CustomerPONo} to {pono}", pono);
+                        if (hd.CustomerNo != cstmNo) dbClss.AddHistory(this.Name, "Customer P/O", $"Customer No. from {hd.CustomerNo} to {cstmNo}", pono);
+                        if (hd.OrderDate != OrderDate) dbClss.AddHistory(this.Name, "Customer P/O", $"Order date from {hd.OrderDate.Date} to {OrderDate.Date}", pono);
+                        if (hd.Remark != remark) dbClss.AddHistory(this.Name, "Customer P/O", $"Remark from {hd.Remark} to {remark}", pono);
+                    }
+
                     hd.CustomerPONo = pono;
                     hd.CustomerNo = cstmNo;
                     hd.OrderDate = OrderDate;
@@ -417,18 +430,42 @@ namespace StockControl
                             t.Active = true;
                             db.mh_CustomerPODTs.InsertOnSubmit(t);
                         }
+                        DateTime reqDate = item.Cells["ReqDate"].Value.ToDateTime().Value.Date;
+                        string ItemName = item.Cells["ItemName"].Value.ToSt();
+                        decimal Qty = item.Cells["Qty"].Value.ToDecimal();
+                        string uom = item.Cells["UOM"].Value.ToSt();
+                        decimal PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
+                        decimal UnitPrice = item.Cells["UnitPrice"].Value.ToDecimal();
+                        decimal Amount = item.Cells["Amount"].Value.ToDecimal();
+                        string Remark = item.Cells["Remark"].Value.ToSt();
+                        string ReplenishmentType = item.Cells["ReplenishmentType"].Value.ToSt();
+
+                        if(t.id >0)
+                        {
+                            if (t.ReqDate != reqDate) dbClss.AddHistory(this.Name, "Customer P/O", $"Request date from {t.ReqDate.Date} to {reqDate.Date}", pono);
+                            if (t.ItemNo != itemNo) dbClss.AddHistory(this.Name, "Customer P/O", $"Item No from {t.ItemNo} to {itemNo}", pono);
+                            if (t.ItemName != ItemName) dbClss.AddHistory(this.Name, "Customer P/O", $"Item Name from {t.ItemName} to {ItemName}", pono);
+                            if (t.Qty != Qty) dbClss.AddHistory(this.Name, "Customer P/O", $"Order Q'ty from {t.Qty} to {Qty}", pono);
+                            if (t.UOM != uom) dbClss.AddHistory(this.Name, "Customer P/O", $"UOM from {t.UOM} to {uom}", pono);
+                            if (t.PCSUnit != PCSUnit) dbClss.AddHistory(this.Name, "Customer P/O", $"PCS:Unit from {t.PCSUnit} to {PCSUnit}", pono);
+                            if (t.UnitPrice != UnitPrice) dbClss.AddHistory(this.Name, "Customer P/O", $"Unit:Price from {t.UnitPrice} to {UnitPrice}", pono);
+                            if (t.Amount != Amount) dbClss.AddHistory(this.Name, "Customer P/O", $"Amount from {t.Amount} to {Amount}", pono);
+                            if (t.Remark != Remark) dbClss.AddHistory(this.Name, "Customer P/O", $"Remark(Detail) from {t.Remark} to {Remark}", pono);
+                            if (t.ReplenishmentType != ReplenishmentType) dbClss.AddHistory(this.Name, "Customer P/O", $"Replenishment Type from {t.ReplenishmentType} to {ReplenishmentType}", pono);
+                        }
+
                         t.idCustomerPO = hd.id;
-                        t.ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value.Date;
-                        t.ItemNo = item.Cells["ItemNo"].Value.ToSt();
-                        t.ItemName = item.Cells["ItemName"].Value.ToSt();
-                        t.Qty = item.Cells["Qty"].Value.ToDecimal();
-                        t.UOM = item.Cells["UOM"].Value.ToSt();
-                        t.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
-                        t.UnitPrice = item.Cells["UnitPrice"].Value.ToDecimal();
-                        t.Amount = item.Cells["Amount"].Value.ToDecimal();
-                        t.Remark = item.Cells["Remark"].Value.ToSt();
+                        t.ReqDate = reqDate;
+                        t.ItemNo = itemNo;
+                        t.ItemName = ItemName;
+                        t.Qty = Qty;
+                        t.UOM = uom;
+                        t.PCSUnit = PCSUnit;
+                        t.UnitPrice = UnitPrice;
+                        t.Amount = Amount;
+                        t.Remark = Remark;
                         t.Active = true;
-                        t.ReplenishmentType = item.Cells["ReplenishmentType"].Value.ToSt();
+                        t.ReplenishmentType = ReplenishmentType;
                         t.OutSO = item.Cells["OutSO"].Value.ToDecimal();
                         t.OutPlan = item.Cells["OutPlan"].Value.ToDecimal();
                         t.Status = item.Cells["Status"].Value.ToSt();
@@ -437,6 +474,7 @@ namespace StockControl
 
                     t_idCSTMPO = hd.id;
                     db.SubmitChanges();
+
                 }
 
                 baseClass.Info("Save complete(s).");
@@ -680,6 +718,9 @@ namespace StockControl
                     {
                         m.Active = false;
                         db.SubmitChanges();
+
+                        var d = db.mh_CustomerPOs.Where(x => x.id == m.idCustomerPO).FirstOrDefault();
+                        dbClss.AddHistory(this.Name, "Customer P/O", $"Remove Item {m.ItemNo} in Customer PO No. {d.CustomerPONo}", d.CustomerPONo);
                     }
 
                 }
