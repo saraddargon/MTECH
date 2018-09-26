@@ -426,6 +426,7 @@ namespace StockControl
                             dbClss.Delete_ApproveList(jobNo);
 
                             db.SubmitChanges();
+                            AddHistory($"Remove Job Order Sheet {m.JobNo}", m.JobNo);
 
                             baseClass.Info("Delete complete.\n");
                             this.Close();
@@ -494,9 +495,11 @@ namespace StockControl
                     string jobNo = (txtidJob.Text.ToInt() > 0) ? txtJobNo.Text : "";
                     bool newJob = false;
                     //Hd
+                    bool newDoc = false;
                     var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo).FirstOrDefault();
                     if (m == null)
                     {
+                        newDoc = true;
                         m = new mh_ProductionOrder();
                         m.CreateBy = ClassLib.Classlib.User;
                         m.CreateDate = DateTime.Now;
@@ -505,7 +508,22 @@ namespace StockControl
                         m.SeqStatus = 0;
                         db.mh_ProductionOrders.InsertOnSubmit(m);
                         newJob = true;
-                        dbClss.AddHistory(this.Name, "Job Order Sheet", $"Edit Job Order Sheet : {m.JobNo}", m.JobNo);
+
+                       AddHistory($"New Job Order Sheet {m.JobNo}", m.JobNo);
+                    }
+                    //history
+                    if (!newDoc)
+                    {
+                        string fgNo = txtFGNo.Text.Trim();
+                        if (m.FGNo != fgNo) AddHistory($"FG from {m.FGNo} to {fgNo}", m.JobNo);
+                        if (m.FGName != txtFGName.Text) AddHistory($" {m.FGName} to {txtFGName.Text}", m.JobNo);
+                        if (m.LotNo != txtLotNo.Text) AddHistory($" {m.LotNo} to {txtLotNo.Text}", m.JobNo);
+                        if (m.Qty != txtFGQty.Value.ToDecimal()) AddHistory($" {m.Qty} to {txtFGQty.Value.ToDecimal()}", m.JobNo);
+                        if (m.PCSUnit != txtPCSUnit.Value.ToDecimal()) AddHistory($" {m.PCSUnit} to {txtPCSUnit.Value.ToDecimal()}", m.JobNo);
+                        if (m.UOM != txtUOM.Text) AddHistory($" {m.UOM} to {txtUOM.Text}", m.JobNo);
+                        if (m.ReqDate != txtReqDate.Text.ToDateTime().Value) AddHistory($" {m.ReqDate} to {txtReqDate.Text.ToDateTime().Value}", m.JobNo);
+                        if (m.EndingDate != txtEndingDate.Text.ToDateTime().Value) AddHistory($"Ending Date from {m.EndingDate} to {txtEndingDate.Text.ToDateTime().Value}", m.JobNo);
+
                     }
                     m.Active = true;
                     m.EndingDate = txtEndingDate.Text.ToDateTime().Value;
@@ -534,7 +552,7 @@ namespace StockControl
                         {
                             var pohd = db.mh_CustomerPOs.Where(x => x.id == po.idCustomerPO).FirstOrDefault();
                             string pono = (pohd != null) ? pohd.CustomerPONo : "";
-                            dbClss.AddHistory("CustomerPO", "CustomerPO", $"New job Order Sheet : {m.JobNo} for P/O {pohd.CustomerPONo}", pohd.CustomerPONo);
+                            dbClss.AddHistory("CustomerPO", "Customer P/O", $"New job Order Sheet : {m.JobNo} for P/O {pohd.CustomerPONo}", pohd.CustomerPONo);
                             //po.OutPlan -= m.OutQty;
                             po.OutPlan = 0;//Full Ref Customer P/O
                             po.Status = baseClass.setCustomerPOStatus(po);
@@ -925,7 +943,7 @@ namespace StockControl
             {
                 //baseClass.Info("Comming soon...");
                 MoveJobToLast();
-
+                AddHistory($"Recalculate Job Order Sheet {txtJobNo.Text}", txtJobNo.Text);
                 baseClass.Info("Recal completed.");
             }
             catch (Exception ex)
@@ -978,11 +996,13 @@ namespace StockControl
                         {
                             m.HoldJob = true;
                             db.SubmitChanges();
+                            AddHistory($"Hold Job Order Sheet {txtJobNo.Text}", txtJobNo.Text);
                         }
                         else
                         {
                             m.HoldJob = false;
                             db.SubmitChanges();
+                            AddHistory($"Unhold Job Order Sheet {txtJobNo.Text}", txtJobNo.Text);
                             //หาว่าวันที่ Unhold Job มากกว่าหรือเท่ากับ StartingDate ไหม ถ้าใช่ให้ move Capacity ไปไว้ท้ายสุดเลย
                             if (DateTime.Now.Date >= txtStartingDate.Text.ToDateTime().Value.Date)
                             {
@@ -991,9 +1011,7 @@ namespace StockControl
                         }
 
                         cbHoldJob.Checked = m.HoldJob;
-
-                        dbClss.AddHistory(this.Name, "Job Order Sheet", $"Change Status Hold job to {((m.HoldJob) ? "Hold" : "UnHold")}", jobno);
-
+                        
                         if (m.HoldJob)
                         {
                             baseClass.Info("Hold Job completed.");
@@ -1488,6 +1506,12 @@ namespace StockControl
                 t_JobNo = txtJobNo.Text.Trim();
                 DataLoad(true);
             }
+        }
+
+        
+        void AddHistory(string Detail, string DocNo)
+        {
+            dbClss.AddHistory(this.Name, "Job Order Sheet", Detail, DocNo);
         }
     }
 }
