@@ -272,7 +272,11 @@ namespace StockControl
 
                         if (!newC)
                         {
-
+                            if(con.Def != c.Cells["Def"].Value.ToBool()) dbClss.AddHistory(this.Name, "Customer Contact", $"Default from {con.Def} to {c.Cells["Def"].Value.ToBool()}", cstm.No);
+                            if(con.ContactName != c.Cells["ContactName"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Contact Name from {con.ContactName} to {c.Cells["ContactName"].Value.ToSt()}", cstm.No);
+                            if(con.Tel != c.Cells["Tel"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Telephone no. from {con.Tel} to {c.Cells["Tel"].Value.ToSt()}", cstm.No);
+                            if(con.Fax != c.Cells["Fax"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Fax no. from {con.Fax} to {c.Cells["Fax"].Value.ToSt()}", cstm.No);
+                            if(con.Email != c.Cells["Email"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Email from {con.Email} to {c.Cells["Email"].Value.ToSt()}", cstm.No);
                         }
 
                         con.idCustomer = cstm.id;
