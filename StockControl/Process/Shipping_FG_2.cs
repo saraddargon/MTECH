@@ -715,7 +715,7 @@ namespace StockControl
                                     , dbClss.TDe(g.Cells["PCSUnit"].Value)
                                     , dbClss.TInt(g.Cells["Refid_dt"].Value)// StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
                                     , dbClss.TInt(g.Cells["idCSTMPODt"].Value)
-
+                                    , "ForSale"
                                     );
 
                                 //ปรับ OutShip ลง
