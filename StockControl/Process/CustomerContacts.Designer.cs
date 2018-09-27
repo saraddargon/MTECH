@@ -71,6 +71,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnAddRow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDeleteRow = new System.Windows.Forms.ToolStripMenuItem();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
             this.radGroupBox2 = new Telerik.WinControls.UI.RadGroupBox();
@@ -116,7 +117,6 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -287,6 +287,7 @@
             this.radRibbonBarButtonGroup1});
             this.radRibbonBarGroup4.Name = "radRibbonBarGroup4";
             this.radRibbonBarGroup4.Text = "Import / Export";
+            this.radRibbonBarGroup4.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
             // btnImport
             // 
@@ -557,6 +558,13 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Enabled = false;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(133, 22);
+            this.toolStripMenuItem2.Text = " ";
             // 
             // btnDeleteRow
             // 
@@ -978,13 +986,6 @@
             this.radRibbonBarButtonGroup5.ShowBackColor = false;
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Enabled = false;
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(133, 22);
-            this.toolStripMenuItem2.Text = " ";
             // 
             // CustomerContacts
             // 
