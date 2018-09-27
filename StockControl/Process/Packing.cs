@@ -1055,7 +1055,40 @@ namespace StockControl
                                 db.sp_057_Cut_Stock(pkNo, ss.CodeNo, ss.TLQty, ClassLib.Classlib.User
                                     , "", m.PackingNo, d.id, "Warehouse", "Shipping", "Shipping - Cancel Packing", 3
                                     , ss.id, ss.idCSTMPODt, ss.LotNo, 0);
-                                
+
+                                //
+                                var shipDt = new tb_Shipping
+                                {
+                                    BasePCSUOM = pcsunit,
+                                    BaseUOM = tool.BaseUOM,
+                                    Calbit = false,
+                                    ClearDate = null,
+                                    ClearFlag = false,
+                                    CodeNo = ss.CodeNo,
+                                    idCSTMPODt = ss.idCSTMPODt,
+                                    ItemDescription = tool.InternalName,
+                                    ItemNo = ss.CodeNo,
+                                    LineName = "",
+                                    Location = "Warehouse",
+                                    LotNo = ss.LotNo,
+                                    MachineName = "",
+                                    PCSUnit = pcsunit,
+                                    QTY = ss.TLQty.ToDecimal(),
+                                    QTYPlan = ss.TLQty.ToDecimal(),
+                                    Refid = 0,
+                                    RefNo = "",
+                                    Remark = "Cancel Packing",
+                                    Seq = ss.Seq.ToInt(),
+                                    SerialNo = "",
+                                    ShippingNo = shipNo,
+                                    ShipType = "Cancel Packing",
+                                    Status = "Completed",
+                                    ToLocation = "Warehouse",
+                                    UnitCost = ss.UnitCost,
+                                    UnitShip = tool.BaseUOM
+                                };
+                                db.tb_Shippings.InsertOnSubmit(shipDt);
+                                db.SubmitChanges();
                             }
                         }
 
