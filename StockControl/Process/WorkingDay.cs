@@ -410,7 +410,8 @@ namespace StockControl
 
 
                 }
-
+                if (radGridView1.Rows.Select(x => x.Cells["ShiftCode"].Value.ToInt()).Distinct().Count() > 1)
+                    err += "- “กะทำงาน:” ไม่สามารถเลือกได้มากกว่า 1 กะ \n";
 
                 if (!err.Equals(""))
                     MessageBox.Show(err);
