@@ -500,6 +500,7 @@ namespace StockControl
                 s.TLQty = s.QTY;
                 s.ShipQty = 0;
                 s.Location = "Warehouse";
+                s.LotNo = tbst.LotNo;
                 s.ShelfNo = tbst.ShelfNo;
                 //ต้องไม่ใช่ Item ที่มีในระบบ
                 var c = (from ix in db.mh_Items

@@ -686,5 +686,11 @@
         <elementListCompartment Id="8061a98e-4b9e-4a40-b2c1-3d9436b5e673" absoluteBounds="3.39, 3.96, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="78bdacd1-f3c0-4bd7-a81b-46c5dcbca076" absoluteBounds="0.875, 5.5, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/DataClasses1DataContext/tb_Shipping_FG" />
+      <nestedChildShapes>
+        <elementListCompartment Id="355beffb-1459-43e4-9cc6-2a164954af3c" absoluteBounds="0.88999999999999968, 5.96, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

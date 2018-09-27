@@ -213,7 +213,7 @@ namespace StockControl
                     bool fRow = true;
                     foreach (var id in idList)
                     {
-                        var c = db.mh_ShipmentDTs.Where(x => x.id == id && x.OutInv > 0).ToList();
+                        var c = db.mh_ShipmentDTs.Where(x => x.id == id && x.OutInv > 0 && x.OutShip==0).ToList();
                         if (c.Count > 0)
                         {
                             
@@ -659,7 +659,7 @@ namespace StockControl
                                     if (p.OutInv <= 0)
                                         p.OutInv = 0;
 
-                                    dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "ปรับ OutShip : " + (rd.Cells["Qty"].Value.ToSt())
+                                    dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "ลบ OutInv : " + (rd.Cells["Qty"].Value.ToSt())
                                     + " ShipmentNo :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
                                     + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
 
@@ -764,7 +764,7 @@ namespace StockControl
                             if (p.Qty < p.OutInv)
                                 p.OutInv = p.Qty;
 
-                            dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "ปรับ OutShip เพราะลบ Invoice : " + (rd.Cells["Qty"].Value.ToSt())
+                            dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "บวก OutShip เพราะลบ Invoice : " + (rd.Cells["Qty"].Value.ToSt())
                             + " ShipmentNo :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
                             + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
 
@@ -1711,7 +1711,7 @@ namespace StockControl
 
                         using (var db = new DataClasses1DataContext())
                         {
-                            var c = db.mh_ShipmentDTs.Where(x => x.id == id && x.OutInv>0 ).ToList();
+                            var c = db.mh_ShipmentDTs.Where(x => x.id == id && x.OutInv>0 && x.OutShip==0 ).ToList();
                             if (c.Count > 0)
                             {
                                 //mh_ShipmentDT im = db.mh_ShipmentDTs

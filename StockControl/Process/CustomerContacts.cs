@@ -208,13 +208,37 @@ namespace StockControl
                 dgvData.EndEdit();
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
+                    bool newDoc = false;
                     int id = txtid.Text.ToInt();
                     var cstm = db.mh_Customers.Where(x => x.id == id).FirstOrDefault();
                     if(cstm == null)
                     {
+                        newDoc = true;
                         cstm = new mh_Customer();
                         db.mh_Customers.InsertOnSubmit(cstm);
+
+                        dbClss.AddHistory(this.Name, "Customer Contact", $"New Customer {txtNo.Text}", txtNo.Text);
                     }
+
+                    if (!newDoc)
+                    {
+                        //dbClss.AddHistory(this.Name, "Customer Contact", $" {} to {}", cstm.No);
+                        if(cstm.BranchCode != txtBranchCOde.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Branchcode {cstm.BranchCode} to {txtBranchCOde.Text}", cstm.No);
+                        if(cstm.No != txtNo.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer No {cstm.No} to {txtNo.Text}", cstm.No);
+                        if(cstm.Name != txtName.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer Name {cstm.Name} to {txtName.Text}", cstm.No);
+                        if(cstm.Address != txtAddress.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Address {cstm.Address} to {txtAddress.Text}", cstm.No);
+                        if(cstm.CreditLimit != txtCreditLimit.Value.ToDecimal()) dbClss.AddHistory(this.Name, "Customer Contact", $"Credit Limit {cstm.CreditLimit} to {txtCreditLimit.Value.ToDecimal()}", cstm.No);
+                        if(cstm.ShippingTime != txtShippingTime.Value.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Shipping Time {cstm.ShippingTime} to {txtShippingTime.Value.ToInt()}", cstm.No);
+                        if(cstm.AttachFile != txtAttachFile.Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Attach file {cstm.AttachFile} to {txtAttachFile.Value.ToSt()}", cstm.No);
+                        if(cstm.VATRegistration != cbVatRegis.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Vat Regis. {cstm.VATRegistration} to {cbVatRegis.Checked}", cstm.No);
+                        if(cstm.PriceIncludeingVat != cbPriceIncVat.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Price Inc. Vat {cstm.PriceIncludeingVat} to {cbPriceIncVat.Checked}", cstm.No);
+                        if(cstm.ShippingAddress != txtShippingAddress.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Shipping Address {cstm.ShippingAddress} to {txtShippingAddress.Text}", cstm.No);
+                        if(cstm.CustomerGroup != cbbCustomerGroup.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer Group {cstm.CustomerGroup} to {cbbCustomerGroup.SelectedValue.ToInt()}", cstm.No);
+                        if(cstm.VatGroup != cbbVatGroup.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Vat Group {cstm.VatGroup} to {cbbVatGroup.SelectedValue.ToInt()}", cstm.No);
+                        if(cstm.DefaultCurrency != cbbCurrency.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Currency {cstm.DefaultCurrency} to {cbbCurrency.SelectedValue.ToInt()}", cstm.No);
+                        if(cstm.Active != cbActive.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Status Customer {cbActive.Checked}", cstm.No);
+                    }
+
                     cstm.BranchCode = txtBranchCOde.Text;
                     cstm.No = txtNo.Text.Trim();
                     cstm.Name = txtName.Text.Trim();
@@ -235,13 +259,22 @@ namespace StockControl
                     {
                         if (c.Cells["dgvC"].Value.ToSt() == "") continue;
 
+                        bool newC = false;
                         int idDt = c.Cells["id"].Value.ToInt();
                         var con = db.mh_CustomerContacts.Where(x => x.id == id).FirstOrDefault();
                         if (con == null)
                         {
+                            newC = true;
                             con = new mh_CustomerContact();
                             db.mh_CustomerContacts.InsertOnSubmit(con);
+                            dbClss.AddHistory(this.Name, "Customer Contact", $"New Contact {c.Cells["ContactName"].Value.ToSt()}", cstm.No);
                         }
+
+                        if (!newC)
+                        {
+
+                        }
+
                         con.idCustomer = cstm.id;
                         con.Def = c.Cells["Def"].Value.ToBool();
                         con.id = 0;
