@@ -143,10 +143,10 @@ namespace StockControl
             dt_Import.Columns.Add(new DataColumn("ModifyDate", typeof(DateTime)));
             dt_Import.Columns.Add(new DataColumn("Inspection", typeof(bool)));
             dt_Import.Columns.Add(new DataColumn("Location", typeof(string)));
-            dt_Import.Columns.Add(new DataColumn("Taking", typeof(bool)));
-            dt_Import.Columns.Add(new DataColumn("ShelfNo", typeof(bool)));
+            dt_Import.Columns.Add(new DataColumn("TakingLot", typeof(bool)));
+            dt_Import.Columns.Add(new DataColumn("ShelfNo", typeof(string)));
             dt_Import.Columns.Add(new DataColumn("StandardPrice", typeof(decimal)));
-            dt_Import.Columns.Add(new DataColumn("StandardCost", typeof(bool)));
+            dt_Import.Columns.Add(new DataColumn("StandardCost", typeof(decimal)));
 
 
             dt_HD_Bom.Columns.Add(new DataColumn("id", typeof(string)));
@@ -226,7 +226,7 @@ namespace StockControl
                 cboTypeCode.Enabled = ss;
                 txtCustomerPartNo.Enabled = ss;
                 cboVendorName.Enabled = ss;
-                cboBaseUOM.Enabled = ss;
+                //cboBaseUOM.Enabled = ss;
                 ddlInventoryGroup.Enabled = ss;
                 cboPurchaseUOM.Enabled = ss;
                 cboSalseUOM.Enabled = ss;
@@ -273,7 +273,7 @@ namespace StockControl
                 cboTypeCode.Enabled = ss;
                 txtCustomerPartNo.Enabled = ss;
                 cboVendorName.Enabled = ss;
-                cboBaseUOM.Enabled = ss;
+                //cboBaseUOM.Enabled = ss;
                 ddlInventoryGroup.Enabled = ss;
                 cboPurchaseUOM.Enabled = ss;
                 cboSalseUOM.Enabled = ss;
@@ -319,7 +319,7 @@ namespace StockControl
                 cboTypeCode.Enabled = ss;
                 txtCustomerPartNo.Enabled = ss;
                 cboVendorName.Enabled = ss;
-                cboBaseUOM.Enabled = ss;
+                //cboBaseUOM.Enabled = ss;
                 ddlInventoryGroup.Enabled = ss;
                 cboPurchaseUOM.Enabled = ss;
                 cboSalseUOM.Enabled = ss;
@@ -1619,8 +1619,6 @@ namespace StockControl
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("รอฟอแมต์");
-            return;
 
             //dbClss.ExportGridCSV(radGridView1);
             //dbClss.ExportGridXlSX(radGridView1);
@@ -1754,8 +1752,7 @@ namespace StockControl
         }
         private void btnImport_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("รอฟอแมต์");
-            return;
+            
             OpenFileDialog op = new OpenFileDialog();
             op.Filter = "Spread Sheet files (*.csv)|*.csv|All files (*.csv)|*.csv";
             if (op.ShowDialog() == DialogResult.OK)
@@ -1771,44 +1768,43 @@ namespace StockControl
                     int a = 0;
                     int c = 0;
 
-                    string CodeNo = "";
-                    string ItemNo = "";
-                    string ItemDescription = "";
-                    string GroupCode = "";
-                    string TypeCode = "";
+                    string InternalNo = "";
+                    string InternalName = "";
+                    string InternalDescription = "";
+                    string CustomerPartNo = "";
+                    string CustomerPartName = "";
+                    string GroupType = "";
+                    string Type = "";
+                    string InventoryGroup = "";
                     string VendorNo = "";
-                    string VendorItemName = "";
-                    string Maker = "";
+                    string VendorName = "";
                     decimal StandardCost = 0;
-                    string UnitBuy = "";
-                    string UnitShip = "";
-                    decimal PCSUnit = 0;
-                    decimal Leadtime = 0;
-                    string UseTacking = "";
-                    string Replacement = "";
-                    bool StopOrder = false;
+                    decimal StandardPrice = 0;
+                    string BaseUOM = "";
+                    string PurchaseUOM = "";
+                    string SalesUOM = "";
+                    string ConsumptionUOM = "";
+                    string VatType = "";
+                    string ReplenishmentType = "";
+                    decimal LeadTime = 0;
+                    bool Inspections = false;
+                    string Locationa = "";
                     string ShelfNo = "";
                     decimal MaximumStock = 0;
                     decimal MinimumStock = 0;
-                    decimal SD = 0;
+                    string ReOrderType = "";
                     decimal ReOrderPoint = 0;
-                    decimal Toollife = 0;
-                    string Size = "";
-                    string Remark = "";
+                    decimal ReOrderQty = 0;
+                    decimal SafetyStock = 0;
+                    decimal MaximumInventory = 0;
+                    string Routing = "";
+                    string BomNo = "";
                     string DWGNo = "";
                     bool DWG = false;
-                    string CostingMethod = "";
-                    string ItemGroup = "";
-                    bool Critical = false;
-                    decimal SafetyStock = 0;
                     string Status = "";
-                    string BarCode = "";
                     string CreateBy = "";
-                    string Location = "";
-                    string TypePart = "";
-                    DateTime? CreateDate = DateTime.Now;
-                    string UpdateBy = "";
-                    DateTime? UpdateDate = DateTime.Now;
+                    DateTime ?CreateDate = null;
+                    bool TakingLot = false;
 
                     while (!parser.EndOfData)
                     {
@@ -1816,44 +1812,43 @@ namespace StockControl
                         a += 1;
                         //DataRow rd = dt_Kanban.NewRow();
                         //// MessageBox.Show(a.ToString());
-                        CodeNo = "";
-                        ItemNo = "";
-                        ItemDescription = "";
-                        GroupCode = "";
-                        TypeCode = "";
+                        InternalNo = "";
+                        InternalName = "";
+                        InternalDescription = "";
+                        CustomerPartNo = "";
+                        CustomerPartName = "";
+                        GroupType = "";
+                        Type = "";
+                        InventoryGroup = "";
                         VendorNo = "";
-                        VendorItemName = "";
-                        Maker = "";
+                        VendorName = "";
                         StandardCost = 0;
-                        UnitBuy = "";
-                        UnitShip = "";
-                        PCSUnit = 0;
-                        Leadtime = 0;
-                        UseTacking = "";
-                        Replacement = "";
-                        StopOrder = false;
+                        StandardPrice = 0;
+                        BaseUOM = "";
+                        PurchaseUOM = "";
+                        SalesUOM = "";
+                        ConsumptionUOM = "";
+                        VatType = "";
+                        ReplenishmentType = "";
+                        LeadTime = 0;
+                        Inspections = false;
+                        Locationa = "";
                         ShelfNo = "";
                         MaximumStock = 0;
                         MinimumStock = 0;
-                        SD = 0;
+                        ReOrderType = "";
                         ReOrderPoint = 0;
-                        Toollife = 0;
-                        Size = "";
-                        Remark = "";
+                        ReOrderQty = 0;
+                        SafetyStock = 0;
+                        MaximumInventory = 0;
+                        Routing = "";
+                        BomNo = "";
                         DWGNo = "";
                         DWG = false;
-                        CostingMethod = "";
-                        ItemGroup = "";
-                        Critical = false;
-                        SafetyStock = 0;
                         Status = "";
-                        BarCode = "";
-                        CreateBy = "";
-                        CreateDate = DateTime.Now;
-                        UpdateBy = "";
-                        UpdateDate = DateTime.Now;
-                        TypePart = "";
-                        Location = "";
+                        CreateBy = ClassLib.Classlib.User;
+                        CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                        TakingLot = false;
                         string[] fields = parser.ReadFields();
                         c = 0;
                         foreach (string field in fields)
@@ -1863,155 +1858,270 @@ namespace StockControl
                             //    // MessageBox.Show(field);
                             if (a > 7)
                             {
-                                if (c == 3 && Convert.ToString(field).Equals(""))
+                                if (c == 2 && Convert.ToString(field).Equals(""))
                                 {
                                     break;
                                 }
 
                                 if (c == 2)
-                                    CodeNo = Convert.ToString(field);
+                                    InternalNo = Convert.ToString(field);
                                 else if (c == 3)
-                                    ItemNo = StockControl.dbClss.TSt(field);
+                                    InternalName = StockControl.dbClss.TSt(field);
                                 else if (c == 4)
-                                    ItemDescription = Convert.ToString(field);
+                                    InternalDescription = Convert.ToString(field);
                                 else if (c == 5)
-                                    GroupCode = Convert.ToString(field);
+                                    CustomerPartNo = Convert.ToString(field);
                                 else if (c == 6)
-                                    TypeCode = Convert.ToString(field);
+                                    CustomerPartName = Convert.ToString(field);
                                 else if (c == 7)
-                                    TypePart = Convert.ToString(field);
+                                    GroupType = Convert.ToString(field);
                                 else if (c == 8)
-                                    VendorNo = Convert.ToString(field);
+                                    Type = Convert.ToString(field);
                                 else if (c == 9)
-                                    VendorItemName = Convert.ToString(field);
+                                    InventoryGroup = Convert.ToString(field);
                                 else if (c == 10)
-                                    Maker = Convert.ToString(field);
+                                    VendorNo = Convert.ToString(field);
                                 else if (c == 11)
-                                    decimal.TryParse(Convert.ToString(field), out StandardCost); //StockControl.dbClss.TDe(field);
+                                    VendorName = Convert.ToString(field);
                                 else if (c == 12)
-                                    UnitBuy = Convert.ToString(field);
+                                    decimal.TryParse(Convert.ToString(field), out StandardCost); //StockControl.dbClss.TDe(field);
                                 else if (c == 13)
-                                    UnitShip = Convert.ToString(field);
+                                    decimal.TryParse(Convert.ToString(field), out StandardPrice);
                                 else if (c == 14)
-                                    decimal.TryParse(Convert.ToString(field), out PCSUnit); //StockControl.dbClss.TDe(field);
+                                    BaseUOM = Convert.ToString(field);
                                 else if (c == 15)
-                                    decimal.TryParse(Convert.ToString(field), out Leadtime);//= StockControl.dbClss.TDe(field);
-                                //else if (c == 15)
-                                //    UseTacking = Convert.ToString(field);
+                                    PurchaseUOM = Convert.ToString(field);
                                 else if (c == 16)
-                                    Replacement = Convert.ToString(field);
+                                    SalesUOM = Convert.ToString(field);
                                 else if (c == 17)
-                                    StopOrder = StockControl.dbClss.TBo(field);
-                                //else if (c == 18)
-                                //    ShelfNo = Convert.ToString(field);
+                                    ConsumptionUOM = Convert.ToString(field);
                                 else if (c == 18)
-                                    decimal.TryParse(Convert.ToString(field), out MaximumStock);//= StockControl.dbClss.TDe(field);
+                                    VatType = Convert.ToString(field).Trim();
                                 else if (c == 19)
-                                    decimal.TryParse(Convert.ToString(field), out MinimumStock);// = StockControl.dbClss.TDe(field);
+                                    ReplenishmentType = Convert.ToString(field).Trim();
                                 else if (c == 20)
-                                   Location = Convert.ToString(field);
-                                //else if (c == 22)
-                                //    decimal.TryParse(Convert.ToString(field), out ReOrderPoint);// = StockControl.dbClss.TDe(field);
+                                    decimal.TryParse(Convert.ToString(field), out LeadTime);// = StockControl.dbClss.TDe(field);
                                 else if (c == 21)
-                                    ShelfNo = Convert.ToString(field);
-                                else if (c == 22)
-                                    decimal.TryParse(Convert.ToString(field), out Toollife);// = StockControl.dbClss.TDe(field);
-                                else if (c == 23)
-                                    Size = Convert.ToString(field);
-                                else if (c == 24)
-                                    Remark = Convert.ToString(field);
-                                else if (c == 25)
-                                    DWGNo = Convert.ToString(field);
-                                else if (c == 26)
-                                    DWG = StockControl.dbClss.TBo(field);
-                                //else if (c == 28)
-                                //    CostingMethod = Convert.ToString(field);
-                                //else if (c == 29)
-                                //    ItemGroup = Convert.ToString(field);
-                                //else if (c == 30)
-                                //    Critical = StockControl.dbClss.TBo(field);
-                                //else if (c == 31)
-                                //    decimal.TryParse(Convert.ToString(field), out SafetyStock);// = StockControl.dbClss.TDe(field);
-                                else if (c == 27)
-                                    Status = Convert.ToString(field);
-                                else if (c == 28)
-                                    BarCode = Convert.ToString(field);
-                                else if (c == 29)
-                                    CreateBy = Convert.ToString(field);
-                                else if (c == 30 && !Convert.ToString(field).Equals(""))
-                                    CreateDate = Convert.ToDateTime(StockControl.dbClss.TDa(field));
-                                //else if (c == 36)
-                                //    rd["UpdateBy"] = Convert.ToString(field);
-                                //else if (c == 37)
-                                //    rd["UpdateDate"] = StockControl.dbClss.TDa(field);
-
-                            }
-                           
-                        }
-
-                        if (!GroupCode.Equals("") && !TypeCode.Equals(""))
-                        {
-                            using (DataClasses1DataContext db = new DataClasses1DataContext())
-                            {
-                                var g = (from ix in db.mh_Items
-                                         where ix.InternalNo.Trim().ToUpper() == CodeNo.Trim().ToUpper() //&& ix.Status == "Active"
-                                         select ix).ToList();
-                                if (g.Count <= 0)
                                 {
-                                    ////CodeNo = Get_CodeNo_GroupCode(GroupCode);
-                                    //string Temp_codeno = CodeNo;
-                                    //string temp_codeno2 = "";
-                                    //if (CodeNo.Length > 5)
-                                    //{
-                                    //    int c1 = txtCodeNo.Text.Length;
-
-                                    //    temp_codeno2 = Temp_codeno.Substring(5, c1 - 5);
-                                    //    CodeNo = Get_CodeNo_GroupCode(GroupCode);
-                                    //    CodeNo = CodeNo + temp_codeno2;
-                                    //}
-                                    //else
-                                        CodeNo = Get_CodeNo_GroupCode(GroupCode);                                    
+                                    if (dbClss.TSt(field) == "1")
+                                        Inspections = true;
+                                    else if (dbClss.TSt(field) == "0")
+                                        Inspections = false;
+                                    else
+                                        Inspections = false;
                                 }
+                                else if (c == 22)
+                                {
+                                    if (Convert.ToString(field).Trim() != "")
+                                        Locationa = Convert.ToString(field);
+                                    else
+                                        Locationa = "Warehouse";
+                                }
+                                else if (c == 23)
+                                    ShelfNo = Convert.ToString(field);
+                                else if (c == 24)
+                                    decimal.TryParse(Convert.ToString(field), out MaximumStock);
+                                else if (c == 25)
+                                    decimal.TryParse(Convert.ToString(field), out MinimumStock);
+                                else if (c == 26)
+                                    ReOrderType = Convert.ToString(field);
+                                else if (c == 27)
+                                    decimal.TryParse(Convert.ToString(field), out ReOrderPoint);
+                                else if (c == 28)
+                                    decimal.TryParse(Convert.ToString(field), out ReOrderQty);
+                                else if (c == 29)
+                                    decimal.TryParse(Convert.ToString(field), out SafetyStock);
+                                else if (c == 30)
+                                    decimal.TryParse(Convert.ToString(field), out MaximumInventory);
+                                else if (c == 31)
+                                {
+                                    if (dbClss.TSt(field) == "1")
+                                        TakingLot = true;
+                                    else if (dbClss.TSt(field) == "0")
+                                        TakingLot = false;
+                                    else
+                                        TakingLot = false;
+                                }
+                                else if (c == 32)
+                                    Routing = Convert.ToString(field);
+                                else if (c == 33)
+                                    BomNo = Convert.ToString(field);
+                                else if (c == 34)
+                                    DWGNo = Convert.ToString(field);
+                                else if (c == 35)
+                                {
+                                    if (dbClss.TSt(field) == "1")
+                                        DWG = true;
+                                    else if (dbClss.TSt(field) == "0")
+                                        DWG = false;
+                                    else
+                                        DWG = false;
+                                }
+                                else if (c == 36)
+                                    Status = Convert.ToString(field);
+                                else if (c == 37)
+                                    CreateBy = Convert.ToString(field);
+                                else if (c == 38 && !Convert.ToString(field).Equals(""))
+                                    CreateDate = Convert.ToDateTime(StockControl.dbClss.TDa(field));
+
                             }
                         }
-                        if (!TypePart.Equals(""))
+
+                        if (!InventoryGroup.Equals(""))
                         {
-                            if (TypePart.ToUpper() != "RM" && TypePart.ToUpper() != "FG" && TypePart.ToUpper() != "WIP"
-                                && TypePart.ToUpper() != "Other"
+                            if (InventoryGroup.ToUpper() != "RM" && InventoryGroup.ToUpper() != "FG" && InventoryGroup.ToUpper() != "SEMI"
+                                //&& InventoryGroup.ToUpper() != "Other"
                                 )
-                                TypePart = "";
+                                InventoryGroup = "";
                         }
-                        if(!Status.Equals(""))
+                        if (CustomerPartNo == "")
+                            CustomerPartNo = InternalNo;
+                        if (CustomerPartName == "")
+                            CustomerPartName = InternalName;
+
+                        if (!Status.Equals(""))
                         {
                             if (Status != "Active" && Status != "InActive")
                                 Status = "Active";
                         }
-                        if (!Location.Equals(""))
+                        int Routingid = 0;
+                        int BomNoid = 0;
+                        using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            using (DataClasses1DataContext db = new DataClasses1DataContext())
+                            if (!Locationa.Equals(""))
                             {
                                 var g = (from ix in db.mh_Locations
-                                         where ix.Code.ToUpper().Trim() == Location.ToUpper().Trim() && ix.Active ==true && ix.Active == true
+                                         where ix.Code.ToUpper().Trim() == Locationa.ToUpper().Trim() 
+                                         && ix.Active == true
                                          select ix).ToList();
                                 if (g.Count > 0)
-                                    Location = g.FirstOrDefault().Code;
+                                    Locationa = g.FirstOrDefault().Code;
                                 else
-                                    Location = "";
+                                    Locationa = "";
                             }
-                            
+                            if (!Routing.Equals(""))
+                            {
+                                var g = (from ix in db.mh_Routings
+                                         where ix.RoutingNo.ToUpper().Trim() == Routing.ToUpper().Trim() 
+                                         && ix.Active == true
+                                         select ix).ToList();
+                                if (g.Count > 0)
+                                    Routingid = dbClss.TInt(g.FirstOrDefault().id);
+                                else
+                                    Routingid = 0;
+                            }
+                            if (!BomNo.Equals(""))
+                            {
+                                var g = (from ix in db.tb_BomHDs
+                                         where ix.BomNo.ToUpper().Trim() == BomNo.ToUpper().Trim()
+                                         && ix.PartNo.ToUpper().Trim() == InternalNo.ToUpper().Trim()
+                                         && ix.Status != "Cancel"
+                                         select ix).ToList();
+                                if (g.Count > 0)
+                                    BomNoid = dbClss.TInt(g.FirstOrDefault().id);
+                                else
+                                    BomNoid = 0;
+                            }
+                            if (!VatType.Equals(""))
+                            {
+                                var g = (from ix in db.mh_VATTypes
+                                         where ix.VatType.ToUpper().Trim() == VatType.ToUpper().Trim() 
+                                         && ix.Active == true
+                                         select ix).ToList();
+                                if (g.Count > 0)
+                                    VatType = g.FirstOrDefault().VatType;
+                                else
+                                    VatType = "";
+                            }
+                            if (!BaseUOM.Equals(""))
+                            {
+                                var g = (from ix in db.mh_Units
+                                         where ix.UnitCode.ToUpper().Trim() == BaseUOM.ToUpper().Trim()
+                                         && ix.UnitActive == true
+                                         select ix).ToList();
+                                if (g.Count > 0)
+                                    BaseUOM = g.FirstOrDefault().UnitCode;
+                                else
+                                    BaseUOM = "";
+                            }
+                            if (!PurchaseUOM.Equals(""))
+                            {
+                                var g = (from ix in db.mh_Units
+                                         where ix.UnitCode.ToUpper().Trim() == PurchaseUOM.ToUpper().Trim()
+                                         && ix.UnitActive == true
+                                         select ix).ToList();
+                                if (g.Count > 0)
+                                    PurchaseUOM = g.FirstOrDefault().UnitCode;
+                                else
+                                    PurchaseUOM = "";
+                            }
+                            if (!SalesUOM.Equals(""))
+                            {
+                                var g = (from ix in db.mh_Units
+                                         where ix.UnitCode.ToUpper().Trim() == SalesUOM.ToUpper().Trim()
+                                         && ix.UnitActive == true
+                                         select ix).ToList();
+                                if (g.Count > 0)
+                                    SalesUOM = g.FirstOrDefault().UnitCode;
+                                else
+                                    SalesUOM = "";
+                            }
+                            if (!ConsumptionUOM.Equals(""))
+                            {
+                                var g = (from ix in db.mh_Units
+                                         where ix.UnitCode.ToUpper().Trim() == ConsumptionUOM.ToUpper().Trim()
+                                         && ix.UnitActive == true
+                                         select ix).ToList();
+                                if (g.Count > 0)
+                                    ConsumptionUOM = g.FirstOrDefault().UnitCode;
+                                else
+                                    ConsumptionUOM = "";
+                            }
+                            if (!GroupType.Equals(""))
+                            {
+                                var g = (from ix in db.mh_GroupTypes
+                                         where ix.GroupCode.ToUpper().Trim() == GroupType.ToUpper().Trim()
+                                         && ix.GroupActive == true
+                                         select ix).ToList();
+                                if (g.Count > 0)
+                                    GroupType = g.FirstOrDefault().GroupCode;
+                                else
+                                    GroupType = "";
+                            }
+                            if (!Type.Equals(""))
+                            {
+                                var g = (from ix in db.mh_Types
+                                         where ix.TypeCode.ToUpper().Trim() == Type.ToUpper().Trim()
+                                         && ix.TypeActive == true
+                                         select ix).ToList();
+                                if (g.Count > 0)
+                                    Type = g.FirstOrDefault().TypeCode;
+                                else
+                                    Type = "";
+                            }
                         }
+                    
 
                         //dt_Kanban.Rows.Add(rd);
-                        if (CodeNo.ToString().Equals("") || ItemNo.ToString().Equals("")
-                               || ItemDescription.ToString().Equals("") || GroupCode.ToString().Equals("")
-                               || TypeCode.ToString().Equals("") || VendorNo.ToString().Equals("") 
-                               || VendorItemName.ToString().Equals("")
-                               || Maker.ToString().Equals("") || StandardCost.ToString().Equals("") 
-                               || UnitBuy.ToString().Equals("")
-                               || UnitShip.ToString().Equals("") || PCSUnit.ToString().ToString().Equals("") 
-                               || Leadtime.ToString().Equals("")
-                               || MaximumStock.ToString().Equals("") || MinimumStock.ToString().Equals("") 
-                               || TypePart.ToString().Equals("") || Location.ToString().Equals("")
+                        if (InternalNo.ToString().Equals("") || InternalName.ToString().Equals("")
+                               || InternalDescription.ToString().Equals("") || CustomerPartNo.ToString().Equals("")
+                               || CustomerPartName.Equals("") || VendorNo.ToString().Equals("") 
+                               || VendorName.ToString().Equals("")
+                               || GroupType.ToString().Equals("") || Type.ToString().Equals("")
+                               || InventoryGroup.ToString().Equals("")
+                               //|| StandardCost.ToString().Equals("") 
+                               || BaseUOM.ToString().Equals("")
+                               || PurchaseUOM.ToString().Equals("") || SalesUOM.ToString().ToString().Equals("")
+                               || ConsumptionUOM.ToString().Equals("")
+                               || VatType.ToString().ToString().Equals("")
+                               || ReplenishmentType.ToString().Equals("")
+                               || LeadTime.ToString().Equals("")
+                               || Locationa.ToString().Equals("")
+                               //|| MaximumStock.ToString().Equals("") || MinimumStock.ToString().Equals("") 
+                               || ReOrderType.ToString().Equals("") || ReOrderPoint.ToString().Equals("")
+                               || ReOrderQty.ToString().Equals("")
+                               || SafetyStock.ToString().Equals("")
+                               || MaximumInventory.ToString().Equals("")
                                )
                         {
                             
@@ -2023,21 +2133,13 @@ namespace StockControl
                             if (CreateBy.Equals(""))
                                 CreateBy = ClassLib.Classlib.User;
 
-                            Add_Item(CodeNo, ItemNo, ItemDescription, GroupCode, TypeCode, TypePart, VendorNo, VendorItemName
-                                , Maker, StandardCost, UnitBuy, UnitShip, PCSUnit, Leadtime, Replacement, StopOrder, MaximumStock
-                                , MinimumStock, Location, Toollife, Size, Remark, DWGNo, DWG, Status, BarCode
-                                , CreateBy, Convert.ToDateTime(CreateDate), ShelfNo);
-
-                            //dt_Import.Rows.Add(CodeNo, ItemNo, ItemDescription, GroupCode
-                            //                               , TypeCode, UnitBuy, UnitShip, PCSUnit, ShelfNo, StandardCost,
-                            //                               CostingMethod, ItemGroup, Replacement, VendorNo, VendorItemName, UseTacking
-                            //                               , Critical, Leadtime, MaximumStock, MinimumStock
-                            //                               , SafetyStock, ReOrderPoint, Status, StopOrder, Remark
-                            //                               , Size, DWGNo, DWG, Maker, Toollife, SD
-                            //                               , BarCode, CreateBy, CreateDate, UpdateBy, UpdateDate);
+                            Add_Item2(InternalNo, InternalName, InternalDescription, CustomerPartNo
+                                , CustomerPartName, GroupType, Type, InventoryGroup, BaseUOM, PurchaseUOM, SalesUOM, ConsumptionUOM
+                                , VatType, DWG, DWGNo, ReplenishmentType, LeadTime, ReOrderType, SafetyStock, ReOrderQty, ReOrderPoint
+                                , MinimumStock, MaximumStock, MaximumInventory, BomNoid, Routingid, true, VendorNo, VendorName
+                                , CreateBy,CreateDate ,Inspections, TakingLot, ShelfNo, StandardPrice, StandardCost, Locationa);
                         }
                     }
-
 
                 }
                 if (dt_Import.Rows.Count > 0)
@@ -2054,79 +2156,64 @@ namespace StockControl
 
         }
 
-        private void Add_Item(string CodeNo, string ItemNo, string ItemDescription
-            , string GroupCode,string TypeCode,string TypePart,string VendorNo,string VendorItemName
-            ,string Maker,decimal StandardCost,string UnitBuy,string UnitShip,decimal PCSUnit
-            ,decimal Leadtime,string Replacement,bool StopOrder,decimal MaximumStock,decimal MinimumStock
-            ,string Location,decimal Toollife,string Size,string Remark,string DWGNo,bool DWG,string Status,
-            string BarCode,string CreateBy,DateTime CreateDate,string ShelfNo
+        private void Add_Item2(string InternalNo, string InternalName, string InternalDescription
+            , string CustomerPartNo, string CustomerPartName, string GroupType, string Type, string InventoryGroup
+            , string BaseUOM, string PurchaseUOM, string SalesUOM, string ConsumptionUOM, string VatType
+            , bool chkDrawing,string Drawing,string ReplenishmentType
+            , decimal LeadTime, string ReorderType, decimal SafetyStock,decimal ReorderQty,decimal ReorderPoint
+            , decimal MinimumQty, decimal MaximumQty,decimal MaximumInventory
+            ,int BOMNoid,int Routingid,bool Active,string VendorNo,string VendorName
+            ,string CreateBy,DateTime ? CreateDate,bool Inspection,bool TakingLot,string ShelfNo
+            ,decimal StandardPrice,decimal StandardCost,string Locationa
             )
         {
-
-
             try
             {
-
                 DataRow rd = dt_Import.NewRow();
 
-
-                rd["CodeNo"] = CodeNo;
-
-                rd["ItemNo"] = ItemNo;
-
-                rd["ItemDescription"] = ItemDescription;
-
-                rd["GroupCode"] = GroupCode;
-
-                rd["TypeCode"] = TypeCode;
-
-                rd["TypePart"] = TypePart;
-
+                rd["InternalNo"] = InternalNo;
+                rd["InternalName"] = InternalName;
+                rd["InternalDescription"] = InternalDescription;
+                rd["CustomerPartNo"] = CustomerPartNo;
+                rd["CustomerPartName"] = CustomerPartName;
+                rd["GroupType"] = GroupType;
+                rd["Type"] = Type;
+                rd["InventoryGroup"] = InventoryGroup;
+                rd["BaseUOM"] = BaseUOM;
+                rd["PurchaseUOM"] = PurchaseUOM;
+                rd["SalesUOM"] = SalesUOM;
+                rd["ConsumptionUOM"] = ConsumptionUOM;
+                rd["VatType"] = VatType;
+                rd["chkDrawing"] = chkDrawing;
+                rd["Drawing"] = Drawing;
+                rd["ReplenishmentType"] = ReplenishmentType;
+                rd["InternalLeadTime"] = LeadTime;
+                rd["ReorderType"] = ReorderType;
+                rd["SafetyStock"] = SafetyStock;
+                rd["ReorderQty"] = ReorderQty;
+                rd["ReorderPoint"] = ReorderPoint;
+                rd["MinimumQty"] = MinimumQty;
+                rd["MaximumQty"] = MaximumQty;
+                rd["MaximumInventory"] = MaximumInventory;
+                rd["BillOfMaterials"] = BOMNoid;
+                rd["Routing"] = Routingid;
+                rd["WorkCenter"] = 0;
+                rd["ItemUOM"] = 0;
+                rd["Active"] = Active;
                 rd["VendorNo"] = VendorNo;
-
-                rd["VendorItemName"] = VendorItemName;
-
-                rd["Maker"] = Maker;
-
-                rd["StandardCost"] = StandardCost;
-
-                rd["UnitBuy"] = UnitBuy;
-
-                rd["UnitShip"] = UnitShip;
-
-                rd["PCSUnit"] = PCSUnit;
-
-                rd["Leadtime"] = Leadtime;
-
-                rd["Replacement"] = Replacement;
-
-                rd["StopOrder"] = StopOrder;
-
-                rd["MaximumStock"] = MaximumStock;
-
-                rd["MinimumStock"] = MinimumStock;
-
-                rd["Location"] = Location;
-
-                rd["ShelfNo"] = ShelfNo;
-
-                rd["Toollife"] = Toollife;
-
-                rd["Size"] = Size;
-
-                rd["Remark"] = Remark;
-
-                rd["DWGNo"] = DWGNo;
-
-                rd["DWG"] = DWG;
-
-                rd["Status"] = Status;
-
-                rd["BarCode"] = BarCode;
-
+                rd["VendorName"] = VendorName;
+                rd["Timebucket"] = 0;
+                //rd["BarCode"] = BarCode;
                 rd["CreateBy"] = CreateBy;
-
                 rd["CreateDate"] = CreateDate;
+                //rd["ModifyBy"] =
+                //rd["ModifyDate", typeof(DateTime)));
+                rd["Inspection"] = Inspection;
+                rd["Location"] = Locationa;
+                rd["TakingLot"] = TakingLot;
+                rd["ShelfNo"] = ShelfNo;
+                rd["StandardPrice"] = StandardPrice;
+                rd["StandardCost"] = StandardCost;
 
 
 
@@ -2145,11 +2232,12 @@ namespace StockControl
                    
                     foreach (DataRow rd in dt_Import.Rows)
                     {
-                        if (!rd["CodeNo"].ToString().Equals(""))
+                        if (!rd["InternalNo"].ToString().Equals(""))
                         {
 
                             var g = (from ix in db.mh_Items
-                                     where ix.InternalNo.Trim() == rd["InternalNo"].ToString().Trim() //&& ix.Status == "Active"
+                                     where ix.InternalNo.Trim() 
+                                     == rd["InternalNo"].ToString().Trim() //&& ix.Status == "Active"
                                      select ix).ToList();
                             if (g.Count > 0)  //มีรายการในระบบ อัพเดต
                             {
@@ -2157,117 +2245,120 @@ namespace StockControl
                                 var gg = (from ix in db.mh_Items
                                           where ix.InternalNo.Trim() == rd["InternalNo"].ToString().Trim()
                                           select ix).First();
-
-                                gg.ModifyBy = rd["ModifyBy"].ToString().Trim();
-                                gg.ModifyDate = Convert.ToDateTime(rd["ModifyDate"].ToString()); //DateTime.Now;
-                                dbClss.AddHistory(this.Name  , "แก้ไข ทูล", " แก้ไข ทูล โดย Import โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", rd["CodeNo"].ToString());
+                                
+                                gg.ModifyBy = dbClss.TSt(rd["CreateBy"]);
+                                gg.ModifyDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                dbClss.AddHistory(this.Name  , "แก้ไข ทูล", " แก้ไข ทูล โดย Import โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", rd["InternalNo"].ToString());
 
                                 //if (StockControl.dbClss.TSt(gg.BarCode).Equals(""))
-                                //    gg.BarCode = StockControl.dbClss.SaveQRCode2D(rd["CodeNo"].ToString());
-
-                                //gg.ItemNo = rd["ItemNo"].ToString().Trim();
+                                //    gg.BarCode = StockControl.dbClss.SaveQRCode2D(rd["InternalNo"].ToString());
+                                
                                 gg.InternalName = rd["InternalName"].ToString().Trim();
+                                gg.InternalDescription = rd["InternalDescription"].ToString().Trim();
+                                gg.CustomerPartNo = rd["CustomerPartNo"].ToString().Trim();
+                                gg.CustomerPartName = rd["CustomerPartName"].ToString().Trim();
                                 gg.InventoryGroup = rd["InventoryGroup"].ToString().Trim();
                                 gg.GroupType = rd["GroupType"].ToString().Trim();
+                                gg.Type = rd["Type"].ToString().Trim();
+                                gg.InventoryGroup = rd["InventoryGroup"].ToString().Trim();
+                                gg.BaseUOM = rd["BaseUOM"].ToSt().Trim();
                                 gg.PurchaseUOM = rd["PurchaseUOM"].ToString().Trim();
                                 gg.SalesUOM = rd["SalesUOM"].ToString().Trim();
-                                gg.ConsumptionUOM = rd["ConsumptionUOM"].ToString().Trim();
-                                gg.BaseUOM = rd["BaseUOM"].ToString().Trim();
-                                gg.CustomerPartName = rd["CustomerPartName"].ToString().Trim();
-                                gg.CustomerPartNo = rd["CustomerPartNo"].ToString().Trim();
-                                gg.Type = rd["Type"].ToString().Trim();
+                                gg.ConsumptionUOM = rd["ConsumptionUOM"].ToString().Trim();                               
                                 gg.VatType = rd["VatType"].ToString().Trim();
                                 gg.chkDrawing = dbClss.TBo(rd["chkDrawing"]);
                                 gg.Drawing = rd["Drawing"].ToString().Trim();
                                 gg.VendorNo = rd["VendorNo"].ToString().Trim();
                                 gg.VendorName = rd["VendorName"].ToString().Trim();
-                                //gg.UseTacking = rd["UseTacking"].ToString().Trim();
-                                int Timebucket = 0; int.TryParse(rd["Timebucket"].ToString(), out Timebucket);
+                                gg.ReplenishmentType = rd["ReplenishmentType"].ToString().Trim();
+                                gg.ReorderType = rd["ReorderType"].ToSt().Trim();
+
+                                int Timebucket = 0; //int.TryParse(rd["Timebucket"].ToString(), out Timebucket);
                                 gg.Timebucket = Timebucket;
-                                decimal MaximumQty = 0; decimal.TryParse(rd["MaximumQty"].ToString(), out MaximumQty);
+                                decimal MaximumQty = 0; decimal.TryParse(rd["MinimumQty"].ToString(), out MaximumQty);
                                 gg.MaximumQty = MaximumQty;
                                 decimal MinimumQty = 0; decimal.TryParse(rd["MinimumQty"].ToString(), out MinimumQty);
                                 gg.MinimumQty = MinimumQty;
-                                decimal ReOrderPoint = 0; decimal.TryParse(rd["ReOrderPoint"].ToString(), out ReOrderPoint);
+                                decimal ReOrderPoint = 0; decimal.TryParse(rd["ReorderPoint"].ToString(), out ReOrderPoint);
                                 gg.ReorderPoint = ReOrderPoint;
                                 decimal ReorderQty = 0; decimal.TryParse(rd["ReorderQty"].ToString(), out ReorderQty);
                                 gg.ReorderQty = ReorderQty;
                                 decimal SafetyStock = 0; decimal.TryParse(rd["SafetyStock"].ToString(), out SafetyStock);
                                 gg.SafetyStock = SafetyStock;
+                                decimal MaximumInventory = 0; decimal.TryParse(rd["MaximumInventory"].ToString(), out MaximumInventory);
+                                gg.MaximumInventory = MaximumInventory;
+                                gg.BillOfMaterials = dbClss.TInt(rd["BillOfMaterials"]);
+                                gg.Routing = dbClss.TInt(rd["Routing"]);
+                                gg.WorkCenter = 0;
+                                gg.ItemUOM = 0;
+                                gg.Inspection = dbClss.TBo(rd["Inspection"]);
+                                gg.Location = dbClss.TSt(rd["Location"]);
+                                gg.TakingLot = dbClss.TBo(rd["TakingLot"]);
+                                gg.ShelfNo = dbClss.TSt(rd["ShelfNo"]);
                                 gg.Active = dbClss.TBo(rd["Active"]);
+                                gg.StandardPrice = dbClss.TDe(rd["StandardPrice"]);
+                                gg.StandardCost = dbClss.TDe(rd["StandardCost"]);
                                 gg.InternalLeadTime = dbClss.TInt(rd["InternalLeadTime"]);
                                 db.SubmitChanges();
                             }
                             else   // Add ใหม่
                             {
-                                // byte[] barcode = StockControl.dbClss.SaveQRCode2D(rd["CodeNo"].ToString().Trim());
-                                //decimal StockDL = 0;
-                                //decimal StockInv = 0;
-                                //decimal StockBackOrder = 0;
-
-                                //decimal StandardCost = 0;
-                                //decimal MaximumStock = 0;
-                                //decimal MinimumStock = 0;
-                                //decimal SafetyStock = 0;
-                                //decimal ReOrderPoint = 0;
-                                //decimal SD = 0;
-                                //decimal Toollife = 0;
-                                //decimal Leadtime = 0;
-                                //bool Critical = false;
-                                //decimal PCSUnit = 0;
-                                //string CostingMethod = "";
-                                //string ItemGroup = "";
-                                //string UpdateBy = ClassLib.Classlib.User;
-                                //DateTime CreateDate = DateTime.Now;
-                                //UpdateBy = rd["CreateBy"].ToString().Trim();
-                                //CreateDate = Convert.ToDateTime(rd["CreateDate"].ToString()); //DateTime.Now;
-
-                                //decimal.TryParse(rd["StandardCost"].ToString(), out StandardCost);
-                                //decimal.TryParse(rd["MaximumStock"].ToString(), out MaximumStock);
-                                //decimal.TryParse(rd["MinimumStock"].ToString(), out MinimumStock);
-                                ////decimal.TryParse(rd["ReOrderPoint"].ToString(), out ReOrderPoint);
-                                //decimal.TryParse(rd["PCSUnit"].ToString(), out PCSUnit);
-                                //decimal.TryParse(rd["Leadtime"].ToString(), out Leadtime);
-                                //decimal.TryParse(rd["Toollife"].ToString(), out Toollife);
-                                //if (Toollife < 0)
-                                //    Toollife = 1;
-
-                                //decimal.TryParse(rd["SD"].ToString(), out SD);
+                               
 
                                 DateTime? UpdateDate = null;
                                 
                                 mh_Item gg = new mh_Item();
+                               // if (StockControl.dbClss.TSt(gg.BarCode).Equals(""))
+                                gg.BarCode = StockControl.dbClss.SaveQRCode2D(rd["InternalNo"].ToString());
+                                gg.InternalNo = rd["InternalNo"].ToString().Trim();
                                 gg.InternalName = rd["InternalName"].ToString().Trim();
+                                gg.InternalDescription = rd["InternalDescription"].ToString().Trim();
+                                gg.CustomerPartNo = rd["CustomerPartNo"].ToString().Trim();
+                                gg.CustomerPartName = rd["CustomerPartName"].ToString().Trim();
                                 gg.InventoryGroup = rd["InventoryGroup"].ToString().Trim();
                                 gg.GroupType = rd["GroupType"].ToString().Trim();
+                                gg.Type = rd["Type"].ToString().Trim();
+                                gg.InventoryGroup = rd["InventoryGroup"].ToString().Trim();
+                                gg.BaseUOM = rd["BaseUOM"].ToSt().Trim();
                                 gg.PurchaseUOM = rd["PurchaseUOM"].ToString().Trim();
                                 gg.SalesUOM = rd["SalesUOM"].ToString().Trim();
                                 gg.ConsumptionUOM = rd["ConsumptionUOM"].ToString().Trim();
-                                gg.BaseUOM = rd["BaseUOM"].ToString().Trim();
-                                gg.CustomerPartName = rd["CustomerPartName"].ToString().Trim();
-                                gg.CustomerPartNo = rd["CustomerPartNo"].ToString().Trim();
-                                gg.Type = rd["Type"].ToString().Trim();
                                 gg.VatType = rd["VatType"].ToString().Trim();
                                 gg.chkDrawing = dbClss.TBo(rd["chkDrawing"]);
                                 gg.Drawing = rd["Drawing"].ToString().Trim();
                                 gg.VendorNo = rd["VendorNo"].ToString().Trim();
                                 gg.VendorName = rd["VendorName"].ToString().Trim();
-                                //gg.UseTacking = rd["UseTacking"].ToString().Trim();
-                                int Timebucket = 0; int.TryParse(rd["Timebucket"].ToString(), out Timebucket);
+                                gg.ReplenishmentType = rd["ReplenishmentType"].ToString().Trim();
+                                gg.ReorderType = rd["ReorderType"].ToSt().Trim();
+
+                                int Timebucket = 0; //int.TryParse(rd["Timebucket"].ToString(), out Timebucket);
                                 gg.Timebucket = Timebucket;
-                                decimal MaximumQty = 0; decimal.TryParse(rd["MaximumQty"].ToString(), out MaximumQty);
+                                decimal MaximumQty = 0; decimal.TryParse(rd["MinimumQty"].ToString(), out MaximumQty);
                                 gg.MaximumQty = MaximumQty;
                                 decimal MinimumQty = 0; decimal.TryParse(rd["MinimumQty"].ToString(), out MinimumQty);
                                 gg.MinimumQty = MinimumQty;
-                                decimal ReOrderPoint = 0; decimal.TryParse(rd["ReOrderPoint"].ToString(), out ReOrderPoint);
+                                decimal ReOrderPoint = 0; decimal.TryParse(rd["ReorderPoint"].ToString(), out ReOrderPoint);
                                 gg.ReorderPoint = ReOrderPoint;
                                 decimal ReorderQty = 0; decimal.TryParse(rd["ReorderQty"].ToString(), out ReorderQty);
                                 gg.ReorderQty = ReorderQty;
                                 decimal SafetyStock = 0; decimal.TryParse(rd["SafetyStock"].ToString(), out SafetyStock);
                                 gg.SafetyStock = SafetyStock;
+                                decimal MaximumInventory = 0; decimal.TryParse(rd["MaximumInventory"].ToString(), out MaximumInventory);
+                                gg.MaximumInventory = MaximumInventory;
+                                gg.BillOfMaterials = dbClss.TInt(rd["BillOfMaterials"]);
+                                gg.Routing = dbClss.TInt(rd["Routing"]);
+                                gg.WorkCenter = 0;
+                                gg.ItemUOM = 0;
+                                gg.Inspection = dbClss.TBo(rd["Inspection"]);
+                                gg.Location = dbClss.TSt(rd["Location"]);
+                                gg.TakingLot = dbClss.TBo(rd["TakingLot"]);
+                                gg.ShelfNo = dbClss.TSt(rd["ShelfNo"]);
                                 gg.Active = dbClss.TBo(rd["Active"]);
+                                gg.StandardPrice = dbClss.TDe(rd["StandardPrice"]);
+                                gg.StandardCost = dbClss.TDe(rd["StandardCost"]);
                                 gg.InternalLeadTime = dbClss.TInt(rd["InternalLeadTime"]);
-
+                                gg.CreateBy = dbClss.TSt(rd["CreateBy"]);
+                                gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                                 db.mh_Items.InsertOnSubmit(gg);
                                 db.SubmitChanges();
 
