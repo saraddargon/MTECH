@@ -145,12 +145,6 @@
     <Compile Include="Process\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Acciden_t_Slip_FG.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Acciden_t_Slip_FG.Designer.cs">
-      <DependentUpon>Acciden_t_Slip_FG.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\ApproveList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -342,6 +336,12 @@
     </Compile>
     <Compile Include="Process\Acciden_t_Slip.Designer.cs">
       <DependentUpon>Acciden_t_Slip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Accident_FG.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Accident_FG.Designer.cs">
+      <DependentUpon>Accident_FG.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Shipping_FG_2.cs">
       <SubType>Form</SubType>
@@ -1109,9 +1109,6 @@
     <EmbeddedResource Include="Process\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Acciden_t_Slip_FG.resx">
-      <DependentUpon>Acciden_t_Slip_FG.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\ApproveList.resx">
       <DependentUpon>ApproveList.cs</DependentUpon>
     </EmbeddedResource>
@@ -1207,6 +1204,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Acciden_t_Slip.resx">
       <DependentUpon>Acciden_t_Slip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Accident_FG.resx">
+      <DependentUpon>Accident_FG.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Shipping_FG_2.resx">
       <DependentUpon>Shipping_FG_2.cs</DependentUpon>
