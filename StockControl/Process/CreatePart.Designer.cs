@@ -3009,14 +3009,14 @@
             this.btnAdd_Item,
             this.btnDel_Item});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(121, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 70);
             // 
             // btnAdd_Item
             // 
             this.btnAdd_Item.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAdd_Item.Enabled = false;
             this.btnAdd_Item.Name = "btnAdd_Item";
-            this.btnAdd_Item.Size = new System.Drawing.Size(120, 22);
+            this.btnAdd_Item.Size = new System.Drawing.Size(152, 22);
             this.btnAdd_Item.Text = "เพิ่ม พาร์ท";
             this.btnAdd_Item.Click += new System.EventHandler(this.btnAdd_Item_Click);
             // 
@@ -3025,7 +3025,7 @@
             this.btnDel_Item.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnDel_Item.Enabled = false;
             this.btnDel_Item.Name = "btnDel_Item";
-            this.btnDel_Item.Size = new System.Drawing.Size(120, 22);
+            this.btnDel_Item.Size = new System.Drawing.Size(152, 22);
             this.btnDel_Item.Text = "ลบ พาร์ท";
             this.btnDel_Item.Click += new System.EventHandler(this.btnDel_Item_Click);
             // 

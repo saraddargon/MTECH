@@ -1601,6 +1601,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
     </None>
+    <None Include="Process\Report\Excel_001_Part_Export.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
