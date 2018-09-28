@@ -1138,5 +1138,26 @@ namespace StockControl
             so.ShowDialog();
         }
 
+        private void btnExportFile_Click(object sender, EventArgs e)
+        {
+            ExportE();
+        }
+        void ExportE()
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                //string tFile =
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
     }
 }

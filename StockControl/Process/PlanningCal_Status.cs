@@ -182,7 +182,7 @@ namespace StockControl
                             PCSUnit = tdata.PCSUnit_BaseUOM,
                             Qty = reorderQty,
                             Remark = "Reorder for Safety Stock",
-                            ReplenishmentType = "",
+                            ReplenishmentType = "Production",
                             ReqDate = dTo,
                             ReqReceiveDate = dTo,
                             Status = "Waiting",

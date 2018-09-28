@@ -1051,6 +1051,21 @@ namespace StockControl
                             if (uom != null) pcsunit = uom.QuantityPer;
                             foreach(var ss in st)
                             {
+                                //คืน Qty Customer P/O Dt
+                                var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == d.idCstmPODt).FirstOrDefault();
+                                if (cstmpo != null)
+                                {
+                                    cstmpo.OutQty += d.Qty;
+                                    db.SubmitChanges();
+                                }
+                                //คืน Qty Production ORder
+                                var pro = db.mh_ProductionOrders.Where(x => x.id == d.idJob).FirstOrDefault();
+                                if (pro != null)
+                                {
+                                    pro.OutQty += d.Qty;
+                                    db.SubmitChanges();
+                                }
+
                                 //เขียน ship ออก จาก id tb_Stock
                                 db.sp_057_Cut_Stock(pkNo, ss.CodeNo, ss.TLQty, ClassLib.Classlib.User
                                     , "", m.PackingNo, d.id, "Warehouse", "Shipping", "Shipping - Cancel Packing", 3
@@ -1085,7 +1100,7 @@ namespace StockControl
                                     Status = "Completed",
                                     ToLocation = "Warehouse",
                                     UnitCost = ss.UnitCost,
-                                    UnitShip = tool.BaseUOM
+                                    UnitShip = tool.BaseUOM,
                                 };
                                 db.tb_Shippings.InsertOnSubmit(shipDt);
                                 db.SubmitChanges();
