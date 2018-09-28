@@ -300,6 +300,7 @@
             this.btnImportCSV.Text = "Import .csv";
             this.btnImportCSV.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnImportCSV.UseCompatibleTextRendering = false;
+            this.btnImportCSV.Click += new System.EventHandler(this.btnImportCSV_Click);
             // 
             // btnExportFile
             // 
