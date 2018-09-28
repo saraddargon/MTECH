@@ -284,6 +284,8 @@ namespace StockControl
                         m.CreateDate = DateTime.Now;
                         m.PackingNo = dbClss.GetNo(32, 2);
                         db.mh_Packings.InsertOnSubmit(m);
+
+                        dbClss.AddHistory(this.Name, "Packing", $"New document Packing {m.PackingNo}", m.PackingNo);
                     }
                     m.Remark = txtRemark.Text;
                     m.Active = true;
@@ -357,6 +359,8 @@ namespace StockControl
                             job.OutQty -= dt.Qty;
                             if (job.OutQty < 0)
                                 job.OutQty = 0;
+
+                            dbClss.AddHistory("ProductionOrder", "Job Order Sheet", $"Receive by Packing No {m.PackingNo} : {dt.Qty}", job.JobNo);
                         }
                         //Stock
                         if (newItem)
@@ -394,6 +398,7 @@ namespace StockControl
                                     s.idCSTMPODt = 0;
 
                                 cstmpo.podt.OutQty -= s.QTY.ToDecimal();
+                                dbClss.AddHistory("CustomerPO", "Customer P/O", $"Receive by Packing no. {m.PackingNo} : {s.QTY}", cstmpo.pohd.CustomerPONo);
                             }
 
                             s.Type_in_out = "In";
@@ -1038,6 +1043,8 @@ namespace StockControl
                         db.tb_ShippingHs.InsertOnSubmit(shipH);
                         db.SubmitChanges();
 
+                        dbClss.AddHistory(this.Name, "Packing", $"Cancel Packing {pkNo}", pkNo);
+
                         var dt = db.mh_PackingDts.Where(x => x.Active && x.PackingNo == pkNo).ToList();
                         foreach (var d in dt)
                         {
@@ -1049,7 +1056,7 @@ namespace StockControl
                             var uom = db.mh_ItemUOMs.Where(x => x.ItemNo == d.ItemNo && x.UOMCode == tool.BaseUOM).FirstOrDefault();
                             var pcsunit = 1.00m;
                             if (uom != null) pcsunit = uom.QuantityPer;
-                            foreach(var ss in st)
+                            foreach (var ss in st)
                             {
                                 //คืน Qty Customer P/O Dt
                                 var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == d.idCstmPODt).FirstOrDefault();
@@ -1057,6 +1064,10 @@ namespace StockControl
                                 {
                                     cstmpo.OutQty += d.Qty;
                                     db.SubmitChanges();
+
+                                    var po = db.mh_CustomerPOs.Where(x => x.id == cstmpo.idCustomerPO).FirstOrDefault();
+                                    if (po != null)
+                                        dbClss.AddHistory("CustomerPO", "Customer P/O", $"Cancel Packing {pkNo} : {d.Qty}", po.CustomerPONo);
                                 }
                                 //คืน Qty Production ORder
                                 var pro = db.mh_ProductionOrders.Where(x => x.id == d.idJob).FirstOrDefault();
@@ -1064,6 +1075,8 @@ namespace StockControl
                                 {
                                     pro.OutQty += d.Qty;
                                     db.SubmitChanges();
+
+                                    dbClss.AddHistory("ProductionOrder", "Job Order Sheet", $"Cancel Packing {pkNo} : {d.Qty}", pro.JobNo);
                                 }
 
                                 //เขียน ship ออก จาก id tb_Stock
