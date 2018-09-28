@@ -300,6 +300,7 @@
             this.btnImportCSV.Text = "Import .csv";
             this.btnImportCSV.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnImportCSV.UseCompatibleTextRendering = false;
+            this.btnImportCSV.Click += new System.EventHandler(this.btnImportCSV_Click);
             // 
             // btnExportFile
             // 
@@ -309,6 +310,7 @@
             this.btnExportFile.Text = "Export file";
             this.btnExportFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnExportFile.UseCompatibleTextRendering = false;
+            this.btnExportFile.Click += new System.EventHandler(this.btnExportFile_Click);
             // 
             // radRibbonBarGroup3
             // 

@@ -54,6 +54,9 @@ namespace StockControl
             }
 
             dgvData.AutoGenerateColumns = false;
+
+            cbbStatus.SelectedIndex = 1;
+
             DataLoad();
 
 
