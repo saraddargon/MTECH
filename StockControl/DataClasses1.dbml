@@ -5009,4 +5009,22 @@
     <Parameter Name="Condition" Parameter="condition" Type="System.String" DbType="VarChar(50)" />
     <Return Type="System.Int32" />
   </Function>
+  <Function Name="dbo.sp_079_JobChart" Method="sp_079_JobChart">
+    <Parameter Name="JobNo" Parameter="jobNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="dFrom" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="dTo" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="sp_079_JobChartResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idD" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="FGNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="FGName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ReqDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Start" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="[End]" Member="End" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(9) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>
