@@ -596,13 +596,11 @@
             gridViewTextBoxColumn14.EnableExpressionEditor = false;
             gridViewTextBoxColumn14.FieldName = "idCSTMPODt";
             gridViewTextBoxColumn14.HeaderText = "idCSTMPODt";
-            gridViewTextBoxColumn14.IsVisible = false;
             gridViewTextBoxColumn14.Name = "idCSTMPODt";
             gridViewTextBoxColumn14.ReadOnly = true;
             gridViewTextBoxColumn15.EnableExpressionEditor = false;
             gridViewTextBoxColumn15.FieldName = "idProductionOrderRM";
             gridViewTextBoxColumn15.HeaderText = "idProductionOrderRM";
-            gridViewTextBoxColumn15.IsVisible = false;
             gridViewTextBoxColumn15.Name = "idProductionOrderRM";
             gridViewTextBoxColumn15.ReadOnly = true;
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {

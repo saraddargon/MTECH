@@ -168,8 +168,8 @@ namespace StockControl
                     bool fRow = true;
                     foreach (var id in idList)
                     {
-                        var c = db.mh_CustomerPODTs.Where(x => x.id == id).ToList();
-                        if (fRow)
+                        var c = db.mh_CustomerPODTs.Where(x => x.id == id && x.OutSO>0).ToList();
+                        if (fRow && c.Count>0)
                         {
                             var dd = db.mh_CustomerPOs.Where(x => x.id == dbClss.TInt(c.FirstOrDefault().idCustomerPO)).ToList();
                             if (dd.Count > 0)
@@ -446,13 +446,17 @@ namespace StockControl
                                 updateOutSO_Customer();
 
                                 baseClass.Info("Delete Sale Order complete.");
-                                ClearData();
+                                //ClearData();
                                 btnNew_Click(null, null);
                             }
                             else
                                 baseClass.Warning("Sale Order Status cannot Delete.");
                         }
                     }
+                }
+                else
+                {
+                    btnNew_Click(null, null);
                 }
 
             }
@@ -885,7 +889,7 @@ namespace StockControl
         {
             try
             {
-                if (dgvData.Rows.Count < 0)
+                if (dgvData.Rows.Count <= 0)
                     return;
 
                 if (Ac.Equals("New") || Ac.Equals("Edit"))
@@ -1140,7 +1144,9 @@ namespace StockControl
 
                         using (var db = new DataClasses1DataContext())
                         {
-                            var c = db.mh_CustomerPODTs.Where(x => x.id == id && Convert.ToBoolean(x.forSafetyStock)==false).ToList();
+                            var c = db.mh_CustomerPODTs.Where(x => x.id == id 
+                            && x.OutSO >0
+                            && Convert.ToBoolean(x.forSafetyStock)==false).ToList();
                             if (c.Count > 0)
                             {
                                 var dd = db.mh_CustomerPOs.Where(x => x.id == dbClss.TInt(c.FirstOrDefault().idCustomerPO)).ToList();

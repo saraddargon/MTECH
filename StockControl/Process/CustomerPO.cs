@@ -259,7 +259,7 @@ namespace StockControl
             try
             {
                 int id = txtid.Text.ToInt();
-                if (id == 0) { }
+                if (id == 0) { btnNew_Click(null, null); }
                 else
                 {
                     using (var db = new DataClasses1DataContext())
@@ -285,6 +285,7 @@ namespace StockControl
                             db.SubmitChanges();
 
                             dbClss.AddHistory(this.Name, "Customer P/O", $"Cancel Customer P/O {m.CustomerPONo}", m.CustomerPONo);
+                            btnNew_Click(null, null);
                         }
                         else
                         {
@@ -293,6 +294,7 @@ namespace StockControl
                         }
                     }
                 }
+               
 
                 baseClass.Info("Delete Customer P/O complete.\n");
             }
@@ -701,7 +703,7 @@ namespace StockControl
         {
             try
             {
-                if (dgvData.Rows.Count < 0) return;
+                if (dgvData.Rows.Count <= 0) return;
                 if (dgvData.CurrentCell == null) return;
 
                 var row = dgvData.CurrentCell.RowInfo;

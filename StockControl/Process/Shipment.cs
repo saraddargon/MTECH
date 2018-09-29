@@ -524,7 +524,7 @@ namespace StockControl
                                 updateOutSO();
 
                                 baseClass.Info("Delete Shipment complete.");
-                                ClearData();
+                               // ClearData();
                                 btnNew_Click(null, null);
                             }
                             else
@@ -532,7 +532,9 @@ namespace StockControl
                         }
                     }
                 }
-               
+                else
+                    btnNew_Click(null, null);
+
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }

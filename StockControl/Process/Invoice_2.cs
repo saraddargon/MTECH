@@ -472,6 +472,8 @@ namespace StockControl
                         }
                     }
                 }
+                else
+                    btnNew_Click(null, null);
 
 
             }
