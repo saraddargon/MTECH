@@ -635,6 +635,7 @@
             this.radButtonElement3.Name = "radButtonElement3";
             this.radButtonElement3.Text = "Export file";
             this.radButtonElement3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.radButtonElement3.Click += new System.EventHandler(this.radButtonElement3_Click);
             // 
             // radRibbonBarGroup8
             // 

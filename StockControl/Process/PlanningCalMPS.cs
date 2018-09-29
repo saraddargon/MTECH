@@ -695,6 +695,11 @@ namespace StockControl
             var j = new CreatePR_List();
             j.ShowDialog();
         }
+
+        private void radButtonElement3_Click(object sender, EventArgs e)
+        {
+            dbClss.ExportGridXlSX(dgvData);
+        }
     }
 
 }

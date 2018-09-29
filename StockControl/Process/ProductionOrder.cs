@@ -128,7 +128,19 @@ namespace StockControl
 
                         //Load Pr in Job
                         LoadPRwithJob(t.RefDocId);
-
+                        //Load Shipping History
+                        var ship1 = db.tb_Shippings.Where(x => x.idCSTMPODt == t.RefDocId).ToList();
+                        foreach (var s in ship1)
+                        {
+                            var shipH = db.tb_ShippingHs.Where(x => x.ShippingNo == s.ShippingNo).FirstOrDefault();
+                            if (shipH == null) continue;
+                            var tool = db.mh_Items.Where(x => x.InternalNo == s.CodeNo).FirstOrDefault();
+                            if (tool == null) continue;
+                            addRow2(s.id, s.CodeNo, tool.InternalName, s.QTY.Value, s.UnitShip, s.PCSUnit.ToDecimal()
+                                , tool.GroupType, tool.Type, tool.InventoryGroup, s.ShippingNo
+                                , shipH.ShipDate.Value.Date, s.Status);
+                        }
+                        //var ship2 = db.tb_
 
                         SetRowNo1(dgvData);
                         SetRowNo1(dgvPurchase);
@@ -176,6 +188,25 @@ namespace StockControl
             //    rowe.Cells["Shipped"].Value = 0.00m;
             //    rowe.Cells["OutShip"].Value = qty;
             //}
+        }
+        private void addRow2(int id, string ItemNo, string ItemName, decimal Qty, string UOM
+            , decimal PCSUnit, string GroupType, string Type, string InvGroup
+            , string RefNo, DateTime ShipDate, string Status)
+        {
+            var rowe = dgvShipHistory.Rows.AddNew();
+            rowe.Cells["RNo"].Value = rowe.Index + 1;
+            rowe.Cells["ItemNo"].Value = ItemNo;
+            rowe.Cells["ItemName"].Value = ItemName;
+            rowe.Cells["Qty"].Value = Qty;
+            rowe.Cells["UOM"].Value = UOM;
+            rowe.Cells["PCSUnit"].Value = PCSUnit;
+            rowe.Cells["id"].Value = id;
+            rowe.Cells["GroupType"].Value = GroupType;
+            rowe.Cells["Type"].Value = Type;
+            rowe.Cells["InvGroup"].Value = InvGroup;
+            rowe.Cells["RefNo"].Value = RefNo;
+            rowe.Cells["ShipDate"].Value = ShipDate;
+            rowe.Cells["Status"].Value = Status;
         }
 
         void LoadPRwithJob(int idCustomerPoDt)
@@ -303,6 +334,8 @@ namespace StockControl
             dgvData.Rows.Clear();
             dgvPurchase.DataSource = null;
             dgvPurchase.Rows.Clear();
+            dgvShipHistory.DataSource = null;
+            dgvShipHistory.Rows.Clear();
 
             t_JobNo = "";
         }
@@ -1512,6 +1545,11 @@ namespace StockControl
         void AddHistory(string Detail, string DocNo)
         {
             dbClss.AddHistory(this.Name, "Job Order Sheet", Detail, DocNo);
+        }
+
+        private void btnExportFile_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
