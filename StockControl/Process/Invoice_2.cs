@@ -638,7 +638,7 @@ namespace StockControl
                             nd.Status = "Process";
                             nd.RefId = Convert.ToInt16(rd.Cells["RefId"].Value);
                             nd.Active = Convert.ToBoolean(true);
-                            
+                          
                             db.mh_InvoiceDTs.InsertOnSubmit(nd);
                             db.SubmitChanges();
 
@@ -650,24 +650,32 @@ namespace StockControl
                                          where
                                                    ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
                                          select ix).ToList();
-                                if (v.Count > 0)
-                                {
-                                    var p = (from ix in db.mh_ShipmentDTs
-                                             where
-                                                ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
-                                             select ix).First();
+                            if (v.Count > 0)
+                            {
+                                var p = (from ix in db.mh_ShipmentDTs
+                                         where
+                                            ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
+                                         select ix).First();
 
-                                    p.OutInv = p.OutInv - Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
-                                    if (p.OutInv <= 0)
-                                        p.OutInv = 0;
+                                p.OutInv = p.OutInv - Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
+                                if (p.OutInv <= 0)
+                                    p.OutInv = 0;
 
-                                    dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "ลบ OutInv : " + (rd.Cells["Qty"].Value.ToSt())
+                                if (dbClss.TDe(p.OutShip) == dbClss.TDe(p.Qty))
+                                    p.Status = "Waiting";
+                                else if (dbClss.TDe(p.OutInv) == 0)
+                                    p.Status = "Completed";
+                                else
+                                    p.Status = "Process";
+
+                                dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "ลบ OutInv : " + (rd.Cells["Qty"].Value.ToSt())
                                     + " ShipmentNo :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
                                     + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
 
-                                    db.SubmitChanges();
+                                db.SubmitChanges();
 
-                                }
+                                db.sp_058_Cal_ShipmentHD_Status(p.SSNo);
+                            }
                             //}
                             //else if (Type_Button == 2)
                             //{
@@ -749,31 +757,38 @@ namespace StockControl
 
                 //if (Type_Button == 1)
                 //{
-                    foreach (GridViewRowInfo rd in dgvData.Rows)
+                foreach (GridViewRowInfo rd in dgvData.Rows)
+                {
+                    var v = (from ix in db.mh_ShipmentDTs
+                             where
+                                       ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
+                             select ix).ToList();
+                    if (v.Count > 0)
                     {
-                        var v = (from ix in db.mh_ShipmentDTs
+                        var p = (from ix in db.mh_ShipmentDTs
                                  where
-                                           ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
-                                 select ix).ToList();
-                        if (v.Count > 0)
-                        {
-                            var p = (from ix in db.mh_ShipmentDTs
-                                     where
-                                        ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
-                                     select ix).First();
+                                    ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
+                                 select ix).First();
 
-                            p.OutInv = p.OutInv + Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
-                            if (p.Qty < p.OutInv)
-                                p.OutInv = p.Qty;
+                        p.OutInv = p.OutInv + Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
+                        if (p.Qty < p.OutInv)
+                            p.OutInv = p.Qty;
 
-                            dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "บวก OutShip เพราะลบ Invoice : " + (rd.Cells["Qty"].Value.ToSt())
-                            + " ShipmentNo :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
-                            + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
+                        if (dbClss.TDe(p.OutShip) == dbClss.TDe(p.Qty))
+                            p.Status = "Waiting";
+                        else if (dbClss.TDe(p.OutInv) == 0)
+                            p.Status = "Completed";
+                        else
+                            p.Status = "Process";
+                        
+                        dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "บวก OutShip เพราะลบ Invoice : " + (rd.Cells["Qty"].Value.ToSt())
+                        + " ShipmentNo :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
+                        + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
 
-                            db.SubmitChanges();
-
-                        }
+                        db.SubmitChanges();
+                        db.sp_058_Cal_ShipmentHD_Status(p.SSNo);
                     }
+                }
                 //}
                 //else if (Type_Button == 2)
                 //{

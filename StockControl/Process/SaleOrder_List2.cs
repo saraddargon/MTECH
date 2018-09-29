@@ -229,6 +229,26 @@ namespace StockControl
             //selRow();
             //demo();
 
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    if (dgvData.Rows.Count <= 0)
+                        return;
+
+
+                    dgvData.EndEdit();
+                    string temp = "";
+                    temp = dbClss.TSt(e.Row.Cells["SONo"].Value);
+                    if (temp != "")
+                    {
+                        SaleOrder a = new SaleOrder(temp);
+                        a.ShowDialog();
+                    }
+                }
+            }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
+
         }
         void selRow()
         {

@@ -354,12 +354,44 @@ namespace StockControl
         {
             if (Condition.Equals("-") || Condition.Equals("New"))
             {
+                cboCustomer.Enabled = ss;
+                txtAddress.Enabled = ss;
+                dtSODate.Enabled = ss;
+                dgvData.ReadOnly = false;
+                txtRemark.Enabled = ss;
+                cbVat.Enabled = ss;
+                txtVatA.Enabled = ss;
+                txtContactName.Enabled = ss;
+                txtEmail.Enabled = ss;
+                txtFax.Enabled = ss;
+                txtTel.Enabled = ss;
+
             }
             else if (Condition.Equals("View"))
             {
+                cboCustomer.Enabled = ss;
+                txtAddress.Enabled = ss;
+                dtSODate.Enabled = ss;
+                dgvData.ReadOnly = true;
+                txtRemark.Enabled = ss;
+                cbVat.Enabled = ss;
+                txtVatA.Enabled = ss;
+                txtEmail.Enabled = ss;
+                txtFax.Enabled = ss;
+                txtTel.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
+                cboCustomer.Enabled = ss;
+                txtAddress.Enabled = ss;
+                dtSODate.Enabled = ss;
+                dgvData.ReadOnly = false;
+                txtRemark.Enabled = ss;
+                cbVat.Enabled = ss;
+                txtVatA.Enabled = ss;
+                txtEmail.Enabled = ss;
+                txtFax.Enabled = ss;
+                txtTel.Enabled = ss;
             }
         }
 
@@ -368,6 +400,8 @@ namespace StockControl
             // txtCSTMNo.Text = "";
             dtSODate.Value = DateTime.Now;
             txtSHNo.Text = "";
+            cboCustomer.SelectedIndex = -1;
+            cboCustomer.Text = "";
             txtCSTMNo.Text = "";
             dtSODate.Value = DateTime.Today;
             dgvData.Rows.Clear();
@@ -518,7 +552,7 @@ namespace StockControl
                                         pp.Status = "Cancel";
                                     }
                                 }
-
+                                
                                 db.SubmitChanges();
 
                                 updateOutSO();
@@ -548,7 +582,7 @@ namespace StockControl
             string err = "";
             try
             {
-                if (cboCustomer.SelectedValue.ToSt() == "" || txtCSTMNo.Text == "")
+                if (cboCustomer.Text.ToSt() == "" || txtCSTMNo.Text == "")
                     err += " “Customer:” is empty \n";
                 if (dtSODate.Text == "")
                     err += " “Delivery Date:” is empty \n";
@@ -561,7 +595,11 @@ namespace StockControl
                     {
                         if (item.Cells["Qty"].Value.ToDecimal() <= 0)
                             err += " “Qty:” is less than 0 \n";
-
+                        else
+                        {
+                            if(item.Cells["Qty"].Value.ToDecimal()> item.Cells["Remain"].Value.ToDecimal())
+                                err += " “Qty:” is more than Remain \n";
+                        }
                         //string itemNo = item.Cells["ItemNo"].Value.ToSt();
                         //if (itemNo == "") continue;
                         //if (item.Cells["ReqDate"].Value == null)
@@ -778,7 +816,8 @@ namespace StockControl
                         sh1.VatType = dbClss.TSt(rd.Cells["VatType"].Value);
                         sh1.DL = false;
                         sh1.Active = true;
-                        
+                        sh1.Status = "Waiting";
+                        sh1.LocationItem = dbClss.TSt(rd.Cells["LocationItem"].Value);
                         db.mh_ShipmentDTs.InsertOnSubmit(sh1);
                         db.SubmitChanges();
                         dbClss.AddHistory(this.Name, "เพิ่ม Shipment", "สร้าง Shipment [ ItemNo : " + dbClss.TSt(rd.Cells["ItemNo"].Value) +" Qty : "+ dbClss.TSt(rd.Cells["Qty"].Value)+" Unit : "+ dbClss.TSt(rd.Cells["Unit"].Value) + "]", txtSHNo.Text);
@@ -797,14 +836,13 @@ namespace StockControl
                                      select ix).First();
 
                             p.OutShip = p.OutShip - Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
-                           
-
+                            
                             dbClss.AddHistory(this.Name, "ปรับสถานะ mh_SaleOrderDTs ", "ปรับ OutShip เพราะมีการทำ Shipment : " + rd.Cells["ItemNo"].ToSt() + " จำนวน : " + (rd.Cells["Qty"].Value.ToSt())
                             + " SaleOrderDT :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
                             + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
 
                             db.SubmitChanges();
-
+                            db.sp_058_Cal_SaleOrderHD_Status(p.SONo);
                         }
 
 
@@ -854,12 +892,14 @@ namespace StockControl
                         if (p.Qty < p.OutShip)
                             p.OutShip = p.Qty;
 
+                        
+
                         dbClss.AddHistory(this.Name, "ปรับสถานะ mh_SaleOrderDTs ", "ปรับ OutShip เพราะลบ Shipment : "+ rd.Cells["ItemNo"].ToSt() +" จำนวน : " + (rd.Cells["Qty"].Value.ToSt())
                         + " SaleOrderDT :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
                         + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
 
                         db.SubmitChanges();
-
+                        db.sp_058_Cal_SaleOrderHD_Status(p.SONo);
                     }
                 }
             }
@@ -874,6 +914,17 @@ namespace StockControl
                 if (e.RowIndex >= -1)
                 {
                     var itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
+                    if ( e.Column.Name.Equals("Qty"))
+                    {
+                        decimal Qty = dbClss.TDe(dgvData.Rows[e.RowIndex].Cells["Qty"].Value);
+                        decimal Remain = dbClss.TDe(dgvData.Rows[e.RowIndex].Cells["Remain"].Value);
+                        if(Qty>Remain)
+                        {
+                            MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
+                            dgvData.Rows[e.RowIndex].Cells["Qty"].Value = Remain;
+                        }
+
+                    }
                     if (e.Column.Name.Equals("UnitPrice") || e.Column.Name.Equals("Qty"))
                     {
                         if (e.Row.Cells["Qty"].Value.ToDecimal() > 0)
@@ -884,9 +935,9 @@ namespace StockControl
                         else
                             dgvData.Rows[e.RowIndex].Cells["Amount"].Value = 0;
 
-                        e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                        e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                        CallTotal();
+                        //e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                        //e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                        ////CallTotal();
                     }
                     else if (e.Column.Name.Equals("ItemNo"))
                     {
@@ -920,8 +971,8 @@ namespace StockControl
                                 e.Row.Cells["ItemName"].Value = t.InternalName;
                                 // e.Row.Cells["Unit"].Value = t.BaseUOM;
                                 e.Row.Cells["PCSUnit"].Value = pcsunit;
-                                e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                                e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                                //e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                                //e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                             }
 
                             //
@@ -937,13 +988,13 @@ namespace StockControl
                             var pcsunit = (u != null) ? u.QuantityPer : 1;
 
                             e.Row.Cells["PCSUnit"].Value = pcsunit;
-                            e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                            e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                            //e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
+                            //e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         }
                     }
 
                     e.Row.Cells["dgvC"].Value = "T";
-                    //CallTotal();
+                    CallTotal();
                 }
             }
             catch { }
@@ -984,7 +1035,7 @@ namespace StockControl
                 rowE.Cells["ItemNo"].Value = ItemNo;
                 rowE.Cells["ItemName"].Value = ItemName;
                 rowE.Cells["Description"].Value = Desc;
-                rowE.Cells["Location"].Value = Location;
+                //rowE.Cells["Location"].Value = Location;
                 rowE.Cells["Qty"].Value = Qty;
                 rowE.Cells["Unit"].Value = UOM;
                 rowE.Cells["PCSUnit"].Value = PCSUnit;
@@ -1443,7 +1494,7 @@ namespace StockControl
                 ee.Cells["RefDocNo"].Value = RefDocNo;
                 ee.Cells["OutInv"].Value = OutInv;
                 ee.Cells["dgvA"].Value = dgvA;
-                ee.Cells["Location"].Value = Location;
+                //ee.Cells["Location"].Value = Location;
                 ee.Cells["LocationItem"].Value = LocationItem;
                 ee.Cells["id"].Value = id;
                 ee.Cells["RefId"].Value = refid;
@@ -1586,6 +1637,11 @@ namespace StockControl
         private void btnAddPart_Click_1(object sender, EventArgs e)
         {
             radButton2_Click(null, null);
+        }
+
+        private void cboCustomer_Leave(object sender, EventArgs e)
+        {
+            cboCustomer_SelectedIndexChanged(null, null);
         }
     }
 

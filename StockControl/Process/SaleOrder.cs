@@ -471,7 +471,7 @@ namespace StockControl
             string err = "";
             try
             {
-                if (cbbCSTM.SelectedValue.ToSt() == "" || txtCSTMNo.Text == "")
+                if (cbbCSTM.Text.ToSt() == "" || txtCSTMNo.Text == "")
                     err += " “Customer:” is empty \n";
                 if (dgvData.Rows.Where(x => x.IsVisible).Count() < 1)
                     err += " “Items:” is empty \n";

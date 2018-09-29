@@ -225,8 +225,9 @@ namespace StockControl
                             decimal Pcsunit = 0;
                             mh_Item im = db.mh_Items.Where(m => m.InternalNo == rd.Cells["ItemNo"].Value.ToSt()).FirstOrDefault();
                             if (im != null)
-                            {
-                                decimal.TryParse(rd.Cells["Qty"].Value.ToString(), out Qty);
+
+                                decimal.TryParse(rd.Cells["Remain"].Value.ToString(), out Qty);
+                            //decimal.TryParse(rd.Cells["Qty"].Value.ToString(), out Qty);
                                 decimal.TryParse(rd.Cells["UnitPrice"].Value.ToString(), out UnitPrice);
                                 decimal.TryParse(rd.Cells["PCSUnit"].Value.ToString(), out Pcsunit);
                                 //decimal ShipQty = dbClss.TDe(rd.Cells["ShipQty"].Value);
@@ -236,8 +237,8 @@ namespace StockControl
                                 if (Pcsunit == 0)
                                     Pcsunit = 1;
 
-                                if (Qty == 0)
-                                    Qty = 1;
+                                //if (Qty == 0)
+                                //    Qty = 1;
 
                                 rows1 += 1;
                                 mh_ShipmentDTTemp st = new mh_ShipmentDTTemp();
@@ -267,7 +268,7 @@ namespace StockControl
                             }
                         }
                     }
-                }
+                
 
             }
             catch { }

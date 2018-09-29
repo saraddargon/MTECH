@@ -736,12 +736,20 @@ namespace StockControl
                                         if (p.OutShip <= 0)
                                             p.OutShip = 0;
 
+
+                                        if (dbClss.TDe(p.OutShip) == dbClss.TDe(p.Qty))
+                                            p.Status = "Waiting";
+                                        else if (dbClss.TDe(p.OutInv) == 0)
+                                            p.Status = "Completed";
+                                        else
+                                            p.Status = "Process";
+
                                         dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "ลบ OutShip : " + (QTY.ToSt())
                                         + " ShippingFG :" + dbClss.TSt(g.Cells["RefNo"].Value)
                                         + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", dbClss.TSt(g.Cells["RefNo"].Value));
 
                                         db.SubmitChanges();
-
+                                        db.sp_058_Cal_ShipmentHD_Status(p.SSNo);
                                     }
                                 }
                             }
@@ -2207,12 +2215,19 @@ namespace StockControl
 
                                                 p.OutShip = p.OutShip + Qty;
 
+                                                if (dbClss.TDe(p.OutShip) == dbClss.TDe(p.Qty))
+                                                    p.Status = "Waiting";
+                                                else if (dbClss.TDe(p.OutInv) == 0)
+                                                    p.Status = "Completed";
+                                                else
+                                                    p.Status = "Process";
+
                                                 dbClss.AddHistory(this.Name, "ปรับสถานะ mh_ShipmentDT ", "บวก OutShip เพราะลบ shipping FG  : " + (Qty.ToSt())
                                                 + " ShippingFG :" + dbClss.TSt(vv.RefNo)
                                                 + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", vv.RefNo);
 
                                                 db.SubmitChanges();
-
+                                                db.sp_058_Cal_ShipmentHD_Status(p.SSNo);
                                             }
                                         }
                                     }
