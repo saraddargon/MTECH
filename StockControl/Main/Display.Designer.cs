@@ -362,6 +362,8 @@
             this.imageList4.Images.SetKeyName(5, "report_main.png");
             this.imageList4.Images.SetKeyName(6, "report_Menu (Custom).png");
             this.imageList4.Images.SetKeyName(7, "stock balance main(Custom).png");
+            this.imageList4.Images.SetKeyName(8, "if_industry_44866.png");
+            this.imageList4.Images.SetKeyName(9, "if_cardboard-box_307356.png");
             // 
             // panel2
             // 
