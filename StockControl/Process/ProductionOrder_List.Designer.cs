@@ -653,6 +653,7 @@
             this.cbbStatus.Size = new System.Drawing.Size(186, 20);
             this.cbbStatus.TabIndex = 13;
             this.cbbStatus.ThemeName = "Office2010Blue";
+            this.cbbStatus.SelectedIndexChanged += new Telerik.WinControls.UI.Data.PositionChangedEventHandler(this.cbbStatus_SelectedIndexChanged);
             // 
             // dtTo
             // 

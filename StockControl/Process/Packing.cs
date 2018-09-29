@@ -353,7 +353,7 @@ namespace StockControl
                         db.SubmitChanges(); //Save Detail
 
                         //update OutQty -- Job
-                        var job = db.mh_ProductionOrders.Where(x => x.id == idJob).FirstOrDefault();
+                        var job = db.mh_ProductionOrders.Where(x => x.id == idJob && x.FGNo == dt.ItemNo).FirstOrDefault();
                         if (job != null)
                         {
                             job.OutQty -= dt.Qty;

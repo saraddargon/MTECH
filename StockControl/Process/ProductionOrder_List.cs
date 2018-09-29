@@ -13,6 +13,7 @@ namespace StockControl
     {
         public string t_JobNo = "";
         bool openForm = true;
+        bool canchange = false;
 
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
@@ -57,6 +58,7 @@ namespace StockControl
                 cbbItem.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
 
+            //cbbStatus.SelectedIndex = 2;
             dgvData.AutoGenerateColumns = false;
             DataLoad();
 
@@ -66,7 +68,7 @@ namespace StockControl
                     x.ReadOnly = true;
             });
 
-
+            canchange = true;
         }
         private void DataLoad()
         {
@@ -104,7 +106,7 @@ namespace StockControl
 
                     //setStatus();
                 }
-                openForm = false;
+                //openForm = false;
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             this.Cursor = Cursors.Default;
@@ -413,6 +415,12 @@ namespace StockControl
             Report.Reportx1 op = new Report.Reportx1("ReportProductionList.rpt");
             op.Show();
 
+        }
+
+        private void cbbStatus_SelectedIndexChanged(object sender, Telerik.WinControls.UI.Data.PositionChangedEventArgs e)
+        {
+            if (canchange)
+                openForm = false;
         }
     }
 
