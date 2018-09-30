@@ -411,7 +411,7 @@ namespace StockControl
             Ac = "New";
 
            // getมาไว้ก่อน แต่ยังไมได้ save
-            txtSHNo.Text = StockControl.dbClss.GetNo(5, 0);
+            txtSHNo.Text = StockControl.dbClss.GetNo(35, 0);
         }
 
         private void btnView_Click(object sender, EventArgs e)

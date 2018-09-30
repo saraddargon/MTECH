@@ -77,7 +77,23 @@ namespace StockControl
        
         private void Unit_Load(object sender, EventArgs e)
         {
-            dtDate1.Value = DateTime.Now;
+
+            if (Condition == "RT")
+            {
+                this.Text = "Return List";
+                radRibbonBar1.Text = "Return List";
+                radLabelElement1.Text = "Status : Return List";
+                radRibbonBarGroup1.Text = "Return List";
+            }
+            else if (Condition == "Taking")
+            {
+                this.Text = "Taking List";
+                radRibbonBar1.Text = "Taking List";
+                radLabelElement1.Text = "Status : Taking List";
+                radRibbonBarGroup1.Text = "Taking List";
+            }
+
+                dtDate1.Value = DateTime.Now;
             dtDate2.Value = DateTime.Now;
            
             dgvData.AutoGenerateColumns = false;
@@ -164,6 +180,76 @@ namespace StockControl
                         Add_Item(dgvNo.ToString(), false, vv.ADNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
                             , dbClss.TDe(vv.QTY), vv.Unit, dbClss.TDe(vv.PCSUnit), vv.VendorNo, vv.VendorName, vv.CreateBy, Convert.ToDateTime(vv.CreateDate)
                             , vv.LotNo, vv.ShelfNo, vv.Location, vv.Reason, vv.Status,vv.RefJobCard);
+                    }
+
+
+                }
+
+            }
+        }
+        private void Load_Adjust_Return()
+        {
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+
+                int dgvNo = 0;
+                bool S = false;
+                DateTime inclusiveStart = dtDate1.Value.Date;
+                // Include the *whole* of the day indicated by searchEndDate
+                DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
+
+
+                var r = (from h in db.tb_StockAdjusts
+                         join d in db.tb_StockAdjustHs on h.AdjustNo equals d.ADNo
+                         join i in db.mh_Items on h.CodeNo equals i.InternalNo
+
+                         where h.Status != "Cancel" //&& d.verticalID == VerticalID
+                             && d.Status != "Cancel"
+                             && d.ADNo.Substring(0, 2) == "RT"
+
+                             && h.AdjustNo.Contains(txtADNo.Text)
+                              //  && (h.CreateDate >= inclusiveStart
+                              //&& h.CreateDate < exclusiveEnd)
+                              && (((h.CreateDate >= inclusiveStart
+                               && h.CreateDate < exclusiveEnd)
+                               && cbDate.Checked == true)
+                                || (cbDate.Checked == false)
+                               )
+
+                         select new
+                         {
+                             CodeNo = h.CodeNo,
+                             S = false,
+                             ItemNo = h.ItemNo,
+                             ItemDescription = h.ItemDescription,
+
+                             QTY = h.Qty,
+                             Unit = h.Unit,
+                             PCSUnit = h.PCSUnit,
+                             VendorNo = i.VendorNo,
+                             VendorName = i.VendorName,
+                             CreateBy = h.CreateBy,
+                             CreateDate = h.CreateDate,
+                             LotNo = h.LotNo,
+                             Reason = h.Reason,
+                             Status = i.Active.ToString(),
+                             ADNo = d.ADNo,
+                             ShelfNo = h.ShelfNo,
+                             Location = h.Location,
+                             RefJobCard = h.RefJobCard
+                         }
+               ).ToList();
+                if (r.Count > 0)
+                {
+                    dgvNo = dgvData.Rows.Count() + 1;
+
+                    foreach (var vv in r)
+                    {
+
+
+                        Add_Item(dgvNo.ToString(), false, vv.ADNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
+                            , dbClss.TDe(vv.QTY), vv.Unit, dbClss.TDe(vv.PCSUnit), vv.VendorNo, vv.VendorName, vv.CreateBy, Convert.ToDateTime(vv.CreateDate)
+                            , vv.LotNo, vv.ShelfNo, vv.Location, vv.Reason, vv.Status, vv.RefJobCard);
                     }
 
 
@@ -299,9 +385,12 @@ namespace StockControl
                     try
                     {
                         if(Condition=="Taking")
-                            Load_AdjustTaking();                       
+                            Load_AdjustTaking();
+                        if (Condition == "RT")
+                            Load_Adjust_Return();
                         else
                             Load_Adjust();
+
                         int rowcount = 0;
                         foreach (var x in dgvData.Rows)
                         {
@@ -372,8 +461,13 @@ namespace StockControl
         {
             try
             {
+                if (dgvData.Rows.Count <= 0)
+                    return;
+
                 if (screen.Equals(1))
                 {
+                   
+
                     if (!Convert.ToString(dgvData.CurrentRow.Cells["ADNo"].Value).Equals(""))
                     {
                         ADNo_tt.Text = Convert.ToString(dgvData.CurrentRow.Cells["ADNo"].Value);
