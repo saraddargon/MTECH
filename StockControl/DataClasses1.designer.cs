@@ -360,6 +360,9 @@ namespace StockControl
     partial void Insertmh_CheckStock_List(mh_CheckStock_List instance);
     partial void Updatemh_CheckStock_List(mh_CheckStock_List instance);
     partial void Deletemh_CheckStock_List(mh_CheckStock_List instance);
+    partial void Insertmh_VendorItem(mh_VendorItem instance);
+    partial void Updatemh_VendorItem(mh_VendorItem instance);
+    partial void Deletemh_VendorItem(mh_VendorItem instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -1301,6 +1304,14 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<mh_CheckStock_List>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_VendorItem> mh_VendorItems
+		{
+			get
+			{
+				return this.GetTable<mh_VendorItem>();
 			}
 		}
 		
@@ -45667,6 +45678,164 @@ namespace StockControl
 					this._PCSUnit = value;
 					this.SendPropertyChanged("PCSUnit");
 					this.OnPCSUnitChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_VendorItem")]
+	public partial class mh_VendorItem : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _VendorId;
+		
+		private string _Item;
+		
+		private string _Description;
+		
+		private bool _Active;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnVendorIdChanging(int value);
+    partial void OnVendorIdChanged();
+    partial void OnItemChanging(string value);
+    partial void OnItemChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public mh_VendorItem()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VendorId", DbType="Int NOT NULL")]
+		public int VendorId
+		{
+			get
+			{
+				return this._VendorId;
+			}
+			set
+			{
+				if ((this._VendorId != value))
+				{
+					this.OnVendorIdChanging(value);
+					this.SendPropertyChanging();
+					this._VendorId = value;
+					this.SendPropertyChanged("VendorId");
+					this.OnVendorIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Item", DbType="NVarChar(200)")]
+		public string Item
+		{
+			get
+			{
+				return this._Item;
+			}
+			set
+			{
+				if ((this._Item != value))
+				{
+					this.OnItemChanging(value);
+					this.SendPropertyChanging();
+					this._Item = value;
+					this.SendPropertyChanged("Item");
+					this.OnItemChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(500)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
 				}
 			}
 		}

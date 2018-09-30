@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
 using Telerik.WinControls;
+using System.IO;
 
 namespace StockControl
 {
@@ -97,6 +98,9 @@ namespace StockControl
         {
             try
             {
+                var op = txtAttachFile.Dialog as OpenFileDialog;
+                op.Filter = "(*.pdf)|*.pdf";
+
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     var gt = (from ix in db.mh_CRRNCies select ix).ToList();
@@ -152,6 +156,12 @@ namespace StockControl
                     dgvData.DataSource = null;
                     dgvData.DataSource = m;
 
+                    var a = db.mh_VendorItems.Where(x => x.VendorId == id && x.Active).ToList();
+                    dgvData2.AutoGenerateColumns = false;
+                    dgvData2.DataSource = null;
+                    dgvData2.DataSource = a;
+                    setRowNo();
+
                     if (tAction == TypeAction.View)
                         setEdit(false);
                     else
@@ -200,7 +210,7 @@ namespace StockControl
                 {
                     int id = txtid.Text.ToInt();
                     var vndr = db.mh_Vendors.Where(x => x.id == id).FirstOrDefault();
-                    if(vndr == null)
+                    if (vndr == null)
                     {
                         vndr = new mh_Vendor();
                         db.mh_Vendors.InsertOnSubmit(vndr);
@@ -210,7 +220,6 @@ namespace StockControl
                     vndr.Name = txtName.Text.Trim();
                     vndr.Address = txtAddress.Text.Trim();
                     vndr.ShippingTime = txtShippingTime.Value.ToInt();
-                    vndr.AttachFile = txtAttachFile.Value.ToSt();
                     vndr.VATRegistration = cbVatRegis.Checked;
                     vndr.PriceIncludeingVat = cbPriceIncVat.Checked;
                     vndr.ReceivingAddress = txtShippingAddress.Text.Trim();
@@ -219,6 +228,28 @@ namespace StockControl
                     vndr.DefaultCurrency = cbbCurrency.SelectedValue.ToInt();
                     vndr.Active = cbActive.Checked;
                     db.SubmitChanges();
+                    //file
+                    string fullPath = txtAttachFile.Value.ToSt();
+                    string fName = "";
+                    try
+                    {
+                        if (Path.GetFileName(fullPath) != fullPath)
+                        {
+                            try
+                            {
+                                fName = vndr.id.ToSt() + "_" + Path.GetFileName(fullPath);
+                                File.Copy(fullPath, Path.Combine(baseClass.GetPathServer(PathCode.Vendor), fName), true);
+                                fullPath = fName;
+                            }
+                            catch (Exception ex) { baseClass.Error(ex.Message); fName = ""; }
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        baseClass.Error(ex.Message);
+                    }
+                    vndr.AttachFile = fName;
 
                     txtid.Text = vndr.id.ToSt();
 
@@ -239,6 +270,24 @@ namespace StockControl
                         con.Active = true;
                         if (idDT <= 0)
                             db.mh_VendorContacts.InsertOnSubmit(con);
+                        db.SubmitChanges();
+                    }
+
+                    foreach (var c in dgvData2.Rows)
+                    {
+                        int idDt = c.Cells["id"].Value.ToInt();
+                        string Item = c.Cells["Item"].Value.ToSt();
+                        string Desc = c.Cells["Description"].Value.ToSt();
+                        var v = db.mh_VendorItems.Where(x => x.id == idDt).FirstOrDefault();
+                        if (v == null)
+                        {
+                            v = new mh_VendorItem();
+                            v.VendorId = vndr.id;
+                            db.mh_VendorItems.InsertOnSubmit(v);
+                        }
+                        v.Item = Item;
+                        v.Description = Desc;
+                        v.Active = true;
                         db.SubmitChanges();
                     }
 
@@ -280,12 +329,12 @@ namespace StockControl
                 dgvData.EndEdit();
                 if (MessageBox.Show("Do you want to Delete ( " + name + " ) ?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    if(id > 0)
+                    if (id > 0)
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
                             var v = db.mh_Vendors.Where(x => x.id == id).FirstOrDefault();
-                            if(v != null)
+                            if (v != null)
                             {
                                 v.Active = false;
                                 db.SubmitChanges();
@@ -400,7 +449,7 @@ namespace StockControl
                     err += "- Vat Group is empty.\n";
                 if (cbbCurrency.SelectedValue.ToInt() == 0)
                     err += "- Currency is empty.\n";
-                if(dgvData.Rows.Count == 0)
+                if (dgvData.Rows.Count == 0)
                 {
                     err += "- Vendor contact is empty.\n";
                 }
@@ -704,12 +753,12 @@ namespace StockControl
             if (dgvData.CurrentCell == null) return;
             var rowe = dgvData.CurrentCell.RowInfo;
             int idDt = rowe.Cells["id"].Value.ToInt();
-            if(idDt > 0)
+            if (idDt > 0)
             {
                 using (var db = new DataClasses1DataContext())
                 {
                     var m = db.mh_VendorContacts.Where(x => x.id == idDt).FirstOrDefault();
-                    if(m != null)
+                    if (m != null)
                     {
                         m.Active = true;
                         db.SubmitChanges();
@@ -717,6 +766,90 @@ namespace StockControl
                 }
             }
             dgvData.Rows.Remove(rowe);
+        }
+
+        private void btnAddRow2_Click(object sender, EventArgs e)
+        {
+            dgvData2.Rows.AddNew();
+            setRowNo();
+        }
+        private void btnDeleteRow2_Click(object sender, EventArgs e)
+        {
+            if (dgvData2.CurrentCell == null) return;
+            var rowe = dgvData2.CurrentCell.RowInfo;
+            int idDt = rowe.Cells["id"].Value.ToInt();
+            if (idDt > 0)
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.mh_VendorItems.Where(x => x.id == idDt).FirstOrDefault();
+                    if (m != null)
+                    {
+                        m.Active = true;
+                        db.SubmitChanges();
+                    }
+                }
+            }
+            dgvData.Rows.Remove(rowe);
+            setRowNo();
+        }
+        void setRowNo()
+        {
+            int rno = 1;
+            dgvData2.Rows.ToList().ForEach(x =>
+            {
+                x.Cells["RNo"].Value = rno++;
+            });
+        }
+
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            if (baseClass.Question("Do you want to 'Delete Attach file' ?"))
+                DelAttachFile();
+        }
+        void DelAttachFile()
+        {
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    int idv = txtid.Text.ToInt();
+                    var m = db.mh_Vendors.Where(x => x.id == idv).FirstOrDefault();
+                    if (m != null)
+                    {
+                        if (m.AttachFile.ToSt() != "")
+                        {
+                            m.AttachFile = "";
+                            db.SubmitChanges();
+                            baseClass.Info("Delete Attach file complete.\n");
+                            dbClss.AddHistory(this.Name, "Vendor", "Delete Attach file", txtNo.Text);
+                        }
+                    }
+                    txtAttachFile.Value = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtAttachFile.Value.ToSt() != "")
+                {
+                    string apath = txtAttachFile.Value.ToSt();
+                    if (Path.GetFileName(txtAttachFile.Value.ToSt()) == Path.GetFileName(txtAttachFile.Value.ToSt()))
+                        apath = Path.Combine(baseClass.GetPathServer(PathCode.Vendor), txtAttachFile.Value.ToSt());
+                    System.Diagnostics.Process.Start(apath);
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
         }
     }
 }

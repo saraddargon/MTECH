@@ -211,7 +211,6 @@
             this.btnExport});
             this.radRibbonBarGroup4.Name = "radRibbonBarGroup4";
             this.radRibbonBarGroup4.Text = "Import / Export";
-            this.radRibbonBarGroup4.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
             // btnImport
             // 
@@ -221,6 +220,7 @@
             this.btnImport.SmallImage = null;
             this.btnImport.Text = "นำข้อมูลเข้า";
             this.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnImport.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // btnExport
