@@ -2401,6 +2401,13 @@ namespace StockControl
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sSNo);
 			return ((int)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_080_CustomerPOSummary_SELECT")]
+		public ISingleResult<sp_080_CustomerPOSummary_SELECTResult> sp_080_CustomerPOSummary_SELECT([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> yy, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ItemNo", DbType="NVarChar(50)")] string itemNo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), yy, itemNo);
+			return ((ISingleResult<sp_080_CustomerPOSummary_SELECTResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ErrorLog")]
@@ -78896,6 +78903,302 @@ namespace StockControl
 				if ((this._VatType != value))
 				{
 					this._VatType = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_080_CustomerPOSummary_SELECTResult
+	{
+		
+		private string _ItemNo;
+		
+		private string _ItemName;
+		
+		private System.Nullable<int> _YY;
+		
+		private System.Nullable<decimal> _Jan;
+		
+		private System.Nullable<decimal> _Feb;
+		
+		private System.Nullable<decimal> _Mar;
+		
+		private System.Nullable<decimal> _Apr;
+		
+		private System.Nullable<decimal> _May;
+		
+		private System.Nullable<decimal> _Jun;
+		
+		private System.Nullable<decimal> _Jul;
+		
+		private System.Nullable<decimal> _Aug;
+		
+		private System.Nullable<decimal> _Sep;
+		
+		private System.Nullable<decimal> _Oct;
+		
+		private System.Nullable<decimal> _Nov;
+		
+		private System.Nullable<decimal> _Dec;
+		
+		private System.Nullable<decimal> _Summary;
+		
+		public sp_080_CustomerPOSummary_SELECTResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string ItemNo
+		{
+			get
+			{
+				return this._ItemNo;
+			}
+			set
+			{
+				if ((this._ItemNo != value))
+				{
+					this._ItemNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this._ItemName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_YY", DbType="Int")]
+		public System.Nullable<int> YY
+		{
+			get
+			{
+				return this._YY;
+			}
+			set
+			{
+				if ((this._YY != value))
+				{
+					this._YY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Jan", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Jan
+		{
+			get
+			{
+				return this._Jan;
+			}
+			set
+			{
+				if ((this._Jan != value))
+				{
+					this._Jan = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Feb", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Feb
+		{
+			get
+			{
+				return this._Feb;
+			}
+			set
+			{
+				if ((this._Feb != value))
+				{
+					this._Feb = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mar", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Mar
+		{
+			get
+			{
+				return this._Mar;
+			}
+			set
+			{
+				if ((this._Mar != value))
+				{
+					this._Mar = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apr", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Apr
+		{
+			get
+			{
+				return this._Apr;
+			}
+			set
+			{
+				if ((this._Apr != value))
+				{
+					this._Apr = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_May", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> May
+		{
+			get
+			{
+				return this._May;
+			}
+			set
+			{
+				if ((this._May != value))
+				{
+					this._May = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Jun", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Jun
+		{
+			get
+			{
+				return this._Jun;
+			}
+			set
+			{
+				if ((this._Jun != value))
+				{
+					this._Jun = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Jul", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Jul
+		{
+			get
+			{
+				return this._Jul;
+			}
+			set
+			{
+				if ((this._Jul != value))
+				{
+					this._Jul = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Aug", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Aug
+		{
+			get
+			{
+				return this._Aug;
+			}
+			set
+			{
+				if ((this._Aug != value))
+				{
+					this._Aug = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sep", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Sep
+		{
+			get
+			{
+				return this._Sep;
+			}
+			set
+			{
+				if ((this._Sep != value))
+				{
+					this._Sep = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Oct", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Oct
+		{
+			get
+			{
+				return this._Oct;
+			}
+			set
+			{
+				if ((this._Oct != value))
+				{
+					this._Oct = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nov", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Nov
+		{
+			get
+			{
+				return this._Nov;
+			}
+			set
+			{
+				if ((this._Nov != value))
+				{
+					this._Nov = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dec", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Dec
+		{
+			get
+			{
+				return this._Dec;
+			}
+			set
+			{
+				if ((this._Dec != value))
+				{
+					this._Dec = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Summary", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Summary
+		{
+			get
+			{
+				return this._Summary;
+			}
+			set
+			{
+				if ((this._Summary != value))
+				{
+					this._Summary = value;
 				}
 			}
 		}
