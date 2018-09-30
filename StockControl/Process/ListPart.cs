@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
+using Telerik.WinControls.Data;
 
 namespace StockControl
 {
@@ -91,7 +92,7 @@ namespace StockControl
         }
         private void Unit_Load(object sender, EventArgs e)
         {
-
+            LoadDefault();
             Set_FindData();
             Set_dt_Print();
             //LoadDefault();
@@ -99,28 +100,43 @@ namespace StockControl
             radGridView1.AutoGenerateColumns = false;
             DataLoad();
         }
-        //private void LoadDefault()
-        //{
-        //    ddlLocation.DataSource = null;
-        //    using (DataClasses1DataContext db = new DataClasses1DataContext())
-        //    {
-        //        ddlLocation.DisplayMember = "Location";
-        //        ddlLocation.ValueMember = "Location";
-        //       // ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
-        //        var g = (from ix in db.tb_Locations select ix).Where(s => s.Active == true && s.Status == "Completed").ToList();
+        private void LoadDefault()
+        {
+            cboLocation.DataSource = null;
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                //ddlLocation.DisplayMember = "Location";
+                //ddlLocation.ValueMember = "Location";
+                //// ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
+                //var g = (from ix in db.mh_Locations select ix).Where(s => s.Active == true && s.Status == "Completed").ToList();
 
-        //        List<string> a = new List<string>();
-        //        if(g.Count>0)
-        //        {
-        //            foreach (var gg in g)
-        //                a.Add(gg.Location);
-        //        }
-        //        a.Add("");
-        //        ddlLocation.DataSource = a;
-        //        ddlLocation.Text = "";
+                //List<string> a = new List<string>();
+                //if (g.Count > 0)
+                //{
+                //    foreach (var gg in g)
+                //        a.Add(gg.Location);
+                //}
+                //a.Add("");
+                //ddlLocation.DataSource = a;
+                //ddlLocation.Text = "";
 
-        //    }
-        //}
+
+                this.cboLocation.AutoFilter = true;
+                this.cboLocation.AutoCompleteMode = AutoCompleteMode.Append;
+                FilterDescriptor lo = new FilterDescriptor();
+                lo.PropertyName = this.cboLocation.ValueMember;
+                lo.Operator = FilterOperator.StartsWith;
+                this.cboLocation.EditorControl.MasterTemplate.FilterDescriptors.Add(lo);
+
+                cboLocation.DisplayMember = "Code";
+                cboLocation.ValueMember = "Name";
+                cboLocation.DataSource = db.mh_Locations.Where(s => s.Active == true).ToList();
+                cboLocation.SelectedIndex = -1;
+                cboLocation.Text = "";
+
+
+            }
+        }
         private void Set_FindData()
         {
             if (TypePart == "All" || TypePart =="")
@@ -203,6 +219,7 @@ namespace StockControl
                         && a.InternalName.Contains(txtPartName.Text)
                         && a.VendorName.Contains(txtVendorName.Text)
                         && a.InventoryGroup.Contains(ddlTypePart.Text)
+                        && a.Location.Contains(cboLocation.Text)
                         && a.Active==true
                         )
                         .ToList();

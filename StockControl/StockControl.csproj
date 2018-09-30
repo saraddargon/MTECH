@@ -145,6 +145,18 @@
     <Compile Include="Process\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\AdjustStock_Taking_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\AdjustStock_Taking_List.Designer.cs">
+      <DependentUpon>AdjustStock_Taking_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Return_RM_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Return_RM_List.Designer.cs">
+      <DependentUpon>Return_RM_List.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\ApproveList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1111,6 +1123,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\AdjustStock_Taking_List.resx">
+      <DependentUpon>AdjustStock_Taking_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Return_RM_List.resx">
+      <DependentUpon>Return_RM_List.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\ApproveList.resx">
       <DependentUpon>ApproveList.cs</DependentUpon>

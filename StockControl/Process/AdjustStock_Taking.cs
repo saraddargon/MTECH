@@ -1635,7 +1635,7 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                AdjustStock_List sc = new AdjustStock_List(txtADNo, txtCodeNo,"Taking");
+                AdjustStock_Taking_List sc = new AdjustStock_Taking_List(txtADNo, txtCodeNo,"Taking");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();

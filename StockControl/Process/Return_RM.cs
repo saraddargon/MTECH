@@ -1449,7 +1449,7 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                AdjustStock_List sc = new AdjustStock_List(txtADNo, txtCodeNo, "RT");
+                Return_RM_List sc = new Return_RM_List(txtADNo, txtCodeNo, "RT");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();

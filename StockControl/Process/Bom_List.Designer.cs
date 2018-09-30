@@ -506,13 +506,11 @@
             // 
             // cbDate
             // 
-            this.cbDate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbDate.Location = new System.Drawing.Point(46, 58);
             this.cbDate.Name = "cbDate";
             this.cbDate.Size = new System.Drawing.Size(64, 18);
             this.cbDate.TabIndex = 19;
             this.cbDate.Text = "เลือกวันที่";
-            this.cbDate.ToggleState = Telerik.WinControls.Enumerations.ToggleState.On;
             // 
             // ddlTypePart
             // 
