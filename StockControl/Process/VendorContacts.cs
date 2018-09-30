@@ -250,6 +250,7 @@ namespace StockControl
                         baseClass.Error(ex.Message);
                     }
                     vndr.AttachFile = fName;
+                    db.SubmitChanges();
 
                     txtid.Text = vndr.id.ToSt();
 
