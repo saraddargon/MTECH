@@ -51,7 +51,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name);
+            HistoryView hw = new HistoryView(this.Name, txtWorkNo.Text);
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }

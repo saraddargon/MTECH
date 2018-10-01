@@ -27,7 +27,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name);
+            HistoryView hw = new HistoryView(this.Name, idCalendar.ToSt());
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }
@@ -228,7 +228,7 @@ namespace StockControl
                                 t.Active = true;
                                 t.idCalendar = idCalendar;
 
-                                dbClss.AddHistory(this.Name, "เพิ่มวันหยุด", $"เพิ่เพิ่มวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", "");
+                                dbClss.AddHistory(this.Name, "เพิ่มวันหยุด", $"เพิ่เพิ่มวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", idCalendar.ToSt());
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
                                 db.mh_Holidays.InsertOnSubmit(t);
                                 db.SubmitChanges();
@@ -250,7 +250,7 @@ namespace StockControl
 
                                 C += 1;
                                 db.SubmitChanges();
-                                dbClss.AddHistory(this.Name, "แก้ไขวันหยุด", $"แก้ไขวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", "");
+                                dbClss.AddHistory(this.Name, "แก้ไขวันหยุด", $"แก้ไขวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", idCalendar.ToSt());
 
                             }
 
@@ -309,7 +309,7 @@ namespace StockControl
                                 foreach (var d in t)
                                 {
                                     d.Active = false;
-                                    dbClss.AddHistory(this.Name, "ลบวันหยุด", $"Delete HoliDay [{d.StartingDate.ToString("dd/MM/yyyy")}-{d.EndingDate.ToString("dd/MM/yyyy")}]", "");
+                                    dbClss.AddHistory(this.Name, "ลบวันหยุด", $"Delete HoliDay [{d.StartingDate.ToString("dd/MM/yyyy")}-{d.EndingDate.ToString("dd/MM/yyyy")}]", idCalendar.ToSt());
 
                                     //delete calndar Load
                                     var calLoad = db.mh_CalendarLoads.Where(x => x.idHol == d.id).FirstOrDefault();
@@ -595,7 +595,7 @@ namespace StockControl
                 }
                 if (dt.Rows.Count > 0)
                 {
-                    dbClss.AddHistory(this.Name, "Import", "Import file CSV in to System", "");
+                    dbClss.AddHistory(this.Name, "Import", "Import file CSV in to System", idCalendar.ToSt());
                     ImportData();
                     MessageBox.Show("Import Completed.");
 

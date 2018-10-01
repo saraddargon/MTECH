@@ -27,7 +27,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name);
+            HistoryView hw = new HistoryView(this.Name, idCalendar.ToSt());
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }
@@ -228,7 +228,7 @@ namespace StockControl
                                 t.idCalendar = idCalendar;
                                 t.Active = true;
 
-                                dbClss.AddHistory(this.Name, "เพิ่มวันทำงาน", "เพิ่มวันทำงาน [" + t.Day + "]", "");
+                                dbClss.AddHistory(this.Name, "เพิ่มวันทำงาน", "เพิ่มวันทำงาน [" + t.Day + "]", idCalendar.ToSt());
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
                                 db.mh_WorkingDays.InsertOnSubmit(t);
                                 db.SubmitChanges();
@@ -247,7 +247,7 @@ namespace StockControl
 
                                 C += 1;
                                 db.SubmitChanges();
-                                dbClss.AddHistory(this.Name, "แก้ไขวันทำงาน", "แก้ไขวันทำงาน [" + t.Day + "]", "");
+                                dbClss.AddHistory(this.Name, "แก้ไขวันทำงาน", "แก้ไขวันทำงาน [" + t.Day + "]", idCalendar.ToSt());
                             }
                         }
                     }
@@ -297,7 +297,7 @@ namespace StockControl
                                     {
                                         //db.mh_WorkingDays.DeleteOnSubmit(d);
                                         d.Active = false;
-                                        dbClss.AddHistory(this.Name, "ลบวันทำงาน", $"Delete Working Day [{d.Day}]", "");
+                                        dbClss.AddHistory(this.Name, "ลบวันทำงาน", $"Delete Working Day [{d.Day}]", idCalendar.ToSt());
                                     }
                                     C += 1;
 
@@ -584,7 +584,7 @@ namespace StockControl
                 }
                 if (dt.Rows.Count > 0)
                 {
-                    dbClss.AddHistory(this.Name, "Import", "Import file CSV in to System", "");
+                    dbClss.AddHistory(this.Name, "Import", "Import file CSV in to System", idCalendar.ToSt());
                     ImportData();
                     MessageBox.Show("Import Completed.");
 
