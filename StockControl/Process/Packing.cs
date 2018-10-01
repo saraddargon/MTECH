@@ -358,7 +358,14 @@ namespace StockControl
                         {
                             job.OutQty -= dt.Qty;
                             if (job.OutQty < 0)
+                            {
                                 job.OutQty = 0;
+                                //รับครบ
+                                var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == item.Cells["idCstmPODt"].Value.ToInt() && x.TLQty > 0).ToList();
+                                foreach(var ss in slist)
+                                    ss.Free = true;
+                                db.SubmitChanges();
+                            }
 
                             dbClss.AddHistory("ProductionOrder", "Job Order Sheet", $"Receive by Packing No {m.PackingNo} : {dt.Qty}", job.JobNo);
                         }
@@ -386,19 +393,24 @@ namespace StockControl
                             //กรณีปกติจะบันทึก idCustomerPO Dt เพื่อระบุว่าของที่รับเข้าใช้สำหรับ Customer PO ใด
                             s.idCSTMPODt = job.RefDocId; //idCstmPODt
                             //กรณี Safety Stock จะบันทึก idCStmPODt เป็น 0 แต่ถ้าเป็นการรับเพื่อไปผลิต FG Safety Stock จะใส่ id นั้นๆปกติ
-                            var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == job.RefDocId && x.forSafetyStock)
-                                .Join(db.mh_CustomerPOs.Where(x => x.DemandType == 1)
+                            var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == job.RefDocId /*&& x.forSafetyStock*/)
+                                .Join(db.mh_CustomerPOs.Where(x => x.Active /*x.DemandType == 1*/)
                                 , podt => podt.idCustomerPO
                                 , pohd => pohd.id
                                 , (podt, pohd) => new { pohd, podt }).FirstOrDefault();
                             if (cstmpo != null)
                             {
                                 //เช็คว่าเป็น FG ที่ผลิตเพื่อ Customer PO (Safety stock หรือไม่) :::: DemandType = 1 --> ผลิตเพื่อ Safety Stock
-                                if (cstmpo.podt.ItemNo == s.CodeNo) //เป็น FG ที่ผลิตเพื่อ Safety Stock ให้ใส่ idCstmPO =0
-                                    s.idCSTMPODt = 0;
+                                if (cstmpo.podt.ItemNo == s.CodeNo)
+                                {
+                                    if(cstmpo.podt.forSafetyStock && cstmpo.pohd.DemandType == 1) //เป็น FG ที่ผลิตเพื่อ Safety Stock ให้ใส่ idCstmPO =0
+                                        s.idCSTMPODt = 0;
 
-                                cstmpo.podt.OutQty -= s.QTY.ToDecimal();
-                                dbClss.AddHistory("CustomerPO", "Customer P/O", $"Receive by Packing no. {m.PackingNo} : {s.QTY}", cstmpo.pohd.CustomerPONo);
+                                    cstmpo.podt.OutQty -= s.QTY.ToDecimal();
+                                    if (cstmpo.podt.OutQty < 0)
+                                        cstmpo.podt.OutQty = 0;
+                                    dbClss.AddHistory("CustomerPO", "Customer P/O", $"Receive by Packing no. {m.PackingNo} : {s.QTY}", cstmpo.pohd.CustomerPONo);
+                                }
                             }
 
                             s.Type_in_out = "In";
@@ -821,144 +833,7 @@ namespace StockControl
 
         private void MasterTemplate_EditorRequired(object sender, EditorRequiredEventArgs e)
         {
-            GridViewEditManager manager = sender as GridViewEditManager;
-            // Assigning DropDownListAddEditor to the right column
 
-            if (manager.GridViewElement.CurrentColumn.Name == "ShelfNo")
-            {
-                DropDownListAddEditor editor = new DropDownListAddEditor();
-                editor.InputValueNotFound += new DropDownListAddEditor.InputValueNotFoundHandler(DropDownListAddEditor_InputValueNotFoundCategory_Edit);
-                e.Editor = editor;
-            }
-        }
-        string ShelfNo_Edit = "";
-        private void DropDownListAddEditor_InputValueNotFoundCategory_Edit(object sender, DropDownListAddEditor.InputValueNotFoundArgs e)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(e.Text))
-                {
-                    List<string> values = e.EditorElement.DataSource as List<string>;
-                    if (values == null)
-                    {
-                        List<string> aa = new List<string>();
-                        e.EditorElement.DataSource = aa;
-                        values = e.EditorElement.DataSource as List<string>;
-                    }
-                    if (!e.Text.Equals(""))
-                        ShelfNo_Edit = e.Text;
-                    values.Add(e.Text);
-                    e.Value = e.Text;
-                    e.ValueAdded = true;
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }
-        internal class DropDownListAddEditor :
-                RadDropDownListEditor
-        {
-            protected GridDataCellElement cell;
-            protected InputValueNotFoundArgs e;
-            /// <summary>
-            /// Event handler for missing values in item list of editor
-            /// </summary>
-            /// <param name="sender">Event source of type DropDownListAddEditor</param>
-            /// <param name="e">Event arguments</param>
-            public delegate void InputValueNotFoundHandler(object sender,
-                                                           InputValueNotFoundArgs e);
-            /// <summary>
-            /// Event for missing values in item list of editor
-            /// </summary>
-            public event InputValueNotFoundHandler InputValueNotFound;
-            /// <summary>
-            /// Constructor
-            /// </summary>
-            public DropDownListAddEditor() :
-                base()
-            {
-                // Nothing to do
-            }
-            public override bool EndEdit()
-            {
-                RadDropDownListEditorElement element = this.EditorElement as RadDropDownListEditorElement;
-                string text = element.Text;
-                RadListDataItem item = null;
-                foreach (RadListDataItem entry in element.Items)
-                {
-                    if (entry.Text == text)
-                    {
-                        item = entry;
-                        break;
-                    }
-                }
-                if ((item == null) &&
-                   (InputValueNotFound != null))
-                {
-                    // Get cell for handling CellEndEdit event
-                    this.cell = (this.EditorManager as GridViewEditManager).GridViewElement.CurrentCell;
-                    // Add event handling for setting value to cell
-                    (this.OwnerElement as GridComboBoxCellElement).GridControl.CellEndEdit += new GridViewCellEventHandler(OnCellEndEdit);
-                    this.e = new InputValueNotFoundArgs(element);
-                    this.InputValueNotFound(this,
-                                            this.e);
-                }
-                return base.EndEdit();
-            }
-            /// <summary>
-            /// Puts added value into cell value
-            /// </summary>
-            /// <param name="sender">Event source of type GridViewEditManager</param>
-            /// <param name="e">Event arguments</param>
-            /// <remarks>Connected to GridView event CellEndEdit</remarks>
-            protected void OnCellEndEdit(object sender,
-                                         GridViewCellEventArgs e)
-            {
-                if (this.e != null)
-                {
-                    // Handle only added value, others by default handling of grid
-                    if ((this.cell == (sender as GridViewEditManager).GridViewElement.CurrentCell) &&
-                        this.e.ValueAdded)
-                    {
-                        e.Row.Cells[e.ColumnIndex].Value = this.e.Value;
-                    }
-                    this.e = null;
-                }
-            }
-            /// <summary>
-            /// Event arguments for InputValueNotFound
-            /// </summary>
-            public class InputValueNotFoundArgs :
-                             EventArgs
-            {
-                /// <summary>
-                /// Constructor
-                /// </summary>
-                /// <param name="editorElement">Editor assiciated element</param>
-                internal protected InputValueNotFoundArgs(RadDropDownListEditorElement editorElement)
-                {
-                    this.EditorElement = editorElement;
-                    this.Text = editorElement.Text;
-                }
-                /// <summary>
-                /// Editor associated element 
-                /// </summary>
-                public RadDropDownListEditorElement EditorElement { get; protected set; }
-                /// <summary>
-                /// Input text with no match in drop down list
-                /// </summary>
-                public string Text { get; protected set; }
-                /// <summary>
-                /// Text related missing value
-                /// </summary>
-                /// <remarks>Has to be set during event processing</remarks>
-                /// <seealso cref="ValueAdded"/>
-                public object Value { get; set; }
-                /// <summary>
-                /// Missing value added
-                /// </summary>
-                /// <remarks>Set also the Value property</remarks>
-                public bool ValueAdded { get; set; }
-            }
         }
 
 
@@ -1078,6 +953,13 @@ namespace StockControl
 
                                     dbClss.AddHistory("ProductionOrder", "Job Order Sheet", $"Cancel Packing {pkNo} : {d.Qty}", pro.JobNo);
                                 }
+
+
+                                //stock กลับมาเป็นไม่ฟรี
+                                var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == d.idCstmPODt && x.TLQty > 0).ToList();
+                                foreach (var s1 in slist)
+                                    s1.Free = null;
+                                db.SubmitChanges();
 
                                 //เขียน ship ออก จาก id tb_Stock
                                 db.sp_057_Cut_Stock(pkNo, ss.CodeNo, ss.TLQty, ClassLib.Classlib.User

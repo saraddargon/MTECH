@@ -350,10 +350,10 @@ namespace StockControl
                     && x.idCSTMPODt != null && x.TLQty > 0).OrderBy(x => x.id).ToList();
                 foreach (var s in st)
                 {
-                    //if (this.InvGroup_enum != InventoryGroup.RM) break;
-                    var j = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == s.idCSTMPODt).FirstOrDefault();
-                    //cstmPO job ยังไม่ปิด หรือ เปิดแล้วแต่ยังรับเข้าไม่ครบแสดงว่ายังไม่ปิด ซึ่งแสดงว่าเป็น Stock ปกติ
-                    if (j == null || (j != null && j.OutQty > 0))
+                    //var j = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == s.idCSTMPODt).FirstOrDefault();
+                    ////cstmPO job ยังไม่ปิด หรือ เปิดแล้วแต่ยังรับเข้าไม่ครบแสดงว่ายังไม่ปิด ซึ่งแสดงว่าเป็น Stock ปกติ
+                    //if (j == null || (j != null && j.OutQty > 0))
+                    if(!s.Free.ToBool())
                     {//CustomerPO ยังไม่เปิด Job หรือ เปิดแล้วแต่ยังไม่ปิด Job
                         var s1 = stockCustomerPO.Where(x => x.idCstmPODt == s.idCSTMPODt).FirstOrDefault();
                         if (s1 == null)
