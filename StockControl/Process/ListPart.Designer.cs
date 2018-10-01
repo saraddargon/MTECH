@@ -499,7 +499,7 @@
             gridViewDecimalColumn1.HeaderText = "CurrentStock";
             gridViewDecimalColumn1.Name = "CurrentStock";
             gridViewDecimalColumn1.ReadOnly = true;
-            gridViewDecimalColumn1.Width = 132;
+            gridViewDecimalColumn1.Width = 94;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "CurrentSafetyStock";
             gridViewDecimalColumn2.FormatString = "{0:N2}";

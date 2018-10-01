@@ -865,5 +865,32 @@ namespace StockControl
             }
             return re;
         }
+        public static string Get_Stock(string InternalNo,string Location,int IDCSTMDT,string Condition)
+        {
+            string re = "";
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                var g = (from ix in db.sp_081_Get_Stock(InternalNo,Location,IDCSTMDT) select ix).ToList();
+                if (g.Count > 0)
+                {
+                    if (Condition == "CurrentStock")
+                        re = dbClss.TSt(g.FirstOrDefault().CurrentStock);
+                    else if (Condition == "CurrentSafetyStock")
+                        re = dbClss.TSt(g.FirstOrDefault().CurrentSafetyStock);
+                    else if (Condition == "CurrentJob_RMStock")
+                        re = dbClss.TSt(g.FirstOrDefault().CurrentJob_RMStock);
+                    else if (Condition == "CurrentJob_FGStock")
+                        re = dbClss.TSt(g.FirstOrDefault().CurrentJob_FGStock);
+                    else if (Condition == "BackOrderStock")
+                        re = dbClss.TSt(g.FirstOrDefault().BackOrderStock);
+                    else if (Condition == "ReservationStock")
+                        re = dbClss.TSt(g.FirstOrDefault().ReservationStock);
+                    else if (Condition == "UnReservationStock")
+                        re = dbClss.TSt(g.FirstOrDefault().UnReservationStock);                  
+
+                }
+            }
+            return re;
+        }
     }
 }

@@ -5063,4 +5063,18 @@
       <Column Name="Summary" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.sp_081_Get_Stock" Method="sp_081_Get_Stock">
+    <Parameter Name="ItemNo" Parameter="itemNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="CSTMID" Parameter="cSTMID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_081_Get_StockResult">
+      <Column Name="CurrentStock" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="CurrentSafetyStock" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="ReservationStock" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="UnReservationStock" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="BackOrderStock" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="CurrentJob_RMStock" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="CurrentJob_FGStock" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>

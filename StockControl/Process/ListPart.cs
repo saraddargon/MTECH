@@ -227,18 +227,22 @@ namespace StockControl
                     {
                         radGridView1.DataSource = g;
 
-                        decimal CurrentStock = 0;
+                        //decimal CurrentStock = 0;
                         //string Location = "";
                         foreach (var x in radGridView1.Rows)
                         {
                             //Location = dbClss.TSt(x.Cells["Location"].Value);
-                            CurrentStock = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["InternalNo"].Value), "", 0, Convert.ToString(x.Cells["Location"].Value),-1)));
-                            x.Cells["CurrentStock"].Value = CurrentStock;
-
-
+                            //CurrentStock = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["InternalNo"].Value), "", 0, Convert.ToString(x.Cells["Location"].Value),-1)));
+                            x.Cells["CurrentStock"].Value =dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value),0, "CurrentStock"));
+                            x.Cells["CurrentSafetyStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentSafetyStock"));
+                            x.Cells["CurrentJob_RMStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentJob_RMStock"));
+                            x.Cells["CurrentJob_FGStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentJob_FGStock"));
+                            x.Cells["BackOrderStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "BackOrderStock"));
+                            x.Cells["ReservationStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "ReservationStock"));
+                            x.Cells["UnReservationStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "UnReservationStock"));
 
                         }
-                            dbClss.SetRowNo1(radGridView1);
+                        dbClss.SetRowNo1(radGridView1);
                     }
 
                 }

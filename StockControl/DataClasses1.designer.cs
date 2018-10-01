@@ -2408,6 +2408,13 @@ namespace StockControl
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), yy, itemNo);
 			return ((ISingleResult<sp_080_CustomerPOSummary_SELECTResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_081_Get_Stock")]
+		public ISingleResult<sp_081_Get_StockResult> sp_081_Get_Stock([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ItemNo", DbType="NVarChar(50)")] string itemNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CSTMID", DbType="Int")] System.Nullable<int> cSTMID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), itemNo, location, cSTMID);
+			return ((ISingleResult<sp_081_Get_StockResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ErrorLog")]
@@ -79199,6 +79206,140 @@ namespace StockControl
 				if ((this._Summary != value))
 				{
 					this._Summary = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_081_Get_StockResult
+	{
+		
+		private decimal _CurrentStock;
+		
+		private decimal _CurrentSafetyStock;
+		
+		private decimal _ReservationStock;
+		
+		private decimal _UnReservationStock;
+		
+		private decimal _BackOrderStock;
+		
+		private decimal _CurrentJob_RMStock;
+		
+		private decimal _CurrentJob_FGStock;
+		
+		public sp_081_Get_StockResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CurrentStock", DbType="Decimal(1,1) NOT NULL")]
+		public decimal CurrentStock
+		{
+			get
+			{
+				return this._CurrentStock;
+			}
+			set
+			{
+				if ((this._CurrentStock != value))
+				{
+					this._CurrentStock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CurrentSafetyStock", DbType="Decimal(1,1) NOT NULL")]
+		public decimal CurrentSafetyStock
+		{
+			get
+			{
+				return this._CurrentSafetyStock;
+			}
+			set
+			{
+				if ((this._CurrentSafetyStock != value))
+				{
+					this._CurrentSafetyStock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReservationStock", DbType="Decimal(1,1) NOT NULL")]
+		public decimal ReservationStock
+		{
+			get
+			{
+				return this._ReservationStock;
+			}
+			set
+			{
+				if ((this._ReservationStock != value))
+				{
+					this._ReservationStock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnReservationStock", DbType="Decimal(1,1) NOT NULL")]
+		public decimal UnReservationStock
+		{
+			get
+			{
+				return this._UnReservationStock;
+			}
+			set
+			{
+				if ((this._UnReservationStock != value))
+				{
+					this._UnReservationStock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BackOrderStock", DbType="Decimal(1,1) NOT NULL")]
+		public decimal BackOrderStock
+		{
+			get
+			{
+				return this._BackOrderStock;
+			}
+			set
+			{
+				if ((this._BackOrderStock != value))
+				{
+					this._BackOrderStock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CurrentJob_RMStock", DbType="Decimal(1,1) NOT NULL")]
+		public decimal CurrentJob_RMStock
+		{
+			get
+			{
+				return this._CurrentJob_RMStock;
+			}
+			set
+			{
+				if ((this._CurrentJob_RMStock != value))
+				{
+					this._CurrentJob_RMStock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CurrentJob_FGStock", DbType="Decimal(1,1) NOT NULL")]
+		public decimal CurrentJob_FGStock
+		{
+			get
+			{
+				return this._CurrentJob_FGStock;
+			}
+			set
+			{
+				if ((this._CurrentJob_FGStock != value))
+				{
+					this._CurrentJob_FGStock = value;
 				}
 			}
 		}
