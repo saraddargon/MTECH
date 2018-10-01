@@ -206,6 +206,7 @@ namespace StockControl
             try
             {
                 dgvData.EndEdit();
+                bool newDoc = false;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     int id = txtid.Text.ToInt();
@@ -214,7 +215,33 @@ namespace StockControl
                     {
                         vndr = new mh_Vendor();
                         db.mh_Vendors.InsertOnSubmit(vndr);
+                        newDoc = true;
+
+                        dbClss.AddHistory(this.Name, "Vendor", $"New Vendor {txtNo.Text}", vndr.No);
                     }
+
+                    if (!newDoc)
+                    {
+                        string vNo = txtNo.Text;
+                        if (vndr.No != txtNo.Text.Trim()) dbClss.AddHistory(this.Name, "Vendor", $"Vendor No. from {vndr.No} to {txtNo.Text}", vNo);
+                        if (vndr.BranchCode != txtBranchCode.Text.Trim()) dbClss.AddHistory(this.Name, "Vendor", $"Branch Code from {vndr.BranchCode} to {txtBranchCode.Text}", vNo);
+                        if (vndr.Name != txtName.Text.Trim()) dbClss.AddHistory(this.Name, "Vendor", $"Vendor Name from {vndr.Name} to {txtName.Text}", vNo);
+                        if (vndr.Address != txtAddress.Text.Trim()) dbClss.AddHistory(this.Name, "Vendor", $"Address from {vndr.Address} to {txtAddress.Text}", vNo);
+                        if (vndr.ShippingTime != txtShippingTime.Value.ToInt()) dbClss.AddHistory(this.Name, "Vendor", $"Shipping time from {vndr.ShippingTime} to {txtShippingTime.Value.ToInt()}", vNo);
+                        if (vndr.VATRegistration != cbVatRegis.Checked) dbClss.AddHistory(this.Name, "Vendor", $"VAT Regis. from {vndr.VATRegistration} to {cbVatRegis.Checked}", vNo);
+                        if (vndr.PriceIncludeingVat != cbPriceIncVat.Checked) dbClss.AddHistory(this.Name, "Vendor", $"Price Inc. Vat from {vndr.PriceIncludeingVat} to {cbPriceIncVat.Checked}", vNo);
+                        if (vndr.ReceivingAddress != txtShippingAddress.Text.Trim()) dbClss.AddHistory(this.Name, "Vendor", $"Receive Address from {vndr.ReceivingAddress} to {txtShippingAddress.Text}", vNo);
+                        if (vndr.VendorGroup != cbbCustomerGroup.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Vendor", $"Vendor Group from {vndr.VendorGroup} to {cbbCustomerGroup.SelectedValue.ToInt()}", vNo);
+                        if (vndr.VatGroup != cbbVatGroup.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Vendor", $"Vat Group from {vndr.VatGroup} to {cbbVatGroup.SelectedValue.ToInt()}", vNo);
+                        if (vndr.DefaultCurrency != cbbCurrency.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Vendor", $"Default Currency from {vndr.DefaultCurrency} to {cbbCurrency.SelectedValue.ToInt()}", vNo);
+                        if (vndr.Active != cbActive.Checked) dbClss.AddHistory(this.Name, "Vendor", $"Status Active from {vndr.Active} to {cbActive.Checked}", vNo);
+                        if (txtAttachFile.Value.ToSt() != "")
+                        {
+                            if (vndr.AttachFile != Path.GetFileName(txtAttachFile.Value.ToSt()))
+                                dbClss.AddHistory(this.Name, "Vendor", $"Attach file from {vndr.AttachFile} to {Path.GetFileName(txtAttachFile.Value.ToSt())}", vNo);
+                        }
+                    }
+
                     vndr.No = txtNo.Text.Trim();
                     vndr.BranchCode = txtBranchCode.Text;
                     vndr.Name = txtName.Text.Trim();
@@ -256,12 +283,27 @@ namespace StockControl
 
                     foreach (var c in dgvData.Rows)
                     {
+                        newDoc = false;
                         if (c.Cells["dgvC"].Value.ToSt() == "") continue;
 
                         int idDT = c.Cells["id"].Value.ToInt();
                         var con = db.mh_VendorContacts.Where(x => x.id == idDT).FirstOrDefault();
                         if (con == null)
+                        {
                             con = new mh_VendorContact();
+                            newDoc = true;
+                            dbClss.AddHistory(this.Name, "Vendor", $"New Customer Contact {c.Cells["ContactName"].Value.ToSt()}", txtNo.Text);
+                        }
+
+                        if (!newDoc)
+                        {
+                            if (con.Def != c.Cells["Def"].Value.ToBool()) dbClss.AddHistory(this.Name, "Vendor", $"Default from {con.Def} to {c.Cells["Def"].Value.ToBool()}", txtNo.Text);
+                            if (con.ContactName != c.Cells["ContactName"].Value.ToSt()) dbClss.AddHistory(this.Name, "Vendor", $"Contact Name from {con.ContactName} to {c.Cells["ContactName"].Value.ToSt()}", txtNo.Text);
+                            if (con.Tel != c.Cells["Tel"].Value.ToSt()) dbClss.AddHistory(this.Name, "Vendor", $"Telephone from {con.Tel} to {c.Cells["Tel"].Value.ToSt()}", txtNo.Text);
+                            if (con.Fax != c.Cells["Fax"].Value.ToSt()) dbClss.AddHistory(this.Name, "Vendor", $"Fax from {con.Fax} to {c.Cells["Fax"].Value.ToSt()}", txtNo.Text);
+                            if (con.Email != c.Cells["Email"].Value.ToSt()) dbClss.AddHistory(this.Name, "Vendor", $"Email from {con.Email} to {c.Cells["Email"].Value.ToSt()}", txtNo.Text);
+                        }
+
                         con.Def = c.Cells["Def"].Value.ToBool();
                         con.VendorId = vndr.id;
                         con.ContactName = c.Cells["ContactName"].Value.ToSt();
@@ -276,6 +318,7 @@ namespace StockControl
 
                     foreach (var c in dgvData2.Rows)
                     {
+                        newDoc = false;
                         int idDt = c.Cells["id"].Value.ToInt();
                         string Item = c.Cells["Item"].Value.ToSt();
                         string Desc = c.Cells["Description"].Value.ToSt();
@@ -285,7 +328,17 @@ namespace StockControl
                             v = new mh_VendorItem();
                             v.VendorId = vndr.id;
                             db.mh_VendorItems.InsertOnSubmit(v);
+
+                            newDoc = true;
+                            dbClss.AddHistory(this.Name, "Vendor", $"New Catagory {Item}", txtNo.Text);
                         }
+
+                        if (!newDoc)
+                        {
+                            if (v.Item != Item) dbClss.AddHistory(this.Name, "Vendor", $"Item from {v.Item} to {Item}", txtNo.Text);
+                            if (v.Description != Desc) dbClss.AddHistory(this.Name, "Vendor", $"Description from {v.Description} to {Desc}", txtNo.Text);
+                        }
+
                         v.Item = Item;
                         v.Description = Desc;
                         v.Active = true;
@@ -339,6 +392,8 @@ namespace StockControl
                             {
                                 v.Active = false;
                                 db.SubmitChanges();
+
+                                dbClss.AddHistory(this.Name, "Vendor", "Delete Vendor", v.No);
                             }
                         }
                     }
