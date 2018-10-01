@@ -30,6 +30,7 @@ namespace StockControl
         {
             //radGridView1.ReadOnly = true;
             LoadDef();
+            var sumRow = new GridViewSummaryRowItem();
             int mm = 1;
             while (mm <= 12)
             {
@@ -43,16 +44,18 @@ namespace StockControl
                     FormatString = "{0:N2}",
                     Width = 70,
                 });
+
+                var sum1 = new GridViewSummaryItem(d.ToString("MMM").ToUpper(), "{0:N2}", GridAggregateFunction.Count);
+                sumRow.Add(sum1);
+
                 mm++;
-            }            
-            //dgvData.Columns.Add(new GridViewDecimalColumn
-            //{
-            //    HeaderText = "Summary",
-            //    Name = "Summary",
-            //    FieldName = "Summary",
-            //    FormatString = "{0:N2}",
-            //    Width = 70,
-            //});
+            }
+            var sum2 = new GridViewSummaryItem("Summary", "{0:N2}", GridAggregateFunction.Sum);
+            sumRow.Add(sum2);
+            dgvData.SummaryRowsBottom.Add(sumRow);
+            dgvData.MasterTemplate.ShowTotals = true;
+
+
             dgvData.AutoGenerateColumns = false;
             DataLoad();
         }
@@ -69,7 +72,7 @@ namespace StockControl
                 }
                 cbbYY.Text = DateTime.Now.Year.ToSt();
 
-                var item = db.mh_Items.Where(x => x.Active)
+                var item = db.mh_Items.Where(x => x.Active && x.InventoryGroup == "FG")
                     .Select(x => new ItemCombo { Item = x.InternalNo, ItemName = x.InternalName }).ToList();
                 item.Add(new ItemCombo
                 {
@@ -367,6 +370,16 @@ namespace StockControl
             Report.Reportx1.WReport = "CustomerList";
             Report.Reportx1 op = new Report.Reportx1("ReportCustomerList.rpt");
             op.Show();
+        }
+
+        private void dgvData_ViewRowFormatting(object sender, RowFormattingEventArgs e)
+        {
+            if(e.RowElement is GridSummaryRowElement)
+            {
+                e.RowElement.ForeColor = Color.Navy;
+                var f = e.RowElement.Font;
+                e.RowElement.Font = new Font(f, FontStyle.Bold);
+            }
         }
     }
 

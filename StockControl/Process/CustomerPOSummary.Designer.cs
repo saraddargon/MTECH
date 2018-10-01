@@ -421,6 +421,7 @@
             this.dgvData.Size = new System.Drawing.Size(1171, 475);
             this.dgvData.TabIndex = 2;
             this.dgvData.ThemeName = "Office2010Blue";
+            this.dgvData.ViewRowFormatting += new Telerik.WinControls.UI.RowFormattingEventHandler(this.dgvData_ViewRowFormatting);
             this.dgvData.CellDoubleClick += new Telerik.WinControls.UI.GridViewCellEventHandler(this.radGridView1_CellDoubleClick);
             // 
             // contextMenuStrip1
