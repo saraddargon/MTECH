@@ -884,7 +884,7 @@ namespace StockControl
                                     Amount = (-QTY) * UnitCost;
                                     string Category1 = "Invoice";
                                     if (dbClss.TInt(vv.idCSTMPODt) > 0) Category1 = "CstmPOID";
-                                    else if (dbClss.TInt(vv.idCSTMPODt) == 0) Category1 = "Free";
+                                    else if (dbClss.TInt(vv.idCSTMPODt) == 0) Category1 = "SafetyStock";
 
                                     //แบบที่ 1 จะไป sum ใหม่
                                     RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
@@ -948,7 +948,7 @@ namespace StockControl
                                     Amount = (-QTY) * UnitCost;
                                     string Category1 = "Invoice";
                                     if (dbClss.TInt(vv.idCSTMPODt) > 0) Category1 = "CstmPOID";
-                                    else if (dbClss.TInt(vv.idCSTMPODt) == 0) Category1 = "Free";
+                                    else if (dbClss.TInt(vv.idCSTMPODt) == 0) Category1 = "SafetyStock";
 
                                     //แบบที่ 1 จะไป sum ใหม่
                                     RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, Category1, 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
@@ -1119,9 +1119,9 @@ namespace StockControl
                             if (QTY > 0)
                             {
                                 int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
-                                int Free = -1;
+                                int Free = 0;//---1;
                                 if (idCSTMPODt > 0) Free = 0;
-                                else if (idCSTMPODt == 0) Free = 1;
+                                //else if (idCSTMPODt == 0) Free = 1;
 
                                 e.Row.Cells["UnitCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
                             }
@@ -1173,7 +1173,7 @@ namespace StockControl
                             int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
                             string Category = "Invoice";
                             if (idCSTMPODt > 0) Category = "CstmPOID";
-                            else if (idCSTMPODt == 0) Category = "Free";
+                            else if (idCSTMPODt == 0) Category = "SafetyStock";
 
                             e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value)
                                 , Category, 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));

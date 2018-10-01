@@ -897,7 +897,7 @@ namespace StockControl
 
                                     Amount = (-QTY) * UnitCost;
 
-                                    string Category1 = "Invoice";
+                                    string Category1 = "Free";
                                     if (dbClss.TInt(vv.idCSTMPODt) > 0) Category1 = "CstmPOID";
                                     else if (dbClss.TInt(vv.idCSTMPODt) == 0) Category1 = "Free";
                                     //แบบที่ 1 จะไป sum ใหม่
@@ -961,7 +961,7 @@ namespace StockControl
                                     //    UnitCost = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "Avg"));
                                     
                                     Amount = (-QTY) * UnitCost;
-                                    string Category1 = "Invoice";
+                                    string Category1 = "Free";
                                     if (dbClss.TInt(vv.idCSTMPODt) > 0) Category1 = "CstmPOID";
                                     else if (dbClss.TInt(vv.idCSTMPODt) == 0) Category1 = "Free";
 

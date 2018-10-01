@@ -374,9 +374,11 @@ namespace StockControl
 
                     UnitCost = Convert.ToDecimal(g.UnitCost); //get_cost(g.CodeNo);
                     Amount = Convert.ToDecimal(txtQTY.Text) * UnitCost;
-
+                    string Category1 = "Free";
+                    if (dbClss.TInt(g.idCSTMPODt) > 0) Category1 = "CstmPOID";
+                    
                     //แบบที่ 1 จะไป sum ใหม่
-                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(g.CodeNo, "", 0, dbClss.TSt(g.Location),dbClss.TInt(g.idCSTMPODt))));
+                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(g.CodeNo, Category1, 0, dbClss.TSt(g.Location),dbClss.TInt(g.idCSTMPODt))));
                     //แบบที่ 2 จะไปดึงล่าสุดมา
                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
 
@@ -597,8 +599,10 @@ namespace StockControl
                 UnitCost = Convert.ToDecimal(g.UnitCost); //get_cost(g.CodeNo);
                 Amount = Convert.ToDecimal(g.QTY) * UnitCost;
 
+                string Category1 = "Free";
+                if (dbClss.TInt(g.idCSTMPODt) > 0) Category1 = "CstmPOID";
                 //แบบที่ 1 จะไป sum ใหม่
-                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(g.CodeNo, "", 0,dbClss.TSt(g.Location), dbClss.TInt(g.idCSTMPODt))));
+                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(g.CodeNo, Category1, 0,dbClss.TSt(g.Location), dbClss.TInt(g.idCSTMPODt))));
                 //แบบที่ 2 จะไปดึงล่าสุดมา
                 //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
 
