@@ -30,16 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorkingDay));
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn5 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn6 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn8 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn3 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn3 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
-            Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn4 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
-            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn4 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
-            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition2 = new Telerik.WinControls.UI.TableViewDefinition();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn1 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
+            Telerik.WinControls.UI.GridViewMaskBoxColumn gridViewMaskBoxColumn2 = new Telerik.WinControls.UI.GridViewMaskBoxColumn();
+            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn2 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
+            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -52,7 +52,6 @@
             this.radRibbonBarGroup4 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnImport = new Telerik.WinControls.UI.RadButtonElement();
             this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarButtonGroup1 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             this.radRibbonBarGroup3 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnRefresh = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup5 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -202,11 +201,9 @@
             this.radRibbonBarGroup4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(86)))), ((int)(((byte)(86)))));
             this.radRibbonBarGroup4.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.btnImport,
-            this.btnExport,
-            this.radRibbonBarButtonGroup1});
+            this.btnExport});
             this.radRibbonBarGroup4.Name = "radRibbonBarGroup4";
             this.radRibbonBarGroup4.Text = "Import / Export";
-            this.radRibbonBarGroup4.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
             // btnImport
             // 
@@ -216,6 +213,7 @@
             this.btnImport.SmallImage = null;
             this.btnImport.Text = "นำข้อมูลเข้า";
             this.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnImport.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // btnExport
@@ -226,14 +224,6 @@
             this.btnExport.Text = "ส่งข้อมูลออก";
             this.btnExport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // radRibbonBarButtonGroup1
-            // 
-            this.radRibbonBarButtonGroup1.Name = "radRibbonBarButtonGroup1";
-            this.radRibbonBarButtonGroup1.Padding = new System.Windows.Forms.Padding(1);
-            this.radRibbonBarButtonGroup1.ShowBackColor = false;
-            this.radRibbonBarButtonGroup1.ShowBorder = false;
-            this.radRibbonBarButtonGroup1.Text = "radRibbonBarButtonGroup1";
             // 
             // radRibbonBarGroup3
             // 
@@ -385,73 +375,73 @@
             this.radGridView1.MasterTemplate.AllowDragToGroup = false;
             this.radGridView1.MasterTemplate.AllowRowResize = false;
             this.radGridView1.MasterTemplate.AutoGenerateColumns = false;
-            gridViewTextBoxColumn5.EnableExpressionEditor = false;
-            gridViewTextBoxColumn5.HeaderText = "column1";
-            gridViewTextBoxColumn5.IsVisible = false;
-            gridViewTextBoxColumn5.Name = "dgvC";
-            gridViewTextBoxColumn5.ReadOnly = true;
-            gridViewTextBoxColumn5.Width = 41;
-            gridViewTextBoxColumn6.EnableExpressionEditor = false;
-            gridViewTextBoxColumn6.FieldName = "None";
-            gridViewTextBoxColumn6.IsPinned = true;
-            gridViewTextBoxColumn6.Name = "None";
-            gridViewTextBoxColumn6.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Right;
-            gridViewTextBoxColumn6.ReadOnly = true;
-            gridViewTextBoxColumn6.Width = 10;
-            gridViewTextBoxColumn7.EnableExpressionEditor = false;
-            gridViewTextBoxColumn7.FieldName = "id";
-            gridViewTextBoxColumn7.HeaderText = "Code";
-            gridViewTextBoxColumn7.IsVisible = false;
-            gridViewTextBoxColumn7.Name = "dgvCodetemp";
-            gridViewTextBoxColumn7.Width = 44;
-            gridViewTextBoxColumn8.EnableExpressionEditor = false;
-            gridViewTextBoxColumn8.HeaderText = "dgvCodetemp2";
-            gridViewTextBoxColumn8.IsVisible = false;
-            gridViewTextBoxColumn8.Name = "dgvCodetemp2";
-            gridViewComboBoxColumn3.EnableExpressionEditor = false;
-            gridViewComboBoxColumn3.FieldName = "Day";
-            gridViewComboBoxColumn3.HeaderText = "Day";
-            gridViewComboBoxColumn3.Name = "Day";
-            gridViewComboBoxColumn3.Width = 102;
-            gridViewDecimalColumn2.EnableExpressionEditor = false;
-            gridViewDecimalColumn2.FieldName = "NoOfWorkHours";
-            gridViewDecimalColumn2.HeaderText = "จำนวนน ชม.";
-            gridViewDecimalColumn2.IsVisible = false;
-            gridViewDecimalColumn2.Name = "WorkHours";
-            gridViewDecimalColumn2.Width = 89;
-            gridViewMaskBoxColumn3.EnableExpressionEditor = false;
-            gridViewMaskBoxColumn3.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
-            gridViewMaskBoxColumn3.FieldName = "StartingTime";
-            gridViewMaskBoxColumn3.HeaderText = "Starting Time";
-            gridViewMaskBoxColumn3.Mask = "00:00";
-            gridViewMaskBoxColumn3.MaskType = Telerik.WinControls.UI.MaskType.Standard;
-            gridViewMaskBoxColumn3.Name = "StartTime";
-            gridViewMaskBoxColumn3.Width = 85;
-            gridViewMaskBoxColumn4.EnableExpressionEditor = false;
-            gridViewMaskBoxColumn4.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
-            gridViewMaskBoxColumn4.FieldName = "EndingTime";
-            gridViewMaskBoxColumn4.HeaderText = "Ending Time";
-            gridViewMaskBoxColumn4.Mask = "00:00";
-            gridViewMaskBoxColumn4.MaskType = Telerik.WinControls.UI.MaskType.Standard;
-            gridViewMaskBoxColumn4.Name = "EndTime";
-            gridViewMaskBoxColumn4.Width = 79;
-            gridViewComboBoxColumn4.EnableExpressionEditor = false;
-            gridViewComboBoxColumn4.FieldName = "ShiftCode";
-            gridViewComboBoxColumn4.HeaderText = "Shift";
-            gridViewComboBoxColumn4.Name = "ShiftCode";
-            gridViewComboBoxColumn4.Width = 175;
+            gridViewTextBoxColumn1.EnableExpressionEditor = false;
+            gridViewTextBoxColumn1.HeaderText = "column1";
+            gridViewTextBoxColumn1.IsVisible = false;
+            gridViewTextBoxColumn1.Name = "dgvC";
+            gridViewTextBoxColumn1.ReadOnly = true;
+            gridViewTextBoxColumn1.Width = 41;
+            gridViewTextBoxColumn2.EnableExpressionEditor = false;
+            gridViewTextBoxColumn2.FieldName = "None";
+            gridViewTextBoxColumn2.IsPinned = true;
+            gridViewTextBoxColumn2.Name = "None";
+            gridViewTextBoxColumn2.PinPosition = Telerik.WinControls.UI.PinnedColumnPosition.Right;
+            gridViewTextBoxColumn2.ReadOnly = true;
+            gridViewTextBoxColumn2.Width = 10;
+            gridViewTextBoxColumn3.EnableExpressionEditor = false;
+            gridViewTextBoxColumn3.FieldName = "id";
+            gridViewTextBoxColumn3.HeaderText = "Code";
+            gridViewTextBoxColumn3.IsVisible = false;
+            gridViewTextBoxColumn3.Name = "dgvCodetemp";
+            gridViewTextBoxColumn3.Width = 44;
+            gridViewTextBoxColumn4.EnableExpressionEditor = false;
+            gridViewTextBoxColumn4.HeaderText = "dgvCodetemp2";
+            gridViewTextBoxColumn4.IsVisible = false;
+            gridViewTextBoxColumn4.Name = "dgvCodetemp2";
+            gridViewComboBoxColumn1.EnableExpressionEditor = false;
+            gridViewComboBoxColumn1.FieldName = "Day";
+            gridViewComboBoxColumn1.HeaderText = "Day";
+            gridViewComboBoxColumn1.Name = "Day";
+            gridViewComboBoxColumn1.Width = 102;
+            gridViewDecimalColumn1.EnableExpressionEditor = false;
+            gridViewDecimalColumn1.FieldName = "NoOfWorkHours";
+            gridViewDecimalColumn1.HeaderText = "จำนวนน ชม.";
+            gridViewDecimalColumn1.IsVisible = false;
+            gridViewDecimalColumn1.Name = "WorkHours";
+            gridViewDecimalColumn1.Width = 89;
+            gridViewMaskBoxColumn1.EnableExpressionEditor = false;
+            gridViewMaskBoxColumn1.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
+            gridViewMaskBoxColumn1.FieldName = "StartingTime";
+            gridViewMaskBoxColumn1.HeaderText = "Starting Time";
+            gridViewMaskBoxColumn1.Mask = "00:00";
+            gridViewMaskBoxColumn1.MaskType = Telerik.WinControls.UI.MaskType.Standard;
+            gridViewMaskBoxColumn1.Name = "StartTime";
+            gridViewMaskBoxColumn1.Width = 85;
+            gridViewMaskBoxColumn2.EnableExpressionEditor = false;
+            gridViewMaskBoxColumn2.ExcelExportType = Telerik.WinControls.UI.Export.DisplayFormatType.None;
+            gridViewMaskBoxColumn2.FieldName = "EndingTime";
+            gridViewMaskBoxColumn2.HeaderText = "Ending Time";
+            gridViewMaskBoxColumn2.Mask = "00:00";
+            gridViewMaskBoxColumn2.MaskType = Telerik.WinControls.UI.MaskType.Standard;
+            gridViewMaskBoxColumn2.Name = "EndTime";
+            gridViewMaskBoxColumn2.Width = 79;
+            gridViewComboBoxColumn2.EnableExpressionEditor = false;
+            gridViewComboBoxColumn2.FieldName = "ShiftCode";
+            gridViewComboBoxColumn2.HeaderText = "Shift";
+            gridViewComboBoxColumn2.Name = "ShiftCode";
+            gridViewComboBoxColumn2.Width = 175;
             this.radGridView1.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
-            gridViewTextBoxColumn5,
-            gridViewTextBoxColumn6,
-            gridViewTextBoxColumn7,
-            gridViewTextBoxColumn8,
-            gridViewComboBoxColumn3,
-            gridViewDecimalColumn2,
-            gridViewMaskBoxColumn3,
-            gridViewMaskBoxColumn4,
-            gridViewComboBoxColumn4});
+            gridViewTextBoxColumn1,
+            gridViewTextBoxColumn2,
+            gridViewTextBoxColumn3,
+            gridViewTextBoxColumn4,
+            gridViewComboBoxColumn1,
+            gridViewDecimalColumn1,
+            gridViewMaskBoxColumn1,
+            gridViewMaskBoxColumn2,
+            gridViewComboBoxColumn2});
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
-            this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition2;
+            this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.radGridView1.Name = "radGridView1";
             this.radContextMenuManager1.SetRadContextMenu(this.radGridView1, this.radContextMenu1);
             this.radGridView1.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -576,7 +566,6 @@
         private Telerik.WinControls.UI.RadButtonElement btnView;
         private Telerik.WinControls.UI.RadButtonElement btnEdit;
         private Telerik.WinControls.UI.RadButtonElement btnDelete;
-        private Telerik.WinControls.UI.RadRibbonBarButtonGroup radRibbonBarButtonGroup1;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup3;
         private Telerik.WinControls.UI.RadButtonElement btnRefresh;
         private Telerik.WinControls.Themes.Office2010BlueTheme office2010BlueTheme1;

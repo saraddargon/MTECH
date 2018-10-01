@@ -822,6 +822,9 @@ namespace StockControl
             }
         }
 
-
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            dbClss.ExportGridXlSX(dgvData);
+        }
     }
 }
