@@ -155,11 +155,11 @@ namespace StockControl
             return (T)Enum.Parse(typeof(T), value, true);
         }
 
-        public static decimal StockQty(string ItemNo, string LocationCode)
+        public static decimal StockQty(string ItemNo, string LocationCode,string Category)
         {
             using (var db = new DataClasses1DataContext())
             {
-                var g = db.Cal_QTY_Remain_Location(ItemNo, "", 0, LocationCode, 0).Value.ToDecimal();
+                var g = db.Cal_QTY_Remain_Location(ItemNo, Category, 0, LocationCode, 0).Value.ToDecimal();
                 return g;
             }
         }
@@ -480,6 +480,7 @@ namespace StockControl
                                     , 0, tbst.Location, "Warehouse", tool.BaseUOM, pcsunit
                                     , tool.BaseUOM, pcsunit, idCstmPODt_Free
                                     , idProductionOrderRM
+                                    , -1
                                     );
 
                 //**Stock Receive ใส่ Customer PODt id ใบใหม่
@@ -509,7 +510,7 @@ namespace StockControl
                 else
                     s.UnitCost = 0;
 
-                decimal RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(s.CodeNo, "", 0, "Warehouse", 0)));
+                decimal RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(s.CodeNo, "Free", 0, "Warehouse", 0)));
                 decimal sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(s.CodeNo, "", "", "RemainAmount", "Warehouse", idCstmPODt)) + s.AmountCost.ToDecimal();
                 decimal sum_Qty = RemainQty.ToDecimal() + s.QTY.ToDecimal();
                 var RemainAmount = sum_Remain;

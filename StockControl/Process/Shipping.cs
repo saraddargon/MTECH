@@ -713,6 +713,7 @@ namespace StockControl
                                     , StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
                                     , dbClss.TInt(txtidCSTMPODt.Text)
                                     , idProductionOrderRM
+                                    ,1
                                     );
 
                                 ////decimal RemainQty = 0;
@@ -896,8 +897,11 @@ namespace StockControl
 
                                     Amount = (-QTY) * UnitCost;
 
+                                    string Category1 = "Invoice";
+                                    if (dbClss.TInt(vv.idCSTMPODt) > 0) Category1 = "CstmPOID";
+                                    else if (dbClss.TInt(vv.idCSTMPODt) == 0) Category1 = "Free";
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, Category1, 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
                                     sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
@@ -957,9 +961,12 @@ namespace StockControl
                                     //    UnitCost = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "Avg"));
                                     
                                     Amount = (-QTY) * UnitCost;
+                                    string Category1 = "Invoice";
+                                    if (dbClss.TInt(vv.idCSTMPODt) > 0) Category1 = "CstmPOID";
+                                    else if (dbClss.TInt(vv.idCSTMPODt) == 0) Category1 = "Free";
 
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, Category1, 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
                                     sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))
@@ -1131,8 +1138,11 @@ namespace StockControl
                                 // ใช้ 0 เพราะต้องการเอาราคาล่าสุดของ stock free
                                 // ใช้ -1 คือเอาทุกรายการรับ
                                 int idCSTMPODt = 0;// dbClss.TInt(txtidCSTMPODt.Text);
+                                int Free = -1;
+                                if (idCSTMPODt > 0) Free = 0;
+                                else if (idCSTMPODt == 0) Free = 1;
 
-                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt);
+                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
                             }
                         }
                     }
@@ -1179,7 +1189,7 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value),0)));
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Free", 0, Convert.ToString(e.Row.Cells["Location"].Value),0)));
 
 
                             string dgvUOM = dbClss.TSt(e.Row.Cells["UnitShip"].Value);
@@ -1232,12 +1242,12 @@ namespace StockControl
 
             return re;
         }
-        private decimal Get_UnitCostFIFO(string CodeNo, decimal Qty,string Location,int idCSTMPODt)
+        private decimal Get_UnitCostFIFO(string CodeNo, decimal Qty,string Location,int idCSTMPODt,int Free)
         {
             decimal re = 0;
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                re = dbClss.TDe(db.Get_AvgCost_FIFO(CodeNo, Qty, Location, idCSTMPODt));
+                re = dbClss.TDe(db.Get_AvgCost_FIFO(CodeNo, Qty, Location, idCSTMPODt, Free));
             }
             return re;
         }

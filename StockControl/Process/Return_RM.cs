@@ -1053,7 +1053,11 @@ namespace StockControl
                             if (QTY > 0)
                             {
                                 int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
-                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt);
+                                int Free = -1;
+                                if (idCSTMPODt > 0) Free = 0;
+                                else if (idCSTMPODt == 0) Free = 1;
+
+                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
                             }
 
 
@@ -1073,7 +1077,11 @@ namespace StockControl
                         int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice",0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
+                            string Category = "Invoice";
+                            if (idCSTMPODt > 0) Category = "CstmPOID";
+                            else if (idCSTMPODt == 0) Category = "Free";
+
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), Category, 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
                         }
                     }
                     else if (dgvData.Columns["Unit"].Index == e.ColumnIndex)
@@ -1182,12 +1190,12 @@ namespace StockControl
             return re;
         }
 
-        private decimal Get_UnitCostFIFO(string CodeNo, decimal Qty, string Location, int idCSTMPODt)
+        private decimal Get_UnitCostFIFO(string CodeNo, decimal Qty, string Location, int idCSTMPODt,int Free)
         {
             decimal re = 0;
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                re = dbClss.TDe(db.Get_AvgCost_FIFO(CodeNo, Qty, Location,idCSTMPODt));
+                re = dbClss.TDe(db.Get_AvgCost_FIFO(CodeNo, Qty, Location,idCSTMPODt, Free));
             }
             return re;
         }
@@ -1352,7 +1360,7 @@ namespace StockControl
 
                             ItemNo = d.InternalName;
                             ItemDescription = d.InternalDescription;
-                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Invoice"
+                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Free"
                                 , 0, "Warehouse", idCSTMPODt)));//Convert.ToDecimal(d.StockInv);
                             Unit = d.PurchaseUOM;
                             PCSUnit = dbClss.Con_UOM(CodeNo, d.PurchaseUOM);

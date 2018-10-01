@@ -532,13 +532,14 @@
             gridViewDecimalColumn6.FieldName = "CurrentJob_RMStock";
             gridViewDecimalColumn6.FormatString = "{0:N2}";
             gridViewDecimalColumn6.HeaderText = "CurrentJob_RMStock";
+            gridViewDecimalColumn6.IsVisible = false;
             gridViewDecimalColumn6.Name = "CurrentJob_RMStock";
             gridViewDecimalColumn6.ReadOnly = true;
             gridViewDecimalColumn6.Width = 125;
             gridViewDecimalColumn7.EnableExpressionEditor = false;
             gridViewDecimalColumn7.FieldName = "CurrentJob_FGStock";
             gridViewDecimalColumn7.FormatString = "{0:N2}";
-            gridViewDecimalColumn7.HeaderText = "CurrentJob FG Stock";
+            gridViewDecimalColumn7.HeaderText = "CurrentJob Stock";
             gridViewDecimalColumn7.Name = "CurrentJob_FGStock";
             gridViewDecimalColumn7.ReadOnly = true;
             gridViewDecimalColumn7.Width = 140;
