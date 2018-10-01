@@ -227,13 +227,16 @@ namespace StockControl
                     {
                         radGridView1.DataSource = g;
 
-                        decimal RemainStock = 0;
+                        decimal CurrentStock = 0;
                         //string Location = "";
                         foreach (var x in radGridView1.Rows)
                         {
                             //Location = dbClss.TSt(x.Cells["Location"].Value);
-                            RemainStock = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["InternalNo"].Value), "Free", 0, Convert.ToString(x.Cells["Location"].Value),0)));
-                            x.Cells["RemainStock"].Value = RemainStock;
+                            CurrentStock = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["InternalNo"].Value), "", 0, Convert.ToString(x.Cells["Location"].Value),-1)));
+                            x.Cells["CurrentStock"].Value = CurrentStock;
+
+
+
                         }
                             dbClss.SetRowNo1(radGridView1);
                     }
