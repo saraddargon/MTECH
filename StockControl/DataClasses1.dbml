@@ -1626,53 +1626,6 @@
       <Column Name="Flag_Temp" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tb_Stock" Member="tb_Stocks">
-    <Type Name="tb_Stock">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="AppDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Seq" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="App" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="Appid" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="DocNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="CodeNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="RefNo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Refid" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="RefidAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="RefShipid" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Type" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="QTY" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="Inbound" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="Outbound" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="AmountCost" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="UnitCost" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="RemainQty" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="RemainUnitCost" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="RemainAmount" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="CalDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Type_i" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Category" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Flag_ClearTemp" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Avg" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="Type_in_out" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="TLQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="TLCost" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="ShipQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="Location" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
-      <Column Name="RefJobCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="RefTempJobCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="RefidJobCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AmountCost_Before" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="UnitCost_Before" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="TLCost_Before" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="ShelfNo" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="RemarkLocation" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
-      <Column Name="LotNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.mh_PurchaseOrderDetail" Member="mh_PurchaseOrderDetails">
     <Type Name="mh_PurchaseOrderDetail">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -2095,6 +2048,54 @@
       <Column Name="Item" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tb_Stock" Member="tb_Stocks">
+    <Type Name="tb_Stock">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AppDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Seq" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="App" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Appid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DocNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="CodeNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="RefNo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Refid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RefidAD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RefShipid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="QTY" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="Inbound" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="Outbound" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="AmountCost" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="UnitCost" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="RemainQty" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="RemainUnitCost" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="RemainAmount" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="CalDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Type_i" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Category" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Flag_ClearTemp" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Avg" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="Type_in_out" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="TLQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="TLCost" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="ShipQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="RefJobCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="RefTempJobCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="RefidJobCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AmountCost_Before" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="UnitCost_Before" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="TLCost_Before" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="ShelfNo" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="RemarkLocation" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="LotNo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Free" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">
