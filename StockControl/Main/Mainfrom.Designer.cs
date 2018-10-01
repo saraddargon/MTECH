@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainfrom));
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Master Setting");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Charts View");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Summary");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Approve");
             System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Purchase Request");
             System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Purchase Order");
@@ -628,8 +628,8 @@
             this.TreeManu.Name = "TreeManu";
             treeNode1.Name = "MasterSetting";
             treeNode1.Text = "Master Setting";
-            treeNode2.Name = "ChartsView";
-            treeNode2.Text = "Charts View";
+            treeNode2.Name = "Summary";
+            treeNode2.Text = "Summary";
             treeNode3.Name = "Approve";
             treeNode3.Text = "Approve";
             treeNode4.Name = "PurchaseReq";

@@ -34,24 +34,25 @@ namespace StockControl
             while (mm <= 12)
             {
                 DateTime d = new DateTime(2018, mm, 1);
-                dgvData.Columns.Add(new GridViewDecimalColumn
+                int cCol = dgvData.Columns.Count;
+                dgvData.Columns.Insert(cCol - 1, new GridViewDecimalColumn
                 {
-                    HeaderText = d.ToString("MMM"),
-                    Name = d.ToString("MMM"),
-                    FieldName = d.ToString("MMM"),
+                    HeaderText = d.ToString("MMM").ToUpper(),
+                    Name = d.ToString("MMM").ToUpper(),
+                    FieldName = d.ToString("MMM").ToUpper(),
                     FormatString = "{0:N2}",
                     Width = 70,
                 });
                 mm++;
-            }
-            dgvData.Columns.Add(new GridViewDecimalColumn
-            {
-                HeaderText = "Summary",
-                Name = "Summary",
-                FieldName = "Summary",
-                FormatString = "{0:N2}",
-                Width = 70,
-            });
+            }            
+            //dgvData.Columns.Add(new GridViewDecimalColumn
+            //{
+            //    HeaderText = "Summary",
+            //    Name = "Summary",
+            //    FieldName = "Summary",
+            //    FormatString = "{0:N2}",
+            //    Width = 70,
+            //});
             dgvData.AutoGenerateColumns = false;
             DataLoad();
         }
@@ -61,10 +62,12 @@ namespace StockControl
             using (var db = new DataClasses1DataContext())
             {
                 int yy = 2018;
-                while (yy <= DateTime.Now.Year)
+                while (yy <= DateTime.Now.Year + 3)
                 {
                     cbbYY.Items.Add(yy.ToSt());
+                    yy++;
                 }
+                cbbYY.Text = DateTime.Now.Year.ToSt();
 
                 var item = db.mh_Items.Where(x => x.Active)
                     .Select(x => new ItemCombo { Item = x.InternalNo, ItemName = x.InternalName }).ToList();
@@ -97,6 +100,11 @@ namespace StockControl
                     string ItemNo = cbbItem.SelectedValue.ToSt();
                     var m = db.sp_080_CustomerPOSummary_SELECT(yy, ItemNo).ToList();
                     dgvData.DataSource = m;
+
+                    dgvData.Rows.ToList().ForEach(x =>
+                    {
+                        x.Cells["Summary"].Value = sumRow(x);
+                    });
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -104,6 +112,20 @@ namespace StockControl
             {
                 this.Cursor = Cursors.Default;
             }
+
+        }
+        decimal sumRow(GridViewRowInfo rowe)
+        {
+            decimal ret = 0.00m;
+            int mm = 1;
+            while(mm <= 12)
+            {
+                DateTime d = new DateTime(DateTime.Now.Year, mm, 1);
+                ret += rowe.Cells[d.ToString("MMM").ToUpper()].Value.ToDecimal();
+                mm++;
+            }
+            ret = Math.Round(ret, 2);
+            return ret;
 
         }
 
@@ -159,8 +181,8 @@ namespace StockControl
         {
             if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
-                var rowe = dgvData.CurrentCell.RowInfo;
-                idCustomerPO = rowe.Cells["idCustomerPO"].Value.ToInt();
+                //var rowe = dgvData.CurrentCell.RowInfo;
+                //idCustomerPO = rowe.Cells["idCustomerPO"].Value.ToInt();
             }
         }
 
