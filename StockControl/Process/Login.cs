@@ -12,6 +12,9 @@ namespace StockControl
 {
     public partial class Login : Form
     {
+        Size s1 = new Size(406, 239);
+        Size s2 = new Size(406, 378);
+
         public Login()
         {
             InitializeComponent();
@@ -21,26 +24,28 @@ namespace StockControl
         {
             if (cbConfig.Checked)
             {
-                try
-                {
-                    lblDatabase.Visible = true;
-                    lblServer.Visible = true;
-                    ddlDatabase.Visible = true;
-                    ddlServer.Visible = true;
+                this.Size = s2;
+                //try
+                //{
+                //    lblDatabase.Visible = true;
+                //    lblServer.Visible = true;
+                //    ddlDatabase.Visible = true;
+                //    ddlServer.Visible = true;
 
-                }
-                catch { }
+                //}
+                //catch { }
             }
             else
             {
-                try
-                {
-                    lblDatabase.Visible = false;
-                    lblServer.Visible = false;
-                    ddlDatabase.Visible = false;
-                    ddlServer.Visible = false;
-                }
-                catch { }
+                this.Size = s1;
+                //try
+                //{
+                //    lblDatabase.Visible = false;
+                //    lblServer.Visible = false;
+                //    ddlDatabase.Visible = false;
+                //    ddlServer.Visible = false;
+                //}
+                //catch { }
             }
         }
 
@@ -48,13 +53,15 @@ namespace StockControl
         {
             //getConfig();
 
-            cbConfig.Checked = true;
+            //cbConfig.Checked = true;
             txtUser.Text = "";//ConnectDB.ConnectDB.user;
             ddlDatabase.Text = ConnectDB.dbname;
             ddlServer.Text = ConnectDB.server;
             txtUser.Text = "admin";
             txtPassword.Text = "1234";
-            
+
+
+            this.Size = s1;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -193,5 +200,30 @@ namespace StockControl
             //else
             //    txtPassword.PasswordChar = "-".ToCharArray();
         }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (baseClass.Question("Do you want to 'Update Program' ?"))
+                UpdateE();
+        }
+        void UpdateE()
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                System.Diagnostics.Process.Start("AutoUpdate.exe");
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+                Application.Exit();
+            }
+        }
+
+
     }
 }

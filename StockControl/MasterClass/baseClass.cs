@@ -388,6 +388,35 @@ namespace StockControl
             //return DateTime.Now;
         }
 
+        //get Path Server
+        public static string GetPathServer(PathCode pCode)
+        {
+            using (var db = new DataClasses1DataContext())
+            {
+                var m = db.tb_Paths.ToList();
+                switch (pCode)
+                {
+                    case PathCode.Customer:
+                        {
+                            var a = m.Where(x => x.PathCode == "Customer").FirstOrDefault();
+                            if (a != null)
+                                return a.PathFile;
+                            else
+                                return "";
+                        }
+                    case PathCode.Vendor:
+                        {
+                            var a = m.Where(x => x.PathCode == "Vendor").FirstOrDefault();
+                            if (a != null)
+                                return a.PathFile;
+                            else
+                                return "";
+                        }
+                    default: return ""; 
+                }
+            }
+        }
+
         //Customer P/O Status
         public static string setCustomerPOStatus(mh_CustomerPODT dt)
         {
@@ -666,6 +695,11 @@ namespace StockControl
         Edit,
         Delete,
         View
+    }
+    public enum PathCode
+    {
+        Vendor,
+        Customer,
     }
 
 

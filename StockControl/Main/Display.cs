@@ -49,6 +49,7 @@ namespace StockControl
                 case "Production": { ShowName = "Production"; pictureBox1.Image = imageList4.Images[8]; }break;
                 case "Planning": { ShowName = "Planning"; pictureBox1.Image = imageList4.Images[1]; }break;
                 case "Sale": { ShowName = "Sales"; pictureBox1.Image = imageList4.Images[6]; }break;
+                case "Summary": { ShowName = "Summary"; pictureBox1.Image = imageList4.Images[1]; }break;
                     //case "Shipping_AvgJobCard": { ShowName = "Shipping Avg JobCard"; pictureBox1.Image = imageList4.Images[0]; } break;
                     //case "Claim": { ShowName = "Claim"; pictureBox1.Image = imageList4.Images[0]; } break;
                     //case "Stock_Location": { ShowName = "Stock Location"; pictureBox1.Image = imageList4.Images[0]; } break;

@@ -34,7 +34,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name, "txtPONo.Text");
+            HistoryView hw = new HistoryView(this.Name, txtJobNo.Text);
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }
@@ -746,11 +746,15 @@ namespace StockControl
         private void btnFilter1_Click(object sender, EventArgs e)
         {
             dgvData.EnableFiltering = true;
+            dgvPurchase.EnableFiltering = true;
+            dgvShipHistory.EnableFiltering = true;
         }
 
         private void btnUnfilter1_Click(object sender, EventArgs e)
         {
             dgvData.EnableFiltering = false;
+            dgvPurchase.EnableFiltering = false;
+            dgvShipHistory.EnableFiltering = false;
         }
 
         private void radMenuItem1_Click(object sender, EventArgs e)

@@ -528,6 +528,8 @@ namespace StockControl
                         m.UpdateDate = DateTime.Now;
                         m.HoldJob = false;
                         db.mh_ProductionOrders.InsertOnSubmit(m);
+                        dbClss.AddHistory("ProductionOrder", "Job Order Sheet", $"New Job Order Sheeet {m.JobNo}", m.JobNo);
+
                         //Update Customer P/O
                         if (item.Cells["root"].Value.ToBool())
                         {
@@ -632,17 +634,17 @@ namespace StockControl
                         //save Cost Overhead
                         var manuTime = 1;
                         var manu = db.mh_ManufacturingSetups.FirstOrDefault();
-                        if(manu != null)
+                        if (manu != null)
                         {
                             if (manu.ShowCapacityInUOM == 2) //Hour
                                 manuTime = 60;
                             else if (manu.ShowCapacityInUOM == 3) //Day
                                 manuTime = (24 * 60);
                         }
-                        foreach(var co in calOvers)
+                        foreach (var co in calOvers)
                         {
                             var rt = db.mh_RoutingDTs.Where(x => x.id == co.idRoute && x.idWorkCenter == co.idWorkcenter && x.Active).FirstOrDefault();
-                            if(rt != null)
+                            if (rt != null)
                             {
                                 var costAll = Math.Round(rt.UnitCost / manuTime, 2);
                                 m.CostOverhead += Math.Round(costAll * co.CapacityX, 2);

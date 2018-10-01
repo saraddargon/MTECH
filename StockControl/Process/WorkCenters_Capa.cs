@@ -148,7 +148,7 @@ namespace StockControl
 
                     var c = db.mh_CapacityAvailables
                         .Where(x => x.Date >= dtFrom && x.Date <= dtTo && (workId == 0 || x.WorkCenterID == workId))
-                        .Join(db.mh_WorkCenters.Where(x=>x.Active)
+                        .Join(db.mh_WorkCenters.Where(x => x.Active)
                         , hd => hd.WorkCenterID
                         , dt => dt.id
                         , (hd, dt) => new { hd, hd.Date, hd.WorkCenterID, hd.Capacity })
@@ -193,7 +193,7 @@ namespace StockControl
                                 rowE.Cells["Name"].Value = w.WorkCenterName;
                                 dgvData.Rows.Add(rowE);
                             }
-                            
+
                             //set capa
                             if (e.Capacity != null)
                             {
@@ -223,5 +223,19 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
         }
 
+        private void btnExportExcel_Click(object sender, EventArgs e)
+        {
+            dbClss.ExportGridXlSX(dgvData);
+        }
+
+        private void radLabelElement2_Click(object sender, EventArgs e)
+        {
+            dgvData.EnableFiltering = true;
+        }
+
+        private void radLabelElement3_Click(object sender, EventArgs e)
+        {
+            dgvData.EnableFiltering = false;
+        }
     }
 }

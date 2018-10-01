@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
 using Telerik.WinControls;
+using System.IO;
 
 namespace StockControl
 {
@@ -32,7 +33,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name);
+            HistoryView hw = new HistoryView(this.Name, txtNo.Text);
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }
@@ -97,6 +98,8 @@ namespace StockControl
         {
             try
             {
+                var op = txtAttachFile.Dialog as OpenFileDialog;
+                op.Filter = "(*.pdf)|*.pdf";
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     var gt = (from ix in db.mh_CRRNCies select ix).ToList();
@@ -254,7 +257,31 @@ namespace StockControl
                     cstm.DefaultCurrency = cbbCurrency.SelectedValue.ToInt();
                     cstm.Active = cbActive.Checked;
                     db.SubmitChanges();
+                    //file
+                    string fullPath = txtAttachFile.Value.ToSt();
+                    string fName = "";
+                    try
+                    {
+                        if (Path.GetFileName(fullPath) != fullPath)
+                        {
+                            try
+                            {
+                                fName = cstm.id.ToSt() + "_" + Path.GetFileName(fullPath);
+                                File.Copy(fullPath, Path.Combine(baseClass.GetPathServer(PathCode.Customer), fName), true);
+                                fullPath = fName;
+                            }
+                            catch (Exception ex) { baseClass.Error(ex.Message); fName = ""; }
 
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        baseClass.Error(ex.Message);
+                    }
+                    cstm.AttachFile = fName;
+                    db.SubmitChanges();
+
+                    txtid.Text = cstm.id.ToSt();
                     foreach (var c in dgvData.Rows)
                     {
                         if (c.Cells["dgvC"].Value.ToSt() == "") continue;
@@ -786,6 +813,54 @@ namespace StockControl
             var rowe = dgvData.Rows.AddNew();
         }
 
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            if (baseClass.Question("Do you want to 'Delete Attach file' ?"))
+                DelAttachFile();
+        }
+        void DelAttachFile()
+        {
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    int idv = txtid.Text.ToInt();
+                    var m = db.mh_Customers.Where(x => x.id == idv).FirstOrDefault();
+                    if (m != null)
+                    {
+                        if (m.AttachFile.ToSt() != "")
+                        {
+                            m.AttachFile = "";
+                            db.SubmitChanges();
+                            baseClass.Info("Delete Attach file complete.\n");
+                            dbClss.AddHistory(this.Name, "Customer", "Delete Attach file", txtNo.Text);
+                        }
+                    }
+                    txtAttachFile.Value = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+        }
 
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtAttachFile.Value.ToSt() != "")
+                {
+                    string apath = txtAttachFile.Value.ToSt();
+                    if (Path.GetFileName(txtAttachFile.Value.ToSt()) == Path.GetFileName(txtAttachFile.Value.ToSt()))
+                        apath = Path.Combine(baseClass.GetPathServer(PathCode.Customer), txtAttachFile.Value.ToSt());
+                    System.Diagnostics.Process.Start(apath);
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name);
+            HistoryView hw = new HistoryView(this.Name, idWorkCenters.ToSt());
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }
@@ -219,7 +219,7 @@ namespace StockControl
                                 t.SubWorkId = g.Cells["SubWorkId"].Value.ToInt();
                                 t.Active = true;
 
-                                dbClss.AddHistory(this.Name, "เพิ่มวัน", $"เพิ่มวันหยุดงาน [{t.Date.ToDtString()}]", "");
+                                dbClss.AddHistory(this.Name, "เพิ่มวัน", $"เพิ่มวันหยุดงาน [{t.Date.ToDtString()}]", idWorkCenters.ToSt());
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
                                 db.mh_CapacityAbsences.InsertOnSubmit(t);
                                 db.SubmitChanges();
@@ -238,7 +238,7 @@ namespace StockControl
 
                                 C += 1;
                                 db.SubmitChanges();
-                                dbClss.AddHistory(this.Name, "แก้ไขวันหยุดงาน", $"แก้ไขวันหยุดงาน [{t.Date.ToDtString()}]", "");
+                                dbClss.AddHistory(this.Name, "แก้ไขวันหยุดงาน", $"แก้ไขวันหยุดงาน [{t.Date.ToDtString()}]", idWorkCenters.ToSt());
 
                             }
 
@@ -299,7 +299,7 @@ namespace StockControl
                                 {
                                     d.Active = false;
                                     //db.mh_CapacityAbsences.DeleteOnSubmit(d);
-                                    dbClss.AddHistory(this.Name, "ลบวันหยุดงาน", $"Delete HoliDay [{d.Date.ToDtString()}]", "");
+                                    dbClss.AddHistory(this.Name, "ลบวันหยุดงาน", $"Delete HoliDay [{d.Date.ToDtString()}]", idWorkCenters.ToSt());
 
                                     //Delete Calendar Load
                                     var calLoad = db.mh_CalendarLoads.Where(x => x.idAbs == d.id).FirstOrDefault();
@@ -583,7 +583,7 @@ namespace StockControl
                 }
                 if (dt.Rows.Count > 0)
                 {
-                    dbClss.AddHistory(this.Name, "Import", "Import file CSV in to System", "");
+                    dbClss.AddHistory(this.Name, "Import", "Import file CSV in to System", idWorkCenters.ToSt());
                     ImportData();
                     MessageBox.Show("Import Completed.");
 
