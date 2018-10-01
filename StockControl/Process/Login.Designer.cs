@@ -33,7 +33,6 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
             this.cbConfig = new Telerik.WinControls.UI.RadCheckBox();
             this.btnConnect = new Telerik.WinControls.UI.RadButton();
             this.btnCancel = new Telerik.WinControls.UI.RadButton();
@@ -41,11 +40,11 @@
             this.lblDatabase = new Telerik.WinControls.UI.RadLabel();
             this.ddlServer = new Telerik.WinControls.UI.RadDropDownList();
             this.ddlDatabase = new Telerik.WinControls.UI.RadDropDownList();
-            this.radLabel6 = new Telerik.WinControls.UI.RadLabel();
             this.cbShow = new Telerik.WinControls.UI.RadCheckBox();
+            this.lbVer = new System.Windows.Forms.Label();
+            this.btnUpdate = new Telerik.WinControls.UI.RadButton();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbConfig)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnConnect)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCancel)).BeginInit();
@@ -53,13 +52,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.lblDatabase)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlServer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlDatabase)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbShow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnUpdate)).BeginInit();
             this.SuspendLayout();
             // 
             // txtUser
             // 
-            this.txtUser.Location = new System.Drawing.Point(94, 70);
+            this.txtUser.Location = new System.Drawing.Point(156, 109);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(126, 20);
             this.txtUser.TabIndex = 0;
@@ -67,7 +66,7 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(94, 96);
+            this.txtPassword.Location = new System.Drawing.Point(156, 135);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(126, 20);
@@ -76,8 +75,9 @@
             // 
             // radLabel2
             // 
+            this.radLabel2.BackColor = System.Drawing.Color.Transparent;
             this.radLabel2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel2.Location = new System.Drawing.Point(52, 70);
+            this.radLabel2.Location = new System.Drawing.Point(114, 109);
             this.radLabel2.Name = "radLabel2";
             this.radLabel2.Size = new System.Drawing.Size(36, 18);
             this.radLabel2.TabIndex = 7;
@@ -85,26 +85,19 @@
             // 
             // radLabel1
             // 
+            this.radLabel1.BackColor = System.Drawing.Color.Transparent;
             this.radLabel1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel1.Location = new System.Drawing.Point(27, 96);
+            this.radLabel1.Location = new System.Drawing.Point(89, 135);
             this.radLabel1.Name = "radLabel1";
             this.radLabel1.Size = new System.Drawing.Size(63, 18);
             this.radLabel1.TabIndex = 7;
             this.radLabel1.Text = "Password :";
             // 
-            // radLabel3
-            // 
-            this.radLabel3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel3.Location = new System.Drawing.Point(61, 46);
-            this.radLabel3.Name = "radLabel3";
-            this.radLabel3.Size = new System.Drawing.Size(211, 18);
-            this.radLabel3.TabIndex = 7;
-            this.radLabel3.Text = "M-TECH Product Co.,Ltd. Version 1.0.0";
-            // 
             // cbConfig
             // 
+            this.cbConfig.BackColor = System.Drawing.Color.Transparent;
             this.cbConfig.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbConfig.Location = new System.Drawing.Point(94, 122);
+            this.cbConfig.Location = new System.Drawing.Point(156, 161);
             this.cbConfig.Name = "cbConfig";
             this.cbConfig.Size = new System.Drawing.Size(56, 18);
             this.cbConfig.TabIndex = 19;
@@ -115,11 +108,11 @@
             // btnConnect
             // 
             this.btnConnect.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConnect.Location = new System.Drawing.Point(78, 149);
+            this.btnConnect.Location = new System.Drawing.Point(72, 189);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(72, 20);
             this.btnConnect.TabIndex = 2;
-            this.btnConnect.Text = "Connect";
+            this.btnConnect.Text = "Login";
             this.btnConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnConnect.ThemeName = "Office2010Blue";
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
@@ -127,7 +120,7 @@
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(156, 149);
+            this.btnCancel.Location = new System.Drawing.Point(150, 189);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(72, 20);
             this.btnCancel.TabIndex = 20;
@@ -139,8 +132,9 @@
             // 
             // lblServer
             // 
+            this.lblServer.BackColor = System.Drawing.Color.Transparent;
             this.lblServer.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblServer.Location = new System.Drawing.Point(45, 184);
+            this.lblServer.Location = new System.Drawing.Point(104, 263);
             this.lblServer.Name = "lblServer";
             this.lblServer.Size = new System.Drawing.Size(46, 18);
             this.lblServer.TabIndex = 7;
@@ -148,8 +142,9 @@
             // 
             // lblDatabase
             // 
+            this.lblDatabase.BackColor = System.Drawing.Color.Transparent;
             this.lblDatabase.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDatabase.Location = new System.Drawing.Point(28, 207);
+            this.lblDatabase.Location = new System.Drawing.Point(87, 286);
             this.lblDatabase.Name = "lblDatabase";
             this.lblDatabase.Size = new System.Drawing.Size(62, 18);
             this.lblDatabase.TabIndex = 7;
@@ -158,7 +153,7 @@
             // ddlServer
             // 
             this.ddlServer.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            this.ddlServer.Location = new System.Drawing.Point(97, 182);
+            this.ddlServer.Location = new System.Drawing.Point(156, 261);
             this.ddlServer.Name = "ddlServer";
             this.ddlServer.Size = new System.Drawing.Size(131, 20);
             this.ddlServer.TabIndex = 4;
@@ -167,24 +162,16 @@
             // ddlDatabase
             // 
             this.ddlDatabase.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            this.ddlDatabase.Location = new System.Drawing.Point(97, 207);
+            this.ddlDatabase.Location = new System.Drawing.Point(156, 286);
             this.ddlDatabase.Name = "ddlDatabase";
             this.ddlDatabase.Size = new System.Drawing.Size(131, 20);
             this.ddlDatabase.TabIndex = 5;
             this.ddlDatabase.ThemeName = "Office2010Blue";
             // 
-            // radLabel6
-            // 
-            this.radLabel6.Font = new System.Drawing.Font("AngsanaUPC", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel6.Location = new System.Drawing.Point(122, 11);
-            this.radLabel6.Name = "radLabel6";
-            this.radLabel6.Size = new System.Drawing.Size(69, 38);
-            this.radLabel6.TabIndex = 7;
-            this.radLabel6.Text = "LOG IN";
-            // 
             // cbShow
             // 
-            this.cbShow.Location = new System.Drawing.Point(225, 96);
+            this.cbShow.BackColor = System.Drawing.Color.Transparent;
+            this.cbShow.Location = new System.Drawing.Point(287, 135);
             this.cbShow.Name = "cbShow";
             this.cbShow.Size = new System.Drawing.Size(47, 18);
             this.cbShow.TabIndex = 19;
@@ -193,14 +180,42 @@
             this.cbShow.Visible = false;
             this.cbShow.ToggleStateChanged += new Telerik.WinControls.UI.StateChangedEventHandler(this.cbShow_ToggleStateChanged);
             // 
+            // lbVer
+            // 
+            this.lbVer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbVer.BackColor = System.Drawing.Color.Transparent;
+            this.lbVer.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.lbVer.Location = new System.Drawing.Point(204, 357);
+            this.lbVer.Name = "lbVer";
+            this.lbVer.Size = new System.Drawing.Size(198, 18);
+            this.lbVer.TabIndex = 21;
+            this.lbVer.Text = "version : 1.0.2";
+            this.lbVer.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdate.Location = new System.Drawing.Point(238, 189);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(72, 20);
+            this.btnUpdate.TabIndex = 20;
+            this.btnUpdate.TabStop = false;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnUpdate.ThemeName = "Office2010Blue";
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(206)))), ((int)(((byte)(225)))));
-            this.ClientSize = new System.Drawing.Size(300, 245);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new System.Drawing.Size(406, 378);
+            this.Controls.Add(this.lbVer);
             this.Controls.Add(this.ddlDatabase);
             this.Controls.Add(this.ddlServer);
+            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.cbShow);
@@ -208,8 +223,6 @@
             this.Controls.Add(this.lblDatabase);
             this.Controls.Add(this.lblServer);
             this.Controls.Add(this.radLabel1);
-            this.Controls.Add(this.radLabel6);
-            this.Controls.Add(this.radLabel3);
             this.Controls.Add(this.radLabel2);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUser);
@@ -223,7 +236,6 @@
             this.Load += new System.EventHandler(this.Login_Load);
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbConfig)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnConnect)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCancel)).EndInit();
@@ -231,8 +243,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.lblDatabase)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlServer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlDatabase)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbShow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnUpdate)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,7 +256,6 @@
         private System.Windows.Forms.TextBox txtPassword;
         private Telerik.WinControls.UI.RadLabel radLabel2;
         private Telerik.WinControls.UI.RadLabel radLabel1;
-        private Telerik.WinControls.UI.RadLabel radLabel3;
         private Telerik.WinControls.UI.RadCheckBox cbConfig;
         private Telerik.WinControls.UI.RadButton btnConnect;
         private Telerik.WinControls.UI.RadButton btnCancel;
@@ -252,7 +263,8 @@
         private Telerik.WinControls.UI.RadLabel lblDatabase;
         private Telerik.WinControls.UI.RadDropDownList ddlServer;
         private Telerik.WinControls.UI.RadDropDownList ddlDatabase;
-        private Telerik.WinControls.UI.RadLabel radLabel6;
         private Telerik.WinControls.UI.RadCheckBox cbShow;
+        private System.Windows.Forms.Label lbVer;
+        private Telerik.WinControls.UI.RadButton btnUpdate;
     }
 }
