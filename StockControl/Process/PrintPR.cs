@@ -514,7 +514,7 @@ namespace StockControl
                             Report.Reportx1.Value[1] = PRNo2;
                             Report.Reportx1.WReport = "ReportShipping2";
                             //Report.Reportx1 op = new Report.Reportx1("ReportShipping2.rpt");
-                            Report.Reportx1 op = new Report.Reportx1("Movement_InOut.rpt");
+                            Report.Reportx1 op = new Report.Reportx1("ReportShipping2.rpt");
 
                             op.Show();
                         }
