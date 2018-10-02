@@ -52,10 +52,14 @@ namespace StockControl
 
                 DefaultItem();
 
-                if (pk != null)
+                if (pk != "")
                 {
                     txtPackingNo.Text = pk;
                     DataLoad();
+                }
+                else
+                {
+                    txtPackingNo.Text = dbClss.GetNo(32, 0);
                 }
 
 
@@ -127,7 +131,7 @@ namespace StockControl
             txtInvoiceNo.Text = "";
             txtDLNo.Text = "";
             txtDLNo.Enabled = false;
-            txtPackingNo.Text = "";
+            txtPackingNo.Text = dbClss.GetNo(32,0);
             //ddlTypeReceive.Text = "";
             dtPackingDate.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             txtReceiveBy.Text = ClassLib.Classlib.User;

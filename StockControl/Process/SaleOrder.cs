@@ -389,7 +389,7 @@ namespace StockControl
         {
             cbbCSTM.SelectedIndex = -1;
             txtCSTMNo.Text = "";
-            txtSONo.Text = "";
+            txtSONo.Text = dbClss.GetNo(28, 0);
             dtSODate.Value = Convert.ToDateTime(DateTime.Today,new CultureInfo("en-US"));
             dgvData.Rows.Clear();
             dgvData.DataSource = null;
