@@ -144,6 +144,7 @@ namespace StockControl
 
                              where h.Status != "Cancel" //&& d.verticalID == VerticalID
                                     && d.Status != "Cancel"
+                                    && h.ShippingNo.Substring(0, 2) == "SH"
                                  && d.ShippingNo.Contains(txtSHNo.Text.Trim())
                                  && d.CodeNo.Contains(txtCodeNo.Text.Trim())
 
