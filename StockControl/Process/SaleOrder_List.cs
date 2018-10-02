@@ -184,7 +184,6 @@ namespace StockControl
         {
             //select Item for Print
             //throw new NotImplementedException();
-
         }
 
 

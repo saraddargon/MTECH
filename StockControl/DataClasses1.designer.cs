@@ -363,6 +363,9 @@ namespace StockControl
     partial void Insertmh_CheckStock_List(mh_CheckStock_List instance);
     partial void Updatemh_CheckStock_List(mh_CheckStock_List instance);
     partial void Deletemh_CheckStock_List(mh_CheckStock_List instance);
+    partial void Insertmh_ProductTAG(mh_ProductTAG instance);
+    partial void Updatemh_ProductTAG(mh_ProductTAG instance);
+    partial void Deletemh_ProductTAG(mh_ProductTAG instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -1312,6 +1315,14 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<mh_CheckStock_List>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_ProductTAG> mh_ProductTAGs
+		{
+			get
+			{
+				return this.GetTable<mh_ProductTAG>();
 			}
 		}
 		
@@ -46068,6 +46079,428 @@ namespace StockControl
 					this._SeqStatus = value;
 					this.SendPropertyChanged("SeqStatus");
 					this.OnSeqStatusChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_ProductTAG")]
+	public partial class mh_ProductTAG : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Machine;
+		
+		private string _UserID;
+		
+		private string _PartNo;
+		
+		private int _Seq;
+		
+		private string _PartName;
+		
+		private string _CSTMShot;
+		
+		private string _CSTMItem;
+		
+		private string _CustItem2;
+		
+		private string _LotNo;
+		
+		private System.Nullable<decimal> _Qty;
+		
+		private string _OFTAG;
+		
+		private string _CustomerName;
+		
+		private string _PathPic;
+		
+		private string _BOMNo;
+		
+		private System.Data.Linq.Binary _QRCode;
+		
+		private string _SHIFT;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMachineChanging(string value);
+    partial void OnMachineChanged();
+    partial void OnUserIDChanging(string value);
+    partial void OnUserIDChanged();
+    partial void OnPartNoChanging(string value);
+    partial void OnPartNoChanged();
+    partial void OnSeqChanging(int value);
+    partial void OnSeqChanged();
+    partial void OnPartNameChanging(string value);
+    partial void OnPartNameChanged();
+    partial void OnCSTMShotChanging(string value);
+    partial void OnCSTMShotChanged();
+    partial void OnCSTMItemChanging(string value);
+    partial void OnCSTMItemChanged();
+    partial void OnCustItem2Changing(string value);
+    partial void OnCustItem2Changed();
+    partial void OnLotNoChanging(string value);
+    partial void OnLotNoChanged();
+    partial void OnQtyChanging(System.Nullable<decimal> value);
+    partial void OnQtyChanged();
+    partial void OnOFTAGChanging(string value);
+    partial void OnOFTAGChanged();
+    partial void OnCustomerNameChanging(string value);
+    partial void OnCustomerNameChanged();
+    partial void OnPathPicChanging(string value);
+    partial void OnPathPicChanged();
+    partial void OnBOMNoChanging(string value);
+    partial void OnBOMNoChanged();
+    partial void OnQRCodeChanging(System.Data.Linq.Binary value);
+    partial void OnQRCodeChanged();
+    partial void OnSHIFTChanging(string value);
+    partial void OnSHIFTChanged();
+    #endregion
+		
+		public mh_ProductTAG()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Machine", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Machine
+		{
+			get
+			{
+				return this._Machine;
+			}
+			set
+			{
+				if ((this._Machine != value))
+				{
+					this.OnMachineChanging(value);
+					this.SendPropertyChanging();
+					this._Machine = value;
+					this.SendPropertyChanged("Machine");
+					this.OnMachineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string UserID
+		{
+			get
+			{
+				return this._UserID;
+			}
+			set
+			{
+				if ((this._UserID != value))
+				{
+					this.OnUserIDChanging(value);
+					this.SendPropertyChanging();
+					this._UserID = value;
+					this.SendPropertyChanged("UserID");
+					this.OnUserIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartNo", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string PartNo
+		{
+			get
+			{
+				return this._PartNo;
+			}
+			set
+			{
+				if ((this._PartNo != value))
+				{
+					this.OnPartNoChanging(value);
+					this.SendPropertyChanging();
+					this._PartNo = value;
+					this.SendPropertyChanged("PartNo");
+					this.OnPartNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Seq", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Seq
+		{
+			get
+			{
+				return this._Seq;
+			}
+			set
+			{
+				if ((this._Seq != value))
+				{
+					this.OnSeqChanging(value);
+					this.SendPropertyChanging();
+					this._Seq = value;
+					this.SendPropertyChanged("Seq");
+					this.OnSeqChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartName", DbType="NVarChar(50)")]
+		public string PartName
+		{
+			get
+			{
+				return this._PartName;
+			}
+			set
+			{
+				if ((this._PartName != value))
+				{
+					this.OnPartNameChanging(value);
+					this.SendPropertyChanging();
+					this._PartName = value;
+					this.SendPropertyChanged("PartName");
+					this.OnPartNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CSTMShot", DbType="NVarChar(60)")]
+		public string CSTMShot
+		{
+			get
+			{
+				return this._CSTMShot;
+			}
+			set
+			{
+				if ((this._CSTMShot != value))
+				{
+					this.OnCSTMShotChanging(value);
+					this.SendPropertyChanging();
+					this._CSTMShot = value;
+					this.SendPropertyChanged("CSTMShot");
+					this.OnCSTMShotChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CSTMItem", DbType="NVarChar(50)")]
+		public string CSTMItem
+		{
+			get
+			{
+				return this._CSTMItem;
+			}
+			set
+			{
+				if ((this._CSTMItem != value))
+				{
+					this.OnCSTMItemChanging(value);
+					this.SendPropertyChanging();
+					this._CSTMItem = value;
+					this.SendPropertyChanged("CSTMItem");
+					this.OnCSTMItemChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustItem2", DbType="NVarChar(50)")]
+		public string CustItem2
+		{
+			get
+			{
+				return this._CustItem2;
+			}
+			set
+			{
+				if ((this._CustItem2 != value))
+				{
+					this.OnCustItem2Changing(value);
+					this.SendPropertyChanging();
+					this._CustItem2 = value;
+					this.SendPropertyChanged("CustItem2");
+					this.OnCustItem2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LotNo", DbType="NVarChar(30)")]
+		public string LotNo
+		{
+			get
+			{
+				return this._LotNo;
+			}
+			set
+			{
+				if ((this._LotNo != value))
+				{
+					this.OnLotNoChanging(value);
+					this.SendPropertyChanging();
+					this._LotNo = value;
+					this.SendPropertyChanged("LotNo");
+					this.OnLotNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Qty
+		{
+			get
+			{
+				return this._Qty;
+			}
+			set
+			{
+				if ((this._Qty != value))
+				{
+					this.OnQtyChanging(value);
+					this.SendPropertyChanging();
+					this._Qty = value;
+					this.SendPropertyChanged("Qty");
+					this.OnQtyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OFTAG", DbType="NVarChar(20)")]
+		public string OFTAG
+		{
+			get
+			{
+				return this._OFTAG;
+			}
+			set
+			{
+				if ((this._OFTAG != value))
+				{
+					this.OnOFTAGChanging(value);
+					this.SendPropertyChanging();
+					this._OFTAG = value;
+					this.SendPropertyChanged("OFTAG");
+					this.OnOFTAGChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="NVarChar(150)")]
+		public string CustomerName
+		{
+			get
+			{
+				return this._CustomerName;
+			}
+			set
+			{
+				if ((this._CustomerName != value))
+				{
+					this.OnCustomerNameChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerName = value;
+					this.SendPropertyChanged("CustomerName");
+					this.OnCustomerNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PathPic", DbType="NVarChar(150)")]
+		public string PathPic
+		{
+			get
+			{
+				return this._PathPic;
+			}
+			set
+			{
+				if ((this._PathPic != value))
+				{
+					this.OnPathPicChanging(value);
+					this.SendPropertyChanging();
+					this._PathPic = value;
+					this.SendPropertyChanged("PathPic");
+					this.OnPathPicChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BOMNo", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string BOMNo
+		{
+			get
+			{
+				return this._BOMNo;
+			}
+			set
+			{
+				if ((this._BOMNo != value))
+				{
+					this.OnBOMNoChanging(value);
+					this.SendPropertyChanging();
+					this._BOMNo = value;
+					this.SendPropertyChanged("BOMNo");
+					this.OnBOMNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QRCode", DbType="Image", UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary QRCode
+		{
+			get
+			{
+				return this._QRCode;
+			}
+			set
+			{
+				if ((this._QRCode != value))
+				{
+					this.OnQRCodeChanging(value);
+					this.SendPropertyChanging();
+					this._QRCode = value;
+					this.SendPropertyChanged("QRCode");
+					this.OnQRCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SHIFT", DbType="NVarChar(50)")]
+		public string SHIFT
+		{
+			get
+			{
+				return this._SHIFT;
+			}
+			set
+			{
+				if ((this._SHIFT != value))
+				{
+					this.OnSHIFTChanging(value);
+					this.SendPropertyChanging();
+					this._SHIFT = value;
+					this.SendPropertyChanged("SHIFT");
+					this.OnSHIFTChanged();
 				}
 			}
 		}

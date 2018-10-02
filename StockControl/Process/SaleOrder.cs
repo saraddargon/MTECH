@@ -689,8 +689,8 @@ namespace StockControl
                 //gg.VatGroup
                 gg.TotalPrice = dbClss.TDe(txtTotal.Text);
                 gg.Vat = cbVat.Checked;
-                gg.VatA = dbClss.TDe(txtVatA);
-                gg.VatAmnt = dbClss.TDe(txtVatAmnt);
+                gg.VatA = dbClss.TDe(txtVatA.Text);
+                gg.VatAmnt = dbClss.TDe(txtVatAmnt.Text);
                 gg.TotalPriceIncVat = dbClss.TDe(txtGrandTotal.Text);
                 gg.Active = true;
                 gg.Status = "Waiting";
