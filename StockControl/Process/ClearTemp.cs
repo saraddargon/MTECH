@@ -604,20 +604,20 @@ namespace StockControl
                         Amount = (QTY) * UnitCost;
 
                         //แบบที่ 1 จะไป sum ใหม่
-                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0,vv.Location)));
+                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                         //แบบที่ 2 จะไปดึงล่าสุดมา
                         //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                        sum_Remain =  Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location))
+                        sum_Remain =  Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))
                             + Amount;
 
                         sum_Qty = RemainQty + (QTY);
                         Avg = UnitCost;//sum_Remain / sum_Qty;
                         RemainAmount = Math.Abs(sum_Remain);
 
-                        if ((Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0,vv.Location))) <= 0)
+                        if ((Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt)))) <= 0)
                             RemainUnitCost = 0;
                         else
-                            RemainUnitCost = Math.Round((Math.Abs(Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location))) / Math.Abs((Convert.ToDecimal(db.Cal_QTY(CodeNo, "", 0))))), 2);
+                            RemainUnitCost = Math.Round((Math.Abs(Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))) / Math.Abs((Convert.ToDecimal(db.Cal_QTY(CodeNo, "", 0))))), 2);
 
 
 
@@ -650,7 +650,7 @@ namespace StockControl
                         gg.UnitCost = UnitCost;
                         gg.RemainQty = sum_Qty;
                         gg.RemainUnitCost =  RemainUnitCost;//vv.RemainUnitCost;
-                        gg.RemainAmount = Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location));
+                        gg.RemainAmount = Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)));
                         gg.Avg = 0;//Avg;
                         gg.TLQty = 0;// Math.Abs(QTY);
                         gg.ShipQty = Math.Abs(QTY);
@@ -659,7 +659,8 @@ namespace StockControl
                         gg.RefidJobCode = vv.RefidJobCode;
                         gg.RefJobCode = vv.RefJobCode;
                         gg.RefTempJobCode = vv.RefTempJobCode;
-                          
+                          gg.idCSTMPODt =dbClss.TInt(vv.idCSTMPODt);
+
                         db.tb_Stocks.InsertOnSubmit(gg);
                         ////ปรับให้เป็น ทำการ clear temp แล้ว
                         //vv.Flag_ClearTemp = 2;
@@ -671,12 +672,12 @@ namespace StockControl
                         Amount = (QTY) * UnitCost;
 
                         //แบบที่ 1 จะไป sum ใหม่
-                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0,vv.Location)));
+                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                         //แบบที่ 2 จะไปดึงล่าสุดมา
                         //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
 
                         //ไม่เปิดใช้งานเพราะ ถ้า Clear bill ให้ใช้ Cost เดียวกัน
-                        sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location))
+                        sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))
                             + Amount;
 
                         sum_Remain = Math.Abs(sum_Remain);
@@ -724,6 +725,7 @@ namespace StockControl
                         bb.RefidJobCode = vv.RefidJobCode;
                         bb.RefJobCode = vv.RefJobCode;
                         bb.RefTempJobCode = vv.RefTempJobCode;
+                        bb.idCSTMPODt = dbClss.TInt(vv.idCSTMPODt);
 
                         bb.TLQty = Math.Abs(Convert.ToDecimal(TLQty_Befor));//Math.Abs(Convert.ToDecimal(vv.TLQty));
                         bb.ShipQty = Math.Abs(Convert.ToDecimal(ShipQty_Befor));//Math.Abs(Convert.ToDecimal(vv.ShipQty));
@@ -800,10 +802,10 @@ namespace StockControl
                         Amount = (QTY) * UnitCost;
 
                         //แบบที่ 1 จะไป sum ใหม่
-                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0,vv.Location)));
+                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                         //แบบที่ 2 จะไปดึงล่าสุดมา
                         //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                        sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location))
+                        sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))
                             + Amount;
 
                         sum_Qty = RemainQty + (QTY);
@@ -853,6 +855,7 @@ namespace StockControl
                         dd.RefidJobCode = vv.RefidJobCode;
                         dd.RefJobCode = vv.RefJobCode;
                         dd.RefTempJobCode = vv.RefTempJobCode;
+                        dd.idCSTMPODt = dbClss.TInt(vv.idCSTMPODt);
 
                         db.tb_Stocks.InsertOnSubmit(dd);
                         ////ปรับให้เป็น ทำการ clear temp แล้ว
@@ -873,11 +876,11 @@ namespace StockControl
                         Amount = (QTY) * UnitCost;
 
                         //แบบที่ 1 จะไป sum ใหม่
-                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0,vv.Location)));
+                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(CodeNo, "", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                         //แบบที่ 2 จะไปดึงล่าสุดมา
                         //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
 
-                        sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location))
+                        sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
                             + Amount;
 
                         sum_Qty = RemainQty + Convert.ToDecimal(vv.QTY);
@@ -923,6 +926,7 @@ namespace StockControl
                         tt.RefidJobCode = vv.RefidJobCode;
                         tt.RefJobCode = vv.RefJobCode;
                         tt.RefTempJobCode = vv.RefTempJobCode;
+                        tt.idCSTMPODt = dbClss.TInt(vv.idCSTMPODt);
 
                         tt.TLQty = Math.Abs( Convert.ToDecimal( vv.TLQty));
                         tt.ShipQty = Math.Abs(Convert.ToDecimal(vv.ShipQty));

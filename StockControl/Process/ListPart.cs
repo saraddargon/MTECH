@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
+using Telerik.WinControls.Data;
 
 namespace StockControl
 {
@@ -91,7 +92,7 @@ namespace StockControl
         }
         private void Unit_Load(object sender, EventArgs e)
         {
-
+            LoadDefault();
             Set_FindData();
             Set_dt_Print();
             //LoadDefault();
@@ -99,28 +100,43 @@ namespace StockControl
             radGridView1.AutoGenerateColumns = false;
             DataLoad();
         }
-        //private void LoadDefault()
-        //{
-        //    ddlLocation.DataSource = null;
-        //    using (DataClasses1DataContext db = new DataClasses1DataContext())
-        //    {
-        //        ddlLocation.DisplayMember = "Location";
-        //        ddlLocation.ValueMember = "Location";
-        //       // ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
-        //        var g = (from ix in db.tb_Locations select ix).Where(s => s.Active == true && s.Status == "Completed").ToList();
+        private void LoadDefault()
+        {
+            cboLocation.DataSource = null;
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                //ddlLocation.DisplayMember = "Location";
+                //ddlLocation.ValueMember = "Location";
+                //// ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
+                //var g = (from ix in db.mh_Locations select ix).Where(s => s.Active == true && s.Status == "Completed").ToList();
 
-        //        List<string> a = new List<string>();
-        //        if(g.Count>0)
-        //        {
-        //            foreach (var gg in g)
-        //                a.Add(gg.Location);
-        //        }
-        //        a.Add("");
-        //        ddlLocation.DataSource = a;
-        //        ddlLocation.Text = "";
+                //List<string> a = new List<string>();
+                //if (g.Count > 0)
+                //{
+                //    foreach (var gg in g)
+                //        a.Add(gg.Location);
+                //}
+                //a.Add("");
+                //ddlLocation.DataSource = a;
+                //ddlLocation.Text = "";
 
-        //    }
-        //}
+
+                this.cboLocation.AutoFilter = true;
+                this.cboLocation.AutoCompleteMode = AutoCompleteMode.Append;
+                FilterDescriptor lo = new FilterDescriptor();
+                lo.PropertyName = this.cboLocation.ValueMember;
+                lo.Operator = FilterOperator.StartsWith;
+                this.cboLocation.EditorControl.MasterTemplate.FilterDescriptors.Add(lo);
+
+                cboLocation.DisplayMember = "Code";
+                cboLocation.ValueMember = "Name";
+                cboLocation.DataSource = db.mh_Locations.Where(s => s.Active == true).ToList();
+                cboLocation.SelectedIndex = -1;
+                cboLocation.Text = "";
+
+
+            }
+        }
         private void Set_FindData()
         {
             if (TypePart == "All" || TypePart =="")
@@ -203,6 +219,7 @@ namespace StockControl
                         && a.InternalName.Contains(txtPartName.Text)
                         && a.VendorName.Contains(txtVendorName.Text)
                         && a.InventoryGroup.Contains(ddlTypePart.Text)
+                        && a.Location.Contains(cboLocation.Text)
                         && a.Active==true
                         )
                         .ToList();
@@ -210,15 +227,22 @@ namespace StockControl
                     {
                         radGridView1.DataSource = g;
 
-                        decimal RemainStock = 0;
+                        //decimal CurrentStock = 0;
                         //string Location = "";
                         foreach (var x in radGridView1.Rows)
                         {
                             //Location = dbClss.TSt(x.Cells["Location"].Value);
-                            RemainStock = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["InternalNo"].Value), "Invoice", 0, Convert.ToString(x.Cells["Location"].Value))));
-                            x.Cells["RemainStock"].Value = RemainStock;
+                            //CurrentStock = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["InternalNo"].Value), "", 0, Convert.ToString(x.Cells["Location"].Value),-1)));
+                            x.Cells["CurrentStock"].Value =dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value),0, "CurrentStock"));
+                            x.Cells["CurrentSafetyStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentSafetyStock"));
+                            //x.Cells["CurrentJob_RMStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentJob_RMStock"));
+                            x.Cells["CurrentJob_FGStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentJob_FGStock"));
+                            x.Cells["BackOrderStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "BackOrderStock"));
+                            x.Cells["ReservationStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "ReservationStock"));
+                            x.Cells["UnReservationStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "UnReservationStock"));
+
                         }
-                            dbClss.SetRowNo1(radGridView1);
+                        dbClss.SetRowNo1(radGridView1);
                     }
 
                 }

@@ -702,6 +702,7 @@ namespace StockControl
                 foreach (var g in dgvData.Rows)
                 {
                     string SS = "";
+                    string LotNo = "";
                     if (g.IsVisible.Equals(true))
                     {
                         if (StockControl.dbClss.TInt(g.Cells["QTY"].Value) != (0)) // เอาเฉพาะรายการที่ไม่เป็น 0 
@@ -712,7 +713,11 @@ namespace StockControl
                                 string PRNo = ""; ;
                                 int PRID = 0;
                                 decimal RemainQty = 0;
-                                
+                                LotNo = StockControl.dbClss.TSt(g.Cells["LotNo"].Value);
+                                if(LotNo=="")
+                                {
+                                    LotNo = dbClss.Get_Lot(DateTime.Now.ToString("yyyyMMdd"));
+                                }
                                 Seq += 1;
                                 tb_Receive u = new tb_Receive();
                                 u.PRNo = StockControl.dbClss.TSt(g.Cells["PRNo"].Value);
@@ -727,7 +732,7 @@ namespace StockControl
                                 u.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);
                                 u.Unit = StockControl.dbClss.TSt(g.Cells["Unit"].Value);
                                 u.Remark = StockControl.dbClss.TSt(g.Cells["Remark"].Value);
-                                u.LotNo = StockControl.dbClss.TSt(g.Cells["LotNo"].Value);
+                                u.LotNo = LotNo; //StockControl.dbClss.TSt(g.Cells["LotNo"].Value);
                                 u.SerialNo = StockControl.dbClss.TSt(g.Cells["SerialNo"].Value);
                                 u.CRRNCY = StockControl.dbClss.TSt(g.Cells["CRRNCY"].Value);
                                 u.RCNo = RCNo;                               
@@ -736,8 +741,21 @@ namespace StockControl
                                 u.TypeReceive = StockControl.dbClss.TSt(g.Cells["TypeReceive"].Value);
                                 u.Location = StockControl.dbClss.TSt(g.Cells["Location"].Value);
                                 u.Rate = dbClss.TDe(g.Cells["Rate"].Value);
-                                
+                                u.idCSTMPODt = dbClss.TInt(g.Cells["idCSTMPODt"].Value);
 
+                                if (rdoDL.IsChecked)
+                                {
+                                    u.InvoiceNo = txtDLNo.Text;
+                                    u.TempInvNo = txtDLNo.Text;
+                                    u.CostPerUnit = 0;
+                                    u.Amount = 0;
+                                }
+                                else if (rdoInvoice.IsChecked)
+                                {
+                                    u.InvoiceNo = txtInvoiceNo.Text;
+                                    u.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
+                                    u.CostPerUnit = StockControl.dbClss.TDe(g.Cells["CostPerUnit"].Value);
+                                }
                                 string BaseUOM = "";
                                 decimal BasePCSUnit = 1;
                                     var be = (from ix in db.mh_Items select ix)
@@ -746,6 +764,11 @@ namespace StockControl
                                         ).ToList();
                                 if (be.Count > 0)
                                 {
+                                    var ins = (from ix in db.mh_Items select ix)
+                                        .Where(a => a.InternalNo.Trim().ToUpper().Equals(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value).Trim().ToUpper())
+                                        ).FirstOrDefault();
+                                    ins.StandardCost = dbClss.TDe(u.CostPerUnit);
+
                                     BaseUOM = dbClss.TSt(be.FirstOrDefault().BaseUOM);
                                     BasePCSUnit = dbClss.Con_UOM((StockControl.dbClss.TSt(g.Cells["CodeNo"].Value).Trim().ToUpper()), BaseUOM);
                                 }
@@ -757,19 +780,6 @@ namespace StockControl
 
                                 u.PCSUnit_Base = BasePCSUnit;
                                 u.BaseUOM = BaseUOM;
-                                if (rdoDL.IsChecked)
-                                {
-                                    u.InvoiceNo =txtDLNo.Text;
-                                    u.TempInvNo = txtDLNo.Text;
-                                    u.CostPerUnit = 0;
-                                    u.Amount = 0;                                   
-                                }
-                                else if (rdoInvoice.IsChecked)
-                                {
-                                    u.InvoiceNo = txtInvoiceNo.Text;
-                                    u.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
-                                    u.CostPerUnit = StockControl.dbClss.TDe(g.Cells["CostPerUnit"].Value);
-                                }
                                 u.RCDate = RequireDate;
                                 u.Seq = Seq;
 
@@ -810,6 +820,7 @@ namespace StockControl
                 }
             }
         }
+       
         private int Get_RCid(string TypeReceive,int RefPRPO_id,string RefPRPO)
         {
             int re = 0;
@@ -1046,10 +1057,10 @@ namespace StockControl
 
                             }
                             //แบบที่ 1 จะไป sum ใหม่
-                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location)));
+                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0, vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                             //แบบที่ 2 จะไปดึงล่าสุดมา
                             //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                            sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                            sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
                                 + Amount;
 
                             sum_Qty = RemainQty + Math.Round(((Convert.ToDecimal(vv.QTY)* Convert.ToDecimal(vv.PCSUnit) * BasePCSUnit)),2);
@@ -1098,6 +1109,8 @@ namespace StockControl
                             gg.ShipQty = 0;
                             gg.Location = vv.Location;
                             gg.ShelfNo = vv.ShelfNo;
+                            gg.LotNo = vv.LotNo;
+                            gg.idCSTMPODt = vv.idCSTMPODt;
 
                             //ต้องไม่ใช่ Item ที่มีในระบบ
                             var c = (from ix in db.mh_Items
@@ -1198,10 +1211,10 @@ namespace StockControl
                                 Amount = (QTY) * UnitCost;
 
                                 //แบบที่ 1 จะไป sum ใหม่
-                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location)));
+                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
                                 //แบบที่ 2 จะไปดึงล่าสุดมา
                                 //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
                                     + Amount;
 
                                 sum_Qty = RemainQty + (QTY * Convert.ToDecimal(vv.PCSUnit));
@@ -1235,7 +1248,7 @@ namespace StockControl
                                 u.Seq = Seq;
                                 u.Status = "Completed";
                                 u.UnitCost = UnitCost;
-                                
+                                u.idCSTMPODt = vv.idCSTMPODt;
                                 db.tb_Shippings.InsertOnSubmit(u);
                                 db.SubmitChanges();
 
@@ -1275,6 +1288,7 @@ namespace StockControl
                                 gg.RefShipid = 0;
                                 gg.Location = vv.Location;
                                 gg.ShelfNo = vv.ShelfNo;
+                                gg.idCSTMPODt = vv.idCSTMPODt;
 
                                 var ab = (from ix in db.tb_Shippings
                                          where ix.ShippingNo.Trim().ToUpper() == SHNo.Trim().ToUpper() && ix.Status != "Cancel"
@@ -1378,10 +1392,10 @@ namespace StockControl
 
                                 Amount = (QTY) * UnitCost ;
                                 //แบบที่ 1 จะไป sum ใหม่
-                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location)));
+                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
                                 //แบบที่ 2 จะไปดึงล่าสุดมา
                                 //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
                                     + Amount;
 
                                 sum_Qty = RemainQty + Math.Round(((QTY*dbClss.TDe(vv.PCSUnit) * BasePCSUnit)),2);
@@ -1417,7 +1431,7 @@ namespace StockControl
                                 u.Location = vv.Location;
                                 u.BasePCSUOM = vv.PCSUnit_Base;
                                 u.BaseUOM = vv.BaseUOM;
-                               
+                                u.idCSTMPODt = vv.idCSTMPODt;
 
                                 db.tb_Shippings.InsertOnSubmit(u);
                                 db.SubmitChanges();
@@ -1457,6 +1471,7 @@ namespace StockControl
                                 gg.RefShipid = 0;
                                 gg.Location = vv.Location;
                                 gg.ShelfNo = vv.ShelfNo;
+                                gg.idCSTMPODt = vv.idCSTMPODt;
 
                                 var ab = (from ix in db.tb_Shippings
                                           where ix.ShippingNo.Trim().ToUpper() == SHNo.Trim().ToUpper() && ix.Status != "Cancel"
@@ -2093,12 +2108,14 @@ namespace StockControl
                     string ShelfNo = "";
                     string Location = "";
                     decimal Rate = 1;
+                    int idCSTMPODt = 0;
 
-                   
+
 
                     var g = (from ix in db.mh_PurchaseOrders select ix)
                         .Where(a => a.PONo == txtDocNo.Text.Trim()
                         && a.Status != "Cancel"
+                        && Convert.ToInt16(a.SeqStatus)==2
                         ).ToList();
                     if (g.Count() > 0)
                     {
@@ -2167,6 +2184,7 @@ namespace StockControl
                                         PRNo = txtDocNo.Text;
                                         RCNo = "";
                                         PRID = StockControl.dbClss.TInt(gg.id);
+                                        idCSTMPODt = dbClss.TInt(gg.idCSTMPODt);
 
                                         if (StockControl.dbClss.TDe(gg.OrderQty)
                                                 == StockControl.dbClss.TDe(gg.BackOrder))
@@ -2196,6 +2214,7 @@ namespace StockControl
                                            , SerialNo, ShelfNo, Location, Remark, TempNo, PRNo, RCNo, InvoiceNo
                                            , ID.ToString(), PRID.ToString(), ""//ddlTypeReceive.Text
                                            ,Rate
+                                           , idCSTMPODt
                                            );
                                     }
                                 }
@@ -2204,7 +2223,8 @@ namespace StockControl
                         }
                         duppicate_vendor = 0;
                     }
-
+                    else
+                        MessageBox.Show("ไม่พบรายการ เช็คสถานะ");
                 }
             }
         }
@@ -2212,7 +2232,7 @@ namespace StockControl
            , string ItemDescription, decimal QTY, decimal RemainQty, string Unit, decimal PCSUnit
           , decimal CostPerUnit, decimal Amount, string CRRNCY, string LotNo, string SerialNo
           ,string ShelfNo,string Location, string Remark,string TempNo,string PRNo,string RCNo
-          ,string InvoiceNo,string ID,string PRID,string TypeReceive,decimal Rate
+          ,string InvoiceNo,string ID,string PRID,string TypeReceive,decimal Rate,int idCSTMPODt
            )                     
         {
             try
@@ -2251,6 +2271,7 @@ namespace StockControl
                 ee.Cells["PRID"].Value = PRID;
                 ee.Cells["TypeReceive"].Value = TypeReceive;
                 ee.Cells["Rate"].Value = Rate;
+                ee.Cells["idCSTMPODt"].Value = idCSTMPODt;
 
                 //if (GroupCode != "Other")
                 //{

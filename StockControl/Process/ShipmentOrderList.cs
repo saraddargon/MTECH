@@ -225,18 +225,20 @@ namespace StockControl
                             decimal Pcsunit = 0;
                             mh_Item im = db.mh_Items.Where(m => m.InternalNo == rd.Cells["ItemNo"].Value.ToSt()).FirstOrDefault();
                             if (im != null)
-                            {
-                                decimal.TryParse(rd.Cells["Qty"].Value.ToString(), out Qty);
+
+                                decimal.TryParse(rd.Cells["Remain"].Value.ToString(), out Qty);
+                            //decimal.TryParse(rd.Cells["Qty"].Value.ToString(), out Qty);
                                 decimal.TryParse(rd.Cells["UnitPrice"].Value.ToString(), out UnitPrice);
                                 decimal.TryParse(rd.Cells["PCSUnit"].Value.ToString(), out Pcsunit);
+                                //decimal ShipQty = dbClss.TDe(rd.Cells["ShipQty"].Value);
 
                                 if (UnitPrice == 0)
                                     UnitPrice = im.StandardPrice;
                                 if (Pcsunit == 0)
                                     Pcsunit = 1;
 
-                                if (Qty == 0)
-                                    Qty = 1;
+                                //if (Qty == 0)
+                                //    Qty = 1;
 
                                 rows1 += 1;
                                 mh_ShipmentDTTemp st = new mh_ShipmentDTTemp();
@@ -252,6 +254,7 @@ namespace StockControl
                                 st.UnitPrice = UnitPrice;
                                 st.Amount = UnitPrice * Qty;
                                 st.Active = true;
+                                st.OutShip = Qty;
                                 if (!Convert.ToString(rd.Cells["Unit"].Value.ToSt()).Equals(""))
                                     st.UOM = rd.Cells["Unit"].Value.ToSt();
                                 else
@@ -259,12 +262,13 @@ namespace StockControl
 
                                 st.RefDocNo = rd.Cells["SONo"].Value.ToSt();
                                 st.RefId = Convert.ToInt32(rd.Cells["id"].Value);
+                                st.VatType = dbClss.TSt(rd.Cells["VatType"].Value);
                                 db.mh_ShipmentDTTemps.InsertOnSubmit(st);
                                 db.SubmitChanges();
                             }
                         }
                     }
-                }
+                
 
             }
             catch { }

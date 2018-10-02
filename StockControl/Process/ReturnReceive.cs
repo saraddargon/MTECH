@@ -496,7 +496,7 @@ namespace StockControl
                             gg.id = g.FirstOrDefault().id;
                             gg.TypeReceive = g.FirstOrDefault().TypeReceive;
                             gg.InvoiceDate = g.FirstOrDefault().InvoiceDate;
-                            
+                         
                             db.tb_ReceiveH_Dels.InsertOnSubmit(gg);
                             db.SubmitChanges();
 
@@ -614,6 +614,8 @@ namespace StockControl
                                     u.TempRemain = vvd.TempRemain;
                                     u.TempShip = vvd.TempShip;
                                     u.Location = vvd.Location;
+                                    u.LotNo = vvd.LotNo;
+                                    u.idCSTMPODt = vvd.idCSTMPODt;
 
                                     db.tb_Receive_Dels.InsertOnSubmit(u);
 
@@ -622,7 +624,8 @@ namespace StockControl
 
 
                                     //New Stock
-                                    InsertStock_new_2(seq, Convert.ToInt32(vvd.ID), vvd.RCNo, CRNo, vvd.InvoiceNo, Type, vvd.Location, vvd.ShelfNo);
+                                    InsertStock_new_2(seq, Convert.ToInt32(vvd.ID), vvd.RCNo, CRNo, vvd.InvoiceNo
+                                        , Type, vvd.Location, vvd.ShelfNo, vvd.LotNo);
 
 
                                     //var aa = (from ix in db.tb_ReceiveHs
@@ -1237,7 +1240,8 @@ namespace StockControl
         //    }
         //    catch (Exception ex) { MessageBox.Show(ex.Message); }
         //}
-        private void InsertStock_new_2(int seq, int id, string RCNo, string CRNo, string inv, string Type,string Location,string ShelfNo)
+        private void InsertStock_new_2(int seq, int id, string RCNo, string CRNo, string inv
+            , string Type,string Location,string ShelfNo,string LotNo)
         {
             try
             {
@@ -1310,10 +1314,10 @@ namespace StockControl
                                     Amount = (-Qty_Cancel) * UnitCost;
 
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location)));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))
                                         + Amount;
 
                                     sum_Qty = RemainQty + Math.Round(((-Qty_Cancel * dbClss.TDe(vv.PCSUnit) * BasePCSUnit)), 2); //(-Qty_Cancel);
@@ -1358,9 +1362,10 @@ namespace StockControl
                                     gg.RefShipid = 0;
                                     gg.Location = Location;
                                     gg.ShelfNo = ShelfNo;
+                                    gg.LotNo = LotNo;
                                     //gg.RefidJobCode = null;
                                     //gg.RefJobCode = null;
-
+                                    gg.idCSTMPODt = dbClss.TInt(vv.idCSTMPODt);
 
                                     db.tb_Stocks.InsertOnSubmit(gg);
                                     db.SubmitChanges();

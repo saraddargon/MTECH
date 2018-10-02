@@ -352,6 +352,7 @@ namespace StockControl
                                 C++;
                             }
                             db.SubmitChanges();
+                            dbClss.AddHistory(this.Name, "Customer Contact", $"Status Customer {CodeDelete} Inactive", CodeDelete);
                             radGridView1.Rows.Remove(radGridView1.Rows[row]);
                         }
                     }

@@ -308,6 +308,33 @@
         YII=
 </value>
   </data>
+  <data name="radButtonElement2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAABQVJREFUWEe9
+        l1ts1FUQxk/iBRqCUUSgD8ZHX4wBQUVINAETkKtGUWP0gUffDYnYQpe2FJEAirDLAlLaKGKCBtpdeqVg
+        2XILNqV7aaGUNq0tyKUX7iL9/L7z3122pV3cSjrJL7Mzu51vzpz5t1tDe3ySy1f81Ao/0jL8GPXVg4y2
+        +Kwfbl61pSEtaUo4ZmP1xkiZtKTpSDv2nLqzVr0ACHwA1HyYwBKyGF/6LlrvxCnmVVO1adKSpiPt2ASN
+        ylpgIXCMRY5/nADjE+9hZekl622cal41VZsmLWk60o5NSON9yTL2N2NFcRtW+trjZPnbkH2gFXklLdYr
+        TjWvmqotk5Y0HWnH2ECxfbOuFzhNgtf603ATWF0csX44edVUbZm0pOlIOzZh9PJoA919qOu6h9Pd96nv
+        6UPkOgvuD1qvONW8aqq2TFrSdKQdizegD9ezSLDnPqHePjTeAPKKgtYrTjWvmqotG7yB6BU0clxn2XUT
+        fzDGOdJyG1jnC1mvONW8aqq2TFrSdKQdi+9A3r56rC0SwTjfFAex3h/GxpKI9YpTz9fb2rLBdyDaQDOX
+        5jxpudWf9r+B9QdC1g8nr5qqLRt0ArEdaOa4mjmqZo4sxnnm2jjK9f6Q9YpTzqsmvSzpErbo9Df6iLxD
+        K3Mdd4CNvFN5xannWZNelrQB/UAHx9aZwAVy+R6wqTRsveJU86qp2rLBG4juwAYuzLf+IL7j+BLZXBqB
+        p7zB+uHkVVO1ZUl34NJdohPQx7hC9AhvKQtbr/i/5SPoYc2uf+6/J0t6BX9xTBdv9/VDORXZXBqyPvaZ
+        h+W38Ar06HMtrFdOlrSBKzr9nb5+KNfLu3SXhKyPfeZh+a1lDaDDlOUGH215Fl3RCaQN9tcw1sA1jm4g
+        1wmfJmyrCFuvODG/vaIR1AQfd2jR5aW186Dz1+8Nl8HyQoNP3Ok2HpNZOfQSekqD8JQF2X0ojpfsqIwg
+        v6rBesU2Xx6myFnsru7AnsBl/HzkKumy/BLowt6j17DvBDAz2yDY8gWW/WjgLv8UY1fWDj0BXp89VSLK
+        aZQ7K8PWxz6jU8uWet7EdJ5SJ01kBpm5ymB6lkGoLQu/NyxB5h6DyblzH2xgVLSBW1S4wWVJ5CZzGul2
+        nlhesfK3eAWyqRkGrVe+R/2FeWQRWdyPus6FiHRsgrvKoKbpM2T9ZvD2KvMrdR9z5BMauKt7pUAi3Ctr
+        P3AHZIqVj+4UXmED4c5suKsNPGTrAJTzHOHrgIG3xuBoy1K4igzmrDZF1LbfjuNXkMwKD0air/rbtEyD
+        k+2fw32MQmTrQI47eKN+16lROND0EuauNboK++04voT5FSESRj7vO8YuUlgVwe7DjdYrVr7g4BnsDVzF
+        aysMDrcvgrfWYNsQeE85bOfrnacNXCUGszLMIWqPsw3Evg8ks58ODT4BNVDeMRkFZ4ylMIGCRoP8BoMd
+        9RQn+WGDVeUGby0zVdR9mTgT+D//mHgrluCdPIMFXz/IvDUGs/kYFjSRswY5lQbTcudr9FPJeOLsQLrL
+        12v/NeMktJAD0Y7omuTjOX69HpNZinGuakzMOYn03D9IbZxJuXUYn3MO89nI7j8Nsg8ZvJ47GxNdtd3U
+        fJ7En4KnyRQyi8x+xMx9d53BGi7jvBxzkfEcMplIM25PECX0y+FR8+L7G3gda00PX88gLxBpSXNE7Bmi
+        6b5K0smICcfsSaITD3FqY/4Fby06YCsWiwYAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="radRibbonBar1.StartButtonImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAA1NJREFUOE9l

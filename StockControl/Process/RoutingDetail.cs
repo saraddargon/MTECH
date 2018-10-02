@@ -433,7 +433,10 @@ namespace StockControl
                     {
                         var t = db.mh_WorkCenters.Where(x => x.id == id).FirstOrDefault();
                         if (t != null)
+                        {
                             e.Row.Cells["Description"].Value = t.WorkCenterName;
+                            e.Row.Cells["UnitCost"].Value = t.CostPerUOM;
+                        }
                     }
                 }
 

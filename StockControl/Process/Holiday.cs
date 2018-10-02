@@ -27,7 +27,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name);
+            HistoryView hw = new HistoryView(this.Name, idCalendar.ToSt());
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }
@@ -214,11 +214,13 @@ namespace StockControl
                     {
                         if (Convert.ToString(g.Cells["dgvC"].Value).Equals("T"))
                         {
+                            var t = new mh_Holiday();
                             if (Convert.ToString(g.Cells["dgvCodeTemp"].Value).Equals(""))
                             {
-                                var t = new mh_Holiday();
                                 t.NoOfWorkHours = g.Cells["WorkHours"].Value.ToDecimal();
                                 t.StartingDate = g.Cells["StartDate"].Value.ToDateTime().Value.Date;
+                                if (g.Cells["EndDate"].Value.ToDateTime() == null)
+                                    g.Cells["EndDate"].Value = g.Cells["StartDate"].Value.ToDateTime().Value.Date;
                                 t.EndingDate = g.Cells["EndDate"].Value.ToDateTime().Value.Date;
                                 t.StartTime = g.Cells["StartTime"].Value.ToSt();
                                 t.EndingTime = g.Cells["EndTime"].Value.ToSt();
@@ -226,7 +228,7 @@ namespace StockControl
                                 t.Active = true;
                                 t.idCalendar = idCalendar;
 
-                                dbClss.AddHistory(this.Name, "เพิ่มวันทำงานในวันหยุด", $"เพิ่มวันทำงานในวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", "");
+                                dbClss.AddHistory(this.Name, "เพิ่มวันหยุด", $"เพิ่เพิ่มวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", idCalendar.ToSt());
                                 //dbClss.AddHistory(this.Name, "เพิ่มผู้ขาย", "เพิ่มผู้ขาย [" + gy.VendorName + "]", "");
                                 db.mh_Holidays.InsertOnSubmit(t);
                                 db.SubmitChanges();
@@ -234,8 +236,10 @@ namespace StockControl
                             }
                             else
                             {
-                                var t = db.mh_Holidays.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
+                                t = db.mh_Holidays.Where(x => x.id == g.Cells["dgvCodeTemp"].Value.ToInt()).First();
                                 t.StartingDate = g.Cells["StartDate"].Value.ToDateTime().Value.Date;
+                                if (g.Cells["EndDate"].Value.ToDateTime() == null)
+                                    g.Cells["EndDate"].Value = g.Cells["StartDate"].Value.ToDateTime().Value.Date;
                                 t.EndingDate = g.Cells["EndDate"].Value.ToDateTime().Value.Date;
                                 t.StartTime = g.Cells["StartTime"].Value.ToSt();
                                 t.EndingTime = g.Cells["EndTime"].Value.ToSt();
@@ -246,9 +250,28 @@ namespace StockControl
 
                                 C += 1;
                                 db.SubmitChanges();
-                                dbClss.AddHistory(this.Name, "แก้ไขวันทำงานในวันหยุด", $"แก้ไขวันทำงานในวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", "");
+                                dbClss.AddHistory(this.Name, "แก้ไขวันหยุด", $"แก้ไขวันหยุด [{t.StartingDate.ToString("dd/MM/yyyy")}-{t.EndingDate.ToString("dd/MM/yyyy")}]", idCalendar.ToSt());
 
                             }
+
+                            DateTime dd = g.Cells["StartDate"].Value.ToDateTime().Value.Date;
+                            //save CalendarLoad
+                            var m = db.mh_CalendarLoads.Where(x => x.idHol == t.id).FirstOrDefault();
+                            if(m == null)
+                            {
+                                m = new mh_CalendarLoad();
+                                db.mh_CalendarLoads.InsertOnSubmit(m);
+                            }
+                            m.idAbs = 0;
+                            m.idCal = t.idCalendar;
+                            m.idHol = t.id;
+                            m.idJob = 0;
+                            m.idRoute = 0;
+                            m.idWorkcenter = 0;
+                            m.StartingTime = baseClass.setTimeSpan(t.StartTime);
+                            m.EndingTime = baseClass.setTimeSpan(t.EndingTime);
+                            m.Date = dd;
+                            db.SubmitChanges();
                         }
                     }
                 }
@@ -256,7 +279,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("เพิ่มวันทำงานในวันหยุด", ex.Message, this.Name);
+                dbClss.AddError("เพิ่มวันหยุด", ex.Message, this.Name);
             }
 
             if (C > 0)
@@ -282,22 +305,20 @@ namespace StockControl
                         {
                             if (!CodeTemp.Equals(""))
                             {
-                                //var unit1 = db.mh_Vendors.Where(x => x.No == CodeDelete).ToList();
-                                //foreach (var d in unit1)
-                                //{
-                                //    db.mh_Vendors.DeleteOnSubmit(d);
-                                //    dbClss.AddHistory(this.Name, "ลบผู้ขาย", "Delete Vendor [" + d.Name + "]", "");
-                                //}
                                 var t = db.mh_Holidays.Where(x => x.id == CodeTemp.ToInt()).ToList();
                                 foreach (var d in t)
                                 {
-                                    //db.mh_Holidays.DeleteOnSubmit(d);
                                     d.Active = false;
-                                    dbClss.AddHistory(this.Name, "ลบวันทำงานในวันหยุด", $"Delete HoliDay [{d.StartingDate.ToString("dd/MM/yyyy")}-{d.EndingDate.ToString("dd/MM/yyyy")}]", "");
+                                    dbClss.AddHistory(this.Name, "ลบวันหยุด", $"Delete HoliDay [{d.StartingDate.ToString("dd/MM/yyyy")}-{d.EndingDate.ToString("dd/MM/yyyy")}]", idCalendar.ToSt());
+
+                                    //delete calndar Load
+                                    var calLoad = db.mh_CalendarLoads.Where(x => x.idHol == d.id).FirstOrDefault();
+                                    if(calLoad != null)
+                                    {
+                                        db.mh_CalendarLoads.DeleteOnSubmit(calLoad);
+                                    }
                                 }
                                 C += 1;
-
-
 
                                 db.SubmitChanges();
                             }
@@ -310,7 +331,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("ลบวันทำงาน", ex.Message, this.Name);
+                dbClss.AddError("ลบวันหยุด", ex.Message, this.Name);
             }
 
             if (C > 0)
@@ -381,12 +402,10 @@ namespace StockControl
                 {
                     if (g.IsVisible)
                     {
-                        //if (Convert.ToString(g.Cells["WorkHours"].Value).Equals(""))
-                        //    err += "- “จำนวนชม.:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["StartDate"].Value).Equals(""))
                             err += "- “วันที่เริ่ม:” เป็นค่าว่างไม่ได้ \n";
-                        if (Convert.ToString(g.Cells["EndDate"].Value).Equals(""))
-                            err += "- “วันที่สิ้นสุด:” เป็นค่าว่างไม่ได้ \n";
+                        //if (Convert.ToString(g.Cells["EndDate"].Value).Equals(""))
+                        //    err += "- “วันที่สิ้นสุด:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["StartTime"].Value).Equals(""))
                             err += "- “เวลาเริ่ม:” เป็นค่าว่างไม่ได้ \n";
                         if (Convert.ToString(g.Cells["EndTime"].Value).Equals(""))
@@ -576,7 +595,7 @@ namespace StockControl
                 }
                 if (dt.Rows.Count > 0)
                 {
-                    dbClss.AddHistory(this.Name, "Import", "Import file CSV in to System", "");
+                    dbClss.AddHistory(this.Name, "Import", "Import file CSV in to System", idCalendar.ToSt());
                     ImportData();
                     MessageBox.Show("Import Completed.");
 

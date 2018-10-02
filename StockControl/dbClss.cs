@@ -203,7 +203,6 @@ namespace StockControl
             }
             catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
-
         public static string GetNo(int ControlNo,int Ac)
         {
             string No = "";
@@ -219,7 +218,7 @@ namespace StockControl
 
                 return No;
         }
-        public static string Get_Stock(string CodeNo, string Category,string Type_in_out,string Condition,string Location)
+        public static string Get_Stock(string CodeNo, string Category,string Type_in_out,string Condition,string Location,int idCSTMPODt)
         {
             string No = "0.00";
 
@@ -227,7 +226,7 @@ namespace StockControl
             {
                 if (!CodeNo.Equals(""))
                 {
-                    var g = (from ix in db.sp_008_Stock_Select(CodeNo, Category, Type_in_out, Location) select ix).OrderByDescending(ab => ab.id ).ToList();
+                    var g = (from ix in db.sp_008_Stock_Select(CodeNo, Category, Type_in_out, Location, idCSTMPODt) select ix).OrderByDescending(ab => ab.id ).ToList();
                     if (g.Count > 0)
                     {
                         if (Condition.Equals("RemainQty"))
@@ -378,7 +377,26 @@ namespace StockControl
             }
             return PCSUOM;
         }
-    public static  bool Permisstion(string RootNode, string Screen,string UserID)
+        public static string Get_Lot(string Date)
+        {
+            string re = "";
+            try
+            {
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    var v = (from ix in db.mh_LotRMs
+                             where ix.LotDate.ToString() == Date //20180131
+                             select ix).OrderByDescending(a => a.LotNo).ToList();
+                    if (v.Count > 0)
+                    {
+                        re = dbClss.TSt(v.FirstOrDefault().LotNo);
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            return re;
+        }
+        public static  bool Permisstion(string RootNode, string Screen,string UserID)
         {
             bool re = false;
             try
@@ -409,7 +427,6 @@ namespace StockControl
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             return re;
         }
-
         public static DateTime ChangeFormat(string ds)
         {
             CultureInfo c = new CultureInfo("en-us", true);
@@ -487,7 +504,6 @@ namespace StockControl
             }
             catch { return ""; }
         }
-       
         public static decimal TDe(object Val)
         {
             try
@@ -826,6 +842,55 @@ namespace StockControl
         public static void WarningIT(string Message)
         {
             RadMessageBox.Show("ไม่พบข้อมูล '" + Message + "' โปรดติดต่อแผนก IT", "Warning", MessageBoxButtons.OK, RadMessageIcon.Exclamation);
+        }
+        public static bool Delete_ApproveList(string DocNo)
+        {
+            bool re = false;
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                var g = (from ix in db.mh_ApproveLists select ix)
+                    .Where(a => a.ApproveDocuNo.Trim().ToUpper().Equals(DocNo.Trim().ToUpper())
+                    ).ToList();
+                if (g.Count > 0)
+                {
+                    foreach (var ss in g)
+                    {
+                        ss.Status = "Cancel";
+                        db.SubmitChanges();
+                    }
+
+                    re = true;
+                    dbClss.AddHistory("dbClss", "Cancel Approve", "ลบรายการอนุมัติ เลขที่เอกสาร [" + DocNo + "]", DocNo);
+                }
+            }
+            return re;
+        }
+        public static string Get_Stock(string InternalNo,string Location,int IDCSTMDT,string Condition)
+        {
+            string re = "";
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                var g = (from ix in db.sp_081_Get_Stock(InternalNo,Location,IDCSTMDT) select ix).ToList();
+                if (g.Count > 0)
+                {
+                    if (Condition == "CurrentStock")
+                        re = dbClss.TSt(g.FirstOrDefault().CurrentStock);
+                    else if (Condition == "CurrentSafetyStock")
+                        re = dbClss.TSt(g.FirstOrDefault().CurrentSafetyStock);
+                    else if (Condition == "CurrentJob_RMStock")
+                        re = dbClss.TSt(g.FirstOrDefault().CurrentJob_RMStock);
+                    else if (Condition == "CurrentJob_FGStock")
+                        re = dbClss.TSt(g.FirstOrDefault().CurrentJob_FGStock);
+                    else if (Condition == "BackOrderStock")
+                        re = dbClss.TSt(g.FirstOrDefault().BackOrderStock);
+                    else if (Condition == "ReservationStock")
+                        re = dbClss.TSt(g.FirstOrDefault().ReservationStock);
+                    else if (Condition == "UnReservationStock")
+                        re = dbClss.TSt(g.FirstOrDefault().UnReservationStock);                  
+
+                }
+            }
+            return re;
         }
     }
 }

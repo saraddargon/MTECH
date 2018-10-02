@@ -18,13 +18,23 @@ namespace StockControl
 
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
+        List<GridViewRowInfo> RetDT;
+        string CSTMNo = "";
+        string CSTMName = "";
         public Invoice_Shipment_List(string CodeNox)
         {
             InitializeComponent();
             CodeNo = CodeNox;
             //this.Text = "ประวัติ "+ Screen;
         }
-
+        public Invoice_Shipment_List(List<GridViewRowInfo> RetDT, string CSTMNo, string CSTMName)
+        {
+            InitializeComponent();
+            this.RetDT = RetDT;
+            this.CSTMNo = CSTMNo;
+            this.CSTMName = CSTMName;
+            sType = 3;
+        }
         string CodeNo = "";
         public Invoice_Shipment_List(int sType = 1)
         {
@@ -45,6 +55,31 @@ namespace StockControl
         private void Unit_Load(object sender, EventArgs e)
         {
             //radGridView1.ReadOnly = true;
+
+            LoadDefault();
+            if (sType == 3)
+            {
+                cbbCSTM.Text = CSTMName;
+                txtCSTMNo.Text = CSTMNo;
+                cbbCSTM.Enabled = false;
+            }
+
+            dgvData.Columns.ToList().ForEach(x =>
+            {
+                if (x.Name == "S")
+                    x.ReadOnly = false;
+                else
+                    x.ReadOnly = true;
+            });
+
+            dgvData.AutoGenerateColumns = false;
+            DataLoad();
+
+
+           // demo();
+        }
+        private void LoadDefault()
+        {
             using (var db = new DataClasses1DataContext())
             {
                 var cust = db.mh_Customers.Where(x => x.Active)
@@ -75,20 +110,6 @@ namespace StockControl
                 cbbItem.DataSource = item;
                 cbbItem.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
-
-            dgvData.Columns.ToList().ForEach(x =>
-            {
-                if (x.Name == "S")
-                    x.ReadOnly = false;
-                else
-                    x.ReadOnly = true;
-            });
-
-            dgvData.AutoGenerateColumns = false;
-            DataLoad();
-
-
-           // demo();
         }
         private void DataLoad()
         {
@@ -100,10 +121,17 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    dgvData.DataSource = db.mh_Shipments.Where(ab=>ab.SSNo.Contains(txtPONo.Text)).ToList();
+                    //dgvData.DataSource = db.mh_Shipments.Where(ab=>ab.SSNo.Contains(txtPONo.Text)).ToList();
+                    string dt1 = "";
+                    string dt2 = "";
+                    if (cbChkDate.Checked)
+                    {
+                        dt1 = Convert.ToDateTime(dtFrom.Value).ToString("yyyyMMdd");
+                        dt2 = Convert.ToDateTime(dtTo.Value).ToString("yyyyMMdd");
+                    }
+                    dgvData.DataSource = db.sp_069_Shipment_List_2(txtPONo.Text,cbbCSTM.Text,cbbItem.Text, dt1, dt2, "", txtCSTMNo.Text);
+
                 }
-
-
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             this.Cursor = Cursors.Default;
@@ -199,42 +227,54 @@ namespace StockControl
                     dgvData.EndEdit();
                     dgvData.EndUpdate();
 
-                    using (DataClasses1DataContext db = new DataClasses1DataContext())
+                    if (sType == 3)
                     {
-
-
-                        int rows1 = 0;
-                        foreach (GridViewRowInfo rd in dgvData.Rows)
+                        dgvData.EndEdit();
+                        foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
                         {
-
-                            if (Convert.ToBoolean(rd.Cells["S"].Value))
-                            {
-                                mh_ShipmentDT im = db.mh_ShipmentDTs.Where(m => m.SSNo == rd.Cells["ShipmentNo"].Value.ToSt()).FirstOrDefault();
-                                if (im != null)
-                                {
-                                    rows1 += 1;
-                                    mh_InvoiceDTTemp st = new mh_InvoiceDTTemp();
-                                    st.RNo = rows1;
-                                    st.IVNo = CodeNo;
-                                    //st.UserID = ClassLib.Classlib.User;
-                                    st.ItemNo = rd.Cells["ShipmentNo"].Value.ToSt();
-                                    st.ItemName = im.ItemName;
-                                    st.Description = im.Description;
-                                    st.Qty = 1;
-                                    st.PCSUnit = 1;
-                                    st.LocationItem = im.LocationItem;
-                                    st.UnitPrice = im.UnitPrice;
-                                    st.Amount = im.UnitPrice * 1;
-                                    st.Active = true;
-                                    st.UOM = im.UOM;
-                                    st.RefId = im.id;
-                                    st.RefDocNo = im.SSNo;
-                                    db.mh_InvoiceDTTemps.InsertOnSubmit(st);
-                                    db.SubmitChanges();
-                                }
-                            }
+                            RetDT.Add(rowinfo);
                         }
+
+                        this.Close();
                     }
+
+                    //using (DataClasses1DataContext db = new DataClasses1DataContext())
+                    //{
+
+
+                    //    int rows1 = 0;
+                    //    foreach (GridViewRowInfo rd in dgvData.Rows)
+                    //    {
+
+                    //        if (Convert.ToBoolean(rd.Cells["S"].Value))
+                    //        {
+                    //            mh_ShipmentDT im = db.mh_ShipmentDTs
+                    //                .Where(m => m.SSNo == rd.Cells["ShipmentNo"].Value.ToSt()).FirstOrDefault();
+                    //            if (im != null)
+                    //            {
+                    //                rows1 += 1;
+                    //                mh_InvoiceDTTemp st = new mh_InvoiceDTTemp();
+                    //                st.RNo = rows1;
+                    //                st.IVNo = CodeNo;
+                    //                //st.UserID = ClassLib.Classlib.User;
+                    //                st.ItemNo = rd.Cells["ShipmentNo"].Value.ToSt();
+                    //                st.ItemName = im.ItemName;
+                    //                st.Description = im.Description;
+                    //                st.Qty = 1;
+                    //                st.PCSUnit = 1;
+                    //                st.LocationItem = im.LocationItem;
+                    //                st.UnitPrice = im.UnitPrice;
+                    //                st.Amount = im.UnitPrice * 1;
+                    //                st.Active = true;
+                    //                st.UOM = im.UOM;
+                    //                st.RefId = im.id;
+                    //                st.RefDocNo = im.SSNo;
+                    //                db.mh_InvoiceDTTemps.InsertOnSubmit(st);
+                    //                db.SubmitChanges();
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
                 }
                 catch { }

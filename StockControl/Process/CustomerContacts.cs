@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
 using Telerik.WinControls;
+using System.IO;
 
 namespace StockControl
 {
@@ -32,7 +33,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name);
+            HistoryView hw = new HistoryView(this.Name, txtNo.Text);
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }
@@ -97,6 +98,8 @@ namespace StockControl
         {
             try
             {
+                var op = txtAttachFile.Dialog as OpenFileDialog;
+                op.Filter = "(*.pdf)|*.pdf";
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     var gt = (from ix in db.mh_CRRNCies select ix).ToList();
@@ -208,13 +211,37 @@ namespace StockControl
                 dgvData.EndEdit();
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
+                    bool newDoc = false;
                     int id = txtid.Text.ToInt();
                     var cstm = db.mh_Customers.Where(x => x.id == id).FirstOrDefault();
                     if(cstm == null)
                     {
+                        newDoc = true;
                         cstm = new mh_Customer();
                         db.mh_Customers.InsertOnSubmit(cstm);
+
+                        dbClss.AddHistory(this.Name, "Customer Contact", $"New Customer {txtNo.Text}", txtNo.Text);
                     }
+
+                    if (!newDoc)
+                    {
+                        //dbClss.AddHistory(this.Name, "Customer Contact", $" {} to {}", cstm.No);
+                        if(cstm.BranchCode != txtBranchCOde.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Branchcode {cstm.BranchCode} to {txtBranchCOde.Text}", cstm.No);
+                        if(cstm.No != txtNo.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer No {cstm.No} to {txtNo.Text}", cstm.No);
+                        if(cstm.Name != txtName.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer Name {cstm.Name} to {txtName.Text}", cstm.No);
+                        if(cstm.Address != txtAddress.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Address {cstm.Address} to {txtAddress.Text}", cstm.No);
+                        if(cstm.CreditLimit != txtCreditLimit.Value.ToDecimal()) dbClss.AddHistory(this.Name, "Customer Contact", $"Credit Limit {cstm.CreditLimit} to {txtCreditLimit.Value.ToDecimal()}", cstm.No);
+                        if(cstm.ShippingTime != txtShippingTime.Value.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Shipping Time {cstm.ShippingTime} to {txtShippingTime.Value.ToInt()}", cstm.No);
+                        if(cstm.AttachFile != txtAttachFile.Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Attach file {cstm.AttachFile} to {txtAttachFile.Value.ToSt()}", cstm.No);
+                        if(cstm.VATRegistration != cbVatRegis.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Vat Regis. {cstm.VATRegistration} to {cbVatRegis.Checked}", cstm.No);
+                        if(cstm.PriceIncludeingVat != cbPriceIncVat.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Price Inc. Vat {cstm.PriceIncludeingVat} to {cbPriceIncVat.Checked}", cstm.No);
+                        if(cstm.ShippingAddress != txtShippingAddress.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Shipping Address {cstm.ShippingAddress} to {txtShippingAddress.Text}", cstm.No);
+                        if(cstm.CustomerGroup != cbbCustomerGroup.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer Group {cstm.CustomerGroup} to {cbbCustomerGroup.SelectedValue.ToInt()}", cstm.No);
+                        if(cstm.VatGroup != cbbVatGroup.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Vat Group {cstm.VatGroup} to {cbbVatGroup.SelectedValue.ToInt()}", cstm.No);
+                        if(cstm.DefaultCurrency != cbbCurrency.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Currency {cstm.DefaultCurrency} to {cbbCurrency.SelectedValue.ToInt()}", cstm.No);
+                        if(cstm.Active != cbActive.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Status Customer {cbActive.Checked}", cstm.No);
+                    }
+
                     cstm.BranchCode = txtBranchCOde.Text;
                     cstm.No = txtNo.Text.Trim();
                     cstm.Name = txtName.Text.Trim();
@@ -230,18 +257,55 @@ namespace StockControl
                     cstm.DefaultCurrency = cbbCurrency.SelectedValue.ToInt();
                     cstm.Active = cbActive.Checked;
                     db.SubmitChanges();
+                    //file
+                    string fullPath = txtAttachFile.Value.ToSt();
+                    string fName = "";
+                    try
+                    {
+                        if (Path.GetFileName(fullPath) != fullPath)
+                        {
+                            try
+                            {
+                                fName = cstm.id.ToSt() + "_" + Path.GetFileName(fullPath);
+                                File.Copy(fullPath, Path.Combine(baseClass.GetPathServer(PathCode.Customer), fName), true);
+                                fullPath = fName;
+                            }
+                            catch (Exception ex) { baseClass.Error(ex.Message); fName = ""; }
 
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        baseClass.Error(ex.Message);
+                    }
+                    cstm.AttachFile = fName;
+                    db.SubmitChanges();
+
+                    txtid.Text = cstm.id.ToSt();
                     foreach (var c in dgvData.Rows)
                     {
                         if (c.Cells["dgvC"].Value.ToSt() == "") continue;
 
+                        bool newC = false;
                         int idDt = c.Cells["id"].Value.ToInt();
                         var con = db.mh_CustomerContacts.Where(x => x.id == id).FirstOrDefault();
                         if (con == null)
                         {
+                            newC = true;
                             con = new mh_CustomerContact();
                             db.mh_CustomerContacts.InsertOnSubmit(con);
+                            dbClss.AddHistory(this.Name, "Customer Contact", $"New Contact {c.Cells["ContactName"].Value.ToSt()}", cstm.No);
                         }
+
+                        if (!newC)
+                        {
+                            if(con.Def != c.Cells["Def"].Value.ToBool()) dbClss.AddHistory(this.Name, "Customer Contact", $"Default from {con.Def} to {c.Cells["Def"].Value.ToBool()}", cstm.No);
+                            if(con.ContactName != c.Cells["ContactName"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Contact Name from {con.ContactName} to {c.Cells["ContactName"].Value.ToSt()}", cstm.No);
+                            if(con.Tel != c.Cells["Tel"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Telephone no. from {con.Tel} to {c.Cells["Tel"].Value.ToSt()}", cstm.No);
+                            if(con.Fax != c.Cells["Fax"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Fax no. from {con.Fax} to {c.Cells["Fax"].Value.ToSt()}", cstm.No);
+                            if(con.Email != c.Cells["Email"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Email from {con.Email} to {c.Cells["Email"].Value.ToSt()}", cstm.No);
+                        }
+
                         con.idCustomer = cstm.id;
                         con.Def = c.Cells["Def"].Value.ToBool();
                         con.id = 0;
@@ -749,6 +813,54 @@ namespace StockControl
             var rowe = dgvData.Rows.AddNew();
         }
 
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            if (baseClass.Question("Do you want to 'Delete Attach file' ?"))
+                DelAttachFile();
+        }
+        void DelAttachFile()
+        {
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    int idv = txtid.Text.ToInt();
+                    var m = db.mh_Customers.Where(x => x.id == idv).FirstOrDefault();
+                    if (m != null)
+                    {
+                        if (m.AttachFile.ToSt() != "")
+                        {
+                            m.AttachFile = "";
+                            db.SubmitChanges();
+                            baseClass.Info("Delete Attach file complete.\n");
+                            dbClss.AddHistory(this.Name, "Customer", "Delete Attach file", txtNo.Text);
+                        }
+                    }
+                    txtAttachFile.Value = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+        }
 
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtAttachFile.Value.ToSt() != "")
+                {
+                    string apath = txtAttachFile.Value.ToSt();
+                    if (Path.GetFileName(txtAttachFile.Value.ToSt()) == Path.GetFileName(txtAttachFile.Value.ToSt()))
+                        apath = Path.Combine(baseClass.GetPathServer(PathCode.Customer), txtAttachFile.Value.ToSt());
+                    System.Diagnostics.Process.Start(apath);
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+        }
     }
 }

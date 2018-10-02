@@ -83,9 +83,10 @@ namespace StockControl
             dtDate1.Value = DateTime.Now;
             dtDate2.Value = DateTime.Now;
 
-            DataLoad();
+            radButton1_Click_1(null, null);
 
-         
+
+
         }
         private void DefaultItem()
         {
@@ -229,6 +230,7 @@ namespace StockControl
                                    && d.Status != "Cancel"
                                  && d.ShippingNo.Contains(txtSHNo.Text.Trim())
                                  && h.JobCard != ""
+                                 && h.ShippingNo.Substring(0, 2) != "AS"
                                  //&& (h.ShipDate >= inclusiveStart
                                  //       && h.ShipDate < exclusiveEnd)
 
@@ -284,7 +286,250 @@ namespace StockControl
 
             //    radGridView1.DataSource = dt;
         }
+        private void DataLoad_for_Accident()
+        {
+            dgvData.Rows.Clear();
 
+            try
+            {
+                DateTime inclusiveStart = dtDate1.Value.Date;
+                // Include the *whole* of the day indicated by searchEndDate
+                DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
+
+                this.Cursor = Cursors.WaitCursor;
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    //string Status = cboStatus.Text;
+                    //if(cboStatus.Text.Equals("ทั้งหมด"))
+                    //{
+                    //    Status = "";
+                    //}
+                    var r = (from d in db.tb_Shippings
+                             join h in db.tb_ShippingHs on d.ShippingNo equals h.ShippingNo
+                             //join i in db.mh_Items on d.CodeNo equals i.InternalNo
+
+                             where h.Status != "Cancel" //&& d.verticalID == VerticalID
+                                   && d.Status != "Cancel"
+                                 && d.ShippingNo.Contains(txtSHNo.Text.Trim())
+                                 && h.JobCard != ""
+                                 && h.ShippingNo.Substring(0, 2)== "AS"
+
+                                 && (((h.ShipDate >= inclusiveStart
+                                   && h.ShipDate < exclusiveEnd)
+                                   && cbDate.Checked == true)
+                                || (cbDate.Checked == false))
+
+                             //&& ((Convert.ToDateTime(h.ShipDate.Value)) >= (Convert.ToDateTime(dtDate1.Value)))
+                             //&& ((Convert.ToDateTime(h.ShipDate.Value)) <= (Convert.ToDateTime(dtDate2.Value)))
+
+                             select new
+                             {
+                                 ShippingNo = d.ShippingNo,
+                                 CodeNo = d.CodeNo,
+                                 ItemNo = d.ItemNo,
+                                 ItemDescription = d.ItemDescription,
+                                 QTY = d.QTY,
+                                 UnitShip = d.UnitShip,
+                                 PCSUnit = d.PCSUnit,
+                                 ////LeadTime = i.Leadtime,
+                                 //MaxStock = i.MaximumQty,
+                                 //MinStock = i.MinimumQty,
+                                 ShipName = h.ShipName,
+                                 CreateDate = h.CreateDate,
+
+                                 CreateBy = h.CreateBy,
+                                 Remark = d.Remark,
+                                 Status = d.Status,
+                                 id = d.id,
+                                 LineName = d.LineName,
+                                 MachineName = d.MachineName,
+                                 LotNo = d.LotNo,
+                                 SerialNo = d.SerialNo
+                                 ,
+                                 Location = d.Location
+                                 ,
+                                 ToLocation = d.ToLocation
+
+                             }).ToList();
+                    dgvData.DataSource = r;
+
+                    int rowcount = 0;
+                    foreach (var x in dgvData.Rows)
+                    {
+                        rowcount += 1;
+                        x.Cells["dgvNo"].Value = rowcount;
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            this.Cursor = Cursors.Default;
+
+
+            //    radGridView1.DataSource = dt;
+        }
+        private void DataLoad_for_FG()
+        {
+            dgvData.Rows.Clear();
+
+            try
+            {
+                DateTime inclusiveStart = dtDate1.Value.Date;
+                // Include the *whole* of the day indicated by searchEndDate
+                DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
+
+                this.Cursor = Cursors.WaitCursor;
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    //string Status = cboStatus.Text;
+                    //if(cboStatus.Text.Equals("ทั้งหมด"))
+                    //{
+                    //    Status = "";
+                    //}
+                    var r = (from d in db.tb_Shippings
+                             join h in db.tb_ShippingHs on d.ShippingNo equals h.ShippingNo
+                             //join i in db.mh_Items on d.CodeNo equals i.InternalNo
+
+                             where h.Status != "Cancel" //&& d.verticalID == VerticalID
+                                   && d.Status != "Cancel"
+                                 && d.ShippingNo.Contains(txtSHNo.Text.Trim())
+                                 && h.JobCard != ""
+                                 && h.ShippingNo.Substring(0, 2) == "SE"
+
+                                 && (((h.ShipDate >= inclusiveStart
+                                   && h.ShipDate < exclusiveEnd)
+                                   && cbDate.Checked == true)
+                                || (cbDate.Checked == false))
+
+                             //&& ((Convert.ToDateTime(h.ShipDate.Value)) >= (Convert.ToDateTime(dtDate1.Value)))
+                             //&& ((Convert.ToDateTime(h.ShipDate.Value)) <= (Convert.ToDateTime(dtDate2.Value)))
+
+                             select new
+                             {
+                                 ShippingNo = d.ShippingNo,
+                                 CodeNo = d.CodeNo,
+                                 ItemNo = d.ItemNo,
+                                 ItemDescription = d.ItemDescription,
+                                 QTY = d.QTY,
+                                 UnitShip = d.UnitShip,
+                                 PCSUnit = d.PCSUnit,
+                                 ////LeadTime = i.Leadtime,
+                                 //MaxStock = i.MaximumQty,
+                                 //MinStock = i.MinimumQty,
+                                 ShipName = h.ShipName,
+                                 CreateDate = h.CreateDate,
+
+                                 CreateBy = h.CreateBy,
+                                 Remark = d.Remark,
+                                 Status = d.Status,
+                                 id = d.id,
+                                 LineName = d.LineName,
+                                 MachineName = d.MachineName,
+                                 LotNo = d.LotNo,
+                                 SerialNo = d.SerialNo
+                                 ,
+                                 Location = d.Location
+                                 ,
+                                 ToLocation = d.ToLocation
+
+                             }).ToList();
+                    dgvData.DataSource = r;
+
+                    int rowcount = 0;
+                    foreach (var x in dgvData.Rows)
+                    {
+                        rowcount += 1;
+                        x.Cells["dgvNo"].Value = rowcount;
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            this.Cursor = Cursors.Default;
+
+
+            //    radGridView1.DataSource = dt;
+        }
+
+        private void DataLoad_for_FG_Accident()
+        {
+            dgvData.Rows.Clear();
+
+            try
+            {
+                DateTime inclusiveStart = dtDate1.Value.Date;
+                // Include the *whole* of the day indicated by searchEndDate
+                DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
+
+                this.Cursor = Cursors.WaitCursor;
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    //string Status = cboStatus.Text;
+                    //if(cboStatus.Text.Equals("ทั้งหมด"))
+                    //{
+                    //    Status = "";
+                    //}
+                    var r = (from d in db.tb_Shippings
+                             join h in db.tb_ShippingHs on d.ShippingNo equals h.ShippingNo
+                             //join i in db.mh_Items on d.CodeNo equals i.InternalNo
+
+                             where h.Status != "Cancel" //&& d.verticalID == VerticalID
+                                   && d.Status != "Cancel"
+                                 && d.ShippingNo.Contains(txtSHNo.Text.Trim())
+                                 && h.JobCard != ""
+                                 && h.ShippingNo.Substring(0, 3) == "ASF"
+
+                                 && (((h.ShipDate >= inclusiveStart
+                                   && h.ShipDate < exclusiveEnd)
+                                   && cbDate.Checked == true)
+                                || (cbDate.Checked == false))
+
+                             //&& ((Convert.ToDateTime(h.ShipDate.Value)) >= (Convert.ToDateTime(dtDate1.Value)))
+                             //&& ((Convert.ToDateTime(h.ShipDate.Value)) <= (Convert.ToDateTime(dtDate2.Value)))
+
+                             select new
+                             {
+                                 ShippingNo = d.ShippingNo,
+                                 CodeNo = d.CodeNo,
+                                 ItemNo = d.ItemNo,
+                                 ItemDescription = d.ItemDescription,
+                                 QTY = d.QTY,
+                                 UnitShip = d.UnitShip,
+                                 PCSUnit = d.PCSUnit,
+                                 ////LeadTime = i.Leadtime,
+                                 //MaxStock = i.MaximumQty,
+                                 //MinStock = i.MinimumQty,
+                                 ShipName = h.ShipName,
+                                 CreateDate = h.CreateDate,
+
+                                 CreateBy = h.CreateBy,
+                                 Remark = d.Remark,
+                                 Status = d.Status,
+                                 id = d.id,
+                                 LineName = d.LineName,
+                                 MachineName = d.MachineName,
+                                 LotNo = d.LotNo,
+                                 SerialNo = d.SerialNo
+                                 ,
+                                 Location = d.Location
+                                 ,
+                                 ToLocation = d.ToLocation
+
+                             }).ToList();
+                    dgvData.DataSource = r;
+
+                    int rowcount = 0;
+                    foreach (var x in dgvData.Rows)
+                    {
+                        rowcount += 1;
+                        x.Cells["dgvNo"].Value = rowcount;
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            this.Cursor = Cursors.Default;
+
+
+            //    radGridView1.DataSource = dt;
+        }
         private void btnCancel_Click(object sender, EventArgs e)
         {
           
@@ -608,7 +853,13 @@ namespace StockControl
 
         private void radButton1_Click_1(object sender, EventArgs e)
         {
-            if (TypeShip != "")
+            if (TypeShip == "Accident_Slip")
+                DataLoad_for_Accident();
+            else if (TypeShip == "ShipFG")
+                DataLoad_for_FG();
+            else if(TypeShip== "ShipFGAccident")
+                DataLoad_for_FG_Accident();
+            else if (TypeShip != "")
                 DataLoad_for_Job();
             else
                 DataLoad();

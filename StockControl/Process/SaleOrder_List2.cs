@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
+using System.Globalization;
 
 namespace StockControl
 {
@@ -32,9 +33,25 @@ namespace StockControl
             this.RetDT = RetDT;
             sType = 2;
         }
+        public SaleOrder_List2(List<GridViewRowInfo> RetDT,string CSTMNo)
+        {
+            InitializeComponent();
+            this.RetDT = RetDT;
+            sType = 2;
+            txtCSTMNo.Text = CSTMNo;
+            cbbCSTM.Enabled = false;
+        }
         public SaleOrder_List2()
         {
             InitializeComponent();
+        }
+        public SaleOrder_List2(string CstmPo, string CstmNo)
+        {
+            InitializeComponent();
+            this.PONo = CstmPo;
+            this.CstmNo = CstmNo;
+            
+            
         }
 
 
@@ -45,7 +62,30 @@ namespace StockControl
 
         private void Unit_Load(object sender, EventArgs e)
         {
+            dtFrom.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            dtTo.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+
             //radGridView1.ReadOnly = true;
+            LoadDefault();
+            txtCstmPO.Text = this.PONo;
+            cbbCSTM.SelectedValue = this.CstmNo;
+
+            dgvData.Columns.ToList().ForEach(x =>
+            {
+                if (x.Name == "S")
+                    x.ReadOnly = false;
+                else
+                    x.ReadOnly = true;
+            });
+
+            dgvData.AutoGenerateColumns = false;
+
+
+            DataLoad();
+        }
+
+        private void LoadDefault()
+        {
             using (var db = new DataClasses1DataContext())
             {
                 var cust = db.mh_Customers.Where(x => x.Active)
@@ -76,21 +116,8 @@ namespace StockControl
                 cbbItem.DataSource = item;
                 cbbItem.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
-
-            dgvData.Columns.ToList().ForEach(x =>
-            {
-                if (x.Name == "S")
-                    x.ReadOnly = false;
-                else
-                    x.ReadOnly = true;
-            });
-
-            dgvData.AutoGenerateColumns = false;
-
-
-            DataLoad();
-            //demo();
         }
+
         private void DataLoad()
         {
 
@@ -108,7 +135,7 @@ namespace StockControl
                         dt1 = Convert.ToDateTime(dtFrom.Value).ToString("yyyyMMdd");
                         dt2 = Convert.ToDateTime(dtTo.Value).ToString("yyyyMMdd");
                     }
-                    dgvData.DataSource = db.sp_054_SaleOrder_List(txtPONo.Text, cbbCSTM.Text, cbbItem.Text, dt1, dt2);
+                    dgvData.DataSource = db.sp_054_SaleOrder_List(txtPONo.Text, "", cbbItem.Text, dt1, dt2,ddlStatus.Text, cbbCSTM.SelectedValue.ToSt(), txtCstmPO.Text );
                 }
 
 
@@ -118,51 +145,6 @@ namespace StockControl
 
         }
 
-        void demo()
-        {
-            dgvData.DataSource = null;
-            dgvData.Rows.Clear();
-
-            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
-            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
-            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
-            demorow("Waiting", "SO1809-004", "I0001", "Item D", 50, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002");
-            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
-            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
-            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
-            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
-            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
-            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
-            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
-            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
-            demorow("Waiting", "SO1809-004", "I0001", "Item D", 50, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002");
-            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
-            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
-            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
-            demorow("Completed", "SO1809-005", "I0001", "Item E", 100, 0, 100, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-003", "JOB1809-003");
-            demorow("Ready", "SO1809-001", "I0001", "Item A", 120, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "");
-            demorow("Ready", "SO1809-002", "I0002", "Item B", 100, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809 -001", "");
-            demorow("Waiting", "SO1809-003", "I0003", "Item C", 0, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-001", "JOB1809-001");
-            demorow("Waiting", "SO1809-004", "I0001", "Item D", 50, 100, 0, "PCS", "C0001", "TT FUJI TOOL SUPPORT CO.,LTD", "CSTMPO1809-002", "JOB1809-002");
-
-        }
-        void demorow(string SS, string SONo, string ItemNo, string ItemName, decimal Stock, decimal Qty, decimal ShipQty
-            , string Unit, string CustomerNo, string CustomerName, string RefDocNo, string ProductionNo)
-        {
-            var rowe = dgvData.Rows.AddNew();
-            rowe.Cells["SS"].Value = SS;
-            rowe.Cells["SONo"].Value = "SO1809-" + (rowe.Index + 1).ToString("000");
-            rowe.Cells["ItemNo"].Value = ItemNo;
-            rowe.Cells["ItemName"].Value = ItemName;
-            rowe.Cells["Stock"].Value = Stock;
-            rowe.Cells["Qty"].Value = Qty;
-            rowe.Cells["ShipQty"].Value = ShipQty;
-            rowe.Cells["Unit"].Value = Unit;
-            rowe.Cells["CustomerNo"].Value = CustomerNo;
-            rowe.Cells["CustomerName"].Value = CustomerName;
-            rowe.Cells["RefDocNo"].Value = RefDocNo;
-            rowe.Cells["ProductionNo"].Value = ProductionNo;
-        }
         //
 
 
@@ -246,6 +228,26 @@ namespace StockControl
             ////select Item from Double click
             //selRow();
             //demo();
+
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    if (dgvData.Rows.Count <= 0)
+                        return;
+
+
+                    dgvData.EndEdit();
+                    string temp = "";
+                    temp = dbClss.TSt(e.Row.Cells["SONo"].Value);
+                    if (temp != "")
+                    {
+                        SaleOrder a = new SaleOrder(temp);
+                        a.ShowDialog();
+                    }
+                }
+            }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
 
         }
         void selRow()
@@ -349,8 +351,42 @@ namespace StockControl
 
         void CreateShipment()
         {
-            var sm = new Shipment(true);
-            sm.ShowDialog();
+            //var sm = new Shipment(true);
+            //sm.ShowDialog();
+            List<int> idList = new List<int>();
+            try
+            {
+                int t = 0;
+                this.Cursor = Cursors.WaitCursor;
+                foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                {
+                    if (dbClss.TSt(rowinfo.Cells["SS"].Value) == "Partial" || dbClss.TSt(rowinfo.Cells["SS"].Value) == "Process")
+                    {
+                        idList.Add(dbClss.TInt(rowinfo.Cells["id"].Value));
+                    }
+                    else
+                    {
+                        t = 1;
+                        MessageBox.Show("สถานะบางรายการไม่สามารถ สร้างรายการเบิกได้");
+                        break;
+                    }
+
+                   
+                }
+                if (t == 1)
+                    return;
+
+                if (idList.Count > 0)
+                {
+                    Shipment a = new Shipment(idList);
+                    a.ShowDialog();
+                    DataLoad();
+                }
+
+
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { this.Cursor = Cursors.Default; }
         }
         private void btnCreateShipment_Click(object sender, EventArgs e)
         {

@@ -30,18 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainfrom));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Charts View");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Part Setting");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Bill of Material (Bom)");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Purchase Request");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Purchase Order");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Receive Part");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Shipping Part");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Stock Balance");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Sale");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Production Plan");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Planning");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Production");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Master Setting");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Approve");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Purchase Request");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Purchase Order");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Receive Part");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Stock Balance");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Sale");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Planning");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Warehouse");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Packing");
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
@@ -86,6 +84,7 @@
             this.radMenuItem28 = new Telerik.WinControls.UI.RadMenuItem();
             this.btnCurrency = new Telerik.WinControls.UI.RadMenuItem();
             this.btnPermisstion = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem20 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem4 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem21 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem22 = new Telerik.WinControls.UI.RadMenuItem();
@@ -344,6 +343,7 @@
             this.btnVat,
             this.btnCurrency,
             this.btnPermisstion,
+            this.radMenuItem20,
             this.radMenuSeparatorItem4,
             this.radMenuItem21,
             this.radMenuItem22});
@@ -468,6 +468,13 @@
             this.btnPermisstion.Name = "btnPermisstion";
             this.btnPermisstion.Text = "Permission Screen";
             this.btnPermisstion.Click += new System.EventHandler(this.btnPermisstion_Click);
+            // 
+            // radMenuItem20
+            // 
+            this.radMenuItem20.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem20.Image")));
+            this.radMenuItem20.Name = "radMenuItem20";
+            this.radMenuItem20.Text = "Master Approve";
+            this.radMenuItem20.Click += new System.EventHandler(this.radMenuItem20_Click_1);
             // 
             // radMenuSeparatorItem4
             // 
@@ -618,30 +625,26 @@
             this.TreeManu.ImageList = this.ImageList;
             this.TreeManu.Location = new System.Drawing.Point(0, 40);
             this.TreeManu.Name = "TreeManu";
-            treeNode1.Name = "ChartsView";
-            treeNode1.Text = "Charts View";
-            treeNode2.Name = "PartSetting";
-            treeNode2.Text = "Part Setting";
-            treeNode3.Name = "Bom";
-            treeNode3.Text = "Bill of Material (Bom)";
-            treeNode4.Name = "PurchaseReq";
-            treeNode4.Text = "Purchase Request";
-            treeNode5.Name = "PurchaseOrder";
-            treeNode5.Text = "Purchase Order";
-            treeNode6.Name = "Receive";
-            treeNode6.Text = "Receive Part";
-            treeNode7.Name = "Shipping";
-            treeNode7.Text = "Shipping Part";
-            treeNode8.Name = "Stock";
-            treeNode8.Text = "Stock Balance";
-            treeNode9.Name = "Sale";
-            treeNode9.Text = "Sale";
-            treeNode10.Name = "ProductionPlan";
-            treeNode10.Text = "Production Plan";
-            treeNode11.Name = "Planning";
-            treeNode11.Text = "Planning";
-            treeNode12.Name = "Production";
-            treeNode12.Text = "Production";
+            treeNode1.Name = "MasterSetting";
+            treeNode1.Text = "Master Setting";
+            treeNode2.Name = "Approve";
+            treeNode2.Text = "Approve";
+            treeNode3.Name = "PurchaseReq";
+            treeNode3.Text = "Purchase Request";
+            treeNode4.Name = "PurchaseOrder";
+            treeNode4.Text = "Purchase Order";
+            treeNode5.Name = "Receive";
+            treeNode5.Text = "Receive Part";
+            treeNode6.Name = "Stock";
+            treeNode6.Text = "Stock Balance";
+            treeNode7.Name = "Sale";
+            treeNode7.Text = "Sale";
+            treeNode8.Name = "Planning";
+            treeNode8.Text = "Planning";
+            treeNode9.Name = "Warehouse";
+            treeNode9.Text = "Warehouse";
+            treeNode10.Name = "Packing";
+            treeNode10.Text = "Packing";
             this.TreeManu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
@@ -652,9 +655,7 @@
             treeNode7,
             treeNode8,
             treeNode9,
-            treeNode10,
-            treeNode11,
-            treeNode12});
+            treeNode10});
             this.TreeManu.SelectedImageIndex = 4;
             this.TreeManu.ShowNodeToolTips = true;
             this.TreeManu.Size = new System.Drawing.Size(212, 486);
@@ -749,7 +750,7 @@
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "M-TECH Management System 1.0.1";
+            this.Text = "M-TECH Management System 1.0.2";
             this.ThemeName = "Office2010Blue";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.MaximumSizeChanged += new System.EventHandler(this.Mainfrom_MaximumSizeChanged);
@@ -840,5 +841,6 @@
         private Telerik.WinControls.UI.RadMenuItem radMenuItem29;
         private Telerik.WinControls.UI.RadMenuItem btnCurrency;
         private Telerik.WinControls.UI.RadMenu radMenu1;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem20;
     }
 }

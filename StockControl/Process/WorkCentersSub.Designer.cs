@@ -33,13 +33,13 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn2 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn5 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn6 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn6 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
@@ -53,7 +53,6 @@
             this.radRibbonBarGroup4 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnImport = new Telerik.WinControls.UI.RadButtonElement();
             this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarButtonGroup1 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             this.radRibbonBarGroup3 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnRefresh = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup5 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -226,8 +225,7 @@
             this.radRibbonBarGroup4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(86)))), ((int)(((byte)(86)))));
             this.radRibbonBarGroup4.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.btnImport,
-            this.btnExport,
-            this.radRibbonBarButtonGroup1});
+            this.btnExport});
             this.radRibbonBarGroup4.Name = "radRibbonBarGroup4";
             this.radRibbonBarGroup4.Text = "Import / Export";
             // 
@@ -239,6 +237,7 @@
             this.btnImport.SmallImage = null;
             this.btnImport.Text = "นำข้อมูลเข้า";
             this.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnImport.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // btnExport
@@ -249,14 +248,6 @@
             this.btnExport.Text = "ส่งข้อมูลออก";
             this.btnExport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // radRibbonBarButtonGroup1
-            // 
-            this.radRibbonBarButtonGroup1.Name = "radRibbonBarButtonGroup1";
-            this.radRibbonBarButtonGroup1.Padding = new System.Windows.Forms.Padding(1);
-            this.radRibbonBarButtonGroup1.ShowBackColor = false;
-            this.radRibbonBarButtonGroup1.ShowBorder = false;
-            this.radRibbonBarButtonGroup1.Text = "radRibbonBarButtonGroup1";
             // 
             // radRibbonBarGroup3
             // 
@@ -380,7 +371,7 @@
             this.dgvData.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.dgvData.ForeColor = System.Drawing.Color.Black;
             this.dgvData.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dgvData.Location = new System.Drawing.Point(0, 126);
+            this.dgvData.Location = new System.Drawing.Point(0, 96);
             // 
             // 
             // 
@@ -411,26 +402,26 @@
             gridViewTextBoxColumn3.Name = "No";
             gridViewTextBoxColumn3.ReadOnly = true;
             gridViewTextBoxColumn3.Width = 41;
-            gridViewComboBoxColumn1.EnableExpressionEditor = false;
-            gridViewComboBoxColumn1.FieldName = "SubWorkNo";
-            gridViewComboBoxColumn1.HeaderText = "Sub-Work No";
-            gridViewComboBoxColumn1.Name = "SubWorkNo";
-            gridViewComboBoxColumn1.Width = 82;
             gridViewTextBoxColumn4.EnableExpressionEditor = false;
-            gridViewTextBoxColumn4.FieldName = "SubWorkName";
-            gridViewTextBoxColumn4.HeaderText = "Sub-Work Name";
-            gridViewTextBoxColumn4.Name = "SubWorkName";
-            gridViewTextBoxColumn4.Width = 159;
-            gridViewComboBoxColumn2.EnableExpressionEditor = false;
-            gridViewComboBoxColumn2.FieldName = "WType";
-            gridViewComboBoxColumn2.HeaderText = "Worker Type";
-            gridViewComboBoxColumn2.Name = "WType";
-            gridViewComboBoxColumn2.Width = 84;
+            gridViewTextBoxColumn4.FieldName = "SubWorkNo";
+            gridViewTextBoxColumn4.HeaderText = "Sub-Work No";
+            gridViewTextBoxColumn4.Name = "SubWorkNo";
+            gridViewTextBoxColumn4.Width = 90;
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
-            gridViewTextBoxColumn5.FieldName = "Description";
-            gridViewTextBoxColumn5.HeaderText = "Description";
-            gridViewTextBoxColumn5.Name = "Description";
-            gridViewTextBoxColumn5.Width = 211;
+            gridViewTextBoxColumn5.FieldName = "SubWorkName";
+            gridViewTextBoxColumn5.HeaderText = "Sub-Work Name";
+            gridViewTextBoxColumn5.Name = "SubWorkName";
+            gridViewTextBoxColumn5.Width = 159;
+            gridViewComboBoxColumn1.EnableExpressionEditor = false;
+            gridViewComboBoxColumn1.FieldName = "WType";
+            gridViewComboBoxColumn1.HeaderText = "Worker Type";
+            gridViewComboBoxColumn1.Name = "WType";
+            gridViewComboBoxColumn1.Width = 84;
+            gridViewTextBoxColumn6.EnableExpressionEditor = false;
+            gridViewTextBoxColumn6.FieldName = "Description";
+            gridViewTextBoxColumn6.HeaderText = "Description";
+            gridViewTextBoxColumn6.Name = "Description";
+            gridViewTextBoxColumn6.Width = 211;
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "CostPerUOM";
             gridViewDecimalColumn1.HeaderText = "Cost/UOM";
@@ -441,29 +432,29 @@
             gridViewDecimalColumn2.HeaderText = "Capacity";
             gridViewDecimalColumn2.Name = "Capacity";
             gridViewDecimalColumn2.Width = 77;
-            gridViewTextBoxColumn6.EnableExpressionEditor = false;
-            gridViewTextBoxColumn6.FieldName = "id";
-            gridViewTextBoxColumn6.HeaderText = "id";
-            gridViewTextBoxColumn6.IsVisible = false;
-            gridViewTextBoxColumn6.Name = "id";
+            gridViewTextBoxColumn7.EnableExpressionEditor = false;
+            gridViewTextBoxColumn7.FieldName = "id";
+            gridViewTextBoxColumn7.HeaderText = "id";
+            gridViewTextBoxColumn7.IsVisible = false;
+            gridViewTextBoxColumn7.Name = "id";
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
             gridViewTextBoxColumn3,
-            gridViewComboBoxColumn1,
             gridViewTextBoxColumn4,
-            gridViewComboBoxColumn2,
             gridViewTextBoxColumn5,
+            gridViewComboBoxColumn1,
+            gridViewTextBoxColumn6,
             gridViewDecimalColumn1,
             gridViewDecimalColumn2,
-            gridViewTextBoxColumn6});
+            gridViewTextBoxColumn7});
             this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.dgvData.Name = "dgvData";
             this.radContextMenuManager1.SetRadContextMenu(this.dgvData, this.radContextMenu1);
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(845, 323);
+            this.dgvData.Size = new System.Drawing.Size(845, 353);
             this.dgvData.TabIndex = 2;
             this.dgvData.ThemeName = "Office2010Blue";
             this.dgvData.CellEndEdit += new Telerik.WinControls.UI.GridViewCellEventHandler(this.dgvData_CellEndEdit);
@@ -484,13 +475,13 @@
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(845, 126);
+            this.radPanel1.Size = new System.Drawing.Size(845, 96);
             this.radPanel1.TabIndex = 1;
             // 
             // cbbCalendar
             // 
             this.cbbCalendar.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            this.cbbCalendar.Location = new System.Drawing.Point(555, 55);
+            this.cbbCalendar.Location = new System.Drawing.Point(534, 29);
             this.cbbCalendar.Name = "cbbCalendar";
             this.cbbCalendar.Size = new System.Drawing.Size(217, 20);
             this.cbbCalendar.TabIndex = 2;
@@ -499,15 +490,16 @@
             // cbbUOM
             // 
             this.cbbUOM.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            this.cbbUOM.Location = new System.Drawing.Point(555, 28);
+            this.cbbUOM.Location = new System.Drawing.Point(534, 6);
             this.cbbUOM.Name = "cbbUOM";
             this.cbbUOM.Size = new System.Drawing.Size(125, 20);
             this.cbbUOM.TabIndex = 2;
             this.cbbUOM.ThemeName = "Office2010Blue";
+            this.cbbUOM.Visible = false;
             // 
             // radLabel4
             // 
-            this.radLabel4.Location = new System.Drawing.Point(35, 81);
+            this.radLabel4.Location = new System.Drawing.Point(427, 56);
             this.radLabel4.Name = "radLabel4";
             this.radLabel4.Size = new System.Drawing.Size(63, 18);
             this.radLabel4.TabIndex = 1;
@@ -515,7 +507,7 @@
             // 
             // lbLL
             // 
-            this.lbLL.Location = new System.Drawing.Point(427, 55);
+            this.lbLL.Location = new System.Drawing.Point(427, 29);
             this.lbLL.Name = "lbLL";
             this.lbLL.Size = new System.Drawing.Size(50, 18);
             this.lbLL.TabIndex = 1;
@@ -531,11 +523,12 @@
             // 
             // radLabel3
             // 
-            this.radLabel3.Location = new System.Drawing.Point(427, 28);
+            this.radLabel3.Location = new System.Drawing.Point(406, 6);
             this.radLabel3.Name = "radLabel3";
             this.radLabel3.Size = new System.Drawing.Size(88, 18);
             this.radLabel3.TabIndex = 1;
             this.radLabel3.Text = "Unit Of Measure";
+            this.radLabel3.Visible = false;
             // 
             // radLabel1
             // 
@@ -548,7 +541,7 @@
             // txtDescription
             // 
             this.txtDescription.BackColor = System.Drawing.Color.White;
-            this.txtDescription.Location = new System.Drawing.Point(147, 80);
+            this.txtDescription.Location = new System.Drawing.Point(534, 55);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(216, 20);
             this.txtDescription.TabIndex = 0;
@@ -709,7 +702,6 @@
         private Telerik.WinControls.UI.RadButtonElement btnView;
         private Telerik.WinControls.UI.RadButtonElement btnEdit;
         private Telerik.WinControls.UI.RadButtonElement btnDelete;
-        private Telerik.WinControls.UI.RadRibbonBarButtonGroup radRibbonBarButtonGroup1;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup3;
         private Telerik.WinControls.UI.RadButtonElement btnRefresh;
         private Telerik.WinControls.Themes.Office2010BlueTheme office2010BlueTheme1;

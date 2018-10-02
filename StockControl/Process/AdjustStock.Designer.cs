@@ -48,6 +48,7 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn8 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn9 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn10 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn11 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
@@ -433,7 +434,6 @@
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
             gridViewTextBoxColumn5.FieldName = "LotNo";
             gridViewTextBoxColumn5.HeaderText = "เลข LotNo";
-            gridViewTextBoxColumn5.IsVisible = false;
             gridViewTextBoxColumn5.Name = "LotNo";
             gridViewTextBoxColumn5.Width = 90;
             gridViewTextBoxColumn6.EnableExpressionEditor = false;
@@ -462,6 +462,7 @@
             gridViewTextBoxColumn8.EnableExpressionEditor = false;
             gridViewTextBoxColumn8.FieldName = "RefJobCard";
             gridViewTextBoxColumn8.HeaderText = "เลขที่อ้างอิงใบผลิต (Job card)";
+            gridViewTextBoxColumn8.IsVisible = false;
             gridViewTextBoxColumn8.Name = "RefJobCard";
             gridViewTextBoxColumn8.Width = 154;
             gridViewTextBoxColumn9.EnableExpressionEditor = false;
@@ -478,6 +479,11 @@
             gridViewTextBoxColumn10.Name = "RefidJobCard";
             gridViewTextBoxColumn10.ReadOnly = true;
             gridViewTextBoxColumn10.Width = 100;
+            gridViewTextBoxColumn11.EnableExpressionEditor = false;
+            gridViewTextBoxColumn11.FieldName = "idCSTMPODt";
+            gridViewTextBoxColumn11.HeaderText = "idCSTMPODt";
+            gridViewTextBoxColumn11.IsVisible = false;
+            gridViewTextBoxColumn11.Name = "idCSTMPODt";
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
@@ -496,7 +502,8 @@
             gridViewMultiComboBoxColumn2,
             gridViewTextBoxColumn8,
             gridViewTextBoxColumn9,
-            gridViewTextBoxColumn10});
+            gridViewTextBoxColumn10,
+            gridViewTextBoxColumn11});
             this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.dgvData.Name = "dgvData";

@@ -342,6 +342,7 @@ namespace StockControl
             txtJobCard.Text = "";
             txtTempJobCard.Text = "";
             txtRefidJobNo.Text = "0";
+            txtidCSTMPODt.Text = "0";
             txtJobCard.ReadOnly = false;
 
             txtSHNo.Text = "";
@@ -692,22 +693,27 @@ namespace StockControl
                                 int RefidJobNo = dbClss.TInt(txtRefidJobNo.Text);
                                 string BaseUOM = dbClss.TSt(g.Cells["BaseUOM"].Value);
                                 decimal BasePCSUOM  = dbClss.Con_UOM(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), BaseUOM);
-                             
+                                decimal QTY = dbClss.TDe(g.Cells["QTY"].Value);
+                                int idProductionOrderRM = 0;
+
                                 db.sp_024_tb_Shipping_ADD(txtSHNo.Text.Trim(), StockControl.dbClss.TSt(g.Cells["CodeNo"].Value)
-                                    ,0
-                                    , StockControl.dbClss.TDe(g.Cells["QTY"].Value), StockControl.dbClss.TSt(g.Cells["Remark"].Value)
+                                    , QTY
+                                    , QTY, StockControl.dbClss.TSt(g.Cells["Remark"].Value)
                                     , StockControl.dbClss.TSt(g.Cells["LineName"].Value), StockControl.dbClss.TSt(g.Cells["MachineName"].Value)
                                     , StockControl.dbClss.TSt(g.Cells["SerialNo"].Value), StockControl.dbClss.TSt(g.Cells["LotNo"].Value)
                                     , "Completed", ClassLib.Classlib.User
                                     , txtJobCard.Text.Trim()
                                     , txtTempJobCard.Text.Trim()
                                     , RefidJobNo
-                                    ,dbClss.TSt(g.Cells["Location"].Value)
-                                    ,""
+                                    , dbClss.TSt(g.Cells["Location"].Value)
+                                    , ""
                                     , BaseUOM
                                     , BasePCSUOM
-                                    ,dbClss.TSt(g.Cells["UnitShip"].Value)
+                                    , dbClss.TSt(g.Cells["UnitShip"].Value)
                                     , StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
+                                    , dbClss.TInt(txtidCSTMPODt.Text)
+                                    , idProductionOrderRM
+                                    ,1
                                     );
 
                                 ////decimal RemainQty = 0;
@@ -752,7 +758,7 @@ namespace StockControl
                     }
                     else
                     {
-                        MessageBox.Show("ไม่สามารถโหลดเลขที่รับสินค้าได้ ติดต่อแผนก IT");
+                        MessageBox.Show("ไม่สามารถโหลดเลขที่เอกสารได้ ติดต่อแผนก IT");
                     }
                     }
                 }
@@ -891,11 +897,14 @@ namespace StockControl
 
                                     Amount = (-QTY) * UnitCost;
 
+                                    string Category1 = "Free";
+                                    if (dbClss.TInt(vv.idCSTMPODt) > 0) Category1 = "CstmPOID";
+                                    else if (dbClss.TInt(vv.idCSTMPODt) == 0) Category1 = "Free";
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location)));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, Category1, 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
                                         + Amount;
 
                                     sum_Qty = RemainQty + (-QTY);
@@ -935,6 +944,7 @@ namespace StockControl
                                     gg.TLCost = 0;
                                     gg.TLQty = 0;
                                     gg.ShipQty = 0;
+                                    gg.idCSTMPODt = dbClss.TInt(vv.idCSTMPODt);
 
                                     db.tb_Stocks.InsertOnSubmit(gg);
                                     db.SubmitChanges();
@@ -951,12 +961,15 @@ namespace StockControl
                                     //    UnitCost = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "Avg"));
                                     
                                     Amount = (-QTY) * UnitCost;
+                                    string Category1 = "Free";
+                                    if (dbClss.TInt(vv.idCSTMPODt) > 0) Category1 = "CstmPOID";
+                                    else if (dbClss.TInt(vv.idCSTMPODt) == 0) Category1 = "Free";
 
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location)));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, Category1, 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location))
+                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))
                                         + Amount;
 
                                     sum_Qty = RemainQty + (-QTY);
@@ -995,6 +1008,7 @@ namespace StockControl
                                     gg.TLCost = 0;
                                     gg.TLQty = 0;
                                     gg.ShipQty = 0;
+                                    gg.idCSTMPODt =dbClss.TInt(vv.idCSTMPODt);
 
                                     db.tb_Stocks.InsertOnSubmit(gg);
                                     db.SubmitChanges();
@@ -1089,7 +1103,7 @@ namespace StockControl
                             string CodeNo = dbClss.TSt(e.Row.Cells["CodeNo"].Value);
                             decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
                             string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
-                            decimal BasePCSUOM  = dbClss.Con_UOM(CodeNo, BaseUOM);
+                            decimal BasePCSUOM = dbClss.Con_UOM(CodeNo, BaseUOM);
 
                             //using (DataClasses1DataContext db = new DataClasses1DataContext())
                             //{
@@ -1118,10 +1132,19 @@ namespace StockControl
                                 QTY = 0;
                             }
 
-                            if (QTY > 0)
-                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value));
-                        }
 
+                            if (QTY > 0)
+                            {
+                                // ใช้ 0 เพราะต้องการเอาราคาล่าสุดของ stock free
+                                // ใช้ -1 คือเอาทุกรายการรับ
+                                int idCSTMPODt = 0;// dbClss.TInt(txtidCSTMPODt.Text);
+                                int Free = -1;
+                                if (idCSTMPODt > 0) Free = 0;
+                                else if (idCSTMPODt == 0) Free = 1;
+
+                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
+                            }
+                        }
                     }
 
                     if (dgvData.Columns["QTY"].Index == e.ColumnIndex
@@ -1166,7 +1189,7 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value))));
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Free", 0, Convert.ToString(e.Row.Cells["Location"].Value),0)));
 
 
                             string dgvUOM = dbClss.TSt(e.Row.Cells["UnitShip"].Value);
@@ -1219,12 +1242,12 @@ namespace StockControl
 
             return re;
         }
-        private decimal Get_UnitCostFIFO(string CodeNo, decimal Qty,string Location)
+        private decimal Get_UnitCostFIFO(string CodeNo, decimal Qty,string Location,int idCSTMPODt,int Free)
         {
             decimal re = 0;
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                re = dbClss.TDe(db.Get_AvgCost_FIFO(CodeNo, Qty, Location));
+                re = dbClss.TDe(db.Get_AvgCost_FIFO(CodeNo, Qty, Location, idCSTMPODt, Free));
             }
             return re;
         }
@@ -1516,6 +1539,7 @@ namespace StockControl
                              where i.Active == true //&& d.verticalID == VerticalID
                                 && i.InternalNo.Trim().ToUpper() == txtCodeNo.Text.Trim().ToUpper()
                                 && s.TLQty > 0
+                                && Convert.ToInt16(s.idCSTMPODt)==0
                              && s.Location == ddlLocation.Text
                              //&& h.VendorNo.Contains(VendorNo_ss)
                              select new
@@ -1523,11 +1547,11 @@ namespace StockControl
                                  CodeNo = i.InternalNo,
                                  ItemNo = i.InternalName,
                                  ItemDescription = i.InternalDescription,
-                                 RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(i.InternalNo, "Invoice", 0, Location))),  //(Convert.ToDecimal(db.Cal_QTY(i.CodeNo, "", 0))),
+                                 RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(i.InternalNo, "Free", 0, Location, 0))),  //(Convert.ToDecimal(db.Cal_QTY(i.CodeNo, "", 0))),
                                  UnitShip = i.ConsumptionUOM,
                                  PCSUnit = dbClss.Con_UOM(i.InternalNo, i.ConsumptionUOM),
                                  BaseUOM = i.BaseUOM,
-                                 StandardCodt = 0,// i.StandardCost,//Convert.ToDecimal(dbClss.Get_Stock(i.CodeNo, "", "", "Avg")),//i.StandardCost
+                                 StandardCodt = Convert.ToDecimal(i.StandardCost),//Convert.ToDecimal(dbClss.Get_Stock(i.CodeNo, "", "", "Avg")),//i.StandardCost
                                  Amount = 0,
                                  QTY = 0,
                                  LotNo = "",
@@ -1841,25 +1865,26 @@ namespace StockControl
         {
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                var p = (from ix in db.tb_JobCards select ix)
+                var p = (from ix in db.mh_ProductionOrders select ix)
                      .Where
-                     (a => a.JobCard.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Status != "Cancel"
+                     (a => a.JobNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Active ==true
 
                      ).ToList();
                 if (p.Count > 0)
                 {
-                    if (dbClss.TSt(p.FirstOrDefault().Status) != "Completed")
-                    {
-                        txtTempJobCard.Text = dbClss.TSt(p.FirstOrDefault().TempJobCard);
+                    //if (dbClss.TSt(p.FirstOrDefault().Status) != "Completed")
+                    //{
+                        //txtTempJobCard.Text = dbClss.TSt(p.FirstOrDefault().TempJobCard);
                         txtRefidJobNo.Text = dbClss.TSt(p.FirstOrDefault().id);
-                    }
-                    else if (dbClss.TSt(p.FirstOrDefault().Status) != "Completed")
-                    {
-                        txtTempJobCard.Text = "";
-                        txtJobCard.Text = "";
-                        txtRefidJobNo.Text = "0";
-                        MessageBox.Show("ใบงานการผลิตดังกล่าวถูกปิดไปแล้ว กรุณาระบุใบงานการผลิตใหม่");
-                    }
+                        txtidCSTMPODt.Text = dbClss.TInt(p.FirstOrDefault().RefDocId).ToString();
+                    //}
+                    //else if (dbClss.TSt(p.FirstOrDefault().Status) != "Completed")
+                    //{
+                    //    txtTempJobCard.Text = "";
+                    //    txtJobCard.Text = "";
+                    //    txtRefidJobNo.Text = "0";
+                    //    MessageBox.Show("ใบงานการผลิตดังกล่าวถูกปิดไปแล้ว กรุณาระบุใบงานการผลิตใหม่");
+                    //}
 
                 }
                 else

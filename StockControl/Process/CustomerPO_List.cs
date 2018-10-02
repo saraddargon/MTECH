@@ -7,12 +7,14 @@ using System.Text;
 using System.Windows.Forms;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
+using System.IO;
+using ClassLib;
+
 namespace StockControl
 {
     public partial class CustomerPO_List : Telerik.WinControls.UI.RadRibbonForm
     {
-        public string PONo { get; private set; } = "";
-        public string CstmNo { get; private set; } = "";
+        public int idCustomerPO { get; set; }
 
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
@@ -38,6 +40,7 @@ namespace StockControl
             //radGridView1.ReadOnly = true;
             LoadDef();
             dgvData.AutoGenerateColumns = false;
+            cbbStatus.SelectedIndex = 1; //Waiting
             DataLoad();
 
             dgvData.Columns.ToList().ForEach(x =>
@@ -95,7 +98,7 @@ namespace StockControl
                     DateTime? dFrom = (cbChkDate.Checked) ? (DateTime?)dtFrom.Value.Date : null;
                     DateTime? dTo = (cbChkDate.Checked) ? (DateTime?)dtTo.Value.Date.AddDays(1).AddMinutes(-1) : null;
                     var m = getGrid.GetGrid_CustomerPO(txtPONo.Text.Trim(), txtCSTMNo.Text.Trim()
-                        , cbbItem.SelectedValue.ToSt(), dFrom, dTo);
+                        , cbbItem.SelectedValue.ToSt(), dFrom, dTo, cbbStatus.Text);
 
                     dgvData.DataSource = m;
                 }
@@ -105,7 +108,7 @@ namespace StockControl
             {
                 this.Cursor = Cursors.Default;
             }
-            
+
         }
 
 
@@ -120,7 +123,26 @@ namespace StockControl
         private void btnExport_Click(object sender, EventArgs e)
         {
             //  dbClss.ExportGridCSV(radGridView1);
-            dbClss.ExportGridXlSX(dgvData);
+            //dbClss.ExportGridXlSX(dgvData);
+
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                string fName = "CustomerPO_Template.csv";
+                string mFile = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, fName);
+                string tFile = Path.Combine(Path.GetTempPath(), fName);
+                File.Copy(mFile, tFile, true);
+
+                System.Diagnostics.Process.Start(tFile);
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
         }
 
 
@@ -159,7 +181,8 @@ namespace StockControl
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
-            //selRow();
+            if(e.RowIndex >= 0)
+                selRow();
 
         }
         void selRow()
@@ -167,19 +190,27 @@ namespace StockControl
             if (dgvData.CurrentCell != null && dgvData.CurrentCell.RowIndex >= 0)
             {
                 var rowe = dgvData.CurrentCell.RowInfo;
-                PONo = rowe.Cells["PONo"].Value.ToSt();
-                CstmNo = rowe.Cells["CustomerNo"].Value.ToSt();
+                idCustomerPO = rowe.Cells["idCustomerPO"].Value.ToInt();
 
-                if (sType == 1)
+                if (dgvData.CurrentCell.ColumnInfo.Name.Equals("JobNo"))
                 {
-                    //var p = new CustomerPO(PONo, CstmNo);
-                    //p.ShowDialog();
-                    //DataLoad();
-                    //PONo = "";
-                    //CstmNo = "";
+                    string jobNo = rowe.Cells["JobNo"].Value.ToSt();
+                    if (!baseClass.Question("Do you want to open 'Job Order sheet' ?"))
+                        return;
+                    var m = new ProductionOrder(jobNo);
+                    m.ShowDialog();
                 }
                 else
-                    this.Close();
+                {
+                    if (sType == 1)
+                    {
+                        var p = new CustomerPO(idCustomerPO);
+                        p.ShowDialog();
+                        DataLoad();
+                    }
+                    else
+                        this.Close();
+                }
             }
         }
 
@@ -365,6 +396,156 @@ namespace StockControl
             Report.Reportx1 op = new Report.Reportx1("ReportCustomerList.rpt");
             op.Show();
         }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            var op = new OpenFileDialog();
+            op.Filter = "(*.csv)|*.csv";
+            if (op.ShowDialog() == DialogResult.OK && op.FileName.ToSt() != "")
+                OpenImport(op.FileName);
+        }
+        void OpenImport(string filePath)
+        {
+            //MessageBox.Show(filePath);
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                using (TextFieldParser parser = new TextFieldParser(filePath, Encoding.GetEncoding("windows-874")))
+                {
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters(",");
+                    int a = 0;
+                    int c = 0;
+
+                    int impCom = 0;
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        while (!parser.EndOfData)
+                        {
+                            a += 1;
+                            string[] fields = parser.ReadFields();
+                            c = 0;
+
+                            string CustomerNo = "";
+                            string CustomerPONo = "";
+                            DateTime? OrderDate = null;
+                            string Remark = "";
+                            DateTime? CustomerReqDate = null;
+                            string ItemNo = "";
+                            string ItemName = "";
+                            decimal OrderQty = 0.00m;
+                            string UOM = "";
+                            decimal PCSUnit = 0.00m;
+                            decimal UnitPrice = 0.00m;
+                            decimal Amnt = 0.00m;
+                            foreach (string field in fields)
+                            {
+                                c += 1;
+                                if (a < 8) continue;
+                                string f = field.ToSt().Trim();
+                                switch (c)
+                                {
+                                    case 2: CustomerNo = f; break;
+                                    case 3: CustomerPONo = f; break;
+                                    case 4: OrderDate = f.ToDateTime(); break;
+                                    case 5: Remark = f; break;
+                                    case 6: CustomerReqDate = f.ToDateTime(); break;
+                                    case 7: ItemNo = f; break;
+                                    case 8: ItemName = f; break;
+                                    case 9: OrderQty = f.ToDecimal(); break;
+                                    case 10: UOM = f; break;
+                                    case 11: PCSUnit = f.ToDecimal(); break;
+                                    case 12: UnitPrice = f.ToDecimal(); break;
+                                    case 13: Amnt = f.ToDecimal(); break;
+                                    default: break;
+                                }
+                            }
+                            //check customerNo
+                            var cstm = db.mh_Customers.Where(x => x.No == CustomerNo).FirstOrDefault();
+                            if (cstm == null) continue;
+                            //check OrderDate
+                            if (OrderDate == null) continue;
+                            //check CustomerReqDate
+                            if (CustomerReqDate == null) continue;
+                            //Check ItemNo
+                            var tool = db.mh_Items.Where(x => x.InternalNo == ItemNo).FirstOrDefault();
+                            if (tool == null) continue;
+                            //Check Order Qty
+                            if (OrderQty <= 0) continue;
+                            //Check UOM
+                            var unit = db.mh_ItemUOMs.Where(x => x.ItemNo == ItemNo && x.UOMCode == UOM).FirstOrDefault();
+                            if (unit == null) continue;
+                            //check PCSUnit
+                            if (PCSUnit <= 0) PCSUnit = unit.QuantityPer;
+
+                            Amnt = Math.Round(OrderQty * UnitPrice, 2);
+
+                            //add to CustomerPO
+                            var cstmPo = db.mh_CustomerPOs.Where(x => x.CustomerNo == CustomerNo && x.CustomerPONo == CustomerPONo).FirstOrDefault();
+                            if (cstmPo == null)
+                            {
+                                cstmPo = new mh_CustomerPO();
+                                db.mh_CustomerPOs.InsertOnSubmit(cstmPo);
+                            }
+                            cstmPo.Active = true;
+                            cstmPo.CreateBy = Classlib.User;
+                            cstmPo.CreateDate = DateTime.Now;
+                            cstmPo.CustomerNo = CustomerNo;
+                            cstmPo.CustomerPONo = CustomerPONo;
+                            cstmPo.DemandType = 0;  //Customer P/O
+                            cstmPo.OrderDate = OrderDate.Value.Date;
+                            cstmPo.Remark = Remark;
+                            cstmPo.UpdateBy = Classlib.User;
+                            cstmPo.UpdateDate = DateTime.Now;
+                            db.SubmitChanges();
+
+                            //add to Customer PO Dt
+                            decimal allQ = Math.Round(OrderQty * PCSUnit, 2);
+                            var cstmpoDt = new mh_CustomerPODT
+                            {
+                                Active = true,
+                                Amount = Amnt,
+                                forSafetyStock = false,
+                                genPR = false,
+                                idCustomerPO = cstmPo.id,
+                                ItemName = ItemName,
+                                ItemNo = ItemNo,
+                                OutPlan = OrderQty,
+                                OutQty = allQ,
+                                OutSO = OrderQty,
+                                PCSUnit = PCSUnit,
+                                Qty = OrderQty,
+                                Remark = "",
+                                ReplenishmentType = tool.ReplenishmentType,
+                                ReqDate = CustomerReqDate.Value.Date,
+                                ReqReceiveDate = CustomerReqDate.Value.Date,
+                                Status = "Waiting",
+                                UnitPrice = UnitPrice,
+                                UOM = UOM,
+                            };
+                            db.mh_CustomerPODTs.InsertOnSubmit(cstmpoDt);
+                            db.SubmitChanges();
+
+                            impCom++;
+                        }
+                    }
+
+                    if (impCom > 0)
+                    {
+                        baseClass.Info($"Improt Data({impCom}) completes.\n");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
     }
 
 

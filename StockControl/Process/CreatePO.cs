@@ -111,6 +111,8 @@ namespace StockControl
             dt_PODT.Columns.Add(new DataColumn("LotNo", typeof(string)));
             dt_PODT.Columns.Add(new DataColumn("Remark", typeof(string)));
             dt_PODT.Columns.Add(new DataColumn("SS", typeof(int)));
+            dt_PODT.Columns.Add(new DataColumn("idCSTMPODt", typeof(int)));
+
             
     }
         
@@ -353,6 +355,7 @@ namespace StockControl
                         txtAfterDiscount.Text = StockControl.dbClss.TDe(g.FirstOrDefault().AfterDiscount).ToString("##,###,##0.00");
                         lbOrderSubtotal.Text = StockControl.dbClss.TDe(g.FirstOrDefault().Total).ToString("##,###,##0.00");
                         txtVat.Text = StockControl.dbClss.TDe(g.FirstOrDefault().vat).ToString("##,###,##0.00");
+                        txtSeqStatus.Text = dbClss.TInt(g.FirstOrDefault().SeqStatus).ToSt();
 
                         cbvatDetail.Checked = StockControl.dbClss.TBo(g.FirstOrDefault().VatDetail);
                         if (StockControl.dbClss.TDe(txtVat.Text) > 0)
@@ -472,10 +475,18 @@ namespace StockControl
                         CallTotal();
                         btnCal_Click(null, null);                        
                         if (cbvatDetail.Checked)
-                            getTotal();                        
+                            getTotal();
 
+                        string Status = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
+                        int SeqStatus = 0;
+                        SeqStatus = dbClss.TInt(txtSeqStatus.Text);
+
+                        if (Status == "Waiting" && SeqStatus == 1)
+                            Status = "Waiting Approve";
+                        else if (Status == "Waiting" && SeqStatus == 2)
+                            Status = "Approved";
                         //lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
-                        if (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Cancel"))
+                        if (Status.Equals("Cancel"))
                         {
                             //ddlFactory.Enabled = false;
                             btnNew.Enabled = true;
@@ -489,10 +500,13 @@ namespace StockControl
                             btnAdd_Part.Enabled = false;
                             btnAdd_Row.Enabled = false;
                             btnDel_Item.Enabled = false;
+                            btnSendApprove.Enabled = false;
                         }
                         else if
-                            (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Completed")
-                            || StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Process")
+                            (Status.Equals("Completed")
+                            || Status.Equals("Process")
+                            || Status.Equals("Waiting Approve")
+                            || Status.Equals("Approved")
                             )
                         {
                             //ddlFactory.Enabled = false;
@@ -501,19 +515,20 @@ namespace StockControl
                             btnView.Enabled = false;
                             btnEdit.Enabled = false;
                             btnNew.Enabled = true;
-                            lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
+                            lblStatus.Text = Status;// StockControl.dbClss.TSt(g.FirstOrDefault().Status);
                             dgvData.ReadOnly = true;
                             btnAdd_Item.Enabled = false;
                             btnAdd_Part.Enabled = false;
                             btnAdd_Row.Enabled = false;
                             btnDel_Item.Enabled = false;
+                            btnSendApprove.Enabled = false;
 
                             if (lblStatus.Text == "Process")
                             {
                                 btnDiscon.Enabled = true;
-                                btnDiscon_Item.Enabled = true;
-                            }
-                        }
+                                btnDiscon_Item.Enabled = true;                                
+                            }                            
+                        }                       
                         else
                         {
                             //ddlFactory.Enabled = false;
@@ -522,14 +537,14 @@ namespace StockControl
                             btnDelete.Enabled = true;
                             btnView.Enabled = false;
                             btnEdit.Enabled = true;
-                            lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
+                            lblStatus.Text = Status;//StockControl.dbClss.TSt(g.FirstOrDefault().Status);
                             dgvData.ReadOnly = false;
                             btnAdd_Item.Enabled = false;
                             btnAdd_Part.Enabled = false;
                             btnAdd_Row.Enabled = false;
                             btnDel_Item.Enabled = false;
+                            btnSendApprove.Enabled = true;
                         }
-
                         foreach (var x in dgvData.Rows)
                         {
                             if (row >= 0 && row == ck && dgvData.Rows.Count>0)
@@ -778,7 +793,7 @@ namespace StockControl
                     gg.Discpct = StockControl.dbClss.TDe(txtLessPoDiscountAmountPersen.Text);                    
                     gg.VatTax = StockControl.dbClss.TDe(txtVattax.Text);
                     gg.Usefixunit = StockControl.dbClss.TBo(cbUsefixunit.Checked);
-
+                    
                     DateTime? Duedate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     if (!dtDuedate.Text.Equals(""))
                         Duedate = dtDuedate.Value;
@@ -791,6 +806,7 @@ namespace StockControl
                     gg.CRRNCY = ddlCurrency.Text.Trim();
                     gg.Status = "Waiting";
                     gg.CHStatus = "Waiting";
+                    gg.SeqStatus = 0;
 
                     db.mh_PurchaseOrders.InsertOnSubmit(gg);
                     db.SubmitChanges();
@@ -856,6 +872,7 @@ namespace StockControl
 
                             u.DeliveryDate = DeliveryDate;
                             u.SS = 1;
+                            u.idCSTMPODt = dbClss.TInt(g.Cells["idCSTMPODt"].Value);
                             db.mh_PurchaseOrderDetails.InsertOnSubmit(u);
                             db.SubmitChanges();
                             //C += 1;
@@ -990,7 +1007,7 @@ namespace StockControl
                                         else
                                             DeliveryDate = dtDuedate.Value;
                                         u.DeliveryDate = DeliveryDate;
-
+                                        u.idCSTMPODt = dbClss.TInt(g.Cells["idCSTMPODt"].Value);
 
                                         u.SS = 1;
                                         //C += 1;
@@ -1155,6 +1172,7 @@ namespace StockControl
         private void ClearData()
         {
             //ddlFactory.Text = "";
+            txtSeqStatus.Text = "0";
             txtPONo.Text = "";
             cboVendorName.Text = "";
             txtTempNo.Text = "";
@@ -1200,6 +1218,7 @@ namespace StockControl
             btnDelete.Enabled = true;
             btnDiscon.Enabled = false;
             btnDiscon_Item.Enabled = false;
+            btnSendApprove.Enabled = true;
             ClearData();
             Enable_Status(true, "New");
             lblStatus.Text = "New";
@@ -1280,7 +1299,9 @@ namespace StockControl
                         return;
                     }
                    
-                    if (lblStatus.Text != "Completed" && lblStatus.Text != "Process")
+                    if (lblStatus.Text != "Completed" && lblStatus.Text != "Process"
+                        && lblStatus.Text != "Approved"
+                        && lblStatus.Text != "Waiting Approve")
                     {
                         lblStatus.Text = "Delete";
                         Ac = "Del";
@@ -1291,7 +1312,7 @@ namespace StockControl
                             var g = (from ix in db.mh_PurchaseOrders
                                      where ix.TempPNo.Trim() == txtTempNo.Text.Trim()
                                      && ix.Status != "Cancel" && ix.Status != "Completed" && ix.Status != "Process"
-                                     //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
+                                     && ix.SeqStatus ==0
                                      select ix).ToList();
                             if (g.Count > 0)  //มีรายการในระบบ
                             {
@@ -1314,7 +1335,6 @@ namespace StockControl
 
                                             ss.SS = 0;
                                             db.SubmitChanges();
-
                                             //update Stock backorder
                                             db.sp_010_Update_StockItem(Convert.ToString(ss.CodeNo), "BackOrder");
                                         }
@@ -1331,11 +1351,14 @@ namespace StockControl
 
                                 dbClss.AddHistory(this.Name, "ลบ PO", "Delete PONo [" + txtPONo.Text.Trim() + "]", txtPONo.Text);
 
+                                dbClss.Delete_ApproveList(txtPONo.Text.Trim());
 
                                 db.SubmitChanges();
                                 btnNew_Click(null, null);
                                 Ac = "New";
                                 btnSave.Enabled = true;
+
+                               
                             }
                             else // ไม่มีในระบบ
                             {
@@ -1376,6 +1399,7 @@ namespace StockControl
                     foreach (var p in s)
                     {
                         p.Status = "Waiting";
+                        
                         //p.RemainQty = p.OrderQty;
                         p.PoNo = "";
                         p.RefPOid = 0;
@@ -1499,12 +1523,9 @@ namespace StockControl
                                     else
                                   
                                             txtPONo.Text = StockControl.dbClss.GetNo(11, 2);                                   
-                                        txtTempNo.Text = StockControl.dbClss.GetNo(10, 2);
-                               
-
+                                        txtTempNo.Text = StockControl.dbClss.GetNo(10, 2);                               
                                 }
-
-
+                                
                                 var ggg = (from ix in db.mh_PurchaseOrders
                                            where ix.TempPNo.Trim() == txtTempNo.Text.Trim() //&& ix.Status != "Cancel"
                                            //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
@@ -2058,6 +2079,7 @@ namespace StockControl
                         int id = 0;
                         int Row = dgvData.Rows.Count() + 1;
                         DateTime? DeliveryDate = null;
+                        int idCSTMPODt = 0;
                         foreach (GridViewRowInfo ee in dgvRow_List)
                         {
                             CodeNo = Convert.ToString(ee.Cells["CodeNo"].Value).Trim();
@@ -2071,9 +2093,10 @@ namespace StockControl
                             PRNO = StockControl.dbClss.TSt(ee.Cells["TempNo"].Value);
                             Refid = StockControl.dbClss.TInt(ee.Cells["id"].Value);
                             //DeliveryDate = Convert.ToDateTime(ee.Cells["dgvDeliveryDate"].Value);
+                            idCSTMPODt = dbClss.TInt(ee.Cells["idCSTMPODt"].Value);
 
                             Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty
-                                , PCSUnit, Unit, Cost, PRNO, DeliveryDate, Status, Refid, id,true);
+                                , PCSUnit, Unit, Cost, PRNO, DeliveryDate, Status, Refid, id,true, idCSTMPODt);
                            
                         }
                        
@@ -2476,7 +2499,8 @@ namespace StockControl
                     int Refid = 0;
                     int id = 0;
                     DateTime? dgvDeliveryDate = null;
-                    Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty, PCSUnit, Unit, Cost,PRNO, dgvDeliveryDate, Status,Refid,id,false);
+                    Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty, PCSUnit
+                        , Unit, Cost,PRNO, dgvDeliveryDate, Status,Refid,id,false,0);
                     
                 }
                 else
@@ -2486,7 +2510,8 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
         }
         private void Add_Item(int Row, string CodeNo, string ItemNo, string ItemDescription, string GroupCode, decimal OrderQty, decimal PCSUnit
-           , string UnitBuy, decimal StandardCost,string PRNo,DateTime? DeliveryDate, string Status,int Refid,int id,bool Sys)
+           , string UnitBuy, decimal StandardCost,string PRNo,DateTime? DeliveryDate
+            , string Status,int Refid,int id,bool Sys,int idCSTMPODt)
         {
             try
             {
@@ -2515,8 +2540,9 @@ namespace StockControl
                 ee.Cells["dgvStatus"].Value = Status;
                 ee.Cells["dgvid"].Value = 0;
                 ee.Cells["dgvBackOrder"].Value = OrderQty;
+                ee.Cells["idCSTMPODt"].Value = idCSTMPODt;
 
-                if(dbClss.TSt(DeliveryDate) != "")
+                if (dbClss.TSt(DeliveryDate) != "")
                     ee.Cells["dgvDeliveryDate"].Value = DeliveryDate;
 
                 //if (!statuss.Equals("Completed") || !statuss.Equals("Process")) //|| (!dbclass.TBo(ApproveFlag) && dbclass.TSt(status) != "Reject"))
@@ -2640,7 +2666,7 @@ namespace StockControl
                     DateTime? dgvDeliveryDate = null;
                     
                     Add_Item(Row, CodeNo, ItemNo, ItemDescription, GroupCode, OrderQty
-                        , PCSUnit, UnitBuy, StandardCost, PRNO, dgvDeliveryDate,Status, Refid, id,true);
+                        , PCSUnit, UnitBuy, StandardCost, PRNO, dgvDeliveryDate,Status, Refid, id,true,0);
 
                 }
             }
@@ -2870,7 +2896,9 @@ namespace StockControl
         {
             try
             {
-                if (lblStatus.Text != "Completed")
+                if (lblStatus.Text != "Completed"
+                    && lblStatus.Text != "Approved"
+                    && lblStatus.Text != "Waiting Approve")
                 {
                     lblStatus.Text = "Discon";
                     Ac = "Discon";
@@ -3505,6 +3533,25 @@ namespace StockControl
 
             }
             catch { }
+        }
+
+        private void btnSendApprove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    if (lblStatus.Text == "Waiting")
+                    {
+                        if (baseClass.IsSendApprove())
+                        {
+                            db.sp_062_mh_ApproveList_Add(txtPONo.Text.Trim(), "Purchase Order", ClassLib.Classlib.User);
+                            MessageBox.Show("Send complete.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }

@@ -297,13 +297,13 @@
             gridViewTextBoxColumn2.Name = "CodeNo";
             gridViewTextBoxColumn2.ReadOnly = true;
             gridViewTextBoxColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            gridViewTextBoxColumn2.Width = 55;
+            gridViewTextBoxColumn2.Width = 103;
             gridViewTextBoxColumn3.EnableExpressionEditor = false;
             gridViewTextBoxColumn3.FieldName = "InternalName";
             gridViewTextBoxColumn3.HeaderText = "ชื่อพาร์ท";
             gridViewTextBoxColumn3.Name = "ItemNo";
             gridViewTextBoxColumn3.ReadOnly = true;
-            gridViewTextBoxColumn3.Width = 150;
+            gridViewTextBoxColumn3.Width = 170;
             gridViewTextBoxColumn4.EnableExpressionEditor = false;
             gridViewTextBoxColumn4.FieldName = "InventoryGroup";
             gridViewTextBoxColumn4.HeaderText = "ประเภททูล";
@@ -338,7 +338,7 @@
             gridViewTextBoxColumn8.ReadOnly = true;
             gridViewTextBoxColumn8.Width = 280;
             gridViewTextBoxColumn9.EnableExpressionEditor = false;
-            gridViewTextBoxColumn9.FieldName = "Leadtime";
+            gridViewTextBoxColumn9.FieldName = "InternalLeadTime";
             gridViewTextBoxColumn9.FormatString = "{0:N2}";
             gridViewTextBoxColumn9.HeaderText = "ระยะเวลาซื้อ";
             gridViewTextBoxColumn9.Name = "Leadtime";
@@ -346,7 +346,7 @@
             gridViewTextBoxColumn9.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewTextBoxColumn9.Width = 68;
             gridViewTextBoxColumn10.EnableExpressionEditor = false;
-            gridViewTextBoxColumn10.FieldName = "MinimumQty";
+            gridViewTextBoxColumn10.FieldName = "MaximumQty";
             gridViewTextBoxColumn10.FormatString = "{0:N2}";
             gridViewTextBoxColumn10.HeaderText = "Max";
             gridViewTextBoxColumn10.Name = "MaximumStock";
@@ -354,7 +354,7 @@
             gridViewTextBoxColumn10.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             gridViewTextBoxColumn10.Width = 80;
             gridViewTextBoxColumn11.EnableExpressionEditor = false;
-            gridViewTextBoxColumn11.FieldName = "MaximumQty";
+            gridViewTextBoxColumn11.FieldName = "MinimumQty";
             gridViewTextBoxColumn11.FormatString = "{0:N2}";
             gridViewTextBoxColumn11.HeaderText = "Min";
             gridViewTextBoxColumn11.Name = "MinimumStock";
@@ -364,6 +364,7 @@
             gridViewTextBoxColumn12.EnableExpressionEditor = false;
             gridViewTextBoxColumn12.FieldName = "Status";
             gridViewTextBoxColumn12.HeaderText = "สถานะ";
+            gridViewTextBoxColumn12.IsVisible = false;
             gridViewTextBoxColumn12.Name = "Status";
             gridViewTextBoxColumn12.ReadOnly = true;
             gridViewTextBoxColumn12.Width = 55;

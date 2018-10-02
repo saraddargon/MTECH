@@ -51,7 +51,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name);
+            HistoryView hw = new HistoryView(this.Name, txtWorkNo.Text);
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }
@@ -76,7 +76,7 @@ namespace StockControl
             //    return;
             //}
 
-            if(dgvData.CurrentCell != null)
+            if (dgvData.CurrentCell != null)
             {
                 int id = dgvData.CurrentCell.RowInfo.Cells["id"].Value.ToInt();
                 if (id > 0)
@@ -90,7 +90,7 @@ namespace StockControl
                         decimal sumCost = 0.00m;
                         decimal sumCapa = 0.00m;
                         int workId = txtWorkId.Text.ToInt();
-                        if(WorkId > 0)
+                        if (WorkId > 0)
                         {
                             var ww = db.mh_WorkCenterSubs.Where(x => x.idWorkCenter == workId && x.Active).ToList();
                             foreach (var item in ww)
@@ -202,12 +202,25 @@ namespace StockControl
                     int UOM = cbbUOM.SelectedValue.ToInt();
                     int Cal = cbbCalendar.SelectedValue.ToInt();
                     string Desc = txtDescription.Text.Trim();
+                    bool newDoc = false;
                     var work = db.mh_WorkCenters.Where(x => x.id == idWork).FirstOrDefault();
                     if (work == null)
                     {
                         work = new mh_WorkCenter();
                         //workNo = dbClss.GetNo(25, 2);
+                        dbClss.AddHistory(this.Name, "WorkCenter", $"New Work Center {workNo}", workNo);
+                        newDoc = true;
                     }
+
+                    if (!newDoc)
+                    {
+                        if (work.WorkCenterNo != workNo) dbClss.AddHistory(this.Name, "WorkCenter", $"Work Center No. from {work.WorkCenterNo} to {workNo}", workNo);
+                        if (work.WorkCenterName != workName) dbClss.AddHistory(this.Name, "WorkCenter", $"Work Center Name from {work.WorkCenterName} to {workName}", workNo);
+                        if (work.UOM != UOM) dbClss.AddHistory(this.Name, "WorkCenter", $"UOM from {work.UOM} to {UOM}", workNo);
+                        if (work.Calendar != Cal) dbClss.AddHistory(this.Name, "WorkCenter", $"Calendar from {work.Calendar} to {Cal}", workNo);
+                        if (work.Decription != Desc) dbClss.AddHistory(this.Name, "WorkCenter", $"Description from {work.Decription} to {Desc}", workNo);
+                    }
+
                     work.WorkCenterNo = workNo;
                     work.WorkCenterName = workName;
                     work.UOM = UOM;
@@ -227,6 +240,7 @@ namespace StockControl
                     decimal sumCost = 0.00m;
                     foreach (var item in dgvData.Rows)
                     {
+                        newDoc = false;
                         decimal CostPerUOM = item.Cells["CostPerUOM"].Value.ToDecimal();
                         decimal Capacity = item.Cells["Capacity"].Value.ToDecimal();
                         sumCapa += Capacity;
@@ -245,7 +259,23 @@ namespace StockControl
 
                         var ws = db.mh_WorkCenterSubs.Where(x => x.id == id).FirstOrDefault();
                         if (ws == null)
+                        {
                             ws = new mh_WorkCenterSub();
+                            newDoc = true;
+                            dbClss.AddHistory(this.Name, "WorkCenter", $"New Sub-Workcenter from {SubWorkNo}", workNo);
+                        }
+
+                        if (!newDoc)
+                        {
+                            if (SubWorkNo != ws.SubWorkNo) dbClss.AddHistory(this.Name, "WorkCenter", $"Sub-Work No from {ws.SubWorkNo} to {SubWorkNo}", workNo);
+                            if (SubWorkName != ws.SubWorkName) dbClss.AddHistory(this.Name, "WorkCenter", $"Sub-Work Name from {ws.SubWorkName} to {SubWorkName}", workNo);
+                            if (UOM != ws.UOM) dbClss.AddHistory(this.Name, "WorkCenter", $"Sub-UOM from {ws.UOM} to {UOM}", workNo);
+                            if (WType != ws.WType) dbClss.AddHistory(this.Name, "WorkCenter", $"Work Center Type from {ws.WType} to {WType}", workNo);
+                            if (CostPerUOM != ws.CostPerUOM) dbClss.AddHistory(this.Name, "WorkCenter", $"Cost:UOM from {ws.CostPerUOM} to {CostPerUOM}", workNo);
+                            if (Capacity != ws.Capacity) dbClss.AddHistory(this.Name, "WorkCenter", $"Capacity from {ws.Capacity} to {Capacity}", workNo);
+                            if (Description != ws.Description) dbClss.AddHistory(this.Name, "WorkCenter", $"Description from {ws.Description} to {Description}", workNo);
+                        }
+
                         ws.idWorkCenter = idWork;
                         ws.SubWorkName = SubWorkName;
                         ws.SubWorkNo = SubWorkNo;
@@ -349,7 +379,7 @@ namespace StockControl
             var rowe = dgvData.Rows.AddNew();
             rowe.Cells["No"].Value = rowe.Index + 1;
             setEnabled(true);
-            
+
         }
         private void EditClick()
         {
@@ -411,7 +441,7 @@ namespace StockControl
                         int idw = txtWorkId.Text.ToInt();
                         string workcode = txtWorkNo.Text;
                         var d = db.mh_WorkCenters.Where(x => x.id != idw && x.Active && x.WorkCenterNo == workcode).ToList();
-                        if(d.Count > 0)
+                        if (d.Count > 0)
                         {
                             err += "- Work center no. is dupplicate.\n";
                         }
@@ -436,7 +466,7 @@ namespace StockControl
                         else
                         {
                             var sb = db.mh_WorkCenterSubs.Where(x => x.id != ids && x.Active && x.SubWorkNo == subworkno).ToList();
-                            if(sb.Count >0)
+                            if (sb.Count > 0)
                             {
                                 err += "- Sub-Work No is dupplicate.\n";
                                 break;
@@ -448,7 +478,7 @@ namespace StockControl
                             err += "- Work Type is empty.\n";
                         if (e.Cells["Capacity"].Value.ToDecimal() <= 0)
                             err += "- Capacity is empty.\n";
-                        
+
 
 
                         if (err != "")
@@ -457,10 +487,10 @@ namespace StockControl
                 }
 
 
-                    if (!err.Equals(""))
-                        MessageBox.Show(err);
-                    else
-                        re = false;
+                if (!err.Equals(""))
+                    MessageBox.Show(err);
+                else
+                    re = false;
             }
             catch (Exception ex)
             {

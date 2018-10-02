@@ -323,8 +323,26 @@ namespace StockControl
 
         void CreateShipment()
         {
-            var sm = new Shipment(true);
-            sm.ShowDialog();
+            //var sm = new Shipment(true);
+            //sm.ShowDialog();
+            dgvData.EndEdit();
+            try
+            {
+                if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
+                {
+                    //var so = new SaleOrder(0);
+                    //so.ShowDialog();
+                }
+                else
+                {
+                    baseClass.Warning("Please select data.");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Warning(ex.Message);
+            }
         }
         private void btnCreateShipment_Click(object sender, EventArgs e)
         {

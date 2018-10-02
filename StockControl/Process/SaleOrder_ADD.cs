@@ -25,10 +25,20 @@ namespace StockControl
             this.sType = sType;
         }
         List<GridViewRowInfo> RetDT;
+        string CSTMNo = "";
+        string CSTMName = "";
         public SaleOrder_ADD(List<GridViewRowInfo> RetDT)
         {
             InitializeComponent();
             this.RetDT = RetDT;
+        }
+        public SaleOrder_ADD(List<GridViewRowInfo> RetDT,string CSTMNo,string CSTMName)
+        {
+            InitializeComponent();
+            this.RetDT = RetDT;
+            this.CSTMNo = CSTMNo;
+            this.CSTMName = CSTMName;
+            sType = 3;
         }
         public SaleOrder_ADD()
         {
@@ -45,9 +55,15 @@ namespace StockControl
         {
             //radGridView1.ReadOnly = true;
             LoadDef();
+            if (sType == 3)
+            {
+                cbbCSTM.Text = CSTMName;
+                txtCSTMNo.Text = CSTMNo;
+                cbbCSTM.Enabled = false;
+            }
             dgvData.AutoGenerateColumns = false;
             DataLoad();
-
+            
             dgvData.Columns.ToList().ForEach(x =>
             {
                 if (x.Name != "S")

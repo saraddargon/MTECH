@@ -1,0 +1,11 @@
+No,Customer No,Customer P/O No,Order Date,Remark,Customer Req Date,Item No,Item Name,Order Q'ty,UOM,PCS:Unit,Unit:Price,Amount
+ลำดับ,รหัสลูกค้า,เลขที่เอกสาร P/O,วันที่สั่ง,หมายเหตุ,วันที่ลูกค้าต้องการ,รหัสทูล,ชื่อทูล,จำนวนสั่งซื้อ,ชื่อหน่วยนับ,จำนวน:หน่วยนับ,ราคา:หน่วยนับ,รวม
+,nvarchar(50),nvarchar(100),Date,nvarchar(200),Date,nvarchar(50),nvarchar(100),"decimal(18,2)",nvarchar(50),"decimal(18,2)","decimal(18,2)","decimal(18,2)"
+ข้อมูลที่ต้องใส่,*,*,*,,*,*,*,*,*,*,*,*
+คำอธิบาย,,,,,,,,,,,,
+ตัวอย่าง,TBK-T-001,PO201810-0001,28-Sep-18,,30-Sep-18,PHT-T-001,TRAY-PLHT-77,100,PCS,1,1000,100000
+เริ่มต้นคียบันทัดที่ 8 เป็นต้นไป,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
