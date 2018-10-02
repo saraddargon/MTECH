@@ -48,6 +48,7 @@
             this.btnInput = new Telerik.WinControls.UI.RadButton();
             this.radLabel7 = new Telerik.WinControls.UI.RadLabel();
             this.radGroupBox1 = new Telerik.WinControls.UI.RadGroupBox();
+            this.lblStatus = new Telerik.WinControls.UI.RadLabel();
             this.dtListDate = new Telerik.WinControls.UI.RadDateTimePicker();
             this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
             this.txtListNo = new Telerik.WinControls.UI.RadTextBox();
@@ -85,7 +86,6 @@
             this.btn_PrintPR = new Telerik.WinControls.UI.RadButtonElement();
             this.btn_Print_Barcode = new Telerik.WinControls.UI.RadButtonElement();
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
-            this.lblStatus = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox3)).BeginInit();
@@ -106,6 +106,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).BeginInit();
             this.radGroupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtListDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtListNo)).BeginInit();
@@ -118,7 +119,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -327,6 +327,19 @@
             this.radGroupBox1.TabIndex = 11;
             this.radGroupBox1.Text = "Get & Check Data";
             // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = false;
+            this.lblStatus.Font = new System.Drawing.Font("Tahoma", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.lblStatus.Location = new System.Drawing.Point(355, 21);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(177, 34);
+            this.lblStatus.TabIndex = 9;
+            this.lblStatus.Text = "New";
+            this.lblStatus.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblStatus.Visible = false;
+            // 
             // dtListDate
             // 
             this.dtListDate.CustomFormat = "dd/MMM/yyyy";
@@ -378,6 +391,7 @@
             this.btnPrintReport.TabIndex = 15;
             this.btnPrintReport.Text = "Print Report";
             this.btnPrintReport.ThemeName = "Office2010Blue";
+            this.btnPrintReport.Click += new System.EventHandler(this.btnPrintReport_Click);
             // 
             // btnGetList
             // 
@@ -680,19 +694,6 @@
             this.radMenuItem1.Text = "Exit";
             this.radMenuItem1.Click += new System.EventHandler(this.radMenuItem1_Click);
             // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = false;
-            this.lblStatus.Font = new System.Drawing.Font("Tahoma", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.lblStatus.Location = new System.Drawing.Point(355, 21);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(177, 34);
-            this.lblStatus.TabIndex = 9;
-            this.lblStatus.Text = "New";
-            this.lblStatus.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblStatus.Visible = false;
-            // 
             // AdjustStock_Taking_Card_2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -736,6 +737,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).EndInit();
             this.radGroupBox1.ResumeLayout(false);
             this.radGroupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtListDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtListNo)).EndInit();
@@ -748,7 +750,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1643,6 +1643,26 @@ namespace StockControl
         {
             cboCustomer_SelectedIndexChanged(null, null);
         }
+
+        private void btnPickSlip_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(txtSHNo.Text.Trim() != "")
+                {
+                    Report.Reportx1.Value = new string[1];
+                    Report.Reportx1.Value[0] = txtSHNo.Text;
+                    Report.Reportx1.WReport = "PickSlip";
+                    Report.Reportx1 op = new Report.Reportx1("PickSlip.rpt");
+                    op.Show();
+                }
+
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+
+
     }
 
 }
