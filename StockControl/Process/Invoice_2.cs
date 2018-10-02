@@ -75,6 +75,7 @@ namespace StockControl
                 {
                     idList.Add(item);
                 }
+                txtIVNo.Text = t_SONo;
                 
                 if (t_SONo != "" && t_CustomerNo != "")
                     DataLoad();
