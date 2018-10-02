@@ -605,7 +605,7 @@ namespace StockControl
                 bool tagQr = false;
                 string FullTag = JobNo;
                 decimal qtyTag = 0.00m;
-                if(FullTag.Split(',').Count() > 0)
+                if(FullTag.Split(',').Count() > 1)
                 {
                     List<string> t = FullTag.Split(',').ToList();
                     JobNo = t[0];
