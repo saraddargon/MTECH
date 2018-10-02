@@ -372,6 +372,7 @@ namespace StockControl
                             if (job.OutQty < 0)
                             {
                                 job.OutQty = 0;
+                                job.CloseJob = true;
                                 //รับครบ
                                 var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == item.Cells["idCstmPODt"].Value.ToInt() && x.TLQty > 0).ToList();
                                 foreach(var ss in slist)
@@ -633,7 +634,7 @@ namespace StockControl
                             baseClass.Warning($"- Job no {JobNo} status not Approved.\n");
                             return;
                         }
-                        if (m.OutQty <= 0)
+                        if (m.OutQty <= 0 || m.CloseJob)
                         {
                             baseClass.Warning($"- Job no {JobNo} is already Completed.\n");
                             return;
@@ -976,6 +977,7 @@ namespace StockControl
                                 if (pro != null)
                                 {
                                     pro.OutQty += d.Qty;
+                                    pro.CloseJob = false;
                                     db.SubmitChanges();
 
                                     dbClss.AddHistory("ProductionOrder", "Job Order Sheet", $"Cancel Packing {pkNo} : {d.Qty}", pro.JobNo);

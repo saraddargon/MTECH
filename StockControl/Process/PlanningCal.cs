@@ -62,6 +62,7 @@ namespace StockControl
                     dgvData.DataSource = null;
                     dgvData.AutoGenerateColumns = false;
                     dgvData.DataSource = m;
+                    setRowNo();
 
                     //var rowList = new List<GridViewRowInfo>();
                     //foreach (var item in dgvData.Rows)
@@ -99,6 +100,14 @@ namespace StockControl
         }
 
         //
+        void setRowNo()
+        {
+            int rNo = 1;
+            dgvData.Rows.ToList().ForEach(x =>
+            {
+                x.Cells["RNo"].Value = rNo++;
+            });
+        }
 
         private void radGridView1_CellEndEdit(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
@@ -506,6 +515,7 @@ namespace StockControl
                         m.JobNo = dbClss.GetNo(29, 2);
                         //
                         m.Active = true;
+                        m.CloseJob = false;
                         m.EndingDate = item.Cells["EndingDate"].Value.ToDateTime().Value;
                         m.FGName = item.Cells["ItemName"].Value.ToSt();
                         m.FGNo = item.Cells["ItemNo"].Value.ToSt();
@@ -831,6 +841,11 @@ namespace StockControl
         private void radButtonElement3_Click(object sender, EventArgs e)
         {
             dbClss.ExportGridXlSX(dgvData);
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            DataLoad();
         }
     }
 

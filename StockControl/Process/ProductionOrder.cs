@@ -107,6 +107,7 @@ namespace StockControl
                         txtCreateBy.Text = t.CreateBy;
                         txtLotNo.Text = t.LotNo;
                         cbHoldJob.Checked = t.HoldJob;
+                        cbCloseJob.Checked = t.CloseJob;
                         if (cbHoldJob.Checked)
                             btnHoldJob.Text = "Unhold Job";
                         else
@@ -116,6 +117,8 @@ namespace StockControl
 
                         if (txtSeqStatus.Text.ToInt() == 2)
                             txtStatus.Text = "Approved";
+                        else if (t.CloseJob)
+                            txtSeqStatus.Text = "Completed";
                         else
                             txtStatus.Text = "Waiting";
 
@@ -317,6 +320,7 @@ namespace StockControl
             txtCreateBy.Text = Classlib.User;
             txtCreateDate.Text = DateTime.Now.ToDtString();
             cbHoldJob.Checked = false;
+            cbCloseJob.Checked = false;
             txtStatus.Text = "Waiting";
             txtidJob.Text = "";
             txtSeqStatus.Text = "";
@@ -536,6 +540,7 @@ namespace StockControl
                     {
                         newDoc = true;
                         m = new mh_ProductionOrder();
+                        m.CloseJob = false;
                         m.CreateBy = ClassLib.Classlib.User;
                         m.CreateDate = DateTime.Now;
                         m.JobDate = DateTime.Now.Date;
@@ -979,7 +984,9 @@ namespace StockControl
             if (txtJobNo.Text.Trim() == "")
                 mssg += "- Please Save job before Hold Job.\n";
             if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
-                mssg += "- Cannot Hold Job because FG Already Received.\n";
+                mssg += "- Cannot Recalculate Job because FG Already Received.\n";
+            if (cbCloseJob.Checked)
+                mssg += "- Cannot Recalculate Job because Job is completed.\n";
 
             if (mssg != "")
             {
@@ -1023,6 +1030,8 @@ namespace StockControl
                 mssg += "- Please Save job before Hold Job.\n";
             if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
                 mssg += "- Cannot Hold Job because FG Already Received.\n";
+            if (cbCloseJob.Checked)
+                mssg += "- Cannot Recalculate Job because Job is completed.\n";
 
             if (mssg != "")
             {
@@ -1068,6 +1077,7 @@ namespace StockControl
                         }
 
                         cbHoldJob.Checked = m.HoldJob;
+                        cbCloseJob.Checked = m.CloseJob;
 
                         if (m.HoldJob)
                         {

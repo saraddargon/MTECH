@@ -402,6 +402,10 @@ namespace StockControl
                                     q = Math.Ceiling(q);
                                 gp1.Qty = q;
 
+                                gp1.EndingDate = gp1.StartingDate.Value.Date.AddDays(tdata.LeadTime);
+                                var vndr = db.mh_Vendors.Where(x => x.No == gp1.VendorNo).FirstOrDefault();
+                                if (vndr != null)
+                                    gp1.EndingDate = gp1.EndingDate.Value.AddDays(vndr.ShippingTime);
                                 gp1.DueDate = gp1.EndingDate.Value.Date.AddDays(1);
                                 gp1.ReqDate = gp1.DueDate.AddDays(1);
                                 gridPlans.Add(gp1);
