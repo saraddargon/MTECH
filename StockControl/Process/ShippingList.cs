@@ -392,7 +392,7 @@ namespace StockControl
                              where h.Status != "Cancel" //&& d.verticalID == VerticalID
                                    && d.Status != "Cancel"
                                  && d.ShippingNo.Contains(txtSHNo.Text.Trim())
-                                 && h.JobCard != ""
+                                 //&& h.JobCard != ""
                                  && h.ShippingNo.Substring(0, 2) == "SE"
 
                                  && (((h.ShipDate >= inclusiveStart
