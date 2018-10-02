@@ -3561,6 +3561,7 @@ namespace StockControl
                         {
                             db.sp_062_mh_ApproveList_Add(txtPONo.Text.Trim(), "Purchase Order", ClassLib.Classlib.User);
                             MessageBox.Show("Send complete.");
+                            btnRefresh_Click(null, null);
                         }
                     }
                 }

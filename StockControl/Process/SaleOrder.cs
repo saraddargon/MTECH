@@ -432,6 +432,7 @@ namespace StockControl
                 row = 0;
             //getมาไว้ก่อน แต่ยังไมได้ save 
             //txtTempNo.Text = StockControl.dbClss.GetNo(28, 0);
+            txtSONo.Text = StockControl.dbClss.GetNo(28, 0);
 
             idList.Clear();
             //potoso.Clear();
@@ -1416,6 +1417,7 @@ namespace StockControl
                         {
                             db.sp_062_mh_ApproveList_Add(txtSONo.Text.Trim(), "Sale Order", Classlib.User);
                             MessageBox.Show("Send complete.");
+                            btnRefresh_Click(null, null);
                         }
                     }
                 }

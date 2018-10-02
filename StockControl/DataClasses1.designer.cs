@@ -1489,13 +1489,6 @@ namespace StockControl
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Sp_GetNameControl_001")]
-		public ISingleResult<Sp_GetNameControl_001Result> Sp_GetNameControl_001([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ControlNo", DbType="Int")] System.Nullable<int> controlNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Action", DbType="Int")] System.Nullable<int> action)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), controlNo, action);
-			return ((ISingleResult<Sp_GetNameControl_001Result>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_SelectUser")]
 		public ISingleResult<sp_SelectUserResult> sp_SelectUser([global::System.Data.Linq.Mapping.ParameterAttribute(Name="User", DbType="VarChar(50)")] string user, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Pass", DbType="VarChar(50)")] string pass)
 		{
@@ -2427,6 +2420,13 @@ namespace StockControl
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sONo, cSTMName, itemNo, dt1, dt2, status, cSTMNo);
 			return ((ISingleResult<sp_069_Shipment_List_2Result>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Sp_GetNameControl_001")]
+		public ISingleResult<Sp_GetNameControl_001Result> Sp_GetNameControl_001([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ControlNo", DbType="Int")] System.Nullable<int> controlNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Action", DbType="Int")] System.Nullable<int> action)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), controlNo, action);
+			return ((ISingleResult<Sp_GetNameControl_001Result>)(result.ReturnValue));
 		}
 	}
 	
@@ -49782,32 +49782,6 @@ namespace StockControl
 		}
 	}
 	
-	public partial class Sp_GetNameControl_001Result
-	{
-		
-		private string _GetNo;
-		
-		public Sp_GetNameControl_001Result()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GetNo", DbType="VarChar(15)")]
-		public string GetNo
-		{
-			get
-			{
-				return this._GetNo;
-			}
-			set
-			{
-				if ((this._GetNo != value))
-				{
-					this._GetNo = value;
-				}
-			}
-		}
-	}
-	
 	public partial class sp_SelectUserResult
 	{
 		
@@ -80177,6 +80151,32 @@ namespace StockControl
 				if ((this._CreateDate != value))
 				{
 					this._CreateDate = value;
+				}
+			}
+		}
+	}
+	
+	public partial class Sp_GetNameControl_001Result
+	{
+		
+		private string _GetNo;
+		
+		public Sp_GetNameControl_001Result()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GetNo", DbType="VarChar(15)")]
+		public string GetNo
+		{
+			get
+			{
+				return this._GetNo;
+			}
+			set
+			{
+				if ((this._GetNo != value))
+				{
+					this._GetNo = value;
 				}
 			}
 		}
