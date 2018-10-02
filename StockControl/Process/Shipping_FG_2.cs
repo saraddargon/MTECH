@@ -20,6 +20,11 @@ namespace StockControl
         {
             InitializeComponent();
         }
+        public Shipping_FG_2(string SHNo)
+        {
+            InitializeComponent();
+            SHNo_t = SHNo;
+        }
         public Shipping_FG_2(string SHNo,string CodeNo)
         {
             InitializeComponent();
@@ -1797,7 +1802,7 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                ShippingList sc = new ShippingList(txtSHNo, txtShipmentNo, "ShipFG");
+                ShippingList_FG sc = new ShippingList_FG(txtSHNo, txtShipmentNo, "ShipFG");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();

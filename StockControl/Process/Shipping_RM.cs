@@ -1757,7 +1757,7 @@ namespace StockControl
                 txtCodeNo.Text = "";
 
                 this.Cursor = Cursors.WaitCursor;
-                ShippingList sc = new ShippingList(txtSHNo, txtCodeNo,"Job");
+                Shipping_RM_List sc = new Shipping_RM_List(txtSHNo, txtCodeNo,"Job");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
