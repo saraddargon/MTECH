@@ -99,7 +99,20 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    dgvData.DataSource = db.mh_InvoiceHDs.Where(ab=>ab.IVNo.Contains(txtPONo.Text)).ToList();
+                    DateTime inclusiveStart = dtFrom.Value.Date;
+                    // Include the *whole* of the day indicated by searchEndDate
+                    DateTime exclusiveEnd = dtTo.Value.Date.AddDays(1);
+
+
+                    dgvData.DataSource = db.mh_InvoiceHDs
+                        .Where(ab => ab.IVNo.Contains(txtIvNo.Text)
+                        && ab.CustomerName.Contains(cbbCSTM.Text)
+                        && (((ab.SSDate >= inclusiveStart
+                                   && ab.SSDate < exclusiveEnd)
+                                   && cbChkDate.Checked == true)
+                         || (cbChkDate.Checked == false)
+                                   )
+                        ).ToList();
                 }
 
 
@@ -199,10 +212,12 @@ namespace StockControl
                 if (sType == 2)
                 {
                     dgvData.EndEdit();
-                    foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
-                    {
-                        RetDT.Add(rowinfo);
-                    }
+                    //foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                    //{
+                    //    RetDT.Add(rowinfo);
+                    //}
+
+                    RetDT.Add(dgvData.CurrentRow);
 
                     this.Close();
                 }
@@ -210,14 +225,15 @@ namespace StockControl
                 {
                     dgvData.EndEdit();
                     string temp = "";
-                    foreach (var ix in dgvData.Rows)
-                    {
-                        if (dbClss.TBo(ix.Cells["S"].Value))
-                        {
-                            temp = dbClss.TSt(ix.Cells["IVNo"].Value);
-                            break;
-                        }
-                    }
+                    temp = dbClss.TSt(dgvData.CurrentRow.Cells["IVNo"].Value);
+                    //foreach (var ix in dgvData.Rows)
+                    //{
+                    //    if (dbClss.TBo(ix.Cells["S"].Value))
+                    //    {
+                    //        temp = dbClss.TSt(ix.Cells["IVNo"].Value);
+                    //        break;
+                    //    }
+                    //}
                     if (temp != "")
                     {
                         Invoice_2 a = new Invoice_2(temp);
@@ -377,6 +393,28 @@ namespace StockControl
         {
             dgvData.EndInit();
             CreateInvoice();
+        }
+
+        private void cbbCSTM_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        var cm = db.mh_Customers.Where(ab=>ab.Name.Contains(cbbCSTM.Text)).ToList();
+            //        if (cm.Count > 0)
+            //        {
+
+            //            txtCSTMNo.Text = dbClss.TSt(cm.FirstOrDefault().No);
+                        
+            //        }
+            //        else
+            //            txtCSTMNo.Text = "";
+
+                    
+            //    }
+            //}
+            //catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 

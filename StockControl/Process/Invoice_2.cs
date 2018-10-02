@@ -191,7 +191,8 @@ namespace StockControl
                             Type_Button = 2;
                         else if (mh.Type.ToSt() == "3")
                             Type_Button = 3;
-                        
+                        lblStatus.Text = mh.StatusHD;
+
                         var list1 = db.mh_InvoiceDTs.Where(w => w.IVNo == txtIVNo.Text && !w.Status.Equals("Cancel")).ToList();
                         if (list1.Count > 0)
                         {
@@ -607,7 +608,7 @@ namespace StockControl
                         sh1.VatAmnt = vatAmount;
                         sh1.TotalPrice = totalPrice;
                         sh1.TotalPriceIncVat = grantotal;
-                        sh1.StatusHD = "Process";
+                        sh1.StatusHD = "Complete";
                         sh1.ContactName = txtContactName.Text;
                         sh1.Active = true;
                         sh1.Type = Type_Button.ToSt();
@@ -636,7 +637,7 @@ namespace StockControl
                             nd.UnitPrice = Convert.ToDecimal(rd.Cells["UnitPrice"].Value.ToSt());
                             nd.PCSUnit = Convert.ToDecimal(rd.Cells["PCSUnit"].Value.ToSt());
                             nd.IVNo = txtIVNo.Text;
-                            nd.Status = "Process";
+                            nd.Status = "Complete";
                             nd.RefId = Convert.ToInt16(rd.Cells["RefId"].Value);
                             nd.Active = Convert.ToBoolean(true);
                           
@@ -1561,7 +1562,13 @@ namespace StockControl
         {
             try
             {
-
+                string InvNo = txtIVNo.Text.Trim();
+                Report.Reportx1.Value = new string[2];
+                Report.Reportx1.Value[0] = InvNo;
+                Report.Reportx1.Value[1] = InvNo;
+                Report.Reportx1.WReport = "Invoice";
+                Report.Reportx1 op = new Report.Reportx1("Invoice.rpt");
+                op.Show();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
