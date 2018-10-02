@@ -2129,6 +2129,20 @@
       <Column Name="CloseJob" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.mh_ProductionOrder_CloseSpecial" Member="mh_ProductionOrder_CloseSpecials">
+    <Type Name="mh_ProductionOrder_CloseSpecial">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DocNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="JobNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idCSTMPOdt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UpdateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">
     <ElementType Name="Sp_ADM03_OpenFormSelectResult">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
