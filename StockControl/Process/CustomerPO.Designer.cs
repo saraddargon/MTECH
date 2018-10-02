@@ -291,6 +291,7 @@
             this.radRibbonBarGroup8.Name = "radRibbonBarGroup8";
             this.radRibbonBarGroup8.Text = "Import/Export";
             this.radRibbonBarGroup8.UseCompatibleTextRendering = false;
+            this.radRibbonBarGroup8.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
             // btnImportCSV
             // 

@@ -1118,6 +1118,7 @@
       <DependentUpon>RadForm1.cs</DependentUpon>
     </Compile>
     <Compile Include="version.cs" />
+    <None Include="CustomerPO_Template.csv" />
     <None Include="CustomerPO_Template.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

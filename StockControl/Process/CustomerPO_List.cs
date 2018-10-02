@@ -7,6 +7,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Linq;
 using Microsoft.VisualBasic.FileIO;
+using System.IO;
+using ClassLib;
+
 namespace StockControl
 {
     public partial class CustomerPO_List : Telerik.WinControls.UI.RadRibbonForm
@@ -120,7 +123,26 @@ namespace StockControl
         private void btnExport_Click(object sender, EventArgs e)
         {
             //  dbClss.ExportGridCSV(radGridView1);
-            dbClss.ExportGridXlSX(dgvData);
+            //dbClss.ExportGridXlSX(dgvData);
+
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                string fName = "CustomerPO_Template.csv";
+                string mFile = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, fName);
+                string tFile = Path.Combine(Path.GetTempPath(), fName);
+                File.Copy(mFile, tFile, true);
+
+                System.Diagnostics.Process.Start(tFile);
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
         }
 
 
@@ -374,6 +396,156 @@ namespace StockControl
             Report.Reportx1 op = new Report.Reportx1("ReportCustomerList.rpt");
             op.Show();
         }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            var op = new OpenFileDialog();
+            op.Filter = "(*.csv)|*.csv";
+            if (op.ShowDialog() == DialogResult.OK && op.FileName.ToSt() != "")
+                OpenImport(op.FileName);
+        }
+        void OpenImport(string filePath)
+        {
+            //MessageBox.Show(filePath);
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                using (TextFieldParser parser = new TextFieldParser(filePath, Encoding.GetEncoding("windows-874")))
+                {
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters(",");
+                    int a = 0;
+                    int c = 0;
+
+                    int impCom = 0;
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        while (!parser.EndOfData)
+                        {
+                            a += 1;
+                            string[] fields = parser.ReadFields();
+                            c = 0;
+
+                            string CustomerNo = "";
+                            string CustomerPONo = "";
+                            DateTime? OrderDate = null;
+                            string Remark = "";
+                            DateTime? CustomerReqDate = null;
+                            string ItemNo = "";
+                            string ItemName = "";
+                            decimal OrderQty = 0.00m;
+                            string UOM = "";
+                            decimal PCSUnit = 0.00m;
+                            decimal UnitPrice = 0.00m;
+                            decimal Amnt = 0.00m;
+                            foreach (string field in fields)
+                            {
+                                c += 1;
+                                if (a < 8) continue;
+                                string f = field.ToSt().Trim();
+                                switch (c)
+                                {
+                                    case 2: CustomerNo = f; break;
+                                    case 3: CustomerPONo = f; break;
+                                    case 4: OrderDate = f.ToDateTime(); break;
+                                    case 5: Remark = f; break;
+                                    case 6: CustomerReqDate = f.ToDateTime(); break;
+                                    case 7: ItemNo = f; break;
+                                    case 8: ItemName = f; break;
+                                    case 9: OrderQty = f.ToDecimal(); break;
+                                    case 10: UOM = f; break;
+                                    case 11: PCSUnit = f.ToDecimal(); break;
+                                    case 12: UnitPrice = f.ToDecimal(); break;
+                                    case 13: Amnt = f.ToDecimal(); break;
+                                    default: break;
+                                }
+                            }
+                            //check customerNo
+                            var cstm = db.mh_Customers.Where(x => x.No == CustomerNo).FirstOrDefault();
+                            if (cstm == null) continue;
+                            //check OrderDate
+                            if (OrderDate == null) continue;
+                            //check CustomerReqDate
+                            if (CustomerReqDate == null) continue;
+                            //Check ItemNo
+                            var tool = db.mh_Items.Where(x => x.InternalNo == ItemNo).FirstOrDefault();
+                            if (tool == null) continue;
+                            //Check Order Qty
+                            if (OrderQty <= 0) continue;
+                            //Check UOM
+                            var unit = db.mh_ItemUOMs.Where(x => x.ItemNo == ItemNo && x.UOMCode == UOM).FirstOrDefault();
+                            if (unit == null) continue;
+                            //check PCSUnit
+                            if (PCSUnit <= 0) PCSUnit = unit.QuantityPer;
+
+                            Amnt = Math.Round(OrderQty * UnitPrice, 2);
+
+                            //add to CustomerPO
+                            var cstmPo = db.mh_CustomerPOs.Where(x => x.CustomerNo == CustomerNo && x.CustomerPONo == CustomerPONo).FirstOrDefault();
+                            if (cstmPo == null)
+                            {
+                                cstmPo = new mh_CustomerPO();
+                                db.mh_CustomerPOs.InsertOnSubmit(cstmPo);
+                            }
+                            cstmPo.Active = true;
+                            cstmPo.CreateBy = Classlib.User;
+                            cstmPo.CreateDate = DateTime.Now;
+                            cstmPo.CustomerNo = CustomerNo;
+                            cstmPo.CustomerPONo = CustomerPONo;
+                            cstmPo.DemandType = 0;  //Customer P/O
+                            cstmPo.OrderDate = OrderDate.Value.Date;
+                            cstmPo.Remark = Remark;
+                            cstmPo.UpdateBy = Classlib.User;
+                            cstmPo.UpdateDate = DateTime.Now;
+                            db.SubmitChanges();
+
+                            //add to Customer PO Dt
+                            decimal allQ = Math.Round(OrderQty * PCSUnit, 2);
+                            var cstmpoDt = new mh_CustomerPODT
+                            {
+                                Active = true,
+                                Amount = Amnt,
+                                forSafetyStock = false,
+                                genPR = false,
+                                idCustomerPO = cstmPo.id,
+                                ItemName = ItemName,
+                                ItemNo = ItemNo,
+                                OutPlan = OrderQty,
+                                OutQty = allQ,
+                                OutSO = OrderQty,
+                                PCSUnit = PCSUnit,
+                                Qty = OrderQty,
+                                Remark = "",
+                                ReplenishmentType = tool.ReplenishmentType,
+                                ReqDate = CustomerReqDate.Value.Date,
+                                ReqReceiveDate = CustomerReqDate.Value.Date,
+                                Status = "Waiting",
+                                UnitPrice = UnitPrice,
+                                UOM = UOM,
+                            };
+                            db.mh_CustomerPODTs.InsertOnSubmit(cstmpoDt);
+                            db.SubmitChanges();
+
+                            impCom++;
+                        }
+                    }
+
+                    if (impCom > 0)
+                    {
+                        baseClass.Info($"Improt Data({impCom}) completes.\n");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
     }
 
 
