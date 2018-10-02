@@ -687,9 +687,9 @@ namespace StockControl
 
         private void btnImport_Click_1(object sender, EventArgs e)
         {
-            Report.Reportx1.Value = new string[1];
-            Report.Reportx1.Value[0] = "";
-            Report.Reportx1.WReport = "ALLReport2";
+            //Report.Reportx1.Value = new string[1];
+            //Report.Reportx1.Value[0] = "";
+            Report.Reportx1.WReport = "WorkCenter";
             Report.Reportx1 op = new Report.Reportx1("WorkCenterList.rpt");
             op.Show();
         }

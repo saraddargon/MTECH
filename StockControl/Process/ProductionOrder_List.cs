@@ -202,6 +202,7 @@ namespace StockControl
         {
             //select Item for Print
             //throw new NotImplementedException();
+            if (dgvData.CurrentCell == null) return;
             if (dgvData.CurrentCell.RowIndex >= 0)
             {
                 string JobNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
