@@ -1562,7 +1562,13 @@ namespace StockControl
         {
             try
             {
-
+                string InvNo = txtIVNo.Text.Trim();
+                Report.Reportx1.Value = new string[2];
+                Report.Reportx1.Value[0] = InvNo;
+                Report.Reportx1.Value[1] = InvNo;
+                Report.Reportx1.WReport = "Invoice";
+                Report.Reportx1 op = new Report.Reportx1("Invoice.rpt");
+                op.Show();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }

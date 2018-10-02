@@ -523,7 +523,7 @@
             gridViewDecimalColumn4.ReadOnly = true;
             gridViewDecimalColumn4.Width = 124;
             gridViewDecimalColumn5.EnableExpressionEditor = false;
-            gridViewDecimalColumn5.FieldName = "SafetyStock";
+            gridViewDecimalColumn5.FieldName = "BackOrderStock";
             gridViewDecimalColumn5.FormatString = "{0:N2}";
             gridViewDecimalColumn5.HeaderText = "BackOrder Stock";
             gridViewDecimalColumn5.Name = "BackOrderStock";
@@ -621,7 +621,7 @@
             gridViewDecimalColumn12.HeaderText = "Set Safety Stock";
             gridViewDecimalColumn12.Name = "SafetyStock";
             gridViewDecimalColumn12.ReadOnly = true;
-            gridViewDecimalColumn12.Width = 107;
+            gridViewDecimalColumn12.Width = 103;
             gridViewTextBoxColumn20.EnableExpressionEditor = false;
             gridViewTextBoxColumn20.FieldName = "CreateBy";
             gridViewTextBoxColumn20.HeaderText = "ผู้สร้าง";

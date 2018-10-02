@@ -99,7 +99,20 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    dgvData.DataSource = db.mh_InvoiceHDs.Where(ab=>ab.IVNo.Contains(txtPONo.Text)).ToList();
+                    DateTime inclusiveStart = dtFrom.Value.Date;
+                    // Include the *whole* of the day indicated by searchEndDate
+                    DateTime exclusiveEnd = dtTo.Value.Date.AddDays(1);
+
+
+                    dgvData.DataSource = db.mh_InvoiceHDs
+                        .Where(ab => ab.IVNo.Contains(txtIvNo.Text)
+                        && ab.CustomerName.Contains(cbbCSTM.Text)
+                        && (((ab.SSDate >= inclusiveStart
+                                   && ab.SSDate < exclusiveEnd)
+                                   && cbChkDate.Checked == true)
+                         || (cbChkDate.Checked == false)
+                                   )
+                        ).ToList();
                 }
 
 
@@ -380,6 +393,28 @@ namespace StockControl
         {
             dgvData.EndInit();
             CreateInvoice();
+        }
+
+        private void cbbCSTM_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //    {
+            //        var cm = db.mh_Customers.Where(ab=>ab.Name.Contains(cbbCSTM.Text)).ToList();
+            //        if (cm.Count > 0)
+            //        {
+
+            //            txtCSTMNo.Text = dbClss.TSt(cm.FirstOrDefault().No);
+                        
+            //        }
+            //        else
+            //            txtCSTMNo.Text = "";
+
+                    
+            //    }
+            //}
+            //catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 
