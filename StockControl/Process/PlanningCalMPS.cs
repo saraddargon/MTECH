@@ -514,6 +514,7 @@ namespace StockControl
                         m.JobNo = dbClss.GetNo(29, 2);
                         //
                         m.Active = true;
+                        m.CloseJob = false;
                         m.EndingDate = item.Cells["EndingDate"].Value.ToDateTime().Value;
                         m.FGName = item.Cells["ItemName"].Value.ToSt();
                         m.FGNo = item.Cells["ItemNo"].Value.ToSt();
