@@ -29,6 +29,7 @@ namespace StockControl
             //this.MPS = MPS;
             cbMRP.Checked = MRP;
             cbMPS.Checked = MPS;
+            
         }
 
         private void radMenuItem1_Click(object sender, EventArgs e)
@@ -49,9 +50,12 @@ namespace StockControl
         }
         private void Unit_Load(object sender, EventArgs e)
         {
-            dtFrom.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            dtTo.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+            //dtFrom.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            //dtTo.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
 
+            dtFrom.Value = DateTime.Now.Date;
+            dtTo.Value = dtFrom.Value.Date.AddDays(90);
+            
             ////for test data
             //dtFrom.Value = new DateTime(2018, 9, 4);
             //dtTo.Value = new DateTime(2018, 9, 7);
