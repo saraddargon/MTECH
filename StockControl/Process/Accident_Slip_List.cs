@@ -11,13 +11,13 @@ using Telerik.WinControls.UI;
 
 namespace StockControl
 {
-    public partial class ShippingList : Telerik.WinControls.UI.RadRibbonForm
+    public partial class Accident_Slip_List : Telerik.WinControls.UI.RadRibbonForm
     {
-        public ShippingList()
+        public Accident_Slip_List()
         {
             InitializeComponent();
         }
-        public ShippingList(Telerik.WinControls.UI.RadTextBox SHNoxxx
+        public Accident_Slip_List(Telerik.WinControls.UI.RadTextBox SHNoxxx
                     , Telerik.WinControls.UI.RadTextBox CodeNoxxx)
         {
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace StockControl
             screen = 1;
 
         }
-        public ShippingList(Telerik.WinControls.UI.RadTextBox SHNoxxx
+        public Accident_Slip_List(Telerik.WinControls.UI.RadTextBox SHNoxxx
                    , Telerik.WinControls.UI.RadTextBox CodeNoxxx,string TypeShipx)
         {
             InitializeComponent();
@@ -151,7 +151,7 @@ namespace StockControl
                                  &&  d.ShippingNo.Contains(txtSHNo.Text.Trim())
                                  //&& (h.ShipDate >= inclusiveStart
                                  //       && h.ShipDate < exclusiveEnd)
-                                 && h.ShippingNo.Substring(0, 2) == "SH"
+
                                  && (((h.ShipDate >= inclusiveStart
                                    && h.ShipDate < exclusiveEnd)
                                    && cbDate.Checked == true)
@@ -577,12 +577,12 @@ namespace StockControl
                 {
                     if (dgvData.Rows.Count > 0)
                     {
-                        Shipping a = new Shipping(Convert.ToString(dgvData.CurrentRow.Cells["ShippingNo"].Value),
+                        Acciden_t_Slip a = new Acciden_t_Slip(Convert.ToString(dgvData.CurrentRow.Cells["ShippingNo"].Value),
                             Convert.ToString(dgvData.CurrentRow.Cells["CodeNo"].Value));
                         a.ShowDialog();
                     }else
                     {
-                        Shipping b = new Shipping();
+                        Acciden_t_Slip b = new Acciden_t_Slip();
                         b.ShowDialog();
                     }
                 }
@@ -854,7 +854,7 @@ namespace StockControl
         private void radButton1_Click_1(object sender, EventArgs e)
         {
             //if (TypeShip == "Accident_Slip")
-            //    DataLoad_for_Accident();
+                DataLoad_for_Accident();
             //else if (TypeShip == "ShipFG")
             //    DataLoad_for_FG();
             //else if(TypeShip== "ShipFGAccident")
@@ -862,7 +862,7 @@ namespace StockControl
             //else if (TypeShip != "")
             //    DataLoad_for_Job();
             //else
-                DataLoad();
+            //    DataLoad();
         }
 
         private void radGridView1_CellFormatting(object sender, Telerik.WinControls.UI.CellFormattingEventArgs e)
@@ -968,7 +968,7 @@ namespace StockControl
                 {
                     if (e.RowIndex > -1)
                     {
-                        Shipping a = new Shipping(Convert.ToString(e.Row.Cells["ShippingNo"].Value),
+                        Acciden_t_Slip a = new Acciden_t_Slip(Convert.ToString(e.Row.Cells["ShippingNo"].Value),
                         Convert.ToString(e.Row.Cells["CodeNo"].Value));
                         a.ShowDialog();
                         //this.Close();

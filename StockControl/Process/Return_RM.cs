@@ -20,7 +20,11 @@ namespace StockControl
         {
             InitializeComponent();
         }
-
+        public Return_RM(string ADNo)
+        {
+            InitializeComponent();
+            ADNo_tt = ADNo;
+        }
         public Return_RM(string ADNo, string CodeNo,string Screen)
         {
             InitializeComponent();
