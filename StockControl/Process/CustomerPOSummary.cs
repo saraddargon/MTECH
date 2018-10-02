@@ -45,7 +45,7 @@ namespace StockControl
                     Width = 70,
                 });
 
-                var sum1 = new GridViewSummaryItem(d.ToString("MMM").ToUpper(), "{0:N2}", GridAggregateFunction.Count);
+                var sum1 = new GridViewSummaryItem(d.ToString("MMM").ToUpper(), "{0:N2}", GridAggregateFunction.Sum);
                 sumRow.Add(sum1);
 
                 mm++;
