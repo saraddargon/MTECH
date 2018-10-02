@@ -12,8 +12,8 @@ namespace StockControl
     public partial class ProductionOrder_List : Telerik.WinControls.UI.RadRibbonForm
     {
         public string t_JobNo = "";
-        bool openForm = true;
-        bool canchange = false;
+        //bool openForm = true;
+        //bool canchange = false;
 
         //sType = 1 : btnNew to Create Customer P/O,,, 2: btnNew to Select Customer P/O
         int sType = 1;
@@ -39,7 +39,7 @@ namespace StockControl
             dtFrom.Value = DateTime.Now;
             dtTo.Value = DateTime.Now;
             //radGridView1.ReadOnly = true;
-            cbbStatus.SelectedIndex = 0; //None
+            cbbStatus.SelectedIndex = 3; //Process
             using (var db = new DataClasses1DataContext())
             {
 
@@ -68,7 +68,7 @@ namespace StockControl
                     x.ReadOnly = true;
             });
 
-            canchange = true;
+            //canchange = true;
         }
         private void DataLoad()
         {
@@ -85,7 +85,7 @@ namespace StockControl
                     string FGNo = cbbItem.SelectedValue.ToSt();
                     DateTime? dFrom = (cbChkDate.Checked) ? (DateTime?)dtFrom.Value.Date : null;
                     DateTime? dTo = (cbChkDate.Checked) ? (DateTime?)dtTo.Value.Date.AddDays(1).AddMinutes(-1) : null;
-                    string Status = (openForm) ? "OpenForm" : cbbStatus.Text;
+                    string Status = cbbStatus.Text; //(openForm) ? "OpenForm" : cbbStatus.Text;
                     //var m = db.mh_ProductionOrders.Where(x => x.Active
                     //        && (jobNo == "" || x.JobNo == jobNo)
                     //        && (FGNo == "" || x.FGNo == FGNo)
@@ -419,8 +419,8 @@ namespace StockControl
 
         private void cbbStatus_SelectedIndexChanged(object sender, Telerik.WinControls.UI.Data.PositionChangedEventArgs e)
         {
-            if (canchange)
-                openForm = false;
+            //if (canchange)
+            //    openForm = false;
         }
     }
 
