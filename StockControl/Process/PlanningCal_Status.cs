@@ -74,6 +74,7 @@ namespace StockControl
                     //remove FGTEMPJOB Customer PO not gen P/R
                     var podt_Temp = db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && !x.genPR).ToList();
                     db.mh_CustomerPODTs.DeleteAllOnSubmit(podt_Temp);
+                    db.SubmitChanges();
 
                     //1.Get Customer P/O (OutPlan) and SaleOrder (OutPlan) [Only not customer P/O]
                     var poDt = db.mh_CustomerPODTs.Where(x => x.Active
@@ -581,6 +582,9 @@ namespace StockControl
             var gPlan = gPlanN;
             using (var db = new DataClasses1DataContext())
             {
+                if (gPlan.ItemNo == "TBK-T-0001" || gPlan.ItemNo == "MET-T-001")
+                { }
+
                 bool RMready = true;
                 //manu Unit Time
                 decimal manuTime = 1;

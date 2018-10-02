@@ -364,9 +364,9 @@ namespace StockControl
             {
                 string PRNo = "";
                 if (radGridView1.Rows.Count > 0)
-                    PRNo = StockControl.dbClss.TSt(radGridView1.CurrentRow.Cells["PRNo"].Value);
+                    PRNo = StockControl.dbClss.TSt(radGridView1.CurrentRow.Cells["PONo"].Value);
 
-                PrintPR a = new PrintPR(PRNo, PRNo, "PR");
+                PrintPR a = new PrintPR(PRNo, PRNo, "PO");
                 a.ShowDialog();
             }
             catch { }

@@ -84,7 +84,8 @@ namespace StockControl
                 SetConfig();
                 ConnectDB.dbconnection = "Data Source=" + ddlServer.Text + ";Initial Catalog="
                         + ddlDatabase.Text + ";User ID=" + ConnectDB.Userdb + ";Password=" + ConnectDB.PassDb + ";";
-                //+ ";Connection Timeout=" + ConnectDB.ConnectDB.Timeout + ";"; //Integrated Security=SSPI; Connection Timeout=1800
+
+                Properties.Settings.Default["dbStockControlConnectionString1"] = ConnectDB.dbconnection;
                 ConnectDB.user = txtUser.Text;
                 ConnectDB.server = ddlServer.Text;
                 ConnectDB.dbname = ddlDatabase.Text;
@@ -171,7 +172,7 @@ namespace StockControl
                     }
                 }
             }
-            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
+            catch (Exception ex) { MessageBox.Show(ex.ToString()); return false; }
             if (err.Equals(""))
             {
                 ck = true;

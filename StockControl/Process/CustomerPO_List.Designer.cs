@@ -71,6 +71,7 @@
             this.btnEditItem = new Telerik.WinControls.UI.RadButtonElement();
             this.btnDeleteItem = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup4 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnImport = new Telerik.WinControls.UI.RadButtonElement();
             this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup3 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnRefresh = new Telerik.WinControls.UI.RadButtonElement();
@@ -115,7 +116,6 @@
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             this.btnEdit = new Telerik.WinControls.UI.RadButtonElement();
             this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
-            this.btnImport = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -253,6 +253,15 @@
             this.btnExport});
             this.radRibbonBarGroup4.Name = "radRibbonBarGroup4";
             this.radRibbonBarGroup4.Text = "Export";
+            // 
+            // btnImport
+            // 
+            this.btnImport.Image = ((System.Drawing.Image)(resources.GetObject("btnImport.Image")));
+            this.btnImport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Text = "นำข้อมูลเข้า";
+            this.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // btnExport
             // 
@@ -686,6 +695,7 @@
             this.cbbStatus.Size = new System.Drawing.Size(186, 20);
             this.cbbStatus.TabIndex = 13;
             this.cbbStatus.ThemeName = "Office2010Blue";
+            this.cbbStatus.SelectedIndexChanged += new Telerik.WinControls.UI.Data.PositionChangedEventHandler(this.cbbStatus_SelectedIndexChanged);
             // 
             // dtTo
             // 
@@ -899,15 +909,6 @@
             this.radButtonElement2.Text = "แก้ไขรายการ";
             this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.radButtonElement2.UseCompatibleTextRendering = false;
-            // 
-            // btnImport
-            // 
-            this.btnImport.Image = ((System.Drawing.Image)(resources.GetObject("btnImport.Image")));
-            this.btnImport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnImport.Name = "btnImport";
-            this.btnImport.Text = "นำข้อมูลเข้า";
-            this.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // CustomerPO_List
             // 

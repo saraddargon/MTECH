@@ -340,7 +340,12 @@ namespace StockControl
                         }
                         dt.UnitPrice = Math.Round(dt.Amount / dt.Qty, 2);
 
-                        dt.LotNo = item.Cells["LotNo"].Value.ToSt();
+                        DateTime dNow = DateTime.Now.Date;
+                        string LotNo = item.Cells["LotNo"].Value.ToSt(); 
+                        var dLot = db.mh_LotFGs.Where(x => x.LotDate == dNow).FirstOrDefault();
+                        if (dLot != null)
+                            LotNo = dLot.LotNo;
+                        dt.LotNo = LotNo;
                         dt.ShelfNo = item.Cells["ShelfNo"].Value.ToSt();
                         dt.Remark = item.Cells["Remark"].Value.ToSt();
                         dt.RefNo = jobNo;

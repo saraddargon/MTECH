@@ -101,7 +101,7 @@ namespace StockControl
                     //    m = m.Where(x => x.OutQty == 0).ToList();
 
                     var m = db.sp_067_ProductionOrder_Search(jobNo, FGNo, dFrom, dTo, Status).ToList();
-
+                    
                     dgvData.DataSource = m;
 
                     //setStatus();
@@ -410,7 +410,7 @@ namespace StockControl
 
             //  string JobNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
             Report.Reportx1.Value = new string[1];
-            Report.Reportx1.Value[0] = "";
+            Report.Reportx1.Value[0] = cbbStatus.Text;
             Report.Reportx1.WReport = "ProductionList";
             Report.Reportx1 op = new Report.Reportx1("ReportProductionList.rpt");
             op.Show();
