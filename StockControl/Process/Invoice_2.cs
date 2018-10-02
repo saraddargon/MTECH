@@ -953,7 +953,8 @@ namespace StockControl
                             using (DataClasses1DataContext db = new DataClasses1DataContext())
                             {
                                 decimal QTY = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["Qty"].Value), out QTY);
-                                decimal RemainQty = 0;
+                                decimal RemainQty = dbClss.TDe(e.Row.Cells["OutInv"].Value);
+
                                 int id = dbClss.TInt(e.Row.Cells["Refid"].Value);
                                 var v = (from ix in db.mh_ShipmentDTs
                                          where
@@ -1083,7 +1084,7 @@ namespace StockControl
 
                         //e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         //e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
-                        CallTotal();
+                        //CallTotal();
                     }
 
                     else if (e.Column.Name.Equals("Unit"))
@@ -1184,6 +1185,7 @@ namespace StockControl
                     //    }
                     //}
                         e.Row.Cells["dgvC"].Value = "T";
+                    CallTotal();
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -1341,7 +1343,7 @@ namespace StockControl
                 //rowE.Cells["Status"].Value = Status;
                 rowE.Cells["RefDocNo"].Value = RefDocNo;
                 rowE.Cells["OutInv"].Value = OutInv;
-                //rowE.Cells["RefId"].Value = RefId;
+                rowE.Cells["RefId"].Value = RefId;
                 //rowE.Cells["RepType"].Value = RepType;
                 rowE.Cells["dgvC"].Value = dgvC; //if Edit row -> value = T
                                                  //rowE.Cells["PlanStatus"].Value = PlanStatus;
@@ -1607,7 +1609,8 @@ namespace StockControl
                 if (cbVat.Checked)
                     vat = amnt * Math.Round(vatA / 100, 2);
                 txtVatAmnt.Value = vat;
-                txtGrandTotal.Value = amnt + vat;
+
+                txtGrandTotal.Value = amnt + dbClss.TDe(txtVatAmnt.Value);
             }
             catch (Exception ex) { MessageBox.Show("err2: " + ex.Message); }
         }
@@ -1770,12 +1773,14 @@ namespace StockControl
                                             var rowE = dgvData.Rows.AddNew();
                                         addRow(rowE.Index, DateTime.Now,
                                             c.FirstOrDefault().ItemNo
-                                            , c.FirstOrDefault().ItemName, c.FirstOrDefault().Description, c.FirstOrDefault().LocationItem
+                                            , c.FirstOrDefault().ItemName, c.FirstOrDefault().Description
+                                            , c.FirstOrDefault().LocationItem
                                             , 0, c.FirstOrDefault().UOM, dbClss.TDe(c.FirstOrDefault().PCSUnit)
                                             , dbClss.TDe(c.FirstOrDefault().UnitPrice)
                                             , dbClss.TDe(c.FirstOrDefault().UnitPrice) * 0
                                             , false, 0, 0, 0, "Waiting", "Waiting"
-                                            , c.FirstOrDefault().SSNo, dbClss.TInt(c.FirstOrDefault().id)
+                                            , c.FirstOrDefault().SSNo
+                                            , dbClss.TInt(c.FirstOrDefault().id)
                                             ,dbClss.TDe(c.FirstOrDefault().OutInv), "T", "SH");
                                                 
                                         
