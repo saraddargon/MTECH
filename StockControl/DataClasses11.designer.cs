@@ -2439,6 +2439,13 @@ namespace StockControl
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sONo, cSTMName, itemNo, dt1, dt2, status, cSTMNo);
 			return ((ISingleResult<sp_069_Shipment_List_2Result>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_082_CloseJobSpecial_SELECT")]
+		public ISingleResult<sp_082_CloseJobSpecial_SELECTResult> sp_082_CloseJobSpecial_SELECT([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DocNo", DbType="NVarChar(50)")] string docNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobNo", DbType="NVarChar(50)")] string jobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> dFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> dTo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), docNo, jobNo, dFrom, dTo);
+			return ((ISingleResult<sp_082_CloseJobSpecial_SELECTResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ErrorLog")]
@@ -80466,6 +80473,284 @@ namespace StockControl
 				if ((this._CreateDate != value))
 				{
 					this._CreateDate = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_082_CloseJobSpecial_SELECTResult
+	{
+		
+		private int _id;
+		
+		private string _DocNo;
+		
+		private string _JobNo;
+		
+		private int _idCSTMPOdt;
+		
+		private string _Remark;
+		
+		private bool _Active;
+		
+		private System.DateTime _CreateDate;
+		
+		private string _CreateBy;
+		
+		private System.DateTime _UpdateDate;
+		
+		private string _UpdateBy;
+		
+		private string _FGNo;
+		
+		private string _FGName;
+		
+		private decimal _Qty;
+		
+		private decimal _OutQty;
+		
+		private int _idCstmPODt1;
+		
+		public sp_082_CloseJobSpecial_SELECTResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNo", DbType="NVarChar(50)")]
+		public string DocNo
+		{
+			get
+			{
+				return this._DocNo;
+			}
+			set
+			{
+				if ((this._DocNo != value))
+				{
+					this._DocNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobNo", DbType="NVarChar(50)")]
+		public string JobNo
+		{
+			get
+			{
+				return this._JobNo;
+			}
+			set
+			{
+				if ((this._JobNo != value))
+				{
+					this._JobNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCSTMPOdt", DbType="Int NOT NULL")]
+		public int idCSTMPOdt
+		{
+			get
+			{
+				return this._idCSTMPOdt;
+			}
+			set
+			{
+				if ((this._idCSTMPOdt != value))
+				{
+					this._idCSTMPOdt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this._Remark = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this._Active = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(50)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this._CreateBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime UpdateDate
+		{
+			get
+			{
+				return this._UpdateDate;
+			}
+			set
+			{
+				if ((this._UpdateDate != value))
+				{
+					this._UpdateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="NVarChar(50)")]
+		public string UpdateBy
+		{
+			get
+			{
+				return this._UpdateBy;
+			}
+			set
+			{
+				if ((this._UpdateBy != value))
+				{
+					this._UpdateBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FGNo", DbType="NVarChar(50)")]
+		public string FGNo
+		{
+			get
+			{
+				return this._FGNo;
+			}
+			set
+			{
+				if ((this._FGNo != value))
+				{
+					this._FGNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FGName", DbType="NVarChar(100)")]
+		public string FGName
+		{
+			get
+			{
+				return this._FGName;
+			}
+			set
+			{
+				if ((this._FGName != value))
+				{
+					this._FGName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Qty
+		{
+			get
+			{
+				return this._Qty;
+			}
+			set
+			{
+				if ((this._Qty != value))
+				{
+					this._Qty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutQty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal OutQty
+		{
+			get
+			{
+				return this._OutQty;
+			}
+			set
+			{
+				if ((this._OutQty != value))
+				{
+					this._OutQty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCstmPODt1", DbType="Int NOT NULL")]
+		public int idCstmPODt1
+		{
+			get
+			{
+				return this._idCstmPODt1;
+			}
+			set
+			{
+				if ((this._idCstmPODt1 != value))
+				{
+					this._idCstmPODt1 = value;
 				}
 			}
 		}

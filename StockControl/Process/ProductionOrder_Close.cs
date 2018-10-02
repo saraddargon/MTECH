@@ -17,6 +17,11 @@ namespace StockControl
         {
             InitializeComponent();
         }
+        public ProductionOrder_Close(string tNo)
+        {
+            InitializeComponent();
+            txtSPNo.Text = tNo;
+        }
 
         //private int RowView = 50;
         //private int ColView = 10;
@@ -37,7 +42,13 @@ namespace StockControl
         private void Unit_Load(object sender, EventArgs e)
         {
             // txtCNNo.Text = StockControl.dbClss.GetNo(6, 0);
+            string tNo = txtSPNo.Text;
             ClearData();
+            if(tNo != "")
+            {
+                txtSPNo.Text = tNo;
+                DataLoad();
+            }
         }
 
         void DataLoad()
@@ -46,12 +57,12 @@ namespace StockControl
             {
                 string docNo = txtSPNo.Text.Trim();
                 var m = db.mh_ProductionOrder_CloseSpecials.Where(x => x.DocNo == docNo).FirstOrDefault();
-                if(m != null)
+                if (m != null)
                 {
                     btnDelete.Enabled = true;
                     btnSave.Enabled = false;
                     var j = db.mh_ProductionOrders.Where(x => x.JobNo == m.JobNo).FirstOrDefault();
-                    if(j != null)
+                    if (j != null)
                     {
                         txtFGNo.Text = j.FGNo;
                         txtFGName.Text = j.FGName;
@@ -60,6 +71,9 @@ namespace StockControl
                         txtidCstmPODt.Text = j.RefDocId.ToSt();
                         txtSPNo.Text = m.DocNo;
                         txtRemark.Text = m.Remark;
+
+                        if (!m.Active)
+                            btnDelete.Enabled = false;
                     }
                 }
             }
@@ -151,6 +165,7 @@ namespace StockControl
                                 JobNo = txtJobNo.Text.Trim(),
                                 UpdateBy = ClassLib.Classlib.User,
                                 UpdateDate = DateTime.Now,
+                                Remark = txtRemark.Text,
                             };
                             db.mh_ProductionOrder_CloseSpecials.InsertOnSubmit(m);
 
@@ -328,8 +343,16 @@ namespace StockControl
 
         private void btnListItem_Click(object sender, EventArgs e)
         {
-            ShippingCancelList a = new ShippingCancelList();
-            a.Show();
+            //ShippingCancelList a = new ShippingCancelList();
+            //a.Show();
+            var p = new ProductionOrder_CancelList(1);
+            p.ShowDialog();
+            if(p.retDoc != "")
+            {
+                ClearData();
+                txtSPNo.Text = p.retDoc;
+                DataLoad();
+            }
         }
 
         private void txtJobNo_KeyDown(object sender, KeyEventArgs e)
@@ -387,7 +410,7 @@ namespace StockControl
                         j.UpdateBy = ClassLib.Classlib.User;
                         j.UpdateDate = DateTime.Now;
                         db.SubmitChanges();
-
+                        btnDelete.Enabled = false;
                         baseClass.Info("Delete complete.\n");
                     }
                 }

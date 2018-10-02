@@ -373,14 +373,20 @@ namespace StockControl
                             {
                                 job.OutQty = 0;
                                 var rm = db.mh_ProductionOrderRMs.Where(x => x.JobNo == job.JobNo && x.OutQty < 0 && x.Active).ToList();
-                                if(rm.Count < 1)
+                                if (rm.Count > 0)
+                                { }
+                                else
+                                {
                                     job.CloseJob = true;
+                                }
                                 //รับครบ
                                 var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == item.Cells["idCstmPODt"].Value.ToInt() && x.TLQty > 0).ToList();
-                                foreach(var ss in slist)
+                                foreach (var ss in slist)
                                     ss.Free = true;
                                 db.SubmitChanges();
                             }
+                            else if (job.OutQty == 0)
+                                job.CloseJob = true;
 
                             dbClss.AddHistory("ProductionOrder", "Job Order Sheet", $"Receive by Packing No {m.PackingNo} : {dt.Qty}", job.JobNo);
                         }
