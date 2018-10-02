@@ -349,6 +349,7 @@
             this.btnExcel.Name = "btnExcel";
             this.btnExcel.Text = "รายงานประจำเดือน";
             this.btnExcel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnExcel.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
             // 
             // radRibbonBarGroup2
