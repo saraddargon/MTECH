@@ -546,6 +546,10 @@ namespace StockControl
             }
         }
 
+        private void cbbStatus_SelectedIndexChanged(object sender, Telerik.WinControls.UI.Data.PositionChangedEventArgs e)
+        {
+
+        }
     }
 
 
