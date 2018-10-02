@@ -487,7 +487,7 @@ namespace StockControl
                 //    err += "- Cannot Save because Status is 'Approved'.\n";
                 else if (txtSeqStatus.Text.ToInt() > 0)
                     err += "- Cannot Save because Status is 'Approved'.\n";
-                
+
 
 
                 if (!err.Equals(""))
@@ -544,7 +544,7 @@ namespace StockControl
                         db.mh_ProductionOrders.InsertOnSubmit(m);
                         newJob = true;
 
-                       AddHistory($"New Job Order Sheet {m.JobNo}", m.JobNo);
+                        AddHistory($"New Job Order Sheet {m.JobNo}", m.JobNo);
                     }
                     //history
                     if (!newDoc)
@@ -845,7 +845,7 @@ namespace StockControl
                 var pd = new ProductionOrder_List(2);
                 this.Cursor = Cursors.Default;
                 pd.ShowDialog();
-                if(pd.t_JobNo != "")
+                if (pd.t_JobNo != "")
                 {
                     this.t_JobNo = pd.t_JobNo;
                     DataLoad();
@@ -883,8 +883,26 @@ namespace StockControl
         {
             try
             {
-                PrintPR a = new PrintPR(txtJobNo.Text, txtJobNo.Text, "ReportProductionOrder");
-                a.ShowDialog();
+                //PrintPR a = new PrintPR(txtJobNo.Text, txtJobNo.Text, "ReportProductionOrder");
+                //a.ShowDialog();
+                string JobNo = txtJobNo.Text.Trim();
+                if (JobNo != "")
+                {
+                    Report.Reportx1.Value = new string[1];
+                    Report.Reportx1.Value[0] = JobNo;
+                    Report.Reportx1.WReport = "JOBNoList";
+                    Report.Reportx1 op = new Report.Reportx1("JobOrderSheet3.rpt");
+                    op.Show();
+                }
+                //if (dgvData.CurrentCell.RowIndex >= 0)
+                //{
+                //    string JobNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
+                //    Report.Reportx1.Value = new string[1];
+                //    Report.Reportx1.Value[0] = JobNo;
+                //    Report.Reportx1.WReport = "JOBNoList";
+                //    Report.Reportx1 op = new Report.Reportx1("JobOrderSheet3.rpt");
+                //    op.Show();
+                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -1050,7 +1068,7 @@ namespace StockControl
                         }
 
                         cbHoldJob.Checked = m.HoldJob;
-                        
+
                         if (m.HoldJob)
                         {
                             baseClass.Info("Hold Job completed.");
@@ -1144,7 +1162,7 @@ namespace StockControl
                         var CapaUse = 0.00m; //Capacity ไม่รวม WaitTime
                         CapaUseX = totalCapa_All; //เวลาการทำงานที่ถูกใช้ทั้งหมดใน Workcenter นี้
                         CapaUse = SetupTime + Math.Round(RunTime * UseQty, 2);
-                        
+
                         //หาว่า Capacity จากต้องใช้ Starting - Ending ใด โดยวนไปจนกว่า CapaUseX จะเป็น 0
                         do
                         {
@@ -1504,7 +1522,7 @@ namespace StockControl
                                 co.idRoute = c.idRoute;
                         }
                         db.SubmitChanges();
-                        
+
                         //save Cost Overhead
                         var manuTime = 1;
                         var manu = db.mh_ManufacturingSetups.FirstOrDefault();
@@ -1547,7 +1565,7 @@ namespace StockControl
             }
         }
 
-        
+
         void AddHistory(string Detail, string DocNo)
         {
             dbClss.AddHistory(this.Name, "Job Order Sheet", Detail, DocNo);

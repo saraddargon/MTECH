@@ -155,7 +155,7 @@ namespace StockControl
                         {
                             po = new mh_CustomerPO();
                             po.CustomerPONo = tempNo;
-                            po.CustomerNo = "@@@TEMP@@@";
+                            po.CustomerNo = "ForSafety";
                             po.Active = true;
                             po.CreateBy = ClassLib.Classlib.User;
                             po.CreateDate = DateTime.Now;
