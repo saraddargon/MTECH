@@ -97,7 +97,6 @@ namespace StockControl
                 Report.CRRReport.dbPass = ConnectDB.PassDb;
 
 
-
                 ////OpenSqlConnection(); //Test Connection time out
                 if (checkVr())
                 {
