@@ -211,6 +211,8 @@ namespace StockControl
         {
             //select Item for Print
             //throw new NotImplementedException();
+            var printe = new PrintPR("", "", "PackingList");
+            printe.ShowDialog();
         }
 
 

@@ -102,7 +102,7 @@ namespace StockControl
                             {
                                 addRow(item.id, item.ItemNo, item.ItemName, item.Qty, item.UOM, item.PCSUnit
                                     , item.UnitPrice, item.LotNo, item.Location, item.ShelfNo, item.Remark, item.RefNo
-                                    , item.CustomerPONo, item.CustomerPONo_TEMP, item.idJob, item.idCstmPODt);
+                                    , item.CustomerPONo, item.CustomerPONo_TEMP, item.idJob, item.idCstmPODt, "");
                             }
                             setRowNo();
 
@@ -602,9 +602,19 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                if (dgvData.Rows.Where(x => x.Cells["RefNo"].Value.ToSt().Equals(JobNo)).Count() > 0)
+                bool tagQr = false;
+                string FullTag = JobNo;
+                decimal qtyTag = 0.00m;
+                if(FullTag.Split(',').Count() > 0)
                 {
-                    baseClass.Warning($"- Job no {JobNo} is already in list.\n");
+                    List<string> t = FullTag.Split(',').ToList();
+                    JobNo = t[0];
+                    qtyTag = t[1].ToDecimal();
+                    tagQr = true;
+                }
+                if (dgvData.Rows.Where(x => x.Cells["FullTag"].Value.ToSt().Equals(FullTag)).Count() > 0)
+                {
+                    baseClass.Warning($"- Job no or QR code is already in list.\n");
                     return;
                 }
 
@@ -635,9 +645,9 @@ namespace StockControl
                         costAll += dt2.Sum(x => x.TotalCost);
                         var costPer = Math.Round(costAll / m.Qty, 2);
 
-                        addRow(0, m.FGNo, m.FGName, 0, m.UOM, m.PCSUnit, costPer
+                        addRow(0, m.FGNo, m.FGName, qtyTag, m.UOM, m.PCSUnit, costPer
                             , m.LotNo, "Warehouse", tool.ShelfNo, "", JobNo, pohd.CustomerPONo, m.RefDocNo_TEMP
-                            , m.id, m.RefDocId);
+                            , m.id, m.RefDocId, FullTag);
                         setRowNo();
                         calAmnt();
                     }
@@ -654,7 +664,7 @@ namespace StockControl
         }
         private void addRow(int id, string itemNo, string itemName, decimal qty, string uOM, decimal pCSUnit
             , decimal costPer, string lotNo, string LocationItem, string shelfNo, string Remark
-            , string jobNo, string customerPONo, string customerPONo_TEMP, int idJob, int idCstmPOdt)
+            , string jobNo, string customerPONo, string customerPONo_TEMP, int idJob, int idCstmPOdt, string FullTag)
         {
             var row = dgvData.Rows.AddNew();
             row.Cells["id"].Value = id;
@@ -674,6 +684,7 @@ namespace StockControl
             row.Cells["CustomerPONo_TEMP"].Value = customerPONo_TEMP;
             row.Cells["idJob"].Value = idJob;
             row.Cells["idCstmPOdt"].Value = idCstmPOdt;
+            row.Cells["FullTag"].Value = FullTag;
 
             //find OutQty
             using (var db = new DataClasses1DataContext())

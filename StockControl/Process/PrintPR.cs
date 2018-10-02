@@ -194,7 +194,22 @@ namespace StockControl
                 {
                     lblName.Text = "เลขที่เอกสาร";
                 }
-                
+                else if(Type == "PackingList")
+                {
+                    txtPRNo1.Visible = false;
+                    txtPRNo2.Visible = false;
+                    cbDate.Visible = false;
+                    lblName.Visible = false;
+                    cbDate.Visible = false;
+                    radLabel37.Visible = false;
+                    //lblName.Text = "เลขที่เบิกสินค้า";
+                    dtDate1.Visible = true;
+                    dtDate2.Visible = true;
+                    lblToDate.Visible = true;
+                    dtDate1.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                    dtDate2.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                    panel2.Location = new Point(panel2.Location.X, 30);
+                }
             }
         }
 
@@ -712,7 +727,15 @@ namespace StockControl
                         else
                             MessageBox.Show("not found.");
                     }
-
+                    else if (Type.Equals("PackingList"))
+                    {
+                        Report.Reportx1.Value = new string[2];
+                        Report.Reportx1.Value[0] = dtDate1.Value.Date.ToString("dd/MMM/yyyy");
+                        Report.Reportx1.Value[1] = dtDate2.Value.Date.ToString("dd/MMM/yyyy");
+                        Report.Reportx1.WReport = "PackingList";
+                        Report.Reportx1 op = new Report.Reportx1("ReceiveFG.rpt");
+                        op.Show();
+                    }
                 }
 
             }

@@ -499,17 +499,19 @@ namespace StockControl
                             decimal Qty = row.Cells["Qty"].Value.ToDecimal();
                             string printDate = DateTime.Now.ToString("ddMMyyyy");
                             int TagCount = row.Cells["TagCount"].Value.ToInt();
-                            string qr = $"{JobNo},{Qty},{printDate}";
-
-                            byte[] qrCode = dbClss.SaveQRCode2D(qr);
-
                             decimal q1 = Math.Round(Qty / TagCount, 0);
                             decimal q2 = Qty - Math.Round(q1 * (TagCount - 1), 0);
                             var temp_tagCount = TagCount;
+                            int ofTag = 0;
                             while (temp_tagCount > 0)
                             {
+                                ofTag++;
                                 rNo++;
                                 bool last = temp_tagCount == 1;
+
+                                string qr = $"{JobNo},{((last) ? q2 : q1)},{printDate},{ofTag}";
+                                byte[] qrCode = dbClss.SaveQRCode2D(qr);
+                                
                                 var m = new mh_ProductTAG
                                 {
                                     UserID = ClassLib.Classlib.User,
@@ -521,6 +523,7 @@ namespace StockControl
                                     QRCode = qrCode,
                                     Machine = "",
                                     BOMNo = "",
+                                    OFTAG = ofTag.ToSt(),
                                 };
                                 db.mh_ProductTAGs.InsertOnSubmit(m);
                                 temp_tagCount--;

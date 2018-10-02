@@ -461,6 +461,12 @@ namespace Report
                         rptDc.SetParameterValue("@Datex", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;
+                case "PackingList":
+                    {
+                        rptDc.SetParameterValue("@Date1", Convert.ToDateTime(Value[0].ToString(), new CultureInfo("en-US")));
+                        rptDc.SetParameterValue("@Date2", Convert.ToDateTime(Value[1].ToString(), new CultureInfo("en-US")));
+                    }
+                    break;
             }
         }
 
