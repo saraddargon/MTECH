@@ -564,6 +564,7 @@
             this.ddlStatus.Name = "ddlStatus";
             this.ddlStatus.Size = new System.Drawing.Size(124, 20);
             this.ddlStatus.TabIndex = 27;
+            this.ddlStatus.Text = "Waiting";
             this.ddlStatus.ThemeName = "Office2010Blue";
             // 
             // cbDate

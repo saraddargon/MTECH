@@ -62,6 +62,7 @@
             Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn2 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn10 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn11 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn12 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn20 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn21 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
@@ -614,6 +615,13 @@
             gridViewDecimalColumn11.Name = "MaximumQty";
             gridViewDecimalColumn11.ReadOnly = true;
             gridViewDecimalColumn11.Width = 98;
+            gridViewDecimalColumn12.EnableExpressionEditor = false;
+            gridViewDecimalColumn12.FieldName = "SafetyStock";
+            gridViewDecimalColumn12.FormatString = "{0:N2}";
+            gridViewDecimalColumn12.HeaderText = "Set Safety Stock";
+            gridViewDecimalColumn12.Name = "SafetyStock";
+            gridViewDecimalColumn12.ReadOnly = true;
+            gridViewDecimalColumn12.Width = 107;
             gridViewTextBoxColumn20.EnableExpressionEditor = false;
             gridViewTextBoxColumn20.FieldName = "CreateBy";
             gridViewTextBoxColumn20.HeaderText = "ผู้สร้าง";
@@ -659,6 +667,7 @@
             gridViewCheckBoxColumn2,
             gridViewDecimalColumn10,
             gridViewDecimalColumn11,
+            gridViewDecimalColumn12,
             gridViewTextBoxColumn20,
             gridViewTextBoxColumn21});
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;

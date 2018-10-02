@@ -194,6 +194,8 @@
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
+            this.radLabel31 = new Telerik.WinControls.UI.RadLabel();
+            this.txtVersion = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -283,6 +285,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel31)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtVersion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -1219,6 +1223,8 @@
             this.radGroupBox3.Controls.Add(this.radLabel22);
             this.radGroupBox3.Controls.Add(this.radLabel4);
             this.radGroupBox3.Controls.Add(this.txtPONo);
+            this.radGroupBox3.Controls.Add(this.txtVersion);
+            this.radGroupBox3.Controls.Add(this.radLabel31);
             this.radGroupBox3.Controls.Add(this.txtQuotation);
             this.radGroupBox3.Controls.Add(this.radLabel15);
             this.radGroupBox3.Controls.Add(this.radLabel29);
@@ -1235,7 +1241,7 @@
             // 
             // cbClearBill
             // 
-            this.cbClearBill.Location = new System.Drawing.Point(104, 119);
+            this.cbClearBill.Location = new System.Drawing.Point(104, 140);
             this.cbClearBill.Name = "cbClearBill";
             this.cbClearBill.Size = new System.Drawing.Size(57, 18);
             this.cbClearBill.TabIndex = 18;
@@ -1994,6 +2000,24 @@
             this.radButtonElement2.Text = "รายการ";
             this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // radLabel31
+            // 
+            this.radLabel31.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel31.Location = new System.Drawing.Point(16, 117);
+            this.radLabel31.Name = "radLabel31";
+            this.radLabel31.Size = new System.Drawing.Size(28, 17);
+            this.radLabel31.TabIndex = 14;
+            this.radLabel31.Text = "Rev.";
+            // 
+            // txtVersion
+            // 
+            this.txtVersion.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtVersion.Location = new System.Drawing.Point(104, 116);
+            this.txtVersion.MaxLength = 50;
+            this.txtVersion.Name = "txtVersion";
+            this.txtVersion.Size = new System.Drawing.Size(119, 19);
+            this.txtVersion.TabIndex = 17;
+            // 
             // CreatePO
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2108,6 +2132,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel31)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtVersion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2238,5 +2264,7 @@
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup10;
         private Telerik.WinControls.UI.RadButtonElement btnSendApprove;
         private Telerik.WinControls.UI.RadTextBox txtSeqStatus;
+        private Telerik.WinControls.UI.RadTextBox txtVersion;
+        private Telerik.WinControls.UI.RadLabel radLabel31;
     }
 }

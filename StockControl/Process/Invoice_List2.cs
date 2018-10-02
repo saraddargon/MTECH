@@ -199,10 +199,12 @@ namespace StockControl
                 if (sType == 2)
                 {
                     dgvData.EndEdit();
-                    foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
-                    {
-                        RetDT.Add(rowinfo);
-                    }
+                    //foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                    //{
+                    //    RetDT.Add(rowinfo);
+                    //}
+
+                    RetDT.Add(dgvData.CurrentRow);
 
                     this.Close();
                 }
@@ -210,14 +212,15 @@ namespace StockControl
                 {
                     dgvData.EndEdit();
                     string temp = "";
-                    foreach (var ix in dgvData.Rows)
-                    {
-                        if (dbClss.TBo(ix.Cells["S"].Value))
-                        {
-                            temp = dbClss.TSt(ix.Cells["IVNo"].Value);
-                            break;
-                        }
-                    }
+                    temp = dbClss.TSt(dgvData.CurrentRow.Cells["IVNo"].Value);
+                    //foreach (var ix in dgvData.Rows)
+                    //{
+                    //    if (dbClss.TBo(ix.Cells["S"].Value))
+                    //    {
+                    //        temp = dbClss.TSt(ix.Cells["IVNo"].Value);
+                    //        break;
+                    //    }
+                    //}
                     if (temp != "")
                     {
                         Invoice_2 a = new Invoice_2(temp);

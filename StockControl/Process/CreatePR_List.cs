@@ -51,11 +51,18 @@ namespace StockControl
         }
         private void Unit_Load(object sender, EventArgs e)
         {
-            dtDateFrom.Value = DateTime.Now;
-            dtDateTo.Value = DateTime.Now;
+            DateTime dd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            dd = (dd.DayOfWeek == DayOfWeek.Sunday) ? dd.AddDays(1) : (dd.DayOfWeek == DayOfWeek.Saturday) ? dd.AddDays(2) : dd;
+
+            DateTime today = DateTime.Today;
+            DateTime endOfMonth = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
+
+            dtDateFrom.Value = dd;
+            dtDateTo.Value = endOfMonth;
             Set_dt_Print();
             //radGridView1.ReadOnly = true;
             radGridView1.AutoGenerateColumns = false;
+            ddlStatus.Text = "Waiting";
             DataLoad();
             //LoadRunning();
         }

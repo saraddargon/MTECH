@@ -87,7 +87,8 @@ namespace StockControl
             dt_POHD.Columns.Add(new DataColumn("id", typeof(int)));
             dt_POHD.Columns.Add(new DataColumn("VATGroup", typeof(string)));
             dt_POHD.Columns.Add(new DataColumn("VATType", typeof(string)));
-
+            dt_POHD.Columns.Add(new DataColumn("Version", typeof(string)));
+            
             dt_PODT.Columns.Add(new DataColumn("id", typeof(string)));
             dt_PODT.Columns.Add(new DataColumn("TempPNo", typeof(string)));
             dt_PODT.Columns.Add(new DataColumn("PONo", typeof(string)));
@@ -356,6 +357,7 @@ namespace StockControl
                         lbOrderSubtotal.Text = StockControl.dbClss.TDe(g.FirstOrDefault().Total).ToString("##,###,##0.00");
                         txtVat.Text = StockControl.dbClss.TDe(g.FirstOrDefault().vat).ToString("##,###,##0.00");
                         txtSeqStatus.Text = dbClss.TInt(g.FirstOrDefault().SeqStatus).ToSt();
+                        txtVersion.Text = dbClss.TSt(g.FirstOrDefault().Version);
 
                         cbvatDetail.Checked = StockControl.dbClss.TBo(g.FirstOrDefault().VatDetail);
                         if (StockControl.dbClss.TDe(txtVat.Text) > 0)
@@ -675,6 +677,12 @@ namespace StockControl
                             gg.Email = txtEmail.Text.Trim();
                             dbClss.AddHistory(this.Name , "แก้ไข CreatePO", "แก้ไขอีเมลล์ [" + txtEmail.Text.Trim() + "]", txtPONo.Text);
                         }
+                        if (!txtVersion.Text.Trim().Equals(row["Version"].ToString()))
+                        {
+                            gg.Version = dbClss.TSt(txtVersion.Text);
+                            dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไข Rev. [" + txtVersion.Text.Trim() + "]", txtPONo.Text);
+                        }
+
                         //if (!txtVat.Text.Trim().Equals(row["vat"].ToString()))
                         //{
                         //    gg.vat = StockControl.dbClss.TDe(txtVat.Text);
@@ -720,6 +728,7 @@ namespace StockControl
                         gg.GrandTotal = StockControl.dbClss.TDe(lbTotalOrder.Text);
                         gg.Usefixunit = StockControl.dbClss.TBo(cbUsefixunit.Checked);
                         gg.CHStatus = "Waiting";
+                        
 
                         if (!dtDuedate.Text.Trim().Equals(""))
                         {
@@ -793,7 +802,8 @@ namespace StockControl
                     gg.Discpct = StockControl.dbClss.TDe(txtLessPoDiscountAmountPersen.Text);                    
                     gg.VatTax = StockControl.dbClss.TDe(txtVattax.Text);
                     gg.Usefixunit = StockControl.dbClss.TBo(cbUsefixunit.Checked);
-                    
+                    gg.Version = dbClss.TSt(txtVersion.Text);
+
                     DateTime? Duedate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     if (!dtDuedate.Text.Equals(""))
                         Duedate = dtDuedate.Value;
@@ -1112,6 +1122,7 @@ namespace StockControl
                 cbvat.Enabled = ss;
                 cbvatDetail.Enabled = ss;
                 txtVattax.Enabled = ss;
+                txtVersion.Enabled = ss;
             }
             else if (Condition.Equals("View"))
             {
@@ -1139,6 +1150,7 @@ namespace StockControl
                 cbvat.Enabled = ss;
                 cbvatDetail.Enabled = ss;
                 txtVattax.Enabled = ss;
+                txtVersion.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
@@ -1166,6 +1178,7 @@ namespace StockControl
                 cbvat.Enabled = ss;
                 cbvatDetail.Enabled = ss;
                 txtVattax.Enabled = ss;
+                txtVersion.Enabled = ss;
             }
         }
        
@@ -1204,6 +1217,7 @@ namespace StockControl
             cboVatGroup.Text = "";
             cbvatDetail.Checked = false;
             txtQuotation.Text = "";
+            txtVersion.Text = "";
 
             dt_POHD.Rows.Clear();
             dt_PODT.Rows.Clear();
