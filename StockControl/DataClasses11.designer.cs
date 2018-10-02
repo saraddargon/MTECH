@@ -366,6 +366,9 @@ namespace StockControl
     partial void Insertmh_Item(mh_Item instance);
     partial void Updatemh_Item(mh_Item instance);
     partial void Deletemh_Item(mh_Item instance);
+    partial void Insertmh_ProductionOrder_CloseSpecial(mh_ProductionOrder_CloseSpecial instance);
+    partial void Updatemh_ProductionOrder_CloseSpecial(mh_ProductionOrder_CloseSpecial instance);
+    partial void Deletemh_ProductionOrder_CloseSpecial(mh_ProductionOrder_CloseSpecial instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -1323,6 +1326,14 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<mh_Item>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_ProductionOrder_CloseSpecial> mh_ProductionOrder_CloseSpecials
+		{
+			get
+			{
+				return this.GetTable<mh_ProductionOrder_CloseSpecial>();
 			}
 		}
 		
@@ -46597,6 +46608,284 @@ namespace StockControl
 					this._StandardPrice = value;
 					this.SendPropertyChanged("StandardPrice");
 					this.OnStandardPriceChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_ProductionOrder_CloseSpecial")]
+	public partial class mh_ProductionOrder_CloseSpecial : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _DocNo;
+		
+		private string _JobNo;
+		
+		private int _idCSTMPOdt;
+		
+		private string _Remark;
+		
+		private bool _Active;
+		
+		private System.DateTime _CreateDate;
+		
+		private string _CreateBy;
+		
+		private System.DateTime _UpdateDate;
+		
+		private string _UpdateBy;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnDocNoChanging(string value);
+    partial void OnDocNoChanged();
+    partial void OnJobNoChanging(string value);
+    partial void OnJobNoChanged();
+    partial void OnidCSTMPOdtChanging(int value);
+    partial void OnidCSTMPOdtChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
+    partial void OnCreateByChanging(string value);
+    partial void OnCreateByChanged();
+    partial void OnUpdateDateChanging(System.DateTime value);
+    partial void OnUpdateDateChanged();
+    partial void OnUpdateByChanging(string value);
+    partial void OnUpdateByChanged();
+    #endregion
+		
+		public mh_ProductionOrder_CloseSpecial()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNo", DbType="NVarChar(50)")]
+		public string DocNo
+		{
+			get
+			{
+				return this._DocNo;
+			}
+			set
+			{
+				if ((this._DocNo != value))
+				{
+					this.OnDocNoChanging(value);
+					this.SendPropertyChanging();
+					this._DocNo = value;
+					this.SendPropertyChanged("DocNo");
+					this.OnDocNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobNo", DbType="NVarChar(50)")]
+		public string JobNo
+		{
+			get
+			{
+				return this._JobNo;
+			}
+			set
+			{
+				if ((this._JobNo != value))
+				{
+					this.OnJobNoChanging(value);
+					this.SendPropertyChanging();
+					this._JobNo = value;
+					this.SendPropertyChanged("JobNo");
+					this.OnJobNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCSTMPOdt", DbType="Int NOT NULL")]
+		public int idCSTMPOdt
+		{
+			get
+			{
+				return this._idCSTMPOdt;
+			}
+			set
+			{
+				if ((this._idCSTMPOdt != value))
+				{
+					this.OnidCSTMPOdtChanging(value);
+					this.SendPropertyChanging();
+					this._idCSTMPOdt = value;
+					this.SendPropertyChanged("idCSTMPOdt");
+					this.OnidCSTMPOdtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="NVarChar(500)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(50)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this.OnCreateByChanging(value);
+					this.SendPropertyChanging();
+					this._CreateBy = value;
+					this.SendPropertyChanged("CreateBy");
+					this.OnCreateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime UpdateDate
+		{
+			get
+			{
+				return this._UpdateDate;
+			}
+			set
+			{
+				if ((this._UpdateDate != value))
+				{
+					this.OnUpdateDateChanging(value);
+					this.SendPropertyChanging();
+					this._UpdateDate = value;
+					this.SendPropertyChanged("UpdateDate");
+					this.OnUpdateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="NVarChar(50)")]
+		public string UpdateBy
+		{
+			get
+			{
+				return this._UpdateBy;
+			}
+			set
+			{
+				if ((this._UpdateBy != value))
+				{
+					this.OnUpdateByChanging(value);
+					this.SendPropertyChanging();
+					this._UpdateBy = value;
+					this.SendPropertyChanged("UpdateBy");
+					this.OnUpdateByChanged();
 				}
 			}
 		}

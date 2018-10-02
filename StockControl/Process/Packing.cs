@@ -372,7 +372,9 @@ namespace StockControl
                             if (job.OutQty < 0)
                             {
                                 job.OutQty = 0;
-                                job.CloseJob = true;
+                                var rm = db.mh_ProductionOrderRMs.Where(x => x.JobNo == job.JobNo && x.OutQty < 0 && x.Active).ToList();
+                                if(rm.Count < 1)
+                                    job.CloseJob = true;
                                 //รับครบ
                                 var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == item.Cells["idCstmPODt"].Value.ToInt() && x.TLQty > 0).ToList();
                                 foreach(var ss in slist)
