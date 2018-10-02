@@ -20,7 +20,11 @@ namespace StockControl
         {
             InitializeComponent();
         }
-
+        public AdjustStock_Taking(string ADNo)
+        {
+            InitializeComponent();
+            ADNo_tt = ADNo;
+        }
         public AdjustStock_Taking(string ADNo, string CodeNo,string Screen)
         {
             InitializeComponent();

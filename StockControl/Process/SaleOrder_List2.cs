@@ -369,9 +369,7 @@ namespace StockControl
                         t = 1;
                         MessageBox.Show("สถานะบางรายการไม่สามารถ สร้างรายการเบิกได้");
                         break;
-                    }
-
-                   
+                    }                   
                 }
                 if (t == 1)
                     return;
