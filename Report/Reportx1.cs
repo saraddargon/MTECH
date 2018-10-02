@@ -435,7 +435,13 @@ namespace Report
                         rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;
-
+                case "ReportAccidentSlip":
+                    {
+                        rptDc.SetParameterValue("@ShippingNo1", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@ShippingNo2", Convert.ToString(Value[1].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
 
 
             }
