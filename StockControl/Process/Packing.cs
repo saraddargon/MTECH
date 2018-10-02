@@ -52,10 +52,14 @@ namespace StockControl
 
                 DefaultItem();
 
-                if (pk != null)
+                if (pk != "")
                 {
                     txtPackingNo.Text = pk;
                     DataLoad();
+                }
+                else
+                {
+                    txtPackingNo.Text = dbClss.GetNo(32, 0);
                 }
 
 
