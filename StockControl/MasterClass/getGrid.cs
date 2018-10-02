@@ -294,6 +294,8 @@ namespace StockControl
             {
                 var t = db.mh_Items.Where(x => x.InternalNo == this.ItemNo).FirstOrDefault();
                 if (t == null) return;
+                if (ItemNo == "MET-T-001")
+                { }
 
                 this.ItemName = t.InternalName;
                 this.ReorderType = baseClass.getReorderType(t.ReorderType);
@@ -342,8 +344,6 @@ namespace StockControl
                 else this.PCSUnit_PurchaseUOM = 1;
                 this.StandardCost = t.StandardCost;
 
-                if (this.ItemNo == "MET-T-001")
-                { }
                 //**Stock Customer P/O --> BackOrder Q'ty for Customer P/O, Receive stock Q'ty for Customer P/O
                 //find Received stock Q'ty for Customer P/O idDt ,,, reserve or not reserve(if job closed)
                 var st = db.tb_Stocks.Where(x => x.CodeNo == this.ItemNo
@@ -475,6 +475,8 @@ namespace StockControl
                     }
                 }
 
+                if (this.ItemNo == "TBK-T-0001")
+                { }
                 var m = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1)
                     .Join(db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && x.genPR
                         && x.ItemNo == this.ItemNo && x.OutQty > 0)
