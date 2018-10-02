@@ -137,6 +137,8 @@ namespace StockControl
                         txtCreateDate.Text = t.CreateDate.ToDtString();
                         txtCreateBy.Text = t.CreateBy;
 
+                        
+
                         dgvData.Rows.Clear();
                         var dt = db.mh_SaleOrderDTs.Where(x => x.Active && x.SONo == t_SONo).ToList();
                         if (dt.Count>0)
@@ -149,8 +151,13 @@ namespace StockControl
                         CallTotal();
 
                         btnView_Click(null, null);
-
-                        lblStatus.Text = t.Status.ToSt();
+                        
+                        if(t.Status.ToSt()=="Waiting" && dbClss.TInt(t.SeqStatus)==0)
+                        {
+                            lblStatus.Text = "Waiting Approve";
+                        }                        
+                        else
+                            lblStatus.Text = t.Status.ToSt();
                     }
                     else if (warningMssg)
                         baseClass.Warning("Sale Order not found.!!");
