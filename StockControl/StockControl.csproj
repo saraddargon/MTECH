@@ -139,12 +139,6 @@
     </Compile>
     <Compile Include="MasterClass\baseClass.cs" />
     <Compile Include="MasterClass\getGrid.cs" />
-    <Compile Include="Process\AdjustStock_Taking_Card.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\AdjustStock_Taking_Card.Designer.cs">
-      <DependentUpon>AdjustStock_Taking_Card.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\About.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,6 +150,12 @@
     </Compile>
     <Compile Include="Process\AdjustStock_Taking_List.Designer.cs">
       <DependentUpon>AdjustStock_Taking_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\AdjustStock_Taking_Card_2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\AdjustStock_Taking_Card_2.Designer.cs">
+      <DependentUpon>AdjustStock_Taking_Card_2.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\CustomerPOSummary.cs">
       <SubType>Form</SubType>
@@ -1136,14 +1136,14 @@
     <EmbeddedResource Include="Main\Mainfrom.resx">
       <DependentUpon>Mainfrom.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\AdjustStock_Taking_Card.resx">
-      <DependentUpon>AdjustStock_Taking_Card.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\AdjustStock_Taking_List.resx">
       <DependentUpon>AdjustStock_Taking_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\AdjustStock_Taking_Card_2.resx">
+      <DependentUpon>AdjustStock_Taking_Card_2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CustomerPOSummary.resx">
       <DependentUpon>CustomerPOSummary.cs</DependentUpon>

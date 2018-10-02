@@ -137,27 +137,119 @@ namespace StockControl
                         txtCreateDate.Text = t.CreateDate.ToDtString();
                         txtCreateBy.Text = t.CreateBy;
 
-                        
 
+                        int SS_ = 0;
+                        //1 Waiting
+                        //2 Process
+                        //3 Completed
+                        //4 Waiting Approve
                         dgvData.Rows.Clear();
                         var dt = db.mh_SaleOrderDTs.Where(x => x.Active && x.SONo == t_SONo).ToList();
                         if (dt.Count>0)
                         {
                             dgvData.DataSource = dt;
+
+                            foreach (var gg in dt)
+                            {
+                                if (t.Status.ToSt() == "Waiting" && dbClss.TInt(t.SeqStatus) == 0)
+                                {
+                                    SS_ = 1;
+                                }
+                                else if(dbClss.TInt(t.SeqStatus) == 1)
+                                {
+                                    SS_ = 4;
+                                }
+                                else if (dbClss.TDe(gg.OutShip) == dbClss.TDe(gg.Qty)
+                                    && dbClss.TSt(t.SendApproveBy) == "")
+                                {
+                                    SS_ = 4;
+                                }
+                                else if (dbClss.TDe(gg.OutShip) == dbClss.TDe(gg.Qty)
+                                    && dbClss.TInt(t.SeqStatus) == 2)
+                                {
+                                    SS_ = 2;
+                                    break;
+                                }
+                                else if (dbClss.TDe(gg.OutShip) == 0)                                    
+                                {
+                                    SS_ = 3;
+                                    break;
+                                }
+                            }
                         }
-
-
-                            SetRowNo1(dgvData);
+                        SetRowNo1(dgvData);
                         CallTotal();
 
                         btnView_Click(null, null);
-                        
-                        if(t.Status.ToSt()=="Waiting" && dbClss.TInt(t.SeqStatus)==0)
+                        lblStatus.Text = t.Status.ToSt();
+
+                        if (SS_ == 3 || lblStatus.Text == "Partial" || lblStatus.Text == "Completed")
+                        {
+                            radButtonElement3.Enabled = false;
+                            btnDelete.Enabled = false;
+                            btnEdit.Enabled = false;
+                            btnView.Enabled = false;
+                            btnSave.Enabled = false;
+                            btnNew.Enabled = true;
+                            radButton2.Enabled = false;
+                            btnAddPart.Enabled = false;
+                            btnDel_Item.Enabled = false;
+                            if (SS_ == 3 || lblStatus.Text == "Completed")
+                                lblStatus.Text = "Completed";
+                            else
+                                lblStatus.Text = "Partial";
+                        }
+                        else if (SS_ == 2)
+                        {
+                            radButtonElement3.Enabled = false;
+                            btnDelete.Enabled = false;
+                            btnEdit.Enabled = false;
+                            btnView.Enabled = false;
+                            btnSave.Enabled = false;
+                            btnNew.Enabled = true;
+                            radButton2.Enabled = false;
+                            btnAddPart.Enabled = false;
+                            btnDel_Item.Enabled = false;
+                            lblStatus.Text = "Process";
+                        }
+                        else if (SS_ == 4)
                         {
                             lblStatus.Text = "Waiting Approve";
-                        }                        
+                        }
+                        else if (lblStatus.Text == "Reject")
+                        {
+                            radButtonElement3.Enabled = false;
+                        }
                         else
-                            lblStatus.Text = t.Status.ToSt();
+                            lblStatus.Text = "Waiting";
+
+
+                        //if (t.Status.ToSt()=="Waiting" && dbClss.TInt(t.SeqStatus)==0)
+                        //{
+                        //    lblStatus.Text = "Waiting Approve";
+                        //}                       
+                        //else if (lblStatus.Text == "Waiting Approve")
+                        //{
+
+                            //}
+                            //else if (lblStatus.Text == "Reject")
+                            //{
+                            //    radButtonElement3.Enabled = false;                           
+                            //}                       
+                            //else if (lblStatus.Text == "Partial" || lblStatus.Text == "Completed")
+                            //{
+                            //    radButtonElement3.Enabled = false;
+                            //    btnDelete.Enabled = false;
+                            //    btnEdit.Enabled = false;
+                            //    btnView.Enabled = false;
+                            //    btnSave.Enabled = false;
+                            //    btnNew.Enabled = true;
+                            //    radButton2.Enabled = false;
+                            //    btnAddPart.Enabled = false;
+                            //    btnDel_Item.Enabled = false;
+                            //}
+                            //else
+                            //    lblStatus.Text = t.Status.ToSt();
                     }
                     else if (warningMssg)
                         baseClass.Warning("Sale Order not found.!!");
@@ -1107,7 +1199,7 @@ namespace StockControl
                 if (cbVat.Checked)
                     vat = amnt * Math.Round(vatA / 100, 2);
                 txtVatAmnt.Value = vat;
-                txtGrandTotal.Value = amnt + vat;
+                txtGrandTotal.Value = amnt + vatA;
             }
             catch (Exception ex) { MessageBox.Show("err2: " + ex.Message); }
         }
@@ -1318,7 +1410,7 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    if (lblStatus.Text == "Waiting Approve")
+                    if (lblStatus.Text == "Waiting" || lblStatus.Text == "Waiting Approve")
                     {
                         if (baseClass.IsSendApprove())
                         {

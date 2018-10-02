@@ -29,34 +29,63 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn109 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn110 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn111 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn112 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn64 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn65 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject37 = new Telerik.WinControls.UI.ConditionalFormattingObject();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn66 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject38 = new Telerik.WinControls.UI.ConditionalFormattingObject();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn67 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn19 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn68 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn69 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject39 = new Telerik.WinControls.UI.ConditionalFormattingObject();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn70 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn113 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn114 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn115 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn10 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
+            Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn20 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
+            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject40 = new Telerik.WinControls.UI.ConditionalFormattingObject();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn116 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn117 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn118 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn119 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn120 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition10 = new Telerik.WinControls.UI.TableViewDefinition();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdjustStock_Taking));
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject1 = new Telerik.WinControls.UI.ConditionalFormattingObject();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn3 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject2 = new Telerik.WinControls.UI.ConditionalFormattingObject();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn4 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn1 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn5 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn6 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject3 = new Telerik.WinControls.UI.ConditionalFormattingObject();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn7 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn5 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn6 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
-            Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn2 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
-            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject4 = new Telerik.WinControls.UI.ConditionalFormattingObject();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn8 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn9 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn10 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn11 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn12 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
+            this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
+            this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.dgvData = new Telerik.WinControls.UI.RadGridView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnDel_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.radPanel2 = new Telerik.WinControls.UI.RadPanel();
+            this.txtCreateDate = new Telerik.WinControls.UI.RadTextBox();
+            this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
+            this.txtCreateBy = new Telerik.WinControls.UI.RadTextBox();
+            this.radLabel8 = new Telerik.WinControls.UI.RadLabel();
+            this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
+            this.radGroupBox1 = new Telerik.WinControls.UI.RadGroupBox();
+            this.lblStatus = new Telerik.WinControls.UI.RadLabel();
+            this.dtRequire = new Telerik.WinControls.UI.RadDateTimePicker();
+            this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel7 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
+            this.txtADNo = new Telerik.WinControls.UI.RadTextBox();
+            this.txtRemark = new Telerik.WinControls.UI.RadTextBox();
+            this.txtAdjustBy = new Telerik.WinControls.UI.RadTextBox();
+            this.txtCodeNo = new Telerik.WinControls.UI.RadTextBox();
+            this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
+            this.radRibbonBarButtonGroup2 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.btnAdd_Item = new Telerik.WinControls.UI.RadButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -78,38 +107,9 @@
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
-            this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
-            this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.dgvData = new Telerik.WinControls.UI.RadGridView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnDel_Item = new System.Windows.Forms.ToolStripMenuItem();
-            this.radPanel2 = new Telerik.WinControls.UI.RadPanel();
-            this.txtCreateDate = new Telerik.WinControls.UI.RadTextBox();
-            this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
-            this.txtCreateBy = new Telerik.WinControls.UI.RadTextBox();
-            this.radLabel8 = new Telerik.WinControls.UI.RadLabel();
-            this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
-            this.btnAdd_Item = new Telerik.WinControls.UI.RadButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.radGroupBox1 = new Telerik.WinControls.UI.RadGroupBox();
-            this.lblStatus = new Telerik.WinControls.UI.RadLabel();
-            this.dtRequire = new Telerik.WinControls.UI.RadDateTimePicker();
-            this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel7 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
-            this.txtADNo = new Telerik.WinControls.UI.RadTextBox();
-            this.txtRemark = new Telerik.WinControls.UI.RadTextBox();
-            this.txtAdjustBy = new Telerik.WinControls.UI.RadTextBox();
-            this.txtCodeNo = new Telerik.WinControls.UI.RadTextBox();
-            this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
-            this.radRibbonBarButtonGroup2 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
+            this.radButtonElement3 = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -123,8 +123,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             this.radPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnAdd_Item)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).BeginInit();
             this.radGroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).BeginInit();
@@ -138,213 +136,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAdjustBy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCodeNo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAdd_Item)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
-            // 
-            // radRibbonBar1
-            // 
-            this.radRibbonBar1.CommandTabs.AddRange(new Telerik.WinControls.RadItem[] {
-            this.ribbonTab1});
-            // 
-            // 
-            // 
-            this.radRibbonBar1.ExitButton.Text = "Exit";
-            this.radRibbonBar1.ExitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.radRibbonBar1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radRibbonBar1.Location = new System.Drawing.Point(0, 0);
-            this.radRibbonBar1.Name = "radRibbonBar1";
-            // 
-            // 
-            // 
-            this.radRibbonBar1.OptionsButton.Text = "Options";
-            this.radRibbonBar1.OptionsButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.radRibbonBar1.OptionsButton.Visibility = Telerik.WinControls.ElementVisibility.Hidden;
-            // 
-            // 
-            // 
-            this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(901, 160);
-            this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
-            this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radMenuItem1,
-            this.radMenuSeparatorItem1,
-            this.radMenuItem2});
-            this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "AdjustStock (ปรับปรุงจำนวน-สินค้า)";
-            this.radRibbonBar1.ThemeName = "Office2010Blue";
-            this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
-            // 
-            // ribbonTab1
-            // 
-            this.ribbonTab1.IsSelected = true;
-            this.ribbonTab1.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radRibbonBarGroup1,
-            this.radRibbonBarGroup3,
-            this.radRibbonBarGroup5,
-            this.radRibbonBarGroup4,
-            this.radRibbonBarGroup2,
-            this.radRibbonBarGroup6});
-            this.ribbonTab1.Name = "ribbonTab1";
-            this.ribbonTab1.Text = "Action";
-            this.ribbonTab1.UseMnemonic = false;
-            // 
-            // radRibbonBarGroup1
-            // 
-            this.radRibbonBarGroup1.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnNew,
-            this.btnSave});
-            this.radRibbonBarGroup1.Name = "radRibbonBarGroup1";
-            this.radRibbonBarGroup1.Text = "New List";
-            // 
-            // btnNew
-            // 
-            this.btnNew.Image = ((System.Drawing.Image)(resources.GetObject("btnNew.Image")));
-            this.btnNew.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnNew.Name = "btnNew";
-            this.btnNew.Text = "เพิ่มใหม่";
-            this.btnNew.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
-            this.btnSave.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Text = "บันทึกรายการ";
-            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // radRibbonBarGroup3
-            // 
-            this.radRibbonBarGroup3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(135)))), ((int)(((byte)(135)))));
-            this.radRibbonBarGroup3.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnRefresh});
-            this.radRibbonBarGroup3.Name = "radRibbonBarGroup3";
-            this.radRibbonBarGroup3.Text = "Page";
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(6)))), ((int)(((byte)(197)))));
-            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
-            this.btnRefresh.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Text = "รีเฟรช";
-            this.btnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnRefresh.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // radRibbonBarGroup5
-            // 
-            this.radRibbonBarGroup5.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBarGroup5.FitToSizeMode = Telerik.WinControls.RadFitToSizeMode.FitToParentContent;
-            this.radRibbonBarGroup5.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radRibbonBarButtonGroup3});
-            this.radRibbonBarGroup5.Name = "radRibbonBarGroup5";
-            this.radRibbonBarGroup5.Text = "Filter";
-            // 
-            // radRibbonBarButtonGroup3
-            // 
-            this.radRibbonBarButtonGroup3.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnFilter1,
-            this.btnUnfilter1,
-            this.ribbonBarGroupSeparator1});
-            this.radRibbonBarButtonGroup3.Name = "radRibbonBarButtonGroup3";
-            this.radRibbonBarButtonGroup3.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.radRibbonBarButtonGroup3.Padding = new System.Windows.Forms.Padding(1);
-            this.radRibbonBarButtonGroup3.ShowBackColor = false;
-            this.radRibbonBarButtonGroup3.ShowBorder = false;
-            this.radRibbonBarButtonGroup3.Text = "radRibbonBarButtonGroup3";
-            // 
-            // btnFilter1
-            // 
-            this.btnFilter1.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter1.Image")));
-            this.btnFilter1.Name = "btnFilter1";
-            this.btnFilter1.ShowBorder = false;
-            this.btnFilter1.Text = "กรอง";
-            this.btnFilter1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnFilter1.Click += new System.EventHandler(this.btnFilter1_Click);
-            // 
-            // btnUnfilter1
-            // 
-            this.btnUnfilter1.Image = ((System.Drawing.Image)(resources.GetObject("btnUnfilter1.Image")));
-            this.btnUnfilter1.Name = "btnUnfilter1";
-            this.btnUnfilter1.ShowBorder = false;
-            this.btnUnfilter1.Text = "ยกเลิก";
-            this.btnUnfilter1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnUnfilter1.Click += new System.EventHandler(this.btnUnfilter1_Click);
-            // 
-            // ribbonBarGroupSeparator1
-            // 
-            this.ribbonBarGroupSeparator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ribbonBarGroupSeparator1.Name = "ribbonBarGroupSeparator1";
-            this.ribbonBarGroupSeparator1.Text = "ribbonBarGroupSeparator1";
-            // 
-            // radRibbonBarGroup4
-            // 
-            this.radRibbonBarGroup4.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radButtonElement1});
-            this.radRibbonBarGroup4.Name = "radRibbonBarGroup4";
-            this.radRibbonBarGroup4.Text = "Print Document";
-            // 
-            // radButtonElement1
-            // 
-            this.radButtonElement1.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement1.Image")));
-            this.radButtonElement1.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radButtonElement1.Name = "radButtonElement1";
-            this.radButtonElement1.Text = "พิมพ์รายงาน";
-            this.radButtonElement1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.radButtonElement1.Click += new System.EventHandler(this.radButtonElement1_Click);
-            // 
-            // radRibbonBarGroup2
-            // 
-            this.radRibbonBarGroup2.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnListitem});
-            this.radRibbonBarGroup2.Name = "radRibbonBarGroup2";
-            this.radRibbonBarGroup2.Text = "List item";
-            // 
-            // btnListitem
-            // 
-            this.btnListitem.Image = ((System.Drawing.Image)(resources.GetObject("btnListitem.Image")));
-            this.btnListitem.ImageAlignment = System.Drawing.ContentAlignment.TopCenter;
-            this.btnListitem.Name = "btnListitem";
-            this.btnListitem.Text = "รายการ";
-            this.btnListitem.TextAlignment = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnListitem.Click += new System.EventHandler(this.btnListitem_Click);
-            // 
-            // radRibbonBarGroup6
-            // 
-            this.radRibbonBarGroup6.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radButtonElement2});
-            this.radRibbonBarGroup6.Name = "radRibbonBarGroup6";
-            this.radRibbonBarGroup6.Text = "Get List";
-            // 
-            // radButtonElement2
-            // 
-            this.radButtonElement2.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement2.Image")));
-            this.radButtonElement2.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radButtonElement2.Name = "radButtonElement2";
-            this.radButtonElement2.Text = "รายงานทูลทั้งหมด";
-            this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.radButtonElement2.Click += new System.EventHandler(this.radButtonElement2_Click);
-            // 
-            // radMenuItem1
-            // 
-            this.radMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem1.Image")));
-            this.radMenuItem1.Name = "radMenuItem1";
-            this.radMenuItem1.Text = "Exit";
-            this.radMenuItem1.Click += new System.EventHandler(this.radMenuItem1_Click);
-            // 
-            // radMenuSeparatorItem1
-            // 
-            this.radMenuSeparatorItem1.Name = "radMenuSeparatorItem1";
-            this.radMenuSeparatorItem1.Text = "radMenuSeparatorItem1";
-            this.radMenuSeparatorItem1.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // radMenuItem2
-            // 
-            this.radMenuItem2.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem2.Image")));
-            this.radMenuItem2.Name = "radMenuItem2";
-            this.radMenuItem2.Text = "History View";
-            this.radMenuItem2.Click += new System.EventHandler(this.radMenuItem2_Click);
             // 
             // radStatusStrip1
             // 
@@ -398,219 +194,219 @@
             this.dgvData.MasterTemplate.AllowDragToGroup = false;
             this.dgvData.MasterTemplate.AllowRowResize = false;
             this.dgvData.MasterTemplate.AutoGenerateColumns = false;
-            gridViewTextBoxColumn1.EnableExpressionEditor = false;
-            gridViewTextBoxColumn1.HeaderText = "ลำดับ";
-            gridViewTextBoxColumn1.Name = "dgvNo";
-            gridViewTextBoxColumn1.Width = 45;
-            gridViewTextBoxColumn2.EnableExpressionEditor = false;
-            gridViewTextBoxColumn2.FieldName = "CodeNo";
-            gridViewTextBoxColumn2.HeaderText = "รหัสทูล";
-            gridViewTextBoxColumn2.Name = "CodeNo";
-            gridViewTextBoxColumn2.ReadOnly = true;
-            gridViewTextBoxColumn2.Width = 82;
-            gridViewTextBoxColumn3.EnableExpressionEditor = false;
-            gridViewTextBoxColumn3.FieldName = "ItemNo";
-            gridViewTextBoxColumn3.HeaderText = "ชื่อทูล";
-            gridViewTextBoxColumn3.Name = "ItemNo";
-            gridViewTextBoxColumn3.ReadOnly = true;
-            gridViewTextBoxColumn3.Width = 120;
-            gridViewTextBoxColumn4.EnableExpressionEditor = false;
-            gridViewTextBoxColumn4.FieldName = "ItemDescription";
-            gridViewTextBoxColumn4.HeaderText = "รายละเอียดทูล";
-            gridViewTextBoxColumn4.Name = "ItemDescription";
-            gridViewTextBoxColumn4.ReadOnly = true;
-            gridViewTextBoxColumn4.Width = 217;
-            gridViewDecimalColumn1.EnableExpressionEditor = false;
-            gridViewDecimalColumn1.FieldName = "StockQty";
-            gridViewDecimalColumn1.FormatString = "{0:N2}";
-            gridViewDecimalColumn1.HeaderText = "จำนวนคงเหลือ";
-            gridViewDecimalColumn1.Name = "StockQty";
-            gridViewDecimalColumn1.ReadOnly = true;
-            gridViewDecimalColumn1.Width = 86;
-            conditionalFormattingObject1.CellBackColor = System.Drawing.Color.LightCyan;
-            conditionalFormattingObject1.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject1.CellForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject1.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
-            conditionalFormattingObject1.Name = "NewCondition";
-            conditionalFormattingObject1.RowBackColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject1.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject1.RowForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject1.TValue1 = "\'\'";
-            gridViewDecimalColumn2.ConditionalFormattingObjectList.Add(conditionalFormattingObject1);
-            gridViewDecimalColumn2.EnableExpressionEditor = false;
-            gridViewDecimalColumn2.FieldName = "CompareQty";
-            gridViewDecimalColumn2.FormatString = "{0:N2}";
-            gridViewDecimalColumn2.HeaderText = "จำนวนทีนับได้";
-            gridViewDecimalColumn2.Minimum = new decimal(new int[] {
+            gridViewTextBoxColumn109.EnableExpressionEditor = false;
+            gridViewTextBoxColumn109.HeaderText = "ลำดับ";
+            gridViewTextBoxColumn109.Name = "dgvNo";
+            gridViewTextBoxColumn109.Width = 45;
+            gridViewTextBoxColumn110.EnableExpressionEditor = false;
+            gridViewTextBoxColumn110.FieldName = "CodeNo";
+            gridViewTextBoxColumn110.HeaderText = "รหัสทูล";
+            gridViewTextBoxColumn110.Name = "CodeNo";
+            gridViewTextBoxColumn110.ReadOnly = true;
+            gridViewTextBoxColumn110.Width = 82;
+            gridViewTextBoxColumn111.EnableExpressionEditor = false;
+            gridViewTextBoxColumn111.FieldName = "ItemNo";
+            gridViewTextBoxColumn111.HeaderText = "ชื่อทูล";
+            gridViewTextBoxColumn111.Name = "ItemNo";
+            gridViewTextBoxColumn111.ReadOnly = true;
+            gridViewTextBoxColumn111.Width = 120;
+            gridViewTextBoxColumn112.EnableExpressionEditor = false;
+            gridViewTextBoxColumn112.FieldName = "ItemDescription";
+            gridViewTextBoxColumn112.HeaderText = "รายละเอียดทูล";
+            gridViewTextBoxColumn112.Name = "ItemDescription";
+            gridViewTextBoxColumn112.ReadOnly = true;
+            gridViewTextBoxColumn112.Width = 217;
+            gridViewDecimalColumn64.EnableExpressionEditor = false;
+            gridViewDecimalColumn64.FieldName = "StockQty";
+            gridViewDecimalColumn64.FormatString = "{0:N2}";
+            gridViewDecimalColumn64.HeaderText = "จำนวนคงเหลือ";
+            gridViewDecimalColumn64.Name = "StockQty";
+            gridViewDecimalColumn64.ReadOnly = true;
+            gridViewDecimalColumn64.Width = 86;
+            conditionalFormattingObject37.CellBackColor = System.Drawing.Color.LightCyan;
+            conditionalFormattingObject37.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject37.CellForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject37.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
+            conditionalFormattingObject37.Name = "NewCondition";
+            conditionalFormattingObject37.RowBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject37.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject37.RowForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject37.TValue1 = "\'\'";
+            gridViewDecimalColumn65.ConditionalFormattingObjectList.Add(conditionalFormattingObject37);
+            gridViewDecimalColumn65.EnableExpressionEditor = false;
+            gridViewDecimalColumn65.FieldName = "CompareQty";
+            gridViewDecimalColumn65.FormatString = "{0:N2}";
+            gridViewDecimalColumn65.HeaderText = "จำนวนทีนับได้";
+            gridViewDecimalColumn65.Minimum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            gridViewDecimalColumn2.Name = "CompareQty";
-            gridViewDecimalColumn2.Width = 114;
-            conditionalFormattingObject2.CellBackColor = System.Drawing.Color.LightCyan;
-            conditionalFormattingObject2.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject2.CellForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject2.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
-            conditionalFormattingObject2.Name = "NewCondition";
-            conditionalFormattingObject2.RowBackColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject2.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject2.RowForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject2.TValue1 = "\"\"";
-            gridViewDecimalColumn3.ConditionalFormattingObjectList.Add(conditionalFormattingObject2);
-            gridViewDecimalColumn3.EnableExpressionEditor = false;
-            gridViewDecimalColumn3.FieldName = "QTY";
-            gridViewDecimalColumn3.FormatString = "{0:N2}";
-            gridViewDecimalColumn3.HeaderText = "จำนวนทีจะปรับ";
-            gridViewDecimalColumn3.Minimum = new decimal(new int[] {
+            gridViewDecimalColumn65.Name = "CompareQty";
+            gridViewDecimalColumn65.Width = 114;
+            conditionalFormattingObject38.CellBackColor = System.Drawing.Color.LightCyan;
+            conditionalFormattingObject38.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject38.CellForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject38.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
+            conditionalFormattingObject38.Name = "NewCondition";
+            conditionalFormattingObject38.RowBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject38.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject38.RowForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject38.TValue1 = "\"\"";
+            gridViewDecimalColumn66.ConditionalFormattingObjectList.Add(conditionalFormattingObject38);
+            gridViewDecimalColumn66.EnableExpressionEditor = false;
+            gridViewDecimalColumn66.FieldName = "QTY";
+            gridViewDecimalColumn66.FormatString = "{0:N2}";
+            gridViewDecimalColumn66.HeaderText = "จำนวนทีจะปรับ";
+            gridViewDecimalColumn66.Minimum = new decimal(new int[] {
             100000,
             0,
             0,
             -2147483648});
-            gridViewDecimalColumn3.Name = "QTY";
-            gridViewDecimalColumn3.Width = 94;
-            gridViewDecimalColumn4.EnableExpressionEditor = false;
-            gridViewDecimalColumn4.FieldName = "QTYTrue";
-            gridViewDecimalColumn4.FormatString = "{0:N2}";
-            gridViewDecimalColumn4.HeaderText = "จำนวนที่ปรับจริง";
-            gridViewDecimalColumn4.Name = "QTYTrue";
-            gridViewDecimalColumn4.ReadOnly = true;
-            gridViewDecimalColumn4.Width = 106;
-            gridViewMultiComboBoxColumn1.EnableExpressionEditor = false;
-            gridViewMultiComboBoxColumn1.FieldName = "Unit";
-            gridViewMultiComboBoxColumn1.HeaderText = "หน่วย";
-            gridViewMultiComboBoxColumn1.Name = "Unit";
-            gridViewMultiComboBoxColumn1.Width = 104;
-            gridViewDecimalColumn5.EnableExpressionEditor = false;
-            gridViewDecimalColumn5.FieldName = "PCSUnit";
-            gridViewDecimalColumn5.FormatString = "{0:N2}";
-            gridViewDecimalColumn5.HeaderText = "จำนวน/หน่วย";
-            gridViewDecimalColumn5.Name = "PCSUnit";
-            gridViewDecimalColumn5.Width = 79;
-            conditionalFormattingObject3.CellBackColor = System.Drawing.Color.LightCyan;
-            conditionalFormattingObject3.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject3.CellForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject3.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
-            conditionalFormattingObject3.Name = "NewCondition";
-            conditionalFormattingObject3.RowBackColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject3.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject3.RowForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject3.TValue1 = "\"\"";
-            gridViewDecimalColumn6.ConditionalFormattingObjectList.Add(conditionalFormattingObject3);
-            gridViewDecimalColumn6.EnableExpressionEditor = false;
-            gridViewDecimalColumn6.FieldName = "StandardCost";
-            gridViewDecimalColumn6.FormatString = "{0:N2}";
-            gridViewDecimalColumn6.HeaderText = "ราคา:หน่วย";
-            gridViewDecimalColumn6.Minimum = new decimal(new int[] {
+            gridViewDecimalColumn66.Name = "QTY";
+            gridViewDecimalColumn66.Width = 94;
+            gridViewDecimalColumn67.EnableExpressionEditor = false;
+            gridViewDecimalColumn67.FieldName = "QTYTrue";
+            gridViewDecimalColumn67.FormatString = "{0:N2}";
+            gridViewDecimalColumn67.HeaderText = "จำนวนที่ปรับจริง";
+            gridViewDecimalColumn67.Name = "QTYTrue";
+            gridViewDecimalColumn67.ReadOnly = true;
+            gridViewDecimalColumn67.Width = 106;
+            gridViewMultiComboBoxColumn19.EnableExpressionEditor = false;
+            gridViewMultiComboBoxColumn19.FieldName = "Unit";
+            gridViewMultiComboBoxColumn19.HeaderText = "หน่วย";
+            gridViewMultiComboBoxColumn19.Name = "Unit";
+            gridViewMultiComboBoxColumn19.Width = 104;
+            gridViewDecimalColumn68.EnableExpressionEditor = false;
+            gridViewDecimalColumn68.FieldName = "PCSUnit";
+            gridViewDecimalColumn68.FormatString = "{0:N2}";
+            gridViewDecimalColumn68.HeaderText = "จำนวน/หน่วย";
+            gridViewDecimalColumn68.Name = "PCSUnit";
+            gridViewDecimalColumn68.Width = 79;
+            conditionalFormattingObject39.CellBackColor = System.Drawing.Color.LightCyan;
+            conditionalFormattingObject39.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject39.CellForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject39.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
+            conditionalFormattingObject39.Name = "NewCondition";
+            conditionalFormattingObject39.RowBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject39.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject39.RowForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject39.TValue1 = "\"\"";
+            gridViewDecimalColumn69.ConditionalFormattingObjectList.Add(conditionalFormattingObject39);
+            gridViewDecimalColumn69.EnableExpressionEditor = false;
+            gridViewDecimalColumn69.FieldName = "StandardCost";
+            gridViewDecimalColumn69.FormatString = "{0:N2}";
+            gridViewDecimalColumn69.HeaderText = "ราคา:หน่วย";
+            gridViewDecimalColumn69.Minimum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            gridViewDecimalColumn6.Name = "StandardCost";
-            gridViewDecimalColumn6.Width = 84;
-            gridViewDecimalColumn7.EnableExpressionEditor = false;
-            gridViewDecimalColumn7.FieldName = "Amount";
-            gridViewDecimalColumn7.FormatString = "{0:N2}";
-            gridViewDecimalColumn7.HeaderText = "ยอดรวม";
-            gridViewDecimalColumn7.Name = "Amount";
-            gridViewDecimalColumn7.ReadOnly = true;
-            gridViewDecimalColumn7.Width = 93;
-            gridViewTextBoxColumn5.EnableExpressionEditor = false;
-            gridViewTextBoxColumn5.FieldName = "LotNo";
-            gridViewTextBoxColumn5.HeaderText = "เลข LotNo";
-            gridViewTextBoxColumn5.IsVisible = false;
-            gridViewTextBoxColumn5.Name = "LotNo";
-            gridViewTextBoxColumn5.Width = 90;
-            gridViewTextBoxColumn6.EnableExpressionEditor = false;
-            gridViewTextBoxColumn6.FieldName = "Reason";
-            gridViewTextBoxColumn6.HeaderText = "วัตถุประสงค์";
-            gridViewTextBoxColumn6.Name = "Remark";
-            gridViewTextBoxColumn6.Width = 150;
-            gridViewTextBoxColumn7.EnableExpressionEditor = false;
-            gridViewTextBoxColumn7.FieldName = "id";
-            gridViewTextBoxColumn7.HeaderText = "id";
-            gridViewTextBoxColumn7.IsVisible = false;
-            gridViewTextBoxColumn7.Name = "id";
-            gridViewTextBoxColumn7.ReadOnly = true;
-            gridViewComboBoxColumn1.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
-            gridViewComboBoxColumn1.EnableExpressionEditor = false;
-            gridViewComboBoxColumn1.FieldName = "ShelfNo";
-            gridViewComboBoxColumn1.HeaderText = "ชั้นเก็บ Shelf No.";
-            gridViewComboBoxColumn1.IsVisible = false;
-            gridViewComboBoxColumn1.Name = "ShelfNo";
-            gridViewComboBoxColumn1.Width = 118;
-            conditionalFormattingObject4.CellBackColor = System.Drawing.Color.LightCyan;
-            conditionalFormattingObject4.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject4.CellForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject4.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
-            conditionalFormattingObject4.Name = "NewCondition";
-            conditionalFormattingObject4.RowBackColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject4.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject4.RowForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject4.TValue1 = "\"\"";
-            gridViewMultiComboBoxColumn2.ConditionalFormattingObjectList.Add(conditionalFormattingObject4);
-            gridViewMultiComboBoxColumn2.EnableExpressionEditor = false;
-            gridViewMultiComboBoxColumn2.FieldName = "Location";
-            gridViewMultiComboBoxColumn2.HeaderText = "สถานที่เก็บ";
-            gridViewMultiComboBoxColumn2.Name = "Location";
-            gridViewMultiComboBoxColumn2.ReadOnly = true;
-            gridViewMultiComboBoxColumn2.Width = 124;
-            gridViewTextBoxColumn8.EnableExpressionEditor = false;
-            gridViewTextBoxColumn8.FieldName = "RefJobCard";
-            gridViewTextBoxColumn8.HeaderText = "เลขที่อ้างอิงใบผลิต (JobCard)";
-            gridViewTextBoxColumn8.IsVisible = false;
-            gridViewTextBoxColumn8.Name = "RefJobCard";
-            gridViewTextBoxColumn8.Width = 154;
-            gridViewTextBoxColumn9.EnableExpressionEditor = false;
-            gridViewTextBoxColumn9.FieldName = "RefTempJobCard";
-            gridViewTextBoxColumn9.HeaderText = "RefTempJobCard";
-            gridViewTextBoxColumn9.IsVisible = false;
-            gridViewTextBoxColumn9.Name = "RefTempJobCard";
-            gridViewTextBoxColumn9.ReadOnly = true;
-            gridViewTextBoxColumn9.Width = 100;
-            gridViewTextBoxColumn10.EnableExpressionEditor = false;
-            gridViewTextBoxColumn10.FieldName = "RefidJobCard";
-            gridViewTextBoxColumn10.HeaderText = "RefidJobCard";
-            gridViewTextBoxColumn10.IsVisible = false;
-            gridViewTextBoxColumn10.Name = "RefidJobCard";
-            gridViewTextBoxColumn10.ReadOnly = true;
-            gridViewTextBoxColumn10.Width = 100;
-            gridViewTextBoxColumn11.EnableExpressionEditor = false;
-            gridViewTextBoxColumn11.FieldName = "idCSTMPODt";
-            gridViewTextBoxColumn11.HeaderText = "idCSTMPODt";
-            gridViewTextBoxColumn11.IsVisible = false;
-            gridViewTextBoxColumn11.Name = "idCSTMPODt";
-            gridViewTextBoxColumn12.EnableExpressionEditor = false;
-            gridViewTextBoxColumn12.FieldName = "Type";
-            gridViewTextBoxColumn12.HeaderText = "ประเภท";
-            gridViewTextBoxColumn12.Name = "Type";
-            gridViewTextBoxColumn12.ReadOnly = true;
-            gridViewTextBoxColumn12.Width = 118;
+            gridViewDecimalColumn69.Name = "StandardCost";
+            gridViewDecimalColumn69.Width = 84;
+            gridViewDecimalColumn70.EnableExpressionEditor = false;
+            gridViewDecimalColumn70.FieldName = "Amount";
+            gridViewDecimalColumn70.FormatString = "{0:N2}";
+            gridViewDecimalColumn70.HeaderText = "ยอดรวม";
+            gridViewDecimalColumn70.Name = "Amount";
+            gridViewDecimalColumn70.ReadOnly = true;
+            gridViewDecimalColumn70.Width = 93;
+            gridViewTextBoxColumn113.EnableExpressionEditor = false;
+            gridViewTextBoxColumn113.FieldName = "LotNo";
+            gridViewTextBoxColumn113.HeaderText = "เลข LotNo";
+            gridViewTextBoxColumn113.IsVisible = false;
+            gridViewTextBoxColumn113.Name = "LotNo";
+            gridViewTextBoxColumn113.Width = 90;
+            gridViewTextBoxColumn114.EnableExpressionEditor = false;
+            gridViewTextBoxColumn114.FieldName = "Reason";
+            gridViewTextBoxColumn114.HeaderText = "วัตถุประสงค์";
+            gridViewTextBoxColumn114.Name = "Remark";
+            gridViewTextBoxColumn114.Width = 150;
+            gridViewTextBoxColumn115.EnableExpressionEditor = false;
+            gridViewTextBoxColumn115.FieldName = "id";
+            gridViewTextBoxColumn115.HeaderText = "id";
+            gridViewTextBoxColumn115.IsVisible = false;
+            gridViewTextBoxColumn115.Name = "id";
+            gridViewTextBoxColumn115.ReadOnly = true;
+            gridViewComboBoxColumn10.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
+            gridViewComboBoxColumn10.EnableExpressionEditor = false;
+            gridViewComboBoxColumn10.FieldName = "ShelfNo";
+            gridViewComboBoxColumn10.HeaderText = "ชั้นเก็บ Shelf No.";
+            gridViewComboBoxColumn10.IsVisible = false;
+            gridViewComboBoxColumn10.Name = "ShelfNo";
+            gridViewComboBoxColumn10.Width = 118;
+            conditionalFormattingObject40.CellBackColor = System.Drawing.Color.LightCyan;
+            conditionalFormattingObject40.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject40.CellForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject40.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
+            conditionalFormattingObject40.Name = "NewCondition";
+            conditionalFormattingObject40.RowBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject40.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject40.RowForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject40.TValue1 = "\"\"";
+            gridViewMultiComboBoxColumn20.ConditionalFormattingObjectList.Add(conditionalFormattingObject40);
+            gridViewMultiComboBoxColumn20.EnableExpressionEditor = false;
+            gridViewMultiComboBoxColumn20.FieldName = "Location";
+            gridViewMultiComboBoxColumn20.HeaderText = "สถานที่เก็บ";
+            gridViewMultiComboBoxColumn20.Name = "Location";
+            gridViewMultiComboBoxColumn20.ReadOnly = true;
+            gridViewMultiComboBoxColumn20.Width = 124;
+            gridViewTextBoxColumn116.EnableExpressionEditor = false;
+            gridViewTextBoxColumn116.FieldName = "RefJobCard";
+            gridViewTextBoxColumn116.HeaderText = "เลขที่อ้างอิงใบผลิต (JobCard)";
+            gridViewTextBoxColumn116.IsVisible = false;
+            gridViewTextBoxColumn116.Name = "RefJobCard";
+            gridViewTextBoxColumn116.Width = 154;
+            gridViewTextBoxColumn117.EnableExpressionEditor = false;
+            gridViewTextBoxColumn117.FieldName = "RefTempJobCard";
+            gridViewTextBoxColumn117.HeaderText = "RefTempJobCard";
+            gridViewTextBoxColumn117.IsVisible = false;
+            gridViewTextBoxColumn117.Name = "RefTempJobCard";
+            gridViewTextBoxColumn117.ReadOnly = true;
+            gridViewTextBoxColumn117.Width = 100;
+            gridViewTextBoxColumn118.EnableExpressionEditor = false;
+            gridViewTextBoxColumn118.FieldName = "RefidJobCard";
+            gridViewTextBoxColumn118.HeaderText = "RefidJobCard";
+            gridViewTextBoxColumn118.IsVisible = false;
+            gridViewTextBoxColumn118.Name = "RefidJobCard";
+            gridViewTextBoxColumn118.ReadOnly = true;
+            gridViewTextBoxColumn118.Width = 100;
+            gridViewTextBoxColumn119.EnableExpressionEditor = false;
+            gridViewTextBoxColumn119.FieldName = "idCSTMPODt";
+            gridViewTextBoxColumn119.HeaderText = "idCSTMPODt";
+            gridViewTextBoxColumn119.IsVisible = false;
+            gridViewTextBoxColumn119.Name = "idCSTMPODt";
+            gridViewTextBoxColumn120.EnableExpressionEditor = false;
+            gridViewTextBoxColumn120.FieldName = "Type";
+            gridViewTextBoxColumn120.HeaderText = "ประเภท";
+            gridViewTextBoxColumn120.Name = "Type";
+            gridViewTextBoxColumn120.ReadOnly = true;
+            gridViewTextBoxColumn120.Width = 118;
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
-            gridViewTextBoxColumn1,
-            gridViewTextBoxColumn2,
-            gridViewTextBoxColumn3,
-            gridViewTextBoxColumn4,
-            gridViewDecimalColumn1,
-            gridViewDecimalColumn2,
-            gridViewDecimalColumn3,
-            gridViewDecimalColumn4,
-            gridViewMultiComboBoxColumn1,
-            gridViewDecimalColumn5,
-            gridViewDecimalColumn6,
-            gridViewDecimalColumn7,
-            gridViewTextBoxColumn5,
-            gridViewTextBoxColumn6,
-            gridViewTextBoxColumn7,
-            gridViewComboBoxColumn1,
-            gridViewMultiComboBoxColumn2,
-            gridViewTextBoxColumn8,
-            gridViewTextBoxColumn9,
-            gridViewTextBoxColumn10,
-            gridViewTextBoxColumn11,
-            gridViewTextBoxColumn12});
+            gridViewTextBoxColumn109,
+            gridViewTextBoxColumn110,
+            gridViewTextBoxColumn111,
+            gridViewTextBoxColumn112,
+            gridViewDecimalColumn64,
+            gridViewDecimalColumn65,
+            gridViewDecimalColumn66,
+            gridViewDecimalColumn67,
+            gridViewMultiComboBoxColumn19,
+            gridViewDecimalColumn68,
+            gridViewDecimalColumn69,
+            gridViewDecimalColumn70,
+            gridViewTextBoxColumn113,
+            gridViewTextBoxColumn114,
+            gridViewTextBoxColumn115,
+            gridViewComboBoxColumn10,
+            gridViewMultiComboBoxColumn20,
+            gridViewTextBoxColumn116,
+            gridViewTextBoxColumn117,
+            gridViewTextBoxColumn118,
+            gridViewTextBoxColumn119,
+            gridViewTextBoxColumn120});
             this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
-            this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
+            this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition10;
             this.dgvData.Name = "dgvData";
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
@@ -716,26 +512,6 @@
             this.radPanel1.ThemeName = "Office2010Blue";
             this.radPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.radPanel1_Paint);
             // 
-            // btnAdd_Item
-            // 
-            this.btnAdd_Item.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd_Item.Image")));
-            this.btnAdd_Item.Location = new System.Drawing.Point(437, 18);
-            this.btnAdd_Item.Name = "btnAdd_Item";
-            this.btnAdd_Item.Size = new System.Drawing.Size(49, 26);
-            this.btnAdd_Item.TabIndex = 14;
-            this.btnAdd_Item.Text = "   เพิ่ม";
-            this.btnAdd_Item.ThemeName = "Office2010Blue";
-            this.btnAdd_Item.Click += new System.EventHandler(this.btnAdd_Item_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(288, 23);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(19, 18);
-            this.pictureBox1.TabIndex = 12;
-            this.pictureBox1.TabStop = false;
-            // 
             // radGroupBox1
             // 
             this.radGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
@@ -766,6 +542,7 @@
             this.dtRequire.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtRequire.Location = new System.Drawing.Point(118, 71);
             this.dtRequire.Name = "dtRequire";
+            this.dtRequire.ReadOnly = true;
             this.dtRequire.Size = new System.Drawing.Size(119, 19);
             this.dtRequire.TabIndex = 9;
             this.dtRequire.TabStop = false;
@@ -830,6 +607,7 @@
             this.txtADNo.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtADNo.Location = new System.Drawing.Point(118, 21);
             this.txtADNo.Name = "txtADNo";
+            this.txtADNo.ReadOnly = true;
             this.txtADNo.Size = new System.Drawing.Size(119, 19);
             this.txtADNo.TabIndex = 7;
             this.txtADNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtADNo_KeyPress);
@@ -876,6 +654,244 @@
             this.radRibbonBarButtonGroup2.ShowBackColor = false;
             this.radRibbonBarButtonGroup2.Text = "radRibbonBarButtonGroup2";
             // 
+            // radRibbonBarButtonGroup5
+            // 
+            this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
+            this.radRibbonBarButtonGroup5.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.radRibbonBarButtonGroup5.Padding = new System.Windows.Forms.Padding(1);
+            this.radRibbonBarButtonGroup5.ShowBackColor = false;
+            this.radRibbonBarButtonGroup5.ShowBorder = false;
+            this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
+            // 
+            // btnAdd_Item
+            // 
+            this.btnAdd_Item.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd_Item.Image")));
+            this.btnAdd_Item.Location = new System.Drawing.Point(437, 18);
+            this.btnAdd_Item.Name = "btnAdd_Item";
+            this.btnAdd_Item.Size = new System.Drawing.Size(49, 26);
+            this.btnAdd_Item.TabIndex = 14;
+            this.btnAdd_Item.Text = "   เพิ่ม";
+            this.btnAdd_Item.ThemeName = "Office2010Blue";
+            this.btnAdd_Item.Click += new System.EventHandler(this.btnAdd_Item_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(288, 23);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(19, 18);
+            this.pictureBox1.TabIndex = 12;
+            this.pictureBox1.TabStop = false;
+            // 
+            // radRibbonBar1
+            // 
+            this.radRibbonBar1.CommandTabs.AddRange(new Telerik.WinControls.RadItem[] {
+            this.ribbonTab1});
+            // 
+            // 
+            // 
+            this.radRibbonBar1.ExitButton.Text = "Exit";
+            this.radRibbonBar1.ExitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.radRibbonBar1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radRibbonBar1.Location = new System.Drawing.Point(0, 0);
+            this.radRibbonBar1.Name = "radRibbonBar1";
+            // 
+            // 
+            // 
+            this.radRibbonBar1.OptionsButton.Text = "Options";
+            this.radRibbonBar1.OptionsButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.radRibbonBar1.OptionsButton.Visibility = Telerik.WinControls.ElementVisibility.Hidden;
+            // 
+            // 
+            // 
+            this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
+            this.radRibbonBar1.Size = new System.Drawing.Size(901, 160);
+            this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
+            this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radMenuItem1,
+            this.radMenuSeparatorItem1,
+            this.radMenuItem2});
+            this.radRibbonBar1.TabIndex = 0;
+            this.radRibbonBar1.Text = "AdjustStock (ปรับปรุงจำนวน-สินค้า)";
+            this.radRibbonBar1.ThemeName = "Office2010Blue";
+            this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
+            // 
+            // ribbonTab1
+            // 
+            this.ribbonTab1.IsSelected = true;
+            this.ribbonTab1.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radRibbonBarGroup1,
+            this.radRibbonBarGroup3,
+            this.radRibbonBarGroup5,
+            this.radRibbonBarGroup4,
+            this.radRibbonBarGroup2,
+            this.radRibbonBarGroup6});
+            this.ribbonTab1.Name = "ribbonTab1";
+            this.ribbonTab1.Text = "Action";
+            this.ribbonTab1.UseMnemonic = false;
+            // 
+            // radRibbonBarGroup1
+            // 
+            this.radRibbonBarGroup1.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnSave,
+            this.radButtonElement3,
+            this.btnNew});
+            this.radRibbonBarGroup1.Name = "radRibbonBarGroup1";
+            this.radRibbonBarGroup1.Text = "Save && Compare";
+            // 
+            // btnNew
+            // 
+            this.btnNew.Image = ((System.Drawing.Image)(resources.GetObject("btnNew.Image")));
+            this.btnNew.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Text = "Compare";
+            this.btnNew.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnNew.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Text = "บันทึกรายการ";
+            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // radRibbonBarGroup3
+            // 
+            this.radRibbonBarGroup3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(135)))), ((int)(((byte)(135)))));
+            this.radRibbonBarGroup3.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnRefresh});
+            this.radRibbonBarGroup3.Name = "radRibbonBarGroup3";
+            this.radRibbonBarGroup3.Text = "Page";
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(6)))), ((int)(((byte)(197)))));
+            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
+            this.btnRefresh.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Text = "รีเฟรช";
+            this.btnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnRefresh.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // radRibbonBarGroup5
+            // 
+            this.radRibbonBarGroup5.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
+            this.radRibbonBarGroup5.FitToSizeMode = Telerik.WinControls.RadFitToSizeMode.FitToParentContent;
+            this.radRibbonBarGroup5.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radRibbonBarButtonGroup3});
+            this.radRibbonBarGroup5.Name = "radRibbonBarGroup5";
+            this.radRibbonBarGroup5.Text = "Filter";
+            // 
+            // radRibbonBarButtonGroup3
+            // 
+            this.radRibbonBarButtonGroup3.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnFilter1,
+            this.btnUnfilter1,
+            this.ribbonBarGroupSeparator1});
+            this.radRibbonBarButtonGroup3.Name = "radRibbonBarButtonGroup3";
+            this.radRibbonBarButtonGroup3.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.radRibbonBarButtonGroup3.Padding = new System.Windows.Forms.Padding(1);
+            this.radRibbonBarButtonGroup3.ShowBackColor = false;
+            this.radRibbonBarButtonGroup3.ShowBorder = false;
+            this.radRibbonBarButtonGroup3.Text = "radRibbonBarButtonGroup3";
+            // 
+            // btnFilter1
+            // 
+            this.btnFilter1.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter1.Image")));
+            this.btnFilter1.Name = "btnFilter1";
+            this.btnFilter1.ShowBorder = false;
+            this.btnFilter1.Text = "กรอง";
+            this.btnFilter1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnFilter1.Click += new System.EventHandler(this.btnFilter1_Click);
+            // 
+            // btnUnfilter1
+            // 
+            this.btnUnfilter1.Image = ((System.Drawing.Image)(resources.GetObject("btnUnfilter1.Image")));
+            this.btnUnfilter1.Name = "btnUnfilter1";
+            this.btnUnfilter1.ShowBorder = false;
+            this.btnUnfilter1.Text = "ยกเลิก";
+            this.btnUnfilter1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnUnfilter1.Click += new System.EventHandler(this.btnUnfilter1_Click);
+            // 
+            // ribbonBarGroupSeparator1
+            // 
+            this.ribbonBarGroupSeparator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ribbonBarGroupSeparator1.Name = "ribbonBarGroupSeparator1";
+            this.ribbonBarGroupSeparator1.Text = "ribbonBarGroupSeparator1";
+            // 
+            // radRibbonBarGroup4
+            // 
+            this.radRibbonBarGroup4.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radButtonElement1});
+            this.radRibbonBarGroup4.Name = "radRibbonBarGroup4";
+            this.radRibbonBarGroup4.Text = "Print Document";
+            // 
+            // radButtonElement1
+            // 
+            this.radButtonElement1.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement1.Image")));
+            this.radButtonElement1.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radButtonElement1.Name = "radButtonElement1";
+            this.radButtonElement1.Text = "พิมพ์รายงาน";
+            this.radButtonElement1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.radButtonElement1.Click += new System.EventHandler(this.radButtonElement1_Click);
+            // 
+            // radRibbonBarGroup2
+            // 
+            this.radRibbonBarGroup2.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnListitem});
+            this.radRibbonBarGroup2.Name = "radRibbonBarGroup2";
+            this.radRibbonBarGroup2.Text = "List item";
+            this.radRibbonBarGroup2.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
+            // 
+            // btnListitem
+            // 
+            this.btnListitem.Image = ((System.Drawing.Image)(resources.GetObject("btnListitem.Image")));
+            this.btnListitem.ImageAlignment = System.Drawing.ContentAlignment.TopCenter;
+            this.btnListitem.Name = "btnListitem";
+            this.btnListitem.Text = "รายการ";
+            this.btnListitem.TextAlignment = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnListitem.Click += new System.EventHandler(this.btnListitem_Click);
+            // 
+            // radRibbonBarGroup6
+            // 
+            this.radRibbonBarGroup6.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radButtonElement2});
+            this.radRibbonBarGroup6.Name = "radRibbonBarGroup6";
+            this.radRibbonBarGroup6.Text = "Get List";
+            this.radRibbonBarGroup6.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
+            // 
+            // radButtonElement2
+            // 
+            this.radButtonElement2.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement2.Image")));
+            this.radButtonElement2.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radButtonElement2.Name = "radButtonElement2";
+            this.radButtonElement2.Text = "รายงานทูลทั้งหมด";
+            this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.radButtonElement2.Click += new System.EventHandler(this.radButtonElement2_Click);
+            // 
+            // radMenuItem1
+            // 
+            this.radMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem1.Image")));
+            this.radMenuItem1.Name = "radMenuItem1";
+            this.radMenuItem1.Text = "Exit";
+            this.radMenuItem1.Click += new System.EventHandler(this.radMenuItem1_Click);
+            // 
+            // radMenuSeparatorItem1
+            // 
+            this.radMenuSeparatorItem1.Name = "radMenuSeparatorItem1";
+            this.radMenuSeparatorItem1.Text = "radMenuSeparatorItem1";
+            this.radMenuSeparatorItem1.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // radMenuItem2
+            // 
+            this.radMenuItem2.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem2.Image")));
+            this.radMenuItem2.Name = "radMenuItem2";
+            this.radMenuItem2.Text = "History View";
+            this.radMenuItem2.Click += new System.EventHandler(this.radMenuItem2_Click);
+            // 
             // btnFilter
             // 
             this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
@@ -890,14 +906,11 @@
             this.Unfilter.Text = "Un Filter";
             this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             // 
-            // radRibbonBarButtonGroup5
+            // radButtonElement3
             // 
-            this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
-            this.radRibbonBarButtonGroup5.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.radRibbonBarButtonGroup5.Padding = new System.Windows.Forms.Padding(1);
-            this.radRibbonBarButtonGroup5.ShowBackColor = false;
-            this.radRibbonBarButtonGroup5.ShowBorder = false;
-            this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
+            this.radButtonElement3.Name = "radButtonElement3";
+            this.radButtonElement3.Text = "radButton";
+            this.radButtonElement3.Visibility = Telerik.WinControls.ElementVisibility.Hidden;
             // 
             // AdjustStock_Taking
             // 
@@ -909,6 +922,7 @@
             this.Controls.Add(this.radRibbonBar1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MainMenuStrip = null;
             this.Name = "AdjustStock_Taking";
             // 
             // 
@@ -918,7 +932,6 @@
             this.Text = "AdjustStock (ปรับปรุงจำนวน-สินค้า)";
             this.Load += new System.EventHandler(this.Unit_Load);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Unit_PreviewKeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).EndInit();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData.MasterTemplate)).EndInit();
@@ -934,8 +947,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
             this.radPanel1.ResumeLayout(false);
             this.radPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnAdd_Item)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).EndInit();
             this.radGroupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).EndInit();
@@ -949,6 +960,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtAdjustBy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCodeNo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAdd_Item)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1009,5 +1023,6 @@
         private Telerik.WinControls.UI.RadButton btnAdd_Item;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup6;
         private Telerik.WinControls.UI.RadButtonElement radButtonElement2;
+        private Telerik.WinControls.UI.RadButtonElement radButtonElement3;
     }
 }
