@@ -1045,7 +1045,20 @@ namespace StockControl
         {
             try
             {
+                string AdNo1 = "";
+                string AdNo2 = "";
 
+                
+                    AdNo1 = txtSONo.Text;
+
+                    AdNo2 = txtSONo.Text;
+               
+                Report.Reportx1.Value = new string[2];
+                Report.Reportx1.Value[0] = AdNo1;
+                Report.Reportx1.Value[1] = AdNo1;
+                Report.Reportx1.WReport = "SaleOrder";
+                Report.Reportx1 op = new Report.Reportx1("CustomerPO.rpt");
+                op.Show();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
