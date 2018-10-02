@@ -41,6 +41,8 @@
             this.radGroupBox2 = new Telerik.WinControls.UI.RadGroupBox();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.txtListNo1 = new Telerik.WinControls.UI.RadTextBox();
+            this.btnSendApprove = new Telerik.WinControls.UI.RadButton();
+            this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
             this.btnCompareData = new Telerik.WinControls.UI.RadButton();
             this.radLabel8 = new Telerik.WinControls.UI.RadLabel();
             this.btnInput = new Telerik.WinControls.UI.RadButton();
@@ -83,8 +85,7 @@
             this.btn_PrintPR = new Telerik.WinControls.UI.RadButtonElement();
             this.btn_Print_Barcode = new Telerik.WinControls.UI.RadButtonElement();
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
-            this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
-            this.btnSendApprove = new Telerik.WinControls.UI.RadButton();
+            this.lblStatus = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox3)).BeginInit();
@@ -97,6 +98,8 @@
             this.radGroupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtListNo1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSendApprove)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCompareData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnInput)).BeginInit();
@@ -115,8 +118,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSendApprove)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -243,6 +245,25 @@
             this.txtListNo1.Size = new System.Drawing.Size(110, 19);
             this.txtListNo1.TabIndex = 16;
             // 
+            // btnSendApprove
+            // 
+            this.btnSendApprove.Location = new System.Drawing.Point(88, 93);
+            this.btnSendApprove.Name = "btnSendApprove";
+            this.btnSendApprove.Size = new System.Drawing.Size(112, 40);
+            this.btnSendApprove.TabIndex = 15;
+            this.btnSendApprove.Text = "Send Approve";
+            this.btnSendApprove.ThemeName = "Office2010Blue";
+            this.btnSendApprove.Click += new System.EventHandler(this.btnSendApprove_Click);
+            // 
+            // radLabel10
+            // 
+            this.radLabel10.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel10.Location = new System.Drawing.Point(44, 104);
+            this.radLabel10.Name = "radLabel10";
+            this.radLabel10.Size = new System.Drawing.Size(38, 17);
+            this.radLabel10.TabIndex = 9;
+            this.radLabel10.Text = "Step 4";
+            // 
             // btnCompareData
             // 
             this.btnCompareData.Location = new System.Drawing.Point(256, 47);
@@ -287,6 +308,7 @@
             // 
             this.radGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
             this.radGroupBox1.BackColor = System.Drawing.Color.Cornsilk;
+            this.radGroupBox1.Controls.Add(this.lblStatus);
             this.radGroupBox1.Controls.Add(this.dtListDate);
             this.radGroupBox1.Controls.Add(this.radLabel5);
             this.radGroupBox1.Controls.Add(this.txtListNo);
@@ -658,26 +680,18 @@
             this.radMenuItem1.Text = "Exit";
             this.radMenuItem1.Click += new System.EventHandler(this.radMenuItem1_Click);
             // 
-            // radLabel10
+            // lblStatus
             // 
-            this.radLabel10.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel10.Location = new System.Drawing.Point(44, 104);
-            this.radLabel10.Name = "radLabel10";
-            this.radLabel10.Size = new System.Drawing.Size(38, 17);
-            this.radLabel10.TabIndex = 9;
-            this.radLabel10.Text = "Step 4";
-            this.radLabel10.Visible = false;
-            // 
-            // btnSendApprove
-            // 
-            this.btnSendApprove.Location = new System.Drawing.Point(88, 93);
-            this.btnSendApprove.Name = "btnSendApprove";
-            this.btnSendApprove.Size = new System.Drawing.Size(112, 40);
-            this.btnSendApprove.TabIndex = 15;
-            this.btnSendApprove.Text = "Send Approve";
-            this.btnSendApprove.ThemeName = "Office2010Blue";
-            this.btnSendApprove.Visible = false;
-            this.btnSendApprove.Click += new System.EventHandler(this.btnSendApprove_Click);
+            this.lblStatus.AutoSize = false;
+            this.lblStatus.Font = new System.Drawing.Font("Tahoma", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.lblStatus.Location = new System.Drawing.Point(355, 21);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(177, 34);
+            this.lblStatus.TabIndex = 9;
+            this.lblStatus.Text = "New";
+            this.lblStatus.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblStatus.Visible = false;
             // 
             // AdjustStock_Taking_Card_2
             // 
@@ -713,6 +727,8 @@
             this.radGroupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtListNo1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSendApprove)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCompareData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnInput)).EndInit();
@@ -732,8 +748,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSendApprove)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -797,5 +812,6 @@
         private Telerik.WinControls.UI.RadButton btnUpdateStockTaking;
         private Telerik.WinControls.UI.RadButton btnSendApprove;
         private Telerik.WinControls.UI.RadLabel radLabel10;
+        private Telerik.WinControls.UI.RadLabel lblStatus;
     }
 }
