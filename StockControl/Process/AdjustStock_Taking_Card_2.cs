@@ -881,5 +881,25 @@ namespace StockControl
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+
+        private void btnPrintReport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string ListNo = txtListNo.Text.Trim();
+                if (ListNo != "")
+                {
+                    Report.Reportx1.Value = new string[1];
+                    Report.Reportx1.Value[0] = ListNo;
+                    Report.Reportx1.WReport = "CheckStockList";
+                    Report.Reportx1 op = new Report.Reportx1("ReportCheckStock.rpt");
+                    op.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+        }
     }
 }
