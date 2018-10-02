@@ -438,30 +438,49 @@ namespace StockControl
             {
                 
                 //dt_ShelfTag.Rows.Clear();
-                string PRNo = "";
-                if(radGridView1.Rows.Count > 0)
-                    PRNo = StockControl.dbClss.TSt(radGridView1.CurrentRow.Cells["PRNo"].Value);
+                string ApproveDocuNo = "";
+                if (radGridView1.Rows.Count > 0)
+                {
+                    ApproveDocuNo = StockControl.dbClss.TSt(radGridView1.CurrentRow.Cells["ApproveDocuNo"].Value);
 
-                PrintPR a = new PrintPR(PRNo, PRNo,"PR");
-                a.ShowDialog();
+                    string Type = dbClss.TSt(radGridView1.CurrentRow.Cells["ApproveType"].Value);
+                    if (Type == "Purchase Order")
+                    {
+                        //PrintPR a = new PrintPR(ApproveDocuNo, ApproveDocuNo, "PO");
+                        //a.ShowDialog();
+                        Report.Reportx1.Value = new string[2];
+                        Report.Reportx1.Value[0] = ApproveDocuNo;
+                        Report.Reportx1.Value[1] = ApproveDocuNo;
+                        Report.Reportx1.WReport = "PO";
+                        Report.Reportx1 op = new Report.Reportx1("PO.rpt");
+                        op.Show();
+                    }
+                    else if (Type == "Job Req")
+                    {
+                        Report.Reportx1.Value = new string[1];
+                        Report.Reportx1.Value[0] = ApproveDocuNo;
+                        Report.Reportx1.WReport = "JOBNoList";
+                        Report.Reportx1 op = new Report.Reportx1("JobOrderSheet3.rpt");
+                        op.Show();
+                    }
+                    else if (Type == "Sale Order")
+                    {
+                        //PrintPR a = new PrintPR(ApproveDocuNo, ApproveDocuNo, "PR");
+                        //a.ShowDialog();
+                        Report.Reportx1.Value = new string[2];
+                        Report.Reportx1.Value[0] = ApproveDocuNo;
+                        Report.Reportx1.Value[1] = ApproveDocuNo;
+                        Report.Reportx1.WReport = "SaleOrder";
+                        Report.Reportx1 op = new Report.Reportx1("CustomerPO.rpt");
+                        op.Show();
+                    }
+                    else if (Type == "Taking Stock")
+                    {
+                        PrintPR a = new PrintPR(ApproveDocuNo, ApproveDocuNo, "PR");
+                        a.ShowDialog();
+                    }
 
-                //using (DataClasses1DataContext db = new DataClasses1DataContext())
-                //{
-                //    var g = (from ix in db.sp_R002_ReportPR(PRNo, DateTime.Now) select ix).ToList();
-                //    if (g.Count() > 0)
-                //    {
-
-                //        Report.Reportx1.Value = new string[2];
-                //        Report.Reportx1.Value[0] = PRNo;
-                //        Report.Reportx1.WReport = "ReportPR";
-                //        Report.Reportx1 op = new Report.Reportx1("ReportPR.rpt");
-                //        op.Show();
-
-                //    }
-                //    else
-                //        MessageBox.Show("not found.");
-                //}
-
+                }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
