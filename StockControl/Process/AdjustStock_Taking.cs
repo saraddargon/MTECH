@@ -1245,7 +1245,7 @@ namespace StockControl
                                         ss.Remark = dbClss.TSt(g.Cells["Remark"].Value);
                                         ss.Type = dbClss.TSt(g.Cells["Type"].Value);
                                         ss.UOM = StockControl.dbClss.TSt(g.Cells["Unit"].Value);
-                                        ss.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);
+                                        ss.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);                                       
                                         //ss.CheckStatus = "Completed";
                                         ss.InputOK = true;
                                         db.SubmitChanges();
@@ -1467,7 +1467,7 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value),0)));
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Free", 0, Convert.ToString(e.Row.Cells["Location"].Value),0)));
                         }
                     }
                     else if (dgvData.Columns["Unit"].Index == e.ColumnIndex)
@@ -1707,7 +1707,7 @@ namespace StockControl
 
                             ItemNo = d.InternalName;
                             ItemDescription = d.InternalName;
-                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Invoice", 0, Convert.ToString(d.Location),0)));//Convert.ToDecimal(d.StockInv);
+                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Free", 0, Convert.ToString(d.Location),0)));//Convert.ToDecimal(d.StockInv);
                             Unit = d.BaseUOM;
                             PCSUnit = dbClss.Con_UOM(CodeNo, d.BaseUOM);
                             CostPerUnit = 0;// Convert.ToDecimal(d.StandardCost); // Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "Avg"));//Convert.ToDecimal(d.StandardCost);
