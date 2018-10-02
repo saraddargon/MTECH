@@ -1107,7 +1107,7 @@ namespace StockControl
                 if (cbVat.Checked)
                     vat = amnt * Math.Round(vatA / 100, 2);
                 txtVatAmnt.Value = vat;
-                txtGrandTotal.Value = amnt + vatA;
+                txtGrandTotal.Value = amnt + vat;
             }
             catch (Exception ex) { MessageBox.Show("err2: " + ex.Message); }
         }
@@ -1318,7 +1318,7 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    if (lblStatus.Text == "Waiting")
+                    if (lblStatus.Text == "Waiting Approve")
                     {
                         if (baseClass.IsSendApprove())
                         {

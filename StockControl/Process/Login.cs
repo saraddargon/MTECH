@@ -91,6 +91,13 @@ namespace StockControl
                 ConnectDB.dbname = ddlDatabase.Text;
                 ClassLib.Classlib.User = ConnectDB.user;
 
+                Report.CRRReport.ServerName = ddlServer.Text;
+                Report.CRRReport.DbName = ddlDatabase.Text;
+                Report.CRRReport.dbUser = ConnectDB.Userdb;
+                Report.CRRReport.dbPass = ConnectDB.PassDb;
+
+
+
                 ////OpenSqlConnection(); //Test Connection time out
                 if (checkVr())
                 {
