@@ -83,6 +83,8 @@
             this.btn_PrintPR = new Telerik.WinControls.UI.RadButtonElement();
             this.btn_Print_Barcode = new Telerik.WinControls.UI.RadButtonElement();
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
+            this.btnSendApprove = new Telerik.WinControls.UI.RadButton();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox3)).BeginInit();
@@ -113,6 +115,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSendApprove)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -120,7 +124,7 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 624);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 639);
             this.radStatusStrip1.Name = "radStatusStrip1";
             this.radStatusStrip1.Size = new System.Drawing.Size(544, 26);
             this.radStatusStrip1.SizingGrip = false;
@@ -143,7 +147,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(544, 464);
+            this.panel1.Size = new System.Drawing.Size(544, 479);
             this.panel1.TabIndex = 2;
             // 
             // radGroupBox3
@@ -156,9 +160,9 @@
             this.radGroupBox3.Controls.Add(this.btnUpdateStockTaking);
             this.radGroupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radGroupBox3.HeaderText = "Update Stock";
-            this.radGroupBox3.Location = new System.Drawing.Point(0, 317);
+            this.radGroupBox3.Location = new System.Drawing.Point(0, 319);
             this.radGroupBox3.Name = "radGroupBox3";
-            this.radGroupBox3.Size = new System.Drawing.Size(544, 147);
+            this.radGroupBox3.Size = new System.Drawing.Size(544, 160);
             this.radGroupBox3.TabIndex = 13;
             this.radGroupBox3.Text = "Update Stock";
             // 
@@ -198,6 +202,7 @@
             this.btnUpdateStockTaking.TabIndex = 15;
             this.btnUpdateStockTaking.Text = "   Update \r\nStock Taking";
             this.btnUpdateStockTaking.ThemeName = "Office2010Blue";
+            this.btnUpdateStockTaking.Click += new System.EventHandler(this.btnUpdateStockTaking_Click);
             // 
             // radGroupBox2
             // 
@@ -205,6 +210,8 @@
             this.radGroupBox2.BackColor = System.Drawing.Color.Honeydew;
             this.radGroupBox2.Controls.Add(this.radLabel1);
             this.radGroupBox2.Controls.Add(this.txtListNo1);
+            this.radGroupBox2.Controls.Add(this.btnSendApprove);
+            this.radGroupBox2.Controls.Add(this.radLabel10);
             this.radGroupBox2.Controls.Add(this.btnCompareData);
             this.radGroupBox2.Controls.Add(this.radLabel8);
             this.radGroupBox2.Controls.Add(this.btnInput);
@@ -213,7 +220,7 @@
             this.radGroupBox2.HeaderText = "Input Data";
             this.radGroupBox2.Location = new System.Drawing.Point(0, 174);
             this.radGroupBox2.Name = "radGroupBox2";
-            this.radGroupBox2.Size = new System.Drawing.Size(544, 143);
+            this.radGroupBox2.Size = new System.Drawing.Size(544, 145);
             this.radGroupBox2.TabIndex = 12;
             this.radGroupBox2.Text = "Input Data";
             // 
@@ -238,21 +245,24 @@
             // 
             // btnCompareData
             // 
-            this.btnCompareData.Location = new System.Drawing.Point(88, 93);
+            this.btnCompareData.Location = new System.Drawing.Point(256, 47);
             this.btnCompareData.Name = "btnCompareData";
             this.btnCompareData.Size = new System.Drawing.Size(112, 40);
             this.btnCompareData.TabIndex = 15;
             this.btnCompareData.Text = "Compare Data";
             this.btnCompareData.ThemeName = "Office2010Blue";
+            this.btnCompareData.Visible = false;
+            this.btnCompareData.Click += new System.EventHandler(this.btnCompareData_Click);
             // 
             // radLabel8
             // 
             this.radLabel8.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel8.Location = new System.Drawing.Point(44, 104);
+            this.radLabel8.Location = new System.Drawing.Point(212, 58);
             this.radLabel8.Name = "radLabel8";
             this.radLabel8.Size = new System.Drawing.Size(38, 17);
             this.radLabel8.TabIndex = 9;
             this.radLabel8.Text = "Step 4";
+            this.radLabel8.Visible = false;
             // 
             // btnInput
             // 
@@ -648,11 +658,32 @@
             this.radMenuItem1.Text = "Exit";
             this.radMenuItem1.Click += new System.EventHandler(this.radMenuItem1_Click);
             // 
+            // radLabel10
+            // 
+            this.radLabel10.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel10.Location = new System.Drawing.Point(44, 104);
+            this.radLabel10.Name = "radLabel10";
+            this.radLabel10.Size = new System.Drawing.Size(38, 17);
+            this.radLabel10.TabIndex = 9;
+            this.radLabel10.Text = "Step 4";
+            this.radLabel10.Visible = false;
+            // 
+            // btnSendApprove
+            // 
+            this.btnSendApprove.Location = new System.Drawing.Point(88, 93);
+            this.btnSendApprove.Name = "btnSendApprove";
+            this.btnSendApprove.Size = new System.Drawing.Size(112, 40);
+            this.btnSendApprove.TabIndex = 15;
+            this.btnSendApprove.Text = "Send Approve";
+            this.btnSendApprove.ThemeName = "Office2010Blue";
+            this.btnSendApprove.Visible = false;
+            this.btnSendApprove.Click += new System.EventHandler(this.btnSendApprove_Click);
+            // 
             // AdjustStock_Taking_Card_2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(544, 650);
+            this.ClientSize = new System.Drawing.Size(544, 665);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);
@@ -701,6 +732,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSendApprove)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -762,5 +795,7 @@
         private Telerik.WinControls.UI.RadLabel radLabel2;
         private Telerik.WinControls.UI.RadButton btnCompleted;
         private Telerik.WinControls.UI.RadButton btnUpdateStockTaking;
+        private Telerik.WinControls.UI.RadButton btnSendApprove;
+        private Telerik.WinControls.UI.RadLabel radLabel10;
     }
 }

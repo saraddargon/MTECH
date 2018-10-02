@@ -421,7 +421,9 @@ namespace StockControl
                 if (MessageBox.Show("คุณต้องทำ Set ข้อมุล ListNo นี้ให้ Completed ใช่หรือไม่? \n ", "Completed", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     var c = (from ix in db.mh_CheckStock_Lists select ix)
-                            .Where(a => a.CheckStatus == "Waiting" && a.CheckNo.Trim().ToUpper() == txtListNo1.Text.Trim().ToUpper()).ToList();
+                            .Where(a => a.CheckStatus == "Waiting" 
+                            //&& a.SeqStatus == 2
+                            && a.CheckNo.Trim().ToUpper() == txtListNo1.Text.Trim().ToUpper()).ToList();
                     if (c.Count > 0)
                     {
                         foreach (var ss in c)
@@ -434,6 +436,435 @@ namespace StockControl
                     }
                 }
             }
+        }
+
+        private void btnCompareData_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("ต้องการเปรียบเทีบบสต็อกที่ทำการนับมากับระบบ ใช่หรือไม่?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    var c = (from ix in db.mh_CheckStock_Lists select ix)
+                     .Where(a => a.CheckStatus == "Waiting" 
+                     &&  a.CheckNo.Trim().ToUpper() == txtListNo1.Text.Trim().ToUpper() 
+                     && Convert.ToBoolean(a.InputOK) == false).ToList();
+                    if (c.Count > 0)
+                    {
+                        foreach (var ss in c)
+                        {
+                            //ss.InputQty = StockControl.dbClss.TDe(g.Cells["QTYTrue"].Value);
+                            //ss.CompareQty = StockControl.dbClss.TDe(g.Cells["CompareQty"].Value);
+                            //ss.Cost = StandardCost;//StockControl.dbClss.TDe(g.Cells["StandardCost"].Value);
+                            //ss.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
+                            //ss.Remark = dbClss.TSt(g.Cells["Remark"].Value);
+                            //ss.Type = dbClss.TSt(g.Cells["Type"].Value);
+                            //ss.UOM = StockControl.dbClss.TSt(g.Cells["Unit"].Value);
+                            //ss.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);
+                            ////ss.CheckStatus = "Completed";
+                            ss.InputOK = true;
+                            db.SubmitChanges();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btnUpdateStockTaking_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("ต้องการอัพเดตสต็อก ใช่หรือไม่?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    var c = (from ix in db.mh_CheckStock_Lists select ix)
+                     .Where(a => a.CheckStatus == "Waiting"
+                     && a.SeqStatus ==2
+                     && Convert.ToString(a.ApproveBy) != ""
+                     && a.CheckNo.Trim().ToUpper() == txtListNo1.Text.Trim().ToUpper()
+                     && Convert.ToBoolean(a.InputOK) == true).ToList();
+                    if (c.Count > 0)
+                    {
+                       bool re = SaveHerder();
+                        if (re)
+                        {
+                            //SaveDetail();
+                        }
+                    }
+                }
+            }
+        }
+        private bool SaveHerder()
+        {
+            bool re = false;
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                var g = (from ix in db.tb_StockAdjustHs
+                         where ix.ADNo.Trim() == txtListNo1.Text.Trim() && ix.Status != "Cancel"
+                         //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
+                         select ix).ToList();
+                if (g.Count <= 0)  //มีรายการในระบบ
+                //{
+                //    foreach (DataRow row in dt_ADH.Rows)
+                //    {
+                //        var gg = (from ix in db.tb_StockAdjustHs
+                //                  where ix.ADNo.Trim() == txtADNo.Text.Trim() && ix.Status != "Cancel"
+                //                  //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
+                //                  select ix).First();
+
+                //        gg.UpdateBy = ClassLib.Classlib.User;
+                //        gg.UpdateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                //        dbClss.AddHistory(this.Name, "ปรับสต็อก", "แก้ไขโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", txtADNo.Text);
+
+                //        if (StockControl.dbClss.TSt(gg.BarCode).Equals(""))
+                //            gg.BarCode = StockControl.dbClss.SaveQRCode2D(txtADNo.Text.Trim());
+
+
+                //        if (!txtAdjustBy.Text.Trim().Equals(row["ADBy"].ToString()))
+                //        {
+                //            gg.ADBy = txtAdjustBy.Text.Trim();
+                //            dbClss.AddHistory(this.Name, "ปรับสต็อก", "แก้ไข ผู้ร้องขอ[" + txtAdjustBy.Text.Trim() + " เดิม :" + row["ADBy"].ToString() + "]", txtADNo.Text);
+                //        }
+                //        if (!txtRemark.Text.Trim().Equals(row["Remark"].ToString()))
+                //        {
+                //            gg.Remark = txtRemark.Text.Trim();
+                //            dbClss.AddHistory(this.Name, "ปรับสต็อก", "แก้ไขหมายเหตุ [" + txtRemark.Text.Trim() + " เดิม :" + row["Remark"].ToString() + "]", txtADNo.Text);
+                //        }
+
+
+                //        if (!dtRequire.Text.Trim().Equals(""))
+                //        {
+                //            string date1 = "";
+                //            date1 = dtRequire.Value.ToString("yyyyMMdd", new CultureInfo("en-US"));
+                //            string date2 = "";
+                //            DateTime temp = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                //            if (!StockControl.dbClss.TSt(row["ADDate"].ToString()).Equals(""))
+                //            {
+
+                //                temp = Convert.ToDateTime(row["ADDate"]);
+                //                date2 = temp.ToString("yyyyMMdd", new CultureInfo("en-US"));
+
+                //            }
+                //            if (!date1.Equals(date2))
+                //            {
+                //                DateTime? RequireDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                //                if (!dtRequire.Text.Equals(""))
+                //                    RequireDate = dtRequire.Value;
+                //                gg.ADDate = RequireDate;
+                //                dbClss.AddHistory(this.Name, "ปรับสต็อก", "แก้ไขวันที่ปรับสต็อกสินค้า [" + dtRequire.Text.Trim() + " เดิม :" + temp.ToString() + "]", txtADNo.Text);
+                //            }
+                //        }
+                //        db.SubmitChanges();
+                //    }
+                //}
+                //else //สร้างใหม่
+                {
+                    var c = (from ix in db.mh_CheckStock_Lists select ix)
+                    .Where(a => a.CheckStatus == "Waiting"
+                    && a.SeqStatus == 2
+                    && Convert.ToString(a.ApproveBy) != ""
+                    && a.CheckNo.Trim().ToUpper() == txtListNo1.Text.Trim().ToUpper()
+                    && Convert.ToBoolean(a.InputOK) == true).ToList();
+                    if (c.Count > 0)
+                    {
+                        re = true;
+
+                        byte[] barcode = null;
+                        barcode = StockControl.dbClss.SaveQRCode2D(c.FirstOrDefault().CheckNo.Trim());
+                        DateTime? UpdateDate = null;
+
+                        DateTime? RequireDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                        if (!c.FirstOrDefault().CheckDate.ToSt().Equals(""))
+                            RequireDate = Convert.ToDateTime(c.FirstOrDefault().CheckDate);
+
+                        tb_StockAdjustH gg = new tb_StockAdjustH();
+                        gg.ADNo = c.FirstOrDefault().CheckNo.Trim();
+                        gg.ADBy = ClassLib.Classlib.User;
+                        gg.ADDate = RequireDate;
+                        gg.UpdateBy = null;
+                        gg.UpdateDate = UpdateDate;
+                        gg.CreateBy = ClassLib.Classlib.User;
+                        gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                        gg.Remark = "";
+                        gg.BarCode = barcode;
+                        gg.Status = "Completed";
+                        db.tb_StockAdjustHs.InsertOnSubmit(gg);
+                        db.SubmitChanges();
+
+                        dbClss.AddHistory(this.Name, "ปรับสต็อก", "สร้าง การปรับสต็อกสินค้า [" + c.FirstOrDefault().CheckNo.Trim() + "]", c.FirstOrDefault().CheckNo.Trim());
+                    }
+                }
+            }
+            return re;
+        }
+        //private void SaveDetail()
+        //{
+           
+
+        //    string ADNo = txtListNo1.Text.Trim().ToUpper();
+        //    DateTime? RequireDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+        //    //if (!dtRequire.Text.Equals(""))
+        //    //    RequireDate = dtRequire.Value;
+
+        //    int Seq = 0;
+        //    DateTime? UpdateDate = null;
+        //    string LotNo = "";
+
+        //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+        //    {
+        //        string SS = "";
+        //        int id = 0;
+
+        //        DateTime? CalDate = null;
+        //        DateTime? AppDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+        //        string Type = "";
+        //        string Category = "";
+        //        int Flag_ClearTemp = 0;
+        //        string Type_in_out = "In";
+        //        decimal RemainQty = 0;
+        //        decimal Amount = 0;
+        //        decimal RemainAmount = 0;
+        //        decimal RemainUnitCost = 0;
+        //        //decimal Avg = 0;
+        //        decimal UnitCost = 0;
+        //        decimal sum_Remain = 0;
+        //        decimal sum_Qty = 0;
+        //        decimal BasePCSUnit = 0;
+        //        Category = "Adjust";
+        //        Type = "Adjust";
+        //        Flag_ClearTemp = 5;
+        //        decimal Qty = 0;
+
+        //        var c = (from ix in db.mh_CheckStock_Lists select ix)
+        //             .Where(a => a.CheckStatus == "Waiting"
+        //             && a.SeqStatus == 2
+        //             && Convert.ToString(a.ApproveBy) != ""
+        //             && a.CheckNo.Trim().ToUpper() == ADNo.Trim().ToUpper()
+        //             && Convert.ToBoolean(a.InputOK) == true).ToList();
+        //        if (c.Count > 0)
+        //        {
+        //            foreach (var gg in c)
+        //            {
+        //                id = StockControl.dbClss.TInt(gg.id);
+                       
+        //                    if (StockControl.dbClss.TDe(gg.InputQty) != (0)) // เอาเฉพาะรายการที่ไม่เป็น 0 
+        //                    {
+        //                    //if (StockControl.dbClss.TInt(g.Cells["id"].Value) <= 0)  //New ใหม่
+        //                    //{
+
+        //                   LotNo = dbClss.Get_Lot(DateTime.Now.ToString("yyyyMMdd"));
+        //                    //StockControl.dbClss.TSt(g.Cells["LotNo"].Value);
+        //                    //if (LotNo == "")
+        //                    //{                                                                                                                                    
+        //                    //LotNo = dbClss.Get_Lot(DateTime.Now.ToString("yyyyMMdd"));
+        //                    //    }
+        //                        Seq += 1;
+        //                        tb_StockAdjust u = new tb_StockAdjust();
+        //                        u.AdjustNo = ADNo;
+
+        //                        u.CodeNo = StockControl.dbClss.TSt(g.Cells["CodeNo"].Value);
+        //                        u.ItemNo = StockControl.dbClss.TSt(g.Cells["ItemNo"].Value);
+        //                        u.ItemDescription = StockControl.dbClss.TSt(g.Cells["ItemDescription"].Value);
+        //                        u.Qty = StockControl.dbClss.TDe(g.Cells["QTY"].Value);
+        //                        u.StandardCost = StockControl.dbClss.TDe(g.Cells["StandardCost"].Value);
+        //                        u.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);
+        //                        u.Unit = StockControl.dbClss.TSt(g.Cells["Unit"].Value);
+        //                        u.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
+        //                        u.Reason = StockControl.dbClss.TSt(g.Cells["Remark"].Value);
+        //                        u.LotNo = LotNo;
+        //                        u.StockType = "Taking";
+        //                        u.Seq = Seq;
+        //                        u.Status = "Completed";
+
+        //                        u.CreateBy = ClassLib.Classlib.User;
+        //                        u.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+        //                        u.Location = StockControl.dbClss.TSt(g.Cells["Location"].Value);
+        //                        u.ShelfNo = StockControl.dbClss.TSt(g.Cells["ShelfNo"].Value);
+
+        //                        u.RefidJobCard = StockControl.dbClss.TInt(g.Cells["RefidJobCard"].Value);
+        //                        u.RefJobCard = StockControl.dbClss.TSt(g.Cells["RefJobCard"].Value);
+        //                        u.RefTempJobCard = StockControl.dbClss.TSt(g.Cells["RefTempJobCard"].Value);
+        //                        u.idCSTMPODt = StockControl.dbClss.TInt(g.Cells["idCSTMPODt"].Value);
+
+        //                        db.tb_StockAdjusts.InsertOnSubmit(u);
+        //                        db.SubmitChanges();
+
+
+        //                        dbClss.AddHistory(this.Name, "ปรับสต็อก", "เพิ่มรายการ ปรับสต็อก [" + u.CodeNo + " จำนวนปรับปรุง :" + u.Qty.ToString() + " จำนวนก่อนปรับปรุง " + StockControl.dbClss.TSt(g.Cells["StockQty"].Value) + "]", txtADNo.Text);
+
+
+        //                        decimal StandardCost = 0;
+        //                        StandardCost = Math.Round((StockControl.dbClss.TDe(g.Cells["Amount"].Value) / StockControl.dbClss.TDe(g.Cells["QTYTrue"].Value)), 2);
+
+        //                        var c = (from ix in db.mh_CheckStock_Lists select ix)
+        //                          .Where(a => a.CheckStatus == "Waiting" && a.id == id).ToList();
+        //                        if (c.Count > 0)
+        //                        {
+        //                            foreach (var ss in c)
+        //                            {
+        //                                ss.InputQty = StockControl.dbClss.TDe(g.Cells["QTYTrue"].Value);
+        //                                ss.CompareQty = StockControl.dbClss.TDe(g.Cells["CompareQty"].Value);
+        //                                ss.Cost = StandardCost;//StockControl.dbClss.TDe(g.Cells["StandardCost"].Value);
+        //                                ss.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
+        //                                ss.Remark = dbClss.TSt(g.Cells["Remark"].Value);
+        //                                ss.Type = dbClss.TSt(g.Cells["Type"].Value);
+        //                                ss.UOM = StockControl.dbClss.TSt(g.Cells["Unit"].Value);
+        //                                ss.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);
+        //                                ss.CheckStatus = "Completed";
+        //                                db.SubmitChanges();
+        //                            }
+        //                        }
+        //                        else
+        //                        {
+        //                            if (id == 0)
+        //                            {
+        //                                mh_CheckStock_List ss = new mh_CheckStock_List();
+        //                                ss.CheckNo = txtADNo.Text;
+        //                                ss.CheckDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+        //                                ss.CheckBy = ClassLib.Classlib.User;
+        //                                ss.CheckStatus = "Completed";
+        //                                ss.InternalNo = StockControl.dbClss.TSt(g.Cells["CodeNo"].Value);
+        //                                ss.StockQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), "Free", 0, StockControl.dbClss.TSt(g.Cells["Location"].Value), 0)));
+        //                                ss.InputQty = StockControl.dbClss.TDe(g.Cells["QTYTrue"].Value);
+        //                                ss.CompareQty = StockControl.dbClss.TDe(g.Cells["CompareQty"].Value);
+        //                                ss.Cost = StandardCost;//StockControl.dbClss.TDe(g.Cells["StandardCost"].Value);
+        //                                ss.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
+        //                                ss.Remark = dbClss.TSt(g.Cells["Remark"].Value);
+        //                                ss.Type = dbClss.TSt(g.Cells["Type"].Value);
+        //                                ss.UOM = StockControl.dbClss.TSt(g.Cells["Unit"].Value);
+        //                                ss.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);
+
+        //                                db.mh_CheckStock_Lists.InsertOnSubmit(ss);
+        //                                db.SubmitChanges();
+        //                            }
+        //                        }
+
+        //                        Qty = StockControl.dbClss.TDe(g.Cells["QTYTrue"].Value);
+        //                        if (Qty > 0)
+        //                        {
+        //                            Seq += 1;
+        //                            BasePCSUnit = 1;
+
+        //                            Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);//Math.Round((Qty * StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)), 2);
+        //                            UnitCost = Math.Round((Amount / Qty), 2);//Math.Round((Amount / (Qty * StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value) * BasePCSUnit)), 2);
+
+
+        //                            //แบบที่ 1 จะไป sum ใหม่
+        //                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), "Free", 0, StockControl.dbClss.TSt(g.Cells["Location"].Value), StockControl.dbClss.TInt(g.Cells["idCSTMPODt"].Value))));
+        //                            sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), "", "", "RemainAmount", StockControl.dbClss.TSt(g.Cells["Location"].Value), StockControl.dbClss.TInt(g.Cells["idCSTMPODt"].Value)))
+        //                                + Amount;
+
+        //                            sum_Qty = RemainQty + Qty;//Math.Round(((Qty * StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value) * BasePCSUnit)), 2);
+        //                            RemainAmount = sum_Remain;
+        //                            if (sum_Qty <= 0)
+        //                                RemainUnitCost = 0;
+        //                            else
+        //                                RemainUnitCost = Math.Round((Math.Abs(RemainAmount) / Math.Abs(sum_Qty)), 2);
+
+        //                            tb_Stock gg = new tb_Stock();
+        //                            gg.AppDate = AppDate;
+        //                            gg.Seq = Seq;
+        //                            gg.App = "Adjust";
+        //                            gg.Appid = Seq;
+        //                            gg.CreateBy = ClassLib.Classlib.User;
+        //                            gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+        //                            gg.DocNo = txtADNo.Text;
+        //                            gg.RefNo = txtADNo.Text;
+        //                            gg.CodeNo = StockControl.dbClss.TSt(g.Cells["CodeNo"].Value);
+        //                            gg.Type = Type;
+        //                            gg.QTY = Qty;//Math.Round((Qty * StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value) * BasePCSUnit), 2);
+        //                            gg.Inbound = Qty;//Math.Round((Qty * StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value) * BasePCSUnit), 2);
+        //                            gg.Outbound = 0;
+        //                            gg.Type_i = 1;  //Receive = 1,Cancel Receive 2,Shipping = 3,Cancel Shipping = 4,Adjust stock = 5,ClearTemp = 6
+        //                            gg.Category = Category;
+        //                            gg.Refid = 0;
+        //                            gg.Type_in_out = Type_in_out;
+        //                            gg.AmountCost = Amount;
+        //                            gg.UnitCost = UnitCost;
+        //                            gg.RemainQty = sum_Qty;
+        //                            gg.RemainUnitCost = RemainUnitCost;
+        //                            gg.RemainAmount = RemainAmount;
+        //                            gg.Avg = 0;// Avg;
+        //                            gg.CalDate = CalDate;
+        //                            gg.Status = "Active";
+        //                            gg.Flag_ClearTemp = Flag_ClearTemp;   //0 คือ invoice,1 คือ Temp , 2 คือ clear temp แล้ว
+        //                            gg.TLCost = Amount;
+        //                            gg.TLQty = Qty;//Math.Round((Qty * StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value) * BasePCSUnit), 2);
+        //                            gg.ShipQty = 0;
+        //                            gg.Location = StockControl.dbClss.TSt(g.Cells["Location"].Value);
+        //                            gg.ShelfNo = StockControl.dbClss.TSt(g.Cells["ShelfNo"].Value);
+        //                            gg.LotNo = LotNo;
+        //                            gg.idCSTMPODt = StockControl.dbClss.TInt(g.Cells["idCSTMPODt"].Value);
+
+        //                            //ต้องไม่ใช่ Item ที่มีในระบบ
+        //                            var cc = (from ix in db.mh_Items
+        //                                      where ix.InternalNo.Trim().ToUpper() == StockControl.dbClss.TSt(g.Cells["CodeNo"].Value).Trim().ToUpper() && ix.Active == true
+        //                                      select ix).ToList();
+        //                            if (cc.Count <= 0)
+        //                            {
+        //                                gg.TLQty = 0;
+        //                                gg.ShipQty = Qty;//Math.Round((Qty * StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value) * BasePCSUnit), 2);
+        //                            }
+
+        //                            db.tb_Stocks.InsertOnSubmit(gg);
+        //                            db.SubmitChanges();
+        //                        }
+        //                        else if (Qty < 0) //ปรับออก
+        //                        {
+        //                            Qty = Math.Abs(Qty);
+        //                            //db.sp_041_tb_Adjust_Stock(txtADNo.Text, vv.CodeNo, Qty, ClassLib.Classlib.User,"","",0, Location,dbClss.TInt(vv.idCSTMPODt));
+        //                            db.sp_057_Cut_Stock(txtADNo.Text, StockControl.dbClss.TSt(g.Cells["CodeNo"].Value).Trim().ToUpper(), Qty, ClassLib.Classlib.User, "", "", 0, StockControl.dbClss.TSt(g.Cells["Location"].Value), "Adjust", "Adjust", 5, 0, 0, "", 0);
+
+        //                        }
+                                
+        //                        //update Stock เข้า item
+        //                        db.sp_010_Update_StockItem(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value).Trim().ToUpper(), "");
+
+
+        //                    }
+        //                    //else
+        //                    //{
+        //                    //    var c = (from ix in db.mh_CheckStock_Lists select ix)
+        //                    //             .Where(a => a.CheckStatus == "Waiting" && a.id == id).ToList();
+        //                    //    if (c.Count > 0)
+        //                    //    {
+        //                    //        foreach (var ss in c)
+        //                    //        {
+        //                    //            ss.CheckStatus = "Completed";
+        //                    //            db.SubmitChanges();
+        //                    //        }
+        //                    //    }
+        //                    //}                        
+        //            }
+        //        }
+        //    }
+        //}
+
+        private void btnSendApprove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("ต้องการส่งขออนุมัติปรับสต็อก ใช่หรือไม่?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        var c = (from ix in db.mh_CheckStock_Lists select ix)
+                        .Where(a => a.CheckStatus == "Waiting"
+                        && a.CheckNo.Trim().ToUpper() == txtListNo1.Text.Trim().ToUpper()
+                        && Convert.ToBoolean(a.InputOK) == true
+                        ).ToList();
+                        if (c.Count > 0)
+                        {
+                            if (baseClass.IsSendApprove())
+                            {
+                                db.sp_062_mh_ApproveList_Add(txtListNo1.Text.Trim(), "Taking Stock", Classlib.User);
+                                MessageBox.Show("Send approve complete.");
+                            }
+                        }
+                        else
+                            MessageBox.Show("can't send Approve.");
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }

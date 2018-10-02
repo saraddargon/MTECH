@@ -692,10 +692,10 @@
         <elementListCompartment Id="2fd44df3-038b-4167-83d3-e7502f9c8f2b" absoluteBounds="19.015, 18.71, 1.9700000000000002, 8.7106526692708321" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="9d9f2070-815c-435c-b345-28796ca2988d" isExpanded="false" absoluteBounds="0.75, 3.5, 2, 0.45">
+    <classShape Id="05e2cee7-abe7-4343-ba46-7147bf380c0c" isExpanded="false" absoluteBounds="0.5, 3.5, 2, 0.45">
       <DataClassMoniker Name="/DataClasses1DataContext/mh_CheckStock_List" />
       <nestedChildShapes>
-        <elementListCompartment Id="4c831572-b62f-49a3-a235-6ab88be2275b" absoluteBounds="0.76500000000000012, 3.96, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="b344f0c7-37c6-43d1-b489-4a66d8650315" absoluteBounds="0.51500000000000012, 3.96, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
