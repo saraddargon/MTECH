@@ -190,6 +190,11 @@ namespace StockControl
                 {
                     lblName.Text = "เลขที่เอกสาร";
                 }
+                else if (Type == "ReportAccidentSlip")
+                {
+                    lblName.Text = "เลขที่เอกสาร";
+                }
+                
             }
         }
 
@@ -669,7 +674,7 @@ namespace StockControl
                         else
                             MessageBox.Show("not found.");
                     }
-                    if (Type.Equals("ReportProductionOrder"))
+                    else if (Type.Equals("ReportProductionOrder"))
                     {
                         string Dt1 = "";
                         string Dt2 = "";
@@ -689,7 +694,24 @@ namespace StockControl
                         else
                             MessageBox.Show("not found.");
                     }
+                    else if (Type.Equals("ReportAccidentSlip"))
+                    {
+                        //string Dt1 = "";
+                        //string Dt2 = "";
+                        var g = (from ix in db.sp_R007_ReportShipping(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        if (g.Count() > 0)
+                        {
 
+                            Report.Reportx1.Value = new string[2];
+                            Report.Reportx1.Value[0] = PRNo1;
+                            Report.Reportx1.Value[1] = PRNo2;                           
+                            Report.Reportx1.WReport = "ReportAccidentSlip";
+                            Report.Reportx1 op = new Report.Reportx1("ReportAccidentSlip.rpt");
+                            op.Show();
+                        }
+                        else
+                            MessageBox.Show("not found.");
+                    }
 
                 }
 
