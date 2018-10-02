@@ -92,6 +92,7 @@ namespace StockControl
                     {
                         txtJobNo.Text = t.JobNo;
                         txtRefDocNo.Text = t.RefDocNo;
+                        txtRefDocNo_TEMP.Text = t.RefDocNo_TEMP;
                         txtRefDocId.Text = t.RefDocId.ToSt();
                         txtFGNo.Text = t.FGNo;
                         txtFGName.Text = t.FGName;
@@ -486,6 +487,7 @@ namespace StockControl
                 //    err += "- Cannot Save because Status is 'Approved'.\n";
                 else if (txtSeqStatus.Text.ToInt() > 0)
                     err += "- Cannot Save because Status is 'Approved'.\n";
+                
 
 
                 if (!err.Equals(""))
@@ -1555,5 +1557,12 @@ namespace StockControl
         {
 
         }
+
+        private void btnShipping_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }
