@@ -23,7 +23,7 @@ namespace StockControl
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            AdjustStock_Taking_Card a = new AdjustStock_Taking_Card();
+            AdjustStock_Taking_Card_2 a = new AdjustStock_Taking_Card_2();
             a.ShowDialog();
         }
     }

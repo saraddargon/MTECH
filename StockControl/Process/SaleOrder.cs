@@ -1378,7 +1378,7 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    if (lblStatus.Text == "Waiting")
+                    if (lblStatus.Text == "Waiting Approve")
                     {
                         if (baseClass.IsApprove())
                         {
