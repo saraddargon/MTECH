@@ -230,7 +230,7 @@ namespace StockControl
                                    && d.Status != "Cancel"
                                  && d.ShippingNo.Contains(txtSHNo.Text.Trim())
                                  && h.JobCard != ""
-                                 && h.ShippingNo.Substring(0, 2) != "AS"
+                                 && h.ShippingNo.Substring(0, 3) == "SHR"
                                  //&& (h.ShipDate >= inclusiveStart
                                  //       && h.ShipDate < exclusiveEnd)
 
