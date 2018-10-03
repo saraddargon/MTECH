@@ -542,15 +542,22 @@ namespace StockControl
                         //Update Customer P/O
                         if (item.Cells["root"].Value.ToBool())
                         {
-                            var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                            if (po != null)
+                            //var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                            //if (po != null)
+                            //{
+                            //    //po.OutPlan -= m.OutQty;
+                            //    po.OutPlan = 0;//Full Ref Customer P/O
+                            //    po.Status = baseClass.setCustomerPOStatus(po);
+                            //    db.SubmitChanges();
+                            //}
+                            //db.SubmitChanges();
+                            var so = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                            if(so != null)
                             {
-                                //po.OutPlan -= m.OutQty;
-                                po.OutPlan = 0;//Full Ref Customer P/O
-                                po.Status = baseClass.setCustomerPOStatus(po);
+                                //so.OutPlan -= m.OutQty;
+                                so.OutPlan = 0;//Full Ref SaleOrder
                                 db.SubmitChanges();
                             }
-                            db.SubmitChanges();
                         }
 
                         var calOvers = new List<CalOverhead>();

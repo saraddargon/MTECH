@@ -478,214 +478,6 @@ namespace StockControl
             dgvData.EnableFiltering = false;
         }
 
-        private void btnGenJob_Click(object sender, EventArgs e)
-        {
-            dgvData.EndEdit();
-            GenJob();
-        }
-        void GenJob()
-        {
-            this.Cursor = Cursors.WaitCursor;
-            try
-            {
-                var rowS = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
-                if (rowS.Count < 1)
-                {
-                    baseClass.Warning("Please select data.!");
-                    return;
-                }
-                if (rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production").Count() < 1)
-                {
-                    baseClass.Warning("Please select PlanningType: Production.\n");
-                    return;
-                }
-
-                if (!baseClass.Question("Do you want to 'Generate Job Order Sheet' ?"))
-                    return;
-
-                using (var db = new DataClasses1DataContext())
-                {
-                    foreach (var item in rowS.Where(x => x.Cells["PlanningType"].Value.ToSt() == "Production"))
-                    {
-                        //Hd
-                        var m = new mh_ProductionOrder();
-                        m.CreateBy = ClassLib.Classlib.User;
-                        m.CreateDate = DateTime.Now;
-                        m.JobDate = DateTime.Now.Date;
-                        m.JobNo = dbClss.GetNo(29, 2);
-                        //
-                        m.Active = true;
-                        m.CloseJob = false;
-                        m.EndingDate = item.Cells["EndingDate"].Value.ToDateTime().Value;
-                        m.FGName = item.Cells["ItemName"].Value.ToSt();
-                        m.FGNo = item.Cells["ItemNo"].Value.ToSt();
-                        m.ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value;
-                        var reqDate = m.ReqDate.Date;
-                        var lot = db.mh_LotFGs.Where(x => x.LotDate == reqDate).FirstOrDefault();
-                        if (lot != null)
-                            m.LotNo = lot.LotNo;
-                        else
-                            m.LotNo = "";
-                        m.Qty = item.Cells["Qty"].Value.ToDecimal();
-                        m.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
-                        m.OutQty = m.Qty;
-                        m.RefDocId = item.Cells["idRef"].Value.ToInt();
-                        m.RefDocNo = item.Cells["RefDocNo"].Value.ToSt();
-                        m.StartingDate = item.Cells["StartingDate"].Value.ToDateTime().Value;
-                        m.UOM = item.Cells["UOM"].Value.ToSt();
-                        m.UpdateBy = ClassLib.Classlib.User;
-                        m.UpdateDate = DateTime.Now;
-                        m.HoldJob = false;
-                        db.mh_ProductionOrders.InsertOnSubmit(m);
-                        //Update Customer P/O
-                        if (item.Cells["root"].Value.ToBool())
-                        {
-                            var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                            if (po != null)
-                            {
-                                //po.OutPlan -= m.OutQty;
-                                po.OutPlan = 0;//Full Ref Customer P/O
-                                po.Status = baseClass.setCustomerPOStatus(po);
-                                db.SubmitChanges();
-                            }
-                            db.SubmitChanges();
-                        }
-
-                        var calOvers = new List<CalOverhead>();
-                        //Dt
-                        //**Component**
-                        int mainNo = item.Cells["mainNo"].Value.ToInt(); //find all component of Item
-                        var rowDt = db.tb_BomDTs.Where(x => x.PartNo == m.FGNo).ToList();
-                        foreach (var r in rowDt)
-                        {
-                            var itemA = db.mh_Items.Where(x => x.InternalNo == r.Component).FirstOrDefault();
-                            if (itemA == null) continue;
-                            var dt = new mh_ProductionOrderRM
-                            {
-                                Active = true,
-                                GroupType = itemA.GroupType,
-                                InvGroup = itemA.InventoryGroup,
-                                ItemName = itemA.InternalName,
-                                ItemNo = itemA.InternalNo,
-                                JobNo = m.JobNo,
-                                PCSUnit = r.PCSUnit.ToDecimal(),
-                                Qty = m.Qty * r.Qty,
-                                OutQty = m.Qty * r.Qty,
-                                Type = itemA.Type,
-                                UOM = r.Unit,
-                                CostOverall = 0.00m,
-                            };
-                            db.mh_ProductionOrderRMs.InsertOnSubmit(dt);
-                            db.SubmitChanges();
-                        }
-                        //save Capacity Load --mh_CapacityLoad_TEMP <---> mh_CapacityLoad
-                        var capaList = db.mh_CapacityLoad_TEMPs.Where(x => x.DocId == mainNo && x.DocNo == null).ToList();
-                        foreach (var c in capaList)
-                        {
-                            if (c.DocNo.ToSt() != "") continue;
-
-                            var cc = new mh_CapacityLoad
-                            {
-                                Active = true,
-                                Capacity = c.Capacity,
-                                CapacityX = c.CapacityX,
-                                Date = c.Date,
-                                DocId = m.id,//idJob
-                                DocNo = m.JobNo,
-                                WorkCenterID = c.WorkCenterID,
-                            };
-                            db.mh_CapacityLoads.InsertOnSubmit(cc);
-                            c.DocId = m.id;
-                            c.DocNo = m.JobNo;
-                            m.CapacityUseX += c.CapacityX;
-
-                            var co = calOvers.Where(x => x.idDoc == c.DocId && x.idWorkcenter == c.WorkCenterID).FirstOrDefault();
-                            if (co == null)
-                                calOvers.Add(new CalOverhead
-                                {
-                                    CapacityX = c.CapacityX,
-                                    idDoc = c.DocId,
-                                    idWorkcenter = c.WorkCenterID
-                                });
-                            else
-                                co.CapacityX += c.CapacityX;
-                        }
-                        db.SubmitChanges();
-
-                        //save Calendar Load --mh_CalendarLoad_TEMP <---> mh_CalendarLoad
-                        var calList = db.mh_CalendarLoad_TEMPs.Where(x => x.idJob == mainNo && x.idAbs == -1).ToList();
-                        foreach (var c in calList)
-                        {
-                            var cc = new mh_CalendarLoad
-                            {
-                                Date = c.Date,
-                                EndingTime = c.EndingTime,
-                                idAbs = (c.idAbs >= 0) ? c.idAbs : 0,
-                                idCal = c.idCal,
-                                idHol = c.idHol,
-                                idJob = m.id, //idJob
-                                idRoute = c.idRoute,
-                                idWorkcenter = c.idWorkcenter,
-                                StartingTime = c.StartingTime,
-                            };
-                            db.mh_CalendarLoads.InsertOnSubmit(cc);
-                            c.idJob = m.id;
-                            c.idAbs = 0;
-
-                            var co = calOvers.Where(x => x.idWorkcenter == c.idWorkcenter && x.idDoc == c.idJob && x.idRoute == 0).FirstOrDefault();
-                            if (co != null)
-                                co.idRoute = c.idRoute;
-                        }
-                        db.SubmitChanges();
-
-                        //save Cost Overhead
-                        var manuTime = 1;
-                        var manu = db.mh_ManufacturingSetups.FirstOrDefault();
-                        if (manu != null)
-                        {
-                            if (manu.ShowCapacityInUOM == 2) //Hour
-                                manuTime = 60;
-                            else if (manu.ShowCapacityInUOM == 3) //Day
-                                manuTime = (24 * 60);
-                        }
-                        foreach (var co in calOvers)
-                        {
-                            var rt = db.mh_RoutingDTs.Where(x => x.id == co.idRoute && x.idWorkCenter == co.idWorkcenter && x.Active).FirstOrDefault();
-                            if (rt != null)
-                            {
-                                var costAll = Math.Round(rt.UnitCost / manuTime, 2);
-                                m.CostOverhead += Math.Round(costAll * co.CapacityX, 2);
-                            }
-                        }
-
-                        //delete gridPlan
-                        int id = item.Cells["id"].Value.ToInt();
-                        var d = db.mh_Planning_TEMPs.Where(x => x.id == id).ToList();
-                        if (d.Count > 0)
-                        {
-                            db.mh_Planning_TEMPs.DeleteAllOnSubmit(d);
-                            db.SubmitChanges();
-                        }
-
-
-                        //Send to Approve
-                        db.sp_062_mh_ApproveList_Add(m.JobNo, "Job Req", ClassLib.Classlib.User);
-                    }
-                    DataLoad();
-
-                    baseClass.Info("Generate Job Order Sheet complete.\n");
-                }
-            }
-            catch (Exception ex)
-            {
-                baseClass.Error(ex.Message);
-            }
-            finally
-            {
-                this.Cursor = Cursors.Default;
-            }
-        }
-
         private void btnGenPR_Click(object sender, EventArgs e)
         {
             dgvData.EndEdit();
@@ -723,16 +515,20 @@ namespace StockControl
                         //Hd
                         byte[] b = null;
                         int idRef = item.Cells["idRef"].Value.ToInt();
-                        var poDt = db.mh_CustomerPODTs.Where(x => x.id == idRef).FirstOrDefault();
-                        int idPoHd = 0;
-                        if (poDt != null)
-                            idPoHd = poDt.idCustomerPO;
-                        string CstmPoNo = item.Cells["RefDocNo"].Value.ToSt();
-
-                        var hd = new mh_PurchaseRequest();
-                        if (_dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idPoHd).Count() > 0)
+                        ////
+                        var soDt = db.mh_SaleOrderDTs.Where(x => x.id == idRef).FirstOrDefault();
+                        int idSoHd = 0;
+                        if (soDt != null)
                         {
-                            var row = _dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idPoHd).First();
+                            var sohd = db.mh_SaleOrders.Where(x => x.SONo == soDt.SONo).FirstOrDefault();
+                            idSoHd = sohd.id;
+                        }
+
+                        string SONo = item.Cells["RefDocNo"].Value.ToSt();
+                        var hd = new mh_PurchaseRequest();
+                        if (_dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idSoHd).Count() > 0)
+                        {
+                            var row = _dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idSoHd).First();
                             string prNo = row["PRNo"].ToSt();
                             hd = db.mh_PurchaseRequests.Where(x => x.PRNo == prNo).FirstOrDefault();
                         }
@@ -745,25 +541,70 @@ namespace StockControl
                                 ClearBill = false,
                                 CreateBy = ClassLib.Classlib.User,
                                 CreateDate = DateTime.Now,
-                                Department = "Planing",
+                                Department = "Planning",
                                 HDRemark = "",
-                                idCstmPO = idPoHd,
+                                idCstmPO = idSoHd,
                                 LocationRunning = null,
                                 PRNo = dbClss.GetNo(12, 2),
-                                RefDocument = CstmPoNo, //Customer PoNo
+                                RefDocument = SONo,
                                 RequestBy = ClassLib.Classlib.User,
                                 RequestDate = DateTime.Now,
                                 Status = "Waiting",
-                                TEMPNo = dbClss.GetNo(3, 2),
-                                Total = 0,//update
+                                TEMPNo = dbClss.GetNo(3,2),
+                                Total = 0, //update
                                 UpdateBy = ClassLib.Classlib.User,
                                 UpdateDate = DateTime.Now,
                             };
                             db.mh_PurchaseRequests.InsertOnSubmit(hd);
-                            _dt.Rows.Add(idPoHd, hd.PRNo);
+                            _dt.Rows.Add(idSoHd, hd.PRNo);
                         }
-                        if (poDt != null) poDt.genPR = true;
+                        if (soDt != null) soDt.genPR = true;
                         db.SubmitChanges();
+
+                        if (false)
+                        {
+                            //var poDt = db.mh_CustomerPODTs.Where(x => x.id == idRef).FirstOrDefault();
+                            //int idPoHd = 0;
+                            //if (poDt != null)
+                            //    idPoHd = poDt.idCustomerPO;
+                            //string CstmPoNo = item.Cells["RefDocNo"].Value.ToSt();
+
+                            //var hd = new mh_PurchaseRequest();
+                            //if (_dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idPoHd).Count() > 0)
+                            //{
+                            //    var row = _dt.Rows.Cast<DataRow>().Where(x => x["idCstmPO"].ToInt() == idPoHd).First();
+                            //    string prNo = row["PRNo"].ToSt();
+                            //    hd = db.mh_PurchaseRequests.Where(x => x.PRNo == prNo).FirstOrDefault();
+                            //}
+                            //else
+                            //{
+                            //    //New PR
+                            //    hd = new mh_PurchaseRequest
+                            //    {
+                            //        Barcode = b,
+                            //        ClearBill = false,
+                            //        CreateBy = ClassLib.Classlib.User,
+                            //        CreateDate = DateTime.Now,
+                            //        Department = "Planing",
+                            //        HDRemark = "",
+                            //        idCstmPO = idPoHd,
+                            //        LocationRunning = null,
+                            //        PRNo = dbClss.GetNo(12, 2),
+                            //        RefDocument = CstmPoNo, //Customer PoNo
+                            //        RequestBy = ClassLib.Classlib.User,
+                            //        RequestDate = DateTime.Now,
+                            //        Status = "Waiting",
+                            //        TEMPNo = dbClss.GetNo(3, 2),
+                            //        Total = 0,//update
+                            //        UpdateBy = ClassLib.Classlib.User,
+                            //        UpdateDate = DateTime.Now,
+                            //    };
+                            //    db.mh_PurchaseRequests.InsertOnSubmit(hd);
+                            //    _dt.Rows.Add(idPoHd, hd.PRNo);
+                            //}
+                            //if (poDt != null) poDt.genPR = true;
+                            //db.SubmitChanges();
+                        }
 
                         //Dt
                         string itemNo = item.Cells["ItemNo"].Value.ToSt();
@@ -772,7 +613,8 @@ namespace StockControl
                         var vn = db.mh_Vendors.Where(x => x.No == tool.VendorNo).FirstOrDefault();
 
                         var dt = db.mh_PurchaseRequestLines.Where(x => x.PRNo == hd.PRNo && x.idCstmPODt == idRef && x.CodeNo == itemNo && x.SS == 1
-                                                            && x.PCSUOM == item.Cells["PCSUnit"].Value.ToDecimal() && x.UOM == item.Cells["UOM"].Value.ToSt()).FirstOrDefault();
+                                                            && x.PCSUOM == item.Cells["PCSUnit"].Value.ToDecimal() 
+                                                            && x.UOM == item.Cells["UOM"].Value.ToSt()).FirstOrDefault();
                         if (dt != null)
                         {
                             dt.OrderQty += item.Cells["Qty"].Value.ToDecimal();
