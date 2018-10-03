@@ -445,12 +445,21 @@ namespace StockControl
                         m.UpdateDate = DateTime.Now;
                         m.UpdateBy = ClassLib.Classlib.User;
 
-                        var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                        if (po != null)
+                        //var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        //if (po != null)
+                        //{
+                        //    //po.OutPlan += (m.Qty * m.PCSUnit) - m.OutQty;
+                        //    po.OutPlan = Math.Round(m.Qty, 2); //Full Return Qty
+                        //    po.Status = baseClass.setCustomerPOStatus(po);
+                        //    db.SubmitChanges();
+
+                        //}
+
+                        var so = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        if(so != null)
                         {
-                            //po.OutPlan += (m.Qty * m.PCSUnit) - m.OutQty;
-                            po.OutPlan = Math.Round(m.Qty, 2); //Full Return Qty
-                            po.Status = baseClass.setCustomerPOStatus(po);
+                            //so.OutPlan += (m.Qty + m.PCSUnit) - m.OutQty;
+                            so.OutPlan = Math.Round(m.Qty, 2);//Full Return Qty;
                             db.SubmitChanges();
 
                             //remove capa
@@ -587,15 +596,24 @@ namespace StockControl
                     if (newJob)
                     {
                         dbClss.AddHistory(this.Name, "Job Order Sheet", $"New Job Order Sheet : {m.JobNo}", m.JobNo);
-                        var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                        if (po != null)
+                        //var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        //if (po != null)
+                        //{
+                        //    var pohd = db.mh_CustomerPOs.Where(x => x.id == po.idCustomerPO).FirstOrDefault();
+                        //    string pono = (pohd != null) ? pohd.CustomerPONo : "";
+                        //    dbClss.AddHistory("CustomerPO", "Customer P/O", $"New job Order Sheet : {m.JobNo} for P/O {pohd.CustomerPONo}", pohd.CustomerPONo);
+                        //    //po.OutPlan -= m.OutQty;
+                        //    po.OutPlan = 0;//Full Ref Customer P/O
+                        //    po.Status = baseClass.setCustomerPOStatus(po);
+                        //    db.SubmitChanges();
+                        //}
+                        var so = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        if(so != null)
                         {
-                            var pohd = db.mh_CustomerPOs.Where(x => x.id == po.idCustomerPO).FirstOrDefault();
-                            string pono = (pohd != null) ? pohd.CustomerPONo : "";
-                            dbClss.AddHistory("CustomerPO", "Customer P/O", $"New job Order Sheet : {m.JobNo} for P/O {pohd.CustomerPONo}", pohd.CustomerPONo);
-                            //po.OutPlan -= m.OutQty;
-                            po.OutPlan = 0;//Full Ref Customer P/O
-                            po.Status = baseClass.setCustomerPOStatus(po);
+                            var sohd = db.mh_SaleOrders.Where(x => x.SONo == so.SONo).FirstOrDefault();
+                            string sono = so.SONo;
+                            //so.OutPlan -= m.OutQty;
+                            so.OutPlan = 0;
                             db.SubmitChanges();
                         }
                     }
