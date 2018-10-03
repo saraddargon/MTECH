@@ -84,8 +84,6 @@
             this.btnClearPlan = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup5 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnGenPR = new Telerik.WinControls.UI.RadButtonElement();
-            this.radButtonElement4 = new Telerik.WinControls.UI.RadButtonElement();
-            this.btnGenJob = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup9 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnLinkToPR = new Telerik.WinControls.UI.RadButtonElement();
             this.btnLinkToJob = new Telerik.WinControls.UI.RadButtonElement();
@@ -559,9 +557,7 @@
             // radRibbonBarGroup5
             // 
             this.radRibbonBarGroup5.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnGenPR,
-            this.radButtonElement4,
-            this.btnGenJob});
+            this.btnGenPR});
             this.radRibbonBarGroup5.Name = "radRibbonBarGroup5";
             this.radRibbonBarGroup5.Text = "Generate";
             // 
@@ -573,22 +569,6 @@
             this.btnGenPR.Text = "<html><p>Generate</p><p>to P/R</p></html>";
             this.btnGenPR.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnGenPR.Click += new System.EventHandler(this.btnGenPR_Click);
-            // 
-            // radButtonElement4
-            // 
-            this.radButtonElement4.Name = "radButtonElement4";
-            this.radButtonElement4.Text = "    ";
-            this.radButtonElement4.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
-            // 
-            // btnGenJob
-            // 
-            this.btnGenJob.Image = ((System.Drawing.Image)(resources.GetObject("btnGenJob.Image")));
-            this.btnGenJob.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnGenJob.Name = "btnGenJob";
-            this.btnGenJob.Text = "<html><p>Generate </p><p>to JOB</p></html>";
-            this.btnGenJob.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnGenJob.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
-            this.btnGenJob.Click += new System.EventHandler(this.btnGenJob_Click);
             // 
             // radRibbonBarGroup9
             // 
@@ -749,14 +729,12 @@
         private Telerik.WinControls.UI.RadButtonElement btnRecal;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup3;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup5;
-        private Telerik.WinControls.UI.RadButtonElement btnGenJob;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup6;
         private Telerik.WinControls.UI.RadButtonElement radButtonElement1;
         private Telerik.WinControls.UI.RadButtonElement radButtonElement2;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup7;
         private Telerik.WinControls.UI.RadButtonElement radButtonElement3;
         private Telerik.WinControls.UI.RadButtonElement btnGenPR;
-        private Telerik.WinControls.UI.RadButtonElement radButtonElement4;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup8;
         private Telerik.WinControls.UI.RadButtonElement btnPrintReport;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup9;
