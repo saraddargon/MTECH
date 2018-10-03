@@ -317,7 +317,7 @@ namespace StockControl
                                 foreach (var vv in r)
                                 {
                                     string QtyAC = "";
-                                    QtyAC = (dbClss.TDe(vv.QTY)* dbClss.TDe(vv.PCSUnit)).ToString() + " "+ vv.Unit;
+                                    QtyAC = (dbClss.TDe(vv.QTY)* dbClss.TDe(vv.PCSUnit)).ToString("N2") + " "+ vv.Unit;
 
                                     Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription, vv.RemainQty
                                         , dbClss.TDe( vv.QTY), vv.Unit, dbClss.TDe(vv.PCSUnit)
@@ -861,9 +861,7 @@ namespace StockControl
                         {
                             if (StockControl.dbClss.TInt(g.Cells["id"].Value) <= 0)  //New ใหม่
                             {
-
-                                Seq += 1;
-
+                                
                                 //int RefidJobNo = dbClss.TInt(txtRefidJobNo.Text);
                                 string BaseUOM = "PCS";//dbClss.TSt(e.Row.Cells["Unit"].Value);
                                 decimal BasePCSUOM = 1;// dbClss.Con_UOM(CodeNo, BaseUOM);
