@@ -288,6 +288,14 @@ namespace StockControl
 
         public ItemData(string ItemNo, string ItemName = "")
         {
+            //**************
+            //***************
+            //***************
+            //***************
+            //*** ระบบเปลี่ยนจาก idCustomerPODt เป็น id ของ SaleOrder Dt แทน
+            //***************
+            //***************
+            //***************
             this.ItemNo = ItemNo;
             this.ItemName = ItemName;
             using (var db = new DataClasses1DataContext())
@@ -477,12 +485,18 @@ namespace StockControl
 
                 if (this.ItemNo == "TBK-T-0001")
                 { }
-                var m = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1)
-                    .Join(db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && x.genPR
+                //var m = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1)
+                //    .Join(db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && x.genPR
+                //        && x.ItemNo == this.ItemNo && x.OutQty > 0)
+                //    , hd => hd.id
+                //    , dt => dt.idCustomerPO
+                //    , (hd, dt) => new { hd, dt }).ToList();
+                var m = db.mh_SaleOrders.Where(x => x.Active && x.DemandType == 1)
+                    .Join(db.mh_SaleOrderDTs.Where(x => x.Active && x.forSafetyStock && x.genPR
                         && x.ItemNo == this.ItemNo && x.OutQty > 0)
-                    , hd => hd.id
-                    , dt => dt.idCustomerPO
-                    , (hd, dt) => new { hd, dt }).ToList();
+                        , hd => hd.SONo
+                        , dt => dt.SONo
+                        , (hd, dt) => new { hd, dt }).ToList();
                 foreach (var mm in m)
                 {
                     SafetyStockFG += mm.dt.OutQty;

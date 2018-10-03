@@ -46476,6 +46476,8 @@ namespace StockControl
 		
 		private bool _genPR;
 		
+		private System.DateTime _ReqDate;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -46526,6 +46528,8 @@ namespace StockControl
     partial void OnforSafetyStockChanged();
     partial void OngenPRChanging(bool value);
     partial void OngenPRChanged();
+    partial void OnReqDateChanging(System.DateTime value);
+    partial void OnReqDateChanged();
     #endregion
 		
 		public mh_SaleOrderDT()
@@ -46989,6 +46993,26 @@ namespace StockControl
 					this._genPR = value;
 					this.SendPropertyChanged("genPR");
 					this.OngenPRChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReqDate", DbType="DateTime NOT NULL")]
+		public System.DateTime ReqDate
+		{
+			get
+			{
+				return this._ReqDate;
+			}
+			set
+			{
+				if ((this._ReqDate != value))
+				{
+					this.OnReqDateChanging(value);
+					this.SendPropertyChanging();
+					this._ReqDate = value;
+					this.SendPropertyChanged("ReqDate");
+					this.OnReqDateChanged();
 				}
 			}
 		}

@@ -743,6 +743,7 @@ namespace StockControl
                     gg.genPR = false;
                     gg.forSafetyStock = false;
                     gg.OutQty = ix.Cells["OutQty"].Value.ToDecimal();
+                    gg.ReqDate = ix.Cells["ReqDate"].Value.ToDateTime().Value.Date;
 
 
                     db.mh_SaleOrderDTs.InsertOnSubmit(gg);
