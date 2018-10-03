@@ -200,6 +200,8 @@ namespace StockControl
                         }
                         btnSave.Enabled = false;
                         SetRowNo1(dgvData);
+
+                        CallTotal();
                     }
                 }
             }
@@ -230,14 +232,23 @@ namespace StockControl
                                     cbbCSTM_SelectedIndexChanged(null, null);
                                     //txtRemark.Text = "";// c.RemarkHD;
 
+                                    //decimal Cost = 0;
+                                    //var t = db.mh_Items.Where(x => x.InternalNo == c.FirstOrDefault().ItemNo.ToSt()).ToList();
+                                    //if (t.Count > 0)
+                                    //{
+                                    //    Cost = dbClss.TDe(t.FirstOrDefault().StandardPrice);
+                                    //}
+
 
                                     var rowE = dgvData.Rows.AddNew();
                                     addRow(rowE.Index, DateTime.Now,
                                         c.FirstOrDefault().ItemNo
                                         , c.FirstOrDefault().ItemName, c.FirstOrDefault().Description, c.FirstOrDefault().LocationItem
                                         , 0, c.FirstOrDefault().UOM, dbClss.TDe(c.FirstOrDefault().PCSUnit)
+                                        
                                         , dbClss.TDe(c.FirstOrDefault().UnitPrice)
                                         , dbClss.TDe(c.FirstOrDefault().UnitPrice) * 0
+
                                         , false, 0, 0, 0, "Waiting", "Waiting"
                                         , c.FirstOrDefault().SSNo, dbClss.TInt(c.FirstOrDefault().id)
                                         , dbClss.TDe(c.FirstOrDefault().OutInv), "T", "SH");
@@ -1775,17 +1786,24 @@ namespace StockControl
                                     cboCustomer.SelectedValue = dbClss.TSt(dd.FirstOrDefault().CustomerNo);
                                     //dtSODate.Value = DateTime.Now;
                                     cbbCSTM_SelectedIndexChanged(null, null);
-                                    //txtRemark.Text = "";// c.RemarkHD;
+                                        //txtRemark.Text = "";// c.RemarkHD;
+                                        //decimal Cost = 0;
+                                        //var t = db.mh_Items.Where(x => x.InternalNo == c.FirstOrDefault().ItemNo.ToSt()).ToList();
+                                        //if (t.Count > 0)
+                                        //{
+                                        //    Cost = dbClss.TDe(t.FirstOrDefault().StandardPrice);
+                                        //}
 
-                                    
                                             var rowE = dgvData.Rows.AddNew();
                                         addRow(rowE.Index, DateTime.Now,
                                             c.FirstOrDefault().ItemNo
                                             , c.FirstOrDefault().ItemName, c.FirstOrDefault().Description
                                             , c.FirstOrDefault().LocationItem
                                             , 0, c.FirstOrDefault().UOM, dbClss.TDe(c.FirstOrDefault().PCSUnit)
+
                                             , dbClss.TDe(c.FirstOrDefault().UnitPrice)
                                             , dbClss.TDe(c.FirstOrDefault().UnitPrice) * 0
+                                            
                                             , false, 0, 0, 0, "Waiting", "Waiting"
                                             , c.FirstOrDefault().SSNo
                                             , dbClss.TInt(c.FirstOrDefault().id)
