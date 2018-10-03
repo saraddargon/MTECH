@@ -226,7 +226,7 @@ namespace StockControl
                 cboTypeCode.Enabled = ss;
                 txtCustomerPartNo.Enabled = ss;
                 cboVendorName.Enabled = ss;
-                //cboBaseUOM.Enabled = ss;
+                cboBaseUOM.Enabled = ss;
                 ddlInventoryGroup.Enabled = ss;
                 cboPurchaseUOM.Enabled = ss;
                 cboSalseUOM.Enabled = ss;
@@ -273,7 +273,7 @@ namespace StockControl
                 cboTypeCode.Enabled = ss;
                 txtCustomerPartNo.Enabled = ss;
                 cboVendorName.Enabled = ss;
-                //cboBaseUOM.Enabled = ss;
+                cboBaseUOM.Enabled = ss;
                 ddlInventoryGroup.Enabled = ss;
                 cboPurchaseUOM.Enabled = ss;
                 cboSalseUOM.Enabled = ss;
@@ -319,7 +319,7 @@ namespace StockControl
                 cboTypeCode.Enabled = ss;
                 txtCustomerPartNo.Enabled = ss;
                 cboVendorName.Enabled = ss;
-                //cboBaseUOM.Enabled = ss;
+                cboBaseUOM.Enabled = ss;
                 ddlInventoryGroup.Enabled = ss;
                 cboPurchaseUOM.Enabled = ss;
                 cboSalseUOM.Enabled = ss;
