@@ -45840,7 +45840,7 @@ namespace StockControl
 		
 		private string _Status;
 		
-		private System.Nullable<int> _DemandType;
+		private int _DemandType;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -45894,7 +45894,7 @@ namespace StockControl
     partial void OnSeqStatusChanged();
     partial void OnStatusChanging(string value);
     partial void OnStatusChanged();
-    partial void OnDemandTypeChanging(System.Nullable<int> value);
+    partial void OnDemandTypeChanging(int value);
     partial void OnDemandTypeChanged();
     #endregion
 		
@@ -46383,8 +46383,8 @@ namespace StockControl
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DemandType", DbType="Int")]
-		public System.Nullable<int> DemandType
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DemandType", DbType="Int NOT NULL")]
+		public int DemandType
 		{
 			get
 			{
@@ -46470,11 +46470,11 @@ namespace StockControl
 		
 		private decimal _OutPlan;
 		
-		private System.Nullable<decimal> _OutQty;
+		private decimal _OutQty;
 		
-		private System.Nullable<bool> _forSafetyStock;
+		private bool _forSafetyStock;
 		
-		private System.Nullable<bool> _genPR;
+		private bool _genPR;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -46520,11 +46520,11 @@ namespace StockControl
     partial void OnOutShipChanged();
     partial void OnOutPlanChanging(decimal value);
     partial void OnOutPlanChanged();
-    partial void OnOutQtyChanging(System.Nullable<decimal> value);
+    partial void OnOutQtyChanging(decimal value);
     partial void OnOutQtyChanged();
-    partial void OnforSafetyStockChanging(System.Nullable<bool> value);
+    partial void OnforSafetyStockChanging(bool value);
     partial void OnforSafetyStockChanged();
-    partial void OngenPRChanging(System.Nullable<bool> value);
+    partial void OngenPRChanging(bool value);
     partial void OngenPRChanged();
     #endregion
 		
@@ -46933,8 +46933,8 @@ namespace StockControl
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutQty", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> OutQty
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutQty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal OutQty
 		{
 			get
 			{
@@ -46953,8 +46953,8 @@ namespace StockControl
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_forSafetyStock", DbType="Bit")]
-		public System.Nullable<bool> forSafetyStock
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_forSafetyStock", DbType="Bit NOT NULL")]
+		public bool forSafetyStock
 		{
 			get
 			{
@@ -46973,8 +46973,8 @@ namespace StockControl
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_genPR", DbType="Bit")]
-		public System.Nullable<bool> genPR
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_genPR", DbType="Bit NOT NULL")]
+		public bool genPR
 		{
 			get
 			{
