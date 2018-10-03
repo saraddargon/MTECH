@@ -412,26 +412,50 @@ namespace StockControl
                             s.Refid = dt.id; //id mh_PackingDt
 
                             //กรณีปกติจะบันทึก idCustomerPO Dt เพื่อระบุว่าของที่รับเข้าใช้สำหรับ Customer PO ใด
-                            s.idCSTMPODt = job.RefDocId; //idCstmPODt
-                            //กรณี Safety Stock จะบันทึก idCStmPODt เป็น 0 แต่ถ้าเป็นการรับเพื่อไปผลิต FG Safety Stock จะใส่ id นั้นๆปกติ
-                            var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == job.RefDocId /*&& x.forSafetyStock*/)
-                                .Join(db.mh_CustomerPOs.Where(x => x.Active /*x.DemandType == 1*/)
-                                , podt => podt.idCustomerPO
-                                , pohd => pohd.id
-                                , (podt, pohd) => new { pohd, podt }).FirstOrDefault();
-                            if (cstmpo != null)
+                            s.idCSTMPODt = job.RefDocId; //idCstmPODt -->เปลี่ยนเป็น idSaleOrder
+
+                            var so = db.mh_SaleOrderDTs.Where(x => x.id == job.RefDocId)
+                                .Join(db.mh_SaleOrders.Where(x => x.Active)
+                                , sodt => sodt.SONo
+                                , sohd => sohd.SONo
+                                , (sodt, sohd) => new { sohd, sodt }).FirstOrDefault();
+                            if(so != null)
                             {
                                 //เช็คว่าเป็น FG ที่ผลิตเพื่อ Customer PO (Safety stock หรือไม่) :::: DemandType = 1 --> ผลิตเพื่อ Safety Stock
-                                if (cstmpo.podt.ItemNo == s.CodeNo)
+                                if (so.sodt.ItemNo == s.CodeNo)
                                 {
-                                    if(cstmpo.podt.forSafetyStock && cstmpo.pohd.DemandType == 1) //เป็น FG ที่ผลิตเพื่อ Safety Stock ให้ใส่ idCstmPO =0
+                                    if (so.sodt.forSafetyStock && so.sohd.DemandType == 1) //เป็น FG ที่ผลิตเพื่อ Safety Stock ให้ใส่ idCstmPO =0
                                         s.idCSTMPODt = 0;
 
-                                    cstmpo.podt.OutQty -= s.QTY.ToDecimal();
-                                    if (cstmpo.podt.OutQty < 0)
-                                        cstmpo.podt.OutQty = 0;
-                                    dbClss.AddHistory("CustomerPO", "Customer P/O", $"Receive by Packing no. {m.PackingNo} : {s.QTY}", cstmpo.pohd.CustomerPONo);
+                                    so.sodt.OutQty -= s.QTY.ToDecimal();
+                                    if (so.sodt.OutQty < 0)
+                                        so.sodt.OutQty = 0;
+                                    //dbClss.AddHistory("CustomerPO", "Customer P/O", $"Receive by Packing no. {m.PackingNo} : {s.QTY}", cstmpo.pohd.CustomerPONo);
                                 }
+                            }
+
+                            if (false)
+                            {
+                                //กรณี Safety Stock จะบันทึก idCStmPODt เป็น 0 แต่ถ้าเป็นการรับเพื่อไปผลิต FG Safety Stock จะใส่ id นั้นๆปกติ
+                                //var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == job.RefDocId /*&& x.forSafetyStock*/)
+                                //    .Join(db.mh_CustomerPOs.Where(x => x.Active /*x.DemandType == 1*/)
+                                //    , podt => podt.idCustomerPO
+                                //    , pohd => pohd.id
+                                //    , (podt, pohd) => new { pohd, podt }).FirstOrDefault();
+                                //if (cstmpo != null)
+                                //{
+                                ////เช็คว่าเป็น FG ที่ผลิตเพื่อ Customer PO (Safety stock หรือไม่) :::: DemandType = 1 --> ผลิตเพื่อ Safety Stock
+                                //if (cstmpo.podt.ItemNo == s.CodeNo)
+                                //{
+                                //    if(cstmpo.podt.forSafetyStock && cstmpo.pohd.DemandType == 1) //เป็น FG ที่ผลิตเพื่อ Safety Stock ให้ใส่ idCstmPO =0
+                                //        s.idCSTMPODt = 0;
+
+                                //    cstmpo.podt.OutQty -= s.QTY.ToDecimal();
+                                //    if (cstmpo.podt.OutQty < 0)
+                                //        cstmpo.podt.OutQty = 0;
+                                //    dbClss.AddHistory("CustomerPO", "Customer P/O", $"Receive by Packing no. {m.PackingNo} : {s.QTY}", cstmpo.pohd.CustomerPONo);
+                                //}
+                                //}
                             }
 
                             s.Type_in_out = "In";
@@ -649,8 +673,10 @@ namespace StockControl
                         }
 
                         var tool = db.mh_Items.Where(x => x.InternalNo == m.FGNo).FirstOrDefault();
-                        var podt = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                        var pohd = db.mh_CustomerPOs.Where(x => x.id == podt.idCustomerPO).FirstOrDefault();
+                        //var podt = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        //var pohd = db.mh_CustomerPOs.Where(x => x.id == podt.idCustomerPO).FirstOrDefault();
+                        var sodt = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        var sohd = db.mh_SaleOrders.Where(x => x.SONo == sodt.SONo).FirstOrDefault();
 
                         var costAll = m.CostOverhead;
                         var dt = db.mh_ProductionOrderRMs.Where(x => x.JobNo == m.JobNo && x.Active).ToList();
@@ -660,7 +686,9 @@ namespace StockControl
                         var costPer = Math.Round(costAll / m.Qty, 2);
 
                         addRow(0, m.FGNo, m.FGName, qtyTag, m.UOM, m.PCSUnit, costPer
-                            , m.LotNo, "Warehouse", tool.ShelfNo, "", JobNo, pohd.CustomerPONo, m.RefDocNo_TEMP
+                            , m.LotNo, "Warehouse", tool.ShelfNo, "", JobNo
+                            , sohd.SONo
+                            , m.RefDocNo_TEMP
                             , m.id, m.RefDocId, FullTag, ofTag);
                         setRowNo();
                         calAmnt();
@@ -969,16 +997,24 @@ namespace StockControl
                             if (uom != null) pcsunit = uom.QuantityPer;
                             foreach (var ss in st)
                             {
-                                //คืน Qty Customer P/O Dt
-                                var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == d.idCstmPODt).FirstOrDefault();
-                                if (cstmpo != null)
-                                {
-                                    cstmpo.OutQty += d.Qty;
-                                    db.SubmitChanges();
+                                ////คืน Qty Customer P/O Dt
+                                //var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == d.idCstmPODt).FirstOrDefault();
+                                //if (cstmpo != null)
+                                //{
+                                //    cstmpo.OutQty += d.Qty;
+                                //    db.SubmitChanges();
 
-                                    var po = db.mh_CustomerPOs.Where(x => x.id == cstmpo.idCustomerPO).FirstOrDefault();
-                                    if (po != null)
-                                        dbClss.AddHistory("CustomerPO", "Customer P/O", $"Cancel Packing {pkNo} : {d.Qty}", po.CustomerPONo);
+                                //    var po = db.mh_CustomerPOs.Where(x => x.id == cstmpo.idCustomerPO).FirstOrDefault();
+                                //    if (po != null)
+                                //        dbClss.AddHistory("CustomerPO", "Customer P/O", $"Cancel Packing {pkNo} : {d.Qty}", po.CustomerPONo);
+                                //}
+
+                                //คืน Qty Customer P/O Dt
+                                var so = db.mh_SaleOrderDTs.Where(x => x.id == d.idCstmPODt).FirstOrDefault();
+                                if(so != null)
+                                {
+                                    so.OutQty += d.Qty;
+                                    db.SubmitChanges();
                                 }
                                 //คืน Qty Production ORder
                                 var pro = db.mh_ProductionOrders.Where(x => x.id == d.idJob).FirstOrDefault();
