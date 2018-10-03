@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreatePart));
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn33 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn34 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition13 = new Telerik.WinControls.UI.TableViewDefinition();
@@ -106,7 +107,6 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn63 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn64 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition24 = new Telerik.WinControls.UI.TableViewDefinition();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreatePart));
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -126,6 +126,7 @@
             this.radRibbonBarGroup6 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnPrintStockCard = new Telerik.WinControls.UI.RadButtonElement();
             this.btnPrintShelfTAG = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnWhereUsed = new Telerik.WinControls.UI.RadButtonElement();
             this.btnPrintBarCode = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnCal = new Telerik.WinControls.UI.RadButtonElement();
@@ -274,7 +275,6 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.btnWhereUsed = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -642,6 +642,15 @@
             this.btnPrintShelfTAG.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnPrintShelfTAG.Click += new System.EventHandler(this.btnPrintShelfTAG_Click);
             // 
+            // btnWhereUsed
+            // 
+            this.btnWhereUsed.Image = ((System.Drawing.Image)(resources.GetObject("btnWhereUsed.Image")));
+            this.btnWhereUsed.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnWhereUsed.Name = "btnWhereUsed";
+            this.btnWhereUsed.Text = "Where Used";
+            this.btnWhereUsed.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnWhereUsed.Click += new System.EventHandler(this.btnWhereUsed_Click);
+            // 
             // btnPrintBarCode
             // 
             this.btnPrintBarCode.Image = ((System.Drawing.Image)(resources.GetObject("btnPrintBarCode.Image")));
@@ -890,7 +899,7 @@
             this.radGroupBox4.HeaderText = "";
             this.radGroupBox4.Location = new System.Drawing.Point(483, 283);
             this.radGroupBox4.Name = "radGroupBox4";
-            this.radGroupBox4.Size = new System.Drawing.Size(341, 62);
+            this.radGroupBox4.Size = new System.Drawing.Size(341, 46);
             this.radGroupBox4.TabIndex = 8;
             this.radGroupBox4.ThemeName = "Office2010Blue";
             // 
@@ -898,27 +907,29 @@
             // 
             this.txtidBOM.Enabled = false;
             this.txtidBOM.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtidBOM.Location = new System.Drawing.Point(247, 34);
+            this.txtidBOM.Location = new System.Drawing.Point(247, 38);
             this.txtidBOM.MaxLength = 100;
             this.txtidBOM.Name = "txtidBOM";
             this.txtidBOM.ReadOnly = true;
             this.txtidBOM.Size = new System.Drawing.Size(41, 19);
             this.txtidBOM.TabIndex = 5;
             this.txtidBOM.ThemeName = "Office2010Blue";
+            this.txtidBOM.Visible = false;
             // 
             // radLabel60
             // 
             this.radLabel60.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel60.Location = new System.Drawing.Point(65, 34);
+            this.radLabel60.Location = new System.Drawing.Point(65, 38);
             this.radLabel60.Name = "radLabel60";
             this.radLabel60.Size = new System.Drawing.Size(50, 17);
             this.radLabel60.TabIndex = 4;
             this.radLabel60.Text = "BOM No.";
+            this.radLabel60.Visible = false;
             // 
             // radLabel59
             // 
             this.radLabel59.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel59.Location = new System.Drawing.Point(65, 11);
+            this.radLabel59.Location = new System.Drawing.Point(65, 15);
             this.radLabel59.Name = "radLabel59";
             this.radLabel59.Size = new System.Drawing.Size(52, 17);
             this.radLabel59.TabIndex = 0;
@@ -984,12 +995,13 @@
             this.cboBOM.EditorControl.TabIndex = 0;
             this.cboBOM.Enabled = false;
             this.cboBOM.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboBOM.Location = new System.Drawing.Point(123, 34);
+            this.cboBOM.Location = new System.Drawing.Point(123, 38);
             this.cboBOM.Name = "cboBOM";
             this.cboBOM.Size = new System.Drawing.Size(117, 21);
             this.cboBOM.TabIndex = 3;
             this.cboBOM.TabStop = false;
             this.cboBOM.ThemeName = "Office2010Blue";
+            this.cboBOM.Visible = false;
             this.cboBOM.SelectedIndexChanged += new System.EventHandler(this.cboBOM_SelectedIndexChanged);
             // 
             // cboRouting
@@ -1057,7 +1069,7 @@
             this.cboRouting.EditorControl.TabIndex = 0;
             this.cboRouting.Enabled = false;
             this.cboRouting.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboRouting.Location = new System.Drawing.Point(123, 8);
+            this.cboRouting.Location = new System.Drawing.Point(123, 12);
             this.cboRouting.Name = "cboRouting";
             this.cboRouting.Size = new System.Drawing.Size(117, 21);
             this.cboRouting.TabIndex = 3;
@@ -1070,7 +1082,7 @@
             // 
             this.txtidRouting.Enabled = false;
             this.txtidRouting.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtidRouting.Location = new System.Drawing.Point(247, 9);
+            this.txtidRouting.Location = new System.Drawing.Point(247, 13);
             this.txtidRouting.Name = "txtidRouting";
             this.txtidRouting.Size = new System.Drawing.Size(41, 19);
             this.txtidRouting.TabIndex = 1;
@@ -1090,7 +1102,7 @@
             this.radGroupBox3.Controls.Add(this.btnOpenDWG);
             this.radGroupBox3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radGroupBox3.HeaderText = "รายละเอียดอื่นๆ";
-            this.radGroupBox3.Location = new System.Drawing.Point(483, 349);
+            this.radGroupBox3.Location = new System.Drawing.Point(483, 343);
             this.radGroupBox3.Name = "radGroupBox3";
             this.radGroupBox3.Size = new System.Drawing.Size(341, 111);
             this.radGroupBox3.TabIndex = 8;
@@ -1226,6 +1238,7 @@
             0,
             0});
             this.seStandardPrice.Name = "seStandardPrice";
+            this.seStandardPrice.ReadOnly = true;
             this.seStandardPrice.Size = new System.Drawing.Size(128, 20);
             this.seStandardPrice.TabIndex = 20;
             this.seStandardPrice.TabStop = false;
@@ -1259,7 +1272,7 @@
             // 
             // seTimebucket
             // 
-            this.seTimebucket.Location = new System.Drawing.Point(581, 477);
+            this.seTimebucket.Location = new System.Drawing.Point(581, 471);
             this.seTimebucket.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -1343,7 +1356,7 @@
             // radLabel45
             // 
             this.radLabel45.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel45.Location = new System.Drawing.Point(477, 476);
+            this.radLabel45.Location = new System.Drawing.Point(477, 470);
             this.radLabel45.Name = "radLabel45";
             this.radLabel45.Size = new System.Drawing.Size(105, 43);
             this.radLabel45.TabIndex = 0;
@@ -1848,7 +1861,7 @@
             // 
             this.radLabel36.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel36.ForeColor = System.Drawing.Color.DarkGray;
-            this.radLabel36.Location = new System.Drawing.Point(711, 479);
+            this.radLabel36.Location = new System.Drawing.Point(711, 473);
             this.radLabel36.Name = "radLabel36";
             this.radLabel36.Size = new System.Drawing.Size(68, 17);
             this.radLabel36.TabIndex = 0;
@@ -3117,15 +3130,6 @@
             this.radRibbonBarButtonGroup5.ShowBackColor = false;
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
-            // 
-            // btnWhereUsed
-            // 
-            this.btnWhereUsed.Image = ((System.Drawing.Image)(resources.GetObject("btnWhereUsed.Image")));
-            this.btnWhereUsed.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnWhereUsed.Name = "btnWhereUsed";
-            this.btnWhereUsed.Text = "Where Used";
-            this.btnWhereUsed.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnWhereUsed.Click += new System.EventHandler(this.btnWhereUsed_Click);
             // 
             // CreatePart
             // 

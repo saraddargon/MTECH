@@ -70,7 +70,8 @@ namespace StockControl
             dt_HD.Columns.Add(new DataColumn("ModifyBy", typeof(string)));
             dt_HD.Columns.Add(new DataColumn("ModifyDate", typeof(DateTime)));
             dt_HD.Columns.Add(new DataColumn("ShelfNo", typeof(DateTime)));
-
+            dt_HD.Columns.Add(new DataColumn("YieldOperation", typeof(decimal)));
+            
 
             dt_DT.Columns.Add(new DataColumn("id", typeof(string)));
             dt_DT.Columns.Add(new DataColumn("PartNo", typeof(string)));
@@ -84,9 +85,9 @@ namespace StockControl
             dt_DT.Columns.Add(new DataColumn("PCSUnit", typeof(decimal)));
             dt_DT.Columns.Add(new DataColumn("UnitCost", typeof(decimal)));
             dt_DT.Columns.Add(new DataColumn("Cost", typeof(decimal)));
-           
+            dt_DT.Columns.Add(new DataColumn("chk_YieldOperation", typeof(decimal)));
 
-    }
+        }
         
         string Ac = "";
         private void Unit_Load(object sender, EventArgs e)
@@ -209,6 +210,8 @@ namespace StockControl
                                  ReplenishmentType = b.ReplenishmentType
                                  , GroupType = b.GroupType
                                  , Version = a.Version
+                                 ,
+                                 YieldOperation = a.YieldOperation
 
                              }//.Where(ab => ab.VendorNo.Contains(Vendorno))
                               ).ToList();
@@ -242,6 +245,7 @@ namespace StockControl
                         txtYear_.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Year_);
                         txtMonth_.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Month_);
                         txtVersion.Text = dbClss.TSt(g.FirstOrDefault().Version);
+                        seYieldoperation.Value = dbClss.TDe(g.FirstOrDefault().YieldOperation);
 
                         txtCreateby.Text = StockControl.dbClss.TSt(g.FirstOrDefault().CreateBy);
                         DateTime temp = Convert.ToDateTime(g.FirstOrDefault().CreateDate,new CultureInfo("en-US"));
@@ -454,16 +458,13 @@ namespace StockControl
                         //int ver = dbClss.TInt(txtVersion.Text) +1;
                         gg.Version = txtVersion.Text.Trim();
                         gg.Status = "Process";
-                        
+                        gg.YieldOperation = dbClss.TDe(seYieldoperation.Value);
                         if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                         {
-                           
                             gg.StartDate = Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
                             gg.EndDate = Convert.ToDateTime(dtEnd.Value, new CultureInfo("en-US"));
 
                             dbClss.AddHistory(this.Name, "แก้ไข Bom", "แก้ไขวันเริ่มและสิ้นสุด [ วันที่เริ่ม : " + dtBegin.Text.Trim() +" วันที่สิ้นสุด : "+ dtEnd.Text.Trim() + "]", txtBomNo.Text.Trim() + "-" + txtPartNo.Text.Trim());
-
-                            //}
                         }
                         if (!txtRemarkHD.Text.Trim().Equals(row["Remark"].ToString()))
                         {
@@ -492,6 +493,8 @@ namespace StockControl
                     gg.Remark = txtRemarkHD.Text.Trim();
                     gg.Version = txtVersion.Text.Trim();
                     gg.Status = "Process";
+                    gg.YieldOperation = dbClss.TDe(seYieldoperation.Value);
+
                     if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                     {
                         gg.StartDate = Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
@@ -550,6 +553,8 @@ namespace StockControl
                             u.UnitCost = StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value);
                             u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);
                             u.PCSUnit = dbClss.TDe(g.Cells["dgvPCSUnit"].Value);
+                            u.chk_YieldOperation = dbClss.TBo(g.Cells["dgvchk_YieldOperation"].Value);
+
                             db.tb_BomDTs.InsertOnSubmit(u);
                             db.SubmitChanges();
                             //C += 1;
@@ -602,6 +607,8 @@ namespace StockControl
                                             // u.Unit = StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value);
                                             dbClss.AddHistory(this.Name, "แก้ไข Item Bom", "แก้ไขหน่วย [" + StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value) + "]", txtBomNo.Text.Trim() + "-" + txtPartNo.Text.Trim());
                                         }
+                                       
+                                       
 
                                         //u.UnitCost = StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value);
                                         //u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);
@@ -616,6 +623,7 @@ namespace StockControl
                                             , StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value)
                                             , StockControl.dbClss.TDe(g.Cells["dgvCost"].Value)
                                             , StockControl.dbClss.TDe(g.Cells["dgvPCSUnit"].Value)
+                                            ,StockControl.dbClss.TBo(g.Cells["dgvchk_YieldOperation"].Value)
                                             , ClassLib.Classlib.User
                                             
                                             );
@@ -669,7 +677,7 @@ namespace StockControl
                 btnAdd_Item.Enabled = ss;
                 btnDel_Item.Enabled = ss;
                 txtVersion.Enabled = ss;
-               
+                seYieldoperation.Enabled = ss;
             }
             else if (Condition.Equals("View"))
             {
@@ -683,6 +691,7 @@ namespace StockControl
                 btnAdd_Item.Enabled = ss;
                 btnDel_Item.Enabled = ss;
                 txtVersion.Enabled = ss;
+                seYieldoperation.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
@@ -696,6 +705,7 @@ namespace StockControl
                 btnAdd_Item.Enabled = ss;
                 btnDel_Item.Enabled = ss;
                 txtVersion.Enabled = ss;
+                seYieldoperation.Enabled = ss;
             }
         }
        

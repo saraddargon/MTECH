@@ -381,24 +381,23 @@ namespace StockControl
                 ro.PropertyName = this.cboRouting.ValueMember;
                 ro.Operator = FilterOperator.StartsWith;
                 this.cboRouting.EditorControl.MasterTemplate.FilterDescriptors.Add(ro);
-
                 cboRouting.DisplayMember = "RoutingNo";
                 cboRouting.ValueMember = "RoutingNo";
                 cboRouting.DataSource = db.mh_Routings.Where(s => s.Active == true).ToList();
                 cboRouting.SelectedIndex = -1;
                 cboRouting.Text = "";
 
-                this.cboBOM.AutoFilter = true;
-                this.cboBOM.AutoCompleteMode = AutoCompleteMode.Append;
-                FilterDescriptor bb = new FilterDescriptor();
-                bb.PropertyName = this.cboBOM.ValueMember;
-                bb.Operator = FilterOperator.StartsWith;
-                this.cboBOM.EditorControl.MasterTemplate.FilterDescriptors.Add(bb);
-                cboBOM.DisplayMember = "BomNo";
-                cboBOM.ValueMember = "BomNo";
-                cboBOM.DataSource = db.tb_BomHDs.Where(s => s.Status != "Cancel").ToList();
-                cboBOM.SelectedIndex = -1;
-                cboBOM.Text = "";
+                //this.cboBOM.AutoFilter = true;
+                //this.cboBOM.AutoCompleteMode = AutoCompleteMode.Append;
+                //FilterDescriptor bb = new FilterDescriptor();
+                //bb.PropertyName = this.cboBOM.ValueMember;
+                //bb.Operator = FilterOperator.StartsWith;
+                //this.cboBOM.EditorControl.MasterTemplate.FilterDescriptors.Add(bb);
+                //cboBOM.DisplayMember = "BomNo";
+                //cboBOM.ValueMember = "BomNo";
+                //cboBOM.DataSource = db.tb_BomHDs.Where(s => s.Status != "Cancel").ToList();
+                //cboBOM.SelectedIndex = -1;
+                //cboBOM.Text = "";
 
                 this.cboLocation.AutoFilter = true;
                 this.cboLocation.AutoCompleteMode = AutoCompleteMode.Append;
@@ -1312,7 +1311,7 @@ namespace StockControl
                         int ver = dbClss.TInt(txtVersion.Text) + 1;
                         gg.Version = ver.ToString();
                         gg.Status = "Process";
-
+                        gg.YieldOperation = 0;
                         db.SubmitChanges();
                     }
                 }
@@ -1335,6 +1334,7 @@ namespace StockControl
                     gg.Remark = "";// txtRemarkHD.Text.Trim();
                     gg.Version = txtVersion.Text.Trim();
                     gg.Status = "Process";
+                    gg.YieldOperation = 0;
                     //if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                     //{
                     //    gg.StartDate = Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
@@ -1393,6 +1393,7 @@ namespace StockControl
                             u.UnitCost = StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value);
                             u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);
                             u.PCSUnit = dbClss.TDe(g.Cells["dgvPCSUnit"].Value);
+                            u.chk_YieldOperation = false;
                             db.tb_BomDTs.InsertOnSubmit(u);
                             db.SubmitChanges();
                             //C += 1;
@@ -1459,8 +1460,9 @@ namespace StockControl
                                             , StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value)
                                             , StockControl.dbClss.TDe(g.Cells["dgvCost"].Value)
                                             , StockControl.dbClss.TDe(g.Cells["dgvPCSUnit"].Value)
+                                            ,false
                                             , ClassLib.Classlib.User
-
+                                            
                                             );
                                         //db.SubmitChanges();
                                         line_t += 50;
