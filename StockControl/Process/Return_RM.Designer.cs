@@ -660,6 +660,7 @@
             // radGroupBox1
             // 
             this.radGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
+            this.radGroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radGroupBox1.Controls.Add(this.lblStatus);
             this.radGroupBox1.HeaderText = "สถานะ";
             this.radGroupBox1.Location = new System.Drawing.Point(688, 3);

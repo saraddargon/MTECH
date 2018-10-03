@@ -55,12 +55,37 @@ namespace StockControl
         }
         private void Unit_Load(object sender, EventArgs e)
         {
+            LoadDefault();
             dtDateFrom.Value = Convert.ToDateTime( DateTime.Now,new CultureInfo("en-US"));
             dtDateTo.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             //Set_dt_Print();
             //radGridView1.ReadOnly = true;
             radGridView1.AutoGenerateColumns = false;
             DataLoad();
+        }
+        private void LoadDefault()
+        {
+            try
+            {
+                //List<string> Type = new List<string>();
+                //Type.Add("");
+                string UserID = ClassLib.Classlib.User;
+
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    var g = (from ix in db.mh_ApproveSetups.Where(s => s.Active == 1 && s.UserID.ToUpper().Trim() == UserID.ToUpper().Trim())
+                             select new { ix.ApproveType }).ToList();
+                    if(g.Count>0)
+                    {
+                        foreach(var gg in g)
+                        {
+                           ddlType.Items.Add(gg.ApproveType);
+                        }
+                        
+                    }
+                }
+            }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void DataLoad()
         {

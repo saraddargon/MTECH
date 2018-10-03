@@ -2919,6 +2919,8 @@ namespace StockControl
                     int cc = 0;
                     if (MessageBox.Show("ต้องการยกเลิกรายการ ( " + txtPONo.Text + " ) หรือไม่ ?", "ยกเลิกรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
+                        btnCal_Click(null, null);
+
                         this.Cursor = Cursors.WaitCursor;
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
@@ -2944,8 +2946,9 @@ namespace StockControl
                                                          && ix.BackOrder > 0
                                                          select ix).First();
 
-                                                u.Discon = u.BackOrder;
+                                                u.Discon = dbClss.TDe(u.Discon) + u.BackOrder;
                                                 u.BackOrder = 0;
+                                                
                                                 cc += 1;
 
                                                 db.SubmitChanges();
