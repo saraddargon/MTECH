@@ -35,10 +35,11 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn1 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn1 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn3 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn4 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn5 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn2 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
             Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
@@ -65,6 +66,8 @@
             this.btnFilter1 = new Telerik.WinControls.UI.RadButtonElement();
             this.btnUnfilter1 = new Telerik.WinControls.UI.RadButtonElement();
             this.ribbonBarGroupSeparator1 = new Telerik.WinControls.UI.RibbonBarGroupSeparator();
+            this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup4 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnPrint = new Telerik.WinControls.UI.RadButtonElement();
             this.btnExcel = new Telerik.WinControls.UI.RadButtonElement();
@@ -89,8 +92,6 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -160,14 +161,13 @@
             this.btnNew});
             this.radRibbonBarGroup1.Name = "radRibbonBarGroup1";
             this.radRibbonBarGroup1.Text = "New List";
-            this.radRibbonBarGroup1.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
             // btnNew
             // 
             this.btnNew.Image = ((System.Drawing.Image)(resources.GetObject("btnNew.Image")));
             this.btnNew.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnNew.Name = "btnNew";
-            this.btnNew.Text = "เพิ่มใหม่";
+            this.btnNew.Text = "เริ่มใหม่";
             this.btnNew.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
@@ -260,6 +260,22 @@
             this.ribbonBarGroupSeparator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.ribbonBarGroupSeparator1.Name = "ribbonBarGroupSeparator1";
             this.ribbonBarGroupSeparator1.Text = "ribbonBarGroupSeparator1";
+            // 
+            // radRibbonBarGroup7
+            // 
+            this.radRibbonBarGroup7.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnExport});
+            this.radRibbonBarGroup7.Name = "radRibbonBarGroup7";
+            this.radRibbonBarGroup7.Text = "Export";
+            // 
+            // btnExport
+            // 
+            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
+            this.btnExport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Text = "ส่งข้อมูลออก";
+            this.btnExport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // radRibbonBarGroup4
             // 
@@ -403,61 +419,68 @@
             gridViewTextBoxColumn3.ReadOnly = true;
             gridViewTextBoxColumn3.Width = 217;
             gridViewDecimalColumn1.EnableExpressionEditor = false;
-            gridViewDecimalColumn1.FieldName = "Qty";
-            gridViewDecimalColumn1.FormatString = "{0:N2}";
-            gridViewDecimalColumn1.HeaderText = "Receive Q\'ty";
-            gridViewDecimalColumn1.Minimum = new decimal(new int[] {
+            gridViewDecimalColumn1.FieldName = "TagCount";
+            gridViewDecimalColumn1.FormatString = "{0:N0}";
+            gridViewDecimalColumn1.HeaderText = "Tag";
+            gridViewDecimalColumn1.Name = "TagCount";
+            gridViewDecimalColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            gridViewDecimalColumn1.Width = 60;
+            gridViewDecimalColumn2.EnableExpressionEditor = false;
+            gridViewDecimalColumn2.FieldName = "Qty";
+            gridViewDecimalColumn2.FormatString = "{0:N2}";
+            gridViewDecimalColumn2.HeaderText = "Q\'ty";
+            gridViewDecimalColumn2.Minimum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            gridViewDecimalColumn1.Name = "Qty";
-            gridViewDecimalColumn1.Width = 98;
+            gridViewDecimalColumn2.Name = "Qty";
+            gridViewDecimalColumn2.Width = 85;
             gridViewMultiComboBoxColumn1.EnableExpressionEditor = false;
             gridViewMultiComboBoxColumn1.FieldName = "UOM";
             gridViewMultiComboBoxColumn1.HeaderText = "UOM";
             gridViewMultiComboBoxColumn1.Name = "UOM";
-            gridViewMultiComboBoxColumn1.Width = 101;
-            gridViewDecimalColumn2.EnableExpressionEditor = false;
-            gridViewDecimalColumn2.FieldName = "PCSUnit";
-            gridViewDecimalColumn2.FormatString = "{0:N2}";
-            gridViewDecimalColumn2.HeaderText = "PCSUnit";
-            gridViewDecimalColumn2.IsVisible = false;
-            gridViewDecimalColumn2.Minimum = new decimal(new int[] {
+            gridViewMultiComboBoxColumn1.Width = 81;
+            gridViewDecimalColumn3.EnableExpressionEditor = false;
+            gridViewDecimalColumn3.FieldName = "PCSUnit";
+            gridViewDecimalColumn3.FormatString = "{0:N2}";
+            gridViewDecimalColumn3.HeaderText = "PCS:UOM";
+            gridViewDecimalColumn3.IsVisible = false;
+            gridViewDecimalColumn3.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            gridViewDecimalColumn2.Name = "PCSUnit";
-            gridViewDecimalColumn2.Width = 81;
-            gridViewDecimalColumn3.DecimalPlaces = 6;
-            gridViewDecimalColumn3.EnableExpressionEditor = false;
-            gridViewDecimalColumn3.FieldName = "UnitPrice";
-            gridViewDecimalColumn3.FormatString = "{0:N2}";
-            gridViewDecimalColumn3.HeaderText = "Cost:Unit";
-            gridViewDecimalColumn3.IsVisible = false;
-            gridViewDecimalColumn3.Minimum = new decimal(new int[] {
+            gridViewDecimalColumn3.Name = "PCSUnit";
+            gridViewDecimalColumn3.ReadOnly = true;
+            gridViewDecimalColumn3.Width = 81;
+            gridViewDecimalColumn4.DecimalPlaces = 6;
+            gridViewDecimalColumn4.EnableExpressionEditor = false;
+            gridViewDecimalColumn4.FieldName = "UnitPrice";
+            gridViewDecimalColumn4.FormatString = "{0:N2}";
+            gridViewDecimalColumn4.HeaderText = "Cost:Unit";
+            gridViewDecimalColumn4.IsVisible = false;
+            gridViewDecimalColumn4.Minimum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            gridViewDecimalColumn3.Name = "UnitPrice";
-            gridViewDecimalColumn3.Width = 87;
-            gridViewDecimalColumn4.DecimalPlaces = 6;
-            gridViewDecimalColumn4.EnableExpressionEditor = false;
-            gridViewDecimalColumn4.FieldName = "Amount";
-            gridViewDecimalColumn4.FormatString = "{0:N2}";
-            gridViewDecimalColumn4.HeaderText = "Amount";
-            gridViewDecimalColumn4.IsVisible = false;
-            gridViewDecimalColumn4.Name = "Amount";
-            gridViewDecimalColumn4.ReadOnly = true;
-            gridViewDecimalColumn4.Width = 119;
+            gridViewDecimalColumn4.Name = "UnitPrice";
+            gridViewDecimalColumn4.Width = 87;
+            gridViewDecimalColumn5.DecimalPlaces = 6;
+            gridViewDecimalColumn5.EnableExpressionEditor = false;
+            gridViewDecimalColumn5.FieldName = "Amount";
+            gridViewDecimalColumn5.FormatString = "{0:N2}";
+            gridViewDecimalColumn5.HeaderText = "Amount";
+            gridViewDecimalColumn5.IsVisible = false;
+            gridViewDecimalColumn5.Name = "Amount";
+            gridViewDecimalColumn5.ReadOnly = true;
+            gridViewDecimalColumn5.Width = 119;
             gridViewTextBoxColumn4.EnableExpressionEditor = false;
             gridViewTextBoxColumn4.FieldName = "LotNo";
             gridViewTextBoxColumn4.HeaderText = "Lot no.";
-            gridViewTextBoxColumn4.IsVisible = false;
             gridViewTextBoxColumn4.Name = "LotNo";
-            gridViewTextBoxColumn4.Width = 125;
+            gridViewTextBoxColumn4.Width = 101;
             gridViewMultiComboBoxColumn2.EnableExpressionEditor = false;
             gridViewMultiComboBoxColumn2.FieldName = "Location";
             gridViewMultiComboBoxColumn2.HeaderText = "Location";
@@ -517,10 +540,11 @@
             gridViewTextBoxColumn2,
             gridViewTextBoxColumn3,
             gridViewDecimalColumn1,
-            gridViewMultiComboBoxColumn1,
             gridViewDecimalColumn2,
+            gridViewMultiComboBoxColumn1,
             gridViewDecimalColumn3,
             gridViewDecimalColumn4,
+            gridViewDecimalColumn5,
             gridViewTextBoxColumn4,
             gridViewMultiComboBoxColumn2,
             gridViewComboBoxColumn1,
@@ -649,22 +673,6 @@
             this.radRibbonBarButtonGroup5.ShowBackColor = false;
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
-            // 
-            // radRibbonBarGroup7
-            // 
-            this.radRibbonBarGroup7.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnExport});
-            this.radRibbonBarGroup7.Name = "radRibbonBarGroup7";
-            this.radRibbonBarGroup7.Text = "Export";
-            // 
-            // btnExport
-            // 
-            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
-            this.btnExport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Text = "ส่งข้อมูลออก";
-            this.btnExport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // PrintFGCard
             // 

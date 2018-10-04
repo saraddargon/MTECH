@@ -385,11 +385,18 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     var v = (from ix in db.mh_LotRMs
-                             where ix.LotDate.ToString() == Date //20180131
+                             //where Convert.ToDateTime(ix.LotDate).ToString("yyyy-MM-dd") == Date //20180131
                              select ix).OrderByDescending(a => a.LotNo).ToList();
                     if (v.Count > 0)
                     {
-                        re = dbClss.TSt(v.FirstOrDefault().LotNo);
+                        foreach (var gg in v)
+                        {
+                            if (Convert.ToDateTime(gg.LotDate).ToString("yyyyMMdd") == Date)
+                            {
+                                re = dbClss.TSt(v.FirstOrDefault().LotNo);
+                                break;
+                            }
+                        }
                     }
                 }
             }

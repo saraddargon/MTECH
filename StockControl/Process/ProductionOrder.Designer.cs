@@ -122,27 +122,28 @@
             this.radGroupBox3 = new Telerik.WinControls.UI.RadGroupBox();
             this.cbHoldJob = new Telerik.WinControls.UI.RadCheckBox();
             this.txtOutQty = new Telerik.WinControls.UI.RadMaskedEditBox();
-            this.txtPCSUnit = new Telerik.WinControls.UI.RadMaskedEditBox();
             this.txtEndingDate = new Telerik.WinControls.UI.RadTextBox();
             this.txtStartingDate = new Telerik.WinControls.UI.RadTextBox();
             this.txtUOM = new Telerik.WinControls.UI.RadTextBox();
             this.txtReqDate = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel11 = new Telerik.WinControls.UI.RadLabel();
+            this.txtRefDocNo_TEMP = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel7 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel12 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel11 = new Telerik.WinControls.UI.RadLabel();
             this.txtFGQty = new Telerik.WinControls.UI.RadMaskedEditBox();
             this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
+            this.txtLotNo = new Telerik.WinControls.UI.RadTextBox();
             this.txtFGName = new Telerik.WinControls.UI.RadTextBox();
             this.txtFGNo = new Telerik.WinControls.UI.RadTextBox();
             this.txtRefDocId = new Telerik.WinControls.UI.RadTextBox();
-            this.txtRefDocNo = new Telerik.WinControls.UI.RadTextBox();
-            this.txtLotNo = new Telerik.WinControls.UI.RadTextBox();
             this.txtidJob = new Telerik.WinControls.UI.RadTextBox();
             this.txtJobNo = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel6 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
+            this.txtPCSUnit = new Telerik.WinControls.UI.RadMaskedEditBox();
             this.txtCreateBy = new Telerik.WinControls.UI.RadTextBox();
             this.txtStatus = new Telerik.WinControls.UI.RadTextBox();
             this.txtCreateDate = new Telerik.WinControls.UI.RadTextBox();
@@ -151,6 +152,7 @@
             this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel9 = new Telerik.WinControls.UI.RadLabel();
             this.txtSeqStatus = new Telerik.WinControls.UI.RadTextBox();
+            this.txtRefDocNo = new Telerik.WinControls.UI.RadTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnAddPart = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAdd_Row = new System.Windows.Forms.ToolStripMenuItem();
@@ -164,6 +166,7 @@
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
+            this.cbCloseJob = new Telerik.WinControls.UI.RadCheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -185,27 +188,28 @@
             this.radGroupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbHoldJob)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOutQty)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPCSUnit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEndingDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStartingDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUOM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtReqDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRefDocNo_TEMP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtLotNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRefDocId)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtRefDocNo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtLotNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtidJob)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtJobNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPCSUnit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCreateBy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCreateDate)).BeginInit();
@@ -215,7 +219,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRefDocNo)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbCloseJob)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -292,6 +298,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Text = "บันทึกรายการ";
             this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSave.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // radRibbonBarGroup2
@@ -320,6 +327,7 @@
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Text = "แก้ไขรายการ";
             this.btnEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnEdit.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnDelete
@@ -477,6 +485,7 @@
             this.btnShipping.Name = "btnShipping";
             this.btnShipping.Text = "เบิกของ";
             this.btnShipping.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnShipping.Click += new System.EventHandler(this.btnShipping_Click);
             // 
             // radRibbonBarGroup6
             // 
@@ -550,7 +559,7 @@
             this.radPageView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radPageView1.Location = new System.Drawing.Point(0, 200);
             this.radPageView1.Name = "radPageView1";
-            this.radPageView1.SelectedPage = this.radPageViewPage3;
+            this.radPageView1.SelectedPage = this.radPageViewPage1;
             this.radPageView1.Size = new System.Drawing.Size(1037, 330);
             this.radPageView1.TabIndex = 18;
             ((Telerik.WinControls.UI.RadPageViewStripElement)(this.radPageView1.GetChildAt(0))).StripButtons = Telerik.WinControls.UI.StripViewButtons.Scroll;
@@ -976,8 +985,10 @@
             // radPanel1
             // 
             this.radPanel1.BackColor = System.Drawing.Color.AliceBlue;
+            this.radPanel1.Controls.Add(this.cbCloseJob);
             this.radPanel1.Controls.Add(this.radLabel8);
             this.radPanel1.Controls.Add(this.radGroupBox3);
+            this.radPanel1.Controls.Add(this.txtPCSUnit);
             this.radPanel1.Controls.Add(this.txtCreateBy);
             this.radPanel1.Controls.Add(this.txtStatus);
             this.radPanel1.Controls.Add(this.txtCreateDate);
@@ -985,6 +996,7 @@
             this.radPanel1.Controls.Add(this.radLabel10);
             this.radPanel1.Controls.Add(this.radLabel9);
             this.radPanel1.Controls.Add(this.txtSeqStatus);
+            this.radPanel1.Controls.Add(this.txtRefDocNo);
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.radPanel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
@@ -1009,23 +1021,23 @@
             this.radGroupBox3.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
             this.radGroupBox3.Controls.Add(this.cbHoldJob);
             this.radGroupBox3.Controls.Add(this.txtOutQty);
-            this.radGroupBox3.Controls.Add(this.txtPCSUnit);
             this.radGroupBox3.Controls.Add(this.txtEndingDate);
             this.radGroupBox3.Controls.Add(this.txtStartingDate);
             this.radGroupBox3.Controls.Add(this.txtUOM);
             this.radGroupBox3.Controls.Add(this.txtReqDate);
             this.radGroupBox3.Controls.Add(this.radLabel5);
             this.radGroupBox3.Controls.Add(this.radLabel2);
-            this.radGroupBox3.Controls.Add(this.radLabel11);
+            this.radGroupBox3.Controls.Add(this.txtRefDocNo_TEMP);
             this.radGroupBox3.Controls.Add(this.radLabel7);
+            this.radGroupBox3.Controls.Add(this.radLabel12);
             this.radGroupBox3.Controls.Add(this.radLabel4);
+            this.radGroupBox3.Controls.Add(this.radLabel11);
             this.radGroupBox3.Controls.Add(this.txtFGQty);
             this.radGroupBox3.Controls.Add(this.radLabel3);
+            this.radGroupBox3.Controls.Add(this.txtLotNo);
             this.radGroupBox3.Controls.Add(this.txtFGName);
             this.radGroupBox3.Controls.Add(this.txtFGNo);
             this.radGroupBox3.Controls.Add(this.txtRefDocId);
-            this.radGroupBox3.Controls.Add(this.txtRefDocNo);
-            this.radGroupBox3.Controls.Add(this.txtLotNo);
             this.radGroupBox3.Controls.Add(this.txtidJob);
             this.radGroupBox3.Controls.Add(this.txtJobNo);
             this.radGroupBox3.Controls.Add(this.radLabel6);
@@ -1039,7 +1051,7 @@
             // 
             // cbHoldJob
             // 
-            this.cbHoldJob.Location = new System.Drawing.Point(407, 136);
+            this.cbHoldJob.Location = new System.Drawing.Point(541, 131);
             this.cbHoldJob.Name = "cbHoldJob";
             this.cbHoldJob.ReadOnly = true;
             this.cbHoldJob.Size = new System.Drawing.Size(65, 18);
@@ -1048,32 +1060,21 @@
             // 
             // txtOutQty
             // 
-            this.txtOutQty.Location = new System.Drawing.Point(541, 135);
+            this.txtOutQty.Location = new System.Drawing.Point(407, 106);
             this.txtOutQty.Mask = "N2";
             this.txtOutQty.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
             this.txtOutQty.Name = "txtOutQty";
-            this.txtOutQty.Size = new System.Drawing.Size(56, 20);
+            this.txtOutQty.ReadOnly = true;
+            this.txtOutQty.Size = new System.Drawing.Size(128, 20);
             this.txtOutQty.TabIndex = 19;
             this.txtOutQty.TabStop = false;
             this.txtOutQty.Text = "0.00";
-            this.txtOutQty.Visible = false;
-            // 
-            // txtPCSUnit
-            // 
-            this.txtPCSUnit.Location = new System.Drawing.Point(541, 108);
-            this.txtPCSUnit.Mask = "N2";
-            this.txtPCSUnit.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
-            this.txtPCSUnit.Name = "txtPCSUnit";
-            this.txtPCSUnit.Size = new System.Drawing.Size(56, 20);
-            this.txtPCSUnit.TabIndex = 19;
-            this.txtPCSUnit.TabStop = false;
-            this.txtPCSUnit.Text = "0.00";
-            this.txtPCSUnit.Visible = false;
+            this.txtOutQty.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtEndingDate
             // 
             this.txtEndingDate.BackColor = System.Drawing.Color.White;
-            this.txtEndingDate.Location = new System.Drawing.Point(407, 107);
+            this.txtEndingDate.Location = new System.Drawing.Point(126, 132);
             this.txtEndingDate.Name = "txtEndingDate";
             this.txtEndingDate.ReadOnly = true;
             this.txtEndingDate.Size = new System.Drawing.Size(128, 20);
@@ -1117,19 +1118,20 @@
             // 
             // radLabel2
             // 
-            this.radLabel2.Location = new System.Drawing.Point(294, 108);
+            this.radLabel2.Location = new System.Drawing.Point(13, 133);
             this.radLabel2.Name = "radLabel2";
             this.radLabel2.Size = new System.Drawing.Size(96, 18);
             this.radLabel2.TabIndex = 12;
             this.radLabel2.Text = "Ending Date-Time";
             // 
-            // radLabel11
+            // txtRefDocNo_TEMP
             // 
-            this.radLabel11.Location = new System.Drawing.Point(73, 133);
-            this.radLabel11.Name = "radLabel11";
-            this.radLabel11.Size = new System.Drawing.Size(38, 18);
-            this.radLabel11.TabIndex = 12;
-            this.radLabel11.Text = "Lot no";
+            this.txtRefDocNo_TEMP.BackColor = System.Drawing.Color.White;
+            this.txtRefDocNo_TEMP.Location = new System.Drawing.Point(407, 24);
+            this.txtRefDocNo_TEMP.Name = "txtRefDocNo_TEMP";
+            this.txtRefDocNo_TEMP.ReadOnly = true;
+            this.txtRefDocNo_TEMP.Size = new System.Drawing.Size(128, 20);
+            this.txtRefDocNo_TEMP.TabIndex = 1;
             // 
             // radLabel7
             // 
@@ -1139,6 +1141,14 @@
             this.radLabel7.TabIndex = 12;
             this.radLabel7.Text = "Starting Date-Time";
             // 
+            // radLabel12
+            // 
+            this.radLabel12.Location = new System.Drawing.Point(294, 107);
+            this.radLabel12.Name = "radLabel12";
+            this.radLabel12.Size = new System.Drawing.Size(96, 18);
+            this.radLabel12.TabIndex = 12;
+            this.radLabel12.Text = "Out Standing Q\'ty";
+            // 
             // radLabel4
             // 
             this.radLabel4.Location = new System.Drawing.Point(350, 81);
@@ -1146,6 +1156,14 @@
             this.radLabel4.Size = new System.Drawing.Size(40, 18);
             this.radLabel4.TabIndex = 12;
             this.radLabel4.Text = "FG Qty";
+            // 
+            // radLabel11
+            // 
+            this.radLabel11.Location = new System.Drawing.Point(354, 132);
+            this.radLabel11.Name = "radLabel11";
+            this.radLabel11.Size = new System.Drawing.Size(38, 18);
+            this.radLabel11.TabIndex = 12;
+            this.radLabel11.Text = "Lot no";
             // 
             // txtFGQty
             // 
@@ -1168,6 +1186,14 @@
             this.radLabel3.Size = new System.Drawing.Size(40, 18);
             this.radLabel3.TabIndex = 8;
             this.radLabel3.Text = "FG No.";
+            // 
+            // txtLotNo
+            // 
+            this.txtLotNo.Location = new System.Drawing.Point(407, 131);
+            this.txtLotNo.Name = "txtLotNo";
+            this.txtLotNo.ReadOnly = true;
+            this.txtLotNo.Size = new System.Drawing.Size(128, 20);
+            this.txtLotNo.TabIndex = 1;
             // 
             // txtFGName
             // 
@@ -1196,23 +1222,6 @@
             this.txtRefDocId.Size = new System.Drawing.Size(53, 20);
             this.txtRefDocId.TabIndex = 1;
             this.txtRefDocId.Visible = false;
-            // 
-            // txtRefDocNo
-            // 
-            this.txtRefDocNo.BackColor = System.Drawing.Color.White;
-            this.txtRefDocNo.Location = new System.Drawing.Point(407, 25);
-            this.txtRefDocNo.Name = "txtRefDocNo";
-            this.txtRefDocNo.ReadOnly = true;
-            this.txtRefDocNo.Size = new System.Drawing.Size(128, 20);
-            this.txtRefDocNo.TabIndex = 1;
-            // 
-            // txtLotNo
-            // 
-            this.txtLotNo.Location = new System.Drawing.Point(126, 132);
-            this.txtLotNo.Name = "txtLotNo";
-            this.txtLotNo.ReadOnly = true;
-            this.txtLotNo.Size = new System.Drawing.Size(128, 20);
-            this.txtLotNo.TabIndex = 1;
             // 
             // txtidJob
             // 
@@ -1246,6 +1255,18 @@
             this.radLabel1.Size = new System.Drawing.Size(76, 18);
             this.radLabel1.TabIndex = 0;
             this.radLabel1.Text = "Job Order No.";
+            // 
+            // txtPCSUnit
+            // 
+            this.txtPCSUnit.Location = new System.Drawing.Point(644, 87);
+            this.txtPCSUnit.Mask = "N2";
+            this.txtPCSUnit.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            this.txtPCSUnit.Name = "txtPCSUnit";
+            this.txtPCSUnit.Size = new System.Drawing.Size(56, 20);
+            this.txtPCSUnit.TabIndex = 19;
+            this.txtPCSUnit.TabStop = false;
+            this.txtPCSUnit.Text = "0.00";
+            this.txtPCSUnit.Visible = false;
             // 
             // txtCreateBy
             // 
@@ -1327,6 +1348,16 @@
             this.txtSeqStatus.Size = new System.Drawing.Size(42, 20);
             this.txtSeqStatus.TabIndex = 1;
             this.txtSeqStatus.Visible = false;
+            // 
+            // txtRefDocNo
+            // 
+            this.txtRefDocNo.BackColor = System.Drawing.Color.White;
+            this.txtRefDocNo.Location = new System.Drawing.Point(644, 30);
+            this.txtRefDocNo.Name = "txtRefDocNo";
+            this.txtRefDocNo.ReadOnly = true;
+            this.txtRefDocNo.Size = new System.Drawing.Size(77, 20);
+            this.txtRefDocNo.TabIndex = 1;
+            this.txtRefDocNo.Visible = false;
             // 
             // contextMenuStrip1
             // 
@@ -1429,6 +1460,16 @@
             this.radButtonElement2.Text = "รายการ";
             this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // cbCloseJob
+            // 
+            this.cbCloseJob.Location = new System.Drawing.Point(672, 118);
+            this.cbCloseJob.Name = "cbCloseJob";
+            this.cbCloseJob.ReadOnly = true;
+            this.cbCloseJob.Size = new System.Drawing.Size(65, 18);
+            this.cbCloseJob.TabIndex = 20;
+            this.cbCloseJob.Text = "CloseJob";
+            this.cbCloseJob.Visible = false;
+            // 
             // ProductionOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1471,27 +1512,28 @@
             this.radGroupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbHoldJob)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOutQty)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPCSUnit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEndingDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStartingDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUOM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtReqDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRefDocNo_TEMP)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGQty)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtLotNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRefDocId)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtRefDocNo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtLotNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtidJob)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtJobNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPCSUnit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCreateBy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCreateDate)).EndInit();
@@ -1501,7 +1543,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRefDocNo)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cbCloseJob)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1598,5 +1642,8 @@
         private Telerik.WinControls.UI.RadTextBox txtStatus;
         private Telerik.WinControls.UI.RadPageViewPage radPageViewPage3;
         private Telerik.WinControls.UI.RadGridView dgvShipHistory;
+        private Telerik.WinControls.UI.RadTextBox txtRefDocNo_TEMP;
+        private Telerik.WinControls.UI.RadLabel radLabel12;
+        private Telerik.WinControls.UI.RadCheckBox cbCloseJob;
     }
 }

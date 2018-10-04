@@ -9,16 +9,11 @@ using Telerik.WinControls;
 
 namespace StockControl
 {
-    public partial class AdjustStock_Taking_Card : Telerik.WinControls.UI.RadForm
+    public partial class ISOReport : Telerik.WinControls.UI.RadForm
     {
-        public AdjustStock_Taking_Card()
+        public ISOReport()
         {
             InitializeComponent();
-        }
-
-        private void About_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

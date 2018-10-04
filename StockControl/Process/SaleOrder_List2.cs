@@ -276,6 +276,21 @@ namespace StockControl
             //select Item for Print
             //throw new NotImplementedException();
 
+            try
+            {
+                if (dgvData.CurrentCell != null)
+                {
+                    var row = dgvData.CurrentCell.RowInfo;
+
+                    Report.Reportx1.Value = new string[2];
+                    Report.Reportx1.Value[0] = row.Cells["SONo"].Value.ToSt();
+                    Report.Reportx1.Value[1] = row.Cells["SONo"].Value.ToSt();
+                    Report.Reportx1.WReport = "SaleOrder";
+                    Report.Reportx1 op = new Report.Reportx1("CustomerPO.rpt");
+                    op.Show();
+                }
+            }
+            catch (Exception ex) { baseClass.Error(ex.Message); }
         }
 
 
@@ -369,9 +384,7 @@ namespace StockControl
                         t = 1;
                         MessageBox.Show("สถานะบางรายการไม่สามารถ สร้างรายการเบิกได้");
                         break;
-                    }
-
-                   
+                    }                   
                 }
                 if (t == 1)
                     return;

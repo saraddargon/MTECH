@@ -44,10 +44,6 @@
             Telerik.WinControls.UI.RadListDataItem radListDataItem1 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem2 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem3 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem4 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem5 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem6 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem7 = new Telerik.WinControls.UI.RadListDataItem();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApproveList));
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
@@ -320,13 +316,6 @@
             // 
             // ddlType
             // 
-            radListDataItem1.Text = "Sale Order";
-            radListDataItem2.Text = "Job Req";
-            radListDataItem3.Text = "Purchase Order";
-            this.ddlType.Items.Add(radListDataItem1);
-            this.ddlType.Items.Add(radListDataItem2);
-            this.ddlType.Items.Add(radListDataItem3);
-            this.ddlType.Items.Add(radListDataItem4);
             this.ddlType.Location = new System.Drawing.Point(123, 32);
             this.ddlType.Name = "ddlType";
             this.ddlType.Size = new System.Drawing.Size(125, 20);
@@ -334,12 +323,12 @@
             // 
             // ddlStatus
             // 
-            radListDataItem5.Text = "Waiting";
-            radListDataItem6.Text = "Approved";
-            radListDataItem7.Text = "Reject";
-            this.ddlStatus.Items.Add(radListDataItem5);
-            this.ddlStatus.Items.Add(radListDataItem6);
-            this.ddlStatus.Items.Add(radListDataItem7);
+            radListDataItem1.Text = "Waiting";
+            radListDataItem2.Text = "Approved";
+            radListDataItem3.Text = "Reject";
+            this.ddlStatus.Items.Add(radListDataItem1);
+            this.ddlStatus.Items.Add(radListDataItem2);
+            this.ddlStatus.Items.Add(radListDataItem3);
             this.ddlStatus.Location = new System.Drawing.Point(314, 10);
             this.ddlStatus.Name = "ddlStatus";
             this.ddlStatus.Size = new System.Drawing.Size(95, 20);
@@ -375,9 +364,9 @@
             this.dtDateFrom.CustomFormat = "dd/MMM/yyyy";
             this.dtDateFrom.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtDateFrom.Location = new System.Drawing.Point(116, 57);
+            this.dtDateFrom.Location = new System.Drawing.Point(123, 57);
             this.dtDateFrom.Name = "dtDateFrom";
-            this.dtDateFrom.Size = new System.Drawing.Size(124, 19);
+            this.dtDateFrom.Size = new System.Drawing.Size(125, 19);
             this.dtDateFrom.TabIndex = 11;
             this.dtDateFrom.TabStop = false;
             this.dtDateFrom.Text = "16/May/2017";
@@ -644,7 +633,6 @@
             this.btn_Print_Barcode});
             this.radRibbonBarGroup2.Name = "radRibbonBarGroup2";
             this.radRibbonBarGroup2.Text = "Print Document";
-            this.radRibbonBarGroup2.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
             // btn_PrintPR
             // 

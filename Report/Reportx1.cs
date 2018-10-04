@@ -44,7 +44,7 @@ namespace Report
         static string Userdb = Report.CRRReport.dbUser;
         static string PassDb = Report.CRRReport.dbPass;
         static string DATA = "";
-        
+
         private void Report_Load(object sender, EventArgs e)
         {
             try
@@ -54,14 +54,14 @@ namespace Report
                 Userdb = Report.CRRReport.dbUser;
                 PassDb = Report.CRRReport.dbPass;
 
-               // MessageBox.Show(SERVERName + "," + DBName + "," + Userdb + "," + PassDb);
+                // MessageBox.Show(SERVERName + "," + DBName + "," + Userdb + "," + PassDb);
                 // this.Cursor = Cursors.WaitCursor;
                 // dbClass.rptSourceX.Refresh();
                 // crystalReportViewer1.ReportSource = null;
                 DATA = "";
                 DATA = AppDomain.CurrentDomain.BaseDirectory;
-                DATA = DATA+@"Report\" + Rpt;
-              
+                DATA = DATA + @"Report\" + Rpt;
+
                 if (fromdt.Equals(""))
                 {
 
@@ -85,8 +85,8 @@ namespace Report
             }
             catch { }
             finally { }
-           // this.reportViewer1.RefreshReport();
-            
+            // this.reportViewer1.RefreshReport();
+
         }
         public static void SetDataSourceConnection(CrystalDecisions.CrystalReports.Engine.ReportDocument rpt)
         {
@@ -163,7 +163,7 @@ namespace Report
                 case "ALLReport2":
                     {
 
-                       // rptDc.SetParameterValue("@DocumentNo", Convert.ToString(Value[0].ToString()));
+                        // rptDc.SetParameterValue("@DocumentNo", Convert.ToString(Value[0].ToString()));
                         rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
 
                     }
@@ -204,7 +204,7 @@ namespace Report
                     {
 
                         rptDc.SetParameterValue("@SONo", Convert.ToString(Value[0].ToString()));
-                        rptDc.SetParameterValue("@SONo", Convert.ToString(Value[1].ToString()));
+                        rptDc.SetParameterValue("@SONo2", Convert.ToString(Value[1].ToString()));
                         rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
 
                     }
@@ -240,8 +240,9 @@ namespace Report
 
                         rptDc.SetParameterValue("@User", Convert.ToString(Value[0].ToString()));
                         rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
-                        
-                    } break;
+
+                    }
+                    break;
                 case "ReportPR":
                     {
 
@@ -274,7 +275,8 @@ namespace Report
                         rptDc.SetParameterValue("@PONo", Convert.ToString(Value[0].ToString()));
                         rptDc.SetParameterValue("@Datex", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                         // rptDc.SetParameterValue("@Action", Convert.ToInt32(ClassReport.Value[1]));
-                    } break;
+                    }
+                    break;
                 case "ReportReceive":
                     {
 
@@ -318,7 +320,7 @@ namespace Report
                         rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                         // rptDc.SetParameterValue("@Action", Convert.ToInt32(ClassReport.Value[1]));
                     }
-                    break;                    
+                    break;
                 case "ReportAdjustStock":
                     {
 
@@ -415,10 +417,56 @@ namespace Report
                         rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;
+                case "WhereUsed":
+                    {
+                        rptDc.SetParameterValue("@Code", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
 
-
-
-
+                    }
+                    break;
+                case "WorkCenter":
+                    {
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
+                case "ProductionRM":
+                    {
+                        rptDc.SetParameterValue("@JobNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
+                case "ReportAccidentSlip":
+                    {
+                        rptDc.SetParameterValue("@ShippingNo1", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@ShippingNo2", Convert.ToString(Value[1].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
+                case "PickSlip":
+                    {
+                        rptDc.SetParameterValue("@ShipmentNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
+                case "CheckStockList":
+                    {
+                        rptDc.SetParameterValue("@CheckNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
+                case "TagFG":
+                    {
+                        rptDc.SetParameterValue("@BomNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@USERID", Convert.ToString(Value[1].ToString()));
+                        rptDc.SetParameterValue("@Datex", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
+                case "PackingList":
+                    {
+                        rptDc.SetParameterValue("@Date1", Convert.ToDateTime(Value[0].ToString(), new CultureInfo("en-US")));
+                        rptDc.SetParameterValue("@Date2", Convert.ToDateTime(Value[1].ToString(), new CultureInfo("en-US")));
+                    }
+                    break;
             }
         }
 
@@ -449,7 +497,7 @@ namespace Report
                 //rptSourceX.PrintOptions.PrinterName = printDocument1.PrinterSettings.PrinterName;
                 ////Start the printing process.  Provide details of the print job
                 //rptSourceX.PrintToPrinter(nCopy, false, sPage, ePage);
- 
+
             }
         }
     }

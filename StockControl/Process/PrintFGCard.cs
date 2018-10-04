@@ -91,6 +91,8 @@ namespace StockControl
                         x.ReadOnly = false;
                     else if (x.Name == "Qty")
                         x.ReadOnly = false;
+                    else if (x.Name == "TagCount")
+                        x.ReadOnly = false;
                     else
                         x.ReadOnly = true;
                 });
@@ -157,7 +159,7 @@ namespace StockControl
             ClearData();
 
         }
-        
+
         private void btnSave_Click(object sender, EventArgs e)
         {
 
@@ -344,7 +346,7 @@ namespace StockControl
         {
             row = e.RowIndex;
         }
-        
+
 
         private void btnFilter1_Click(object sender, EventArgs e)
         {
@@ -391,7 +393,7 @@ namespace StockControl
                     //    setRowNo();
                     //}
                     var m = db.sp_065_PrintTag_JobNo(JobNo).ToList();
-                    foreach(var mm in m)
+                    foreach (var mm in m)
                     {
                         addRow(mm.ItemNo, mm.ItemName, mm.Qty, mm.UOM, mm.PCSUnit, mm.UnitPrice, mm.Amount
                             , mm.LotNo, mm.Location, mm.ShelfNo, mm.JobNo, mm.CustomerPONo, mm.idCustomerPO
@@ -433,6 +435,7 @@ namespace StockControl
             rowe.Cells["Type"].Value = Type;
             rowe.Cells["GroupType"].Value = GroupType;
             rowe.Cells["InvGroup"].Value = InvGroup;
+            rowe.Cells["TagCount"].Value = 1;
         }
 
         void setRowNo()
@@ -442,7 +445,7 @@ namespace StockControl
                 item.Cells["dgvNo"].Value = item.Index + 1;
             }
         }
-        
+
         private void Cal_Amount()
         {
             if (dgvData.Rows.Count() > 0)
@@ -470,19 +473,87 @@ namespace StockControl
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             try
             {
+                if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
+                {
+                    var rowlist = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
+                    
+                    if(rowlist.Where(x=>x.Cells["TagCount"].Value.ToDecimal() <= 0).Count() > 0)
+                    {
+                        baseClass.Warning("Tag cannot less than 1.");
+                        return;
+                    }
 
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        var l = db.mh_ProductTAGs.Where(x => x.UserID == ClassLib.Classlib.User).ToList();
+                        db.mh_ProductTAGs.DeleteAllOnSubmit(l);
+                        db.SubmitChanges();
+                        //
+                        int rNo = 0;
+                        foreach (var row in rowlist)
+                        {
+                            string JobNo = row.Cells["JobNo"].Value.ToSt();
+                            decimal Qty = row.Cells["Qty"].Value.ToDecimal();
+                            string printDate = DateTime.Now.ToString("ddMMyyyy");
+                            int TagCount = row.Cells["TagCount"].Value.ToInt();
+                            decimal q1 = Math.Round(Qty / TagCount, 0);
+                            decimal q2 = Qty - Math.Round(q1 * (TagCount - 1), 0);
+                            var temp_tagCount = TagCount;
+                            int ofTag = 0;
+                            while (temp_tagCount > 0)
+                            {
+                                ofTag++;
+                                rNo++;
+                                bool last = temp_tagCount == 1;
 
+                                string qr = $"{JobNo},{((last) ? q2 : q1)},{printDate},{ofTag}";
+                                byte[] qrCode = dbClss.SaveQRCode2D(qr);
+                                
+                                var m = new mh_ProductTAG
+                                {
+                                    UserID = ClassLib.Classlib.User,
+                                    PartNo = row.Cells["ItemNo"].Value.ToSt(),
+                                    Seq = rNo,
+                                    PartName = row.Cells["ItemName"].Value.ToSt(),
+                                    LotNo = row.Cells["LotNo"].Value.ToSt(),
+                                    Qty = (last) ? q2 : q1,
+                                    QRCode = qrCode,
+                                    Machine = "",
+                                    BOMNo = "",
+                                    OFTAG = ofTag.ToSt(),
+                                };
+                                db.mh_ProductTAGs.InsertOnSubmit(m);
+                                temp_tagCount--;
+                            }
+                            db.SubmitChanges();
+                        }
+
+                        if(rNo > 0)
+                        {
+                            Report.Reportx1.Value = new string[2];
+                            Report.Reportx1.Value[0] = ""; //BomNo
+                            Report.Reportx1.Value[1] = ClassLib.Classlib.User; //USERID
+                            Report.Reportx1.WReport = "TagFG";
+                            Report.Reportx1 op = new Report.Reportx1("FG_TAG.rpt");
+                            op.Show();
+                        }
+                    }
+                }
+                else
+                    baseClass.Warning("Please select Data.\n");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { this.Cursor = Cursors.Default; }
         }
 
         private void dgvData_Click(object sender, EventArgs e)
         {
 
         }
-        
+
         private void MasterTemplate_CellBeginEdit(object sender, GridViewCellCancelEventArgs e)
         {
             try
@@ -621,145 +692,9 @@ namespace StockControl
 
         private void MasterTemplate_EditorRequired(object sender, EditorRequiredEventArgs e)
         {
-            GridViewEditManager manager = sender as GridViewEditManager;
-            // Assigning DropDownListAddEditor to the right column
-
-            if (manager.GridViewElement.CurrentColumn.Name == "ShelfNo")
-            {
-                DropDownListAddEditor editor = new DropDownListAddEditor();
-                editor.InputValueNotFound += new DropDownListAddEditor.InputValueNotFoundHandler(DropDownListAddEditor_InputValueNotFoundCategory_Edit);
-                e.Editor = editor;
-            }
         }
         string ShelfNo_Edit = "";
-        private void DropDownListAddEditor_InputValueNotFoundCategory_Edit(object sender, DropDownListAddEditor.InputValueNotFoundArgs e)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(e.Text))
-                {
-                    List<string> values = e.EditorElement.DataSource as List<string>;
-                    if (values == null)
-                    {
-                        List<string> aa = new List<string>();
-                        e.EditorElement.DataSource = aa;
-                        values = e.EditorElement.DataSource as List<string>;
-                    }
-                    if (!e.Text.Equals(""))
-                        ShelfNo_Edit = e.Text;
-                    values.Add(e.Text);
-                    e.Value = e.Text;
-                    e.ValueAdded = true;
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }
-        internal class DropDownListAddEditor :
-                RadDropDownListEditor
-        {
-            protected GridDataCellElement cell;
-            protected InputValueNotFoundArgs e;
-            /// <summary>
-            /// Event handler for missing values in item list of editor
-            /// </summary>
-            /// <param name="sender">Event source of type DropDownListAddEditor</param>
-            /// <param name="e">Event arguments</param>
-            public delegate void InputValueNotFoundHandler(object sender,
-                                                           InputValueNotFoundArgs e);
-            /// <summary>
-            /// Event for missing values in item list of editor
-            /// </summary>
-            public event InputValueNotFoundHandler InputValueNotFound;
-            /// <summary>
-            /// Constructor
-            /// </summary>
-            public DropDownListAddEditor() :
-                base()
-            {
-                // Nothing to do
-            }
-            public override bool EndEdit()
-            {
-                RadDropDownListEditorElement element = this.EditorElement as RadDropDownListEditorElement;
-                string text = element.Text;
-                RadListDataItem item = null;
-                foreach (RadListDataItem entry in element.Items)
-                {
-                    if (entry.Text == text)
-                    {
-                        item = entry;
-                        break;
-                    }
-                }
-                if ((item == null) &&
-                   (InputValueNotFound != null))
-                {
-                    // Get cell for handling CellEndEdit event
-                    this.cell = (this.EditorManager as GridViewEditManager).GridViewElement.CurrentCell;
-                    // Add event handling for setting value to cell
-                    (this.OwnerElement as GridComboBoxCellElement).GridControl.CellEndEdit += new GridViewCellEventHandler(OnCellEndEdit);
-                    this.e = new InputValueNotFoundArgs(element);
-                    this.InputValueNotFound(this,
-                                            this.e);
-                }
-                return base.EndEdit();
-            }
-            /// <summary>
-            /// Puts added value into cell value
-            /// </summary>
-            /// <param name="sender">Event source of type GridViewEditManager</param>
-            /// <param name="e">Event arguments</param>
-            /// <remarks>Connected to GridView event CellEndEdit</remarks>
-            protected void OnCellEndEdit(object sender,
-                                         GridViewCellEventArgs e)
-            {
-                if (this.e != null)
-                {
-                    // Handle only added value, others by default handling of grid
-                    if ((this.cell == (sender as GridViewEditManager).GridViewElement.CurrentCell) &&
-                        this.e.ValueAdded)
-                    {
-                        e.Row.Cells[e.ColumnIndex].Value = this.e.Value;
-                    }
-                    this.e = null;
-                }
-            }
-            /// <summary>
-            /// Event arguments for InputValueNotFound
-            /// </summary>
-            public class InputValueNotFoundArgs :
-                             EventArgs
-            {
-                /// <summary>
-                /// Constructor
-                /// </summary>
-                /// <param name="editorElement">Editor assiciated element</param>
-                internal protected InputValueNotFoundArgs(RadDropDownListEditorElement editorElement)
-                {
-                    this.EditorElement = editorElement;
-                    this.Text = editorElement.Text;
-                }
-                /// <summary>
-                /// Editor associated element 
-                /// </summary>
-                public RadDropDownListEditorElement EditorElement { get; protected set; }
-                /// <summary>
-                /// Input text with no match in drop down list
-                /// </summary>
-                public string Text { get; protected set; }
-                /// <summary>
-                /// Text related missing value
-                /// </summary>
-                /// <remarks>Has to be set during event processing</remarks>
-                /// <seealso cref="ValueAdded"/>
-                public object Value { get; set; }
-                /// <summary>
-                /// Missing value added
-                /// </summary>
-                /// <remarks>Set also the Value property</remarks>
-                public bool ValueAdded { get; set; }
-            }
-        }
+
 
         private void openPRToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -816,7 +751,7 @@ namespace StockControl
 
         private void btnDeleteRow_Click(object sender, EventArgs e)
         {
-            if(dgvData.CurrentCell != null)
+            if (dgvData.CurrentCell != null)
             {
                 dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
             }

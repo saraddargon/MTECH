@@ -113,7 +113,7 @@
     <Compile Include="DataClasses1.cs">
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </Compile>
-    <Compile Include="DataClasses1.designer.cs">
+    <Compile Include="DataClasses11.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses1.dbml</DependentUpon>
@@ -139,12 +139,6 @@
     </Compile>
     <Compile Include="MasterClass\baseClass.cs" />
     <Compile Include="MasterClass\getGrid.cs" />
-    <Compile Include="Process\AdjustStock_Taking_Card.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\AdjustStock_Taking_Card.Designer.cs">
-      <DependentUpon>AdjustStock_Taking_Card.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\About.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,11 +151,29 @@
     <Compile Include="Process\AdjustStock_Taking_List.Designer.cs">
       <DependentUpon>AdjustStock_Taking_List.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\AdjustStock_Taking_Card_2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\AdjustStock_Taking_Card_2.Designer.cs">
+      <DependentUpon>AdjustStock_Taking_Card_2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\CustomerPOSummary.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Process\CustomerPOSummary.Designer.cs">
       <DependentUpon>CustomerPOSummary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\ISOReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\ISOReport.Designer.cs">
+      <DependentUpon>ISOReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\PackingPrint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\PackingPrint.Designer.cs">
+      <DependentUpon>PackingPrint.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Return_RM_List.cs">
       <SubType>Form</SubType>
@@ -366,6 +378,42 @@
     </Compile>
     <Compile Include="Process\Accident_FG.Designer.cs">
       <DependentUpon>Accident_FG.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Accident_Slip_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Accident_Slip_List.Designer.cs">
+      <DependentUpon>Accident_Slip_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Accident_FG_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Accident_FG_List.Designer.cs">
+      <DependentUpon>Accident_FG_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\ProductionOrder_Close.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\ProductionOrder_Close.Designer.cs">
+      <DependentUpon>ProductionOrder_Close.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\ProductionOrder_CancelList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\ProductionOrder_CancelList.Designer.cs">
+      <DependentUpon>ProductionOrder_CancelList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Shipping_RM_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Shipping_RM_List.Designer.cs">
+      <DependentUpon>Shipping_RM_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\ShippingList_FG.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\ShippingList_FG.Designer.cs">
+      <DependentUpon>ShippingList_FG.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Shipping_FG_2.cs">
       <SubType>Form</SubType>
@@ -1136,17 +1184,23 @@
     <EmbeddedResource Include="Main\Mainfrom.resx">
       <DependentUpon>Mainfrom.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\AdjustStock_Taking_Card.resx">
-      <DependentUpon>AdjustStock_Taking_Card.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\AdjustStock_Taking_List.resx">
       <DependentUpon>AdjustStock_Taking_List.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\AdjustStock_Taking_Card_2.resx">
+      <DependentUpon>AdjustStock_Taking_Card_2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\CustomerPOSummary.resx">
       <DependentUpon>CustomerPOSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\ISOReport.resx">
+      <DependentUpon>ISOReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\PackingPrint.resx">
+      <DependentUpon>PackingPrint.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Return_RM_List.resx">
       <DependentUpon>Return_RM_List.cs</DependentUpon>
@@ -1249,6 +1303,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Accident_FG.resx">
       <DependentUpon>Accident_FG.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Accident_Slip_List.resx">
+      <DependentUpon>Accident_Slip_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Accident_FG_List.resx">
+      <DependentUpon>Accident_FG_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\ProductionOrder_Close.resx">
+      <DependentUpon>ProductionOrder_Close.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\ProductionOrder_CancelList.resx">
+      <DependentUpon>ProductionOrder_CancelList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Shipping_RM_List.resx">
+      <DependentUpon>Shipping_RM_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\ShippingList_FG.resx">
+      <DependentUpon>ShippingList_FG.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Shipping_FG_2.resx">
       <DependentUpon>Shipping_FG_2.cs</DependentUpon>
@@ -1641,7 +1713,7 @@
     <None Include="DataClasses1.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
+      <LastGenOutput>DataClasses11.designer.cs</LastGenOutput>
     </None>
     <None Include="Process\Report\Excel_001_Part_Export.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

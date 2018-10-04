@@ -1328,7 +1328,7 @@ namespace StockControl
                 if (cbVat.Checked)
                     vat = amnt * Math.Round(vatA / 100, 2);
                 txtVatAmnt.Value = vat;
-                txtGrandTotal.Value = amnt + vatA;
+                txtGrandTotal.Value = amnt + vat;
             }
             catch (Exception ex) { MessageBox.Show("err2: " + ex.Message); }
         }
@@ -1607,11 +1607,11 @@ namespace StockControl
             {
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var sh = db.mh_SaleOrders.Where(s => s.SONo == txtSHNo.Text  
+                    var sh = db.mh_SaleOrders.Where(s => s.SONo == txtSONo.Text  
                         && s.Active == true && Convert.ToInt16(s.SeqStatus)==2).ToList();
                     if (sh.Count > 0)
                     {
-                        var ShipList = db.mh_SaleOrderDTs.Where(s => s.SONo == txtSHNo.Text 
+                        var ShipList = db.mh_SaleOrderDTs.Where(s => s.SONo == txtSONo.Text 
                             && s.OutShip > 0 && s.Active == true).ToList();
                         if (ShipList.Count > 0)
                             foreach (var gg in ShipList)
@@ -1643,6 +1643,26 @@ namespace StockControl
         {
             cboCustomer_SelectedIndexChanged(null, null);
         }
+
+        private void btnPickSlip_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(txtSHNo.Text.Trim() != "")
+                {
+                    Report.Reportx1.Value = new string[1];
+                    Report.Reportx1.Value[0] = txtSHNo.Text;
+                    Report.Reportx1.WReport = "PickSlip";
+                    Report.Reportx1 op = new Report.Reportx1("PickSlip.rpt");
+                    op.Show();
+                }
+
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+
+
     }
 
 }

@@ -286,8 +286,18 @@ namespace StockControl
         public decimal PCSUnit_PurchaseUOM { get; set; }
         public decimal StandardCost { get; set; }
 
+        public string BomNo { get; set; }
+
         public ItemData(string ItemNo, string ItemName = "")
         {
+            //**************
+            //***************
+            //***************
+            //***************
+            //*** ระบบเปลี่ยนจาก idCustomerPODt เป็น id ของ SaleOrder Dt แทน
+            //***************
+            //***************
+            //***************
             this.ItemNo = ItemNo;
             this.ItemName = ItemName;
             using (var db = new DataClasses1DataContext())
@@ -309,6 +319,14 @@ namespace StockControl
                 this.LeadTime = t.InternalLeadTime.ToInt();
                 this.RepType_enum = baseClass.getRepType(t.ReplenishmentType);
                 this.InvGroup_enum = baseClass.getInventoryGroup(t.InventoryGroup);
+                //this.BomNo = t.BillOfMaterials;
+                var bom = db.tb_BomHDs.Where(x => x.id == t.BillOfMaterials)
+                    .Join(db.tb_BomDTs,
+                    hd => hd.BomNo,
+                    dt => dt.BomNo,
+                    (hd, dt) => new { hd, dt }).ToList();
+                if (bom.Count > 0)
+                    this.BomNo = bom.First().hd.BomNo;
                 //this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
                 decimal? a = null;
                 if (InvGroup_enum == InventoryGroup.FG || InvGroup_enum == InventoryGroup.SEMI) //FG,SEMI กรณีไม่ได้เปิดจากเพื่อ Customer PO ใดๆ
@@ -477,12 +495,18 @@ namespace StockControl
 
                 if (this.ItemNo == "TBK-T-0001")
                 { }
-                var m = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1)
-                    .Join(db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && x.genPR
+                //var m = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1)
+                //    .Join(db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && x.genPR
+                //        && x.ItemNo == this.ItemNo && x.OutQty > 0)
+                //    , hd => hd.id
+                //    , dt => dt.idCustomerPO
+                //    , (hd, dt) => new { hd, dt }).ToList();
+                var m = db.mh_SaleOrders.Where(x => x.Active && x.DemandType == 1)
+                    .Join(db.mh_SaleOrderDTs.Where(x => x.Active && x.forSafetyStock && x.genPR
                         && x.ItemNo == this.ItemNo && x.OutQty > 0)
-                    , hd => hd.id
-                    , dt => dt.idCustomerPO
-                    , (hd, dt) => new { hd, dt }).ToList();
+                        , hd => hd.SONo
+                        , dt => dt.SONo
+                        , (hd, dt) => new { hd, dt }).ToList();
                 foreach (var mm in m)
                 {
                     SafetyStockFG += mm.dt.OutQty;

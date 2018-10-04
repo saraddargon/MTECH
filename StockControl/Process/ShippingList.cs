@@ -151,7 +151,7 @@ namespace StockControl
                                  &&  d.ShippingNo.Contains(txtSHNo.Text.Trim())
                                  //&& (h.ShipDate >= inclusiveStart
                                  //       && h.ShipDate < exclusiveEnd)
-
+                                 && h.ShippingNo.Substring(0, 2) == "SH"
                                  && (((h.ShipDate >= inclusiveStart
                                    && h.ShipDate < exclusiveEnd)
                                    && cbDate.Checked == true)
@@ -392,7 +392,7 @@ namespace StockControl
                              where h.Status != "Cancel" //&& d.verticalID == VerticalID
                                    && d.Status != "Cancel"
                                  && d.ShippingNo.Contains(txtSHNo.Text.Trim())
-                                 && h.JobCard != ""
+                                 //&& h.JobCard != ""
                                  && h.ShippingNo.Substring(0, 2) == "SE"
 
                                  && (((h.ShipDate >= inclusiveStart
@@ -853,15 +853,15 @@ namespace StockControl
 
         private void radButton1_Click_1(object sender, EventArgs e)
         {
-            if (TypeShip == "Accident_Slip")
-                DataLoad_for_Accident();
-            else if (TypeShip == "ShipFG")
-                DataLoad_for_FG();
-            else if(TypeShip== "ShipFGAccident")
-                DataLoad_for_FG_Accident();
-            else if (TypeShip != "")
-                DataLoad_for_Job();
-            else
+            //if (TypeShip == "Accident_Slip")
+            //    DataLoad_for_Accident();
+            //else if (TypeShip == "ShipFG")
+            //    DataLoad_for_FG();
+            //else if(TypeShip== "ShipFGAccident")
+            //    DataLoad_for_FG_Accident();
+            //else if (TypeShip != "")
+            //    DataLoad_for_Job();
+            //else
                 DataLoad();
         }
 
@@ -924,8 +924,16 @@ namespace StockControl
                 if (dgvData.Rows.Count > 0)
                     SHNo = StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["ShippingNo"].Value);
 
-                PrintPR a = new PrintPR(SHNo, SHNo, "Shipping");
-                a.ShowDialog();
+                if (TypeShip == "ShipFGAccident")
+                {
+                    PrintPR a = new PrintPR(SHNo, SHNo, "ReportAccidentSlip");
+                    a.ShowDialog();
+                }
+                else
+                {
+                    PrintPR a = new PrintPR(SHNo, SHNo, "Shipping");
+                    a.ShowDialog();
+                }
             }
             catch { }
         }

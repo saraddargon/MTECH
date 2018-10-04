@@ -52,10 +52,14 @@ namespace StockControl
 
                 DefaultItem();
 
-                if (pk != null)
+                if (pk != "")
                 {
                     txtPackingNo.Text = pk;
                     DataLoad();
+                }
+                else
+                {
+                    txtPackingNo.Text = dbClss.GetNo(32, 0);
                 }
 
 
@@ -98,7 +102,8 @@ namespace StockControl
                             {
                                 addRow(item.id, item.ItemNo, item.ItemName, item.Qty, item.UOM, item.PCSUnit
                                     , item.UnitPrice, item.LotNo, item.Location, item.ShelfNo, item.Remark, item.RefNo
-                                    , item.CustomerPONo, item.CustomerPONo_TEMP, item.idJob, item.idCstmPODt);
+                                    , item.CustomerPONo, item.CustomerPONo_TEMP, item.idJob, item.idCstmPODt
+                                    , item.FullTag, item.OfTag);
                             }
                             setRowNo();
 
@@ -127,7 +132,7 @@ namespace StockControl
             txtInvoiceNo.Text = "";
             txtDLNo.Text = "";
             txtDLNo.Enabled = false;
-            txtPackingNo.Text = "";
+            txtPackingNo.Text = dbClss.GetNo(32,0);
             //ddlTypeReceive.Text = "";
             dtPackingDate.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             txtReceiveBy.Text = ClassLib.Classlib.User;
@@ -340,7 +345,12 @@ namespace StockControl
                         }
                         dt.UnitPrice = Math.Round(dt.Amount / dt.Qty, 2);
 
-                        dt.LotNo = item.Cells["LotNo"].Value.ToSt();
+                        DateTime dNow = DateTime.Now.Date;
+                        string LotNo = item.Cells["LotNo"].Value.ToSt(); 
+                        var dLot = db.mh_LotFGs.Where(x => x.LotDate == dNow).FirstOrDefault();
+                        if (dLot != null)
+                            LotNo = dLot.LotNo;
+                        dt.LotNo = LotNo;
                         dt.ShelfNo = item.Cells["ShelfNo"].Value.ToSt();
                         dt.Remark = item.Cells["Remark"].Value.ToSt();
                         dt.RefNo = jobNo;
@@ -349,6 +359,8 @@ namespace StockControl
                         dt.idJob = idJob;
                         dt.idCstmPODt = item.Cells["idCstmPODt"].Value.ToInt();
                         dt.Active = true;
+                        dt.OfTag = item.Cells["OfTag"].Value.ToSt();
+                        dt.FullTag = item.Cells["FullTag"].Value.ToSt();
 
                         db.SubmitChanges(); //Save Detail
 
@@ -360,12 +372,21 @@ namespace StockControl
                             if (job.OutQty < 0)
                             {
                                 job.OutQty = 0;
+                                var rm = db.mh_ProductionOrderRMs.Where(x => x.JobNo == job.JobNo && x.OutQty < 0 && x.Active).ToList();
+                                if (rm.Count > 0)
+                                { }
+                                else
+                                {
+                                    job.CloseJob = true;
+                                }
                                 //รับครบ
                                 var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == item.Cells["idCstmPODt"].Value.ToInt() && x.TLQty > 0).ToList();
-                                foreach(var ss in slist)
+                                foreach (var ss in slist)
                                     ss.Free = true;
                                 db.SubmitChanges();
                             }
+                            else if (job.OutQty == 0)
+                                job.CloseJob = true;
 
                             dbClss.AddHistory("ProductionOrder", "Job Order Sheet", $"Receive by Packing No {m.PackingNo} : {dt.Qty}", job.JobNo);
                         }
@@ -391,26 +412,50 @@ namespace StockControl
                             s.Refid = dt.id; //id mh_PackingDt
 
                             //กรณีปกติจะบันทึก idCustomerPO Dt เพื่อระบุว่าของที่รับเข้าใช้สำหรับ Customer PO ใด
-                            s.idCSTMPODt = job.RefDocId; //idCstmPODt
-                            //กรณี Safety Stock จะบันทึก idCStmPODt เป็น 0 แต่ถ้าเป็นการรับเพื่อไปผลิต FG Safety Stock จะใส่ id นั้นๆปกติ
-                            var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == job.RefDocId /*&& x.forSafetyStock*/)
-                                .Join(db.mh_CustomerPOs.Where(x => x.Active /*x.DemandType == 1*/)
-                                , podt => podt.idCustomerPO
-                                , pohd => pohd.id
-                                , (podt, pohd) => new { pohd, podt }).FirstOrDefault();
-                            if (cstmpo != null)
+                            s.idCSTMPODt = job.RefDocId; //idCstmPODt -->เปลี่ยนเป็น idSaleOrder
+
+                            var so = db.mh_SaleOrderDTs.Where(x => x.id == job.RefDocId)
+                                .Join(db.mh_SaleOrders.Where(x => x.Active)
+                                , sodt => sodt.SONo
+                                , sohd => sohd.SONo
+                                , (sodt, sohd) => new { sohd, sodt }).FirstOrDefault();
+                            if(so != null)
                             {
                                 //เช็คว่าเป็น FG ที่ผลิตเพื่อ Customer PO (Safety stock หรือไม่) :::: DemandType = 1 --> ผลิตเพื่อ Safety Stock
-                                if (cstmpo.podt.ItemNo == s.CodeNo)
+                                if (so.sodt.ItemNo == s.CodeNo)
                                 {
-                                    if(cstmpo.podt.forSafetyStock && cstmpo.pohd.DemandType == 1) //เป็น FG ที่ผลิตเพื่อ Safety Stock ให้ใส่ idCstmPO =0
+                                    if (so.sodt.forSafetyStock && so.sohd.DemandType == 1) //เป็น FG ที่ผลิตเพื่อ Safety Stock ให้ใส่ idCstmPO =0
                                         s.idCSTMPODt = 0;
 
-                                    cstmpo.podt.OutQty -= s.QTY.ToDecimal();
-                                    if (cstmpo.podt.OutQty < 0)
-                                        cstmpo.podt.OutQty = 0;
-                                    dbClss.AddHistory("CustomerPO", "Customer P/O", $"Receive by Packing no. {m.PackingNo} : {s.QTY}", cstmpo.pohd.CustomerPONo);
+                                    so.sodt.OutQty -= s.QTY.ToDecimal();
+                                    if (so.sodt.OutQty < 0)
+                                        so.sodt.OutQty = 0;
+                                    //dbClss.AddHistory("CustomerPO", "Customer P/O", $"Receive by Packing no. {m.PackingNo} : {s.QTY}", cstmpo.pohd.CustomerPONo);
                                 }
+                            }
+
+                            if (false)
+                            {
+                                //กรณี Safety Stock จะบันทึก idCStmPODt เป็น 0 แต่ถ้าเป็นการรับเพื่อไปผลิต FG Safety Stock จะใส่ id นั้นๆปกติ
+                                //var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == job.RefDocId /*&& x.forSafetyStock*/)
+                                //    .Join(db.mh_CustomerPOs.Where(x => x.Active /*x.DemandType == 1*/)
+                                //    , podt => podt.idCustomerPO
+                                //    , pohd => pohd.id
+                                //    , (podt, pohd) => new { pohd, podt }).FirstOrDefault();
+                                //if (cstmpo != null)
+                                //{
+                                ////เช็คว่าเป็น FG ที่ผลิตเพื่อ Customer PO (Safety stock หรือไม่) :::: DemandType = 1 --> ผลิตเพื่อ Safety Stock
+                                //if (cstmpo.podt.ItemNo == s.CodeNo)
+                                //{
+                                //    if(cstmpo.podt.forSafetyStock && cstmpo.pohd.DemandType == 1) //เป็น FG ที่ผลิตเพื่อ Safety Stock ให้ใส่ idCstmPO =0
+                                //        s.idCSTMPODt = 0;
+
+                                //    cstmpo.podt.OutQty -= s.QTY.ToDecimal();
+                                //    if (cstmpo.podt.OutQty < 0)
+                                //        cstmpo.podt.OutQty = 0;
+                                //    dbClss.AddHistory("CustomerPO", "Customer P/O", $"Receive by Packing no. {m.PackingNo} : {s.QTY}", cstmpo.pohd.CustomerPONo);
+                                //}
+                                //}
                             }
 
                             s.Type_in_out = "In";
@@ -420,8 +465,8 @@ namespace StockControl
                             else
                                 s.UnitCost = 0;
 
-                            decimal RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(s.CodeNo, "", 0, "Warehouse", 0)));
-                            decimal sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(s.CodeNo, "", "", "RemainAmount", "Warehouse", job.RefDocId)) + s.AmountCost.ToDecimal();
+                            decimal RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(s.CodeNo, "", 0, "Warehouse", -1)));
+                            decimal sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(s.CodeNo, "", "", "RemainAmount", "Warehouse", 0/*job.RefDocId*/)) + s.AmountCost.ToDecimal();
                             decimal sum_Qty = RemainQty.ToDecimal() + s.QTY.ToDecimal();
                             var RemainAmount = sum_Remain;
                             decimal RemainUnitCost = 0.00m;
@@ -593,9 +638,21 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                if (dgvData.Rows.Where(x => x.Cells["RefNo"].Value.ToSt().Equals(JobNo)).Count() > 0)
+                bool tagQr = false;
+                string FullTag = JobNo;
+                decimal qtyTag = 0.00m;
+                string ofTag = "0";
+                if(FullTag.Split(',').Count() > 1)
                 {
-                    baseClass.Warning($"- Job no {JobNo} is already in list.\n");
+                    List<string> t = FullTag.Split(',').ToList();
+                    JobNo = t[0];
+                    qtyTag = t[1].ToDecimal();
+                    ofTag = t[3];
+                    tagQr = true;
+                }
+                if (dgvData.Rows.Where(x => x.Cells["FullTag"].Value.ToSt().Equals(FullTag)).Count() > 0)
+                {
+                    baseClass.Warning($"- Job no or QR code is already in list.\n");
                     return;
                 }
 
@@ -609,15 +666,17 @@ namespace StockControl
                             baseClass.Warning($"- Job no {JobNo} status not Approved.\n");
                             return;
                         }
-                        if (m.OutQty <= 0)
+                        if (m.OutQty <= 0 || m.CloseJob)
                         {
                             baseClass.Warning($"- Job no {JobNo} is already Completed.\n");
                             return;
                         }
 
                         var tool = db.mh_Items.Where(x => x.InternalNo == m.FGNo).FirstOrDefault();
-                        var podt = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                        var pohd = db.mh_CustomerPOs.Where(x => x.id == podt.idCustomerPO).FirstOrDefault();
+                        //var podt = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        //var pohd = db.mh_CustomerPOs.Where(x => x.id == podt.idCustomerPO).FirstOrDefault();
+                        var sodt = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        var sohd = db.mh_SaleOrders.Where(x => x.SONo == sodt.SONo).FirstOrDefault();
 
                         var costAll = m.CostOverhead;
                         var dt = db.mh_ProductionOrderRMs.Where(x => x.JobNo == m.JobNo && x.Active).ToList();
@@ -626,9 +685,11 @@ namespace StockControl
                         costAll += dt2.Sum(x => x.TotalCost);
                         var costPer = Math.Round(costAll / m.Qty, 2);
 
-                        addRow(0, m.FGNo, m.FGName, 0, m.UOM, m.PCSUnit, costPer
-                            , m.LotNo, "Warehouse", tool.ShelfNo, "", JobNo, pohd.CustomerPONo, m.RefDocNo_TEMP
-                            , m.id, m.RefDocId);
+                        addRow(0, m.FGNo, m.FGName, qtyTag, m.UOM, m.PCSUnit, costPer
+                            , m.LotNo, "Warehouse", tool.ShelfNo, "", JobNo
+                            , sohd.SONo
+                            , m.RefDocNo_TEMP
+                            , m.id, m.RefDocId, FullTag, ofTag);
                         setRowNo();
                         calAmnt();
                     }
@@ -645,7 +706,8 @@ namespace StockControl
         }
         private void addRow(int id, string itemNo, string itemName, decimal qty, string uOM, decimal pCSUnit
             , decimal costPer, string lotNo, string LocationItem, string shelfNo, string Remark
-            , string jobNo, string customerPONo, string customerPONo_TEMP, int idJob, int idCstmPOdt)
+            , string jobNo, string customerPONo, string customerPONo_TEMP, int idJob, int idCstmPOdt
+            , string FullTag, string OfTag)
         {
             var row = dgvData.Rows.AddNew();
             row.Cells["id"].Value = id;
@@ -665,6 +727,8 @@ namespace StockControl
             row.Cells["CustomerPONo_TEMP"].Value = customerPONo_TEMP;
             row.Cells["idJob"].Value = idJob;
             row.Cells["idCstmPOdt"].Value = idCstmPOdt;
+            row.Cells["FullTag"].Value = FullTag;
+            row.Cells["OfTag"].Value = OfTag;
 
             //find OutQty
             using (var db = new DataClasses1DataContext())
@@ -933,22 +997,31 @@ namespace StockControl
                             if (uom != null) pcsunit = uom.QuantityPer;
                             foreach (var ss in st)
                             {
-                                //คืน Qty Customer P/O Dt
-                                var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == d.idCstmPODt).FirstOrDefault();
-                                if (cstmpo != null)
-                                {
-                                    cstmpo.OutQty += d.Qty;
-                                    db.SubmitChanges();
+                                ////คืน Qty Customer P/O Dt
+                                //var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == d.idCstmPODt).FirstOrDefault();
+                                //if (cstmpo != null)
+                                //{
+                                //    cstmpo.OutQty += d.Qty;
+                                //    db.SubmitChanges();
 
-                                    var po = db.mh_CustomerPOs.Where(x => x.id == cstmpo.idCustomerPO).FirstOrDefault();
-                                    if (po != null)
-                                        dbClss.AddHistory("CustomerPO", "Customer P/O", $"Cancel Packing {pkNo} : {d.Qty}", po.CustomerPONo);
+                                //    var po = db.mh_CustomerPOs.Where(x => x.id == cstmpo.idCustomerPO).FirstOrDefault();
+                                //    if (po != null)
+                                //        dbClss.AddHistory("CustomerPO", "Customer P/O", $"Cancel Packing {pkNo} : {d.Qty}", po.CustomerPONo);
+                                //}
+
+                                //คืน Qty Customer P/O Dt
+                                var so = db.mh_SaleOrderDTs.Where(x => x.id == d.idCstmPODt).FirstOrDefault();
+                                if(so != null)
+                                {
+                                    so.OutQty += d.Qty;
+                                    db.SubmitChanges();
                                 }
                                 //คืน Qty Production ORder
                                 var pro = db.mh_ProductionOrders.Where(x => x.id == d.idJob).FirstOrDefault();
                                 if (pro != null)
                                 {
                                     pro.OutQty += d.Qty;
+                                    pro.CloseJob = false;
                                     db.SubmitChanges();
 
                                     dbClss.AddHistory("ProductionOrder", "Job Order Sheet", $"Cancel Packing {pkNo} : {d.Qty}", pro.JobNo);

@@ -409,7 +409,7 @@ namespace StockControl
             Ac = "New";
 
            // getมาไว้ก่อน แต่ยังไมได้ save
-            txtSHNo.Text = StockControl.dbClss.GetNo(5, 0);
+            txtSHNo.Text = StockControl.dbClss.GetNo(39, 0);
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -725,7 +725,7 @@ namespace StockControl
                         this.Cursor = Cursors.WaitCursor;
 
                         if (Ac.Equals("New"))
-                            txtSHNo.Text = StockControl.dbClss.GetNo(5, 2);
+                            txtSHNo.Text = StockControl.dbClss.GetNo(39, 2);
 
                     if (!txtSHNo.Text.Equals(""))
                     {
@@ -1757,7 +1757,7 @@ namespace StockControl
                 txtCodeNo.Text = "";
 
                 this.Cursor = Cursors.WaitCursor;
-                ShippingList sc = new ShippingList(txtSHNo, txtCodeNo,"Job");
+                Shipping_RM_List sc = new Shipping_RM_List(txtSHNo, txtCodeNo,"Job");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();

@@ -20,7 +20,11 @@ namespace StockControl
         {
             InitializeComponent();
         }
-
+        public AdjustStock_Taking(string ADNo)
+        {
+            InitializeComponent();
+            ADNo_tt = ADNo;
+        }
         public AdjustStock_Taking(string ADNo, string CodeNo,string Screen)
         {
             InitializeComponent();
@@ -270,30 +274,41 @@ namespace StockControl
                                          //RemainQty = (Convert.ToDecimal(db.Cal_QTY(d.CodeNo, "", 0))),// i.StockInv,
                                          Unit = d.UOM,//i.BaseUOM,
                                          PCSUnit = Convert.ToDecimal(d.PCSUnit) //dbClss.Con_UOM(d.InternalNo, StockControl.dbClss.TSt(i.BaseUOM))
-                                         , StandardCost = d.Cost,//i.StandardCost,
+                                         ,
+                                         StandardCost = d.Cost,//i.StandardCost,
                                          Amount = d.Amount,
                                          LotNo = "",
                                          Remark = d.Remark,
                                          id = d.id,
                                          Location = i.Location,
                                          ShelfNo = ""
-                                         ,RefJobCard = ""//d.RefJobCard
-                                         ,RefTempJobCard = ""//d.RefTempJobCard
-                                         ,RefidJobCard = 0//d.RefidJobCard                                         
-                                         ,StockQty = d.StockQty
-                                         ,CompareQty = d.CompareQty
-                                         ,InputQty = d.InputQty
-                                         ,Type = d.Type
-                                         ,QTYTrue = d.InputQty,
-                                         
+                                         ,
+                                         RefJobCard = ""//d.RefJobCard
+                                         ,
+                                         RefTempJobCard = ""//d.RefTempJobCard
+                                         ,
+                                         RefidJobCard = 0//d.RefidJobCard                                         
+                                         ,
+                                         StockQty = d.StockQty
+                                         ,
+                                         CompareQty = d.CompareQty
+                                         ,
+                                         InputQty = d.InputQty
+                                         ,
+                                         Type = d.Type
+                                         ,
+                                         QTYTrue = d.InputQty,
+                                         InputOK = d.InputOK
 
-                        }
+
+                                     }
                             ).ToList();
                             if (r.Count > 0)
                             {
                                 dgvNo = dgvData.Rows.Count() + 1;
                                 decimal QTY = 0;
                                 decimal StandardCost = 0;
+                                string Reason = "";
                                 foreach (var vv in r)
                                 {
                                     StandardCost = 0;                                  
@@ -301,13 +316,19 @@ namespace StockControl
                                         QTY =  dbClss.TDe(vv.QTYTrue) / dbClss.TDe(vv.PCSUnit);
                                     if(dbClss.TDe(vv.QTYTrue)>0)
                                         StandardCost = (dbClss.TDe(vv.Amount) / dbClss.TDe(vv.QTYTrue) )* dbClss.TDe(vv.PCSUnit);
+                                    Reason = "";
+                                    if (dbClss.TDe(vv.StockQty) > 0)
+                                    {
+                                        Reason = //"รับเข้าได้ไม่เกิน " + Convert.ToString(rd.Cells["dgvMaxQty"].Value) +
+                                        " ปรับสต็อกลดเกินจำนวนในสต็อก " + vv.StockQty.ToString("N2");
+                                    }
                                     Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
                                         , QTY, vv.Unit, dbClss.TDe(vv.PCSUnit)
                                         , dbClss.TDe(vv.StandardCost), dbClss.TDe(vv.Amount)
                                         , vv.LotNo, vv.Remark,vv.id.ToString(),vv.ShelfNo
                                         , vv.Location, vv.RefJobCard,vv.RefTempJobCard
                                         , vv.RefidJobCard.ToString(),vv.StockQty
-                                        , vv.CompareQty, vv.InputQty,vv.Type,vv.QTYTrue);
+                                        , vv.CompareQty, vv.InputQty,vv.Type,vv.QTYTrue, Reason, dbClss.TBo(vv.InputOK));
                                 }
 
                             }
@@ -588,19 +609,39 @@ namespace StockControl
                     string ADNo = txtADNo.Text;
                     ClearData();
                     txtADNo.Text = ADNo;
-
-
-                    DataLoad();
+                   
                     btnNew.Enabled = true;
                     btnDel_Item.Enabled = false;
+                    
+                    MessageBox.Show("บันทึกสำเร็จ!");
+                    DataLoad();
+                }
+                else
+                {
+                    MessageBox.Show("ไม่สามารถโหลดเลขที่รับสินค้าได้ ติดต่อแผนก IT");
+                }
+            }
+        }
+        private void Save_Update_InputOK()
+        {
+            if (Check_Save())
+                return;
+            if (MessageBox.Show("ต้องการบันทึกการใส่ข้อมูลจากการนับสต็อก ใช่หรือไม่?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                this.Cursor = Cursors.WaitCursor;
+                if (!txtADNo.Text.Equals("")) //&& Ac.Equals("New"))
+                {
 
-                    ////เอา Stock ออกทั้งหมด
-                    //Insert_Stock_Out();
-                    //เอา Stock เข้าทีละบรรทัด
-                    //Insert_Stock_Taking();
-
-                    //ปรับสต็อก
-
+                    //SaveHerder();
+                    //SaveDetail();
+                    Save_InputOK();
+                    string ADNo = txtADNo.Text;
+                    ClearData();
+                    txtADNo.Text = ADNo;
+                    
+                    btnNew.Enabled = true;
+                    btnDel_Item.Enabled = false;
+                    
                     MessageBox.Show("บันทึกสำเร็จ!");
                     DataLoad();
                 }
@@ -614,10 +655,11 @@ namespace StockControl
         {
             try
             {
-                if (Ac.Equals("New"))// || Ac.Equals("Edit"))
-                {
-                    Save_Adjust_CheckStock();
-                }
+                //if (Ac.Equals("New"))// || Ac.Equals("Edit"))
+                //{
+                    //Save_Adjust_CheckStock();
+                    Save_Update_InputOK();
+                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -943,7 +985,7 @@ namespace StockControl
                     id = StockControl.dbClss.TInt(g.Cells["id"].Value);
                     if (g.IsVisible.Equals(true))
                     {
-                        if (StockControl.dbClss.TInt(g.Cells["QTYTrue"].Value) != (0)) // เอาเฉพาะรายการที่ไม่เป็น 0 
+                        if (StockControl.dbClss.TDe(g.Cells["QTYTrue"].Value) != (0)) // เอาเฉพาะรายการที่ไม่เป็น 0 
                         {
                             //if (StockControl.dbClss.TInt(g.Cells["id"].Value) <= 0)  //New ใหม่
                             //{
@@ -1149,6 +1191,132 @@ namespace StockControl
                 }
             }
         }
+        private void Save_InputOK()
+        {
+            dgvData.EndEdit();
+
+            string ADNo = txtADNo.Text;
+            DateTime? RequireDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            if (!dtRequire.Text.Equals(""))
+                RequireDate = dtRequire.Value;
+            //int Seq = 0;
+            //DateTime? UpdateDate = null;
+            //string LotNo = "";
+
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                string SS = "";
+                int id = 0;
+
+                foreach (var g in dgvData.Rows)
+                {
+
+                    id = StockControl.dbClss.TInt(g.Cells["id"].Value);
+                    if (g.IsVisible.Equals(true))
+                    {
+                        if (dbClss.TBo(g.Cells["InputOK"].Value))
+                        {
+                            if (StockControl.dbClss.TInt(g.Cells["QTYTrue"].Value) != (0)) // เอาเฉพาะรายการที่ไม่เป็น 0 
+                            {
+                                //LotNo = StockControl.dbClss.TSt(g.Cells["LotNo"].Value);
+                                //if (LotNo == "")
+                                //{
+                                //    LotNo = dbClss.Get_Lot(DateTime.Now.ToString("yyyyMMdd"));
+                                //}
+                                //Seq += 1;
+
+                                //dbClss.AddHistory(this.Name, "ปรับสต็อก", "เพิ่มรายการ ปรับสต็อก [" + u.CodeNo + " จำนวนปรับปรุง :" + u.Qty.ToString() + " จำนวนก่อนปรับปรุง " + StockControl.dbClss.TSt(g.Cells["StockQty"].Value) + "]", txtADNo.Text);
+
+                                decimal StandardCost = 0;
+                                StandardCost = Math.Round((StockControl.dbClss.TDe(g.Cells["Amount"].Value) / StockControl.dbClss.TDe(g.Cells["QTYTrue"].Value)), 2);
+
+                                var c = (from ix in db.mh_CheckStock_Lists select ix)
+                                  .Where(a => a.CheckStatus == "Waiting" && a.id == id).ToList();
+                                if (c.Count > 0)
+                                {
+                                    foreach (var ss in c)
+                                    {
+                                        ss.InputDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                        ss.InputBy = ClassLib.Classlib.User;
+                                        ss.InputQty = StockControl.dbClss.TDe(g.Cells["QTYTrue"].Value);
+                                        ss.CompareQty = StockControl.dbClss.TDe(g.Cells["CompareQty"].Value);
+                                        ss.Cost = StandardCost;//StockControl.dbClss.TDe(g.Cells["StandardCost"].Value);
+                                        ss.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
+                                        ss.Remark = dbClss.TSt(g.Cells["Remark"].Value);
+                                        ss.Type = dbClss.TSt(g.Cells["Type"].Value);
+                                        ss.UOM = StockControl.dbClss.TSt(g.Cells["Unit"].Value);
+                                        ss.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);                                       
+                                        //ss.CheckStatus = "Completed";
+                                        ss.InputOK = true;
+                                        db.SubmitChanges();
+                                    }
+                                }
+                                else
+                                {
+                                    if (id == 0)
+                                    {
+                                        mh_CheckStock_List ss = new mh_CheckStock_List();
+                                        ss.CheckNo = txtADNo.Text;
+                                        ss.CheckDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                        ss.CheckBy = ClassLib.Classlib.User;
+                                        ss.InputDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                        ss.InputBy = ClassLib.Classlib.User;
+                                        ss.SeqStatus = 0;
+                                        ss.CheckStatus = "Waiting";
+                                        ss.InternalNo = StockControl.dbClss.TSt(g.Cells["CodeNo"].Value);
+                                        ss.StockQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), "Free", 0, StockControl.dbClss.TSt(g.Cells["Location"].Value), 0)));
+                                        ss.InputQty = StockControl.dbClss.TDe(g.Cells["QTYTrue"].Value);
+                                        ss.CompareQty = StockControl.dbClss.TDe(g.Cells["CompareQty"].Value);
+                                        ss.Cost = StandardCost;//StockControl.dbClss.TDe(g.Cells["StandardCost"].Value);
+                                        ss.Amount = StockControl.dbClss.TDe(g.Cells["Amount"].Value);
+                                        ss.Remark = dbClss.TSt(g.Cells["Remark"].Value);
+                                        ss.Type = dbClss.TSt(g.Cells["Type"].Value);
+                                        ss.UOM = StockControl.dbClss.TSt(g.Cells["Unit"].Value);
+                                        ss.PCSUnit = StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value);
+                                        ss.InputOK = true;
+                                        db.mh_CheckStock_Lists.InsertOnSubmit(ss);
+                                        db.SubmitChanges();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                var c = (from ix in db.mh_CheckStock_Lists select ix)
+                                         .Where(a => a.CheckStatus == "Waiting" && a.id == id).ToList();
+                                if (c.Count > 0)
+                                {
+                                    foreach (var ss in c)
+                                    {
+                                        ss.InputDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                        ss.InputBy = ClassLib.Classlib.User;
+                                        ss.InputOK = true;
+                                        db.SubmitChanges();
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        var c = (from ix in db.mh_CheckStock_Lists select ix)
+                                                     .Where(a => a.CheckStatus == "Waiting" && a.id == id).ToList();
+                        if (c.Count > 0)
+                        {
+                            foreach (var ss in c)
+                            {
+                                ss.CheckStatus = "Cancel";
+                                ss.InputDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                ss.InputBy = ClassLib.Classlib.User;
+                                db.SubmitChanges();
+                            }
+                        }
+                    }
+                    
+
+                }
+            }
+        }
         private void radGridView1_CellEndEdit(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             try
@@ -1299,7 +1467,7 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value),0)));
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Free", 0, Convert.ToString(e.Row.Cells["Location"].Value),0)));
                         }
                     }
                     else if (dgvData.Columns["Unit"].Index == e.ColumnIndex)
@@ -1539,7 +1707,7 @@ namespace StockControl
 
                             ItemNo = d.InternalName;
                             ItemDescription = d.InternalName;
-                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Invoice", 0, Convert.ToString(d.Location),0)));//Convert.ToDecimal(d.StockInv);
+                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Free", 0, Convert.ToString(d.Location),0)));//Convert.ToDecimal(d.StockInv);
                             Unit = d.BaseUOM;
                             PCSUnit = dbClss.Con_UOM(CodeNo, d.BaseUOM);
                             CostPerUnit = 0;// Convert.ToDecimal(d.StandardCost); // Convert.ToDecimal(dbClss.Get_Stock(CodeNo, "", "", "Avg"));//Convert.ToDecimal(d.StandardCost);
@@ -1551,7 +1719,7 @@ namespace StockControl
 
                                 Add_Item(No, CodeNo, ItemNo, ItemDescription
                                     , QTY, Unit, PCSUnit, CostPerUnit, Amount, LotNo, Remark
-                                    , "0", ShelfNo, Location, "", "", "0",0,0,0,"",0);
+                                    , "0", ShelfNo, Location, "", "", "0",0,0,0,"",0,"",true);
                             }
                         }
                     }
@@ -1564,7 +1732,8 @@ namespace StockControl
             , string ItemDescription 
            , decimal QTY, string Unit,decimal PCSUnit, decimal StandardCost,decimal Amount,string LotNo,string Remark
             ,string id ,string ShelfNo,string Location,string RefJobCard,string RefTempJobCard,string RefidJobCard
-            , decimal StockQty, decimal CompareQty, decimal InputQty,string Type,decimal QTYTrue
+            , decimal StockQty, decimal CompareQty, decimal InputQty,string Type,decimal QTYTrue,string Reason
+            ,bool InputOK
             )
         {
 
@@ -1602,6 +1771,8 @@ namespace StockControl
                 ee.Cells["CompareQty"].Value = CompareQty;
                 ee.Cells["Type"].Value = Type;
                 ee.Cells["QTYTrue"].Value = QTYTrue;
+                ee.Cells["Reason"].Value = Reason;
+                ee.Cells["InputOK"].Value = InputOK;
 
                 //dbclass.SetRowNo1(dgvData);
             }

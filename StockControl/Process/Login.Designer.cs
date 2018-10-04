@@ -31,6 +31,7 @@
             Telerik.WinControls.UI.RadListDataItem radListDataItem1 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem2 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem3 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem4 = new Telerik.WinControls.UI.RadListDataItem();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.txtUser = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
@@ -47,6 +48,10 @@
             this.lbVer = new System.Windows.Forms.Label();
             this.btnUpdate = new Telerik.WinControls.UI.RadButton();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
+            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
+            this.txtUserDb = new System.Windows.Forms.TextBox();
+            this.txtPassDb = new System.Windows.Forms.TextBox();
+            this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbConfig)).BeginInit();
@@ -58,6 +63,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.ddlDatabase)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbShow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnUpdate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
             this.SuspendLayout();
             // 
             // txtUser
@@ -138,7 +145,7 @@
             // 
             this.lblServer.BackColor = System.Drawing.Color.Transparent;
             this.lblServer.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblServer.Location = new System.Drawing.Point(104, 263);
+            this.lblServer.Location = new System.Drawing.Point(104, 253);
             this.lblServer.Name = "lblServer";
             this.lblServer.Size = new System.Drawing.Size(46, 18);
             this.lblServer.TabIndex = 7;
@@ -148,7 +155,7 @@
             // 
             this.lblDatabase.BackColor = System.Drawing.Color.Transparent;
             this.lblDatabase.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDatabase.Location = new System.Drawing.Point(87, 286);
+            this.lblDatabase.Location = new System.Drawing.Point(87, 276);
             this.lblDatabase.Name = "lblDatabase";
             this.lblDatabase.Size = new System.Drawing.Size(62, 18);
             this.lblDatabase.TabIndex = 7;
@@ -156,14 +163,13 @@
             // 
             // ddlServer
             // 
-            this.ddlServer.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
             radListDataItem1.Text = "1.179.133.222,2018";
             radListDataItem2.Text = "FILE_SERVER";
             radListDataItem3.Text = "110.170.161.35";
             this.ddlServer.Items.Add(radListDataItem1);
             this.ddlServer.Items.Add(radListDataItem2);
             this.ddlServer.Items.Add(radListDataItem3);
-            this.ddlServer.Location = new System.Drawing.Point(156, 261);
+            this.ddlServer.Location = new System.Drawing.Point(156, 251);
             this.ddlServer.Name = "ddlServer";
             this.ddlServer.Size = new System.Drawing.Size(131, 20);
             this.ddlServer.TabIndex = 4;
@@ -171,8 +177,9 @@
             // 
             // ddlDatabase
             // 
-            this.ddlDatabase.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            this.ddlDatabase.Location = new System.Drawing.Point(156, 286);
+            radListDataItem4.Text = "dbMTECH";
+            this.ddlDatabase.Items.Add(radListDataItem4);
+            this.ddlDatabase.Location = new System.Drawing.Point(156, 276);
             this.ddlDatabase.Name = "ddlDatabase";
             this.ddlDatabase.Size = new System.Drawing.Size(131, 20);
             this.ddlDatabase.TabIndex = 5;
@@ -215,6 +222,42 @@
             this.btnUpdate.ThemeName = "Office2010Blue";
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
+            // radLabel3
+            // 
+            this.radLabel3.BackColor = System.Drawing.Color.Transparent;
+            this.radLabel3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel3.Location = new System.Drawing.Point(108, 304);
+            this.radLabel3.Name = "radLabel3";
+            this.radLabel3.Size = new System.Drawing.Size(36, 18);
+            this.radLabel3.TabIndex = 7;
+            this.radLabel3.Text = "User :";
+            // 
+            // txtUserDb
+            // 
+            this.txtUserDb.Location = new System.Drawing.Point(156, 302);
+            this.txtUserDb.Name = "txtUserDb";
+            this.txtUserDb.Size = new System.Drawing.Size(131, 20);
+            this.txtUserDb.TabIndex = 1;
+            this.txtUserDb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPassword_KeyPress);
+            // 
+            // txtPassDb
+            // 
+            this.txtPassDb.Location = new System.Drawing.Point(156, 328);
+            this.txtPassDb.Name = "txtPassDb";
+            this.txtPassDb.Size = new System.Drawing.Size(131, 20);
+            this.txtPassDb.TabIndex = 1;
+            this.txtPassDb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPassword_KeyPress);
+            // 
+            // radLabel4
+            // 
+            this.radLabel4.BackColor = System.Drawing.Color.Transparent;
+            this.radLabel4.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel4.Location = new System.Drawing.Point(87, 330);
+            this.radLabel4.Name = "radLabel4";
+            this.radLabel4.Size = new System.Drawing.Size(63, 18);
+            this.radLabel4.TabIndex = 7;
+            this.radLabel4.Text = "Password :";
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -230,10 +273,14 @@
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.cbShow);
             this.Controls.Add(this.cbConfig);
+            this.Controls.Add(this.radLabel4);
+            this.Controls.Add(this.radLabel3);
             this.Controls.Add(this.lblDatabase);
             this.Controls.Add(this.lblServer);
             this.Controls.Add(this.radLabel1);
             this.Controls.Add(this.radLabel2);
+            this.Controls.Add(this.txtPassDb);
+            this.Controls.Add(this.txtUserDb);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUser);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -255,6 +302,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.ddlDatabase)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbShow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnUpdate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -277,5 +326,9 @@
         private System.Windows.Forms.Label lbVer;
         private Telerik.WinControls.UI.RadButton btnUpdate;
         private Telerik.WinControls.Themes.Office2010BlueTheme office2010BlueTheme1;
+        private Telerik.WinControls.UI.RadLabel radLabel3;
+        private System.Windows.Forms.TextBox txtUserDb;
+        private System.Windows.Forms.TextBox txtPassDb;
+        private Telerik.WinControls.UI.RadLabel radLabel4;
     }
 }

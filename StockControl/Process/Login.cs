@@ -57,6 +57,8 @@ namespace StockControl
             txtUser.Text = "";//ConnectDB.ConnectDB.user;
             ddlDatabase.Text = ConnectDB.dbname;
             ddlServer.Text = ConnectDB.server;
+            txtUserDb.Text = ConnectDB.Userdb;
+            txtPassDb.Text = ConnectDB.PassDb;
             txtUser.Text = "admin";
             txtPassword.Text = "1234";
 
@@ -83,13 +85,23 @@ namespace StockControl
             {
                 SetConfig();
                 ConnectDB.dbconnection = "Data Source=" + ddlServer.Text + ";Initial Catalog="
-                        + ddlDatabase.Text + ";User ID=" + ConnectDB.Userdb + ";Password=" + ConnectDB.PassDb + ";";
+                        + ddlDatabase.Text + ";User ID=" + txtUserDb.Text + ";Password=" + txtPassDb.Text + ";";
+                ConnectDB.server = ddlServer.Text;
+                ConnectDB.dbname = ddlDatabase.Text;
+                ConnectDB.Userdb = txtUserDb.Text;
+                ConnectDB.PassDb = txtPassDb.Text;
 
                 Properties.Settings.Default["dbStockControlConnectionString1"] = ConnectDB.dbconnection;
                 ConnectDB.user = txtUser.Text;
                 ConnectDB.server = ddlServer.Text;
                 ConnectDB.dbname = ddlDatabase.Text;
                 ClassLib.Classlib.User = ConnectDB.user;
+
+                Report.CRRReport.ServerName = ddlServer.Text;
+                Report.CRRReport.DbName = ddlDatabase.Text;
+                Report.CRRReport.dbUser = ConnectDB.Userdb;
+                Report.CRRReport.dbPass = ConnectDB.PassDb;
+
 
                 ////OpenSqlConnection(); //Test Connection time out
                 if (checkVr())
@@ -112,7 +124,7 @@ namespace StockControl
         }
         private void SetConfig()
         {
-            ConnectDB.SetSqlconn(ddlServer.Text, ddlDatabase.Text, ConnectDB.Userdb, ConnectDB.PassDb, txtUser.Text);
+            ConnectDB.SetSqlconn(ddlServer.Text, ddlDatabase.Text, txtUserDb.Text, txtPassDb.Text, txtUser.Text);
         }
         private bool checkVr()
         {

@@ -92,6 +92,7 @@ namespace StockControl
                     {
                         txtJobNo.Text = t.JobNo;
                         txtRefDocNo.Text = t.RefDocNo;
+                        txtRefDocNo_TEMP.Text = t.RefDocNo_TEMP;
                         txtRefDocId.Text = t.RefDocId.ToSt();
                         txtFGNo.Text = t.FGNo;
                         txtFGName.Text = t.FGName;
@@ -106,6 +107,7 @@ namespace StockControl
                         txtCreateBy.Text = t.CreateBy;
                         txtLotNo.Text = t.LotNo;
                         cbHoldJob.Checked = t.HoldJob;
+                        cbCloseJob.Checked = t.CloseJob;
                         if (cbHoldJob.Checked)
                             btnHoldJob.Text = "Unhold Job";
                         else
@@ -115,6 +117,8 @@ namespace StockControl
 
                         if (txtSeqStatus.Text.ToInt() == 2)
                             txtStatus.Text = "Approved";
+                        else if (t.CloseJob)
+                            txtSeqStatus.Text = "Completed";
                         else
                             txtStatus.Text = "Waiting";
 
@@ -316,6 +320,7 @@ namespace StockControl
             txtCreateBy.Text = Classlib.User;
             txtCreateDate.Text = DateTime.Now.ToDtString();
             cbHoldJob.Checked = false;
+            cbCloseJob.Checked = false;
             txtStatus.Text = "Waiting";
             txtidJob.Text = "";
             txtSeqStatus.Text = "";
@@ -440,12 +445,21 @@ namespace StockControl
                         m.UpdateDate = DateTime.Now;
                         m.UpdateBy = ClassLib.Classlib.User;
 
-                        var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                        if (po != null)
+                        //var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        //if (po != null)
+                        //{
+                        //    //po.OutPlan += (m.Qty * m.PCSUnit) - m.OutQty;
+                        //    po.OutPlan = Math.Round(m.Qty, 2); //Full Return Qty
+                        //    po.Status = baseClass.setCustomerPOStatus(po);
+                        //    db.SubmitChanges();
+
+                        //}
+
+                        var so = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        if(so != null)
                         {
-                            //po.OutPlan += (m.Qty * m.PCSUnit) - m.OutQty;
-                            po.OutPlan = Math.Round(m.Qty, 2); //Full Return Qty
-                            po.Status = baseClass.setCustomerPOStatus(po);
+                            //so.OutPlan += (m.Qty + m.PCSUnit) - m.OutQty;
+                            so.OutPlan = Math.Round(m.Qty, 2);//Full Return Qty;
                             db.SubmitChanges();
 
                             //remove capa
@@ -486,6 +500,7 @@ namespace StockControl
                 //    err += "- Cannot Save because Status is 'Approved'.\n";
                 else if (txtSeqStatus.Text.ToInt() > 0)
                     err += "- Cannot Save because Status is 'Approved'.\n";
+
 
 
                 if (!err.Equals(""))
@@ -534,6 +549,7 @@ namespace StockControl
                     {
                         newDoc = true;
                         m = new mh_ProductionOrder();
+                        m.CloseJob = false;
                         m.CreateBy = ClassLib.Classlib.User;
                         m.CreateDate = DateTime.Now;
                         m.JobDate = DateTime.Now.Date;
@@ -542,7 +558,7 @@ namespace StockControl
                         db.mh_ProductionOrders.InsertOnSubmit(m);
                         newJob = true;
 
-                       AddHistory($"New Job Order Sheet {m.JobNo}", m.JobNo);
+                        AddHistory($"New Job Order Sheet {m.JobNo}", m.JobNo);
                     }
                     //history
                     if (!newDoc)
@@ -580,15 +596,24 @@ namespace StockControl
                     if (newJob)
                     {
                         dbClss.AddHistory(this.Name, "Job Order Sheet", $"New Job Order Sheet : {m.JobNo}", m.JobNo);
-                        var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                        if (po != null)
+                        //var po = db.mh_CustomerPODTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        //if (po != null)
+                        //{
+                        //    var pohd = db.mh_CustomerPOs.Where(x => x.id == po.idCustomerPO).FirstOrDefault();
+                        //    string pono = (pohd != null) ? pohd.CustomerPONo : "";
+                        //    dbClss.AddHistory("CustomerPO", "Customer P/O", $"New job Order Sheet : {m.JobNo} for P/O {pohd.CustomerPONo}", pohd.CustomerPONo);
+                        //    //po.OutPlan -= m.OutQty;
+                        //    po.OutPlan = 0;//Full Ref Customer P/O
+                        //    po.Status = baseClass.setCustomerPOStatus(po);
+                        //    db.SubmitChanges();
+                        //}
+                        var so = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                        if(so != null)
                         {
-                            var pohd = db.mh_CustomerPOs.Where(x => x.id == po.idCustomerPO).FirstOrDefault();
-                            string pono = (pohd != null) ? pohd.CustomerPONo : "";
-                            dbClss.AddHistory("CustomerPO", "Customer P/O", $"New job Order Sheet : {m.JobNo} for P/O {pohd.CustomerPONo}", pohd.CustomerPONo);
-                            //po.OutPlan -= m.OutQty;
-                            po.OutPlan = 0;//Full Ref Customer P/O
-                            po.Status = baseClass.setCustomerPOStatus(po);
+                            var sohd = db.mh_SaleOrders.Where(x => x.SONo == so.SONo).FirstOrDefault();
+                            string sono = so.SONo;
+                            //so.OutPlan -= m.OutQty;
+                            so.OutPlan = 0;
                             db.SubmitChanges();
                         }
                     }
@@ -843,7 +868,7 @@ namespace StockControl
                 var pd = new ProductionOrder_List(2);
                 this.Cursor = Cursors.Default;
                 pd.ShowDialog();
-                if(pd.t_JobNo != "")
+                if (pd.t_JobNo != "")
                 {
                     this.t_JobNo = pd.t_JobNo;
                     DataLoad();
@@ -881,8 +906,26 @@ namespace StockControl
         {
             try
             {
-                PrintPR a = new PrintPR(txtJobNo.Text, txtJobNo.Text, "ReportProductionOrder");
-                a.ShowDialog();
+                //PrintPR a = new PrintPR(txtJobNo.Text, txtJobNo.Text, "ReportProductionOrder");
+                //a.ShowDialog();
+                string JobNo = txtJobNo.Text.Trim();
+                if (JobNo != "")
+                {
+                    Report.Reportx1.Value = new string[1];
+                    Report.Reportx1.Value[0] = JobNo;
+                    Report.Reportx1.WReport = "JOBNoList";
+                    Report.Reportx1 op = new Report.Reportx1("JobOrderSheet3.rpt");
+                    op.Show();
+                }
+                //if (dgvData.CurrentCell.RowIndex >= 0)
+                //{
+                //    string JobNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
+                //    Report.Reportx1.Value = new string[1];
+                //    Report.Reportx1.Value[0] = JobNo;
+                //    Report.Reportx1.WReport = "JOBNoList";
+                //    Report.Reportx1 op = new Report.Reportx1("JobOrderSheet3.rpt");
+                //    op.Show();
+                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -959,7 +1002,9 @@ namespace StockControl
             if (txtJobNo.Text.Trim() == "")
                 mssg += "- Please Save job before Hold Job.\n";
             if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
-                mssg += "- Cannot Hold Job because FG Already Received.\n";
+                mssg += "- Cannot Recalculate Job because FG Already Received.\n";
+            if (cbCloseJob.Checked)
+                mssg += "- Cannot Recalculate Job because Job is completed.\n";
 
             if (mssg != "")
             {
@@ -1003,6 +1048,8 @@ namespace StockControl
                 mssg += "- Please Save job before Hold Job.\n";
             if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
                 mssg += "- Cannot Hold Job because FG Already Received.\n";
+            if (cbCloseJob.Checked)
+                mssg += "- Cannot Recalculate Job because Job is completed.\n";
 
             if (mssg != "")
             {
@@ -1048,7 +1095,8 @@ namespace StockControl
                         }
 
                         cbHoldJob.Checked = m.HoldJob;
-                        
+                        cbCloseJob.Checked = m.CloseJob;
+
                         if (m.HoldJob)
                         {
                             baseClass.Info("Hold Job completed.");
@@ -1142,7 +1190,7 @@ namespace StockControl
                         var CapaUse = 0.00m; //Capacity ไม่รวม WaitTime
                         CapaUseX = totalCapa_All; //เวลาการทำงานที่ถูกใช้ทั้งหมดใน Workcenter นี้
                         CapaUse = SetupTime + Math.Round(RunTime * UseQty, 2);
-                        
+
                         //หาว่า Capacity จากต้องใช้ Starting - Ending ใด โดยวนไปจนกว่า CapaUseX จะเป็น 0
                         do
                         {
@@ -1502,7 +1550,7 @@ namespace StockControl
                                 co.idRoute = c.idRoute;
                         }
                         db.SubmitChanges();
-                        
+
                         //save Cost Overhead
                         var manuTime = 1;
                         var manu = db.mh_ManufacturingSetups.FirstOrDefault();
@@ -1545,7 +1593,7 @@ namespace StockControl
             }
         }
 
-        
+
         void AddHistory(string Detail, string DocNo)
         {
             dbClss.AddHistory(this.Name, "Job Order Sheet", Detail, DocNo);
@@ -1555,5 +1603,21 @@ namespace StockControl
         {
 
         }
+
+        private void btnShipping_Click(object sender, EventArgs e)
+        {
+            if(txtJobNo.Text.Trim() != "")
+            {
+                Report.Reportx1.Value = new string[1];
+                Report.Reportx1.Value[0] = txtJobNo.Text.Trim();
+                Report.Reportx1.WReport = "ProductionRM";
+                //Report.Reportx1 op = new Report.Reportx1("ReportShipping2.rpt");
+                Report.Reportx1 op = new Report.Reportx1("Movement_InOut.rpt");
+
+                op.Show();
+            }
+        }
+
+
     }
 }

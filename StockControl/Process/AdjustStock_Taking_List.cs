@@ -22,6 +22,14 @@ namespace StockControl
         int screen = 0;
         string Condition = "";
         public AdjustStock_Taking_List(Telerik.WinControls.UI.RadTextBox ADNoxxx
+                  
+               )
+        {
+            InitializeComponent();
+            ADNo_tt = ADNoxxx;
+            screen = 1;
+        }
+        public AdjustStock_Taking_List(Telerik.WinControls.UI.RadTextBox ADNoxxx
                     , Telerik.WinControls.UI.RadTextBox CodeNoxxx
                 )
         {
@@ -269,45 +277,47 @@ namespace StockControl
                 DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
 
 
-                var r = (from h in db.tb_StockAdjusts
-                         join d in db.tb_StockAdjustHs on h.AdjustNo equals d.ADNo
-                         join i in db.mh_Items on h.CodeNo equals i.InternalNo
+                var r = (from h in db.mh_CheckStock_Lists
+                         //join d in db.tb_StockAdjustHs on h.AdjustNo equals d.ADNo
+                         join i in db.mh_Items on h.InternalNo equals i.InternalNo
+                         //join d in db.tb_StockAdjusts on h.CheckNo equals d.AdjustNo
 
-                         where h.Status != "Cancel" //&& d.verticalID == VerticalID
-                             && d.Status != "Cancel"
-                             && d.ADNo.Substring(0,2)=="CS"
-                             && h.AdjustNo.Contains(txtADNo.Text)
+                         where h.CheckStatus != "Cancel" //&& d.verticalID == VerticalID
+                             //&& d.Status != "Cancel"
+                             //&& d.ADNo.Substring(0,2)=="CS"
+                             && h.CheckStatus.Contains(txtADNo.Text)
                               //  && (h.CreateDate >= inclusiveStart
                               //&& h.CreateDate < exclusiveEnd)
-                              && (((h.CreateDate >= inclusiveStart
-                               && h.CreateDate < exclusiveEnd)
+                              && (((h.CheckDate >= inclusiveStart
+                               && h.CheckDate < exclusiveEnd)
                                && cbDate.Checked == true)
                                 || (cbDate.Checked == false)
                                )
 
                          select new
                          {
-                             CodeNo = h.CodeNo,
+                             CodeNo = h.InternalNo,
                              S = false,
-                             ItemNo = h.ItemNo,
-                             ItemDescription = h.ItemDescription,
+                             ItemNo = i.InternalName,
+                             ItemDescription = i.InternalDescription,
 
-                             QTY = h.Qty,
-                             Unit = h.Unit,
+                             QTY = h.InputQty,
+                             Unit = h.UOM,
                              PCSUnit = h.PCSUnit,
                              VendorNo = i.VendorNo,
                              VendorName = i.VendorName,
-                             CreateBy = h.CreateBy,
-                             CreateDate = h.CreateDate,
-                             LotNo = h.LotNo,
-                             Reason = h.Reason,
-                             Status = i.Active.ToString(),
-                             ADNo = d.ADNo,
-                             ShelfNo = h.ShelfNo,
-                             Location = h.Location,
-                             RefJobCard = h.RefJobCard
+                             CreateBy = h.CheckBy,
+                             CreateDate = h.CheckDate,
+                             LotNo = "",
+                             Reason = h.Remark,
+                             Status = h.CheckStatus,
+                             ADNo = h.CheckNo,
+                             ShelfNo = h.CheckNo,
+                             Location = i.Location,
+                             RefJobCard = "",
+                             
                          }
-               ).ToList();
+               ).OrderByDescending(ab=>ab.ADNo).ToList();
                 if (r.Count > 0)
                 {
                     dgvNo = dgvData.Rows.Count() + 1;
@@ -347,6 +357,7 @@ namespace StockControl
 
                 ee.Cells["dgvNo"].Value = Row.ToString();
                 ee.Cells["S"].Value = s;
+                ee.Cells["Status"].Value = Status;
 
                 ee.Cells["CodeNo"].Value = CodeNo;
                 ee.Cells["ItemNo"].Value = ItemNo;

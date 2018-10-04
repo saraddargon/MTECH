@@ -194,7 +194,7 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(732, 161);
+            this.radRibbonBar1.Size = new System.Drawing.Size(732, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
@@ -217,6 +217,7 @@
             this.radRibbonBarGroup4});
             this.ribbonTab1.Name = "ribbonTab1";
             this.ribbonTab1.Text = "Action";
+            this.ribbonTab1.UseMnemonic = false;
             // 
             // radRibbonBarGroup1
             // 
@@ -352,12 +353,11 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 777);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 762);
             this.radStatusStrip1.Name = "radStatusStrip1";
             this.radStatusStrip1.Size = new System.Drawing.Size(732, 21);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
-            this.radStatusStrip1.Text = "radStatusStrip1";
             this.radStatusStrip1.ThemeName = "Office2010Blue";
             // 
             // radLabelElement1
@@ -372,9 +372,9 @@
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.radPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 161);
+            this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(732, 616);
+            this.panel1.Size = new System.Drawing.Size(732, 602);
             this.panel1.TabIndex = 2;
             // 
             // radPanel1
@@ -397,7 +397,7 @@
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(732, 616);
+            this.radPanel1.Size = new System.Drawing.Size(732, 602);
             this.radPanel1.TabIndex = 0;
             this.radPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.radPanel1_Paint);
             // 
@@ -541,7 +541,7 @@
             this.radGroupBox2.HeaderText = "เลขที่ใบผลิตงานใหม่";
             this.radGroupBox2.Location = new System.Drawing.Point(391, 97);
             this.radGroupBox2.Name = "radGroupBox2";
-            this.radGroupBox2.Size = new System.Drawing.Size(329, 454);
+            this.radGroupBox2.Size = new System.Drawing.Size(329, 440);
             this.radGroupBox2.TabIndex = 11;
             this.radGroupBox2.Text = "เลขที่ใบผลิตงานใหม่";
             // 
@@ -773,7 +773,7 @@
             this.radGroupBox1.HeaderText = "เลขที่ใบขาย(รับงานคืน)";
             this.radGroupBox1.Location = new System.Drawing.Point(20, 97);
             this.radGroupBox1.Name = "radGroupBox1";
-            this.radGroupBox1.Size = new System.Drawing.Size(349, 454);
+            this.radGroupBox1.Size = new System.Drawing.Size(349, 440);
             this.radGroupBox1.TabIndex = 11;
             this.radGroupBox1.Text = "เลขที่ใบขาย(รับงานคืน)";
             // 
@@ -998,7 +998,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(732, 798);
+            this.ClientSize = new System.Drawing.Size(732, 783);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);

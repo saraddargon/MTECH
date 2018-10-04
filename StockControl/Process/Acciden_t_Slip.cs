@@ -21,6 +21,12 @@ namespace StockControl
         {
             InitializeComponent();
         }
+        public Acciden_t_Slip(string SHNo)
+        {
+            InitializeComponent();
+            SHNo_t = SHNo;
+           
+        }
         public Acciden_t_Slip(string SHNo,string CodeNo)
         {
             InitializeComponent();
@@ -96,9 +102,8 @@ namespace StockControl
             DefaultItem();
             
             btnNew_Click(null, null);
-
-            txtJobCard.Text = "JOB201801-001";
-            Add_JobCard();
+            
+            //Add_JobCard();
 
             if (!SHNo_t.Equals(""))
             {
@@ -1754,7 +1759,7 @@ namespace StockControl
                 txtCodeNo.Text = "";
 
                 this.Cursor = Cursors.WaitCursor;
-                ShippingList sc = new ShippingList(txtSHNo, txtCodeNo,"Accident_Slip");
+                Accident_Slip_List sc = new Accident_Slip_List(txtSHNo, txtCodeNo,"Accident_Slip");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -1795,7 +1800,7 @@ namespace StockControl
         {
             try
             {
-                PrintPR a = new PrintPR(txtSHNo.Text, txtSHNo.Text, "Shipping");
+                PrintPR a = new PrintPR(txtSHNo.Text, txtSHNo.Text, "ReportAccidentSlip");
                 a.ShowDialog();
 
                 //using (DataClasses1DataContext db = new DataClasses1DataContext())

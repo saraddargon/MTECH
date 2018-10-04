@@ -463,12 +463,12 @@ namespace StockControl
         {
             try
             {
-                if (dgvData.Rows.Count <= 0)
-                    return;
+                
 
                 if (screen.Equals(1))
                 {
-                   
+                    if (dgvData.Rows.Count <= 0)
+                        return;
 
                     if (!Convert.ToString(dgvData.CurrentRow.Cells["ADNo"].Value).Equals(""))
                     {
@@ -484,11 +484,19 @@ namespace StockControl
                 }
                 else
                 {
-                    Return_RM a = new Return_RM(Convert.ToString(dgvData.CurrentRow.Cells["ADNo"].Value),
-                        Convert.ToString(dgvData.CurrentRow.Cells["CodeNo"].Value)
-                        ,this.Name);
-                    a.ShowDialog();
-                    //this.Close();
+                    if (dgvData.Rows.Count > 0)
+                    {
+                        Return_RM a = new Return_RM(Convert.ToString(dgvData.CurrentRow.Cells["ADNo"].Value),
+                            Convert.ToString(dgvData.CurrentRow.Cells["CodeNo"].Value)
+                            , this.Name);
+                        a.ShowDialog();
+                        //this.Close();
+                    }
+                    else
+                    {
+                        Return_RM a = new Return_RM();
+                        a.ShowDialog();
+                    }
                 }
 
             }

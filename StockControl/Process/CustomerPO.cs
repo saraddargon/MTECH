@@ -593,9 +593,9 @@ namespace StockControl
                         var unit = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo).ToList();
                         unit = unit.Where(x => x.Active.ToBool()).ToList();
                         var c1 = dgvData.Columns["UOM"] as GridViewComboBoxColumn;
-                        c1.ValueMember = "UOMCode";
-                        c1.DisplayMember = "UOMCode";
-                        c1.DataSource = unit;
+                        //c1.ValueMember = "UOMCode";
+                        //c1.DisplayMember = "UOMCode";
+                        c1.DataSource = unit.Select(x => x.UOMCode).ToList();
                     }
                 }
                 else if (e.Column.Name.Equals("ItemNo"))

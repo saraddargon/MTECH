@@ -442,6 +442,8 @@ namespace StockControl
                             {
                                 c += 1;
                                 if (a < 8) continue;
+                                if (c ==4)
+                                { }
                                 string f = field.ToSt().Trim();
                                 switch (c)
                                 {
