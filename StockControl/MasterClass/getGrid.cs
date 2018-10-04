@@ -286,6 +286,8 @@ namespace StockControl
         public decimal PCSUnit_PurchaseUOM { get; set; }
         public decimal StandardCost { get; set; }
 
+        public string BomNo { get; set; }
+
         public ItemData(string ItemNo, string ItemName = "")
         {
             //**************
@@ -317,6 +319,14 @@ namespace StockControl
                 this.LeadTime = t.InternalLeadTime.ToInt();
                 this.RepType_enum = baseClass.getRepType(t.ReplenishmentType);
                 this.InvGroup_enum = baseClass.getInventoryGroup(t.InventoryGroup);
+                //this.BomNo = t.BillOfMaterials;
+                var bom = db.tb_BomHDs.Where(x => x.id == t.BillOfMaterials)
+                    .Join(db.tb_BomDTs,
+                    hd => hd.BomNo,
+                    dt => dt.BomNo,
+                    (hd, dt) => new { hd, dt }).ToList();
+                if (bom.Count > 0)
+                    this.BomNo = bom.First().hd.BomNo;
                 //this.QtyOnHand = baseClass.StockQty(this.ItemNo, "Warehouse");
                 decimal? a = null;
                 if (InvGroup_enum == InventoryGroup.FG || InvGroup_enum == InventoryGroup.SEMI) //FG,SEMI กรณีไม่ได้เปิดจากเพื่อ Customer PO ใดๆ

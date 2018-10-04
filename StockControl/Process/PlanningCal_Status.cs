@@ -688,7 +688,8 @@ namespace StockControl
                 else if (manuUnit == 3)
                     manuTime = (24 * 60);
                 //find BOM
-                var boms = db.tb_BomDTs.Where(x => x.PartNo == gPlan.ItemNo).ToList();
+
+                var boms = db.tb_BomDTs.Where(x => x.BomNo == tdata.BomNo).ToList();
                 if (boms.Count == 0)
                     RMready = false; //ถ้าไม่มี Bom จะไม่แพลน
 

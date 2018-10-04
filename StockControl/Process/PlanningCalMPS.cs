@@ -552,7 +552,7 @@ namespace StockControl
                             //}
                             //db.SubmitChanges();
                             var so = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                            if(so != null)
+                            if (so != null)
                             {
                                 //so.OutPlan -= m.OutQty;
                                 so.OutPlan = 0;//Full Ref SaleOrder
@@ -564,7 +564,11 @@ namespace StockControl
                         //Dt
                         //**Component**
                         int mainNo = item.Cells["mainNo"].Value.ToInt(); //find all component of Item
-                        var rowDt = db.tb_BomDTs.Where(x => x.PartNo == m.FGNo).ToList();
+                        var itemFG = db.mh_Items.Where(x => x.InternalNo == m.FGNo).FirstOrDefault();
+                        if (itemFG == null) continue;
+                        var bom = db.tb_BomHDs.Where(x => x.id == itemFG.BillOfMaterials).FirstOrDefault();
+                        if (bom == null) continue;
+                        var rowDt = db.tb_BomDTs.Where(x => x.BomNo == bom.BomNo).ToList();
                         foreach (var r in rowDt)
                         {
                             var itemA = db.mh_Items.Where(x => x.InternalNo == r.Component).FirstOrDefault();
