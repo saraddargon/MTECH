@@ -96,6 +96,7 @@
             this.radMenuSeparatorItem2 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem12 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuItem29 = new Telerik.WinControls.UI.RadMenuItem();
+            this.btnISO = new Telerik.WinControls.UI.RadMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -107,7 +108,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
-            this.btnISO = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItem24 = new Telerik.WinControls.UI.RadMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
@@ -347,7 +348,8 @@
             this.radMenuItem20,
             this.radMenuSeparatorItem4,
             this.radMenuItem21,
-            this.radMenuItem22});
+            this.radMenuItem22,
+            this.radMenuItem24});
             this.radMenuItem2.Name = "radMenuItem2";
             this.radMenuItem2.Text = "&Administrator";
             // 
@@ -557,6 +559,12 @@
             this.radMenuItem29.Text = "Change Password";
             this.radMenuItem29.Click += new System.EventHandler(this.radMenuItem34_Click);
             // 
+            // btnISO
+            // 
+            this.btnISO.Name = "btnISO";
+            this.btnISO.Text = "ISO Report";
+            this.btnISO.Click += new System.EventHandler(this.btnISO_Click);
+            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
@@ -733,11 +741,12 @@
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(4)))), ((int)(((byte)(129)))));
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ClipDrawing = false;
             // 
-            // btnISO
+            // radMenuItem24
             // 
-            this.btnISO.Name = "btnISO";
-            this.btnISO.Text = "ISO Report";
-            this.btnISO.Click += new System.EventHandler(this.btnISO_Click);
+            this.radMenuItem24.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem24.Image")));
+            this.radMenuItem24.Name = "radMenuItem24";
+            this.radMenuItem24.Text = "Master Price List";
+            this.radMenuItem24.Click += new System.EventHandler(this.radMenuItem24_Click);
             // 
             // Mainfrom
             // 
@@ -851,5 +860,6 @@
         private Telerik.WinControls.UI.RadMenu radMenu1;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem20;
         private Telerik.WinControls.UI.RadMenuItem btnISO;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem24;
     }
 }

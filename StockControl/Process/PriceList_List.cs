@@ -13,10 +13,10 @@ using System.Globalization;
 
 namespace StockControl
 {
-    public partial class ListPart : Telerik.WinControls.UI.RadRibbonForm
+    public partial class PriceList_List : Telerik.WinControls.UI.RadRibbonForm
     {
         List<GridViewRowInfo> RetDT;
-        public ListPart(string CodeNox)
+        public PriceList_List(string CodeNox)
         {
             InitializeComponent();
             CodeNo = CodeNox;
@@ -26,42 +26,14 @@ namespace StockControl
         int screen = 0;
         string TypePart = "";
         string List_RetDT = "";
-        public ListPart(Telerik.WinControls.UI.RadTextBox  CodeNox,string TypePartx,string Sc)
+        public PriceList_List(Telerik.WinControls.UI.RadTextBox  CodeNox,string Sc)
         {
             InitializeComponent();
             CodeNo_tt = CodeNox;
-            TypePart = TypePartx;
-            if (Sc == "Bom")
-                screen = 3;
-            else if (Sc == "CreateJob")
-                screen = 3;
-            else if (Sc == "ShipAVG")
-                screen = 3;
-            else
-                screen = 1;
+            screen = 1;
         }
-        public ListPart(List<GridViewRowInfo> RetDT, string TypePartx, string Sc)
-        {
-            InitializeComponent();
-            this.RetDT = RetDT;
-
-            TypePart = TypePartx;
-            if (Sc == "Bom")
-                screen = 3;
-            else if (Sc == "CreateJob")
-                screen = 3;
-            else if (Sc == "ShipAVG")
-                screen = 3;
-            else if (Sc == "PriceList")
-                screen = 3;
-            else if (Sc == "Taking" || Sc== "AdjustStock")
-                screen = 2;
-            else
-                screen = 1;
-
-            List_RetDT = "ListTaking";
-        }
-        public ListPart(Telerik.WinControls.UI.RadTextBox CodeNox, string TypePartx, List<GridViewRowInfo> RetDT)
+       
+        public PriceList_List(Telerik.WinControls.UI.RadTextBox CodeNox, string TypePartx, List<GridViewRowInfo> RetDT)
         {
             InitializeComponent();
             this.RetDT = RetDT;
@@ -69,7 +41,7 @@ namespace StockControl
             TypePart = TypePartx;
             screen = 2;
         }
-        public ListPart()
+        public PriceList_List()
         {
             InitializeComponent();
         }
@@ -95,10 +67,11 @@ namespace StockControl
         }
         private void Unit_Load(object sender, EventArgs e)
         {
-            //dtDate1.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-            //dtDate2.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
 
-            LoadDefault();
+            dtDate1.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            dtDate2.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+
+            //LoadDefault();
             Set_FindData();
             Set_dt_Print();
             //LoadDefault();
@@ -108,93 +81,45 @@ namespace StockControl
         }
         private void LoadDefault()
         {
-            cboLocation.DataSource = null;
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
-                //ddlLocation.DisplayMember = "Location";
-                //ddlLocation.ValueMember = "Location";
-                //// ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
-                //var g = (from ix in db.mh_Locations select ix).Where(s => s.Active == true && s.Status == "Completed").ToList();
+            //cboLocation.DataSource = null;
+            //using (DataClasses1DataContext db = new DataClasses1DataContext())
+            //{
+            //    //ddlLocation.DisplayMember = "Location";
+            //    //ddlLocation.ValueMember = "Location";
+            //    //// ddlLocation.DataSource = db.tb_Locations.Where(s => s.Active == true && s.Status == "Completed").ToList();
+            //    //var g = (from ix in db.mh_Locations select ix).Where(s => s.Active == true && s.Status == "Completed").ToList();
 
-                //List<string> a = new List<string>();
-                //if (g.Count > 0)
-                //{
-                //    foreach (var gg in g)
-                //        a.Add(gg.Location);
-                //}
-                //a.Add("");
-                //ddlLocation.DataSource = a;
-                //ddlLocation.Text = "";
-
-
-                this.cboLocation.AutoFilter = true;
-                this.cboLocation.AutoCompleteMode = AutoCompleteMode.Append;
-                FilterDescriptor lo = new FilterDescriptor();
-                lo.PropertyName = this.cboLocation.ValueMember;
-                lo.Operator = FilterOperator.StartsWith;
-                this.cboLocation.EditorControl.MasterTemplate.FilterDescriptors.Add(lo);
-
-                cboLocation.DisplayMember = "Code";
-                cboLocation.ValueMember = "Name";
-                cboLocation.DataSource = db.mh_Locations.Where(s => s.Active == true).ToList();
-                cboLocation.SelectedIndex = -1;
-                cboLocation.Text = "";
+            //    //List<string> a = new List<string>();
+            //    //if (g.Count > 0)
+            //    //{
+            //    //    foreach (var gg in g)
+            //    //        a.Add(gg.Location);
+            //    //}
+            //    //a.Add("");
+            //    //ddlLocation.DataSource = a;
+            //    //ddlLocation.Text = "";
 
 
-            }
+            //    this.cboLocation.AutoFilter = true;
+            //    this.cboLocation.AutoCompleteMode = AutoCompleteMode.Append;
+            //    FilterDescriptor lo = new FilterDescriptor();
+            //    lo.PropertyName = this.cboLocation.ValueMember;
+            //    lo.Operator = FilterOperator.StartsWith;
+            //    this.cboLocation.EditorControl.MasterTemplate.FilterDescriptors.Add(lo);
+
+            //    cboLocation.DisplayMember = "Code";
+            //    cboLocation.ValueMember = "Name";
+            //    cboLocation.DataSource = db.mh_Locations.Where(s => s.Active == true).ToList();
+            //    cboLocation.SelectedIndex = -1;
+            //    cboLocation.Text = "";
+
+
+            //}
         }
         private void Set_FindData()
         {
-            if (TypePart == "All" || TypePart =="")
-            {
-                ddlTypePart.Items.Add("");
-                ddlTypePart.Items.Add("FG");
-                ddlTypePart.Items.Add("SEMI");
-                ddlTypePart.Items.Add("RM");
-                //ddlTypePart.Items.Add("Other");
-
-
-                ddlTypePart.Text = "";
-            }
-            else if (TypePart == "SEMI-RM")
-            {
-                ddlTypePart.Items.Add("SEMI");
-                ddlTypePart.Items.Add("RM");
-
-                ddlTypePart.Text = "RM";
-            }
-            else if (TypePart == "SEMI-RM-Other")
-            {
-                ddlTypePart.Items.Add("SEMI");
-                ddlTypePart.Items.Add("RM");
-                ddlTypePart.Items.Add("Other");
-
-                ddlTypePart.Text = "RM";
-            }
-
-            else if (TypePart == "FG-SEMI")
-            {
-                ddlTypePart.Items.Add("FG");
-                ddlTypePart.Items.Add("SEMI");
-
-                ddlTypePart.Text = "FG";
-            }
-            else if (TypePart == "FG")
-            {
-                ddlTypePart.Items.Add("FG");
-                ddlTypePart.Text = "FG";
-            }
-            else if (TypePart == "SEMI")
-            {
-                ddlTypePart.Items.Add("SEMI");
-                ddlTypePart.Text = "SEMI";
-            }
-            else if (TypePart == "RM")
-            {
-                ddlTypePart.Items.Add("RM");
-                ddlTypePart.Text = "RM";
-            }
-           
+         
+          
             if(screen==2)
             {
                 radButtonElement1.Text = "เพิ่มรายการ";
@@ -216,38 +141,80 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    //dt = ClassLib.Classlib.LINQToDataTable(db.tb_Units.ToList());
-                    //radGridView1.DataSource = db.tb_Histories.Where(s => s.ScreenName == ScreenSearch).OrderBy(o => o.CreateDate).ToList();
-                    //int c = 0;
 
-                    var g = (from ix in db.mh_Items select ix)
-                        .Where(a => a.InternalNo.Contains(txtCodeNo.Text)
-                        && a.InternalName.Contains(txtPartName.Text)
-                        && a.VendorName.Contains(txtVendorName.Text)
-                        && a.InventoryGroup.Contains(ddlTypePart.Text)
-                        && a.Location.Contains(cboLocation.Text)
-                        && a.Active==true
-                        )
-                        .ToList();
-                    if(g.Count>0)
+                    //var g = (from ix in db.mh_Items select ix)
+                    //    .Where(a => a.InternalNo.Contains(txtCodeNo.Text)
+                    //    && a.InternalName.Contains(txtPartName.Text)
+                    //    && a.VendorName.Contains(txtVendorName.Text)
+                    //    && a.InventoryGroup.Contains(ddlTypePart.Text)
+                    //    && a.Location.Contains(cboLocation.Text)
+                    //    && a.Active==true
+                    //    )
+                    //    .ToList();
+                    DateTime inclusiveStart = dtDate1.Value.Date;
+                    // Include the *whole* of the day indicated by searchEndDate
+                    DateTime exclusiveEnd = dtDate2.Value.Date.AddDays(1);
+
+
+                    var g = (from h in db.mh_PriceLists
+                                 
+                             join i in db.mh_Items on h.InternalNo equals i.InternalNo
+                             where //h.Status == "Waiting" //&& d.verticalID == VerticalID
+
+                                 h.InternalNo.Contains(txtInternalNo.Text)
+                                 && h.PriceListCode.Contains(txtPriceListCode.Text)
+
+                             && (((h.CreateDate >= inclusiveStart
+                              && h.CreateDate < exclusiveEnd)
+                              && cbDate.Checked == true)
+                               || (cbDate.Checked == false)
+                              )
+
+                             select new
+                             {
+                                
+                                 Status = h.Status
+                                 ,InternalNo = h.InternalNo
+                                 ,InternalName = i.InternalName
+                                 ,InternalDescription = i.InternalDescription
+                                 ,
+                                 PriceListCode = h.PriceListCode
+                                 ,
+                                 GroupType = i.GroupType
+                                 ,Type = i.Type
+                                 ,
+                                 UnitPrice = h.UnitPrice
+                                 ,
+                                 StartDate = h.StartDate,
+                                 EndDate = h.EndDate,
+                                 ApproveBy = h.ApproveBy,
+                                 ApproveDate = h.ApproveDate,
+                                 Remark = h.Remark
+                                 ,
+                                 CreateDate = h.CreateDate
+                                 ,
+                                 CreateBy = h.CreateBy
+                             }
+                            ).ToList();
+                    if (g.Count>0)
                     {
                         radGridView1.DataSource = g;
 
-                        //decimal CurrentStock = 0;
-                        //string Location = "";
-                        foreach (var x in radGridView1.Rows)
-                        {
-                            //Location = dbClss.TSt(x.Cells["Location"].Value);
-                            //CurrentStock = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["InternalNo"].Value), "", 0, Convert.ToString(x.Cells["Location"].Value),-1)));
-                            x.Cells["CurrentStock"].Value =dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value),0, "CurrentStock"));
-                            x.Cells["CurrentSafetyStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentSafetyStock"));
-                            //x.Cells["CurrentJob_RMStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentJob_RMStock"));
-                            x.Cells["CurrentJob_FGStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentJob_FGStock"));
-                            x.Cells["BackOrderStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "BackOrderStock"));
-                            x.Cells["ReservationStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "ReservationStock"));
-                            x.Cells["UnReservationStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "UnReservationStock"));
+                        ////decimal CurrentStock = 0;
+                        ////string Location = "";
+                        //foreach (var x in radGridView1.Rows)
+                        //{
+                        //    //Location = dbClss.TSt(x.Cells["Location"].Value);
+                        //    //CurrentStock = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["InternalNo"].Value), "", 0, Convert.ToString(x.Cells["Location"].Value),-1)));
+                        //    x.Cells["CurrentStock"].Value =dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value),0, "CurrentStock"));
+                        //    x.Cells["CurrentSafetyStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentSafetyStock"));
+                        //    //x.Cells["CurrentJob_RMStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentJob_RMStock"));
+                        //    x.Cells["CurrentJob_FGStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "CurrentJob_FGStock"));
+                        //    x.Cells["BackOrderStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "BackOrderStock"));
+                        //    x.Cells["ReservationStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "ReservationStock"));
+                        //    x.Cells["UnReservationStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "UnReservationStock"));
 
-                        }
+                        //}
                         dbClss.SetRowNo1(radGridView1);
                     }
 
@@ -360,40 +327,35 @@ namespace StockControl
 
         private void radButtonElement1_Click(object sender, EventArgs e)
         {
-            if (screen == 2)
-            {
-                try
-                {
-                    radGridView1.EndEdit();
+            //if (screen == 2)
+            //{
+            //    try
+            //    {
+                    
+            //        radGridView1.EndEdit();
 
-                    //foreach (var rd1 in radGridView1.Rows)
-                    //{
-                    //    if(StockControl.dbClss.TBo(rd1.Cells["S"].Value).Equals(true))
-                    //    {
-                    //        RetDT.Add(rd1);
-                    //    }
-                    //}
-                    foreach (GridViewRowInfo rowinfo in radGridView1.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
-                    {
-                        RetDT.Add(rowinfo);
-                    }
+                   
+            //        foreach (GridViewRowInfo rowinfo in radGridView1.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+            //        {
+            //            RetDT.Add(rowinfo);
+            //        }
 
-                    this.Close();
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-            }
-            else if (screen == 1 || screen == 3)
-            {
-                if (radGridView1.Rows.Count > 0)
-                {
-                    CodeNo_tt.Text = Convert.ToString(radGridView1.CurrentRow.Cells["InternalNo"].Value);
-                    this.Close();
-                }
-            }
-            else
-            {
+            //        this.Close();
+            //    }
+            //    catch (Exception ex) { MessageBox.Show(ex.Message); }
+            //}
+            //else if (screen == 1)
+            //{
+            //    if (radGridView1.Rows.Count > 0)
+            //    {
+            //        CodeNo_tt.Text = Convert.ToString(radGridView1.CurrentRow.Cells["PriceListCode"].Value);
+            //        this.Close();
+            //    }
+            //}
+            //else
+            //{
                 this.Cursor = Cursors.WaitCursor;
-                CreatePart sc = new CreatePart();
+                PriceList sc = new PriceList();
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -401,7 +363,7 @@ namespace StockControl
 
                 ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
                 ClassLib.Memory.Heap();
-            }
+            //}
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -411,27 +373,27 @@ namespace StockControl
 
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
+            //radButtonElement1_Click(null, null);
             try
             {
                 if (e.RowIndex > -1)
                 {
 
-                    if (screen.Equals(1) //เปิดจากหน้า CreatePart
-                    || screen.Equals(3)  // เปิดจากหน้า Bom โดยเลือกแค่ตัวเดียว
+                    if (screen.Equals(1) 
                     )
                     {
-                        CodeNo_tt.Text = Convert.ToString(e.Row.Cells["InternalNo"].Value);
+                        CodeNo_tt.Text = Convert.ToString(e.Row.Cells["PriceListCode"].Value);
                         this.Close();
                     }
                     else if (screen.Equals(2))
                         return;
                     else
                     {
-                        CreatePart sc = new CreatePart(Convert.ToString(e.Row.Cells["InternalNo"].Value));
+                        PriceList sc = new PriceList(Convert.ToString(e.Row.Cells["PriceListCode"].Value));
                         this.Cursor = Cursors.Default;
-                        sc.Show();
+                        sc.ShowDialog();
                     }
-                }               
+                }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -467,7 +429,7 @@ namespace StockControl
 
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == txtCodeNo.Text).ToList();
+                    var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == txtPriceListCode.Text).ToList();
                     if (g.Count() > 0)
                     {
                         foreach (var gg in g)
@@ -709,11 +671,11 @@ namespace StockControl
 
         private void radButtonElement5_Click(object sender, EventArgs e)
         {
-            Report.Reportx1.Value = new string[1];
-            Report.Reportx1.Value[0] = ddlTypePart.Text;
-            Report.Reportx1.WReport = "ItemList";
-            Report.Reportx1 op = new Report.Reportx1("ReportItemList.rpt");
-            op.Show();
+            //Report.Reportx1.Value = new string[1];
+            //Report.Reportx1.Value[0] = ddlTypePart.Text;
+            //Report.Reportx1.WReport = "ItemList";
+            //Report.Reportx1 op = new Report.Reportx1("ReportItemList.rpt");
+            //op.Show();
         }
     }
 }

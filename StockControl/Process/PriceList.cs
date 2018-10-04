@@ -25,12 +25,7 @@ namespace StockControl
             InitializeComponent();
             SHNo_t = SHNo;
         }
-        public PriceList(string SHNo,string CodeNo)
-        {
-            InitializeComponent();
-            SHNo_t = SHNo;
-            CodeNo_t = CodeNo;
-        }
+       
         string SHNo_t = "";
         string CodeNo_t = "";
         string Ac = "";
@@ -66,6 +61,7 @@ namespace StockControl
             dt_h.Columns.Add(new DataColumn("SeqStatus", typeof(int)));
             dt_h.Columns.Add(new DataColumn("Active", typeof(bool)));
             dt_h.Columns.Add(new DataColumn("Status", typeof(string)));
+            dt_h.Columns.Add(new DataColumn("Remark", typeof(string)));
 
 
         }
@@ -95,9 +91,11 @@ namespace StockControl
         }
         private void DataLoad()
         {
-          
-            //dt_h.Rows.Clear();
-            //dt_d.Rows.Clear();
+            string temp = txtPriceListCode.Text;
+            ClearData();
+            txtPriceListCode.Text = temp;
+
+            dt_h.Rows.Clear();
             try
             {
 
@@ -107,11 +105,50 @@ namespace StockControl
 
                     try
                     {
-                        var g = (from ix in db.tb_ShippingHs select ix).Where(a => a.ShippingNo == txtPriceListCode.Text.Trim()).ToList();
+                        var g = (from ix in db.mh_PriceLists select ix)
+                            .Where(a => a.PriceListCode == txtPriceListCode.Text.Trim()).ToList();
                         if (g.Count() > 0)
                         {
+                            dt_h = StockControl.dbClss.LINQToDataTable(g);
+
+                            txtInternalNo.Text = dbClss.TSt(g.FirstOrDefault().InternalNo);
+                            seUnitPrice.Value = dbClss.TDe(g.FirstOrDefault().UnitPrice);
+                            DateTime? a = null;
+                            if (dbClss.TSt(g.FirstOrDefault().StartDate) != "")
+                                dtStartDate.Value = Convert.ToDateTime(g.FirstOrDefault().StartDate);
+                            else
+                                dtStartDate.Value = a.Value;
+
+                            if (dbClss.TSt(g.FirstOrDefault().EndDate) != "")
+                                dtStartDate.Value = Convert.ToDateTime(g.FirstOrDefault().EndDate);
+                            else
+                                dtStartDate.Value = a.Value;
+
+                            lblStatus.Text = dbClss.TSt(g.FirstOrDefault().Status);
+                            txtCreateBy.Text = dbClss.TSt(g.FirstOrDefault().CreateBy);
+                            txtCreateDate.Text = Convert.ToDateTime(g.FirstOrDefault().CreateDate).ToString("dd/MMM/yyyy");
+                            txtPriceListCode.Enabled = false;
+                            txtRemark.Text = dbClss.TSt(g.FirstOrDefault().Remark);
+
                             
+                            if (lblStatus.Text == "Approve")
+                            {
+                                btnSendApprove.Enabled = false;
+                                btnSave.Enabled = false;
+                            }
+                            else if  (lblStatus.Text == "Waiting" || lblStatus.Text == "Waiting Approve")
+                            {
+                                btnEdit.Enabled = true;
+                                btnSave.Enabled = true;
+                                btnSendApprove.Enabled = true;
+                                btnView.Enabled = false;
+                               
+                            }
+                            btnNew.Enabled = true;
+
                         }
+                        else
+                            txtPriceListCode.Enabled = true;
                     }
                     catch (Exception ex) { MessageBox.Show(ex.Message); }
 
@@ -122,20 +159,20 @@ namespace StockControl
             
 
         }
-        private bool CheckDuplicate(string code, string Code2)
+        private bool CheckDuplicate(string code)
         {
             bool ck = false;
 
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                int i = (from ix in db.tb_Models
-                         where ix.ModelName == code
-
+                int i = (from ix in db.mh_PriceLists
+                         where ix.PriceListCode.ToUpper().Trim() == code.ToUpper().Trim()
+                         && ix.Status != "Cancel"
                          select ix).Count();
                 if (i > 0)
-                    ck = false;
-                else
                     ck = true;
+                else
+                    ck = false;
             }
 
             return ck;
@@ -143,13 +180,15 @@ namespace StockControl
 
         private void ClearData()
         {
-            dtEndDate.Value = DateTime.Now;
-            dtStartDate.Value = DateTime.Now;
+            dtEndDate.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            dtStartDate.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             txtCreateBy.Text = ClassLib.Classlib.User;
             seUnitPrice.Value = 0;
             txtPriceListCode.Text = "";
             txtInternalNo.Text = "";
             txtCreateDate.Text = DateTime.Now.ToString("dd/MMM/yyyy");
+            txtRemark.Text = "";
+
             lblStatus.Text = "-";
         }
       private void Enable_Status(bool ss,string Condition)
@@ -186,7 +225,7 @@ namespace StockControl
         private void btnNew_Click(object sender, EventArgs e)
         {
             btnDel_Item.Enabled = true;
-            btnNew.Enabled = false;
+            btnNew.Enabled = true;
             btnSave.Enabled = true;
             btnView.Enabled = false;
             ClearData();
@@ -194,8 +233,8 @@ namespace StockControl
             lblStatus.Text = "New";
             Ac = "New";
 
-           // getมาไว้ก่อน แต่ยังไมได้ save
-           // txtPriceListCode.Text = StockControl.dbClss.GetNo(38, 0);
+            // getมาไว้ก่อน แต่ยังไมได้ save
+            txtPriceListCode.Text = StockControl.dbClss.GetNo(41, 0);
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -229,14 +268,26 @@ namespace StockControl
             string err = "";
             try
             {
-                //if (cbShipforJob.Checked)
-                //{
-                //    if (txtJobCard.Text.Equals(""))
-                //        err += "- “Job Card:” เป็นค่าว่าง \n";
-                //    if (txtTempJobCard.Text.Equals(""))
-                //        err += "- “เลขที่อ้างอิง Job Card:” เป็นค่าว่าง \n";
-                //}
-              
+
+                //if (txtPriceListCode.Text.Equals(""))
+                //    err += "- “เลขที่อ้างอิง:” เป็นค่าว่าง \n";
+                //else
+                if (!txtPriceListCode.Text.Equals(""))
+                {
+                    if(Ac=="New")
+                    {
+                        if(CheckDuplicate(txtPriceListCode.Text))
+                            err += "- “เลขทีอ้างอิงซ้ำ” \n";
+                    }
+                }
+                if (txtInternalNo.Text.Equals(""))
+                    err += "- “รหัสสินค้า:” เป็นค่าว่าง \n";
+                if (dtStartDate.Text.Equals(""))
+                    err += "- “วันที่เริมใช้:” เป็นค่าว่าง \n";
+
+                if (dtEndDate.Text.Equals(""))
+                    err += "- “วันทีสิ้นสุด:” เป็นค่าว่าง \n";
+
 
                 if (!err.Equals(""))
                     MessageBox.Show(err);
@@ -255,61 +306,79 @@ namespace StockControl
         {
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                var g = (from ix in db.tb_ShippingHs
-                         where ix.ShippingNo.Trim() == txtPriceListCode.Text.Trim() && ix.Status != "Cancel"
-                         //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
+                var g = (from ix in db.mh_PriceLists
+                         where ix.PriceListCode.Trim() == txtPriceListCode.Text.Trim() && ix.Status != "Cancel"
                          select ix).ToList();
                 if (g.Count > 0)  //มีรายการในระบบ
                 {
                     foreach (DataRow row in dt_h.Rows)
                     {
-                        var gg = (from ix in db.tb_ShippingHs
-                                  where ix.ShippingNo.Trim() == txtPriceListCode.Text.Trim() && ix.Status != "Cancel"
-                                  //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
+                        var gg = (from ix in db.mh_PriceLists
+                                  where ix.PriceListCode.Trim() == txtPriceListCode.Text.Trim() && ix.Status != "Cancel"
                                   select ix).First();
 
-                        gg.UpdateBy = ClassLib.Classlib.User;
-                        gg.UpdateDate = DateTime.Now;
-                        dbClss.AddHistory(this.Name, "แก้ไขการเบิก", "แก้ไขโดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", txtPriceListCode.Text);
-                        if (StockControl.dbClss.TSt(gg.BarCode).Equals(""))
-                            gg.BarCode = StockControl.dbClss.SaveQRCode2D(txtPriceListCode.Text.Trim());
+                        //gg.CreateBy = ClassLib.Classlib.User;
+                        //gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                        gg.ModifyBy = ClassLib.Classlib.User;
+                        gg.ModifyDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
 
-                        if (!txtInternalNo.Text.Trim().Equals(row["ShipName"].ToString()))
+                        dbClss.AddHistory(this.Name, "แก้ไข PriceList", "แก้ไขโดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", txtPriceListCode.Text);
+                        //if (StockControl.dbClss.TSt(gg.BarCode).Equals(""))
+                        //    gg.BarCode = StockControl.dbClss.SaveQRCode2D(txtPriceListCode.Text.Trim());
+
+                        if (!txtInternalNo.Text.Trim().Equals(row["InternalNo"].ToString()))
                         {
-                            gg.ShipName = txtInternalNo.Text;                           
-                            dbClss.AddHistory(this.Name, "แก้ไขการเบิก", "แก้ไขผู้เบิกสินค้า [" + txtInternalNo.Text.Trim() + " เดิม :" + row["ShipName"].ToString() + "]", txtPriceListCode.Text);
+                            gg.InternalNo = txtInternalNo.Text;                           
+                            dbClss.AddHistory(this.Name, "แก้ไข PriceList", "แก้ไขรหัสสินค้า [" + txtInternalNo.Text.Trim() + " เดิม :" + row["InternalNo"].ToString() + "]", txtPriceListCode.Text);
                         }
-                      
+                        if (!seUnitPrice.Text.Trim().Equals(row["UnitPrice"].ToString()))
+                        {
+                            gg.UnitPrice = dbClss.TDe(seUnitPrice.Value);
+                            dbClss.AddHistory(this.Name, "แก้ไข PriceList", "แก้ไขราคาสินค้า [" + seUnitPrice.Text.Trim() + " เดิม :" + row["UnitPrice"].ToString() + "]", txtPriceListCode.Text);
+                        }
+                        if (!dtStartDate.Value.ToString("yyyyMMdd").Equals(Convert.ToDateTime(row["StartDate"]).ToString("yyyyMMdd")))
+                        {
+                            gg.StartDate = Convert.ToDateTime(dtStartDate.Value,new CultureInfo("en-US"));
+                            dbClss.AddHistory(this.Name, "แก้ไข PriceList", "แก้ไขวันทีเริ่มใช [" + dtStartDate.Text.Trim() + " เดิม :" + row["StartDate"].ToString() + "]", txtPriceListCode.Text);
+                        }
+                        if (!dtEndDate.Value.ToString("yyyyMMdd").Equals(Convert.ToDateTime(row["EndDate"]).ToString("yyyyMMdd")))
+                        {
+                            gg.EndDate = Convert.ToDateTime(dtEndDate.Value, new CultureInfo("en-US"));
+                            dbClss.AddHistory(this.Name, "แก้ไข PriceList", "แก้ไขวันทีสิ้นสุด [" + dtEndDate.Text.Trim() + " เดิม :" + row["EndDate"].ToString() + "]", txtPriceListCode.Text);
+                        }
+                        if (!txtRemark.Text.Trim().Equals(row["Remark"].ToString()))
+                        {
+                            gg.Remark = txtRemark.Text;
+                            dbClss.AddHistory(this.Name, "แก้ไข PriceList", "แก้ไขหมายเหตุ [" + txtRemark.Text.Trim() + " เดิม :" + row["Remark"].ToString() + "]", txtPriceListCode.Text);
+                        }
                         db.SubmitChanges();
                     }
                 }
                 else //สร้างใหม่
                 {
-                    byte[] barcode = null;
-                    barcode = StockControl.dbClss.SaveQRCode2D(txtPriceListCode.Text.Trim());
+                    //byte[] barcode = null;
+                    //barcode = StockControl.dbClss.SaveQRCode2D(txtPriceListCode.Text.Trim());
 
                     DateTime? UpdateDate = null;
 
-                    DateTime? RequireDate = DateTime.Now;
-                    if (!dtStartDate.Text.Equals(""))
-                        RequireDate = dtStartDate.Value;
-
-                    tb_ShippingH gg = new tb_ShippingH();                   
-                    gg.ShippingNo = txtPriceListCode.Text;
-                    gg.ShipDate = RequireDate;
-                    gg.UpdateBy = null;
-                    gg.UpdateDate = UpdateDate;
+                    mh_PriceList gg = new mh_PriceList();                   
+                    gg.PriceListCode = txtPriceListCode.Text;
+                    gg.StartDate = Convert.ToDateTime(dtStartDate.Value, new CultureInfo("en-US"));
+                    gg.EndDate = Convert.ToDateTime(dtEndDate.Value, new CultureInfo("en-US"));
+                    gg.ModifyBy = ClassLib.Classlib.User;
+                    gg.ModifyDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     gg.CreateBy = ClassLib.Classlib.User;
-                    gg.CreateDate = DateTime.Now;
-                    gg.ShipName = txtInternalNo.Text;                 
-                    gg.BarCode = barcode;
-                    gg.Status = "Completed";
-                    gg.Location = "Warehouse";//ddlLocation.Text;
-                    gg.ToLocation = "Customer";
-                    db.tb_ShippingHs.InsertOnSubmit(gg);
+                    gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                    gg.InternalNo = txtInternalNo.Text.Trim();
+                    gg.Remark = txtRemark.Text;
+                    gg.UnitPrice = dbClss.TDe(seUnitPrice.Value);
+
+                    gg.Status = "Waiting";
+                 
+                    db.mh_PriceLists.InsertOnSubmit(gg);
                     db.SubmitChanges();
 
-                    dbClss.AddHistory(this.Name, "แก้ไขการเบิก", "สร้าง การเบิกสินค้า [" + txtPriceListCode.Text.Trim() + "]", txtPriceListCode.Text);
+                    dbClss.AddHistory(this.Name, "แก้ไข PriceList", "สร้าง การเบิกสินค้า [" + txtPriceListCode.Text.Trim() + "]", txtPriceListCode.Text);
                 }
             }
         }
@@ -317,7 +386,7 @@ namespace StockControl
         private void btnSave_Click(object sender, EventArgs e)
         {
             
-                if (Ac.Equals("New"))// || Ac.Equals("Edit"))
+                if (Ac.Equals("New") || Ac.Equals("Edit"))
                 {
                     if (Check_Save())
                         return;
@@ -325,8 +394,8 @@ namespace StockControl
                     {
                         this.Cursor = Cursors.WaitCursor;
 
-                        if (Ac.Equals("New"))
-                            txtPriceListCode.Text = StockControl.dbClss.GetNo(38, 2);
+                    if (Ac.Equals("New")  && txtPriceListCode.Text=="")
+                        txtPriceListCode.Text = StockControl.dbClss.GetNo(41, 2);
 
                     if (!txtPriceListCode.Text.Equals(""))
                     {
@@ -335,11 +404,8 @@ namespace StockControl
                         
                         DataLoad();
                         btnNew.Enabled = true;
-                        btnDel_Item.Enabled = false;
-
-                        ////insert sotck
-                        //InsertStock_new();
-
+                        //btnDel_Item.Enabled = false;
+                        
                         MessageBox.Show("บันทึกสำเร็จ!");
                         btnRefresh_Click(null,null);
                     }
@@ -665,10 +731,9 @@ namespace StockControl
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            btnView_Click(null, null);
             DataLoad();
-            btnDel_Item.Enabled = false;
-            btnSave.Enabled = false;
-            btnNew.Enabled = true;
+           
            
         }
 
@@ -738,50 +803,37 @@ namespace StockControl
 
         private void btnListItem_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    btnSave.Enabled = false;
-            //    //btnEdit.Enabled = true;
-            //    //btnView.Enabled = false;
-            //    btnNew.Enabled = true;
-            //    ClearData();
-            //    Enable_Status(false, "View");
+            try
+            {
+                btnSave.Enabled = false;
+                //btnEdit.Enabled = true;
+                //btnView.Enabled = false;
+                btnNew.Enabled = true;
+                ClearData();
+                Enable_Status(false, "View");
 
-            //    this.Cursor = Cursors.WaitCursor;
-            //    Accident_FG_List sc = new Accident_FG_List(txtSHNo, txtShipmentNo, "ShipFGAccident");
-            //    this.Cursor = Cursors.Default;
-            //    sc.ShowDialog();
-            //    GC.Collect();
-            //    GC.WaitForPendingFinalizers();
+                this.Cursor = Cursors.WaitCursor;
+                PriceList_List sc = new PriceList_List(txtPriceListCode,"PriceList");
+                this.Cursor = Cursors.Default;
+                sc.ShowDialog();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
 
-            //    ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
-            //    ClassLib.Memory.Heap();
-            //    //LoadData
+                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+                ClassLib.Memory.Heap();
+               
+                if (!txtPriceListCode.Text.Equals(""))
+                {
 
-            //    string CodeNo = txtShipmentNo.Text;
-            //    string SHNo = txtSHNo.Text;
-            //    if (!txtSHNo.Text.Equals(""))
-            //    {
-            //        txtShipmentNo.Text = "";
-
-            //        DataLoad();
-            //        Ac = "View";
-            //        btnDel_Item.Enabled = false;
-            //        btnSave.Enabled = false;
-            //        btnNew.Enabled = true;
-            //    }
-            //    else
-            //    {
-            //        btnDel_Item.Enabled = true;
-            //        btnNew_Click(null, null);
-            //        txtShipmentNo.Text = CodeNo;
-
-            //        Insert_data_New();
-            //        txtShipmentNo.Text = "";
-
-            //    }
-            //}
-            //catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError(this.Name, ex.Message + " : radButtonElement1_Click", this.Name); }
+                    DataLoad();
+                    Ac = "View";
+                    btnDel_Item.Enabled = false;
+                    btnSave.Enabled = false;
+                    btnNew.Enabled = true;
+                }
+                
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError(this.Name, ex.Message + " : radButtonElement1_Click", this.Name); }
 
         }
 
@@ -1057,6 +1109,105 @@ namespace StockControl
                             btnRefresh_Click(null, null);
                         }
                     }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void btnAdd_Item_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                this.Cursor = Cursors.WaitCursor;
+                List<GridViewRowInfo> dgvRow_List = new List<GridViewRowInfo>();
+                ListPart sc = new ListPart(dgvRow_List, "FG-SEMI", "AdjustStock");
+
+                sc.ShowDialog();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+                ClassLib.Memory.Heap();
+
+
+                if (dgvRow_List.Count > 0)
+                {
+                    string CodeNo = "";
+
+                    foreach (GridViewRowInfo ee in dgvRow_List)
+                    {
+                        CodeNo = Convert.ToString(ee.Cells["InternalNo"].Value).Trim();
+                        txtInternalNo.Text = CodeNo;
+                        if (txtInternalNo.Text != "")
+                        {
+                            Insert_data(txtInternalNo.Text);
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError(this.Name, ex.Message + " : btnAdd_Item_Click", this.Name); }
+            finally { this.Cursor = Cursors.Default; }
+        }
+
+        private void txtPriceListCode_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == 13)
+                {
+                    DataLoad();
+              
+
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+        private void Insert_data(string CodeNo)
+        {
+
+            try
+
+            {
+                if (!CodeNo.Equals(""))
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    using (DataClasses1DataContext db = new DataClasses1DataContext())
+                    {
+                        
+                        var d1 = (from ix in db.mh_Items select ix)
+                            .Where(a => a.InternalNo == CodeNo.Trim() && a.Active == true
+
+                            ).ToList();
+                        if (d1.Count > 0)
+                        {
+                            var d = (from ix in db.mh_Items select ix)
+                            .Where(a => a.InternalNo == CodeNo.Trim() && a.Active == true
+
+                            ).First();
+                            txtInternalNo.Text = d.InternalNo;
+                       
+                        }
+                        else
+                            txtInternalNo.Text = "";
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { this.Cursor = Cursors.Default; }
+        }
+
+        private void txtInternalNo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                if (e.KeyChar == 13)
+                {
+
+                    Insert_data(txtInternalNo.Text);
+
+
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }

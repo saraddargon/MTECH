@@ -145,6 +145,12 @@
     <Compile Include="Process\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\PriceList_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\PriceList_List.Designer.cs">
+      <DependentUpon>PriceList_List.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\PriceList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1192,6 +1198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\PriceList_List.resx">
+      <DependentUpon>PriceList_List.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\PriceList.resx">
       <DependentUpon>PriceList.cs</DependentUpon>
