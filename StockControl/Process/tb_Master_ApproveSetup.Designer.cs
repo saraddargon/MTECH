@@ -44,6 +44,7 @@
             Telerik.WinControls.UI.RadListDataItem radListDataItem2 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem3 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem4 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem5 = new Telerik.WinControls.UI.RadListDataItem();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(tb_Master_ApproveSetup));
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
@@ -274,10 +275,12 @@
             radListDataItem2.Text = "Job Req";
             radListDataItem3.Text = "Purchase Order";
             radListDataItem4.Text = "Taking Stock";
+            radListDataItem5.Text = "Price List";
             this.ddlType.Items.Add(radListDataItem1);
             this.ddlType.Items.Add(radListDataItem2);
             this.ddlType.Items.Add(radListDataItem3);
             this.ddlType.Items.Add(radListDataItem4);
+            this.ddlType.Items.Add(radListDataItem5);
             this.ddlType.Location = new System.Drawing.Point(125, 15);
             this.ddlType.Name = "ddlType";
             this.ddlType.Size = new System.Drawing.Size(125, 20);

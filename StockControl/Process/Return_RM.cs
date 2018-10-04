@@ -1596,7 +1596,7 @@ namespace StockControl
               
                 this.Cursor = Cursors.WaitCursor;
                 List<GridViewRowInfo> dgvRow_List = new List<GridViewRowInfo>();
-                ListPart sc = new ListPart(dgvRow_List, "All", "AdjustStock");
+                ListPart sc = new ListPart(dgvRow_List, "SEMI-RM", "AdjustStock");
                 
                 sc.ShowDialog();
                 GC.Collect();

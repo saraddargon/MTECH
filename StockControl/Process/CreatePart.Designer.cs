@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreatePart));
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreatePart));
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
@@ -107,36 +107,6 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn31 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn32 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition12 = new Telerik.WinControls.UI.TableViewDefinition();
-            this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
-            this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
-            this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.btnNew = new Telerik.WinControls.UI.RadButtonElement();
-            this.btnSave = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarGroup2 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.btnView = new Telerik.WinControls.UI.RadButtonElement();
-            this.btnEdit = new Telerik.WinControls.UI.RadButtonElement();
-            this.btnDelete = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarGroup4 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.btnImport = new Telerik.WinControls.UI.RadButtonElement();
-            this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarGroup3 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.btnRefresh = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarGroup5 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarGroup6 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.btnPrintStockCard = new Telerik.WinControls.UI.RadButtonElement();
-            this.btnPrintShelfTAG = new Telerik.WinControls.UI.RadButtonElement();
-            this.btnWhereUsed = new Telerik.WinControls.UI.RadButtonElement();
-            this.btnPrintBarCode = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.btnCal = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarGroup8 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarGroup9 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.radButtonElement3 = new Telerik.WinControls.UI.RadButtonElement();
-            this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
-            this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
-            this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -153,16 +123,11 @@
             this.cboRouting = new Telerik.WinControls.UI.RadMultiColumnComboBox();
             this.txtidRouting = new Telerik.WinControls.UI.RadTextBox();
             this.radGroupBox3 = new Telerik.WinControls.UI.RadGroupBox();
-            this.btnDeleteDWG = new Telerik.WinControls.UI.RadButton();
             this.chkDWG = new Telerik.WinControls.UI.RadCheckBox();
-            this.btnAddDWG = new Telerik.WinControls.UI.RadButton();
             this.radLabel49 = new Telerik.WinControls.UI.RadLabel();
             this.lblTempAddFile = new Telerik.WinControls.UI.RadLabel();
             this.lblPath = new Telerik.WinControls.UI.RadLabel();
             this.txtDrawing = new Telerik.WinControls.UI.RadTextBox();
-            this.btnOpenDWG = new Telerik.WinControls.UI.RadButton();
-            this.txtPathDWG = new Telerik.WinControls.UI.RadTextBox();
-            this.btnGET = new Telerik.WinControls.UI.RadButton();
             this.seStandardPrice = new Telerik.WinControls.UI.RadSpinEditor();
             this.seStandardCost = new Telerik.WinControls.UI.RadSpinEditor();
             this.seInternalLeadTime = new Telerik.WinControls.UI.RadSpinEditor();
@@ -272,10 +237,44 @@
             this.radLabel56 = new Telerik.WinControls.UI.RadLabel();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radRibbonBarButtonGroup2 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.btnDeleteDWG = new Telerik.WinControls.UI.RadButton();
+            this.btnAddDWG = new Telerik.WinControls.UI.RadButton();
+            this.btnOpenDWG = new Telerik.WinControls.UI.RadButton();
+            this.txtPathDWG = new Telerik.WinControls.UI.RadTextBox();
+            this.btnGET = new Telerik.WinControls.UI.RadButton();
+            this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
+            this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
+            this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnNew = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnSave = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup2 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnView = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnEdit = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnDelete = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup4 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnImport = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup3 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnRefresh = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup5 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup6 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnPrintStockCard = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnPrintShelfTAG = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnWhereUsed = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnPrintBarCode = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnCal = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup8 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup9 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.radButtonElement3 = new Telerik.WinControls.UI.RadButtonElement();
+            this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
+            this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
-            this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).BeginInit();
@@ -299,17 +298,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtidRouting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox3)).BeginInit();
             this.radGroupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnDeleteDWG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkDWG)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnAddDWG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel49)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblTempAddFile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDrawing)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOpenDWG)).BeginInit();
-            this.btnOpenDWG.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPathDWG)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnGET)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seStandardPrice)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seStandardCost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seInternalLeadTime)).BeginInit();
@@ -436,297 +429,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtVersion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel54)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel56)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnDeleteDWG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAddDWG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpenDWG)).BeginInit();
+            this.btnOpenDWG.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPathDWG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnGET)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
-            // 
-            // radRibbonBar1
-            // 
-            this.radRibbonBar1.CommandTabs.AddRange(new Telerik.WinControls.RadItem[] {
-            this.ribbonTab1});
-            // 
-            // 
-            // 
-            this.radRibbonBar1.ExitButton.Text = "Exit";
-            this.radRibbonBar1.ExitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.radRibbonBar1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radRibbonBar1.Location = new System.Drawing.Point(0, 0);
-            this.radRibbonBar1.Name = "radRibbonBar1";
-            // 
-            // 
-            // 
-            this.radRibbonBar1.OptionsButton.Text = "Options";
-            this.radRibbonBar1.OptionsButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.radRibbonBar1.OptionsButton.Visibility = Telerik.WinControls.ElementVisibility.Hidden;
-            // 
-            // 
-            // 
-            this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(1050, 160);
-            this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
-            this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radMenuItem1,
-            this.radMenuSeparatorItem1,
-            this.radMenuItem2});
-            this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Create Tooling (สร้าง หรือ แก้ไข Item ใหม่)";
-            this.radRibbonBar1.ThemeName = "Office2010Blue";
-            // 
-            // ribbonTab1
-            // 
-            this.ribbonTab1.IsSelected = true;
-            this.ribbonTab1.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radRibbonBarGroup1,
-            this.radRibbonBarGroup2,
-            this.radRibbonBarGroup4,
-            this.radRibbonBarGroup3,
-            this.radRibbonBarGroup5,
-            this.radRibbonBarGroup6,
-            this.radRibbonBarGroup7,
-            this.radRibbonBarGroup8,
-            this.radRibbonBarGroup9});
-            this.ribbonTab1.Name = "ribbonTab1";
-            this.ribbonTab1.Text = "Action";
-            this.ribbonTab1.UseMnemonic = false;
-            // 
-            // radRibbonBarGroup1
-            // 
-            this.radRibbonBarGroup1.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnNew,
-            this.btnSave});
-            this.radRibbonBarGroup1.Name = "radRibbonBarGroup1";
-            this.radRibbonBarGroup1.Text = "New Item";
-            // 
-            // btnNew
-            // 
-            this.btnNew.Image = ((System.Drawing.Image)(resources.GetObject("btnNew.Image")));
-            this.btnNew.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnNew.Name = "btnNew";
-            this.btnNew.Text = "เพิ่มใหม่";
-            this.btnNew.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
-            this.btnSave.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Text = "บันทึกรายการ";
-            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // radRibbonBarGroup2
-            // 
-            this.radRibbonBarGroup2.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnView,
-            this.btnEdit,
-            this.btnDelete});
-            this.radRibbonBarGroup2.Name = "radRibbonBarGroup2";
-            this.radRibbonBarGroup2.Text = "Manage";
-            // 
-            // btnView
-            // 
-            this.btnView.Enabled = false;
-            this.btnView.Image = ((System.Drawing.Image)(resources.GetObject("btnView.Image")));
-            this.btnView.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnView.Name = "btnView";
-            this.btnView.Text = "แสดงรายการ";
-            this.btnView.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnView.Click += new System.EventHandler(this.btnView_Click);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.Image")));
-            this.btnEdit.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Text = "แก้ไขรายการ";
-            this.btnEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
-            this.btnDelete.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Text = "ลบรายการ";
-            this.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // radRibbonBarGroup4
-            // 
-            this.radRibbonBarGroup4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(86)))), ((int)(((byte)(86)))));
-            this.radRibbonBarGroup4.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnImport,
-            this.btnExport});
-            this.radRibbonBarGroup4.Name = "radRibbonBarGroup4";
-            this.radRibbonBarGroup4.Text = "Import / Export";
-            // 
-            // btnImport
-            // 
-            this.btnImport.Image = ((System.Drawing.Image)(resources.GetObject("btnImport.Image")));
-            this.btnImport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnImport.Name = "btnImport";
-            this.btnImport.SmallImage = null;
-            this.btnImport.Text = "นำข้อมูลเข้า";
-            this.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
-            this.btnExport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Text = "เทมเพลต";
-            this.btnExport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // radRibbonBarGroup3
-            // 
-            this.radRibbonBarGroup3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(135)))), ((int)(((byte)(135)))));
-            this.radRibbonBarGroup3.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnRefresh});
-            this.radRibbonBarGroup3.Name = "radRibbonBarGroup3";
-            this.radRibbonBarGroup3.Text = "Page";
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(6)))), ((int)(((byte)(197)))));
-            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
-            this.btnRefresh.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Text = "รีเฟรช";
-            this.btnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // radRibbonBarGroup5
-            // 
-            this.radRibbonBarGroup5.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radButtonElement1});
-            this.radRibbonBarGroup5.Name = "radRibbonBarGroup5";
-            this.radRibbonBarGroup5.Text = "List Item";
-            // 
-            // radButtonElement1
-            // 
-            this.radButtonElement1.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement1.Image")));
-            this.radButtonElement1.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radButtonElement1.Name = "radButtonElement1";
-            this.radButtonElement1.Text = "รายการ";
-            this.radButtonElement1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.radButtonElement1.Click += new System.EventHandler(this.radButtonElement1_Click);
-            // 
-            // radRibbonBarGroup6
-            // 
-            this.radRibbonBarGroup6.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnPrintStockCard,
-            this.btnPrintShelfTAG,
-            this.btnWhereUsed,
-            this.btnPrintBarCode});
-            this.radRibbonBarGroup6.Name = "radRibbonBarGroup6";
-            this.radRibbonBarGroup6.Text = "Print Document";
-            // 
-            // btnPrintStockCard
-            // 
-            this.btnPrintStockCard.Image = ((System.Drawing.Image)(resources.GetObject("btnPrintStockCard.Image")));
-            this.btnPrintStockCard.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnPrintStockCard.Name = "btnPrintStockCard";
-            this.btnPrintStockCard.Text = "Stock Movement";
-            this.btnPrintStockCard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnPrintStockCard.Click += new System.EventHandler(this.btnPrintStockCard_Click);
-            // 
-            // btnPrintShelfTAG
-            // 
-            this.btnPrintShelfTAG.Image = ((System.Drawing.Image)(resources.GetObject("btnPrintShelfTAG.Image")));
-            this.btnPrintShelfTAG.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnPrintShelfTAG.Name = "btnPrintShelfTAG";
-            this.btnPrintShelfTAG.Text = "Shelf (TAG)";
-            this.btnPrintShelfTAG.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnPrintShelfTAG.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
-            this.btnPrintShelfTAG.Click += new System.EventHandler(this.btnPrintShelfTAG_Click);
-            // 
-            // btnWhereUsed
-            // 
-            this.btnWhereUsed.Image = ((System.Drawing.Image)(resources.GetObject("btnWhereUsed.Image")));
-            this.btnWhereUsed.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnWhereUsed.Name = "btnWhereUsed";
-            this.btnWhereUsed.Text = "Where Used";
-            this.btnWhereUsed.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnWhereUsed.Click += new System.EventHandler(this.btnWhereUsed_Click);
-            // 
-            // btnPrintBarCode
-            // 
-            this.btnPrintBarCode.Image = ((System.Drawing.Image)(resources.GetObject("btnPrintBarCode.Image")));
-            this.btnPrintBarCode.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnPrintBarCode.Name = "btnPrintBarCode";
-            this.btnPrintBarCode.Text = "Barcode";
-            this.btnPrintBarCode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnPrintBarCode.Click += new System.EventHandler(this.btnPrintBarCode_Click);
-            // 
-            // radRibbonBarGroup7
-            // 
-            this.radRibbonBarGroup7.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnCal});
-            this.radRibbonBarGroup7.Name = "radRibbonBarGroup7";
-            this.radRibbonBarGroup7.Text = "Cal. Movement";
-            // 
-            // btnCal
-            // 
-            this.btnCal.Image = ((System.Drawing.Image)(resources.GetObject("btnCal.Image")));
-            this.btnCal.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnCal.Name = "btnCal";
-            this.btnCal.Text = "คำนวณใหม่";
-            this.btnCal.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnCal.Click += new System.EventHandler(this.btnCal_Click);
-            // 
-            // radRibbonBarGroup8
-            // 
-            this.radRibbonBarGroup8.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radButtonElement2});
-            this.radRibbonBarGroup8.Name = "radRibbonBarGroup8";
-            this.radRibbonBarGroup8.Text = "ITEM UOM";
-            // 
-            // radButtonElement2
-            // 
-            this.radButtonElement2.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement2.Image")));
-            this.radButtonElement2.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radButtonElement2.Name = "radButtonElement2";
-            this.radButtonElement2.Text = "แปลงหน่วยนับ";
-            this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.radButtonElement2.Click += new System.EventHandler(this.radButtonElement2_Click);
-            // 
-            // radRibbonBarGroup9
-            // 
-            this.radRibbonBarGroup9.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radButtonElement3});
-            this.radRibbonBarGroup9.Name = "radRibbonBarGroup9";
-            this.radRibbonBarGroup9.Text = "Master BOM";
-            // 
-            // radButtonElement3
-            // 
-            this.radButtonElement3.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement3.Image")));
-            this.radButtonElement3.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radButtonElement3.Name = "radButtonElement3";
-            this.radButtonElement3.Text = "สูตรการผลิต";
-            this.radButtonElement3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.radButtonElement3.Click += new System.EventHandler(this.radButtonElement3_Click);
-            // 
-            // radMenuItem1
-            // 
-            this.radMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem1.Image")));
-            this.radMenuItem1.Name = "radMenuItem1";
-            this.radMenuItem1.Text = "Exit";
-            this.radMenuItem1.Click += new System.EventHandler(this.radMenuItem1_Click);
-            // 
-            // radMenuSeparatorItem1
-            // 
-            this.radMenuSeparatorItem1.Name = "radMenuSeparatorItem1";
-            this.radMenuSeparatorItem1.Text = "radMenuSeparatorItem1";
-            this.radMenuSeparatorItem1.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // radMenuItem2
-            // 
-            this.radMenuItem2.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem2.Image")));
-            this.radMenuItem2.Name = "radMenuItem2";
-            this.radMenuItem2.Text = "History View";
-            this.radMenuItem2.Click += new System.EventHandler(this.radMenuItem2_Click);
             // 
             // radStatusStrip1
             // 
@@ -771,10 +482,10 @@
             // radPageViewPage1
             // 
             this.radPageViewPage1.Controls.Add(this.radPanel1);
-            this.radPageViewPage1.ItemSize = new System.Drawing.SizeF(69F, 28F);
-            this.radPageViewPage1.Location = new System.Drawing.Point(10, 37);
+            this.radPageViewPage1.ItemSize = new System.Drawing.SizeF(65F, 24F);
+            this.radPageViewPage1.Location = new System.Drawing.Point(10, 33);
             this.radPageViewPage1.Name = "radPageViewPage1";
-            this.radPageViewPage1.Size = new System.Drawing.Size(1029, 526);
+            this.radPageViewPage1.Size = new System.Drawing.Size(1029, 530);
             this.radPageViewPage1.Text = "รายละเอียด";
             // 
             // radPanel1
@@ -859,7 +570,7 @@
             this.radPanel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(1029, 526);
+            this.radPanel1.Size = new System.Drawing.Size(1029, 530);
             this.radPanel1.TabIndex = 1;
             this.radPanel1.TabStop = false;
             this.radPanel1.ThemeName = "ControlDefault";
@@ -1106,19 +817,6 @@
             this.radGroupBox3.Text = "รายละเอียดอื่นๆ";
             this.radGroupBox3.ThemeName = "Office2010Blue";
             // 
-            // btnDeleteDWG
-            // 
-            this.btnDeleteDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteDWG.Image")));
-            this.btnDeleteDWG.Location = new System.Drawing.Point(222, 57);
-            this.btnDeleteDWG.Name = "btnDeleteDWG";
-            this.btnDeleteDWG.Size = new System.Drawing.Size(97, 24);
-            this.btnDeleteDWG.TabIndex = 28;
-            this.btnDeleteDWG.TabStop = false;
-            this.btnDeleteDWG.Text = "Delete file..";
-            this.btnDeleteDWG.ThemeName = "Office2010Blue";
-            this.btnDeleteDWG.Click += new System.EventHandler(this.radButton2_Click);
-            // 
             // chkDWG
             // 
             this.chkDWG.Enabled = false;
@@ -1126,19 +824,6 @@
             this.chkDWG.Name = "chkDWG";
             this.chkDWG.Size = new System.Drawing.Size(15, 15);
             this.chkDWG.TabIndex = 7;
-            // 
-            // btnAddDWG
-            // 
-            this.btnAddDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnAddDWG.Image")));
-            this.btnAddDWG.Location = new System.Drawing.Point(131, 57);
-            this.btnAddDWG.Name = "btnAddDWG";
-            this.btnAddDWG.Size = new System.Drawing.Size(85, 24);
-            this.btnAddDWG.TabIndex = 27;
-            this.btnAddDWG.TabStop = false;
-            this.btnAddDWG.Text = "Add file..";
-            this.btnAddDWG.ThemeName = "Office2010Blue";
-            this.btnAddDWG.Click += new System.EventHandler(this.radButton1_Click);
             // 
             // radLabel49
             // 
@@ -1182,48 +867,6 @@
             this.txtDrawing.TabIndex = 24;
             this.txtDrawing.ThemeName = "Office2010Blue";
             this.txtDrawing.TextChanged += new System.EventHandler(this.radTextBox12_TextChanged);
-            // 
-            // btnOpenDWG
-            // 
-            this.btnOpenDWG.Controls.Add(this.txtPathDWG);
-            this.btnOpenDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenDWG.Image")));
-            this.btnOpenDWG.Location = new System.Drawing.Point(65, 57);
-            this.btnOpenDWG.Name = "btnOpenDWG";
-            this.btnOpenDWG.Size = new System.Drawing.Size(58, 24);
-            this.btnOpenDWG.TabIndex = 26;
-            this.btnOpenDWG.TabStop = false;
-            this.btnOpenDWG.Text = "Open...";
-            this.btnOpenDWG.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOpenDWG.ThemeName = "Office2010Blue";
-            this.btnOpenDWG.Click += new System.EventHandler(this.btnOpenDWG_Click);
-            // 
-            // txtPathDWG
-            // 
-            this.txtPathDWG.Enabled = false;
-            this.txtPathDWG.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPathDWG.Location = new System.Drawing.Point(0, 30);
-            this.txtPathDWG.Name = "txtPathDWG";
-            this.txtPathDWG.Size = new System.Drawing.Size(85, 20);
-            this.txtPathDWG.TabIndex = 3;
-            this.txtPathDWG.ThemeName = "Office2010Blue";
-            this.txtPathDWG.TextChanged += new System.EventHandler(this.radTextBox12_TextChanged);
-            // 
-            // btnGET
-            // 
-            this.btnGET.Enabled = false;
-            this.btnGET.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGET.Image = ((System.Drawing.Image)(resources.GetObject("btnGET.Image")));
-            this.btnGET.Location = new System.Drawing.Point(287, 7);
-            this.btnGET.Name = "btnGET";
-            this.btnGET.Size = new System.Drawing.Size(49, 20);
-            this.btnGET.TabIndex = 4;
-            this.btnGET.TabStop = false;
-            this.btnGET.Text = "GET";
-            this.btnGET.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnGET.ThemeName = "Office2010Blue";
-            this.btnGET.Visible = false;
-            this.btnGET.Click += new System.EventHandler(this.btnGET_Click);
             // 
             // seStandardPrice
             // 
@@ -2852,7 +2495,7 @@
             // 
             this.radPageViewPage2.Controls.Add(this.panel3);
             this.radPageViewPage2.Controls.Add(this.panel2);
-            this.radPageViewPage2.ItemSize = new System.Drawing.SizeF(39F, 28F);
+            this.radPageViewPage2.ItemSize = new System.Drawing.SizeF(35F, 24F);
             this.radPageViewPage2.Location = new System.Drawing.Point(10, 37);
             this.radPageViewPage2.Name = "radPageViewPage2";
             this.radPageViewPage2.Size = new System.Drawing.Size(1029, 526);
@@ -3105,6 +2748,372 @@
             this.radRibbonBarButtonGroup2.ShowBackColor = false;
             this.radRibbonBarButtonGroup2.Text = "radRibbonBarButtonGroup2";
             // 
+            // radRibbonBarButtonGroup5
+            // 
+            this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
+            this.radRibbonBarButtonGroup5.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.radRibbonBarButtonGroup5.Padding = new System.Windows.Forms.Padding(1);
+            this.radRibbonBarButtonGroup5.ShowBackColor = false;
+            this.radRibbonBarButtonGroup5.ShowBorder = false;
+            this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
+            // 
+            // btnDeleteDWG
+            // 
+            this.btnDeleteDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteDWG.Image")));
+            this.btnDeleteDWG.Location = new System.Drawing.Point(222, 57);
+            this.btnDeleteDWG.Name = "btnDeleteDWG";
+            this.btnDeleteDWG.Size = new System.Drawing.Size(97, 24);
+            this.btnDeleteDWG.TabIndex = 28;
+            this.btnDeleteDWG.TabStop = false;
+            this.btnDeleteDWG.Text = "Delete file..";
+            this.btnDeleteDWG.ThemeName = "Office2010Blue";
+            this.btnDeleteDWG.Click += new System.EventHandler(this.radButton2_Click);
+            // 
+            // btnAddDWG
+            // 
+            this.btnAddDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnAddDWG.Image")));
+            this.btnAddDWG.Location = new System.Drawing.Point(131, 57);
+            this.btnAddDWG.Name = "btnAddDWG";
+            this.btnAddDWG.Size = new System.Drawing.Size(85, 24);
+            this.btnAddDWG.TabIndex = 27;
+            this.btnAddDWG.TabStop = false;
+            this.btnAddDWG.Text = "Add file..";
+            this.btnAddDWG.ThemeName = "Office2010Blue";
+            this.btnAddDWG.Click += new System.EventHandler(this.radButton1_Click);
+            // 
+            // btnOpenDWG
+            // 
+            this.btnOpenDWG.Controls.Add(this.txtPathDWG);
+            this.btnOpenDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOpenDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenDWG.Image")));
+            this.btnOpenDWG.Location = new System.Drawing.Point(65, 57);
+            this.btnOpenDWG.Name = "btnOpenDWG";
+            this.btnOpenDWG.Size = new System.Drawing.Size(58, 24);
+            this.btnOpenDWG.TabIndex = 26;
+            this.btnOpenDWG.TabStop = false;
+            this.btnOpenDWG.Text = "Open...";
+            this.btnOpenDWG.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnOpenDWG.ThemeName = "Office2010Blue";
+            this.btnOpenDWG.Click += new System.EventHandler(this.btnOpenDWG_Click);
+            // 
+            // txtPathDWG
+            // 
+            this.txtPathDWG.Enabled = false;
+            this.txtPathDWG.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPathDWG.Location = new System.Drawing.Point(0, 30);
+            this.txtPathDWG.Name = "txtPathDWG";
+            this.txtPathDWG.Size = new System.Drawing.Size(85, 20);
+            this.txtPathDWG.TabIndex = 3;
+            this.txtPathDWG.ThemeName = "Office2010Blue";
+            this.txtPathDWG.TextChanged += new System.EventHandler(this.radTextBox12_TextChanged);
+            // 
+            // btnGET
+            // 
+            this.btnGET.Enabled = false;
+            this.btnGET.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGET.Image = ((System.Drawing.Image)(resources.GetObject("btnGET.Image")));
+            this.btnGET.Location = new System.Drawing.Point(287, 7);
+            this.btnGET.Name = "btnGET";
+            this.btnGET.Size = new System.Drawing.Size(49, 20);
+            this.btnGET.TabIndex = 4;
+            this.btnGET.TabStop = false;
+            this.btnGET.Text = "GET";
+            this.btnGET.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnGET.ThemeName = "Office2010Blue";
+            this.btnGET.Visible = false;
+            this.btnGET.Click += new System.EventHandler(this.btnGET_Click);
+            // 
+            // radRibbonBar1
+            // 
+            this.radRibbonBar1.CommandTabs.AddRange(new Telerik.WinControls.RadItem[] {
+            this.ribbonTab1});
+            // 
+            // 
+            // 
+            this.radRibbonBar1.ExitButton.Text = "Exit";
+            this.radRibbonBar1.ExitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.radRibbonBar1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radRibbonBar1.Location = new System.Drawing.Point(0, 0);
+            this.radRibbonBar1.Name = "radRibbonBar1";
+            // 
+            // 
+            // 
+            this.radRibbonBar1.OptionsButton.Text = "Options";
+            this.radRibbonBar1.OptionsButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.radRibbonBar1.OptionsButton.Visibility = Telerik.WinControls.ElementVisibility.Hidden;
+            // 
+            // 
+            // 
+            this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
+            this.radRibbonBar1.Size = new System.Drawing.Size(1050, 160);
+            this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
+            this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radMenuItem1,
+            this.radMenuSeparatorItem1,
+            this.radMenuItem2});
+            this.radRibbonBar1.TabIndex = 0;
+            this.radRibbonBar1.Text = "Create Tooling (สร้าง หรือ แก้ไข Item ใหม่)";
+            this.radRibbonBar1.ThemeName = "Office2010Blue";
+            // 
+            // ribbonTab1
+            // 
+            this.ribbonTab1.IsSelected = true;
+            this.ribbonTab1.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radRibbonBarGroup1,
+            this.radRibbonBarGroup2,
+            this.radRibbonBarGroup4,
+            this.radRibbonBarGroup3,
+            this.radRibbonBarGroup5,
+            this.radRibbonBarGroup6,
+            this.radRibbonBarGroup7,
+            this.radRibbonBarGroup8,
+            this.radRibbonBarGroup9});
+            this.ribbonTab1.Name = "ribbonTab1";
+            this.ribbonTab1.Text = "Action";
+            this.ribbonTab1.UseMnemonic = false;
+            // 
+            // radRibbonBarGroup1
+            // 
+            this.radRibbonBarGroup1.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnNew,
+            this.btnSave});
+            this.radRibbonBarGroup1.Name = "radRibbonBarGroup1";
+            this.radRibbonBarGroup1.Text = "New Item";
+            // 
+            // btnNew
+            // 
+            this.btnNew.Image = ((System.Drawing.Image)(resources.GetObject("btnNew.Image")));
+            this.btnNew.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Text = "เพิ่มใหม่";
+            this.btnNew.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Text = "บันทึกรายการ";
+            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // radRibbonBarGroup2
+            // 
+            this.radRibbonBarGroup2.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnView,
+            this.btnEdit,
+            this.btnDelete});
+            this.radRibbonBarGroup2.Name = "radRibbonBarGroup2";
+            this.radRibbonBarGroup2.Text = "Manage";
+            // 
+            // btnView
+            // 
+            this.btnView.Enabled = false;
+            this.btnView.Image = ((System.Drawing.Image)(resources.GetObject("btnView.Image")));
+            this.btnView.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnView.Name = "btnView";
+            this.btnView.Text = "แสดงรายการ";
+            this.btnView.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnView.Click += new System.EventHandler(this.btnView_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnEdit.Image")));
+            this.btnEdit.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Text = "แก้ไขรายการ";
+            this.btnEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
+            this.btnDelete.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Text = "ลบรายการ";
+            this.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // radRibbonBarGroup4
+            // 
+            this.radRibbonBarGroup4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(86)))), ((int)(((byte)(86)))));
+            this.radRibbonBarGroup4.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnImport,
+            this.btnExport});
+            this.radRibbonBarGroup4.Name = "radRibbonBarGroup4";
+            this.radRibbonBarGroup4.Text = "Import / Export";
+            // 
+            // btnImport
+            // 
+            this.btnImport.Image = ((System.Drawing.Image)(resources.GetObject("btnImport.Image")));
+            this.btnImport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnImport.Name = "btnImport";
+            this.btnImport.SmallImage = null;
+            this.btnImport.Text = "นำข้อมูลเข้า";
+            this.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
+            this.btnExport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Text = "เทมเพลต";
+            this.btnExport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // radRibbonBarGroup3
+            // 
+            this.radRibbonBarGroup3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(135)))), ((int)(((byte)(135)))));
+            this.radRibbonBarGroup3.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnRefresh});
+            this.radRibbonBarGroup3.Name = "radRibbonBarGroup3";
+            this.radRibbonBarGroup3.Text = "Page";
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(6)))), ((int)(((byte)(197)))));
+            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
+            this.btnRefresh.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Text = "รีเฟรช";
+            this.btnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // radRibbonBarGroup5
+            // 
+            this.radRibbonBarGroup5.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radButtonElement1});
+            this.radRibbonBarGroup5.Name = "radRibbonBarGroup5";
+            this.radRibbonBarGroup5.Text = "List Item";
+            // 
+            // radButtonElement1
+            // 
+            this.radButtonElement1.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement1.Image")));
+            this.radButtonElement1.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radButtonElement1.Name = "radButtonElement1";
+            this.radButtonElement1.Text = "รายการ";
+            this.radButtonElement1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.radButtonElement1.Click += new System.EventHandler(this.radButtonElement1_Click);
+            // 
+            // radRibbonBarGroup6
+            // 
+            this.radRibbonBarGroup6.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnPrintStockCard,
+            this.btnPrintShelfTAG,
+            this.btnWhereUsed,
+            this.btnPrintBarCode});
+            this.radRibbonBarGroup6.Name = "radRibbonBarGroup6";
+            this.radRibbonBarGroup6.Text = "Print Document";
+            // 
+            // btnPrintStockCard
+            // 
+            this.btnPrintStockCard.Image = ((System.Drawing.Image)(resources.GetObject("btnPrintStockCard.Image")));
+            this.btnPrintStockCard.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnPrintStockCard.Name = "btnPrintStockCard";
+            this.btnPrintStockCard.Text = "Stock Movement";
+            this.btnPrintStockCard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnPrintStockCard.Click += new System.EventHandler(this.btnPrintStockCard_Click);
+            // 
+            // btnPrintShelfTAG
+            // 
+            this.btnPrintShelfTAG.Image = ((System.Drawing.Image)(resources.GetObject("btnPrintShelfTAG.Image")));
+            this.btnPrintShelfTAG.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnPrintShelfTAG.Name = "btnPrintShelfTAG";
+            this.btnPrintShelfTAG.Text = "Shelf (TAG)";
+            this.btnPrintShelfTAG.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnPrintShelfTAG.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
+            this.btnPrintShelfTAG.Click += new System.EventHandler(this.btnPrintShelfTAG_Click);
+            // 
+            // btnWhereUsed
+            // 
+            this.btnWhereUsed.Image = ((System.Drawing.Image)(resources.GetObject("btnWhereUsed.Image")));
+            this.btnWhereUsed.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnWhereUsed.Name = "btnWhereUsed";
+            this.btnWhereUsed.Text = "Where Used";
+            this.btnWhereUsed.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnWhereUsed.Click += new System.EventHandler(this.btnWhereUsed_Click);
+            // 
+            // btnPrintBarCode
+            // 
+            this.btnPrintBarCode.Image = ((System.Drawing.Image)(resources.GetObject("btnPrintBarCode.Image")));
+            this.btnPrintBarCode.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnPrintBarCode.Name = "btnPrintBarCode";
+            this.btnPrintBarCode.Text = "Barcode";
+            this.btnPrintBarCode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnPrintBarCode.Click += new System.EventHandler(this.btnPrintBarCode_Click);
+            // 
+            // radRibbonBarGroup7
+            // 
+            this.radRibbonBarGroup7.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnCal});
+            this.radRibbonBarGroup7.Name = "radRibbonBarGroup7";
+            this.radRibbonBarGroup7.Text = "Cal. Movement";
+            // 
+            // btnCal
+            // 
+            this.btnCal.Image = ((System.Drawing.Image)(resources.GetObject("btnCal.Image")));
+            this.btnCal.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnCal.Name = "btnCal";
+            this.btnCal.Text = "คำนวณใหม่";
+            this.btnCal.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCal.Click += new System.EventHandler(this.btnCal_Click);
+            // 
+            // radRibbonBarGroup8
+            // 
+            this.radRibbonBarGroup8.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radButtonElement2});
+            this.radRibbonBarGroup8.Name = "radRibbonBarGroup8";
+            this.radRibbonBarGroup8.Text = "ITEM UOM";
+            // 
+            // radButtonElement2
+            // 
+            this.radButtonElement2.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement2.Image")));
+            this.radButtonElement2.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radButtonElement2.Name = "radButtonElement2";
+            this.radButtonElement2.Text = "แปลงหน่วยนับ";
+            this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.radButtonElement2.Click += new System.EventHandler(this.radButtonElement2_Click);
+            // 
+            // radRibbonBarGroup9
+            // 
+            this.radRibbonBarGroup9.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radButtonElement3});
+            this.radRibbonBarGroup9.Name = "radRibbonBarGroup9";
+            this.radRibbonBarGroup9.Text = "Master BOM";
+            // 
+            // radButtonElement3
+            // 
+            this.radButtonElement3.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement3.Image")));
+            this.radButtonElement3.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radButtonElement3.Name = "radButtonElement3";
+            this.radButtonElement3.Text = "สูตรการผลิต";
+            this.radButtonElement3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.radButtonElement3.Click += new System.EventHandler(this.radButtonElement3_Click);
+            // 
+            // radMenuItem1
+            // 
+            this.radMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem1.Image")));
+            this.radMenuItem1.Name = "radMenuItem1";
+            this.radMenuItem1.Text = "Exit";
+            this.radMenuItem1.Click += new System.EventHandler(this.radMenuItem1_Click);
+            // 
+            // radMenuSeparatorItem1
+            // 
+            this.radMenuSeparatorItem1.Name = "radMenuSeparatorItem1";
+            this.radMenuSeparatorItem1.Text = "radMenuSeparatorItem1";
+            this.radMenuSeparatorItem1.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // radMenuItem2
+            // 
+            this.radMenuItem2.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem2.Image")));
+            this.radMenuItem2.Name = "radMenuItem2";
+            this.radMenuItem2.Text = "History View";
+            this.radMenuItem2.Click += new System.EventHandler(this.radMenuItem2_Click);
+            // 
             // btnFilter
             // 
             this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
@@ -3119,15 +3128,6 @@
             this.Unfilter.Text = "Un Filter";
             this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             // 
-            // radRibbonBarButtonGroup5
-            // 
-            this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
-            this.radRibbonBarButtonGroup5.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.radRibbonBarButtonGroup5.Padding = new System.Windows.Forms.Padding(1);
-            this.radRibbonBarButtonGroup5.ShowBackColor = false;
-            this.radRibbonBarButtonGroup5.ShowBorder = false;
-            this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
-            // 
             // CreatePart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3139,6 +3139,7 @@
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MainMenuStrip = null;
             this.Name = "CreatePart";
             // 
             // 
@@ -3150,7 +3151,6 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Unit_Load);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Unit_PreviewKeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).EndInit();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).EndInit();
@@ -3177,18 +3177,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox3)).EndInit();
             this.radGroupBox3.ResumeLayout(false);
             this.radGroupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnDeleteDWG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkDWG)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnAddDWG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel49)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblTempAddFile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblPath)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDrawing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOpenDWG)).EndInit();
-            this.btnOpenDWG.ResumeLayout(false);
-            this.btnOpenDWG.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPathDWG)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnGET)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seStandardPrice)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seStandardCost)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seInternalLeadTime)).EndInit();
@@ -3317,6 +3310,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtVersion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel54)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel56)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnDeleteDWG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAddDWG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpenDWG)).EndInit();
+            this.btnOpenDWG.ResumeLayout(false);
+            this.btnOpenDWG.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPathDWG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnGET)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
