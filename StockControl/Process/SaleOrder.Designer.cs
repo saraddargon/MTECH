@@ -55,6 +55,7 @@
             Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn2 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
             Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn3 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn13 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn14 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition2 = new Telerik.WinControls.UI.TableViewDefinition();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SaleOrder));
@@ -139,6 +140,7 @@
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
+            this.txtSOStatus = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -185,6 +187,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSOStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -386,6 +389,11 @@
             gridViewTextBoxColumn13.HeaderText = "CSTMNo";
             gridViewTextBoxColumn13.IsVisible = false;
             gridViewTextBoxColumn13.Name = "CSTMNo";
+            gridViewTextBoxColumn14.EnableExpressionEditor = false;
+            gridViewTextBoxColumn14.FieldName = "VatType";
+            gridViewTextBoxColumn14.HeaderText = "VatType";
+            gridViewTextBoxColumn14.IsVisible = false;
+            gridViewTextBoxColumn14.Name = "VatType";
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewDateTimeColumn1,
@@ -411,7 +419,8 @@
             gridViewDecimalColumn7,
             gridViewCheckBoxColumn2,
             gridViewCheckBoxColumn3,
-            gridViewTextBoxColumn13});
+            gridViewTextBoxColumn13,
+            gridViewTextBoxColumn14});
             this.dgvData.MasterTemplate.EnableGrouping = false;
             this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.dgvData.Name = "dgvData";
@@ -639,6 +648,7 @@
             this.radGroupBox3.Controls.Add(this.txtAddress);
             this.radGroupBox3.Controls.Add(this.dtSODate);
             this.radGroupBox3.Controls.Add(this.txtSONo);
+            this.radGroupBox3.Controls.Add(this.txtSOStatus);
             this.radGroupBox3.Controls.Add(this.txtCSTMNo);
             this.radGroupBox3.Controls.Add(this.cbbCSTM);
             this.radGroupBox3.Controls.Add(this.radLabel4);
@@ -1212,6 +1222,17 @@
             this.radButtonElement1.Text = "รายการ";
             this.radButtonElement1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // txtSOStatus
+            // 
+            this.txtSOStatus.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.txtSOStatus.Enabled = false;
+            this.txtSOStatus.Location = new System.Drawing.Point(441, 94);
+            this.txtSOStatus.Name = "txtSOStatus";
+            this.txtSOStatus.ReadOnly = true;
+            this.txtSOStatus.Size = new System.Drawing.Size(142, 20);
+            this.txtSOStatus.TabIndex = 2;
+            this.txtSOStatus.Visible = false;
+            // 
             // SaleOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1281,6 +1302,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSOStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1370,5 +1392,6 @@
         private Telerik.WinControls.UI.RadButtonElement radButtonElement3;
         private Telerik.WinControls.UI.RadButton radButton2;
         private Telerik.WinControls.UI.RadGridView dgvData;
+        private Telerik.WinControls.UI.RadTextBox txtSOStatus;
     }
 }

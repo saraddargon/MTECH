@@ -305,10 +305,9 @@ namespace StockControl
                     var a = new List<int>();
                     foreach (var ix in dgvData.Rows)
                     {
-                        if (dbClss.TBo(ix.Cells["S"].Value))
+                        if (dbClss.TBo(ix.Cells["S"].Value) && !ix.Cells["SaleOrder"].Value.ToBool())
                         {
                             a.Add(dbClss.TInt(ix.Cells["id"].Value));
-                            break;
                         }
                     }
                     var so = new SaleOrder(a);

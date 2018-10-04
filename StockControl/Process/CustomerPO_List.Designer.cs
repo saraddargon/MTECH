@@ -508,7 +508,7 @@
             gridViewDecimalColumn1.FormatString = "{0:N2}";
             gridViewDecimalColumn1.HeaderText = "Order Q\'ty";
             gridViewDecimalColumn1.Name = "Qty";
-            gridViewDecimalColumn1.Width = 73;
+            gridViewDecimalColumn1.Width = 100;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "Remain";
             gridViewDecimalColumn2.HeaderText = "Out Standing Q\'ty";
@@ -523,12 +523,14 @@
             gridViewCheckBoxColumn2.EnableExpressionEditor = false;
             gridViewCheckBoxColumn2.FieldName = "Plan";
             gridViewCheckBoxColumn2.HeaderText = "Plan";
+            gridViewCheckBoxColumn2.IsVisible = false;
             gridViewCheckBoxColumn2.MinWidth = 20;
             gridViewCheckBoxColumn2.Name = "Plan";
             gridViewCheckBoxColumn2.Width = 60;
             gridViewHyperlinkColumn1.EnableExpressionEditor = false;
             gridViewHyperlinkColumn1.FieldName = "JobNo";
             gridViewHyperlinkColumn1.HeaderText = "Job No";
+            gridViewHyperlinkColumn1.IsVisible = false;
             gridViewHyperlinkColumn1.Name = "JobNo";
             gridViewHyperlinkColumn1.Width = 133;
             gridViewCheckBoxColumn3.EnableExpressionEditor = false;
@@ -544,9 +546,11 @@
             gridViewTextBoxColumn7.Width = 65;
             gridViewDecimalColumn4.EnableExpressionEditor = false;
             gridViewDecimalColumn4.FieldName = "PCSUnit";
-            gridViewDecimalColumn4.HeaderText = "PCSUnit";
-            gridViewDecimalColumn4.IsVisible = false;
+            gridViewDecimalColumn4.FormatString = "{0:N2}";
+            gridViewDecimalColumn4.HeaderText = "PCS:UOM";
             gridViewDecimalColumn4.Name = "PCSUnit";
+            gridViewDecimalColumn4.ReadOnly = true;
+            gridViewDecimalColumn4.Width = 70;
             gridViewDecimalColumn5.EnableExpressionEditor = false;
             gridViewDecimalColumn5.FieldName = "UnitPrice";
             gridViewDecimalColumn5.FormatString = "{0:N2}";

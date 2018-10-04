@@ -49,11 +49,11 @@ namespace StockControl
 
                             //find Job
                             string JobNo = "";
-                            if (dt.OutPlan == 0)
-                            {
-                                var q = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == dt.id).FirstOrDefault();
-                                if (q != null) JobNo = q.JobNo;
-                            }
+                            //if (dt.OutPlan == 0)
+                            //{
+                            //    var q = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == dt.id).FirstOrDefault();
+                            //    if (q != null) JobNo = q.JobNo;
+                            //}
 
                             l.Add(new grid_CustomerPO
                             {
