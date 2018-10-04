@@ -313,6 +313,13 @@ namespace StockControl
                         con.Active = true;
                         if (idDT <= 0)
                             db.mh_VendorContacts.InsertOnSubmit(con);
+                        if (con.Def)
+                        {
+                            vndr.ContactName = con.ContactName;
+                            vndr.PhoneNo = con.Tel;
+                            vndr.FaxNo = con.Fax;
+                            vndr.Email = con.Email;
+                        }
                         db.SubmitChanges();
                     }
 

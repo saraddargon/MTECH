@@ -288,7 +288,7 @@ namespace StockControl
 
                         bool newC = false;
                         int idDt = c.Cells["id"].Value.ToInt();
-                        var con = db.mh_CustomerContacts.Where(x => x.id == id).FirstOrDefault();
+                        var con = db.mh_CustomerContacts.Where(x => x.id == idDt).FirstOrDefault();
                         if (con == null)
                         {
                             newC = true;
@@ -308,12 +308,18 @@ namespace StockControl
 
                         con.idCustomer = cstm.id;
                         con.Def = c.Cells["Def"].Value.ToBool();
-                        con.id = 0;
                         con.ContactName = c.Cells["ContactName"].Value.ToSt();
                         con.Tel = c.Cells["Tel"].Value.ToSt();
                         con.Fax = c.Cells["Fax"].Value.ToSt();
                         con.Email = c.Cells["Email"].Value.ToSt();
                         con.Active = true;
+                        if (con.Def)
+                        {
+                            cstm.ContactName = con.ContactName;
+                            cstm.PhoneNo = con.Tel;
+                            cstm.FaxNo = con.Fax;
+                            cstm.Email = con.Email;
+                        }
                         db.SubmitChanges();
                     }
 
