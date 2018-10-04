@@ -107,6 +107,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
+            this.btnISO = new Telerik.WinControls.UI.RadMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
@@ -511,7 +512,8 @@
             this.radMenuItem11,
             this.radMenuSeparatorItem2,
             this.radMenuItem12,
-            this.radMenuItem29});
+            this.radMenuItem29,
+            this.btnISO});
             this.radMenuItem6.Name = "radMenuItem6";
             this.radMenuItem6.Text = "Help";
             // 
@@ -731,6 +733,12 @@
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(4)))), ((int)(((byte)(129)))));
             ((Telerik.WinControls.Primitives.FillPrimitive)(this.radMenu1.GetChildAt(0).GetChildAt(1))).ClipDrawing = false;
             // 
+            // btnISO
+            // 
+            this.btnISO.Name = "btnISO";
+            this.btnISO.Text = "ISO Report";
+            this.btnISO.Click += new System.EventHandler(this.btnISO_Click);
+            // 
             // Mainfrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -842,5 +850,6 @@
         private Telerik.WinControls.UI.RadMenuItem btnCurrency;
         private Telerik.WinControls.UI.RadMenu radMenu1;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem20;
+        private Telerik.WinControls.UI.RadMenuItem btnISO;
     }
 }

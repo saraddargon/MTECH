@@ -163,6 +163,12 @@
     <Compile Include="Process\CustomerPOSummary.Designer.cs">
       <DependentUpon>CustomerPOSummary.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\ISOReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\ISOReport.Designer.cs">
+      <DependentUpon>ISOReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\PackingPrint.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1189,6 +1195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CustomerPOSummary.resx">
       <DependentUpon>CustomerPOSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\ISOReport.resx">
+      <DependentUpon>ISOReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\PackingPrint.resx">
       <DependentUpon>PackingPrint.cs</DependentUpon>

@@ -745,5 +745,11 @@ namespace StockControl
                 dbClss.WarningIT("No Permisstion.");
             }
         }
+
+        private void btnISO_Click(object sender, EventArgs e)
+        {
+            var ii = new ISOReport();
+            ii.Show();
+        }
     }
 }
