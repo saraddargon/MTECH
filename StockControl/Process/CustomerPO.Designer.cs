@@ -518,9 +518,11 @@
             gridViewComboBoxColumn1.Width = 86;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "PCSUnit";
-            gridViewDecimalColumn2.HeaderText = "PCSUnit";
-            gridViewDecimalColumn2.IsVisible = false;
+            gridViewDecimalColumn2.FormatString = "{0:N2}";
+            gridViewDecimalColumn2.HeaderText = "PCS:UOM";
             gridViewDecimalColumn2.Name = "PCSUnit";
+            gridViewDecimalColumn2.ReadOnly = true;
+            gridViewDecimalColumn2.Width = 70;
             gridViewDecimalColumn3.EnableExpressionEditor = false;
             gridViewDecimalColumn3.FieldName = "UnitPrice";
             gridViewDecimalColumn3.FormatString = "{0:N2}";
@@ -611,6 +613,7 @@
             gridViewHyperlinkColumn1.EnableExpressionEditor = false;
             gridViewHyperlinkColumn1.FieldName = "JobNo";
             gridViewHyperlinkColumn1.HeaderText = "Job No";
+            gridViewHyperlinkColumn1.IsVisible = false;
             gridViewHyperlinkColumn1.Name = "JobNo";
             gridViewHyperlinkColumn1.Width = 130;
             gridViewDecimalColumn7.EnableExpressionEditor = false;
@@ -661,13 +664,13 @@
             this.toolStripSeparator2,
             this.btnDel_Item});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 98);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(150, 76);
             // 
             // btnAddPart
             // 
             this.btnAddPart.Enabled = false;
             this.btnAddPart.Name = "btnAddPart";
-            this.btnAddPart.Size = new System.Drawing.Size(180, 22);
+            this.btnAddPart.Size = new System.Drawing.Size(149, 22);
             this.btnAddPart.Text = "Add Item";
             this.btnAddPart.Click += new System.EventHandler(this.btnAddPart_Click);
             // 
@@ -676,7 +679,7 @@
             this.btnAdd_Row.BackColor = System.Drawing.Color.Transparent;
             this.btnAdd_Row.Enabled = false;
             this.btnAdd_Row.Name = "btnAdd_Row";
-            this.btnAdd_Row.Size = new System.Drawing.Size(180, 22);
+            this.btnAdd_Row.Size = new System.Drawing.Size(149, 22);
             this.btnAdd_Row.Text = "Add New Row";
             this.btnAdd_Row.Visible = false;
             this.btnAdd_Row.Click += new System.EventHandler(this.btnAdd_Row_Click);
@@ -684,14 +687,14 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(146, 6);
             // 
             // btnDel_Item
             // 
             this.btnDel_Item.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnDel_Item.Enabled = false;
             this.btnDel_Item.Name = "btnDel_Item";
-            this.btnDel_Item.Size = new System.Drawing.Size(180, 22);
+            this.btnDel_Item.Size = new System.Drawing.Size(149, 22);
             this.btnDel_Item.Text = "Delete Row";
             this.btnDel_Item.Click += new System.EventHandler(this.ลบพารทToolStripMenuItem_Click);
             // 

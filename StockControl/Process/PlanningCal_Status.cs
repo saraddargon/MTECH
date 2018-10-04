@@ -89,6 +89,10 @@ namespace StockControl
                         && x.OutPlan > 0).OrderBy(x => x.ReqDate).ToList();
                     foreach (var dt in soDt)
                     {
+                        var sohd = db.mh_SaleOrders.Where(x => x.SONo == dt.SONo && x.Active).FirstOrDefault();
+                        if (sohd == null) continue;
+                        if (sohd.SeqStatus != 2) continue; //Only Approved
+
                         if (ItemNo != "" && dt.ItemNo != ItemNo) continue;
                         var t = db.mh_Items.Where(x => x.InternalNo == dt.ItemNo).FirstOrDefault();
                         if (t == null) continue;
@@ -97,7 +101,6 @@ namespace StockControl
                         //var pohd = db.mh_CustomerPOs.Where(x => x.id == dt.idCustomerPO
                         //        && x.Active).FirstOrDefault();
                         //if (pohd == null) continue;
-                        var sohd = db.mh_SaleOrders.Where(x => x.SONo == dt.SONo && x.Active).FirstOrDefault();
                         if (sohd == null) continue;
                         //string docNo = pohd.CustomerPONo;
                         string docNo = sohd.SONo;
@@ -186,6 +189,10 @@ namespace StockControl
                                 SendApproveBy = "",
                                 ApproveBy = "",
                                 DemandType = 1,
+                                SeqStatus = 2,
+                                ApproveDate  =DateTime.Now,
+                                SandApproveDate = DateTime.Now,
+                                VatGroup = 0,
                             };
                             db.mh_SaleOrders.InsertOnSubmit(so);
                         }

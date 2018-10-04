@@ -294,7 +294,7 @@
             gridViewTextBoxColumn2.EnableExpressionEditor = false;
             gridViewTextBoxColumn2.FieldName = "SS";
             gridViewTextBoxColumn2.Name = "SS";
-            gridViewTextBoxColumn2.Width = 83;
+            gridViewTextBoxColumn2.Width = 120;
             gridViewTextBoxColumn3.EnableExpressionEditor = false;
             gridViewTextBoxColumn3.FieldName = "SONo";
             gridViewTextBoxColumn3.HeaderText = "Sale Order no";

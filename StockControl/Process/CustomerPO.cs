@@ -116,8 +116,8 @@ namespace StockControl
                         dgvData.Rows.ToList().ForEach(x =>
                         {
                             int idDt = x.Cells["id"].Value.ToInt();
-                            var j = db.mh_ProductionOrders.Where(q => q.Active && q.RefDocId == idDt).FirstOrDefault();
-                            if (j != null) x.Cells["JobNo"].Value = j.JobNo;
+                            //var j = db.mh_ProductionOrders.Where(q => q.Active && q.RefDocId == idDt).FirstOrDefault();
+                            //if (j != null) x.Cells["JobNo"].Value = j.JobNo;
 
                             if (!foundSO)
                             {
@@ -513,9 +513,12 @@ namespace StockControl
                         else
                             dgvData.Rows[e.RowIndex].Cells["Amount"].Value = 0;
 
-                        e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
-                        e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
-                        e.Row.Cells["OutQty"].Value = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
+                        decimal outso = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal(), 2);
+                        var outplan = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
+                        var outqty = outplan;
+                        e.Row.Cells["OutSO"].Value = outso;
+                        e.Row.Cells["OutPlan"].Value = outplan;
+                        e.Row.Cells["OutQty"].Value = outqty;
                         CallTotal();
                     }
                     else if (e.Column.Name.Equals("ItemNo"))
@@ -535,9 +538,9 @@ namespace StockControl
                             //set Tool
                             if (beginItem == "")
                             {
-                                decimal outso = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
-                                var outplan = outso;
-                                var outqty = outso;
+                                decimal outso = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal(), 2);
+                                var outplan = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
+                                var outqty = outplan;
                                 addRow(e.RowIndex, 0, DateTime.Now, t.InternalNo, t.InternalName
                                     , 1, t.SalesUOM, pcsunit, t.StandardPrice, "", t.ReplenishmentType, outso, outplan, outqty
                                     , "Waiting");
@@ -547,13 +550,18 @@ namespace StockControl
                                 e.Row.Cells["ItemName"].Value = t.InternalName;
                                 e.Row.Cells["UOM"].Value = t.BaseUOM;
                                 e.Row.Cells["PCSUnit"].Value = pcsunit;
-                                e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
-                                e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
-                                e.Row.Cells["OutQty"].Value = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
+
+                                decimal outso = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal(), 2);
+                                var outplan = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
+                                var outqty = outplan;
+                                e.Row.Cells["OutSO"].Value = outso;
+                                e.Row.Cells["OutPlan"].Value = outplan;
+                                e.Row.Cells["OutQty"].Value = outqty;
                             }
 
                             //
                             SetRowNo1(dgvData);
+                            CallTotal();
                         }
                     }
                     else if (e.Column.Name.Equals("UOM"))
@@ -565,9 +573,13 @@ namespace StockControl
                             var pcsunit = (u != null) ? u.QuantityPer : 1;
 
                             e.Row.Cells["PCSUnit"].Value = pcsunit;
-                            e.Row.Cells["OutSO"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
-                            e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal();
-                            e.Row.Cells["OutQty"].Value = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
+                            decimal outso = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal(), 2);
+                            var outplan = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
+                            var outqty = outplan;
+                            e.Row.Cells["OutSO"].Value = outso;
+                            e.Row.Cells["OutPlan"].Value = outplan;
+                            e.Row.Cells["OutQty"].Value = outqty;
+                            CallTotal();
                         }
                     }
                 }
@@ -1119,8 +1131,8 @@ namespace StockControl
             {
                 if (e.Column.Name.Equals("JobNo"))
                 {
-                    string JobNo = e.Row.Cells["JobNo"].Value.ToSt();
-                    linkToJob(JobNo);
+                    //string JobNo = e.Row.Cells["JobNo"].Value.ToSt();
+                    //linkToJob(JobNo);
                 }
             }
         }
