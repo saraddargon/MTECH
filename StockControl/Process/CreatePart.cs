@@ -387,17 +387,17 @@ namespace StockControl
                 cboRouting.SelectedIndex = -1;
                 cboRouting.Text = "";
 
-                //this.cboBOM.AutoFilter = true;
-                //this.cboBOM.AutoCompleteMode = AutoCompleteMode.Append;
-                //FilterDescriptor bb = new FilterDescriptor();
-                //bb.PropertyName = this.cboBOM.ValueMember;
-                //bb.Operator = FilterOperator.StartsWith;
-                //this.cboBOM.EditorControl.MasterTemplate.FilterDescriptors.Add(bb);
-                //cboBOM.DisplayMember = "BomNo";
-                //cboBOM.ValueMember = "BomNo";
-                //cboBOM.DataSource = db.tb_BomHDs.Where(s => s.Status != "Cancel").ToList();
-                //cboBOM.SelectedIndex = -1;
-                //cboBOM.Text = "";
+                this.cboBOM.AutoFilter = true;
+                this.cboBOM.AutoCompleteMode = AutoCompleteMode.Append;
+                FilterDescriptor bb = new FilterDescriptor();
+                bb.PropertyName = this.cboBOM.ValueMember;
+                bb.Operator = FilterOperator.StartsWith;
+                this.cboBOM.EditorControl.MasterTemplate.FilterDescriptors.Add(bb);
+                cboBOM.DisplayMember = "BomNo";
+                cboBOM.ValueMember = "BomNo";
+                cboBOM.DataSource = db.tb_BomHDs.Where(s => s.Status != "Cancel").ToList();
+                cboBOM.SelectedIndex = -1;
+                cboBOM.Text = "";
 
                 this.cboLocation.AutoFilter = true;
                 this.cboLocation.AutoCompleteMode = AutoCompleteMode.Append;
