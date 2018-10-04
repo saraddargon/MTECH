@@ -418,7 +418,7 @@
             gridViewTextBoxColumn13.FieldName = "RefDocNo";
             gridViewTextBoxColumn13.HeaderText = "Customer P/O";
             gridViewTextBoxColumn13.Name = "RefDocNo";
-            gridViewTextBoxColumn13.Width = 89;
+            gridViewTextBoxColumn13.Width = 120;
             gridViewTextBoxColumn14.EnableExpressionEditor = false;
             gridViewTextBoxColumn14.FieldName = "RefId";
             gridViewTextBoxColumn14.HeaderText = "RefId";
@@ -426,9 +426,9 @@
             gridViewTextBoxColumn14.Name = "RefId";
             gridViewTextBoxColumn15.EnableExpressionEditor = false;
             gridViewTextBoxColumn15.FieldName = "ProductionNo";
-            gridViewTextBoxColumn15.HeaderText = "Production No.";
+            gridViewTextBoxColumn15.HeaderText = "Job Order Sheet";
             gridViewTextBoxColumn15.Name = "ProductionNo";
-            gridViewTextBoxColumn15.Width = 93;
+            gridViewTextBoxColumn15.Width = 120;
             gridViewTextBoxColumn16.EnableExpressionEditor = false;
             gridViewTextBoxColumn16.FieldName = "id";
             gridViewTextBoxColumn16.HeaderText = "id";

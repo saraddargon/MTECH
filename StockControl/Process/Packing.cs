@@ -349,7 +349,10 @@ namespace StockControl
                         string LotNo = item.Cells["LotNo"].Value.ToSt(); 
                         var dLot = db.mh_LotFGs.Where(x => x.LotDate == dNow).FirstOrDefault();
                         if (dLot != null)
+                        {
                             LotNo = dLot.LotNo;
+                            //prod.LotNo = dLot.LotNo; //ใส่ lot ในใบ Production
+                        }
                         dt.LotNo = LotNo;
                         dt.ShelfNo = item.Cells["ShelfNo"].Value.ToSt();
                         dt.Remark = item.Cells["Remark"].Value.ToSt();

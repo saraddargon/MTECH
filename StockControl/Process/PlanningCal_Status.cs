@@ -699,6 +699,9 @@ namespace StockControl
                 var boms = db.tb_BomDTs.Where(x => x.BomNo == tdata.BomNo).ToList();
                 if (boms.Count == 0)
                     RMready = false; //ถ้าไม่มี Bom จะไม่แพลน
+                var bomHd = db.tb_BomHDs.Where(x => x.BomNo == tdata.BomNo).FirstOrDefault();
+                //var yield = bomHd.YieldOperation.ToDecimal();
+                var exYield = 100 - bomHd.YieldOperation.ToDecimal();
 
                 //เช็คว่าทุก RM มีของพอจริงไหม ถ้าไม่พอจะไม่แพลน ถ้าพอจะแพลน
                 foreach (var b in boms)
@@ -710,12 +713,14 @@ namespace StockControl
                         t = new ItemData(b.Component);
                         itemDatas.Add(t);
                     }
-
-                    if (data.DocId == 4)
-                    { }
-
+                    
                     decimal useQ = Math.Round(b.Qty * gPlan.UseQty, 2);
-                    decimal useQAll = Math.Round(useQ * b.PCSUnit.ToDecimal(), 2);
+                    decimal yieldItem = 0.00m;
+                    if (b.chk_YieldOperation.ToBool())
+                    {
+                        yieldItem = Math.Ceiling((exYield / 100) * useQ);
+                    }
+                    decimal useQAll = Math.Round(useQ * b.PCSUnit.ToDecimal(), 2) + yieldItem;
                     var sumStockCstmPO = 0.00m; //Stock Qty + BackOrder = Stock All for this CUstomerPO dt
                     var sumStockFree = 0.00m; //Stock Free not on CUstomer PO ใดๆ
                     sumStockCstmPO = t.findStock_CustomerPO(data.DocId);
