@@ -465,6 +465,7 @@
             gridViewTextBoxColumn6.FieldName = "UnitPlan";
             gridViewTextBoxColumn6.HeaderText = "หน่วยที่ใช้ในใบผลิต";
             gridViewTextBoxColumn6.Name = "UnitPlan";
+            gridViewTextBoxColumn6.ReadOnly = true;
             gridViewTextBoxColumn6.Width = 104;
             gridViewDecimalColumn3.EnableExpressionEditor = false;
             gridViewDecimalColumn3.FieldName = "QtyUsed";

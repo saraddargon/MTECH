@@ -292,6 +292,7 @@ namespace StockControl
                                     {
                                         x.Cells["GroupType"].Value = dbClss.TSt(p.FirstOrDefault().GroupType);
                                         x.Cells["Type"].Value = dbClss.TSt(p.FirstOrDefault().InventoryGroup);
+                                        x.Cells["UnitUsed"].Value = dbClss.TSt(p.FirstOrDefault().BaseUOM);
                                     }
 
                                     x.Cells["QtyUsed"].Value = dbClss.TDe( db.Get_ShipQty(Convert.ToString(x.Cells["CodeNo"].Value),txtJobCard.Text));
@@ -309,6 +310,17 @@ namespace StockControl
                                         x.Cells["RemainQty"].Value = Convert.ToDecimal(s.RemainQty);
                                         x.Cells["UnitCost"].Value = Convert.ToDecimal(s.UnitCost);
                                         x.Cells["Amount"].Value = Math.Abs(Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QtyShip"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
+                                    }
+
+                                    var pd = (from ix in db.mh_ProductionOrderRMs select ix)
+                                         .Where
+                                         (a => a.ItemNo.Trim().ToUpper() == Convert.ToString(x.Cells["CodeNo"].Value).Trim().ToUpper()
+                                          && a.JobNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper()
+                                          && a.id == Convert.ToInt16(x.Cells["idProductionOrderRM"].Value)
+                                         ).ToList();
+                                    if (pd.Count > 0)
+                                    {
+                                        x.Cells["UnitPlan"].Value = dbClss.TSt(pd.FirstOrDefault().UOM);
                                     }
                                 }
                             }
