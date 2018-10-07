@@ -1517,7 +1517,9 @@ namespace StockControl
                          select ix).ToList();
                 if (r.Count > 0)
                 {
-
+                    //string UnitPlan = "";
+                    //string UnitUsed = "";
+                    decimal Qty = 0;
                     foreach (var vv in r)
                     {
                         dgvNo = dgvData.Rows.Count() + 1;
@@ -1532,7 +1534,9 @@ namespace StockControl
                                         , dbClss.TDe(vv.UnitCost)
                                         , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark,0
                                         , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM),dbClss.TDe(vv.QtyUsed)
-                                        ,vv.GroupType,vv.Type, dbClss.TInt(vv.idCSTMPODt),dbClss.TInt(vv.id));
+                                        ,vv.GroupType,vv.Type, dbClss.TInt(vv.idCSTMPODt),dbClss.TInt(vv.id)
+                                       ,vv.UnitPlan,vv.UnitUsed,Qty
+                                        );
 
                     }
                 }
@@ -1545,6 +1549,7 @@ namespace StockControl
            , decimal StandardCost,decimal Amount,string LotNo,string SerialNo,string MachineName,string LineName
             ,string Remark,int id,string Location,string BaseUOM,decimal BasePCSUOM
             ,decimal QtyUsed,string GroupType,string Type, int idCSTMPODt,int idProductionOrderRM
+            ,string UnitPlan,string UnitUsed,decimal Qty
             )
         {
             
@@ -1586,6 +1591,10 @@ namespace StockControl
                 ee.Cells["Type"].Value = Type;
                 ee.Cells["idCSTMPODt"].Value = idCSTMPODt;
                 ee.Cells["idProductionOrderRM"].Value = idProductionOrderRM;
+                //ee.Cells["UnitRemain"].Value = UnitRemain;
+                ee.Cells["UnitPlan"].Value = UnitPlan;
+                ee.Cells["UnitUsed"].Value = UnitUsed;
+                ee.Cells["Qty"].Value = Qty;
 
                 //if (GroupCode != "Other")
                 //{

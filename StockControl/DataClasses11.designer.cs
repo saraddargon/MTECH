@@ -2190,13 +2190,6 @@ namespace StockControl
 			return ((System.Nullable<decimal>)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), codeNo, category, type_i, location, cSTMID).ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_051_Job_list")]
-		public ISingleResult<sp_051_Job_listResult> sp_051_Job_list([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobNo", DbType="VarChar(50)")] string jobNo)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jobNo);
-			return ((ISingleResult<sp_051_Job_listResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_008_Stock_Select")]
 		public ISingleResult<sp_008_Stock_SelectResult> sp_008_Stock_Select([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="VarChar(50)")] string codeNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Category", DbType="VarChar(50)")] string category, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type_in_out", DbType="VarChar(20)")] string type_in_out, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt)
 		{
@@ -2472,6 +2465,13 @@ namespace StockControl
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, partNo, bomNo, year_, month_, line, component, componentName, componentDescription, qty, unit, unitCost, cost, pCSUnit, chk_YieldOperation, createBy);
 			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_051_Job_list")]
+		public ISingleResult<sp_051_Job_listResult> sp_051_Job_list([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobNo", DbType="VarChar(50)")] string jobNo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jobNo);
+			return ((ISingleResult<sp_051_Job_listResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -75811,446 +75811,6 @@ namespace StockControl
 		}
 	}
 	
-	public partial class sp_051_Job_listResult
-	{
-		
-		private string _JobNo;
-		
-		private string _CodeNo;
-		
-		private string _ItemNo;
-		
-		private string _ItemDescriptioin;
-		
-		private System.Nullable<decimal> _QtyUsed;
-		
-		private decimal _QtyPlan;
-		
-		private decimal _QtyShip;
-		
-		private System.Nullable<decimal> _RemainQty;
-		
-		private string _UnitShip;
-		
-		private decimal _PCSUnit;
-		
-		private decimal _UnitCost;
-		
-		private decimal _Amount;
-		
-		private string _LotNo;
-		
-		private string _SerialNo;
-		
-		private string _MachineName;
-		
-		private string _LineName;
-		
-		private string _Remark;
-		
-		private int _id;
-		
-		private string _Location;
-		
-		private string _BaseUOM;
-		
-		private decimal _BasePCSUOM;
-		
-		private string _Type;
-		
-		private string _GroupType;
-		
-		private int _idCSTMPODt;
-		
-		public sp_051_Job_listResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobNo", DbType="NVarChar(50)")]
-		public string JobNo
-		{
-			get
-			{
-				return this._JobNo;
-			}
-			set
-			{
-				if ((this._JobNo != value))
-				{
-					this._JobNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CodeNo", DbType="NVarChar(50)")]
-		public string CodeNo
-		{
-			get
-			{
-				return this._CodeNo;
-			}
-			set
-			{
-				if ((this._CodeNo != value))
-				{
-					this._CodeNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(100)")]
-		public string ItemNo
-		{
-			get
-			{
-				return this._ItemNo;
-			}
-			set
-			{
-				if ((this._ItemNo != value))
-				{
-					this._ItemNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemDescriptioin", DbType="VarChar(512) NOT NULL", CanBeNull=false)]
-		public string ItemDescriptioin
-		{
-			get
-			{
-				return this._ItemDescriptioin;
-			}
-			set
-			{
-				if ((this._ItemDescriptioin != value))
-				{
-					this._ItemDescriptioin = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QtyUsed", DbType="Decimal(18,6)")]
-		public System.Nullable<decimal> QtyUsed
-		{
-			get
-			{
-				return this._QtyUsed;
-			}
-			set
-			{
-				if ((this._QtyUsed != value))
-				{
-					this._QtyUsed = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QtyPlan", DbType="Decimal(18,2) NOT NULL")]
-		public decimal QtyPlan
-		{
-			get
-			{
-				return this._QtyPlan;
-			}
-			set
-			{
-				if ((this._QtyPlan != value))
-				{
-					this._QtyPlan = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QtyShip", DbType="Decimal(1,1) NOT NULL")]
-		public decimal QtyShip
-		{
-			get
-			{
-				return this._QtyShip;
-			}
-			set
-			{
-				if ((this._QtyShip != value))
-				{
-					this._QtyShip = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemainQty", DbType="Decimal(18,6)")]
-		public System.Nullable<decimal> RemainQty
-		{
-			get
-			{
-				return this._RemainQty;
-			}
-			set
-			{
-				if ((this._RemainQty != value))
-				{
-					this._RemainQty = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitShip", DbType="VarChar(100)")]
-		public string UnitShip
-		{
-			get
-			{
-				return this._UnitShip;
-			}
-			set
-			{
-				if ((this._UnitShip != value))
-				{
-					this._UnitShip = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2) NOT NULL")]
-		public decimal PCSUnit
-		{
-			get
-			{
-				return this._PCSUnit;
-			}
-			set
-			{
-				if ((this._PCSUnit != value))
-				{
-					this._PCSUnit = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitCost", DbType="Decimal(1,1) NOT NULL")]
-		public decimal UnitCost
-		{
-			get
-			{
-				return this._UnitCost;
-			}
-			set
-			{
-				if ((this._UnitCost != value))
-				{
-					this._UnitCost = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(1,1) NOT NULL")]
-		public decimal Amount
-		{
-			get
-			{
-				return this._Amount;
-			}
-			set
-			{
-				if ((this._Amount != value))
-				{
-					this._Amount = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LotNo", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string LotNo
-		{
-			get
-			{
-				return this._LotNo;
-			}
-			set
-			{
-				if ((this._LotNo != value))
-				{
-					this._LotNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SerialNo", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string SerialNo
-		{
-			get
-			{
-				return this._SerialNo;
-			}
-			set
-			{
-				if ((this._SerialNo != value))
-				{
-					this._SerialNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MachineName", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string MachineName
-		{
-			get
-			{
-				return this._MachineName;
-			}
-			set
-			{
-				if ((this._MachineName != value))
-				{
-					this._MachineName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LineName", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string LineName
-		{
-			get
-			{
-				return this._LineName;
-			}
-			set
-			{
-				if ((this._LineName != value))
-				{
-					this._LineName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this._Remark = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this._id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Location", DbType="VarChar(100)")]
-		public string Location
-		{
-			get
-			{
-				return this._Location;
-			}
-			set
-			{
-				if ((this._Location != value))
-				{
-					this._Location = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseUOM", DbType="VarChar(100)")]
-		public string BaseUOM
-		{
-			get
-			{
-				return this._BaseUOM;
-			}
-			set
-			{
-				if ((this._BaseUOM != value))
-				{
-					this._BaseUOM = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BasePCSUOM", DbType="Decimal(18,2) NOT NULL")]
-		public decimal BasePCSUOM
-		{
-			get
-			{
-				return this._BasePCSUOM;
-			}
-			set
-			{
-				if ((this._BasePCSUOM != value))
-				{
-					this._BasePCSUOM = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(100)")]
-		public string Type
-		{
-			get
-			{
-				return this._Type;
-			}
-			set
-			{
-				if ((this._Type != value))
-				{
-					this._Type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GroupType", DbType="VarChar(100)")]
-		public string GroupType
-		{
-			get
-			{
-				return this._GroupType;
-			}
-			set
-			{
-				if ((this._GroupType != value))
-				{
-					this._GroupType = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCSTMPODt", DbType="Int NOT NULL")]
-		public int idCSTMPODt
-		{
-			get
-			{
-				return this._idCSTMPODt;
-			}
-			set
-			{
-				if ((this._idCSTMPODt != value))
-				{
-					this._idCSTMPODt = value;
-				}
-			}
-		}
-	}
-	
 	public partial class sp_008_Stock_SelectResult
 	{
 		
@@ -81488,6 +81048,482 @@ namespace StockControl
 				if ((this._idCstmPODt1 != value))
 				{
 					this._idCstmPODt1 = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_051_Job_listResult
+	{
+		
+		private string _JobNo;
+		
+		private string _CodeNo;
+		
+		private string _ItemNo;
+		
+		private string _ItemDescriptioin;
+		
+		private System.Nullable<decimal> _QtyUsed;
+		
+		private string _UnitUsed;
+		
+		private decimal _QtyPlan;
+		
+		private string _UnitPlan;
+		
+		private int _QtyShip;
+		
+		private System.Nullable<decimal> _RemainQty;
+		
+		private string _UnitShip;
+		
+		private decimal _PCSUnit;
+		
+		private decimal _UnitCost;
+		
+		private decimal _Amount;
+		
+		private string _LotNo;
+		
+		private string _SerialNo;
+		
+		private string _MachineName;
+		
+		private string _LineName;
+		
+		private string _Remark;
+		
+		private int _id;
+		
+		private string _Location;
+		
+		private string _BaseUOM;
+		
+		private decimal _BasePCSUOM;
+		
+		private string _Type;
+		
+		private string _GroupType;
+		
+		private int _idCSTMPODt;
+		
+		public sp_051_Job_listResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobNo", DbType="NVarChar(50)")]
+		public string JobNo
+		{
+			get
+			{
+				return this._JobNo;
+			}
+			set
+			{
+				if ((this._JobNo != value))
+				{
+					this._JobNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CodeNo", DbType="NVarChar(50)")]
+		public string CodeNo
+		{
+			get
+			{
+				return this._CodeNo;
+			}
+			set
+			{
+				if ((this._CodeNo != value))
+				{
+					this._CodeNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(100)")]
+		public string ItemNo
+		{
+			get
+			{
+				return this._ItemNo;
+			}
+			set
+			{
+				if ((this._ItemNo != value))
+				{
+					this._ItemNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemDescriptioin", DbType="VarChar(512) NOT NULL", CanBeNull=false)]
+		public string ItemDescriptioin
+		{
+			get
+			{
+				return this._ItemDescriptioin;
+			}
+			set
+			{
+				if ((this._ItemDescriptioin != value))
+				{
+					this._ItemDescriptioin = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QtyUsed", DbType="Decimal(18,6)")]
+		public System.Nullable<decimal> QtyUsed
+		{
+			get
+			{
+				return this._QtyUsed;
+			}
+			set
+			{
+				if ((this._QtyUsed != value))
+				{
+					this._QtyUsed = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitUsed", DbType="VarChar(100)")]
+		public string UnitUsed
+		{
+			get
+			{
+				return this._UnitUsed;
+			}
+			set
+			{
+				if ((this._UnitUsed != value))
+				{
+					this._UnitUsed = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QtyPlan", DbType="Decimal(18,2) NOT NULL")]
+		public decimal QtyPlan
+		{
+			get
+			{
+				return this._QtyPlan;
+			}
+			set
+			{
+				if ((this._QtyPlan != value))
+				{
+					this._QtyPlan = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPlan", DbType="NVarChar(50)")]
+		public string UnitPlan
+		{
+			get
+			{
+				return this._UnitPlan;
+			}
+			set
+			{
+				if ((this._UnitPlan != value))
+				{
+					this._UnitPlan = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QtyShip", DbType="Int NOT NULL")]
+		public int QtyShip
+		{
+			get
+			{
+				return this._QtyShip;
+			}
+			set
+			{
+				if ((this._QtyShip != value))
+				{
+					this._QtyShip = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RemainQty", DbType="Decimal(18,6)")]
+		public System.Nullable<decimal> RemainQty
+		{
+			get
+			{
+				return this._RemainQty;
+			}
+			set
+			{
+				if ((this._RemainQty != value))
+				{
+					this._RemainQty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitShip", DbType="NVarChar(50)")]
+		public string UnitShip
+		{
+			get
+			{
+				return this._UnitShip;
+			}
+			set
+			{
+				if ((this._UnitShip != value))
+				{
+					this._UnitShip = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2) NOT NULL")]
+		public decimal PCSUnit
+		{
+			get
+			{
+				return this._PCSUnit;
+			}
+			set
+			{
+				if ((this._PCSUnit != value))
+				{
+					this._PCSUnit = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitCost", DbType="Decimal(1,1) NOT NULL")]
+		public decimal UnitCost
+		{
+			get
+			{
+				return this._UnitCost;
+			}
+			set
+			{
+				if ((this._UnitCost != value))
+				{
+					this._UnitCost = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(1,1) NOT NULL")]
+		public decimal Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this._Amount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LotNo", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string LotNo
+		{
+			get
+			{
+				return this._LotNo;
+			}
+			set
+			{
+				if ((this._LotNo != value))
+				{
+					this._LotNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SerialNo", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string SerialNo
+		{
+			get
+			{
+				return this._SerialNo;
+			}
+			set
+			{
+				if ((this._SerialNo != value))
+				{
+					this._SerialNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MachineName", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string MachineName
+		{
+			get
+			{
+				return this._MachineName;
+			}
+			set
+			{
+				if ((this._MachineName != value))
+				{
+					this._MachineName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LineName", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string LineName
+		{
+			get
+			{
+				return this._LineName;
+			}
+			set
+			{
+				if ((this._LineName != value))
+				{
+					this._LineName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this._Remark = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Location", DbType="VarChar(100)")]
+		public string Location
+		{
+			get
+			{
+				return this._Location;
+			}
+			set
+			{
+				if ((this._Location != value))
+				{
+					this._Location = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseUOM", DbType="VarChar(100)")]
+		public string BaseUOM
+		{
+			get
+			{
+				return this._BaseUOM;
+			}
+			set
+			{
+				if ((this._BaseUOM != value))
+				{
+					this._BaseUOM = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BasePCSUOM", DbType="Decimal(18,2) NOT NULL")]
+		public decimal BasePCSUOM
+		{
+			get
+			{
+				return this._BasePCSUOM;
+			}
+			set
+			{
+				if ((this._BasePCSUOM != value))
+				{
+					this._BasePCSUOM = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(100)")]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this._Type = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GroupType", DbType="VarChar(100)")]
+		public string GroupType
+		{
+			get
+			{
+				return this._GroupType;
+			}
+			set
+			{
+				if ((this._GroupType != value))
+				{
+					this._GroupType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCSTMPODt", DbType="Int NOT NULL")]
+		public int idCSTMPODt
+		{
+			get
+			{
+				return this._idCSTMPODt;
+			}
+			set
+			{
+				if ((this._idCSTMPODt != value))
+				{
+					this._idCSTMPODt = value;
 				}
 			}
 		}
