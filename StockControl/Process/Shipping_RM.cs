@@ -96,8 +96,8 @@ namespace StockControl
             
             btnNew_Click(null, null);
 
-            txtJobCard.Text = "JOB201801-001";
-            Add_JobCard();
+            //txtJobCard.Text = "JOB201801-001";
+            //Add_JobCard();
 
             if (!SHNo_t.Equals(""))
             {
@@ -516,6 +516,8 @@ namespace StockControl
                                     cnk = true;
                                     err += "- “จำนวนเบิก:” มากกว่าจำนวนคงเหลือ \n";
                                 }
+                                if(Temp<=0)
+                                    err += "- “จำนวนเบิกจริง:” น้อยกว่า 0 \n";
 
                             }
 
@@ -676,7 +678,9 @@ namespace StockControl
                     string SS = "";
                     if (g.IsVisible.Equals(true))
                     {
-                        if (StockControl.dbClss.TInt(g.Cells["QtyShip"].Value) != (0)) // เอาเฉพาะรายการที่ไม่เป็น 0 
+                        if (StockControl.dbClss.TInt(g.Cells["QtyShip"].Value) != (0)
+                            && StockControl.dbClss.TInt(g.Cells["Qty"].Value) != (0)
+                            ) // เอาเฉพาะรายการที่ไม่เป็น 0 
                         {
                             if (StockControl.dbClss.TInt(g.Cells["id"].Value) <= 0)  //New ใหม่
                             {
@@ -1128,6 +1132,8 @@ namespace StockControl
 
                                 e.Row.Cells["UnitCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt,Free);
                             }
+                            e.Row.Cells["Qty"].Value = Math.Round(Temp,2);
+
                         }
                     }
 
@@ -1167,6 +1173,7 @@ namespace StockControl
                             e.Row.Cells["QtyShip"].Value = 0;
                             QTY = 0;
                         }
+                        e.Row.Cells["Qty"].Value = Math.Round(Temp, 2);
 
                     }
                     else if (dgvData.Columns["Location"].Index == e.ColumnIndex)
@@ -1207,6 +1214,7 @@ namespace StockControl
                                 e.Row.Cells["QtyShip"].Value = 0;
                                 QTY = 0;
                             }
+                            e.Row.Cells["Qty"].Value = Math.Round(Temp, 2);
                         }
                     }
                 }
@@ -1519,7 +1527,7 @@ namespace StockControl
                 {
                     //string UnitPlan = "";
                     //string UnitUsed = "";
-                    decimal Qty = 0;
+                    //decimal Qty = 0;
                     foreach (var vv in r)
                     {
                         dgvNo = dgvData.Rows.Count() + 1;
@@ -1529,13 +1537,14 @@ namespace StockControl
                         //AC_PCSUnit = dbClss.TDe(vv.PCSUnit) * PCSBaseUOM;
                        
                         Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescriptioin
-                                        , dbClss.TDe( vv.RemainQty), vv.QtyPlan, vv.QtyShip
+                                        , dbClss.TDe( vv.RemainQty), vv.QtyPlan,dbClss.TDe(vv.QtyShip)
                                         , vv.UnitShip, dbClss.TDe(vv.PCSUnit)
                                         , dbClss.TDe(vv.UnitCost)
                                         , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark,0
                                         , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM),dbClss.TDe(vv.QtyUsed)
                                         ,vv.GroupType,vv.Type, dbClss.TInt(vv.idCSTMPODt),dbClss.TInt(vv.id)
-                                       ,vv.UnitPlan,vv.UnitUsed,Qty
+                                        ,vv.UnitPlan,vv.UnitUsed
+                                        , Math.Round((dbClss.TDe(vv.QtyShip)* dbClss.TDe(vv.PCSUnit)),2)
                                         );
 
                     }
