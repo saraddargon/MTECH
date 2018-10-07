@@ -258,7 +258,7 @@ namespace StockControl
             btnDel.Enabled = true;
 
             Enable_Status(true, "Edit");
-            lblStatus.Text = "Edit";
+            //lblStatus.Text = "Edit";
             Ac = "Edit";
         }
 
@@ -1100,7 +1100,8 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    if (lblStatus.Text == "Waiting")
+                    if (lblStatus.Text == "Waiting" || lblStatus.Text == "Edit"
+                        )
                     {
                         if (baseClass.IsSendApprove())
                         {
