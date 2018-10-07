@@ -135,6 +135,7 @@ namespace StockControl
                             {
                                 btnSendApprove.Enabled = false;
                                 btnSave.Enabled = false;
+                                btnEdit.Enabled = false;
                             }
                             else if  (lblStatus.Text == "Waiting" || lblStatus.Text == "Waiting Approve")
                             {
@@ -214,9 +215,10 @@ namespace StockControl
 
             else if (Condition.Equals("Edit"))
             {
-                txtPriceListCode.Enabled = ss;
+                //txtPriceListCode.Enabled = ss;
                 seUnitPrice.Enabled = ss;
-                txtInternalNo.Enabled = ss;
+                //txtInternalNo.Enabled = ss;
+                btnAdd_Item.Enabled = false;
                 dtStartDate.Enabled = ss;
                 dtEndDate.Enabled = ss;
                 btnDel_Item.Enabled = ss;
@@ -224,6 +226,7 @@ namespace StockControl
         }
         private void btnNew_Click(object sender, EventArgs e)
         {
+            btnEdit.Enabled = true;
             btnDel_Item.Enabled = true;
             btnNew.Enabled = true;
             btnSave.Enabled = true;
@@ -1100,7 +1103,7 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    if (lblStatus.Text == "Waiting" || lblStatus.Text == "Edit"
+                    if (lblStatus.Text == "Waiting" || Ac == "Edit" || Ac=="New"
                         )
                     {
                         if (baseClass.IsSendApprove())

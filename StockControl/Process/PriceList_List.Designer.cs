@@ -49,11 +49,11 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn13 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn14 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PriceList_List));
             Telerik.WinControls.UI.RadListDataItem radListDataItem1 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem2 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem3 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem4 = new Telerik.WinControls.UI.RadListDataItem();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PriceList_List));
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -64,6 +64,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.unFrezzToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
+            this.ddlTypePart = new Telerik.WinControls.UI.RadDropDownList();
             this.cbDate = new Telerik.WinControls.UI.RadCheckBox();
             this.dtDate2 = new Telerik.WinControls.UI.RadDateTimePicker();
             this.dtDate1 = new Telerik.WinControls.UI.RadDateTimePicker();
@@ -72,6 +73,7 @@
             this.txtInternalNo = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.txtPriceListCode = new Telerik.WinControls.UI.RadTextBox();
+            this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel37 = new Telerik.WinControls.UI.RadLabel();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radRibbonBarButtonGroup2 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
@@ -102,8 +104,6 @@
             this.radButtonElement3 = new Telerik.WinControls.UI.RadButtonElement();
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             this.radButtonElement4 = new Telerik.WinControls.UI.RadButtonElement();
-            this.ddlTypePart = new Telerik.WinControls.UI.RadDropDownList();
-            this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radGridView1)).BeginInit();
@@ -111,6 +111,7 @@
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             this.radPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ddlTypePart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtDate2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtDate1)).BeginInit();
@@ -119,10 +120,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtInternalNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPriceListCode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel37)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ddlTypePart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -194,7 +194,6 @@
             gridViewTextBoxColumn2.EnableExpressionEditor = false;
             gridViewTextBoxColumn2.FieldName = "Status";
             gridViewTextBoxColumn2.HeaderText = "สถานะ";
-            gridViewTextBoxColumn2.IsVisible = false;
             gridViewTextBoxColumn2.Name = "Status";
             gridViewTextBoxColumn2.ReadOnly = true;
             gridViewTextBoxColumn2.Width = 79;
@@ -392,15 +391,29 @@
             this.radPanel1.TabIndex = 1;
             this.radPanel1.ThemeName = "Office2010Blue";
             // 
+            // ddlTypePart
+            // 
+            this.ddlTypePart.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
+            radListDataItem2.Text = "Waiting";
+            radListDataItem3.Text = "Waiting Approve";
+            radListDataItem4.Text = "Approve";
+            this.ddlTypePart.Items.Add(radListDataItem1);
+            this.ddlTypePart.Items.Add(radListDataItem2);
+            this.ddlTypePart.Items.Add(radListDataItem3);
+            this.ddlTypePart.Items.Add(radListDataItem4);
+            this.ddlTypePart.Location = new System.Drawing.Point(125, 37);
+            this.ddlTypePart.Name = "ddlTypePart";
+            this.ddlTypePart.Size = new System.Drawing.Size(120, 20);
+            this.ddlTypePart.TabIndex = 23;
+            this.ddlTypePart.ThemeName = "Office2010Blue";
+            // 
             // cbDate
             // 
-            this.cbDate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbDate.Location = new System.Drawing.Point(104, 63);
             this.cbDate.Name = "cbDate";
             this.cbDate.Size = new System.Drawing.Size(87, 18);
             this.cbDate.TabIndex = 22;
             this.cbDate.Text = "เลือกวันที่สร้าง";
-            this.cbDate.ToggleState = Telerik.WinControls.Enumerations.ToggleState.On;
             // 
             // dtDate2
             // 
@@ -476,6 +489,15 @@
             this.txtPriceListCode.Size = new System.Drawing.Size(124, 19);
             this.txtPriceListCode.TabIndex = 5;
             this.txtPriceListCode.ThemeName = "Office2010Blue";
+            // 
+            // radLabel2
+            // 
+            this.radLabel2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel2.Location = new System.Drawing.Point(81, 38);
+            this.radLabel2.Name = "radLabel2";
+            this.radLabel2.Size = new System.Drawing.Size(37, 17);
+            this.radLabel2.TabIndex = 4;
+            this.radLabel2.Text = "สถานะ";
             // 
             // radLabel37
             // 
@@ -762,31 +784,6 @@
             this.radButtonElement4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.radButtonElement4.UseCompatibleTextRendering = false;
             // 
-            // ddlTypePart
-            // 
-            this.ddlTypePart.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            radListDataItem2.Text = "Waiting";
-            radListDataItem3.Text = "Waiting Approve";
-            radListDataItem4.Text = "Approve";
-            this.ddlTypePart.Items.Add(radListDataItem1);
-            this.ddlTypePart.Items.Add(radListDataItem2);
-            this.ddlTypePart.Items.Add(radListDataItem3);
-            this.ddlTypePart.Items.Add(radListDataItem4);
-            this.ddlTypePart.Location = new System.Drawing.Point(125, 37);
-            this.ddlTypePart.Name = "ddlTypePart";
-            this.ddlTypePart.Size = new System.Drawing.Size(120, 20);
-            this.ddlTypePart.TabIndex = 23;
-            this.ddlTypePart.ThemeName = "Office2010Blue";
-            // 
-            // radLabel2
-            // 
-            this.radLabel2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel2.Location = new System.Drawing.Point(81, 38);
-            this.radLabel2.Name = "radLabel2";
-            this.radLabel2.Size = new System.Drawing.Size(37, 17);
-            this.radLabel2.TabIndex = 4;
-            this.radLabel2.Text = "สถานะ";
-            // 
             // PriceList_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -816,6 +813,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
             this.radPanel1.ResumeLayout(false);
             this.radPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ddlTypePart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtDate2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtDate1)).EndInit();
@@ -824,10 +822,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtInternalNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPriceListCode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel37)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ddlTypePart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
