@@ -2473,6 +2473,13 @@ namespace StockControl
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jobNo);
 			return ((ISingleResult<sp_051_Job_listResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_080_CustomerPOSummary_SELECT2")]
+		public ISingleResult<sp_080_CustomerPOSummary_SELECT2Result> sp_080_CustomerPOSummary_SELECT2([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> yy, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> mm, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ItemNo", DbType="NVarChar(50)")] string itemNo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), yy, mm, itemNo);
+			return ((ISingleResult<sp_080_CustomerPOSummary_SELECT2Result>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ErrorLog")]
@@ -81524,6 +81531,680 @@ namespace StockControl
 				if ((this._idCSTMPODt != value))
 				{
 					this._idCSTMPODt = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_080_CustomerPOSummary_SELECT2Result
+	{
+		
+		private int _YY;
+		
+		private int _MM;
+		
+		private string _ModelName;
+		
+		private string _ItemNo;
+		
+		private string _ItemName;
+		
+		private string _Process;
+		
+		private decimal _D1;
+		
+		private decimal _D2;
+		
+		private decimal _D3;
+		
+		private decimal _D4;
+		
+		private decimal _D5;
+		
+		private decimal _D6;
+		
+		private decimal _D7;
+		
+		private decimal _D8;
+		
+		private decimal _D9;
+		
+		private decimal _D10;
+		
+		private decimal _D11;
+		
+		private decimal _D12;
+		
+		private decimal _D13;
+		
+		private decimal _D14;
+		
+		private decimal _D15;
+		
+		private decimal _D16;
+		
+		private decimal _D17;
+		
+		private decimal _D18;
+		
+		private decimal _D19;
+		
+		private decimal _D20;
+		
+		private decimal _D21;
+		
+		private decimal _D22;
+		
+		private decimal _D23;
+		
+		private decimal _D24;
+		
+		private decimal _D25;
+		
+		private decimal _D26;
+		
+		private decimal _D27;
+		
+		private decimal _D28;
+		
+		private decimal _D29;
+		
+		private decimal _D30;
+		
+		private decimal _D31;
+		
+		public sp_080_CustomerPOSummary_SELECT2Result()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_YY", DbType="Int NOT NULL")]
+		public int YY
+		{
+			get
+			{
+				return this._YY;
+			}
+			set
+			{
+				if ((this._YY != value))
+				{
+					this._YY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MM", DbType="Int NOT NULL")]
+		public int MM
+		{
+			get
+			{
+				return this._MM;
+			}
+			set
+			{
+				if ((this._MM != value))
+				{
+					this._MM = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ModelName", DbType="NVarChar(25) NOT NULL", CanBeNull=false)]
+		public string ModelName
+		{
+			get
+			{
+				return this._ModelName;
+			}
+			set
+			{
+				if ((this._ModelName != value))
+				{
+					this._ModelName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(55) NOT NULL", CanBeNull=false)]
+		public string ItemNo
+		{
+			get
+			{
+				return this._ItemNo;
+			}
+			set
+			{
+				if ((this._ItemNo != value))
+				{
+					this._ItemNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(55) NOT NULL", CanBeNull=false)]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this._ItemName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Process", DbType="NVarChar(55) NOT NULL", CanBeNull=false)]
+		public string Process
+		{
+			get
+			{
+				return this._Process;
+			}
+			set
+			{
+				if ((this._Process != value))
+				{
+					this._Process = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D1", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D1
+		{
+			get
+			{
+				return this._D1;
+			}
+			set
+			{
+				if ((this._D1 != value))
+				{
+					this._D1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D2", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D2
+		{
+			get
+			{
+				return this._D2;
+			}
+			set
+			{
+				if ((this._D2 != value))
+				{
+					this._D2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D3", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D3
+		{
+			get
+			{
+				return this._D3;
+			}
+			set
+			{
+				if ((this._D3 != value))
+				{
+					this._D3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D4", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D4
+		{
+			get
+			{
+				return this._D4;
+			}
+			set
+			{
+				if ((this._D4 != value))
+				{
+					this._D4 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D5", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D5
+		{
+			get
+			{
+				return this._D5;
+			}
+			set
+			{
+				if ((this._D5 != value))
+				{
+					this._D5 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D6", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D6
+		{
+			get
+			{
+				return this._D6;
+			}
+			set
+			{
+				if ((this._D6 != value))
+				{
+					this._D6 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D7", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D7
+		{
+			get
+			{
+				return this._D7;
+			}
+			set
+			{
+				if ((this._D7 != value))
+				{
+					this._D7 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D8", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D8
+		{
+			get
+			{
+				return this._D8;
+			}
+			set
+			{
+				if ((this._D8 != value))
+				{
+					this._D8 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D9", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D9
+		{
+			get
+			{
+				return this._D9;
+			}
+			set
+			{
+				if ((this._D9 != value))
+				{
+					this._D9 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D10", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D10
+		{
+			get
+			{
+				return this._D10;
+			}
+			set
+			{
+				if ((this._D10 != value))
+				{
+					this._D10 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D11", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D11
+		{
+			get
+			{
+				return this._D11;
+			}
+			set
+			{
+				if ((this._D11 != value))
+				{
+					this._D11 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D12", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D12
+		{
+			get
+			{
+				return this._D12;
+			}
+			set
+			{
+				if ((this._D12 != value))
+				{
+					this._D12 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D13", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D13
+		{
+			get
+			{
+				return this._D13;
+			}
+			set
+			{
+				if ((this._D13 != value))
+				{
+					this._D13 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D14", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D14
+		{
+			get
+			{
+				return this._D14;
+			}
+			set
+			{
+				if ((this._D14 != value))
+				{
+					this._D14 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D15", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D15
+		{
+			get
+			{
+				return this._D15;
+			}
+			set
+			{
+				if ((this._D15 != value))
+				{
+					this._D15 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D16", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D16
+		{
+			get
+			{
+				return this._D16;
+			}
+			set
+			{
+				if ((this._D16 != value))
+				{
+					this._D16 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D17", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D17
+		{
+			get
+			{
+				return this._D17;
+			}
+			set
+			{
+				if ((this._D17 != value))
+				{
+					this._D17 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D18", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D18
+		{
+			get
+			{
+				return this._D18;
+			}
+			set
+			{
+				if ((this._D18 != value))
+				{
+					this._D18 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D19", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D19
+		{
+			get
+			{
+				return this._D19;
+			}
+			set
+			{
+				if ((this._D19 != value))
+				{
+					this._D19 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D20", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D20
+		{
+			get
+			{
+				return this._D20;
+			}
+			set
+			{
+				if ((this._D20 != value))
+				{
+					this._D20 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D21", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D21
+		{
+			get
+			{
+				return this._D21;
+			}
+			set
+			{
+				if ((this._D21 != value))
+				{
+					this._D21 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D22", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D22
+		{
+			get
+			{
+				return this._D22;
+			}
+			set
+			{
+				if ((this._D22 != value))
+				{
+					this._D22 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D23", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D23
+		{
+			get
+			{
+				return this._D23;
+			}
+			set
+			{
+				if ((this._D23 != value))
+				{
+					this._D23 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D24", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D24
+		{
+			get
+			{
+				return this._D24;
+			}
+			set
+			{
+				if ((this._D24 != value))
+				{
+					this._D24 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D25", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D25
+		{
+			get
+			{
+				return this._D25;
+			}
+			set
+			{
+				if ((this._D25 != value))
+				{
+					this._D25 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D26", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D26
+		{
+			get
+			{
+				return this._D26;
+			}
+			set
+			{
+				if ((this._D26 != value))
+				{
+					this._D26 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D27", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D27
+		{
+			get
+			{
+				return this._D27;
+			}
+			set
+			{
+				if ((this._D27 != value))
+				{
+					this._D27 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D28", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D28
+		{
+			get
+			{
+				return this._D28;
+			}
+			set
+			{
+				if ((this._D28 != value))
+				{
+					this._D28 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D29", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D29
+		{
+			get
+			{
+				return this._D29;
+			}
+			set
+			{
+				if ((this._D29 != value))
+				{
+					this._D29 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D30", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D30
+		{
+			get
+			{
+				return this._D30;
+			}
+			set
+			{
+				if ((this._D30 != value))
+				{
+					this._D30 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D31", DbType="Decimal(18,2) NOT NULL")]
+		public decimal D31
+		{
+			get
+			{
+				return this._D31;
+			}
+			set
+			{
+				if ((this._D31 != value))
+				{
+					this._D31 = value;
 				}
 			}
 		}
