@@ -687,6 +687,25 @@ namespace StockControl
             };
         }
 
+        //ger Price
+        public static decimal GetPriceList(string ItemNo, DateTime dt)
+        {
+            decimal ret = 0.00m;
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.mh_PriceLists.Where(x => x.InternalNo == ItemNo && dt >= x.StartDate && dt <= x.EndDate && x.SeqStatus == 2).FirstOrDefault();
+                    if (m != null) ret = Math.Round(m.UnitPrice, 2);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ret;
+        }
+
     }
 
 

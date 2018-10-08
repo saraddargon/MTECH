@@ -177,13 +177,14 @@ namespace StockControl
         {
             btnView.Enabled = true;
             btnEdit.Enabled = true;
-            btnNew.Enabled = false;
+            //btnNew.Enabled = false;
             btnSave.Enabled = true;
             btnDelete.Enabled = true;
 
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
+            btnGetPrice.Enabled = true;
 
             cbbCSTM.Enabled = true;
             txtPONo.ReadOnly = false;
@@ -216,6 +217,7 @@ namespace StockControl
             btnAdd_Row.Enabled = false;
             btnDel_Item.Enabled = false;
             btnAddPart.Enabled = false;
+            btnGetPrice.Enabled = false;
 
             dgvData.ReadOnly = true;
 
@@ -240,6 +242,7 @@ namespace StockControl
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
+            btnGetPrice.Enabled = true;
 
             cbbCSTM.Enabled = true;
             txtPONo.ReadOnly = false;
@@ -294,7 +297,7 @@ namespace StockControl
                         }
                     }
                 }
-               
+
 
                 baseClass.Info("Delete Customer P/O complete.\n");
             }
@@ -581,6 +584,15 @@ namespace StockControl
                             e.Row.Cells["OutQty"].Value = outqty;
                             CallTotal();
                         }
+                    }
+                    else if (e.Column.Name.Equals("ReqDate"))
+                    {
+                        //get from price List
+                        DateTime? ReqDate = e.Row.Cells["ReqDate"].Value.ToDateTime();
+                        if (ReqDate == null) return;
+                        var m = baseClass.GetPriceList(itemNo, ReqDate.Value.Date);
+                        e.Row.Cells["UnitPrice"].Value = m;
+                        CallTotal();
                     }
                 }
             }
@@ -1011,6 +1023,7 @@ namespace StockControl
                 decimal amnt = 0.00m;
                 foreach (var item in dgvData.Rows.Where(x => x.IsVisible))
                 {
+                    item.Cells["Amount"].Value = Math.Round(item.Cells["Qty"].Value.ToDecimal() * item.Cells["UnitPrice"].Value.ToDecimal(), 2);
                     amnt += item.Cells["Amount"].Value.ToDecimal();
                 }
                 txtTotal.Text = amnt.ToString("#,0.00");
@@ -1053,6 +1066,7 @@ namespace StockControl
                             baseClass.Warning($"Item ({itemNo} not found.!!!");
                             return;
                         }
+                        var priceL = baseClass.GetPriceList(itemNo, DateTime.Now.Date);
 
                         var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == t.SalesUOM).FirstOrDefault();
                         decimal u = (tU != null) ? tU.QuantityPer : 1;
@@ -1065,10 +1079,11 @@ namespace StockControl
                         var outplan = 1 * u;
                         var outqty = 1 * u;
                         addRow(rowE.Index, 0, DateTime.Now, itemNo, t.InternalName
-                            , 1, t.SalesUOM, u, t.StandardPrice, "", t.ReplenishmentType, outso, outplan, outqty
+                            , 1, t.SalesUOM, u, priceL, "", t.ReplenishmentType, outso, outplan, outqty
                             , "Waiting");
                     }
                     SetRowNo1(dgvData);
+                    CallTotal();
 
                 }
             }
@@ -1274,7 +1289,7 @@ namespace StockControl
 
                             //add to CustomerPO
                             var cstmPo = db.mh_CustomerPOs.Where(x => x.CustomerNo == CustomerNo && x.CustomerPONo == CustomerPONo).FirstOrDefault();
-                            if(cstmPo == null)
+                            if (cstmPo == null)
                             {
                                 cstmPo = new mh_CustomerPO();
                                 db.mh_CustomerPOs.InsertOnSubmit(cstmPo);
@@ -1322,7 +1337,7 @@ namespace StockControl
                         }
                     }
 
-                    if(impCom > 0)
+                    if (impCom > 0)
                     {
                         baseClass.Info($"Improt Data({impCom}) completes.\n");
                     }
@@ -1338,5 +1353,27 @@ namespace StockControl
             }
         }
 
+        private void btnGetPrice_Click(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                if (dgvData.Rows.Count > 0 && dgvData.CurrentCell != null)
+                {
+                    var itemNo = dgvData.CurrentCell.RowInfo.Cells["ItemNo"].Value.ToSt();
+                    var reqDate = dgvData.CurrentCell.RowInfo.Cells["ReqDate"].Value.ToDateTime();
+                    if (itemNo != "" && reqDate != null)
+                        dgvData.CurrentCell.RowInfo.Cells["UnitPrice"].Value = baseClass.GetPriceList(itemNo, reqDate.Value.Date);
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
     }
 }

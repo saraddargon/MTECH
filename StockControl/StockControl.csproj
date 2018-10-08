@@ -1768,6 +1768,7 @@
     <None Include="Resources\filter.png" />
     <None Include="Resources\filter_cancel.png" />
     <None Include="Resources\goto.png" />
+    <None Include="Resources\if_save_money_93253.png" />
     <Content Include="scan_barcode.png.ico" />
     <Content Include="Shinko Mold.ico" />
   </ItemGroup>
