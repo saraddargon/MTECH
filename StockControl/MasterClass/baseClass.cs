@@ -116,23 +116,23 @@ namespace StockControl
         {
             return RadMessageBox.Show(Mssg, Caption, MessageBoxButtons.YesNo, RadMessageIcon.Question) == DialogResult.Yes;
         }
-        public static bool IsSave(string Mssg = "Do you want to 'Save' ?")
+        public static bool IsSave(string Mssg = "ต้องการ 'บันทึก' ?")
         {
             return Question(Mssg, "บันทึก");
         }
-        public static bool IsApprove(string Mssg = "Do you want to 'Approve' ?")
+        public static bool IsApprove(string Mssg = "ต้องการ 'Approve' ?")
         {
             return Question(Mssg, "Approve");
         }
-        public static bool IsReject(string Mssg = "Do you want to 'Reject' ?")
+        public static bool IsReject(string Mssg = "ต้องการ 'Reject' ?")
         {
             return Question(Mssg, "Reject");
         }
-        public static bool IsSendApprove(string Mssg = "Do you want to 'Send Approve' ?")
+        public static bool IsSendApprove(string Mssg = "ต้องการ 'Send Approve' ?")
         {
             return Question(Mssg, "Send Approve");
         }
-        public static bool IsDel(string Mssg = "Do you want to 'Delete' ?")
+        public static bool IsDel(string Mssg = "ต้องการ 'ลบ' ?")
         {
             return Question(Mssg, "ลบ");
         }

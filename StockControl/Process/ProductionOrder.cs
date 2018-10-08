@@ -1027,11 +1027,11 @@ namespace StockControl
             string mssg = "";
 
             if (txtJobNo.Text.Trim() == "")
-                mssg += "- Please Save job before Hold Job.\n";
+                mssg += "- กรุณา บันทึก ข้อมูลก่อนการ Recalculate Job.\n";
             if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
-                mssg += "- Cannot Recalculate Job because FG Already Received.\n";
+                mssg += "- ไม่สามารถ Recalculate Job ได้เนื่องจาก FG ถูกเบิกใช้งานแล้ว.\n";
             if (cbCloseJob.Checked)
-                mssg += "- Cannot Recalculate Job because Job is completed.\n";
+                mssg += "- ไม่สามารถ Recalculate Job ได้ เนื่องจากสถานะ Completed แล้ว.\n";
 
             if (mssg != "")
             {
@@ -1042,7 +1042,7 @@ namespace StockControl
         }
         private void btnRecal_Click(object sender, EventArgs e)
         {
-            if (chkRecalE() && baseClass.Question("Do you want to 'Recal' ?"))
+            if (chkRecalE() && baseClass.Question("ต้องการ 'Recalculate Job (Capacity)' ?"))
                 Recal();
         }
         void Recal()
@@ -1053,7 +1053,7 @@ namespace StockControl
                 //baseClass.Info("Comming soon...");
                 MoveJobToLast();
                 AddHistory($"Recalculate Job Order Sheet {txtJobNo.Text}", txtJobNo.Text);
-                baseClass.Info("Recal completed.");
+                baseClass.Info("Recalculate completed.");
             }
             catch (Exception ex)
             {
@@ -1087,7 +1087,7 @@ namespace StockControl
         }
         private void btnHoldJob_Click(object sender, EventArgs e)
         {
-            if (ChkHoldJob() && baseClass.Question("Do you want to 'Hold Job' ?"))
+            if (ChkHoldJob() && baseClass.Question("ต้องการ 'Hold Job' ?"))
                 HoldJob();
         }
         void HoldJob()
@@ -1643,6 +1643,28 @@ namespace StockControl
 
                 op.Show();
             }
+        }
+
+        private void btnSendApprove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    if (txtSeqStatus.Text.ToInt() == 0)
+                    {
+                        if (baseClass.IsSendApprove())
+                        {
+                            db.sp_062_mh_ApproveList_Add(txtJobNo.Text.Trim(), "Job Req", Classlib.User);
+                            MessageBox.Show("Send complete.");
+                            btnRefresh_Click(null, null);
+                        }
+                    }
+                    else
+                        baseClass.Warning("สถานะไม่สามารถส่ง Approve ได้.\n");
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
 
