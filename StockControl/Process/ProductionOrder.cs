@@ -109,9 +109,15 @@ namespace StockControl
                         cbHoldJob.Checked = t.HoldJob;
                         cbCloseJob.Checked = t.CloseJob;
                         if (cbHoldJob.Checked)
+                        {
                             btnHoldJob.Text = "Unhold Job";
+                            btnRecal.Enabled = false;
+                        }
                         else
+                        {
                             btnHoldJob.Text = "Hold Job";
+                            btnRecal.Enabled = true;
+                        }
                         txtidJob.Text = t.id.ToSt();
                         txtSeqStatus.Text = t.SeqStatus.ToSt();
 
@@ -123,6 +129,12 @@ namespace StockControl
                             txtStatus.Text = "Completed";
                         else
                             txtStatus.Text = "Waiting";
+
+                        if(t.CloseJob || txtSeqStatus.Text.ToInt() > 0)
+                        {
+                            btnRecal.Enabled = false;
+                            btnHoldJob.Enabled = false;
+                        }
 
                         //dt
                         var dts = db.mh_ProductionOrderRMs.Where(x => x.JobNo == t.JobNo && x.Active).ToList();
@@ -357,7 +369,7 @@ namespace StockControl
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
-
+            
             //dgvData.ReadOnly = false;
 
             ClearData();
@@ -1028,6 +1040,8 @@ namespace StockControl
 
             if (txtJobNo.Text.Trim() == "")
                 mssg += "- กรุณา บันทึก ข้อมูลก่อนการ Recalculate Job.\n";
+            if (txtSeqStatus.Text.ToInt() > 0)
+                mssg += "- สถานะไม่สามารถ Recalculate Job ได้.\n";
             if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
                 mssg += "- ไม่สามารถ Recalculate Job ได้เนื่องจาก FG ถูกเบิกใช้งานแล้ว.\n";
             if (cbCloseJob.Checked)
@@ -1073,6 +1087,8 @@ namespace StockControl
 
             if (txtJobNo.Text.Trim() == "")
                 mssg += "- กรุณา บันทึก ก่อน Hold Job.\n";
+            if (txtSeqStatus.Text.ToInt() > 0)
+                mssg += "- สถานะไม่สามารถ Hold Job ได้.\n";
             if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
                 mssg += "- ไม่สามารถ Hold Job ได้เนื่องจาก FG ถูกเบิกใช้ไปแล้ว.\n";
             if (cbCloseJob.Checked)
@@ -1108,6 +1124,13 @@ namespace StockControl
                             m.HoldJob = true;
                             db.SubmitChanges();
                             AddHistory($"Hold Job Order Sheet {txtJobNo.Text}", txtJobNo.Text);
+                            //Remove Capacity
+                            var capaList = db.mh_CapacityLoads.Where(x => x.DocId == m.id).ToList();
+                            db.mh_CapacityLoads.DeleteAllOnSubmit(capaList);
+                            //Remove Calandar
+                            var calList = db.mh_CalendarLoads.Where(x => x.idJob == m.id).ToList();
+                            db.mh_CalendarLoads.DeleteAllOnSubmit(calList);
+                            db.SubmitChanges();
                         }
                         else
                         {
@@ -1115,10 +1138,11 @@ namespace StockControl
                             db.SubmitChanges();
                             AddHistory($"Unhold Job Order Sheet {txtJobNo.Text}", txtJobNo.Text);
                             //หาว่าวันที่ Unhold Job มากกว่าหรือเท่ากับ StartingDate ไหม ถ้าใช่ให้ move Capacity ไปไว้ท้ายสุดเลย
-                            if (DateTime.Now.Date >= txtStartingDate.Text.ToDateTime().Value.Date)
-                            {
-                                MoveJobToLast();
-                            }
+                            //if (DateTime.Now.Date >= txtStartingDate.Text.ToDateTime().Value.Date)
+                            //{
+                            //    MoveJobToLast();
+                            //}
+                            MoveJobToLast();
                         }
 
                         cbHoldJob.Checked = m.HoldJob;
@@ -1164,7 +1188,7 @@ namespace StockControl
                 {
                     var tdata = new ItemData(txtFGNo.Text);
 
-                    var maxDateJob = db.mh_ProductionOrders.Where(x => x.Active).Max(x => x.EndingDate);
+                    var maxDateJob = db.mh_ProductionOrders.Where(x => x.Active && x.JobNo != txtJobNo.Text).Max(x => x.EndingDate);
                     var dFrom = maxDateJob.Date;
                     var dTo = maxDateJob.Date;
 
@@ -1515,12 +1539,13 @@ namespace StockControl
                         m.EndingDate = EndingDate.Value;
                         m.CapacityUseX = 0;
                         m.CostOverhead = 0;
-                        //ลบ Capacity เก่า
-                        var capa = db.mh_CapacityLoads.Where(x => x.DocId == idJob).ToList();
-                        db.mh_CapacityLoads.DeleteAllOnSubmit(capa);
-                        //ลบ Calendar เก่า
-                        var cal = db.mh_CalendarLoads.Where(x => x.idJob == idJob).ToList();
-                        db.mh_CalendarLoads.DeleteAllOnSubmit(cal);
+                        //ไม่ต้องลบอันเก่าแล้ว เพราะลบไปตั้งแต่ตอน Hold Job
+                        ////ลบ Capacity เก่า
+                        //var capa = db.mh_CapacityLoads.Where(x => x.DocId == idJob).ToList();
+                        //db.mh_CapacityLoads.DeleteAllOnSubmit(capa);
+                        ////ลบ Calendar เก่า
+                        //var cal = db.mh_CalendarLoads.Where(x => x.idJob == idJob).ToList();
+                        //db.mh_CalendarLoads.DeleteAllOnSubmit(cal);
 
                         var calOvers = new List<CalOverhead>();
                         //ใส่ Capacity ใหม่
