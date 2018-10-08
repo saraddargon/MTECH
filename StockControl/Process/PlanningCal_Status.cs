@@ -569,7 +569,7 @@ namespace StockControl
                         sumBackOrder = s1.StockAll;
 
                     //3. Find stock is enought ?
-                    var useQ = Math.Round(data.ReqQty * data.PCSUnit, 2);
+                    var useQ = data.ReqQty; //Math.Round(data.ReqQty * data.PCSUnit, 2);
                     var sumStockCstmPO = 0.00m; //Stock Qty + BackOrder = Stock All for this CUstomerPO dt
                     var sumStockFree = 0.00m; //Stock Free not on CUstomer PO ใดๆ
                     sumStockCstmPO = tdata.findStock_CustomerPO(data.DocId);

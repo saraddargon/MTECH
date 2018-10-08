@@ -85,6 +85,8 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnReport = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -134,6 +136,7 @@
             this.radRibbonBarGroup2,
             this.radRibbonBarGroup4,
             this.radRibbonBarGroup3,
+            this.radRibbonBarGroup7,
             this.radRibbonBarGroup5,
             this.radRibbonBarGroup6});
             this.ribbonTab1.Name = "ribbonTab1";
@@ -582,6 +585,22 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
+            // radRibbonBarGroup7
+            // 
+            this.radRibbonBarGroup7.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnReport});
+            this.radRibbonBarGroup7.Name = "radRibbonBarGroup7";
+            this.radRibbonBarGroup7.Text = "";
+            this.radRibbonBarGroup7.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
+            // 
+            // btnReport
+            // 
+            this.btnReport.Image = global::StockControl.Properties.Resources.printer;
+            this.btnReport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Text = "Report";
+            this.btnReport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
             // Customers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -647,5 +666,7 @@
         private Telerik.WinControls.UI.RibbonBarGroupSeparator ribbonBarGroupSeparator1;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup6;
         private Telerik.WinControls.UI.RadButtonElement radButtonElement1;
+        private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup7;
+        private Telerik.WinControls.UI.RadButtonElement btnReport;
     }
 }

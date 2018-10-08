@@ -557,6 +557,27 @@ namespace StockControl
                                 //so.OutPlan -= m.OutQty;
                                 so.OutPlan = 0;//Full Ref SaleOrder
                                 db.SubmitChanges();
+
+                                if (so.RefId > 0)
+                                {
+                                    var po = db.mh_CustomerPODTs.Where(x => x.id == so.RefId).FirstOrDefault();
+                                    if (po != null) //Sale Order เปิดจาก Customer P/O
+                                    {
+                                        po.OutPlan = Math.Round(po.Qty * po.PCSUnit, 2);
+                                        var soAll = db.mh_SaleOrderDTs.Where(x => x.Active && x.RefId == po.id)
+                                            .Join(db.mh_SaleOrders.Where(x => x.Active)
+                                            , dt => dt.SONo
+                                            , hd => hd.SONo
+                                            , (dt, hd) => new { hd, dt }).ToList();
+                                        foreach (var s in soAll)
+                                        {
+                                            var q = Math.Round(s.dt.Qty * s.dt.PCSUnit, 2) - s.dt.OutPlan;
+                                            po.OutPlan -= q;
+                                        }
+                                        if(soAll.Count > 0)
+                                            db.SubmitChanges();
+                                    }//Customer P/O not null
+                                }
                             }
                         }
 

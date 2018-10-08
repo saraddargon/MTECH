@@ -117,8 +117,10 @@ namespace StockControl
 
                         if (txtSeqStatus.Text.ToInt() == 2)
                             txtStatus.Text = "Approved";
+                        else if (txtSeqStatus.Text.ToInt() == 1)
+                            txtStatus.Text = "Waiting Approve";
                         else if (t.CloseJob)
-                            txtSeqStatus.Text = "Completed";
+                            txtStatus.Text = "Completed";
                         else
                             txtStatus.Text = "Waiting";
 
@@ -152,7 +154,7 @@ namespace StockControl
                         txtJobNo.ReadOnly = true;
                     }
                     else if (warningMssg)
-                        baseClass.Warning("Job Orders not found.!!");
+                        baseClass.Warning("ไม่พบเอกสาร Job Order Sheet.!!");
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -412,22 +414,23 @@ namespace StockControl
             if (txtFGNo.Text == "") return;
             if (Math.Round(txtFGQty.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal())
             {
-                baseClass.Warning("- Cannot Delete because Status is 'Process'.\n");
+                baseClass.Warning("- ไม่สามารถลบได้เนื่องจากสถานะเป็น 'Process'.\n");
                 return;
             }
             else if (txtSeqStatus.Text.ToInt() > 0)
             {
-                baseClass.Warning("- Cannot Delete because Status is 'Approved'.\n");
+                string StatusNow = (txtSeqStatus.Text.ToInt() == 1) ? "Waiting Approve" : "Approved";
+                baseClass.Warning($"- ไม่สามารถลบได้เนื่องจากสถานะเป็น '{StatusNow}'.\n");
                 return;
             }
 
             if (dgvData.Rows.Where(x => x.Cells["Qty"].Value.ToDecimal() != x.Cells["OutShip"].Value.ToDecimal()).Count() > 0)
             {
-                baseClass.Warning("- RM or SEMI alreday shipped into this 'Job', Please cancel shipping RM.\n");
+                baseClass.Warning("- RM หรือ SEMI มีการเบิกใช้สำหรับใน Job ดังกล่าวแล้ว, ไม่สามารถลบได้.\n");
                 return;
             }
 
-            if (baseClass.IsDel("Do you want to 'Delete' ?"))
+            if (baseClass.IsDel("ต้องการ 'ลบ' ?"))
                 DeleteE();
         }
         void DeleteE()
@@ -461,6 +464,27 @@ namespace StockControl
                             //so.OutPlan += (m.Qty + m.PCSUnit) - m.OutQty;
                             so.OutPlan = Math.Round(m.Qty, 2);//Full Return Qty;
                             db.SubmitChanges();
+                            //remove CustomerP/O OutPlan
+                            if (so.RefId > 0)
+                            {
+                                var po = db.mh_CustomerPODTs.Where(x => x.id == so.RefId).FirstOrDefault();
+                                if (po != null) //Sale Order เปิดจาก Customer P/O
+                                {
+                                    po.OutPlan = Math.Round(po.Qty * po.PCSUnit, 2);
+                                    var soAll = db.mh_SaleOrderDTs.Where(x => x.Active && x.RefId == po.id)
+                                        .Join(db.mh_SaleOrders.Where(x => x.Active)
+                                        , dt => dt.SONo
+                                        , hd => hd.SONo
+                                        , (dt, hd) => new { hd, dt }).ToList();
+                                    foreach (var s in soAll)
+                                    {
+                                        var q = Math.Round(s.dt.Qty * s.dt.PCSUnit, 2) - s.dt.OutPlan;
+                                        po.OutPlan -= q;
+                                    }
+                                    if (soAll.Count > 0)
+                                        db.SubmitChanges();
+                                }//Customer P/O not null
+                            }
 
                             //remove capa
                             int idJob = txtidJob.Text.ToInt();
@@ -495,11 +519,14 @@ namespace StockControl
                 //    err += " “รหัสพาร์ท:” เป็นค่าว่าง \n";
 
                 if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
-                    err += "- Cannot Save because Status is 'Process'.\n";
+                    err += "- ไม่สามารถบันทึกได้เนื่องจากสถานะเป็น 'Process'.\n";
                 //else if (txtStatus.Text == "Approved")
                 //    err += "- Cannot Save because Status is 'Approved'.\n";
                 else if (txtSeqStatus.Text.ToInt() > 0)
-                    err += "- Cannot Save because Status is 'Approved'.\n";
+                {
+                    string StatusNow = (txtSeqStatus.Text.ToInt() == 1) ? "Waiting Approve" : "Approved";
+                    baseClass.Warning($"- ไม่สามารถบันทึกได้เนื่องจากสถานะเป็น '{StatusNow}'.\n");
+                }
 
 
 
@@ -528,7 +555,7 @@ namespace StockControl
                         SaveE();
                 }
                 else
-                    MessageBox.Show("Can save only status 'New' or 'Edit'");
+                    MessageBox.Show("ไม่สามารถบันทึกได้เนื่องจากสถานะไม่ใช่ 'New' หรือ 'Edit'");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -1045,11 +1072,11 @@ namespace StockControl
 
 
             if (txtJobNo.Text.Trim() == "")
-                mssg += "- Please Save job before Hold Job.\n";
+                mssg += "- กรุณา บันทึก ก่อน Hold Job.\n";
             if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
-                mssg += "- Cannot Hold Job because FG Already Received.\n";
+                mssg += "- ไม่สามารถ Hold Job ได้เนื่องจาก FG ถูกเบิกใช้ไปแล้ว.\n";
             if (cbCloseJob.Checked)
-                mssg += "- Cannot Recalculate Job because Job is completed.\n";
+                mssg += "- ไม่สามารถ Hold Job ได้เนื่องจากสถานะเป็น Completed.\n";
 
             if (mssg != "")
             {
@@ -1203,7 +1230,7 @@ namespace StockControl
                                 var w = baseClass.getWorkLoad_From(tempStarting.Value.Date, idWorkCenter);
                                 if (w == null) //ไม่มีจริงๆ แสดงว่า Capacity หมด ต้องกลับไปคำนวนใหม่
                                 {
-                                    string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
+                                    string mssg = "Capacity ไม่เพียงพอ, กรุณาตรวจสอบ Capacity ในโปรแกรม Workcenter.\n";
                                     baseClass.Warning(mssg);
                                     throw new Exception(mssg);
                                 }
@@ -1462,7 +1489,7 @@ namespace StockControl
                             }
                             else //วันดังกล่าวไม่ใช่ Working Day
                             {
-                                string mssg = "Work center not having Working days.!!!\n";
+                                string mssg = "Work center ไม่มีวันธรรมงาน.!!!\n";
                                 baseClass.Warning(mssg);
                                 throw new Exception(mssg);
                             }

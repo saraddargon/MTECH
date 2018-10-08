@@ -523,7 +523,6 @@
             gridViewCheckBoxColumn2.EnableExpressionEditor = false;
             gridViewCheckBoxColumn2.FieldName = "Plan";
             gridViewCheckBoxColumn2.HeaderText = "Plan";
-            gridViewCheckBoxColumn2.IsVisible = false;
             gridViewCheckBoxColumn2.MinWidth = 20;
             gridViewCheckBoxColumn2.Name = "Plan";
             gridViewCheckBoxColumn2.Width = 60;
