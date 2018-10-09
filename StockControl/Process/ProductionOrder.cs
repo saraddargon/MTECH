@@ -142,6 +142,8 @@ namespace StockControl
                         var dts = db.mh_ProductionOrderRMs.Where(x => x.JobNo == t.JobNo && x.Active).ToList();
                         foreach (var dt in dts)
                         {
+                            var outQ = dt.OutQty;
+
                             addRow(dt.id, dt.ItemNo, dt.ItemName, dt.Qty, dt.UOM, dt.PCSUnit
                                 , dt.OutQty, dt.GroupType, dt.Type, dt.InvGroup);
                         }
@@ -149,10 +151,10 @@ namespace StockControl
                         //Load Pr in Job
                         LoadPRwithJob(t.RefDocId);
                         //Load Shipping History
-                        var ship1 = db.tb_Shippings.Where(x => x.idCSTMPODt == t.RefDocId).ToList();
+                        var ship1 = db.tb_Shippings.Where(x => x.idCSTMPODt == t.RefDocId && x.Status != "Cancel" && x.ShipType == "ForJob").ToList();
                         foreach (var s in ship1)
                         {
-                            var shipH = db.tb_ShippingHs.Where(x => x.ShippingNo == s.ShippingNo).FirstOrDefault();
+                            var shipH = db.tb_ShippingHs.Where(x => x.ShippingNo == s.ShippingNo && x.Status != "Cancel").FirstOrDefault();
                             if (shipH == null) continue;
                             var tool = db.mh_Items.Where(x => x.InternalNo == s.CodeNo).FirstOrDefault();
                             if (tool == null) continue;
@@ -469,7 +471,7 @@ namespace StockControl
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (txtFGNo.Text == "") return;
-            if(txtOutQty.Value.ToDecimal() == 0)
+            if (txtOutQty.Value.ToDecimal() == 0)
             {
                 baseClass.Warning("- ไม่สามารถลบได้เนื่องจากสถานะเป็น 'Completed'.\n");
                 return;
