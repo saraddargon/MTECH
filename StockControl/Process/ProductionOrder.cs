@@ -143,6 +143,8 @@ namespace StockControl
                         foreach (var dt in dts)
                         {
                             var outQ = dt.OutQty;
+                            var accdQ = baseClass.GetQtyAccidenSlip(dt.id);
+                            outQ += accdQ;
 
                             addRow(dt.id, dt.ItemNo, dt.ItemName, dt.Qty, dt.UOM, dt.PCSUnit
                                 , dt.OutQty, dt.GroupType, dt.Type, dt.InvGroup);

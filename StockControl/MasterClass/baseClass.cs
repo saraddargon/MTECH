@@ -155,7 +155,7 @@ namespace StockControl
             return (T)Enum.Parse(typeof(T), value, true);
         }
 
-        public static decimal StockQty(string ItemNo, string LocationCode,string Category)
+        public static decimal StockQty(string ItemNo, string LocationCode, string Category)
         {
             using (var db = new DataClasses1DataContext())
             {
@@ -412,7 +412,7 @@ namespace StockControl
                             else
                                 return "";
                         }
-                    default: return ""; 
+                    default: return "";
                 }
             }
         }
@@ -702,6 +702,23 @@ namespace StockControl
             catch (Exception ex)
             {
                 throw ex;
+            }
+            return ret;
+        }
+
+        //get Accident from RM id
+        public static decimal GetQtyAccidenSlip(int idPdRM)
+        {
+            var ret = 0.00m;
+            using (var db = new DataClasses1DataContext())
+            {
+                var accd = db.mh_Accident_Slips.Where(x => x.idProductionOrderRM == idPdRM && x.Status != "Cancel")
+                                    .Join(db.mh_Accident_SlipHs.Where(x => x.Status != "Cancel" && x.Type == "None")
+                                    , dd => dd.DocNo
+                                    , hd => hd.DocNo
+                                    , (dd, hd) => new { hd, dd }).ToList();
+                if(accd.Count > 0)
+                    ret = accd.Sum(x => Math.Round(x.dd.QTY * x.dd.PCSUnit, 2));
             }
             return ret;
         }
