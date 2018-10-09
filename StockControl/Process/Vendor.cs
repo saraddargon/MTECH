@@ -798,5 +798,16 @@ namespace StockControl
                 ClassLib.Memory.Heap();
             }
         }
+
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+
+            //VendorList.rpt
+            Report.Reportx1.Value = new string[1];
+            Report.Reportx1.Value[0] = "";
+            Report.Reportx1.WReport = "VendorList2";
+            Report.Reportx1 op = new Report.Reportx1("VendorList.rpt");
+            op.Show();
+        }
     }
 }

@@ -66,6 +66,8 @@
             this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup3 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnRefresh = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnReport = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup5 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.radRibbonBarButtonGroup3 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             this.btnFilter1 = new Telerik.WinControls.UI.RadButtonElement();
@@ -85,8 +87,6 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.btnReport = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -253,6 +253,22 @@
             this.btnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnRefresh.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // radRibbonBarGroup7
+            // 
+            this.radRibbonBarGroup7.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnReport});
+            this.radRibbonBarGroup7.Name = "radRibbonBarGroup7";
+            this.radRibbonBarGroup7.Text = "";
+            // 
+            // btnReport
+            // 
+            this.btnReport.Image = global::StockControl.Properties.Resources.printer;
+            this.btnReport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Text = "Report";
+            this.btnReport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            // 
             // radRibbonBarGroup5
             // 
             this.radRibbonBarGroup5.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
@@ -405,7 +421,7 @@
             gridViewTextBoxColumn1.Name = "VendorNo";
             gridViewTextBoxColumn1.ReadOnly = true;
             gridViewTextBoxColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            gridViewTextBoxColumn1.Width = 60;
+            gridViewTextBoxColumn1.Width = 100;
             gridViewTextBoxColumn2.EnableExpressionEditor = false;
             gridViewTextBoxColumn2.FieldName = "Name";
             gridViewTextBoxColumn2.HeaderText = "Name";
@@ -584,22 +600,6 @@
             this.radRibbonBarButtonGroup5.ShowBackColor = false;
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
-            // 
-            // radRibbonBarGroup7
-            // 
-            this.radRibbonBarGroup7.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnReport});
-            this.radRibbonBarGroup7.Name = "radRibbonBarGroup7";
-            this.radRibbonBarGroup7.Text = "";
-            this.radRibbonBarGroup7.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
-            // 
-            // btnReport
-            // 
-            this.btnReport.Image = global::StockControl.Properties.Resources.printer;
-            this.btnReport.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnReport.Name = "btnReport";
-            this.btnReport.Text = "Report";
-            this.btnReport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // Customers
             // 

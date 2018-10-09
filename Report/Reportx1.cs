@@ -467,6 +467,18 @@ namespace Report
                         rptDc.SetParameterValue("@Date2", Convert.ToDateTime(Value[1].ToString(), new CultureInfo("en-US")));
                     }
                     break;
+                case "CustomerList2":
+                    {
+                        rptDc.SetParameterValue("@CSTMNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
+                case "VendorList2":
+                    {
+                        rptDc.SetParameterValue("@VendorNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
             }
         }
 
