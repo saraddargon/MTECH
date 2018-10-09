@@ -520,11 +520,6 @@ namespace StockControl
                         m.FGNo = item.Cells["ItemNo"].Value.ToSt();
                         m.ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value;
                         var reqDate = m.ReqDate.Date;
-                        //var lot = db.mh_LotFGs.Where(x => x.LotDate == reqDate).FirstOrDefault();
-                        //if (lot != null)
-                        //    m.LotNo = lot.LotNo;
-                        //else
-                        //    m.LotNo = "";
                         var runLot = dbClss.GetNo(42, 2);
                         m.LotNo = runLot;
                         m.Qty = item.Cells["Qty"].Value.ToDecimal();
@@ -598,10 +593,10 @@ namespace StockControl
                             var itemA = db.mh_Items.Where(x => x.InternalNo == r.Component).FirstOrDefault();
                             if (itemA == null) continue;
                             var useQ = Math.Round(m.Qty * r.Qty, 2);
-                            //decimal yieldItem = 0.00m;
-                            //if (r.chk_YieldOperation.ToBool())
-                            //    yieldItem = Math.Ceiling((exYield / 100) * useQ);
-                            //useQ += yieldItem;
+                            decimal yieldItem = 0.00m;
+                            if (r.chk_YieldOperation.ToBool())
+                                yieldItem = Math.Ceiling((exYield / 100) * useQ);
+                            useQ += yieldItem;
                             var useQAll = Math.Round(useQ * r.PCSUnit.ToDecimal(), 2);
 
                             var dt = new mh_ProductionOrderRM

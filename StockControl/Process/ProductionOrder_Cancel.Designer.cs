@@ -76,6 +76,9 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
+            this.txtJobQty = new Telerik.WinControls.UI.RadTextBox();
+            this.txtUOM = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -101,6 +104,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbQty)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtJobQty)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUOM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -222,7 +228,6 @@
             this.btnPrint});
             this.radRibbonBarGroup2.Name = "radRibbonBarGroup2";
             this.radRibbonBarGroup2.Text = "Print Document";
-            this.radRibbonBarGroup2.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
             // btnPrint
             // 
@@ -327,6 +332,8 @@
             this.radPanel1.Controls.Add(this.txtSPNo);
             this.radPanel1.Controls.Add(this.lbCodeNo);
             this.radPanel1.Controls.Add(this.txtRemark);
+            this.radPanel1.Controls.Add(this.txtJobQty);
+            this.radPanel1.Controls.Add(this.txtUOM);
             this.radPanel1.Controls.Add(this.txtOutQty);
             this.radPanel1.Controls.Add(this.txtSeqStatus);
             this.radPanel1.Controls.Add(this.txtidCstmPODt);
@@ -334,6 +341,7 @@
             this.radPanel1.Controls.Add(this.lbDesc);
             this.radPanel1.Controls.Add(this.radButton1);
             this.radPanel1.Controls.Add(this.txtFGName);
+            this.radPanel1.Controls.Add(this.radLabel5);
             this.radPanel1.Controls.Add(this.radLabel4);
             this.radPanel1.Controls.Add(this.radLabel3);
             this.radPanel1.Controls.Add(this.txtFGNo);
@@ -372,7 +380,7 @@
             // txtQty
             // 
             this.txtQty.BackColor = System.Drawing.SystemColors.Info;
-            this.txtQty.Location = new System.Drawing.Point(165, 129);
+            this.txtQty.Location = new System.Drawing.Point(165, 180);
             this.txtQty.Mask = "N2";
             this.txtQty.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
             this.txtQty.Name = "txtQty";
@@ -419,7 +427,7 @@
             // txtRemark
             // 
             this.txtRemark.AutoSize = false;
-            this.txtRemark.Location = new System.Drawing.Point(165, 180);
+            this.txtRemark.Location = new System.Drawing.Point(165, 206);
             this.txtRemark.Multiline = true;
             this.txtRemark.Name = "txtRemark";
             this.txtRemark.Size = new System.Drawing.Size(222, 59);
@@ -430,6 +438,7 @@
             // 
             this.txtOutQty.Location = new System.Drawing.Point(165, 154);
             this.txtOutQty.Name = "txtOutQty";
+            this.txtOutQty.NullText = "Out Q\'ty";
             this.txtOutQty.ReadOnly = true;
             this.txtOutQty.Size = new System.Drawing.Size(125, 20);
             this.txtOutQty.TabIndex = 4;
@@ -447,8 +456,9 @@
             // 
             // txtidCstmPODt
             // 
-            this.txtidCstmPODt.Location = new System.Drawing.Point(296, 129);
+            this.txtidCstmPODt.Location = new System.Drawing.Point(296, 180);
             this.txtidCstmPODt.Name = "txtidCstmPODt";
+            this.txtidCstmPODt.NullText = "idCstmPODt";
             this.txtidCstmPODt.ReadOnly = true;
             this.txtidCstmPODt.Size = new System.Drawing.Size(91, 20);
             this.txtidCstmPODt.TabIndex = 4;
@@ -488,14 +498,15 @@
             // 
             this.txtFGName.Location = new System.Drawing.Point(165, 102);
             this.txtFGName.Name = "txtFGName";
+            this.txtFGName.NullText = "FG Name";
             this.txtFGName.ReadOnly = true;
-            this.txtFGName.Size = new System.Drawing.Size(189, 20);
+            this.txtFGName.Size = new System.Drawing.Size(222, 20);
             this.txtFGName.TabIndex = 4;
             this.txtFGName.ThemeName = "Office2010Blue";
             // 
             // radLabel4
             // 
-            this.radLabel4.Location = new System.Drawing.Point(111, 181);
+            this.radLabel4.Location = new System.Drawing.Point(111, 207);
             this.radLabel4.Name = "radLabel4";
             this.radLabel4.Size = new System.Drawing.Size(44, 18);
             this.radLabel4.TabIndex = 0;
@@ -513,6 +524,7 @@
             // 
             this.txtFGNo.Location = new System.Drawing.Point(165, 76);
             this.txtFGNo.Name = "txtFGNo";
+            this.txtFGNo.NullText = "FG No";
             this.txtFGNo.ReadOnly = true;
             this.txtFGNo.Size = new System.Drawing.Size(125, 20);
             this.txtFGNo.TabIndex = 4;
@@ -520,7 +532,7 @@
             // 
             // lbQty
             // 
-            this.lbQty.Location = new System.Drawing.Point(92, 130);
+            this.lbQty.Location = new System.Drawing.Point(92, 181);
             this.lbQty.Name = "lbQty";
             this.lbQty.Size = new System.Drawing.Size(63, 18);
             this.lbQty.TabIndex = 0;
@@ -559,6 +571,34 @@
             this.radRibbonBarButtonGroup5.ShowBackColor = false;
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
+            // 
+            // radLabel5
+            // 
+            this.radLabel5.Location = new System.Drawing.Point(108, 129);
+            this.radLabel5.Name = "radLabel5";
+            this.radLabel5.Size = new System.Drawing.Size(47, 18);
+            this.radLabel5.TabIndex = 0;
+            this.radLabel5.Text = "Job Q\'ty";
+            // 
+            // txtJobQty
+            // 
+            this.txtJobQty.Location = new System.Drawing.Point(165, 128);
+            this.txtJobQty.Name = "txtJobQty";
+            this.txtJobQty.NullText = "Job Q\'ty";
+            this.txtJobQty.ReadOnly = true;
+            this.txtJobQty.Size = new System.Drawing.Size(125, 20);
+            this.txtJobQty.TabIndex = 4;
+            this.txtJobQty.ThemeName = "Office2010Blue";
+            // 
+            // txtUOM
+            // 
+            this.txtUOM.Location = new System.Drawing.Point(296, 127);
+            this.txtUOM.Name = "txtUOM";
+            this.txtUOM.NullText = "UOM";
+            this.txtUOM.ReadOnly = true;
+            this.txtUOM.Size = new System.Drawing.Size(91, 20);
+            this.txtUOM.TabIndex = 4;
+            this.txtUOM.ThemeName = "Office2010Blue";
             // 
             // ProductionOrder_Cancel
             // 
@@ -605,6 +645,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbQty)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtJobQty)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUOM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -660,5 +703,8 @@
         private Telerik.WinControls.UI.RadTextBox txtSeqStatus;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup7;
         private Telerik.WinControls.UI.RadButtonElement btnNew;
+        private Telerik.WinControls.UI.RadTextBox txtJobQty;
+        private Telerik.WinControls.UI.RadLabel radLabel5;
+        private Telerik.WinControls.UI.RadTextBox txtUOM;
     }
 }
