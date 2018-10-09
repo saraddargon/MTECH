@@ -172,7 +172,7 @@ namespace StockControl
                                 , "Completed");
                         }
                         //Cancel FG Q'ty from Sale document
-                        var pdCancel = db.mh_ProductionOrder_CancelQties.Where(x => x.Active && x.SeqStatus == 2 && x.JobNo == t_JobNo).ToList();
+                        var pdCancel = db.mh_ProductionOrder_CancelQties.Where(x => x.Active && x.JobNo == t_JobNo).ToList();
                         foreach (var pd in pdCancel)
                         {
                             string SS = (pd.SeqStatus == 0) ? "Waiting" : (pd.SeqStatus == 1) ? "Waiting Approve" : "Completed";
@@ -182,7 +182,7 @@ namespace StockControl
                         var pdClose = db.mh_ProductionOrder_CloseSpecials.Where(x => x.Active && x.JobNo == t_JobNo).ToList();
                         foreach (var pd in pdClose)
                         {
-                            addRow3(pd.DocNo, "Close Job", pd.DocNo, pd.Qty, pd.UOM, pd.PCSUnit, pd.CreateDate, pd.CreateBy, "Completed");
+                            addRow3(pd.DocNo, "Close Job (Special)", pd.DocNo, pd.Qty, pd.UOM, pd.PCSUnit, pd.CreateDate, pd.CreateBy, "Completed");
                         }
                         dgvReceiveFG.Columns["ReceiveDate"].SortOrder = RadSortOrder.Ascending;
 
