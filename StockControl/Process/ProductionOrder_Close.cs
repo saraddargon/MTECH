@@ -66,6 +66,7 @@ namespace StockControl
                     var j = db.mh_ProductionOrders.Where(x => x.JobNo == m.JobNo).FirstOrDefault();
                     if (j != null)
                     {
+                        txtJobNo.Text = j.JobNo;
                         txtFGNo.Text = j.FGNo;
                         txtFGName.Text = j.FGName;
                         txtQty.Text = j.Qty.ToSt();
@@ -393,7 +394,8 @@ namespace StockControl
                 {
                     txtFGName.Text = m.FGName;
                     txtFGNo.Text = m.FGNo;
-                    txtQty.Text = m.Qty.ToSt();
+                    //txtQty.Text = m.Qty.ToSt();
+                    txtQty.Text = m.OutQty.ToSt();
                     txtOutQty.Text = m.OutQty.ToSt();
                     txtidCstmPODt.Text = m.RefDocId.ToSt();
                 }

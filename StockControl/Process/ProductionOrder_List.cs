@@ -40,6 +40,9 @@ namespace StockControl
             dtTo.Value = DateTime.Now;
             //radGridView1.ReadOnly = true;
             cbbStatus.SelectedIndex = 3; //Process
+            if (sType == 3)
+                cbbStatus.SelectedIndex = 2; //Approved
+
             using (var db = new DataClasses1DataContext())
             {
 
@@ -67,6 +70,9 @@ namespace StockControl
                 if (x.Name != "S")
                     x.ReadOnly = true;
             });
+
+            if (sType == 3)
+                dgvData.Columns["S"].IsVisible = false;
 
             //canchange = true;
         }
