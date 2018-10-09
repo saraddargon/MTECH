@@ -410,20 +410,34 @@ namespace StockControl
                                     CallSumDiscountLast(false);
                                 }
                             }
-
-
-
-
+                            
                             foreach (var x in dgvData.Rows)
                             {
                                 c += 1;
                                 x.Cells["dgvNo"].Value = c;
+                                x.Cells["dgvBackOrder2"].Value = x.Cells["dgvBackOrder"].Value;
+                                x.Cells["dgvOrderQty2"].Value = x.Cells["dgvOrderQty"].Value;
 
                                 x.Cells["dgvAmount"].Value = dbClss.TDe(x.Cells["dgvOrderQty"].Value) * dbClss.TDe(x.Cells["dgvCost"].Value);
 
                                 if (dbClss.TDe(x.Cells["dgvBackOrder"].Value) == dbClss.TDe(x.Cells["dgvOrderQty"].Value))
                                 {
                                     x.Cells["dgvStatus"].Value = "Waiting";
+
+                                    //ถ้าบางรายการรับเข้าแล้วจะแก้ไข Item หรือ cost ไม่ได้ แก้ไขได้เฉพาะ Qty
+                                    //เพราะ PO นั่นถูกอนุมัติเรียบร้อยแล้ว
+                                    
+                                    if (StockControl.dbClss.TSt(g.FirstOrDefault().Status) == "Process")
+                                    {
+                                        x.Cells["dgvOrderQty"].ReadOnly = false;
+                                        x.Cells["dgvCodeNo"].ReadOnly = true;
+                                        x.Cells["dgvItemName"].ReadOnly = true;
+                                        x.Cells["dgvItemDesc"].ReadOnly = true;
+                                        x.Cells["dgvUnit"].ReadOnly = true;
+                                        x.Cells["dgvCost"].ReadOnly = true;
+                                        x.Cells["dgvPCSUnit"].ReadOnly = true;
+                                        x.Cells["dgvGroupCode"].ReadOnly = true;
+                                    }
 
                                     if (dbClss.TInt(x.Cells["dgvPRItem"].Value) > 0)
                                     {
@@ -437,6 +451,7 @@ namespace StockControl
                                         x.Cells["dgvGroupCode"].ReadOnly = true;
                                         //x.Cells["dgvDiscountAmount"].ReadOnly = true;
                                     }
+                                    x.Cells["dgvChangeQty"].ReadOnly = true;                                    
                                 }
                                 else if (dbClss.TDe(x.Cells["dgvBackOrder"].Value) <= dbClss.TDe(x.Cells["dgvOrderQty"].Value)
                                     && dbClss.TDe(x.Cells["dgvBackOrder"].Value) != 0)
@@ -450,6 +465,9 @@ namespace StockControl
                                     x.Cells["dgvCost"].ReadOnly = true;
                                     x.Cells["dgvPCSUnit"].ReadOnly = true;
                                     x.Cells["dgvDiscountAmount"].ReadOnly = true;
+
+                                    x.Cells["dgvChangeQty"].ReadOnly = false;
+                                    
                                 }
                                 else
                                 {
@@ -457,9 +475,15 @@ namespace StockControl
                                     {
                                         x.Cells["dgvStatus"].Value = "Discon";
                                         x.Cells["dgvDiscon_B"].Value = true;
+                                        x.Cells["dgvChangeQty"].ReadOnly = false;
+                                    
                                     }
                                     else
+                                    {
                                         x.Cells["dgvStatus"].Value = "Full";
+                                        x.Cells["dgvChangeQty"].ReadOnly = true;
+                                      
+                                    }
 
                                     x.Cells["dgvOrderQty"].ReadOnly = true;
                                     x.Cells["dgvOrderQty"].ReadOnly = true;
@@ -528,8 +552,14 @@ namespace StockControl
 
                             if (lblStatus.Text == "Process")
                             {
+                                dgvData.ReadOnly = false;
                                 btnDiscon.Enabled = true;
                                 btnDiscon_Item.Enabled = true;
+                                btnchangeQty.Enabled = true;
+                                btnDel_Item.Enabled = true;
+                                txtAfterDiscount.Enabled = false;
+                                txtLessPoDiscountAmount.Enabled = false;
+                                txtLessPoDiscountAmountPersen.Enabled = false;
                             }
                         }
                         else
@@ -547,6 +577,9 @@ namespace StockControl
                             btnAdd_Row.Enabled = false;
                             btnDel_Item.Enabled = false;
                             btnSendApprove.Enabled = true;
+                            txtAfterDiscount.Enabled = true;
+                            txtLessPoDiscountAmount.Enabled = true;
+                            txtLessPoDiscountAmountPersen.Enabled = true;
                         }
                         foreach (var x in dgvData.Rows)
                         {
@@ -1124,6 +1157,8 @@ namespace StockControl
                 cbvatDetail.Enabled = ss;
                 txtVattax.Enabled = ss;
                 txtVersion.Enabled = ss;
+                txtLessPoDiscountAmountPersen.Enabled = ss;
+                txtAfterDiscount.Enabled = ss;
             }
             else if (Condition.Equals("View"))
             {
@@ -1152,6 +1187,8 @@ namespace StockControl
                 cbvatDetail.Enabled = ss;
                 txtVattax.Enabled = ss;
                 txtVersion.Enabled = ss;
+                txtLessPoDiscountAmountPersen.Enabled = ss;
+                txtAfterDiscount.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
@@ -1180,6 +1217,8 @@ namespace StockControl
                 cbvatDetail.Enabled = ss;
                 txtVattax.Enabled = ss;
                 txtVersion.Enabled = ss;
+                txtLessPoDiscountAmountPersen.Enabled = ss;
+                txtAfterDiscount.Enabled = ss;
             }
         }
 
@@ -1233,6 +1272,7 @@ namespace StockControl
             btnDelete.Enabled = true;
             btnDiscon.Enabled = false;
             btnDiscon_Item.Enabled = false;
+            btnchangeQty.Enabled = false;
             btnSendApprove.Enabled = true;
             ClearData();
             Enable_Status(true, "New");
@@ -1718,8 +1758,7 @@ namespace StockControl
                             CodeNo = "";
                             return;
                         }
-
-
+                        
                         if (CodeNo != "" && c <= 0)
                         {
                             using (DataClasses1DataContext db = new DataClasses1DataContext())
@@ -1835,8 +1874,34 @@ namespace StockControl
                         A = 2;
 
                     }
+                    else if (dgvData.Columns["dgvChangeQty"].Index == e.ColumnIndex)
+                    {
+                        string Status = StockControl.dbClss.TSt(e.Row.Cells["dgvStatus"].Value);
+                        if (Status == "Partial")
+                        {
+                            decimal OrderQty2 = 0;
+                            decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["dgvOrderQty2"].Value), out OrderQty2);
+                            decimal BackOrder2 = 0;
+                            decimal.TryParse(Convert.ToString(dgvData.Rows[e.RowIndex].Cells["dgvBackOrder2"].Value), out BackOrder2);
+                            decimal ChangeQty = 0;
+                            decimal.TryParse(Convert.ToString(dgvData.Rows[e.RowIndex].Cells["dgvChangeQty"].Value), out ChangeQty);
+                            if (ChangeQty <= BackOrder2)
+                            {
+                                e.Row.Cells["dgvBackOrder"].Value = BackOrder2 - ChangeQty;
+                                e.Row.Cells["dgvOrderQty"].Value = OrderQty2 - ChangeQty;
+                            }
+                            else
+                            {
+                                MessageBox.Show("ไม่สามารถทำการลดจำนวนสั่งซื้อเกินจำนวนคงเหลือการสั่งซื้อได้");
+                                e.Row.Cells["dgvBackOrder"].Value = BackOrder2;
+                                e.Row.Cells["dgvChangeQty"].Value = 0;
+                                e.Row.Cells["dgvOrderQty"].Value = e.Row.Cells["dgvOrderQty2"].Value;
+                            }
+                            cal = 1;
+                        }                        
+                    }
 
-                    if (A > 0)
+                        if (A > 0)
                     {
                         decimal PC = 0;
                         decimal AM = 0;
@@ -1876,6 +1941,7 @@ namespace StockControl
                         }
 
                     }
+
                     if (cal > 0)
                     {
 
@@ -2179,13 +2245,13 @@ namespace StockControl
                 if (dgvData.Rows.Count < 0)
                     return;
 
+                string Status = StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["dgvStatus"].Value);
 
-                if (Ac.Equals("New") || Ac.Equals("Edit"))
+                if (Ac.Equals("New") || Ac.Equals("Edit") || (lblStatus.Text=="Process") && Status == "Waiting")
                 {
                     this.Cursor = Cursors.WaitCursor;
 
-                    if (StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["dgvStatus"].Value) == "Waiting"
-                        || StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["dgvStatus"].Value) == "Adding")
+                    if (Status == "Waiting" || Status == "Adding")
                     {
 
                         int id = 0;
@@ -2360,6 +2426,7 @@ namespace StockControl
             btnNew.Enabled = true;
             btnDiscon.Enabled = false;
             btnDiscon_Item.Enabled = false;
+            btnchangeQty.Enabled = false;
             string TempNo = txtTempNo.Text;
             ClearData();
             Enable_Status(false, "View");
@@ -2584,8 +2651,8 @@ namespace StockControl
                     ee.Cells["dgvOrderQty"].ReadOnly = true;
                     ee.Cells["dgvGroupCode"].ReadOnly = true;
                     ee.Cells["dgvUnit"].ReadOnly = true;
-
                 }
+                ee.Cells["dgvChangeQty"].ReadOnly = true;
 
                 //dbclass.SetRowNo1(dgvData);
             }
@@ -3079,25 +3146,28 @@ namespace StockControl
                 dgvData.EndEdit();
                 foreach (var r2 in dgvData.Rows)
                 {
-                    Amount = 0;
-                    decimal.TryParse(Convert.ToString(r2.Cells["dgvAmount"].Value), out Amount);
-                    if (!am) // Persent
+                    if (r2.IsVisible)
                     {
-                        //r2.Cells["dgvdiscount"].Value = (Amount*DisP) / 100;
-                        r2.Cells["dgvDF"].Value = 4;
-                        r2.Cells["dgvDiscountAmount"].Value = ((Amount * DisP) / 100);
-                        r2.Cells["dgvDiscountExt"].Value = ((Amount * DisP) / 100);
-                        r2.Cells["dgvDiscount"].Value = (((Amount * DisP) / 100) / Amount) * 100;
-                        // SumDis += ((Amount * DisP) / 100);
-                    }
-                    else // Amount
-                    {
-                        // MessageBox.Show("xx" + TaxBase+","+Amount);
+                        Amount = 0;
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvAmount"].Value), out Amount);
+                        if (!am) // Persent
+                        {
+                            //r2.Cells["dgvdiscount"].Value = (Amount*DisP) / 100;
+                            r2.Cells["dgvDF"].Value = 4;
+                            r2.Cells["dgvDiscountAmount"].Value = ((Amount * DisP) / 100);
+                            r2.Cells["dgvDiscountExt"].Value = ((Amount * DisP) / 100);
+                            r2.Cells["dgvDiscount"].Value = (((Amount * DisP) / 100) / Amount) * 100;
+                            // SumDis += ((Amount * DisP) / 100);
+                        }
+                        else // Amount
+                        {
+                            // MessageBox.Show("xx" + TaxBase+","+Amount);
 
-                        r2.Cells["dgvDF"].Value = 5;
-                        r2.Cells["dgvDiscountAmount"].Value = ((Amount * DisA) / TaxBase);
-                        r2.Cells["dgvDiscountExt"].Value = ((Amount * DisA) / TaxBase);
-                        r2.Cells["dgvDiscount"].Value = (((Amount * DisA) / TaxBase) / Amount) * 100;
+                            r2.Cells["dgvDF"].Value = 5;
+                            r2.Cells["dgvDiscountAmount"].Value = ((Amount * DisA) / TaxBase);
+                            r2.Cells["dgvDiscountExt"].Value = ((Amount * DisA) / TaxBase);
+                            r2.Cells["dgvDiscount"].Value = (((Amount * DisA) / TaxBase) / Amount) * 100;
+                        }
                     }
                 }
 
@@ -3147,19 +3217,22 @@ namespace StockControl
                 dgvData.EndEdit();
                 foreach (var r2 in dgvData.Rows)
                 {
-                    UnitCost = 0;
-                    Qty = 0;
-                    PA = 0;
-                    PR = 0;
+                    if (r2.IsVisible)
+                    {
+                        UnitCost = 0;
+                        Qty = 0;
+                        PA = 0;
+                        PR = 0;
 
-                    decimal.TryParse(Convert.ToString(r2.Cells["dgvOrderQty"].Value), out Qty);
-                    decimal.TryParse(Convert.ToString(r2.Cells["dgvCost"].Value), out UnitCost);
-                    decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscountAmount"].Value), out PA);
-                    decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscount"].Value), out PR);
-                    decimal.TryParse(Convert.ToString(r2.Cells["dgvAmount"].Value), out ExtendedCost);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvOrderQty"].Value), out Qty);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvCost"].Value), out UnitCost);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscountAmount"].Value), out PA);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscount"].Value), out PR);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvAmount"].Value), out ExtendedCost);
 
-                    SumP += ExtendedCost;
-                    SumA += PA;
+                        SumP += ExtendedCost;
+                        SumA += PA;
+                    }
                 }
                 if (am)
                 {
@@ -3186,93 +3259,98 @@ namespace StockControl
                 //bool hanfix = false;
                 foreach (var r2 in dgvData.Rows)
                 {
-                    UnitCost = 0;
-                    Qty = 0;
-                    PA = 0;
-                    //if (Convert.ToBoolean(r2.Cells["dgvHandFix"].Value))
-                    //{
-                    //    //1365.85376
-                    //    r2.Cells["dgvUnitCost"].Value = 0;
-                    //    // txtUnitCost.Text = (ExtendedCost / Qty).ToString("##,###,###,###,##0.000000");
-                    //    // decimal.TryParse(txtUnitCost.Text, out Cost);
-                    //    // MessageBox.Show(Cost.ToString());
-                    //}
-                    decimal.TryParse(Convert.ToString(r2.Cells["dgvOrderQty"].Value), out Qty);
-                    decimal.TryParse(Convert.ToString(r2.Cells["dgvCost"].Value), out UnitCost);
-                    decimal.TryParse(Convert.ToString(r2.Cells["dgvAmount"].Value), out ExtendedCost);
-                    decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscountAmount"].Value), out PA);
+                    if (r2.IsVisible)
+                    {
+                        UnitCost = 0;
+                        Qty = 0;
+                        PA = 0;
+                        //if (Convert.ToBoolean(r2.Cells["dgvHandFix"].Value))
+                        //{
+                        //    //1365.85376
+                        //    r2.Cells["dgvUnitCost"].Value = 0;
+                        //    // txtUnitCost.Text = (ExtendedCost / Qty).ToString("##,###,###,###,##0.000000");
+                        //    // decimal.TryParse(txtUnitCost.Text, out Cost);
+                        //    // MessageBox.Show(Cost.ToString());
+                        //}
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvOrderQty"].Value), out Qty);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvCost"].Value), out UnitCost);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvAmount"].Value), out ExtendedCost);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscountAmount"].Value), out PA);
 
-                    //decimal.TryParse(Convert.ToString(r2.Cells["dgvReceiveQty"].Value), out RC);
+                        //decimal.TryParse(Convert.ToString(r2.Cells["dgvReceiveQty"].Value), out RC);
 
-                    //if (Convert.ToBoolean(r2.Cells["dgvHandFix"].Value))
-                    //{
-                    //    //1365.85376
-                    //    r2.Cells["dgvCost"].Value = Convert.ToDecimal(Math.Round(Convert.ToDecimal((ExtendedCost / Qty)), 6, MidpointRounding.AwayFromZero));
-                    //    decimal.TryParse(Convert.ToString(r2.Cells["dgvCost"].Value), out UnitCost);
-                    //    // txtUnitCost.Text = (ExtendedCost / Qty).ToString("##,###,###,###,##0.000000");
-                    //    // decimal.TryParse(txtUnitCost.Text, out Cost);
-                    //    // MessageBox.Show(Cost.ToString());
-                    //}
-
-
-
-                    r2.Cells["dgvDiscountExt"].Value = PA;
-                    //if (Convert.ToString(r2.Cells["dgvStatus"].Value).Equals("Discon"))
-                    //{
-                    //    r2.Cells["dgvOutStanding"].Value = 0;
-                    //}
-                    //else
-                    //{
-                    //    r2.Cells["dgvOutStanding"].Value = Qty - RC;
-                    //}
-
-                    ExtendedCost = (Qty * UnitCost);
-
-                    //if (chkCutDecimal.Checked)
-                    //{
-                    //    ExtendedCost = Math.Floor(ExtendedCost * 100) / 100;
-                    //    //MessageBox.Show(ExtendedCost.ToString());
-                    //}
-
-                    r2.Cells["dgvExtendedCost"].Value = Convert.ToDecimal(Math.Round(Convert.ToDecimal(UnitCost), 2, MidpointRounding.AwayFromZero));
-                    r2.Cells["dgvAmount"].Value = ExtendedCost;
-                    r2.Cells["dgvNetofTAX"].Value = ExtendedCost - PA;
-
-
-                    string a = dbClss.TSt(ExtendedCost - PA);
-                    decimal aa = 0;
-                    aa = Convert.ToDecimal(Math.Round(Convert.ToDecimal(a), 6, MidpointRounding.AwayFromZero));
+                        //if (Convert.ToBoolean(r2.Cells["dgvHandFix"].Value))
+                        //{
+                        //    //1365.85376
+                        //    r2.Cells["dgvCost"].Value = Convert.ToDecimal(Math.Round(Convert.ToDecimal((ExtendedCost / Qty)), 6, MidpointRounding.AwayFromZero));
+                        //    decimal.TryParse(Convert.ToString(r2.Cells["dgvCost"].Value), out UnitCost);
+                        //    // txtUnitCost.Text = (ExtendedCost / Qty).ToString("##,###,###,###,##0.000000");
+                        //    // decimal.TryParse(txtUnitCost.Text, out Cost);
+                        //    // MessageBox.Show(Cost.ToString());
+                        //}
 
 
 
-                    r2.Cells["dgvNetofTAX"].Value = ExtendedCost - PA;//Convert.ToDecimal(Math.Round(Convert.ToDecimal(a), 6, MidpointRounding.AwayFromZero));
+                        r2.Cells["dgvDiscountExt"].Value = PA;
+                        //if (Convert.ToString(r2.Cells["dgvStatus"].Value).Equals("Discon"))
+                        //{
+                        //    r2.Cells["dgvOutStanding"].Value = 0;
+                        //}
+                        //else
+                        //{
+                        //    r2.Cells["dgvOutStanding"].Value = Qty - RC;
+                        //}
 
-                    //string b =dbclass.TSt((((Qty * UnitCost) - PA) * vat) / 100);
-                    r2.Cells["dgvVatAmount"].Value = (ExtendedCost - PA) * dbClss.TDe(txtVattax.Text) / 100;
-                    //r2.Cells["dgvVatAmount"].Value = Convert.ToDecimal(Math.Round(Convert.ToDecimal(b), 6, MidpointRounding.AwayFromZero));
+                        ExtendedCost = (Qty * UnitCost);
 
-                    r2.Cells["dgvSubTotal"].Value = (ExtendedCost - PA) + ((ExtendedCost - PA) * dbClss.TDe(txtVattax.Text) / 100);
+                        //if (chkCutDecimal.Checked)
+                        //{
+                        //    ExtendedCost = Math.Floor(ExtendedCost * 100) / 100;
+                        //    //MessageBox.Show(ExtendedCost.ToString());
+                        //}
 
+                        r2.Cells["dgvExtendedCost"].Value = Convert.ToDecimal(Math.Round(Convert.ToDecimal(UnitCost), 2, MidpointRounding.AwayFromZero));
+                        r2.Cells["dgvAmount"].Value = ExtendedCost;
+                        r2.Cells["dgvNetofTAX"].Value = ExtendedCost - PA;
+
+
+                        string a = dbClss.TSt(ExtendedCost - PA);
+                        decimal aa = 0;
+                        aa = Convert.ToDecimal(Math.Round(Convert.ToDecimal(a), 6, MidpointRounding.AwayFromZero));
+
+
+
+                        r2.Cells["dgvNetofTAX"].Value = ExtendedCost - PA;//Convert.ToDecimal(Math.Round(Convert.ToDecimal(a), 6, MidpointRounding.AwayFromZero));
+
+                        //string b =dbclass.TSt((((Qty * UnitCost) - PA) * vat) / 100);
+                        r2.Cells["dgvVatAmount"].Value = (ExtendedCost - PA) * dbClss.TDe(txtVattax.Text) / 100;
+                        //r2.Cells["dgvVatAmount"].Value = Convert.ToDecimal(Math.Round(Convert.ToDecimal(b), 6, MidpointRounding.AwayFromZero));
+
+                        r2.Cells["dgvSubTotal"].Value = (ExtendedCost - PA) + ((ExtendedCost - PA) * dbClss.TDe(txtVattax.Text) / 100);
+
+                    }
+
+
+                    //  dgvDataOrder.EndEdit();
+
+                    decimal Sumtotal = 0;
+                    decimal Total = 0;
+                    decimal SumTotal2 = 0;
+                    //string Currency = "THB";
+                    foreach (var rd in dgvData.Rows)
+                    {
+                        if (rd.IsVisible)
+                        {
+                            Total = 0;
+                            decimal.TryParse(Convert.ToString(rd.Cells["dgvAmount"].Value), out Total);
+                            Sumtotal += Total;
+                            SumTotal2 += (Convert.ToDecimal(rd.Cells["dgvAmount"].Value) - Convert.ToDecimal(rd.Cells["dgvDiscountExt"].Value));
+                            //Currency = (Convert.ToString(rd.Cells["dgvCurrency"].Value));
+                        }
+                    }
+                    txtTotalsumDiscount.Text = (SumTotal2).ToString("###,###,##0.00");
+                    lbOrderSubtotal.Text = (Sumtotal).ToString("###,###,##0.00");
                 }
-
-
-                //  dgvDataOrder.EndEdit();
-
-                decimal Sumtotal = 0;
-                decimal Total = 0;
-                decimal SumTotal2 = 0;
-                //string Currency = "THB";
-                foreach (var rd in dgvData.Rows)
-                {
-                    Total = 0;
-                    decimal.TryParse(Convert.ToString(rd.Cells["dgvAmount"].Value), out Total);
-                    Sumtotal += Total;
-                    SumTotal2 += (Convert.ToDecimal(rd.Cells["dgvAmount"].Value) - Convert.ToDecimal(rd.Cells["dgvDiscountExt"].Value));
-                    //Currency = (Convert.ToString(rd.Cells["dgvCurrency"].Value));
-                }
-                txtTotalsumDiscount.Text = (SumTotal2).ToString("###,###,##0.00");
-                lbOrderSubtotal.Text = (Sumtotal).ToString("###,###,##0.00");
-
                 //lbCurrency1.Text = Currency;
                 //CalTAX1();
                 CalSubtotal();
@@ -3573,6 +3651,374 @@ namespace StockControl
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void ปรบจำนวนToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnchangeQty_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (lblStatus.Text != "Completed"
+                    && lblStatus.Text != "Approved"
+                    && lblStatus.Text != "Waiting Approve")
+                {
+                    lblStatus.Text = "Discon";
+                    Ac = "Discon";
+                    int cc = 0;
+                    if (MessageBox.Show("ต้องการปรับจำนวนสั่งซื้อรายการ ( " + txtPONo.Text + " ) หรือไม่ ?", "ยกเลิกรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        btnCal_Click(null, null);
+
+                        this.Cursor = Cursors.WaitCursor;
+
+                        using (DataClasses1DataContext db = new DataClasses1DataContext())
+                        {
+                            //Herder
+                            var h = (from ix in db.mh_PurchaseOrders
+                                     where ix.TempPNo.Trim() == txtTempNo.Text.Trim()
+                                     && ix.Status != "Cancel"
+                                     && ix.Status != "Completed"
+                                     select ix).ToList();
+                            if (h.Count > 0)  //มีรายการในระบบ
+                            {
+                                foreach (DataRow row in dt_POHD.Rows)
+                                {
+
+                                    var gg = (from ix in db.mh_PurchaseOrders
+                                              where ix.TempPNo.Trim() == txtTempNo.Text.Trim() 
+                                              && ix.Status != "Cancel"
+                                               && ix.Status != "Completed"
+                                              select ix).First();
+                                    gg.ModifyBy = ClassLib.Classlib.User;
+                                    gg.ModifyDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));                                    
+                                    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไข CreatePO โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", txtPONo.Text);
+
+                                    if (!txtPONo.Text.Trim().Equals(row["PONo"].ToString()))
+                                    {
+                                        gg.PONo = txtPONo.Text;
+                                        dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขเลขที่ใบสั่งซื้อ [" + txtPONo.Text.Trim() + "]", txtPONo.Text);
+
+                                        if (StockControl.dbClss.TSt(gg.Barcode).Equals(""))
+                                            gg.Barcode = StockControl.dbClss.SaveQRCode2D(txtPONo.Text.Trim());
+                                    }
+                                    if (StockControl.dbClss.TSt(gg.Barcode).Equals(""))
+                                        gg.Barcode = StockControl.dbClss.SaveQRCode2D(txtPONo.Text.Trim());
+
+                                    //if (!cboVatType.Text.Trim().Equals(row["VATType"].ToString()))
+                                    //{
+                                    //    gg.VATType = cboVatType.Text;
+                                    //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขประเภทภาษี [" + cboVatType.Text.Trim() + "]", txtPONo.Text);
+                                    //}
+                                    //if (!cboVatGroup.Text.Trim().Equals(row["VATGroup"].ToString()))
+                                    //{
+                                    //    gg.VATGroup = cboVatGroup.Text;
+                                    //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขกลุ่มภาษี [" + cboVatGroup.Text.Trim() + "]", txtPONo.Text);
+                                    //}
+                                    //if (!txtVendorNo.Text.Trim().Equals(row["VendorNo"].ToString()))
+                                    //{
+                                    //    gg.VendorName = cboVendorName.Text;
+                                    //    gg.VendorNo = txtVendorNo.Text.Trim();
+                                    //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขรหัสผู้ขาย [" + txtVendorNo.Text.Trim() + "]", txtPONo.Text);
+                                    //}
+                                    //if (!txtQuotation.Text.Trim().Equals(row["Quotation"].ToString()))
+                                    //{
+                                    //    gg.Quotation = txtQuotation.Text.Trim();
+                                    //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขเลขที่เสนอราคา [" + txtQuotation.Text.Trim() + "]", txtPONo.Text);
+                                    //}
+                                    //if (!cbClearBill.Checked.ToString().Equals(row["ClearBill"].ToString()))
+                                    //{
+                                    //    gg.ClearBill = cbClearBill.Checked;
+                                    //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไข ClearBill [" + cbClearBill.Checked.ToString() + "]", txtPONo.Text);
+                                    //}
+                                    //if (!ddlCurrency.Text.Trim().Equals(row["CRRNCY"].ToString()))
+                                    //{
+                                    //    gg.CRRNCY = ddlCurrency.Text.Trim();
+                                    //    decimal Rate = dbClss.TDe(txtRate.Text);
+                                    //    if (Rate <= 0) Rate = 1;
+                                    //    gg.Rate = Rate;
+                                    //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขสกุลเงิน [" + ddlCurrency.Text.Trim() + "]", txtPONo.Text);
+                                    //}
+                                    //if (!txtContactName.Text.Trim().Equals(row["ContactName"].ToString()))
+                                    //{
+                                    //    gg.ContactName = txtContactName.Text.Trim();
+                                    //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขผู้ติดต่อ [" + txtContactName.Text.Trim() + "]", txtPONo.Text);
+                                    //}
+                                    //if (!txtAddress.Text.Trim().Equals(row["Address"].ToString()))
+                                    //{
+                                    //    gg.Address = txtAddress.Text.Trim();
+                                    //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขที่อยู่ [" + txtAddress.Text.Trim() + "]", txtPONo.Text);
+                                    //}
+                                    //if (!txtTel.Text.Trim().Equals(row["Tel"].ToString()))
+                                    //{
+                                    //    gg.Tel = txtTel.Text.Trim();
+                                    //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขเบอร์โทร [" + txtTel.Text.Trim() + "]", txtPONo.Text);
+                                    //}
+                                    //if (!txtFax.Text.Trim().Equals(row["Fax"].ToString()))
+                                    //{
+                                    //    gg.Fax = txtFax.Text.Trim();
+                                    //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขเบอร์แฟกซ์ [" + txtFax.Text.Trim() + "]", txtPONo.Text);
+                                    //}
+
+                                    //if (!txtEmail.Text.Trim().Equals(row["Email"].ToString()))
+                                    //{
+                                    //    gg.Email = txtEmail.Text.Trim();
+                                    //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขอีเมลล์ [" + txtEmail.Text.Trim() + "]", txtPONo.Text);
+                                    //}
+                                    if (!txtVersion.Text.Trim().Equals(row["Version"].ToString()))
+                                    {
+                                        gg.Version = dbClss.TSt(txtVersion.Text);
+                                        dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไข Rev. [" + txtVersion.Text.Trim() + "]", txtPONo.Text);
+                                    }
+                                    
+                                    gg.vat = StockControl.dbClss.TDe(txtVat.Text);
+                                    gg.VatTax = StockControl.dbClss.TDe(txtVattax.Text);
+                                    gg.VatDetail = StockControl.dbClss.TBo(cbvatDetail.Checked);
+                                    gg.Discount = StockControl.dbClss.TDe(txtLessPoDiscountAmount.Text);
+                                    gg.Discpct = StockControl.dbClss.TDe(txtLessPoDiscountAmountPersen.Text);
+                                    gg.AfterDiscount = StockControl.dbClss.TDe(txtAfterDiscount.Text);
+                                    gg.Total = StockControl.dbClss.TDe(lbOrderSubtotal.Text);
+                                    gg.GrandTotal = StockControl.dbClss.TDe(lbTotalOrder.Text);
+                                    gg.Usefixunit = StockControl.dbClss.TBo(cbUsefixunit.Checked);
+                                    //gg.CHStatus = "Waiting";
+                                    //if (!dtDuedate.Text.Trim().Equals(""))
+                                    //{
+                                    //    string date1 = "";
+                                    //    date1 = dtDuedate.Value.ToString("yyyyMMdd", new CultureInfo("en-US"));
+                                    //    string date2 = "";
+                                    //    if (!StockControl.dbClss.TSt(row["Duedate"].ToString()).Equals(""))
+                                    //    {
+                                    //        DateTime temp = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                    //        temp = Convert.ToDateTime(row["Duedate"]);
+                                    //        date2 = temp.ToString("yyyyMMdd", new CultureInfo("en-US"));
+
+                                    //    }
+                                    //    if (!date1.Equals(date2))
+                                    //    {
+                                    //        DateTime? RequireDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                    //        if (!dtDuedate.Text.Equals(""))
+                                    //            RequireDate = dtDuedate.Value;
+                                    //        gg.Duedate = RequireDate;
+                                    //        dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขวันที่ต้องการ [" + dtDuedate.Text.Trim() + "]", txtPONo.Text);
+
+                                    //    }
+
+                                    //}
+                                    if (!txtRemarkHD.Text.Trim().Equals(row["Remark"].ToString()))
+                                    {
+                                        gg.Remark = txtRemarkHD.Text.Trim();
+                                        dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขหมายเหตุ [" + txtRemarkHD.Text.Trim() + "]", txtPONo.Text);
+                                    }
+
+
+                                    db.SubmitChanges();
+                                }
+                            }
+
+
+                            //Detail
+                            decimal ChangeQty = 0;
+                            foreach (var g in dgvData.Rows)
+                            {
+                                if (g.IsVisible.Equals(true) && StockControl.dbClss.TDe(g.Cells["dgvChangeQty"].Value) > 0)
+                                {
+
+                                    if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) > 0
+                                        && StockControl.dbClss.TSt(g.Cells["dgvStatus"].Value) != "Full"
+                                        && StockControl.dbClss.TSt(g.Cells["dgvStatus"].Value) == "Partial"
+                                        )
+                                    {
+                                        foreach (DataRow row in dt_PODT.Rows)
+                                        {
+                                            ChangeQty = StockControl.dbClss.TDe(g.Cells["dgvChangeQty"].Value);
+                                            
+                                            if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) == StockControl.dbClss.TInt(row["id"]))
+                                            {
+                                                var u = (from ix in db.mh_PurchaseOrderDetails
+                                                         where ix.TempPNo == txtTempNo.Text.Trim()
+                                                         // && ix.TempNo == txtTempNo.Text                                             
+                                                         && ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+                                                         && ix.BackOrder > 0
+                                                         select ix).First();
+
+                                                u.Discon = dbClss.TDe(u.Discon) + ChangeQty;
+                                                u.BackOrder = dbClss.TDe(u.BackOrder) - ChangeQty;
+                                                if (dbClss.TDe(u.BackOrder) <= 0)
+                                                    u.BackOrder = 0;
+                                                u.OrderQty = StockControl.dbClss.TDe(g.Cells["dgvOrderQty"].Value);
+
+                                                cc += 1;
+
+                                                db.SubmitChanges();
+                                                dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขยกเลิกการรับส่วนที่เหลือ [" + u.CodeNo.ToString() + "]", txtPONo.Text);
+
+                                                db.sp_010_Update_StockItem(StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value), "BackOrder");
+                                            }
+                                        }
+                                    }
+                                }
+                                else if(g.IsVisible && StockControl.dbClss.TSt(g.Cells["dgvStatus"].Value) == "Waiting")
+                                {
+
+                                    if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) > 0
+                                        && StockControl.dbClss.TSt(g.Cells["dgvStatus"].Value) != "Full"
+                                        && StockControl.dbClss.TSt(g.Cells["dgvStatus"].Value) != "Partial"
+                                        )
+                                    {
+                                        DateTime? d = null;
+                                        DateTime? DeliveryDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                        foreach (DataRow row in dt_PODT.Rows)
+                                        {
+                                            if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) == StockControl.dbClss.TInt(row["id"]))
+                                            {
+                                                var u = (from ix in db.mh_PurchaseOrderDetails
+                                                         where ix.TempPNo == txtTempNo.Text.Trim()
+                                                         // && ix.TempNo == txtTempNo.Text                                             
+                                                         && ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+                                                         select ix).First();
+
+                                                dbClss.AddHistory(this.Name, "แก้ไขรายการ Item PO", "id :" + StockControl.dbClss.TSt(g.Cells["dgvid"].Value)
+                                                + " CodeNo :" + StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value)
+                                                + " แก้ไขโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", txtPONo.Text);
+
+                                                u.PONo = txtPONo.Text.Trim();
+                                                u.Amount = dbClss.TDe(g.Cells["dgvAmount"].Value);
+                                                u.Discount = dbClss.TDe(g.Cells["dgvDiscount"].Value);
+                                                u.DiscountAmount = dbClss.TDe(g.Cells["dgvDiscountAmount"].Value);
+                                                u.ExtendedCost = dbClss.TDe(g.Cells["dgvExtendedCost"].Value);
+                                                u.DF = dbClss.TInt(g.Cells["dgvDF"].Value);
+
+                                                if (!StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value).Equals(row["CodeNo"].ToString()))
+                                                {
+                                                    u.CodeNo = StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value);
+                                                    dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขรหัสทูล [" + u.CodeNo + "]", txtPONo.Text);
+                                                }
+
+                                                if (!StockControl.dbClss.TSt(g.Cells["dgvItemName"].Value).Equals(row["ItemName"].ToString()))
+                                                {
+                                                    u.ItemName = StockControl.dbClss.TSt(g.Cells["dgvItemName"].Value);
+                                                    dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขชื่อทูล [" + u.ItemName + "]", txtPONo.Text);
+                                                }
+                                                if (!StockControl.dbClss.TSt(g.Cells["dgvItemDesc"].Value).Equals(row["ItemDesc"].ToString()))
+                                                {
+                                                    u.ItemDesc = StockControl.dbClss.TSt(g.Cells["dgvItemDesc"].Value);
+                                                    dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขรายละเอียดทูล [" + u.ItemDesc + "]", txtPONo.Text);
+                                                }
+                                                u.GroupCode = StockControl.dbClss.TSt(g.Cells["dgvGroupCode"].Value);
+
+                                                if (!StockControl.dbClss.TSt(g.Cells["dgvOrderQty"].Value).Equals(row["OrderQty"].ToString()))
+                                                {
+                                                    decimal OrderQty = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvOrderQty"].Value), out OrderQty);
+                                                    u.OrderQty = StockControl.dbClss.TDe(g.Cells["dgvOrderQty"].Value);
+                                                    u.BackOrder = OrderQty;
+                                                    dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขจำนวน [" + u.OrderQty.ToString() + "]", txtPONo.Text);
+                                                }
+                                                if (!StockControl.dbClss.TSt(g.Cells["dgvPCSUnit"].Value).Equals(row["PCSUnit"].ToString()))
+                                                {
+                                                    u.PCSUnit = StockControl.dbClss.TDe(g.Cells["dgvPCSUnit"].Value);
+                                                    decimal dgvPCSUnit = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvPCSUnit"].Value), out dgvPCSUnit);
+                                                    dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขจำนวน:หน่วย [" + u.PCSUnit.ToString() + "]", txtPONo.Text);
+                                                }
+
+                                                if (!StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value).Equals(row["Unit"].ToString()))
+                                                {
+                                                    u.Unit = StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value);
+                                                    dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขหน่วย [" + u.Unit + "]", txtPONo.Text);
+                                                }
+
+                                                if (!StockControl.dbClss.TSt(g.Cells["dgvCost"].Value).Equals(row["Cost"].ToString()))
+                                                {
+                                                    u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);
+                                                    decimal dgvCost = 0; decimal.TryParse(StockControl.dbClss.TSt(g.Cells["dgvCost"].Value), out dgvCost);
+                                                    dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขราคา [" + u.Cost.ToString() + "]", txtPONo.Text);
+                                                }
+                                                if (!StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value).Equals(row["PRNo"].ToString()))
+                                                {
+                                                    u.PRNo = StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value);
+                                                    u.PRItem = StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value);
+                                                    dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขเลขที่อ้างอิ่ง [" + u.PRNo + "]", txtPONo.Text);
+                                                }
+                                                if (!StockControl.dbClss.TSt(txtRate.Text).Equals(row["Rate"].ToString()))
+                                                {
+                                                    decimal Rate = 0; decimal.TryParse(StockControl.dbClss.TSt(txtRate.Text), out Rate);
+                                                    if (Rate >= 0)
+                                                        Rate = 1;
+                                                    u.Rate = Rate;
+
+                                                    dbClss.AddHistory(this.Name, "แก้ไข Item Rate", "แก้ไข Rate [" + u.Rate.ToString() + "]", txtPONo.Text);
+                                                }
+
+
+                                                if (!StockControl.dbClss.TSt(g.Cells["dgvDeliveryDate"].Value).Equals(""))
+                                                    DeliveryDate = Convert.ToDateTime((g.Cells["dgvDeliveryDate"].Value));
+                                                else
+                                                    DeliveryDate = dtDuedate.Value;
+                                                u.DeliveryDate = DeliveryDate;
+                                                u.idCSTMPODt = dbClss.TInt(g.Cells["idCSTMPODt"].Value);
+
+                                                u.SS = 1;
+                                                //C += 1;
+                                                db.SubmitChanges();
+                                            }
+                                        }
+                                    }
+                                }
+                                else if(g.IsVisible.Equals(false) && StockControl.dbClss.TSt(g.Cells["dgvStatus"].Value) == "Waiting") //Cancel
+                                {
+
+                                    if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) > 0)
+                                    {
+                                        var u = (from ix in db.mh_PurchaseOrderDetails
+                                                 where //ix.PRNo == txtPONo.Text.Trim() 
+                                                       //&& ix.TempNo == txtTempNo.Text 
+                                                  ix.id == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+                                                 select ix).First();
+                                        u.SS = 0;
+
+                                        dbClss.AddHistory(this.Name, "ลบ Item PO", "id :" + StockControl.dbClss.TSt(g.Cells["dgvid"].Value)
+                                            + " CodeNo :" + StockControl.dbClss.TSt(g.Cells["dgvCodeNo"].Value)
+                                            + " ลบโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", txtPONo.Text);
+
+                                        db.SubmitChanges();
+
+                                        //ปรับสถานะ PR เป็น Waiting
+                                        var p = (from ix in db.mh_PurchaseRequestLines
+                                                 where ix.RefPOid == StockControl.dbClss.TInt(g.Cells["dgvid"].Value)
+                                                  //&& ix.TempNo == txtTempNo.Text 
+                                                  && ix.id == StockControl.dbClss.TInt(g.Cells["dgvPRItem"].Value)
+                                                 select ix).First();
+                                        p.Status = "Waiting";
+                                        //p.RemainQty = p.OrderQty;
+                                        p.PoNo = "";
+                                        p.RefPOid = 0;
+                                        dbClss.AddHistory(this.Name, "ปรับสถานะ Item PR", "ลบ PO จาก POid :" + StockControl.dbClss.TSt(g.Cells["dgvid"].Value)
+                                            + " PONo :" + txtPONo.Text.Trim()
+                                            + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value));
+
+                                        db.SubmitChanges();
+
+                                        db.sp_023_PRHD_Cal_Status(p.TempNo, p.PRNo);
+                                    }
+                                }
+                            }
+                            //Calculate Status
+                            db.sp_022_POHD_Cal_Status(txtTempNo.Text, txtPONo.Text);
+
+                        }
+
+                        if (cc > 0)
+                            MessageBox.Show("บันทึกรายการ สำเร็จ!");
+                        btnRefresh_Click(null, null);
+
+                    }
+                }
+
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { this.Cursor = Cursors.Default; }
         }
     }
 }
