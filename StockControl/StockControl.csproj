@@ -187,6 +187,12 @@
     <Compile Include="Process\PackingPrint.Designer.cs">
       <DependentUpon>PackingPrint.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\ProductionOrder_Cancel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\ProductionOrder_Cancel.Designer.cs">
+      <DependentUpon>ProductionOrder_Cancel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Return_RM_List.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1219,6 +1225,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\PackingPrint.resx">
       <DependentUpon>PackingPrint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\ProductionOrder_Cancel.resx">
+      <DependentUpon>ProductionOrder_Cancel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Return_RM_List.resx">
       <DependentUpon>Return_RM_List.cs</DependentUpon>

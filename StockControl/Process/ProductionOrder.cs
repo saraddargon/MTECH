@@ -130,7 +130,7 @@ namespace StockControl
                         else
                             txtStatus.Text = "Waiting";
 
-                        if(t.CloseJob || txtSeqStatus.Text.ToInt() > 0)
+                        if (t.CloseJob || txtSeqStatus.Text.ToInt() > 0)
                         {
                             btnRecal.Enabled = false;
                             btnHoldJob.Enabled = false;
@@ -173,10 +173,18 @@ namespace StockControl
                         }
                         //Cancel FG Q'ty from Sale document
                         var pdCancel = db.mh_ProductionOrder_CancelQties.Where(x => x.Active && x.SeqStatus == 2 && x.JobNo == t_JobNo).ToList();
-                        foreach(var pd in pdCancel)
+                        foreach (var pd in pdCancel)
                         {
-                            addRow3(pd.DocNo, "Cancel Q'ty FG", pd.DocNo, pd.Qty, pd.UOM, pd.PCSUnit, pd.DocDate, pd.CreateBy, "Completed");
+                            string SS = (pd.SeqStatus == 0) ? "Waiting" : (pd.SeqStatus == 1) ? "Waiting Approve" : "Completed";
+                            addRow3(pd.DocNo, "Cancel Q'ty FG", pd.DocNo, pd.Qty, pd.UOM, pd.PCSUnit, pd.DocDate, pd.CreateBy, SS);
                         }
+                        //Close Job Special
+                        var pdClose = db.mh_ProductionOrder_CloseSpecials.Where(x => x.Active && x.JobNo == t_JobNo).ToList();
+                        foreach (var pd in pdClose)
+                        {
+                            addRow3(pd.DocNo, "Close Job", pd.DocNo, pd.Qty, pd.UOM, pd.PCSUnit, pd.CreateDate, pd.CreateBy, "Completed");
+                        }
+                        dgvReceiveFG.Columns["ReceiveDate"].SortOrder = RadSortOrder.Ascending;
 
 
                         SetRowNo1(dgvData);
@@ -404,7 +412,7 @@ namespace StockControl
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
-            
+
             //dgvData.ReadOnly = false;
 
             ClearData();
@@ -506,7 +514,7 @@ namespace StockControl
                         //}
 
                         var so = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                        if(so != null)
+                        if (so != null)
                         {
                             //so.OutPlan += (m.Qty + m.PCSUnit) - m.OutQty;
                             so.OutPlan = Math.Round(m.Qty, 2);//Full Return Qty;
@@ -682,7 +690,7 @@ namespace StockControl
                         //    db.SubmitChanges();
                         //}
                         var so = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
-                        if(so != null)
+                        if (so != null)
                         {
                             var sohd = db.mh_SaleOrders.Where(x => x.SONo == so.SONo).FirstOrDefault();
                             string sono = so.SONo;
@@ -909,14 +917,26 @@ namespace StockControl
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
-        public static void SetRowNo1(RadGridView Grid)//เลขลำดับ
+        public void SetRowNo1(RadGridView Grid)//เลขลำดับ
         {
             int i = 1;
-            Grid.Rows.Where(o => o.IsVisible).ToList().ForEach(o =>
+
+            if (Grid.Name == dgvReceiveFG.Name)
             {
-                o.Cells["RNo"].Value = i;
-                i++;
-            });
+                Grid.Rows.OrderBy(x => x.Cells["ReceiveDate"].Value.ToDateTime().Value).Where(o => o.IsVisible).ToList().ForEach(o =>
+                  {
+                      o.Cells["RNo"].Value = i;
+                      i++;
+                  });
+            }
+            else
+            {
+                Grid.Rows.Where(o => o.IsVisible).ToList().ForEach(o =>
+                {
+                    o.Cells["RNo"].Value = i;
+                    i++;
+                });
+            }
         }
 
 
@@ -1693,7 +1713,7 @@ namespace StockControl
 
         private void btnShipping_Click(object sender, EventArgs e)
         {
-            if(txtJobNo.Text.Trim() != "")
+            if (txtJobNo.Text.Trim() != "")
             {
                 Report.Reportx1.Value = new string[1];
                 Report.Reportx1.Value[0] = txtJobNo.Text.Trim();

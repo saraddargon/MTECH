@@ -1,6 +1,6 @@
 ﻿namespace StockControl
 {
-    partial class ProductionOrder_Close
+    partial class ProductionOrder_Cancel
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductionOrder_Close));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductionOrder_Cancel));
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
-            this.radRibbonBarGroup6 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnNew = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnSave = new Telerik.WinControls.UI.RadButtonElement();
@@ -43,6 +43,8 @@
             this.btnPrint = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup3 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnRefresh = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup6 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnSendApprove = new Telerik.WinControls.UI.RadButtonElement();
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
@@ -50,14 +52,17 @@
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
             this.panel1 = new System.Windows.Forms.Panel();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
+            this.radGroupBox1 = new Telerik.WinControls.UI.RadGroupBox();
+            this.lbStatus = new Telerik.WinControls.UI.RadLabel();
+            this.txtQty = new Telerik.WinControls.UI.RadMaskedEditBox();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.txtSPNo = new Telerik.WinControls.UI.RadTextBox();
             this.lbCodeNo = new Telerik.WinControls.UI.RadLabel();
             this.txtRemark = new Telerik.WinControls.UI.RadTextBox();
             this.txtOutQty = new Telerik.WinControls.UI.RadTextBox();
+            this.txtSeqStatus = new Telerik.WinControls.UI.RadTextBox();
             this.txtidCstmPODt = new Telerik.WinControls.UI.RadTextBox();
-            this.txtQty = new Telerik.WinControls.UI.RadTextBox();
             this.txtJobNo = new Telerik.WinControls.UI.RadTextBox();
             this.lbDesc = new Telerik.WinControls.UI.RadLabel();
             this.radButton1 = new Telerik.WinControls.UI.RadButton();
@@ -76,14 +81,18 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             this.radPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).BeginInit();
+            this.radGroupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lbStatus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSPNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbCodeNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOutQty)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtidCstmPODt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtJobNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton1)).BeginInit();
@@ -117,14 +126,14 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(524, 160);
+            this.radRibbonBar1.Size = new System.Drawing.Size(648, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
             this.radMenuSeparatorItem1,
             this.radMenuItem2});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Close Job (Special)";
+            this.radRibbonBar1.Text = "Cancel Job (FG Q\'ty)";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
             // 
@@ -132,22 +141,23 @@
             // 
             this.ribbonTab1.IsSelected = true;
             this.ribbonTab1.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radRibbonBarGroup6,
+            this.radRibbonBarGroup7,
             this.radRibbonBarGroup1,
             this.radRibbonBarGroup5,
             this.radRibbonBarGroup4,
             this.radRibbonBarGroup2,
-            this.radRibbonBarGroup3});
+            this.radRibbonBarGroup3,
+            this.radRibbonBarGroup6});
             this.ribbonTab1.Name = "ribbonTab1";
             this.ribbonTab1.Text = "Action";
             this.ribbonTab1.UseMnemonic = false;
             // 
-            // radRibbonBarGroup6
+            // radRibbonBarGroup7
             // 
-            this.radRibbonBarGroup6.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radRibbonBarGroup7.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.btnNew});
-            this.radRibbonBarGroup6.Name = "radRibbonBarGroup6";
-            this.radRibbonBarGroup6.Text = " ";
+            this.radRibbonBarGroup7.Name = "radRibbonBarGroup7";
+            this.radRibbonBarGroup7.Text = " ";
             // 
             // btnNew
             // 
@@ -243,6 +253,22 @@
             this.btnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnRefresh.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // radRibbonBarGroup6
+            // 
+            this.radRibbonBarGroup6.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnSendApprove});
+            this.radRibbonBarGroup6.Name = "radRibbonBarGroup6";
+            this.radRibbonBarGroup6.Text = "Send Approve";
+            // 
+            // btnSendApprove
+            // 
+            this.btnSendApprove.Image = ((System.Drawing.Image)(resources.GetObject("btnSendApprove.Image")));
+            this.btnSendApprove.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnSendApprove.Name = "btnSendApprove";
+            this.btnSendApprove.Text = "ส่งอนุมัติ";
+            this.btnSendApprove.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSendApprove.Click += new System.EventHandler(this.btnSendApprove_Click);
+            // 
             // radMenuItem1
             // 
             this.radMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("radMenuItem1.Image")));
@@ -267,9 +293,9 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 487);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 492);
             this.radStatusStrip1.Name = "radStatusStrip1";
-            this.radStatusStrip1.Size = new System.Drawing.Size(524, 21);
+            this.radStatusStrip1.Size = new System.Drawing.Size(648, 21);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
             this.radStatusStrip1.ThemeName = "Office2010Blue";
@@ -278,7 +304,7 @@
             // 
             this.radLabelElement1.Name = "radLabelElement1";
             this.radStatusStrip1.SetSpring(this.radLabelElement1, false);
-            this.radLabelElement1.Text = "Status : Close Job (Special)";
+            this.radLabelElement1.Text = "Status : Cancel Job (FG Q\'ty)";
             this.radLabelElement1.TextWrap = true;
             // 
             // panel1
@@ -288,20 +314,22 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(524, 327);
+            this.panel1.Size = new System.Drawing.Size(648, 332);
             this.panel1.TabIndex = 2;
             // 
             // radPanel1
             // 
             this.radPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(237)))), ((int)(((byte)(250)))));
+            this.radPanel1.Controls.Add(this.radGroupBox1);
+            this.radPanel1.Controls.Add(this.txtQty);
             this.radPanel1.Controls.Add(this.radLabel2);
             this.radPanel1.Controls.Add(this.radLabel1);
             this.radPanel1.Controls.Add(this.txtSPNo);
             this.radPanel1.Controls.Add(this.lbCodeNo);
             this.radPanel1.Controls.Add(this.txtRemark);
             this.radPanel1.Controls.Add(this.txtOutQty);
+            this.radPanel1.Controls.Add(this.txtSeqStatus);
             this.radPanel1.Controls.Add(this.txtidCstmPODt);
-            this.radPanel1.Controls.Add(this.txtQty);
             this.radPanel1.Controls.Add(this.txtJobNo);
             this.radPanel1.Controls.Add(this.lbDesc);
             this.radPanel1.Controls.Add(this.radButton1);
@@ -313,17 +341,53 @@
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(524, 327);
+            this.radPanel1.Size = new System.Drawing.Size(648, 332);
             this.radPanel1.TabIndex = 0;
             this.radPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.radPanel1_Paint);
             // 
+            // radGroupBox1
+            // 
+            this.radGroupBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
+            this.radGroupBox1.Controls.Add(this.lbStatus);
+            this.radGroupBox1.HeaderText = "Status";
+            this.radGroupBox1.Location = new System.Drawing.Point(426, 6);
+            this.radGroupBox1.Name = "radGroupBox1";
+            this.radGroupBox1.Size = new System.Drawing.Size(200, 100);
+            this.radGroupBox1.TabIndex = 6;
+            this.radGroupBox1.Text = "Status";
+            // 
+            // lbStatus
+            // 
+            this.lbStatus.AutoSize = false;
+            this.lbStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbStatus.Font = new System.Drawing.Font("Segoe UI", 16.25F, System.Drawing.FontStyle.Bold);
+            this.lbStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.lbStatus.Location = new System.Drawing.Point(2, 18);
+            this.lbStatus.Name = "lbStatus";
+            this.lbStatus.Size = new System.Drawing.Size(196, 80);
+            this.lbStatus.TabIndex = 0;
+            this.lbStatus.Text = "Waiting Approve";
+            this.lbStatus.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtQty
+            // 
+            this.txtQty.BackColor = System.Drawing.SystemColors.Info;
+            this.txtQty.Location = new System.Drawing.Point(165, 129);
+            this.txtQty.Mask = "N2";
+            this.txtQty.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            this.txtQty.Name = "txtQty";
+            this.txtQty.Size = new System.Drawing.Size(125, 20);
+            this.txtQty.TabIndex = 5;
+            this.txtQty.TabStop = false;
+            this.txtQty.Text = "0.00";
+            // 
             // radLabel2
             // 
-            this.radLabel2.Location = new System.Drawing.Point(44, 25);
+            this.radLabel2.Location = new System.Drawing.Point(34, 25);
             this.radLabel2.Name = "radLabel2";
-            this.radLabel2.Size = new System.Drawing.Size(111, 18);
+            this.radLabel2.Size = new System.Drawing.Size(125, 18);
             this.radLabel2.TabIndex = 0;
-            this.radLabel2.Text = "Job Special Close no.";
+            this.radLabel2.Text = "Cancel Job (FG Q\'ty) no.";
             // 
             // radLabel1
             // 
@@ -371,6 +435,16 @@
             this.txtOutQty.TabIndex = 4;
             this.txtOutQty.ThemeName = "Office2010Blue";
             // 
+            // txtSeqStatus
+            // 
+            this.txtSeqStatus.Location = new System.Drawing.Point(428, 128);
+            this.txtSeqStatus.Name = "txtSeqStatus";
+            this.txtSeqStatus.ReadOnly = true;
+            this.txtSeqStatus.Size = new System.Drawing.Size(91, 20);
+            this.txtSeqStatus.TabIndex = 4;
+            this.txtSeqStatus.ThemeName = "Office2010Blue";
+            this.txtSeqStatus.Visible = false;
+            // 
             // txtidCstmPODt
             // 
             this.txtidCstmPODt.Location = new System.Drawing.Point(296, 129);
@@ -380,15 +454,6 @@
             this.txtidCstmPODt.TabIndex = 4;
             this.txtidCstmPODt.ThemeName = "Office2010Blue";
             this.txtidCstmPODt.Visible = false;
-            // 
-            // txtQty
-            // 
-            this.txtQty.Location = new System.Drawing.Point(165, 128);
-            this.txtQty.Name = "txtQty";
-            this.txtQty.ReadOnly = true;
-            this.txtQty.Size = new System.Drawing.Size(125, 20);
-            this.txtQty.TabIndex = 4;
-            this.txtQty.ThemeName = "Office2010Blue";
             // 
             // txtJobNo
             // 
@@ -455,11 +520,11 @@
             // 
             // lbQty
             // 
-            this.lbQty.Location = new System.Drawing.Point(128, 129);
+            this.lbQty.Location = new System.Drawing.Point(92, 130);
             this.lbQty.Name = "lbQty";
-            this.lbQty.Size = new System.Drawing.Size(27, 18);
+            this.lbQty.Size = new System.Drawing.Size(63, 18);
             this.lbQty.TabIndex = 0;
-            this.lbQty.Text = "Q\'ty";
+            this.lbQty.Text = "Cancel Q\'ty";
             // 
             // radRibbonBarButtonGroup2
             // 
@@ -495,23 +560,23 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
-            // ProductionOrder_Close
+            // ProductionOrder_Cancel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 508);
+            this.ClientSize = new System.Drawing.Size(648, 513);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "ProductionOrder_Close";
+            this.Name = "ProductionOrder_Cancel";
             // 
             // 
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Close Job (Special)";
+            this.Text = "Cancel Job (FG Q\'ty)";
             this.Load += new System.EventHandler(this.Unit_Load);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Unit_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
@@ -520,14 +585,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
             this.radPanel1.ResumeLayout(false);
             this.radPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).EndInit();
+            this.radGroupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.lbStatus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtQty)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSPNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbCodeNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOutQty)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtidCstmPODt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtQty)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtJobNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbDesc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton1)).EndInit();
@@ -569,7 +638,6 @@
         private Telerik.WinControls.UI.RadTextBox txtJobNo;
         private Telerik.WinControls.UI.RadTextBox txtSPNo;
         private Telerik.WinControls.UI.RadLabel radLabel2;
-        private Telerik.WinControls.UI.RadTextBox txtQty;
         private Telerik.WinControls.UI.RadTextBox txtFGName;
         private Telerik.WinControls.UI.RadTextBox txtFGNo;
         private Telerik.WinControls.UI.RadLabel lbQty;
@@ -584,7 +652,13 @@
         private Telerik.WinControls.UI.RadTextBox txtidCstmPODt;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup5;
         private Telerik.WinControls.UI.RadButtonElement btnDelete;
+        private Telerik.WinControls.UI.RadMaskedEditBox txtQty;
+        private Telerik.WinControls.UI.RadGroupBox radGroupBox1;
+        private Telerik.WinControls.UI.RadLabel lbStatus;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup6;
+        private Telerik.WinControls.UI.RadButtonElement btnSendApprove;
+        private Telerik.WinControls.UI.RadTextBox txtSeqStatus;
+        private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup7;
         private Telerik.WinControls.UI.RadButtonElement btnNew;
     }
 }

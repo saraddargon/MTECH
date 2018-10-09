@@ -11,13 +11,13 @@ using Telerik.WinControls.UI;
 
 namespace StockControl
 {
-    public partial class ProductionOrder_Close : Telerik.WinControls.UI.RadRibbonForm
+    public partial class ProductionOrder_Cancel : Telerik.WinControls.UI.RadRibbonForm
     {
-        public ProductionOrder_Close()
+        public ProductionOrder_Cancel()
         {
             InitializeComponent();
         }
-        public ProductionOrder_Close(string tNo)
+        public ProductionOrder_Cancel(string tNo)
         {
             InitializeComponent();
             txtSPNo.Text = tNo;
@@ -44,7 +44,7 @@ namespace StockControl
             // txtCNNo.Text = StockControl.dbClss.GetNo(6, 0);
             string tNo = txtSPNo.Text;
             ClearData();
-            if(tNo != "")
+            if (tNo != "")
             {
                 txtSPNo.Text = tNo;
                 DataLoad();
@@ -56,9 +56,7 @@ namespace StockControl
             using (var db = new DataClasses1DataContext())
             {
                 string docNo = txtSPNo.Text.Trim();
-                ClearData();
-                txtSPNo.Text = docNo;
-                var m = db.mh_ProductionOrder_CloseSpecials.Where(x => x.DocNo == docNo).FirstOrDefault();
+                var m = db.mh_ProductionOrder_CancelQties.Where(x => x.DocNo == docNo).FirstOrDefault();
                 if (m != null)
                 {
                     btnDelete.Enabled = true;
@@ -72,7 +70,14 @@ namespace StockControl
                         txtOutQty.Text = j.OutQty.ToSt();
                         txtidCstmPODt.Text = j.RefDocId.ToSt();
                         txtSPNo.Text = m.DocNo;
+                        txtSeqStatus.Text = m.SeqStatus.ToSt();
                         txtRemark.Text = m.Remark;
+                        if (m.SeqStatus == 0)
+                            lbStatus.Text = "Waiting";
+                        else if (m.SeqStatus == 1)
+                            lbStatus.Text = "Waiting Approve";
+                        else
+                            lbStatus.Text = "Approved";
 
                         if (!m.Active)
                             btnDelete.Enabled = false;
@@ -112,17 +117,38 @@ namespace StockControl
             try
             {
                 if (txtJobNo.Text == "")
-                    err += "- Please input Job no.\n";
+                    err += "- กรุณาใส่ Job No.\n";
                 using (var db = new DataClasses1DataContext())
                 {
                     string jNo = txtJobNo.Text.Trim();
                     var m = db.mh_ProductionOrders.Where(x => x.JobNo == jNo).FirstOrDefault();
                     if (m == null)
-                        err += "- Job no. not found.\n";
+                        err += "- ไม่พบ Job no.\n";
                     else
                     {
                         if (m.CloseJob)
-                            err += "- Job is already closed.\n";
+                            err += "- สถานะของ Job ปิดแล้ว.\n";
+                        else if (m.OutQty < txtQty.Value.ToDecimal())
+                            err += "- จำนวนยกเลิก มากกว่าจำนวนคงเหลือ.\n";
+                        else
+                        {
+                            var outQ = m.OutQty;
+                            var canQ = txtQty.Value.ToDecimal();
+                            //out Qty Waiting
+                            var d = db.mh_ProductionOrder_CancelQties.Where(x => x.SeqStatus != 2 && x.Active && x.JobNo == jNo).ToList();
+                            if (d.Count > 0)
+                                canQ += d.Sum(x => x.Qty);
+                            if(canQ > outQ)
+                                err += "- จำนวนยกเลิก มากกว่าจำนวนคงเหลือ.\n";
+
+                            var pk = db.mh_PackingDts.Where(x => x.Active && x.idJob == m.id)
+                                .Join(db.mh_Packings.Where(x => x.Active)
+                                , dt => dt.PackingNo
+                                , hd => hd.PackingNo
+                                , (dt, hd) => new { hd, dt }).ToList();
+                            if (pk.Count > 0)
+                                err += "- Job ถูกรับเข้าแล้ว.\n";
+                        }
                     }
                 }
 
@@ -155,39 +181,40 @@ namespace StockControl
                     {
                         string spNo = txtSPNo.Text;
                         string jobNo = txtJobNo.Text.Trim();
-                        var m = db.mh_ProductionOrder_CloseSpecials.Where(x => x.DocNo == spNo).FirstOrDefault();
+                        var m = db.mh_ProductionOrder_CancelQties.Where(x => x.DocNo == spNo).FirstOrDefault();
                         var j = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo).FirstOrDefault();
                         if (m == null && j != null)
                         {
-                            m = new mh_ProductionOrder_CloseSpecial
+                            m = new mh_ProductionOrder_CancelQty
                             {
                                 Active = true,
                                 CreateBy = ClassLib.Classlib.User,
                                 CreateDate = DateTime.Now,
-                                DocNo = dbClss.GetNo(40, 2),
-                                idCSTMPOdt = txtidCstmPODt.Text.ToInt(),
+                                DocNo = dbClss.GetNo(43, 2),
+                                idCstmPODt = txtidCstmPODt.Text.ToInt(),
                                 JobNo = txtJobNo.Text.Trim(),
                                 UpdateBy = ClassLib.Classlib.User,
                                 UpdateDate = DateTime.Now,
                                 Remark = txtRemark.Text,
-                                Qty = j.OutQty,
+                                DocDate = DateTime.Now,
                                 PCSUnit = j.PCSUnit,
+                                Qty = txtQty.Value.ToDecimal(),
+                                SeqStatus = 0,
                                 UOM = j.UOM,
                             };
-                            db.mh_ProductionOrder_CloseSpecials.InsertOnSubmit(m);
+                            db.mh_ProductionOrder_CancelQties.InsertOnSubmit(m);
                             db.SubmitChanges();
 
-                            j.OutQty = 0;
-                            j.CloseJob = true;
+                            //j.OutQty -= m.Qty;
+                            //j.CloseJob = true;
                             j.UpdateBy = ClassLib.Classlib.User;
                             j.UpdateDate = DateTime.Now;
                             db.SubmitChanges();
-
                         }
                     }
 
                     DataLoad();
-                    MessageBox.Show("Close Job complete.\n");
+                    MessageBox.Show("Cancel Job (FG Q'ty) complete.\n");
 
                     //ClearData();
                 }
@@ -205,9 +232,11 @@ namespace StockControl
             txtidCstmPODt.Text = "";
             txtOutQty.Text = "";
             txtRemark.Text = "";
+            btnNew.Enabled = true;
             btnSave.Enabled = true;
             btnDelete.Enabled = false;
-            txtSPNo.Text = StockControl.dbClss.GetNo(40, 0);
+            txtSeqStatus.Text = "";
+            txtSPNo.Text = StockControl.dbClss.GetNo(43, 0);
         }
 
         private void Unit_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -362,7 +391,7 @@ namespace StockControl
             //a.Show();
             var p = new ProductionOrder_CloseList(1);
             p.ShowDialog();
-            if(p.retDoc != "")
+            if (p.retDoc != "")
             {
                 ClearData();
                 txtSPNo.Text = p.retDoc;
@@ -391,6 +420,17 @@ namespace StockControl
                 var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo && !x.CloseJob && x.Active).FirstOrDefault();
                 if (m != null)
                 {
+                    var pk = db.mh_PackingDts.Where(x => x.Active && x.idJob == m.id)
+                        .Join(db.mh_Packings.Where(x => x.Active)
+                        , dt => dt.PackingNo
+                        , hd => hd.PackingNo
+                        , (dt, hd) => new { hd, dt }).ToList();
+                    if (pk.Count > 0)
+                    {
+                        baseClass.Warning("Job is already Received.\n");
+                        return;
+                    }
+
                     txtFGName.Text = m.FGName;
                     txtFGNo.Text = m.FGNo;
                     txtQty.Text = m.Qty.ToSt();
@@ -398,13 +438,30 @@ namespace StockControl
                     txtidCstmPODt.Text = m.RefDocId.ToSt();
                 }
                 else
-                    baseClass.Warning("Job not found.\n");
+                {
+                    baseClass.Warning("Job not found or Job is already Closed.\n");
+                }
             }
         }
 
+        bool ChkDel()
+        {
+            bool retval = true;
+            string mssg = "";
+
+            if (txtSeqStatus.Text.ToInt() > 0)
+                mssg += "- สถานะเอกสารไม่สามารถ ลบได้.\n";
+
+            if(mssg != "")
+            {
+                retval = false;
+                baseClass.Warning(mssg);
+            }
+            return retval;
+        }
         private void btnDelete_Click_1(object sender, EventArgs e)
         {
-            if (baseClass.Question("Do you want to 'Delete' ?"))
+            if (ChkDel() && baseClass.Question("Do you want to 'Delete' ?"))
                 DelDoc();
         }
         void DelDoc()
@@ -412,7 +469,7 @@ namespace StockControl
             using (var db = new DataClasses1DataContext())
             {
                 string docNo = txtSPNo.Text.Trim();
-                var m = db.mh_ProductionOrder_CloseSpecials.Where(x => x.DocNo == docNo).FirstOrDefault();
+                var m = db.mh_ProductionOrder_CancelQties.Where(x => x.DocNo == docNo).FirstOrDefault();
                 if (m != null)
                 {
                     var j = db.mh_ProductionOrders.Where(x => x.JobNo == m.JobNo && x.Active && x.CloseJob).FirstOrDefault();
@@ -422,16 +479,34 @@ namespace StockControl
                         m.UpdateDate = DateTime.Now;
                         m.UpdateBy = ClassLib.Classlib.User;
 
-                        j.OutQty += m.Qty;
-                        j.CloseJob = false;
+                        //j.Qty += j.Qty;
+                        //j.CloseJob = false;
                         j.UpdateBy = ClassLib.Classlib.User;
                         j.UpdateDate = DateTime.Now;
                         db.SubmitChanges();
                         btnDelete.Enabled = false;
-                        baseClass.Info("Delete complete.\n");
+                        baseClass.Info("Delete completed.\n");
                     }
                 }
             }
+        }
+
+        private void btnSendApprove_Click(object sender, EventArgs e)
+        {
+            if (txtSeqStatus.Text.ToInt() == 0)
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    if (baseClass.IsSendApprove())
+                    {
+                        db.sp_062_mh_ApproveList_Add(txtJobNo.Text.Trim(), "Job Cancel", ClassLib.Classlib.User);
+                        MessageBox.Show("Send complete.");
+                        DataLoad();
+                    }
+                }
+            }
+            else
+                baseClass.Warning("สถานะไม่สามารถส่ง Approve ได้.\n");
         }
     }
 }
