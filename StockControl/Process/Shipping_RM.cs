@@ -1096,6 +1096,7 @@ namespace StockControl
                         if (dbClss.TSt(e.Row.Cells["UnitShip"].Value) == "")
                         {
                             e.Row.Cells["QtyShip"].Value = 0;
+                            e.Row.Cells["Qty"].Value = 0;
                             MessageBox.Show("หน่วยเบิกเป็นค่าว่าง");
                         }
                         else
@@ -1133,6 +1134,7 @@ namespace StockControl
                                 MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
                                 e.Row.Cells["QtyShip"].Value = 0;
                                 QTY = 0;
+                                Temp = 0;
                             }
 
                             if (QTY > 0)
@@ -1184,9 +1186,9 @@ namespace StockControl
                             MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
                             e.Row.Cells["QtyShip"].Value = 0;
                             QTY = 0;
+                            Temp = 0;
                         }
                         e.Row.Cells["Qty"].Value = Math.Round(Temp, 2);
-
                     }
                     else if (dgvData.Columns["Location"].Index == e.ColumnIndex)
                     {
@@ -1225,6 +1227,7 @@ namespace StockControl
                                 MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
                                 e.Row.Cells["QtyShip"].Value = 0;
                                 QTY = 0;
+                                Temp = 0;
                             }
                             e.Row.Cells["Qty"].Value = Math.Round(Temp, 2);
                         }
