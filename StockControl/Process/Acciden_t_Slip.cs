@@ -740,7 +740,9 @@ namespace StockControl
                         var gg = (from ix in db.mh_Accident_SlipHs
                                   where ix.DocNo.Trim() == txtSHNo.Text.Trim() && ix.Status != "Cancel"                                 
                                   select ix).First();
-                        
+                        gg.DocNo = txtSHNo.Text;
+                        gg.DocBy = txtSHName.Text;
+                        gg.DocDate = Convert.ToDateTime(dtRequire.Value);
                         gg.CreateBy = ClassLib.Classlib.User;
                         gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")) ;
                         gg.Status = Status;
@@ -779,6 +781,8 @@ namespace StockControl
 
                     mh_Accident_SlipH gg = new mh_Accident_SlipH();
                     gg.DocNo = txtSHNo.Text;
+                    gg.DocBy = txtSHName.Text;
+                    gg.DocDate = Convert.ToDateTime(dtRequire.Value);
                     gg.Status = Status;
                     gg.CreateBy = ClassLib.Classlib.User;
                     gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
@@ -1689,7 +1693,7 @@ namespace StockControl
                         //AC_PCSUnit = dbClss.TDe(vv.PCSUnit) * PCSBaseUOM;
 
                         Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescriptioin
-                                        , dbClss.TDe(vv.RemainQty), vv.QtyPlan, vv.QtyShip
+                                        , dbClss.TDe(vv.RemainQty), dbClss.TDe(vv.QtyPlan), dbClss.TDe(vv.QtyShip)
                                         , vv.UnitShip, dbClss.TDe(vv.PCSUnit)
                                         , dbClss.TDe(vv.UnitCost)
                                         , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, 0
@@ -1805,17 +1809,11 @@ namespace StockControl
                 ee.Cells["UnitUsed"].Value = UnitUsed;
                 ee.Cells["Qty"].Value = Qty;
 
-                //if (GroupCode != "Other")
-                //{
-                //    ee.Cells["dgvCodeNo"].ReadOnly = true;
-                //    ee.Cells["dgvItemName"].ReadOnly = true;
-                //    ee.Cells["dgvItemDesc"].ReadOnly = true;
-
-
-                //    ee.Cells["dgvPCSUnit"].ReadOnly = true;
-                //    //ee.Cells["dgvUnitCode"].ReadOnly = true;
-                //    //ee.Cells["dgvStandardCost"].ReadOnly = true;
-                //}
+                if (ddlType.Text == "None")
+                {
+                    ee.Cells["QtyShip"].ReadOnly = true;
+                    ee.Cells["UnitShip"].ReadOnly = true;                   
+                }
                 //else
                 //{
                 //    ee.Cells["dgvCodeNo"].ReadOnly = false;
@@ -2265,21 +2263,53 @@ namespace StockControl
                         MessageBox.Show("รอเช็คเรื่องการปิดจอบแล้วจะ ลบไมไม่ได้");
                         return;
 
-                        var unit1 = (from ix in db.mh_ProductionOrders
-                                     where ix.Active == true
-                                        && ix.JobNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper()
+                        var unit1 = (from ix in db.mh_Accident_SlipHs
+                                     where ix.Status != "Cancel"
+                                        && ix.Status  != "Completed"
+                                        && ix.DocNo.Trim().ToUpper() == txtSHNo.Text.Trim().ToUpper()
                                      select ix).ToList();
-                        foreach (var d in unit1)
+                        if (unit1.Count > 0)
                         {
-                            string CancelNo = StockControl.dbClss.GetNo(36, 2);
-                            db.sp_073_Accident_Slip_Del(CancelNo, txtSHNo.Text, txtJobCard.Text, Classlib.User, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                            foreach (var d in unit1)
+                            {
+                                //string CancelNo = StockControl.dbClss.GetNo(36, 2);
+                                //db.sp_073_Accident_Slip_Del(CancelNo, txtSHNo.Text, txtJobCard.Text, Classlib.User, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+
+                                try
+                                {
+                                    var s = (from ix in db.mh_Accident_Slips
+                                             where ix.DocNo.Trim() == d.DocNo
+                                             && ix.Status != "Cancel"
+                                             && ix.Status != "Completed"
+                                             select ix).ToList();
+                                    if (s.Count > 0)
+                                    {
+                                        foreach (var ss in s)
+                                        {
+
+                                            ss.Status = "Cancel";
+                                            db.SubmitChanges();
+                                            //update Stock backorder
+                                            db.sp_010_Update_StockItem(Convert.ToString(ss.CodeNo), "BackOrder");
+                                        }
+
+                                    }
+                                }
+                                catch (Exception ex) { MessageBox.Show(ex.Message); }
+                                //----------------------//
+
+                                d.Status = "Cancel";
+                                d.CreateBy = Classlib.User;
+                                d.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                dbClss.AddHistory(this.Name, "Delete accident slip", "Delete accident slip : [" + d.DocNo + "]", d.DocNo);
+
+                            }
 
                             baseClass.Info("Delete accident slip complete.");
-                            dbClss.AddHistory(this.Name, "Delete accident slip", "Delete accident slip : [" + txtSHNo.Text + "]", "");
-
+                           
                             btnNew_Click(null, null);
-                        }
 
+                        }
 
                     }
                 }

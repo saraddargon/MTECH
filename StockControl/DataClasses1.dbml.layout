@@ -728,10 +728,10 @@
         <elementListCompartment Id="f8ec8d03-63fe-478e-91ff-be7c2da4201d" absoluteBounds="0.64000000000000012, 4.21, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="c8248cbb-35ed-4fad-ad93-5f418a152d99" isExpanded="false" absoluteBounds="0.625, 4.375, 2, 0.45">
+    <classShape Id="c0eca5c0-c861-456d-9e02-8f35ac01e58d" isExpanded="false" absoluteBounds="0.625, 4.25, 2, 0.45">
       <DataClassMoniker Name="/DataClasses1DataContext/mh_Accident_SlipH" />
       <nestedChildShapes>
-        <elementListCompartment Id="1fdb3c68-126e-4712-aac4-0f8222e56c1b" absoluteBounds="0.64000000000000012, 4.835, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="db7ed875-577a-4b93-90e2-b105e3004ca7" absoluteBounds="0.64000000000000012, 4.71, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

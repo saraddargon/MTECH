@@ -2234,6 +2234,8 @@
     <Type Name="mh_Accident_SlipH">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="DocNo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DocBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DocDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="Accident_Type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="JobCard" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />

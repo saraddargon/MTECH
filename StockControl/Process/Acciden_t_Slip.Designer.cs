@@ -30,40 +30,40 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Acciden_t_Slip));
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn18 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn19 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn20 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn21 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn10 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn22 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn11 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn23 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn12 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn24 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn13 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject4 = new Telerik.WinControls.UI.ConditionalFormattingObject();
-            Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn3 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn14 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn15 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn16 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn17 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn25 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn26 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn27 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn28 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn29 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject5 = new Telerik.WinControls.UI.ConditionalFormattingObject();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn30 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn4 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
-            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject6 = new Telerik.WinControls.UI.ConditionalFormattingObject();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn18 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn31 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn32 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn33 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn34 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition2 = new Telerik.WinControls.UI.TableViewDefinition();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem3 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem4 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn1 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn2 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn3 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn4 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn5 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn6 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn3 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn4 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject1 = new Telerik.WinControls.UI.ConditionalFormattingObject();
+            Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn1 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn5 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn6 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn7 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn8 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn8 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn9 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn10 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn11 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn12 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject2 = new Telerik.WinControls.UI.ConditionalFormattingObject();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn13 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewMultiComboBoxColumn gridViewMultiComboBoxColumn2 = new Telerik.WinControls.UI.GridViewMultiComboBoxColumn();
+            Telerik.WinControls.UI.ConditionalFormattingObject conditionalFormattingObject3 = new Telerik.WinControls.UI.ConditionalFormattingObject();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn9 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn14 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn15 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn16 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn17 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem1 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem2 = new Telerik.WinControls.UI.RadListDataItem();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -438,250 +438,250 @@
             this.dgvData.MasterTemplate.AllowDragToGroup = false;
             this.dgvData.MasterTemplate.AllowRowResize = false;
             this.dgvData.MasterTemplate.AutoGenerateColumns = false;
-            gridViewTextBoxColumn18.EnableExpressionEditor = false;
-            gridViewTextBoxColumn18.HeaderText = "ลำดับ";
-            gridViewTextBoxColumn18.Name = "dgvNo";
-            gridViewTextBoxColumn18.ReadOnly = true;
-            gridViewTextBoxColumn18.Width = 45;
-            gridViewTextBoxColumn19.EnableExpressionEditor = false;
-            gridViewTextBoxColumn19.FieldName = "CodeNo";
-            gridViewTextBoxColumn19.HeaderText = "รหัสทูล";
-            gridViewTextBoxColumn19.Name = "CodeNo";
-            gridViewTextBoxColumn19.ReadOnly = true;
-            gridViewTextBoxColumn19.Width = 92;
-            gridViewTextBoxColumn20.EnableExpressionEditor = false;
-            gridViewTextBoxColumn20.FieldName = "ItemNo";
-            gridViewTextBoxColumn20.HeaderText = "ชื่อทูล";
-            gridViewTextBoxColumn20.Name = "ItemNo";
-            gridViewTextBoxColumn20.ReadOnly = true;
-            gridViewTextBoxColumn20.Width = 120;
-            gridViewTextBoxColumn21.EnableExpressionEditor = false;
-            gridViewTextBoxColumn21.FieldName = "ItemDescription";
-            gridViewTextBoxColumn21.HeaderText = "รายละเอียดทูล";
-            gridViewTextBoxColumn21.Name = "ItemDescription";
-            gridViewTextBoxColumn21.ReadOnly = true;
-            gridViewTextBoxColumn21.Width = 217;
-            gridViewDecimalColumn10.EnableExpressionEditor = false;
-            gridViewDecimalColumn10.FieldName = "RemainQty";
-            gridViewDecimalColumn10.FormatString = "{0:N2}";
-            gridViewDecimalColumn10.HeaderText = "จำนวนสต็อกปัจจุบัน";
-            gridViewDecimalColumn10.Name = "RemainQty";
-            gridViewDecimalColumn10.ReadOnly = true;
-            gridViewDecimalColumn10.Width = 112;
-            gridViewTextBoxColumn22.EnableExpressionEditor = false;
-            gridViewTextBoxColumn22.FieldName = "BaseUOM";
-            gridViewTextBoxColumn22.HeaderText = "หน่วยสต็อกปัจจุบัน";
-            gridViewTextBoxColumn22.Name = "BaseUOM";
-            gridViewTextBoxColumn22.ReadOnly = true;
-            gridViewTextBoxColumn22.Width = 98;
-            gridViewDecimalColumn11.EnableExpressionEditor = false;
-            gridViewDecimalColumn11.FieldName = "QtyPlan";
-            gridViewDecimalColumn11.FormatString = "{0:N2}";
-            gridViewDecimalColumn11.HeaderText = "จำนวนทีใช้ในใบผลิต";
-            gridViewDecimalColumn11.Minimum = new decimal(new int[] {
+            gridViewTextBoxColumn1.EnableExpressionEditor = false;
+            gridViewTextBoxColumn1.HeaderText = "ลำดับ";
+            gridViewTextBoxColumn1.Name = "dgvNo";
+            gridViewTextBoxColumn1.ReadOnly = true;
+            gridViewTextBoxColumn1.Width = 45;
+            gridViewTextBoxColumn2.EnableExpressionEditor = false;
+            gridViewTextBoxColumn2.FieldName = "CodeNo";
+            gridViewTextBoxColumn2.HeaderText = "รหัสทูล";
+            gridViewTextBoxColumn2.Name = "CodeNo";
+            gridViewTextBoxColumn2.ReadOnly = true;
+            gridViewTextBoxColumn2.Width = 92;
+            gridViewTextBoxColumn3.EnableExpressionEditor = false;
+            gridViewTextBoxColumn3.FieldName = "ItemNo";
+            gridViewTextBoxColumn3.HeaderText = "ชื่อทูล";
+            gridViewTextBoxColumn3.Name = "ItemNo";
+            gridViewTextBoxColumn3.ReadOnly = true;
+            gridViewTextBoxColumn3.Width = 120;
+            gridViewTextBoxColumn4.EnableExpressionEditor = false;
+            gridViewTextBoxColumn4.FieldName = "ItemDescription";
+            gridViewTextBoxColumn4.HeaderText = "รายละเอียดทูล";
+            gridViewTextBoxColumn4.Name = "ItemDescription";
+            gridViewTextBoxColumn4.ReadOnly = true;
+            gridViewTextBoxColumn4.Width = 217;
+            gridViewDecimalColumn1.EnableExpressionEditor = false;
+            gridViewDecimalColumn1.FieldName = "RemainQty";
+            gridViewDecimalColumn1.FormatString = "{0:N2}";
+            gridViewDecimalColumn1.HeaderText = "จำนวนสต็อกปัจจุบัน";
+            gridViewDecimalColumn1.Name = "RemainQty";
+            gridViewDecimalColumn1.ReadOnly = true;
+            gridViewDecimalColumn1.Width = 112;
+            gridViewTextBoxColumn5.EnableExpressionEditor = false;
+            gridViewTextBoxColumn5.FieldName = "BaseUOM";
+            gridViewTextBoxColumn5.HeaderText = "หน่วยสต็อกปัจจุบัน";
+            gridViewTextBoxColumn5.Name = "BaseUOM";
+            gridViewTextBoxColumn5.ReadOnly = true;
+            gridViewTextBoxColumn5.Width = 98;
+            gridViewDecimalColumn2.EnableExpressionEditor = false;
+            gridViewDecimalColumn2.FieldName = "QtyPlan";
+            gridViewDecimalColumn2.FormatString = "{0:N2}";
+            gridViewDecimalColumn2.HeaderText = "จำนวนทีใช้ในใบผลิต";
+            gridViewDecimalColumn2.Minimum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            gridViewDecimalColumn11.Name = "QtyPlan";
-            gridViewDecimalColumn11.ReadOnly = true;
-            gridViewDecimalColumn11.Width = 125;
-            gridViewTextBoxColumn23.EnableExpressionEditor = false;
-            gridViewTextBoxColumn23.FieldName = "UnitPlan";
-            gridViewTextBoxColumn23.HeaderText = "หน่วยทีใช้ในใบผลิต";
-            gridViewTextBoxColumn23.Name = "UnitPlan";
-            gridViewTextBoxColumn23.ReadOnly = true;
-            gridViewTextBoxColumn23.Width = 108;
-            gridViewDecimalColumn12.EnableExpressionEditor = false;
-            gridViewDecimalColumn12.FieldName = "QtyUsed";
-            gridViewDecimalColumn12.FormatString = "{0:N2}";
-            gridViewDecimalColumn12.HeaderText = "จำนวนที่เบิกไปแล้ว";
-            gridViewDecimalColumn12.Name = "QtyUsed";
-            gridViewDecimalColumn12.ReadOnly = true;
-            gridViewDecimalColumn12.Width = 119;
-            gridViewTextBoxColumn24.EnableExpressionEditor = false;
-            gridViewTextBoxColumn24.FieldName = "UnitUsed";
-            gridViewTextBoxColumn24.HeaderText = "หน่วยที่เบิกไปแล้ว";
-            gridViewTextBoxColumn24.Name = "UnitUsed";
-            gridViewTextBoxColumn24.ReadOnly = true;
-            gridViewTextBoxColumn24.Width = 113;
-            conditionalFormattingObject4.CellBackColor = System.Drawing.Color.LightCyan;
-            conditionalFormattingObject4.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject4.CellForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject4.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
-            conditionalFormattingObject4.Name = "NewCondition";
-            conditionalFormattingObject4.RowBackColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject4.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject4.RowForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject4.TValue1 = "\"\"";
-            gridViewDecimalColumn13.ConditionalFormattingObjectList.Add(conditionalFormattingObject4);
-            gridViewDecimalColumn13.EnableExpressionEditor = false;
-            gridViewDecimalColumn13.FieldName = "QTY";
-            gridViewDecimalColumn13.FormatString = "{0:N2}";
-            gridViewDecimalColumn13.HeaderText = "จำนวนเบิก";
-            gridViewDecimalColumn13.Minimum = new decimal(new int[] {
+            gridViewDecimalColumn2.Name = "QtyPlan";
+            gridViewDecimalColumn2.ReadOnly = true;
+            gridViewDecimalColumn2.Width = 125;
+            gridViewTextBoxColumn6.EnableExpressionEditor = false;
+            gridViewTextBoxColumn6.FieldName = "UnitPlan";
+            gridViewTextBoxColumn6.HeaderText = "หน่วยทีใช้ในใบผลิต";
+            gridViewTextBoxColumn6.Name = "UnitPlan";
+            gridViewTextBoxColumn6.ReadOnly = true;
+            gridViewTextBoxColumn6.Width = 108;
+            gridViewDecimalColumn3.EnableExpressionEditor = false;
+            gridViewDecimalColumn3.FieldName = "QtyUsed";
+            gridViewDecimalColumn3.FormatString = "{0:N2}";
+            gridViewDecimalColumn3.HeaderText = "จำนวนที่เบิกไปแล้ว";
+            gridViewDecimalColumn3.Name = "QtyUsed";
+            gridViewDecimalColumn3.ReadOnly = true;
+            gridViewDecimalColumn3.Width = 119;
+            gridViewTextBoxColumn7.EnableExpressionEditor = false;
+            gridViewTextBoxColumn7.FieldName = "UnitUsed";
+            gridViewTextBoxColumn7.HeaderText = "หน่วยที่เบิกไปแล้ว";
+            gridViewTextBoxColumn7.Name = "UnitUsed";
+            gridViewTextBoxColumn7.ReadOnly = true;
+            gridViewTextBoxColumn7.Width = 113;
+            conditionalFormattingObject1.CellBackColor = System.Drawing.Color.LightCyan;
+            conditionalFormattingObject1.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject1.CellForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject1.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
+            conditionalFormattingObject1.Name = "NewCondition";
+            conditionalFormattingObject1.RowBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject1.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject1.RowForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject1.TValue1 = "\"\"";
+            gridViewDecimalColumn4.ConditionalFormattingObjectList.Add(conditionalFormattingObject1);
+            gridViewDecimalColumn4.EnableExpressionEditor = false;
+            gridViewDecimalColumn4.FieldName = "QTY";
+            gridViewDecimalColumn4.FormatString = "{0:N2}";
+            gridViewDecimalColumn4.HeaderText = "จำนวนเบิก";
+            gridViewDecimalColumn4.Minimum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            gridViewDecimalColumn13.Name = "QtyShip";
-            gridViewDecimalColumn13.Width = 91;
-            gridViewMultiComboBoxColumn3.EnableExpressionEditor = false;
-            gridViewMultiComboBoxColumn3.FieldName = "UnitShip";
-            gridViewMultiComboBoxColumn3.HeaderText = "หน่วย";
-            gridViewMultiComboBoxColumn3.Name = "UnitShip";
-            gridViewMultiComboBoxColumn3.Width = 76;
-            gridViewDecimalColumn14.EnableExpressionEditor = false;
-            gridViewDecimalColumn14.FieldName = "PCSUnit";
-            gridViewDecimalColumn14.FormatString = "{0:N2}";
-            gridViewDecimalColumn14.HeaderText = "จำนวน/หน่วย";
-            gridViewDecimalColumn14.Name = "PCSUnit";
-            gridViewDecimalColumn14.ReadOnly = true;
-            gridViewDecimalColumn14.Width = 92;
-            gridViewDecimalColumn15.EnableExpressionEditor = false;
-            gridViewDecimalColumn15.FieldName = "Qty";
-            gridViewDecimalColumn15.FormatString = "{0:N2}";
-            gridViewDecimalColumn15.HeaderText = "หน่วยที่เบิกจริง";
-            gridViewDecimalColumn15.Name = "Qty";
-            gridViewDecimalColumn15.ReadOnly = true;
-            gridViewDecimalColumn15.Width = 102;
-            gridViewDecimalColumn16.EnableExpressionEditor = false;
-            gridViewDecimalColumn16.FieldName = "UnitCost";
-            gridViewDecimalColumn16.FormatString = "{0:N2}";
-            gridViewDecimalColumn16.HeaderText = "ราคา/หน่วย";
-            gridViewDecimalColumn16.IsVisible = false;
-            gridViewDecimalColumn16.Name = "UnitCost";
-            gridViewDecimalColumn16.ReadOnly = true;
-            gridViewDecimalColumn16.Width = 98;
-            gridViewDecimalColumn17.EnableExpressionEditor = false;
-            gridViewDecimalColumn17.FieldName = "Amount";
-            gridViewDecimalColumn17.FormatString = "{0:N2}";
-            gridViewDecimalColumn17.HeaderText = "ยอดรวม";
-            gridViewDecimalColumn17.IsVisible = false;
-            gridViewDecimalColumn17.Name = "Amount";
-            gridViewDecimalColumn17.ReadOnly = true;
-            gridViewDecimalColumn17.Width = 103;
-            gridViewTextBoxColumn25.EnableExpressionEditor = false;
-            gridViewTextBoxColumn25.FieldName = "LotNo";
-            gridViewTextBoxColumn25.HeaderText = "เลข LotNo";
-            gridViewTextBoxColumn25.IsVisible = false;
-            gridViewTextBoxColumn25.Name = "LotNo";
-            gridViewTextBoxColumn25.Width = 90;
-            gridViewTextBoxColumn26.EnableExpressionEditor = false;
-            gridViewTextBoxColumn26.FieldName = "SerialNo";
-            gridViewTextBoxColumn26.HeaderText = "ซีเรียล";
-            gridViewTextBoxColumn26.IsVisible = false;
-            gridViewTextBoxColumn26.Name = "SerialNo";
-            gridViewTextBoxColumn26.Width = 112;
-            gridViewTextBoxColumn27.EnableExpressionEditor = false;
-            gridViewTextBoxColumn27.FieldName = "MachineName";
-            gridViewTextBoxColumn27.HeaderText = "ชื่อ Machine";
-            gridViewTextBoxColumn27.IsVisible = false;
-            gridViewTextBoxColumn27.Name = "MachineName";
-            gridViewTextBoxColumn27.Width = 141;
-            gridViewTextBoxColumn28.EnableExpressionEditor = false;
-            gridViewTextBoxColumn28.FieldName = "LineName";
-            gridViewTextBoxColumn28.HeaderText = "ชื่อ Line";
-            gridViewTextBoxColumn28.IsVisible = false;
-            gridViewTextBoxColumn28.Name = "LineName";
-            gridViewTextBoxColumn28.Width = 107;
-            conditionalFormattingObject5.CellBackColor = System.Drawing.Color.LightCyan;
-            conditionalFormattingObject5.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject5.CellForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject5.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
-            conditionalFormattingObject5.Name = "NewCondition";
-            conditionalFormattingObject5.RowBackColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject5.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject5.RowForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject5.TValue1 = "\"\"";
-            gridViewTextBoxColumn29.ConditionalFormattingObjectList.Add(conditionalFormattingObject5);
-            gridViewTextBoxColumn29.EnableExpressionEditor = false;
-            gridViewTextBoxColumn29.FieldName = "Remark";
-            gridViewTextBoxColumn29.HeaderText = "หมายเหตุ";
-            gridViewTextBoxColumn29.Name = "Remark";
-            gridViewTextBoxColumn29.Width = 150;
-            gridViewTextBoxColumn30.EnableExpressionEditor = false;
-            gridViewTextBoxColumn30.FieldName = "id";
-            gridViewTextBoxColumn30.HeaderText = "id";
-            gridViewTextBoxColumn30.IsVisible = false;
-            gridViewTextBoxColumn30.Name = "id";
-            gridViewTextBoxColumn30.ReadOnly = true;
-            conditionalFormattingObject6.CellBackColor = System.Drawing.Color.LightCyan;
-            conditionalFormattingObject6.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject6.CellForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject6.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
-            conditionalFormattingObject6.Name = "NewCondition";
-            conditionalFormattingObject6.RowBackColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject6.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject6.RowForeColor = System.Drawing.Color.Empty;
-            conditionalFormattingObject6.TValue1 = "\"\"";
-            gridViewMultiComboBoxColumn4.ConditionalFormattingObjectList.Add(conditionalFormattingObject6);
-            gridViewMultiComboBoxColumn4.EnableExpressionEditor = false;
-            gridViewMultiComboBoxColumn4.FieldName = "Location";
-            gridViewMultiComboBoxColumn4.HeaderText = "สถานที่เก็บ";
-            gridViewMultiComboBoxColumn4.Name = "Location";
-            gridViewMultiComboBoxColumn4.ReadOnly = true;
-            gridViewMultiComboBoxColumn4.Width = 94;
-            gridViewDecimalColumn18.EnableExpressionEditor = false;
-            gridViewDecimalColumn18.FieldName = "BasePCSUOM";
-            gridViewDecimalColumn18.HeaderText = "BasePCSUOM";
-            gridViewDecimalColumn18.IsVisible = false;
-            gridViewDecimalColumn18.Name = "BasePCSUOM";
-            gridViewTextBoxColumn31.EnableExpressionEditor = false;
-            gridViewTextBoxColumn31.FieldName = "GroupType";
-            gridViewTextBoxColumn31.HeaderText = "ประเภทกลุ่มสินค้า";
-            gridViewTextBoxColumn31.Name = "GroupType";
-            gridViewTextBoxColumn31.ReadOnly = true;
-            gridViewTextBoxColumn31.Width = 106;
-            gridViewTextBoxColumn32.EnableExpressionEditor = false;
-            gridViewTextBoxColumn32.FieldName = "Type";
-            gridViewTextBoxColumn32.HeaderText = "ประเภทสินค้า";
-            gridViewTextBoxColumn32.Name = "Type";
-            gridViewTextBoxColumn32.ReadOnly = true;
-            gridViewTextBoxColumn32.Width = 89;
-            gridViewTextBoxColumn33.EnableExpressionEditor = false;
-            gridViewTextBoxColumn33.FieldName = "idCSTMPODt";
-            gridViewTextBoxColumn33.HeaderText = "idCSTMPODt";
-            gridViewTextBoxColumn33.IsVisible = false;
-            gridViewTextBoxColumn33.Name = "idCSTMPODt";
-            gridViewTextBoxColumn33.ReadOnly = true;
-            gridViewTextBoxColumn34.EnableExpressionEditor = false;
-            gridViewTextBoxColumn34.FieldName = "idProductionOrderRM";
-            gridViewTextBoxColumn34.HeaderText = "idProductionOrderRM";
-            gridViewTextBoxColumn34.IsVisible = false;
-            gridViewTextBoxColumn34.Name = "idProductionOrderRM";
-            gridViewTextBoxColumn34.ReadOnly = true;
+            gridViewDecimalColumn4.Name = "QtyShip";
+            gridViewDecimalColumn4.Width = 91;
+            gridViewMultiComboBoxColumn1.EnableExpressionEditor = false;
+            gridViewMultiComboBoxColumn1.FieldName = "UnitShip";
+            gridViewMultiComboBoxColumn1.HeaderText = "หน่วย";
+            gridViewMultiComboBoxColumn1.Name = "UnitShip";
+            gridViewMultiComboBoxColumn1.Width = 76;
+            gridViewDecimalColumn5.EnableExpressionEditor = false;
+            gridViewDecimalColumn5.FieldName = "PCSUnit";
+            gridViewDecimalColumn5.FormatString = "{0:N2}";
+            gridViewDecimalColumn5.HeaderText = "จำนวน/หน่วย";
+            gridViewDecimalColumn5.Name = "PCSUnit";
+            gridViewDecimalColumn5.ReadOnly = true;
+            gridViewDecimalColumn5.Width = 92;
+            gridViewDecimalColumn6.EnableExpressionEditor = false;
+            gridViewDecimalColumn6.FieldName = "Qty";
+            gridViewDecimalColumn6.FormatString = "{0:N2}";
+            gridViewDecimalColumn6.HeaderText = "หน่วยที่เบิกจริง";
+            gridViewDecimalColumn6.Name = "Qty";
+            gridViewDecimalColumn6.ReadOnly = true;
+            gridViewDecimalColumn6.Width = 102;
+            gridViewDecimalColumn7.EnableExpressionEditor = false;
+            gridViewDecimalColumn7.FieldName = "UnitCost";
+            gridViewDecimalColumn7.FormatString = "{0:N2}";
+            gridViewDecimalColumn7.HeaderText = "ราคา/หน่วย";
+            gridViewDecimalColumn7.IsVisible = false;
+            gridViewDecimalColumn7.Name = "UnitCost";
+            gridViewDecimalColumn7.ReadOnly = true;
+            gridViewDecimalColumn7.Width = 98;
+            gridViewDecimalColumn8.EnableExpressionEditor = false;
+            gridViewDecimalColumn8.FieldName = "Amount";
+            gridViewDecimalColumn8.FormatString = "{0:N2}";
+            gridViewDecimalColumn8.HeaderText = "ยอดรวม";
+            gridViewDecimalColumn8.IsVisible = false;
+            gridViewDecimalColumn8.Name = "Amount";
+            gridViewDecimalColumn8.ReadOnly = true;
+            gridViewDecimalColumn8.Width = 103;
+            gridViewTextBoxColumn8.EnableExpressionEditor = false;
+            gridViewTextBoxColumn8.FieldName = "LotNo";
+            gridViewTextBoxColumn8.HeaderText = "เลข LotNo";
+            gridViewTextBoxColumn8.IsVisible = false;
+            gridViewTextBoxColumn8.Name = "LotNo";
+            gridViewTextBoxColumn8.Width = 90;
+            gridViewTextBoxColumn9.EnableExpressionEditor = false;
+            gridViewTextBoxColumn9.FieldName = "SerialNo";
+            gridViewTextBoxColumn9.HeaderText = "ซีเรียล";
+            gridViewTextBoxColumn9.IsVisible = false;
+            gridViewTextBoxColumn9.Name = "SerialNo";
+            gridViewTextBoxColumn9.Width = 112;
+            gridViewTextBoxColumn10.EnableExpressionEditor = false;
+            gridViewTextBoxColumn10.FieldName = "MachineName";
+            gridViewTextBoxColumn10.HeaderText = "ชื่อ Machine";
+            gridViewTextBoxColumn10.IsVisible = false;
+            gridViewTextBoxColumn10.Name = "MachineName";
+            gridViewTextBoxColumn10.Width = 141;
+            gridViewTextBoxColumn11.EnableExpressionEditor = false;
+            gridViewTextBoxColumn11.FieldName = "LineName";
+            gridViewTextBoxColumn11.HeaderText = "ชื่อ Line";
+            gridViewTextBoxColumn11.IsVisible = false;
+            gridViewTextBoxColumn11.Name = "LineName";
+            gridViewTextBoxColumn11.Width = 107;
+            conditionalFormattingObject2.CellBackColor = System.Drawing.Color.LightCyan;
+            conditionalFormattingObject2.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject2.CellForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject2.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
+            conditionalFormattingObject2.Name = "NewCondition";
+            conditionalFormattingObject2.RowBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject2.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject2.RowForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject2.TValue1 = "\"\"";
+            gridViewTextBoxColumn12.ConditionalFormattingObjectList.Add(conditionalFormattingObject2);
+            gridViewTextBoxColumn12.EnableExpressionEditor = false;
+            gridViewTextBoxColumn12.FieldName = "Remark";
+            gridViewTextBoxColumn12.HeaderText = "หมายเหตุ";
+            gridViewTextBoxColumn12.Name = "Remark";
+            gridViewTextBoxColumn12.Width = 150;
+            gridViewTextBoxColumn13.EnableExpressionEditor = false;
+            gridViewTextBoxColumn13.FieldName = "id";
+            gridViewTextBoxColumn13.HeaderText = "id";
+            gridViewTextBoxColumn13.IsVisible = false;
+            gridViewTextBoxColumn13.Name = "id";
+            gridViewTextBoxColumn13.ReadOnly = true;
+            conditionalFormattingObject3.CellBackColor = System.Drawing.Color.LightCyan;
+            conditionalFormattingObject3.CellFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject3.CellForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject3.ConditionType = Telerik.WinControls.UI.ConditionTypes.NotEqual;
+            conditionalFormattingObject3.Name = "NewCondition";
+            conditionalFormattingObject3.RowBackColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject3.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            conditionalFormattingObject3.RowForeColor = System.Drawing.Color.Empty;
+            conditionalFormattingObject3.TValue1 = "\"\"";
+            gridViewMultiComboBoxColumn2.ConditionalFormattingObjectList.Add(conditionalFormattingObject3);
+            gridViewMultiComboBoxColumn2.EnableExpressionEditor = false;
+            gridViewMultiComboBoxColumn2.FieldName = "Location";
+            gridViewMultiComboBoxColumn2.HeaderText = "สถานที่เก็บ";
+            gridViewMultiComboBoxColumn2.Name = "Location";
+            gridViewMultiComboBoxColumn2.ReadOnly = true;
+            gridViewMultiComboBoxColumn2.Width = 94;
+            gridViewDecimalColumn9.EnableExpressionEditor = false;
+            gridViewDecimalColumn9.FieldName = "BasePCSUOM";
+            gridViewDecimalColumn9.HeaderText = "BasePCSUOM";
+            gridViewDecimalColumn9.IsVisible = false;
+            gridViewDecimalColumn9.Name = "BasePCSUOM";
+            gridViewTextBoxColumn14.EnableExpressionEditor = false;
+            gridViewTextBoxColumn14.FieldName = "GroupType";
+            gridViewTextBoxColumn14.HeaderText = "ประเภทกลุ่มสินค้า";
+            gridViewTextBoxColumn14.Name = "GroupType";
+            gridViewTextBoxColumn14.ReadOnly = true;
+            gridViewTextBoxColumn14.Width = 106;
+            gridViewTextBoxColumn15.EnableExpressionEditor = false;
+            gridViewTextBoxColumn15.FieldName = "Type";
+            gridViewTextBoxColumn15.HeaderText = "ประเภทสินค้า";
+            gridViewTextBoxColumn15.Name = "Type";
+            gridViewTextBoxColumn15.ReadOnly = true;
+            gridViewTextBoxColumn15.Width = 89;
+            gridViewTextBoxColumn16.EnableExpressionEditor = false;
+            gridViewTextBoxColumn16.FieldName = "idCSTMPODt";
+            gridViewTextBoxColumn16.HeaderText = "idCSTMPODt";
+            gridViewTextBoxColumn16.IsVisible = false;
+            gridViewTextBoxColumn16.Name = "idCSTMPODt";
+            gridViewTextBoxColumn16.ReadOnly = true;
+            gridViewTextBoxColumn17.EnableExpressionEditor = false;
+            gridViewTextBoxColumn17.FieldName = "idProductionOrderRM";
+            gridViewTextBoxColumn17.HeaderText = "idProductionOrderRM";
+            gridViewTextBoxColumn17.IsVisible = false;
+            gridViewTextBoxColumn17.Name = "idProductionOrderRM";
+            gridViewTextBoxColumn17.ReadOnly = true;
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
-            gridViewTextBoxColumn18,
-            gridViewTextBoxColumn19,
-            gridViewTextBoxColumn20,
-            gridViewTextBoxColumn21,
-            gridViewDecimalColumn10,
-            gridViewTextBoxColumn22,
-            gridViewDecimalColumn11,
-            gridViewTextBoxColumn23,
-            gridViewDecimalColumn12,
-            gridViewTextBoxColumn24,
-            gridViewDecimalColumn13,
-            gridViewMultiComboBoxColumn3,
-            gridViewDecimalColumn14,
-            gridViewDecimalColumn15,
-            gridViewDecimalColumn16,
-            gridViewDecimalColumn17,
-            gridViewTextBoxColumn25,
-            gridViewTextBoxColumn26,
-            gridViewTextBoxColumn27,
-            gridViewTextBoxColumn28,
-            gridViewTextBoxColumn29,
-            gridViewTextBoxColumn30,
-            gridViewMultiComboBoxColumn4,
-            gridViewDecimalColumn18,
-            gridViewTextBoxColumn31,
-            gridViewTextBoxColumn32,
-            gridViewTextBoxColumn33,
-            gridViewTextBoxColumn34});
+            gridViewTextBoxColumn1,
+            gridViewTextBoxColumn2,
+            gridViewTextBoxColumn3,
+            gridViewTextBoxColumn4,
+            gridViewDecimalColumn1,
+            gridViewTextBoxColumn5,
+            gridViewDecimalColumn2,
+            gridViewTextBoxColumn6,
+            gridViewDecimalColumn3,
+            gridViewTextBoxColumn7,
+            gridViewDecimalColumn4,
+            gridViewMultiComboBoxColumn1,
+            gridViewDecimalColumn5,
+            gridViewDecimalColumn6,
+            gridViewDecimalColumn7,
+            gridViewDecimalColumn8,
+            gridViewTextBoxColumn8,
+            gridViewTextBoxColumn9,
+            gridViewTextBoxColumn10,
+            gridViewTextBoxColumn11,
+            gridViewTextBoxColumn12,
+            gridViewTextBoxColumn13,
+            gridViewMultiComboBoxColumn2,
+            gridViewDecimalColumn9,
+            gridViewTextBoxColumn14,
+            gridViewTextBoxColumn15,
+            gridViewTextBoxColumn16,
+            gridViewTextBoxColumn17});
             this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
-            this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition2;
+            this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.dgvData.Name = "dgvData";
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
@@ -834,10 +834,10 @@
             // 
             this.ddlType.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
             this.ddlType.Enabled = false;
-            radListDataItem3.Text = "CutStock";
-            radListDataItem4.Text = "None";
-            this.ddlType.Items.Add(radListDataItem3);
-            this.ddlType.Items.Add(radListDataItem4);
+            radListDataItem1.Text = "CutStock";
+            radListDataItem2.Text = "None";
+            this.ddlType.Items.Add(radListDataItem1);
+            this.ddlType.Items.Add(radListDataItem2);
             this.ddlType.Location = new System.Drawing.Point(346, 18);
             this.ddlType.Name = "ddlType";
             this.ddlType.Size = new System.Drawing.Size(119, 20);

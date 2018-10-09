@@ -48892,6 +48892,10 @@ namespace StockControl
 		
 		private string _DocNo;
 		
+		private string _DocBy;
+		
+		private System.Nullable<System.DateTime> _DocDate;
+		
 		private string _Accident_Type;
 		
 		private string _Type;
@@ -48926,6 +48930,10 @@ namespace StockControl
     partial void OnidChanged();
     partial void OnDocNoChanging(string value);
     partial void OnDocNoChanged();
+    partial void OnDocByChanging(string value);
+    partial void OnDocByChanged();
+    partial void OnDocDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDocDateChanged();
     partial void OnAccident_TypeChanging(string value);
     partial void OnAccident_TypeChanged();
     partial void OnTypeChanging(string value);
@@ -48995,6 +49003,46 @@ namespace StockControl
 					this._DocNo = value;
 					this.SendPropertyChanged("DocNo");
 					this.OnDocNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocBy", DbType="VarChar(50)")]
+		public string DocBy
+		{
+			get
+			{
+				return this._DocBy;
+			}
+			set
+			{
+				if ((this._DocBy != value))
+				{
+					this.OnDocByChanging(value);
+					this.SendPropertyChanging();
+					this._DocBy = value;
+					this.SendPropertyChanged("DocBy");
+					this.OnDocByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DocDate
+		{
+			get
+			{
+				return this._DocDate;
+			}
+			set
+			{
+				if ((this._DocDate != value))
+				{
+					this.OnDocDateChanging(value);
+					this.SendPropertyChanging();
+					this._DocDate = value;
+					this.SendPropertyChanged("DocDate");
+					this.OnDocDateChanged();
 				}
 			}
 		}
