@@ -252,11 +252,23 @@ namespace StockControl
                         {
                             if (p.FirstOrDefault().hd.OutQty - qty <= 0) //จะรับเต็มปิด job ได้ไหม ต้องเช็คว่าเบิก RM ไปเกินหรือป่าว
                             {
-                                if (p.Where(x => x.dt.OutQty < 0).Count() > 0) //เบิก RM เข้ามาเกิน
+                                foreach (var pp in p.Where(x => x.dt.OutQty < 0))
                                 {
-                                    err += $"- “{JobNo}:” จำนวนเบิกใช้ 'วัตถุดิบ' เกินกำหนด กรุณาทำ Return RM หรือ Accident Slip กรณีไม่สามารถคืนวัตถุดิบได้ \n";
-                                    break;
+                                    var outQ = pp.dt.OutQty;
+                                    var accdQ = baseClass.GetQtyAccidenSlip(pp.dt.id);
+                                    if (outQ + accdQ < 0)
+                                    {
+                                        err += $"- “{JobNo}:” จำนวนเบิกใช้ 'วัตถุดิบ' เกินกำหนด กรุณาทำ Return RM หรือ Accident Slip กรณีไม่สามารถคืนวัตถุดิบได้ \n";
+                                        break;
+                                    }
+                                    if (err != "")
+                                        break;
                                 }
+                                //if (p.Where(x => x.dt.OutQty < 0).Count() > 0) //เบิก RM เข้ามาเกิน
+                                //{
+                                //    err += $"- “{JobNo}:” จำนวนเบิกใช้ 'วัตถุดิบ' เกินกำหนด กรุณาทำ Return RM หรือ Accident Slip กรณีไม่สามารถคืนวัตถุดิบได้ \n";
+                                //    break;
+                                //}
                             }
                         }
                     }
@@ -676,7 +688,7 @@ namespace StockControl
                 }
                 if (dgvData.Rows.Where(x => x.Cells["FullTag"].Value.ToSt().Equals(FullTag)).Count() > 0)
                 {
-                    baseClass.Warning($"- Job no or QR code is already in list.\n");
+                    baseClass.Warning($"- Job no หรือ QR code ซ้ำในรายการ.\n");
                     return;
                 }
 
