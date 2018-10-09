@@ -59,6 +59,8 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn14 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn15 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem1 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem2 = new Telerik.WinControls.UI.RadListDataItem();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -94,7 +96,6 @@
             this.radLabel6 = new Telerik.WinControls.UI.RadLabel();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
             this.txtRemark = new Telerik.WinControls.UI.RadTextBox();
-            this.radGroupBox2 = new Telerik.WinControls.UI.RadGroupBox();
             this.cbShipforJob = new Telerik.WinControls.UI.RadCheckBox();
             this.txtRefidJobNo = new Telerik.WinControls.UI.RadTextBox();
             this.txtLocation = new Telerik.WinControls.UI.RadTextBox();
@@ -120,6 +121,9 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.ddlInventoryGroup = new Telerik.WinControls.UI.RadDropDownList();
+            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel11 = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -136,8 +140,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             this.radPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radGroupBox2)).BeginInit();
-            this.radGroupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbShipforJob)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRefidJobNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLocation)).BeginInit();
@@ -158,6 +160,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtSHNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSHName)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ddlInventoryGroup)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -417,7 +422,7 @@
             this.dgvData.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.dgvData.ForeColor = System.Drawing.Color.Black;
             this.dgvData.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dgvData.Location = new System.Drawing.Point(0, 135);
+            this.dgvData.Location = new System.Drawing.Point(0, 151);
             // 
             // 
             // 
@@ -656,7 +661,7 @@
             this.dgvData.Name = "dgvData";
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(901, 356);
+            this.dgvData.Size = new System.Drawing.Size(901, 340);
             this.dgvData.TabIndex = 5;
             this.dgvData.ThemeName = "Office2010Blue";
             this.dgvData.CellBeginEdit += new Telerik.WinControls.UI.GridViewCellCancelEventHandler(this.MasterTemplate_CellBeginEdit);
@@ -745,9 +750,18 @@
             // radPanel1
             // 
             this.radPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(237)))), ((int)(((byte)(250)))));
+            this.radPanel1.Controls.Add(this.cbShipforJob);
+            this.radPanel1.Controls.Add(this.txtRefidJobNo);
+            this.radPanel1.Controls.Add(this.ddlInventoryGroup);
+            this.radPanel1.Controls.Add(this.txtLocation);
             this.radPanel1.Controls.Add(this.txtRemark);
-            this.radPanel1.Controls.Add(this.radGroupBox2);
+            this.radPanel1.Controls.Add(this.radLabel14);
+            this.radPanel1.Controls.Add(this.radLabel9);
             this.radPanel1.Controls.Add(this.radLabel13);
+            this.radPanel1.Controls.Add(this.radLabel1);
+            this.radPanel1.Controls.Add(this.radLabel3);
+            this.radPanel1.Controls.Add(this.txtJobCard);
+            this.radPanel1.Controls.Add(this.radLabel11);
             this.radPanel1.Controls.Add(this.radLabel12);
             this.radPanel1.Controls.Add(this.radGroupBox1);
             this.radPanel1.Controls.Add(this.dtRequire);
@@ -761,7 +775,7 @@
             this.radPanel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(901, 135);
+            this.radPanel1.Size = new System.Drawing.Size(901, 151);
             this.radPanel1.TabIndex = 0;
             this.radPanel1.TabStop = false;
             this.radPanel1.ThemeName = "Office2010Blue";
@@ -774,31 +788,13 @@
             this.txtRemark.Location = new System.Drawing.Point(103, 88);
             this.txtRemark.Multiline = true;
             this.txtRemark.Name = "txtRemark";
-            this.txtRemark.Size = new System.Drawing.Size(132, 41);
+            this.txtRemark.Size = new System.Drawing.Size(132, 47);
             this.txtRemark.TabIndex = 4;
-            // 
-            // radGroupBox2
-            // 
-            this.radGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
-            this.radGroupBox2.Controls.Add(this.cbShipforJob);
-            this.radGroupBox2.Controls.Add(this.txtRefidJobNo);
-            this.radGroupBox2.Controls.Add(this.txtLocation);
-            this.radGroupBox2.Controls.Add(this.radLabel14);
-            this.radGroupBox2.Controls.Add(this.radLabel9);
-            this.radGroupBox2.Controls.Add(this.radLabel1);
-            this.radGroupBox2.Controls.Add(this.txtJobCard);
-            this.radGroupBox2.HeaderText = "เบิกเข้า Job Card";
-            this.radGroupBox2.Location = new System.Drawing.Point(267, 15);
-            this.radGroupBox2.Name = "radGroupBox2";
-            this.radGroupBox2.Size = new System.Drawing.Size(235, 111);
-            this.radGroupBox2.TabIndex = 25;
-            this.radGroupBox2.TabStop = false;
-            this.radGroupBox2.Text = "เบิกเข้า Job Card";
             // 
             // cbShipforJob
             // 
             this.cbShipforJob.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbShipforJob.Location = new System.Drawing.Point(92, 18);
+            this.cbShipforJob.Location = new System.Drawing.Point(346, 43);
             this.cbShipforJob.Name = "cbShipforJob";
             this.cbShipforJob.ReadOnly = true;
             this.cbShipforJob.Size = new System.Drawing.Size(78, 18);
@@ -812,7 +808,7 @@
             this.txtRefidJobNo.AcceptsReturn = true;
             this.txtRefidJobNo.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtRefidJobNo.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRefidJobNo.Location = new System.Drawing.Point(187, 18);
+            this.txtRefidJobNo.Location = new System.Drawing.Point(441, 43);
             this.txtRefidJobNo.Name = "txtRefidJobNo";
             this.txtRefidJobNo.ReadOnly = true;
             this.txtRefidJobNo.Size = new System.Drawing.Size(33, 19);
@@ -825,7 +821,7 @@
             this.txtLocation.AcceptsReturn = true;
             this.txtLocation.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtLocation.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLocation.Location = new System.Drawing.Point(92, 67);
+            this.txtLocation.Location = new System.Drawing.Point(346, 92);
             this.txtLocation.Name = "txtLocation";
             this.txtLocation.ReadOnly = true;
             this.txtLocation.Size = new System.Drawing.Size(119, 19);
@@ -836,7 +832,7 @@
             // 
             // radLabel14
             // 
-            this.radLabel14.Location = new System.Drawing.Point(32, 68);
+            this.radLabel14.Location = new System.Drawing.Point(286, 93);
             this.radLabel14.Name = "radLabel14";
             this.radLabel14.Size = new System.Drawing.Size(49, 18);
             this.radLabel14.TabIndex = 14;
@@ -844,7 +840,7 @@
             // 
             // radLabel9
             // 
-            this.radLabel9.Location = new System.Drawing.Point(6, 40);
+            this.radLabel9.Location = new System.Drawing.Point(260, 65);
             this.radLabel9.Name = "radLabel9";
             this.radLabel9.Size = new System.Drawing.Size(77, 18);
             this.radLabel9.TabIndex = 14;
@@ -854,7 +850,7 @@
             // 
             this.radLabel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel1.ForeColor = System.Drawing.Color.Red;
-            this.radLabel1.Location = new System.Drawing.Point(80, 44);
+            this.radLabel1.Location = new System.Drawing.Point(334, 69);
             this.radLabel1.Name = "radLabel1";
             this.radLabel1.Size = new System.Drawing.Size(12, 17);
             this.radLabel1.TabIndex = 16;
@@ -862,7 +858,7 @@
             // 
             // txtJobCard
             // 
-            this.txtJobCard.Location = new System.Drawing.Point(92, 41);
+            this.txtJobCard.Location = new System.Drawing.Point(346, 66);
             this.txtJobCard.Name = "txtJobCard";
             this.txtJobCard.Size = new System.Drawing.Size(119, 20);
             this.txtJobCard.TabIndex = 1;
@@ -1040,6 +1036,38 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
+            // ddlInventoryGroup
+            // 
+            this.ddlInventoryGroup.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
+            this.ddlInventoryGroup.Enabled = false;
+            radListDataItem1.Text = "CutStock";
+            radListDataItem2.Text = "None";
+            this.ddlInventoryGroup.Items.Add(radListDataItem1);
+            this.ddlInventoryGroup.Items.Add(radListDataItem2);
+            this.ddlInventoryGroup.Location = new System.Drawing.Point(346, 18);
+            this.ddlInventoryGroup.Name = "ddlInventoryGroup";
+            this.ddlInventoryGroup.Size = new System.Drawing.Size(119, 20);
+            this.ddlInventoryGroup.TabIndex = 26;
+            this.ddlInventoryGroup.ThemeName = "Office2010Blue";
+            // 
+            // radLabel3
+            // 
+            this.radLabel3.Location = new System.Drawing.Point(286, 17);
+            this.radLabel3.Name = "radLabel3";
+            this.radLabel3.Size = new System.Drawing.Size(43, 18);
+            this.radLabel3.TabIndex = 14;
+            this.radLabel3.Text = "ประเภท";
+            // 
+            // radLabel11
+            // 
+            this.radLabel11.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel11.ForeColor = System.Drawing.Color.Red;
+            this.radLabel11.Location = new System.Drawing.Point(334, 20);
+            this.radLabel11.Name = "radLabel11";
+            this.radLabel11.Size = new System.Drawing.Size(12, 17);
+            this.radLabel11.TabIndex = 16;
+            this.radLabel11.Text = "*";
+            // 
             // Acciden_t_Slip
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1078,9 +1106,6 @@
             this.radPanel1.ResumeLayout(false);
             this.radPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radGroupBox2)).EndInit();
-            this.radGroupBox2.ResumeLayout(false);
-            this.radGroupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbShipforJob)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRefidJobNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLocation)).EndInit();
@@ -1101,6 +1126,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtSHNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSHName)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ddlInventoryGroup)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1163,12 +1191,14 @@
         private Telerik.WinControls.UI.RadLabel radLabel12;
         private Telerik.WinControls.UI.RadLabel radLabel13;
         private Telerik.WinControls.UI.RadCheckBox cbShipforJob;
-        private Telerik.WinControls.UI.RadGroupBox radGroupBox2;
         private Telerik.WinControls.UI.RadTextBox txtRefidJobNo;
         private Telerik.WinControls.UI.RadTextBox txtLocation;
         private Telerik.WinControls.UI.RadLabel radLabel14;
         private Telerik.WinControls.UI.RadButtonElement radButtonElement1;
         private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup6;
         private Telerik.WinControls.UI.RadButtonElement btnDel;
+        private Telerik.WinControls.UI.RadDropDownList ddlInventoryGroup;
+        private Telerik.WinControls.UI.RadLabel radLabel3;
+        private Telerik.WinControls.UI.RadLabel radLabel11;
     }
 }
