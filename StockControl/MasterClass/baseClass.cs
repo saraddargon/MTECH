@@ -116,23 +116,23 @@ namespace StockControl
         {
             return RadMessageBox.Show(Mssg, Caption, MessageBoxButtons.YesNo, RadMessageIcon.Question) == DialogResult.Yes;
         }
-        public static bool IsSave(string Mssg = "Do you want to 'Save' ?")
+        public static bool IsSave(string Mssg = "ต้องการ 'บันทึก' ?")
         {
             return Question(Mssg, "บันทึก");
         }
-        public static bool IsApprove(string Mssg = "Do you want to 'Approve' ?")
+        public static bool IsApprove(string Mssg = "ต้องการ 'Approve' ?")
         {
             return Question(Mssg, "Approve");
         }
-        public static bool IsReject(string Mssg = "Do you want to 'Reject' ?")
+        public static bool IsReject(string Mssg = "ต้องการ 'Reject' ?")
         {
             return Question(Mssg, "Reject");
         }
-        public static bool IsSendApprove(string Mssg = "Do you want to 'Send Approve' ?")
+        public static bool IsSendApprove(string Mssg = "ต้องการ 'Send Approve' ?")
         {
             return Question(Mssg, "Send Approve");
         }
-        public static bool IsDel(string Mssg = "Do you want to 'Delete' ?")
+        public static bool IsDel(string Mssg = "ต้องการ 'ลบ' ?")
         {
             return Question(Mssg, "ลบ");
         }
@@ -421,11 +421,11 @@ namespace StockControl
         public static string setCustomerPOStatus(mh_CustomerPODT dt)
         {
             var fullQty = dt.Qty * dt.PCSUnit;
-            if (/*dt.OutPlan == fullQty &&*/ dt.OutSO == fullQty)
+            if (dt.OutPlan == fullQty && dt.OutSO == fullQty)
                 return "Waiting";
-            else if (/*dt.OutPlan == 0 &&*/ dt.OutSO == 0)
+            else if (dt.OutPlan == 0 && dt.OutSO == 0)
                 return "Completed";
-            else if (/*dt.OutPlan != fullQty ||*/ dt.OutSO != fullQty)
+            else if (dt.OutPlan != fullQty || dt.OutSO != fullQty)
                 return "Process";
             else
                 return "Waiting";
@@ -685,6 +685,25 @@ namespace StockControl
                 idJob = idJob,
                 idAbs = idAbs,
             };
+        }
+
+        //ger Price
+        public static decimal GetPriceList(string ItemNo, DateTime dt)
+        {
+            decimal ret = 0.00m;
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.mh_PriceLists.Where(x => x.InternalNo == ItemNo && dt >= x.StartDate && dt <= x.EndDate && x.SeqStatus == 2).FirstOrDefault();
+                    if (m != null) ret = Math.Round(m.UnitPrice, 2);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ret;
         }
 
     }

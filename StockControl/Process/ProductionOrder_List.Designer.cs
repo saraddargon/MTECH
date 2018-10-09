@@ -338,6 +338,7 @@
             this.radButtonElement5.Name = "radButtonElement5";
             this.radButtonElement5.Text = "Production List";
             this.radButtonElement5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.radButtonElement5.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.radButtonElement5.Click += new System.EventHandler(this.radButtonElement5_Click);
             // 
             // radMenuItem1
@@ -469,7 +470,7 @@
             gridViewTextBoxColumn2.FieldName = "StatusJob";
             gridViewTextBoxColumn2.HeaderText = "Status Job";
             gridViewTextBoxColumn2.Name = "StatusJob";
-            gridViewTextBoxColumn2.Width = 96;
+            gridViewTextBoxColumn2.Width = 110;
             gridViewTextBoxColumn3.EnableExpressionEditor = false;
             gridViewTextBoxColumn3.FieldName = "JobNo";
             gridViewTextBoxColumn3.HeaderText = "Job No";

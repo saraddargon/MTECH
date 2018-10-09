@@ -31,27 +31,7 @@ namespace StockControl
             //radGridView1.ReadOnly = true;
             LoadDef();
             var sumRow = new GridViewSummaryRowItem();
-            int mm = 1;
-            while (mm <= 12)
-            {
-                DateTime d = new DateTime(2018, mm, 1);
-                int cCol = dgvData.Columns.Count;
-                dgvData.Columns.Insert(cCol - 1, new GridViewDecimalColumn
-                {
-                    HeaderText = d.ToString("MMM").ToUpper(),
-                    Name = d.ToString("MMM").ToUpper(),
-                    FieldName = d.ToString("MMM").ToUpper(),
-                    FormatString = "{0:N2}",
-                    Width = 70,
-                });
 
-                var sum1 = new GridViewSummaryItem(d.ToString("MMM").ToUpper(), "{0:N2}", GridAggregateFunction.Sum);
-                sumRow.Add(sum1);
-
-                mm++;
-            }
-            var sum2 = new GridViewSummaryItem("Summary", "{0:N2}", GridAggregateFunction.Sum);
-            sumRow.Add(sum2);
             dgvData.SummaryRowsBottom.Add(sumRow);
             dgvData.MasterTemplate.ShowTotals = true;
 
@@ -71,6 +51,16 @@ namespace StockControl
                     yy++;
                 }
                 cbbYY.Text = DateTime.Now.Year.ToSt();
+
+                cbbMonth.Items.Add("");
+                int mm = 1;
+                while (mm <= 12)
+                {
+                    DateTime dTemp = new DateTime(yy, mm, 1);
+                    cbbMonth.Items.Add(dTemp.ToString("MMM"));
+                    mm++;
+                }
+                cbbMonth.SelectedIndex = DateTime.Now.Month;
 
                 var item = db.mh_Items.Where(x => x.Active && x.InventoryGroup == "FG")
                     .Select(x => new ItemCombo { Item = x.InternalNo, ItemName = x.InternalName }).ToList();
@@ -97,12 +87,24 @@ namespace StockControl
                 dgvData.DataSource = null;
                 dgvData.Rows.Clear();
 
+                LoadCol();
+
                 using (var db = new DataClasses1DataContext())
                 {
                     int yy = cbbYY.Text.ToInt();
+                    int mm = cbbMonth.SelectedIndex;
                     string ItemNo = cbbItem.SelectedValue.ToSt();
-                    var m = db.sp_080_CustomerPOSummary_SELECT(yy, ItemNo).ToList();
-                    dgvData.DataSource = m;
+
+                    if (mm > 0)
+                    {
+                        var m = db.sp_080_CustomerPOSummary_SELECT2(yy, mm, ItemNo).ToList();
+                        dgvData.DataSource = m;
+                    }
+                    else
+                    {
+                        var m = db.sp_080_CustomerPOSummary_SELECT(yy, ItemNo).ToList();
+                        dgvData.DataSource = m;
+                    }
 
                     dgvData.Rows.ToList().ForEach(x =>
                     {
@@ -120,18 +122,107 @@ namespace StockControl
         decimal sumRow(GridViewRowInfo rowe)
         {
             decimal ret = 0.00m;
-            int mm = 1;
-            while(mm <= 12)
+            //int mm = 1;
+            //while(mm <= 12)
+            //{
+            //    DateTime d = new DateTime(DateTime.Now.Year, mm, 1);
+            //    ret += rowe.Cells[d.ToString("MMM").ToUpper()].Value.ToDecimal();
+            //    mm++;
+            //}
+            col_del_list.ForEach(x =>
             {
-                DateTime d = new DateTime(DateTime.Now.Year, mm, 1);
-                ret += rowe.Cells[d.ToString("MMM").ToUpper()].Value.ToDecimal();
-                mm++;
-            }
+                if (x != "MM")
+                    ret += rowe.Cells[x].Value.ToDecimal();
+                
+            });
             ret = Math.Round(ret, 2);
             return ret;
 
         }
 
+        List<string> col_del_list = new List<string>();
+        void LoadCol()
+        {
+            var sumRow = dgvData.SummaryRowsBottom.FirstOrDefault();
+            sumRow.Clear();
+            col_del_list.ForEach(x => dgvData.Columns.Remove(x));
+            col_del_list.Clear();
+            var sum2 = new GridViewSummaryItem("Summary", "{0:N2}", GridAggregateFunction.Sum);
+            sumRow.Add(sum2);
+
+            if (cbbMonth.SelectedIndex > 0)
+            {
+                //add Month Col
+                DateTime dTemp = new DateTime(2018, cbbMonth.SelectedIndex, 1);
+                dgvData.Columns.Insert(dgvData.Columns.Count - 1, new GridViewDecimalColumn
+                {
+                    HeaderText = "MM",
+                    Name = "MM",
+                    FieldName = "MM",
+                    FormatString = "{0:N0}",
+                    Width = 70,
+                });
+                col_del_list.Add("MM");
+
+                int dd = 1;
+                int ddMax = DateTime.DaysInMonth(cbbYY.Text.ToInt(), cbbMonth.SelectedIndex);
+                while (dd <= ddMax)
+                {
+                    int cCol = dgvData.Columns.Count;
+                    string cName = $"D{dd}";
+                    var gcol = new GridViewDecimalColumn
+                    {
+                        HeaderText = dd.ToSt(),
+                        Name = cName,
+                        FieldName = cName,
+                        FormatString = "{0:N2}",
+                        Width = 70,
+                    };
+                    dgvData.Columns.Insert(cCol - 1, gcol);
+                    col_del_list.Add(gcol.Name);
+
+                    var sum1 = new GridViewSummaryItem(cName, "{0:N2}", GridAggregateFunction.Sum);
+                    sumRow.Add(sum1);
+
+                    dd++;
+                }
+            }
+            else
+            {
+                int mm = 1;
+                while (mm <= 12)
+                {
+                    DateTime d = new DateTime(2018, mm, 1);
+                    int cCol = dgvData.Columns.Count;
+                    var gcol = new GridViewDecimalColumn
+                    {
+                        HeaderText = d.ToString("MMM").ToUpper(),
+                        Name = d.ToString("MMM").ToUpper(),
+                        FieldName = d.ToString("MMM").ToUpper(),
+                        FormatString = "{0:N2}",
+                        Width = 70,
+                    };
+                    dgvData.Columns.Insert(cCol - 1, gcol);
+                    col_del_list.Add(gcol.Name);
+
+                    var sum1 = new GridViewSummaryItem(d.ToString("MMM").ToUpper(), "{0:N2}", GridAggregateFunction.Sum);
+                    sumRow.Add(sum1);
+
+                    mm++;
+                }
+            }
+
+            //col_del_list.ForEach(x =>
+            //{
+            //    dgvData.Columns[x].ConditionalFormattingObjectList.Add(new ConditionalFormattingObject
+            //    {
+            //        CellForeColor = Color.Gray,
+            //        Name = "E0",
+            //        ConditionType = ConditionTypes.Equal,
+            //        TValue1 = "0",
+            //    });
+            //});
+        }
 
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -374,7 +465,7 @@ namespace StockControl
 
         private void dgvData_ViewRowFormatting(object sender, RowFormattingEventArgs e)
         {
-            if(e.RowElement is GridSummaryRowElement)
+            if (e.RowElement is GridSummaryRowElement)
             {
                 e.RowElement.ForeColor = Color.Navy;
                 var f = e.RowElement.Font;

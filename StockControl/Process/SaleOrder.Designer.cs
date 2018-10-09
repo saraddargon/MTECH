@@ -68,6 +68,8 @@
             this.btnAdd_Row = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnDel_Item = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnGetPrice = new System.Windows.Forms.ToolStripMenuItem();
             this.pnFootter = new Telerik.WinControls.UI.RadPanel();
             this.txtVatA = new Telerik.WinControls.UI.RadMaskedEditBox();
             this.cbVat = new Telerik.WinControls.UI.RadCheckBox();
@@ -85,6 +87,7 @@
             this.txtAddress = new Telerik.WinControls.UI.RadTextBox();
             this.dtSODate = new Telerik.WinControls.UI.RadDateTimePicker();
             this.txtSONo = new Telerik.WinControls.UI.RadTextBox();
+            this.txtSOStatus = new Telerik.WinControls.UI.RadTextBox();
             this.txtCSTMNo = new Telerik.WinControls.UI.RadTextBox();
             this.cbbCSTM = new Telerik.WinControls.UI.RadMultiColumnComboBox();
             this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
@@ -140,7 +143,6 @@
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
-            this.txtSOStatus = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -166,6 +168,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtAddress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtSODate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSONo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSOStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCSTMNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl)).BeginInit();
@@ -187,7 +190,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSOStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -439,13 +441,16 @@
             this.btnAddPart,
             this.btnAdd_Row,
             this.toolStripSeparator2,
-            this.btnDel_Item});
+            this.btnDel_Item,
+            this.toolStripMenuItem2,
+            this.btnGetPrice});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(216, 76);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(216, 142);
             // 
             // btnAddPart
             // 
             this.btnAddPart.Enabled = false;
+            this.btnAddPart.Image = global::StockControl.Properties.Resources.linkgoto;
             this.btnAddPart.Name = "btnAddPart";
             this.btnAddPart.Size = new System.Drawing.Size(215, 22);
             this.btnAddPart.Text = "Select From Customer P/O";
@@ -455,6 +460,7 @@
             // 
             this.btnAdd_Row.BackColor = System.Drawing.Color.Transparent;
             this.btnAdd_Row.Enabled = false;
+            this.btnAdd_Row.Image = global::StockControl.Properties.Resources.add;
             this.btnAdd_Row.Name = "btnAdd_Row";
             this.btnAdd_Row.Size = new System.Drawing.Size(215, 22);
             this.btnAdd_Row.Text = "Add Item";
@@ -470,10 +476,26 @@
             // 
             this.btnDel_Item.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnDel_Item.Enabled = false;
+            this.btnDel_Item.Image = global::StockControl.Properties.Resources.del;
             this.btnDel_Item.Name = "btnDel_Item";
             this.btnDel_Item.Size = new System.Drawing.Size(215, 22);
             this.btnDel_Item.Text = "Delete";
             this.btnDel_Item.Click += new System.EventHandler(this.ลบพารทToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(215, 22);
+            this.toolStripMenuItem2.Text = " ";
+            // 
+            // btnGetPrice
+            // 
+            this.btnGetPrice.Enabled = false;
+            this.btnGetPrice.Image = global::StockControl.Properties.Resources.money;
+            this.btnGetPrice.Name = "btnGetPrice";
+            this.btnGetPrice.Size = new System.Drawing.Size(215, 22);
+            this.btnGetPrice.Text = "Get Price from Price List";
+            this.btnGetPrice.Click += new System.EventHandler(this.btnGetPrice_Click);
             // 
             // pnFootter
             // 
@@ -697,6 +719,17 @@
             this.txtSONo.Size = new System.Drawing.Size(227, 20);
             this.txtSONo.TabIndex = 3;
             this.txtSONo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPONo_KeyDown);
+            // 
+            // txtSOStatus
+            // 
+            this.txtSOStatus.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.txtSOStatus.Enabled = false;
+            this.txtSOStatus.Location = new System.Drawing.Point(441, 94);
+            this.txtSOStatus.Name = "txtSOStatus";
+            this.txtSOStatus.ReadOnly = true;
+            this.txtSOStatus.Size = new System.Drawing.Size(142, 20);
+            this.txtSOStatus.TabIndex = 2;
+            this.txtSOStatus.Visible = false;
             // 
             // txtCSTMNo
             // 
@@ -1222,17 +1255,6 @@
             this.radButtonElement1.Text = "รายการ";
             this.radButtonElement1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // txtSOStatus
-            // 
-            this.txtSOStatus.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtSOStatus.Enabled = false;
-            this.txtSOStatus.Location = new System.Drawing.Point(441, 94);
-            this.txtSOStatus.Name = "txtSOStatus";
-            this.txtSOStatus.ReadOnly = true;
-            this.txtSOStatus.Size = new System.Drawing.Size(142, 20);
-            this.txtSOStatus.TabIndex = 2;
-            this.txtSOStatus.Visible = false;
-            // 
             // SaleOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1281,6 +1303,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtAddress)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtSODate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSONo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSOStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCSTMNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl.MasterTemplate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbCSTM.EditorControl)).EndInit();
@@ -1302,7 +1325,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSOStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1393,5 +1415,7 @@
         private Telerik.WinControls.UI.RadButton radButton2;
         private Telerik.WinControls.UI.RadGridView dgvData;
         private Telerik.WinControls.UI.RadTextBox txtSOStatus;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem btnGetPrice;
     }
 }

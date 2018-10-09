@@ -132,7 +132,7 @@ namespace StockControl
             txtInvoiceNo.Text = "";
             txtDLNo.Text = "";
             txtDLNo.Enabled = false;
-            txtPackingNo.Text = dbClss.GetNo(32,0);
+            txtPackingNo.Text = dbClss.GetNo(32, 0);
             //ddlTypeReceive.Text = "";
             dtPackingDate.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             txtReceiveBy.Text = ClassLib.Classlib.User;
@@ -217,17 +217,17 @@ namespace StockControl
                 //if (txtVendorNo.Text.Equals(""))
                 //    err += "- “รหัสผู้ขาย:” เป็นค่าว่าง \n";
                 if (dtPackingDate.Text.Equals(""))
-                    err += "- “PackingDate:” is empty. \n";
+                    err += "- “Packing Date:” ว่าง\n";
 
                 if (dgvData.Rows.Count <= 0)
-                    err += "- “Data item:” is empty \n";
+                    err += "- “Data item:” ว่าง\n";
                 var idCal = new List<int>();
                 foreach (GridViewRowInfo r in dgvData.Rows)
                 {
                     string JobNo = r.Cells["RefNo"].Value.ToSt();
                     if (r.Cells["Qty"].Value.ToDecimal() <= 0)
                     {
-                        err += $"- “{JobNo}:” Receive Q'ty is 0 \n";
+                        err += $"- “{JobNo}:” จำนวนรับเป็น 0 \n";
                         break;
                     }
 
@@ -236,8 +236,29 @@ namespace StockControl
                     var outQty = r.Cells["OutQty"].Value.ToDecimal();
                     if (qty > outQty)
                     {
-                        err += $"- “{JobNo}:” Receive Q'ty more than Out Q'ty \n";
+                        err += $"- “{JobNo}:” จำนวนที่รับมากกว่าจำนวนคงเหลือ \n";
                         break;
+                    }
+
+                    //check Return RM ?
+                    using (var db = new DataClasses1DataContext())
+                    {
+                        var p = db.mh_ProductionOrders.Where(x => x.JobNo == JobNo && x.Active)
+                            .Join(db.mh_ProductionOrderRMs.Where(x => x.JobNo == JobNo && x.Active)
+                            , hd => hd.JobNo
+                            , dt => dt.JobNo
+                            , (hd, dt) => new { hd, dt }).ToList();
+                        if(p.Count > 0)
+                        {
+                            if (p.FirstOrDefault().hd.OutQty - qty <= 0) //จะรับเต็มปิด job ได้ไหม ต้องเช็คว่าเบิก RM ไปเกินหรือป่าว
+                            {
+                                if(p.Where(x=>x.dt.OutQty < 0).Count() > 0) //เบิก RM เข้ามาเกิน
+                                {
+                                    err += $"- “{JobNo}:” จำนวนเบิกใช้ 'วัตถุดิบ' เกินกำหนด กรุณาทำ Return RM หรือ Accident Slip กรณีไม่สามารถคืนวัตถุดิบได้ \n";
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -346,13 +367,13 @@ namespace StockControl
                         dt.UnitPrice = Math.Round(dt.Amount / dt.Qty, 2);
 
                         DateTime dNow = DateTime.Now.Date;
-                        string LotNo = item.Cells["LotNo"].Value.ToSt(); 
-                        var dLot = db.mh_LotFGs.Where(x => x.LotDate == dNow).FirstOrDefault();
-                        if (dLot != null)
-                        {
-                            LotNo = dLot.LotNo;
-                            //prod.LotNo = dLot.LotNo; //ใส่ lot ในใบ Production
-                        }
+                        string LotNo = item.Cells["LotNo"].Value.ToSt();
+                        //var dLot = db.mh_LotFGs.Where(x => x.LotDate == dNow).FirstOrDefault();
+                        //if (dLot != null)
+                        //{
+                        //    LotNo = dLot.LotNo;
+                        //    //prod.LotNo = dLot.LotNo; //ใส่ lot ในใบ Production
+                        //}
                         dt.LotNo = LotNo;
                         dt.ShelfNo = item.Cells["ShelfNo"].Value.ToSt();
                         dt.Remark = item.Cells["Remark"].Value.ToSt();
@@ -422,7 +443,7 @@ namespace StockControl
                                 , sodt => sodt.SONo
                                 , sohd => sohd.SONo
                                 , (sodt, sohd) => new { sohd, sodt }).FirstOrDefault();
-                            if(so != null)
+                            if (so != null)
                             {
                                 //เช็คว่าเป็น FG ที่ผลิตเพื่อ Customer PO (Safety stock หรือไม่) :::: DemandType = 1 --> ผลิตเพื่อ Safety Stock
                                 if (so.sodt.ItemNo == s.CodeNo)
@@ -645,7 +666,7 @@ namespace StockControl
                 string FullTag = JobNo;
                 decimal qtyTag = 0.00m;
                 string ofTag = "0";
-                if(FullTag.Split(',').Count() > 1)
+                if (FullTag.Split(',').Count() > 1)
                 {
                     List<string> t = FullTag.Split(',').ToList();
                     JobNo = t[0];
@@ -1014,7 +1035,7 @@ namespace StockControl
 
                                 //คืน Qty Customer P/O Dt
                                 var so = db.mh_SaleOrderDTs.Where(x => x.id == d.idCstmPODt).FirstOrDefault();
-                                if(so != null)
+                                if (so != null)
                                 {
                                     so.OutQty += d.Qty;
                                     db.SubmitChanges();

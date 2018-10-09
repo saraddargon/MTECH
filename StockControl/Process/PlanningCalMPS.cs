@@ -520,11 +520,13 @@ namespace StockControl
                         m.FGNo = item.Cells["ItemNo"].Value.ToSt();
                         m.ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value;
                         var reqDate = m.ReqDate.Date;
-                        var lot = db.mh_LotFGs.Where(x => x.LotDate == reqDate).FirstOrDefault();
-                        if (lot != null)
-                            m.LotNo = lot.LotNo;
-                        else
-                            m.LotNo = "";
+                        //var lot = db.mh_LotFGs.Where(x => x.LotDate == reqDate).FirstOrDefault();
+                        //if (lot != null)
+                        //    m.LotNo = lot.LotNo;
+                        //else
+                        //    m.LotNo = "";
+                        var runLot = dbClss.GetNo(42, 2);
+                        m.LotNo = runLot;
                         m.Qty = item.Cells["Qty"].Value.ToDecimal();
                         m.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
                         m.OutQty = m.Qty;
@@ -557,6 +559,27 @@ namespace StockControl
                                 //so.OutPlan -= m.OutQty;
                                 so.OutPlan = 0;//Full Ref SaleOrder
                                 db.SubmitChanges();
+
+                                if (so.RefId > 0)
+                                {
+                                    var po = db.mh_CustomerPODTs.Where(x => x.id == so.RefId).FirstOrDefault();
+                                    if (po != null) //Sale Order เปิดจาก Customer P/O
+                                    {
+                                        po.OutPlan = Math.Round(po.Qty * po.PCSUnit, 2);
+                                        var soAll = db.mh_SaleOrderDTs.Where(x => x.Active && x.RefId == po.id)
+                                            .Join(db.mh_SaleOrders.Where(x => x.Active)
+                                            , dt => dt.SONo
+                                            , hd => hd.SONo
+                                            , (dt, hd) => new { hd, dt }).ToList();
+                                        foreach (var s in soAll)
+                                        {
+                                            var q = Math.Round(s.dt.Qty * s.dt.PCSUnit, 2) - s.dt.OutPlan;
+                                            po.OutPlan -= q;
+                                        }
+                                        if(soAll.Count > 0)
+                                            db.SubmitChanges();
+                                    }//Customer P/O not null
+                                }
                             }
                         }
 
@@ -582,7 +605,7 @@ namespace StockControl
                                 ItemNo = itemA.InternalNo,
                                 JobNo = m.JobNo,
                                 PCSUnit = r.PCSUnit.ToDecimal(),
-                                Qty = m.Qty * r.Qty,
+                                Qty = m.Qty,
                                 OutQty = m.Qty * r.Qty,
                                 Type = itemA.Type,
                                 UOM = r.Unit,

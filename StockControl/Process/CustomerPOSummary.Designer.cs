@@ -71,7 +71,6 @@
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
             this.cbbYY = new Telerik.WinControls.UI.RadDropDownList();
             this.cbbItem = new Telerik.WinControls.UI.RadMultiColumnComboBox();
-            this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
             this.btnSearch = new Telerik.WinControls.UI.RadButton();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
@@ -81,6 +80,8 @@
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             this.btnEdit = new Telerik.WinControls.UI.RadButtonElement();
             this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
+            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
+            this.cbbMonth = new Telerik.WinControls.UI.RadDropDownList();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -93,9 +94,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.cbbItem)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbItem.EditorControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbItem.EditorControl.MasterTemplate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -363,7 +365,7 @@
             this.dgvData.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.dgvData.ForeColor = System.Drawing.Color.Black;
             this.dgvData.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dgvData.Location = new System.Drawing.Point(0, 90);
+            this.dgvData.Location = new System.Drawing.Point(0, 111);
             // 
             // 
             // 
@@ -418,7 +420,7 @@
             this.dgvData.ReadOnly = true;
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(1171, 475);
+            this.dgvData.Size = new System.Drawing.Size(1171, 454);
             this.dgvData.TabIndex = 2;
             this.dgvData.ThemeName = "Office2010Blue";
             this.dgvData.ViewRowFormatting += new Telerik.WinControls.UI.RowFormattingEventHandler(this.dgvData_ViewRowFormatting);
@@ -466,21 +468,22 @@
             // radPanel1
             // 
             this.radPanel1.BackColor = System.Drawing.Color.AliceBlue;
+            this.radPanel1.Controls.Add(this.cbbMonth);
             this.radPanel1.Controls.Add(this.cbbYY);
+            this.radPanel1.Controls.Add(this.radLabel3);
             this.radPanel1.Controls.Add(this.cbbItem);
-            this.radPanel1.Controls.Add(this.radLabel1);
             this.radPanel1.Controls.Add(this.radLabel2);
             this.radPanel1.Controls.Add(this.btnSearch);
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(1171, 90);
+            this.radPanel1.Size = new System.Drawing.Size(1171, 111);
             this.radPanel1.TabIndex = 1;
             this.radPanel1.ThemeName = "Office2010Blue";
             // 
             // cbbYY
             // 
-            this.cbbYY.Location = new System.Drawing.Point(181, 48);
+            this.cbbYY.Location = new System.Drawing.Point(285, 48);
             this.cbbYY.Name = "cbbYY";
             this.cbbYY.Size = new System.Drawing.Size(98, 20);
             this.cbbYY.TabIndex = 12;
@@ -511,18 +514,10 @@
             this.cbbItem.EditorControl.TabIndex = 0;
             this.cbbItem.Location = new System.Drawing.Point(181, 20);
             this.cbbItem.Name = "cbbItem";
-            this.cbbItem.Size = new System.Drawing.Size(186, 22);
+            this.cbbItem.Size = new System.Drawing.Size(202, 22);
             this.cbbItem.TabIndex = 11;
             this.cbbItem.TabStop = false;
             this.cbbItem.ThemeName = "Office2010Blue";
-            // 
-            // radLabel1
-            // 
-            this.radLabel1.Location = new System.Drawing.Point(77, 48);
-            this.radLabel1.Name = "radLabel1";
-            this.radLabel1.Size = new System.Drawing.Size(28, 18);
-            this.radLabel1.TabIndex = 7;
-            this.radLabel1.Text = "Year";
             // 
             // radLabel2
             // 
@@ -596,6 +591,22 @@
             this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.radButtonElement2.UseCompatibleTextRendering = false;
             // 
+            // radLabel3
+            // 
+            this.radLabel3.Location = new System.Drawing.Point(77, 48);
+            this.radLabel3.Name = "radLabel3";
+            this.radLabel3.Size = new System.Drawing.Size(66, 18);
+            this.radLabel3.TabIndex = 7;
+            this.radLabel3.Text = "Month-Year";
+            // 
+            // cbbMonth
+            // 
+            this.cbbMonth.Location = new System.Drawing.Point(181, 48);
+            this.cbbMonth.Name = "cbbMonth";
+            this.cbbMonth.Size = new System.Drawing.Size(98, 20);
+            this.cbbMonth.TabIndex = 12;
+            this.cbbMonth.ThemeName = "Office2010Blue";
+            // 
             // CustomerPOSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -628,9 +639,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.cbbItem.EditorControl.MasterTemplate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbItem.EditorControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbItem)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbMonth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -682,6 +694,7 @@
         private Telerik.WinControls.UI.RadButtonElement btnDeleteItem;
         private Telerik.WinControls.UI.RadButtonElement btnViewItem;
         private Telerik.WinControls.UI.RadDropDownList cbbYY;
-        private Telerik.WinControls.UI.RadLabel radLabel1;
+        private Telerik.WinControls.UI.RadDropDownList cbbMonth;
+        private Telerik.WinControls.UI.RadLabel radLabel3;
     }
 }

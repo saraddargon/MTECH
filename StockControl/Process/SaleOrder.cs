@@ -195,6 +195,7 @@ namespace StockControl
                             btnNew.Enabled = true;
                             radButton2.Enabled = false;
                             btnAddPart.Enabled = false;
+                            btnGetPrice.Enabled = false;
                             btnDel_Item.Enabled = false;
                             if (SS_ == 3 || lblStatus.Text == "Completed")
                                 lblStatus.Text = "Completed";
@@ -211,6 +212,7 @@ namespace StockControl
                             btnNew.Enabled = true;
                             radButton2.Enabled = false;
                             btnAddPart.Enabled = false;
+                            btnGetPrice.Enabled = false;
                             btnDel_Item.Enabled = false;
                             lblStatus.Text = "Process";
                         }
@@ -423,13 +425,14 @@ namespace StockControl
         {
             btnView.Enabled = true;
             btnEdit.Enabled = true;
-            btnNew.Enabled = false;
+            //btnNew.Enabled = false;
             btnSave.Enabled = true;
             btnDelete.Enabled = true;
 
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
+            btnGetPrice.Enabled = true;
 
             cbbCSTM.Enabled = true;
             dtSODate.ReadOnly = false;
@@ -462,6 +465,7 @@ namespace StockControl
             btnAdd_Row.Enabled = false;
             btnDel_Item.Enabled = false;
             btnAddPart.Enabled = false;
+            btnGetPrice.Enabled = false;
 
             dgvData.ReadOnly = true;
 
@@ -484,6 +488,7 @@ namespace StockControl
             btnAdd_Row.Enabled = true;
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
+            btnGetPrice.Enabled = true;
 
             cbbCSTM.Enabled = true;
 
@@ -967,6 +972,18 @@ namespace StockControl
                             e.Row.Cells["OutQty"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         }
                     }
+                    else if (e.Column.Name.Equals("ReqDate"))
+                    {
+                        //get from price List
+                        DateTime? ReqDate = e.Row.Cells["ReqDate"].Value.ToDateTime();
+                        if (ReqDate == null) return;
+                        if(e.Row.Cells["RefDocNo"].Value.ToSt() == "")
+                        {
+                            var m = baseClass.GetPriceList(itemNo, ReqDate.Value.Date);
+                            e.Row.Cells["UnitPrice"].Value = m;
+                            CallTotal();
+                        }
+                    }
 
                     e.Row.Cells["dgvC"].Value = "T";
                 }
@@ -1274,6 +1291,7 @@ namespace StockControl
                             baseClass.Warning($"Item ({itemNo} not found.!!!");
                             return;
                         }
+                        var p = baseClass.GetPriceList(itemNo, DateTime.Now);
 
                         var tU = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo && x.UOMCode == t.SalesUOM).FirstOrDefault();
                         decimal u = (tU != null) ? tU.QuantityPer : 1;
@@ -1287,11 +1305,12 @@ namespace StockControl
                         var outplan = 1 * u;
                         var outqty = 1 * u;
                         addRow(rowE.Index, DateTime.Now, itemNo, t.InternalName, "", "Warehouse"
-                            , 1, t.SalesUOM, u, t.StandardPrice, t.StandardPrice, false, outso, outplan, outqty
+                            , 1, t.SalesUOM, u, p, p, false, outso, outplan, outqty
                             , 0, "Waiting", "Waiting", cstm.VatGroup, t.VatType, "", 0, t.ReplenishmentType
                             , "T", false, false, "");
                     }
                     SetRowNo1(dgvData);
+                    CallTotal();
 
                 }
             }
@@ -1305,6 +1324,7 @@ namespace StockControl
                 decimal amnt = 0.00m;
                 foreach (var item in dgvData.Rows.Where(x => x.IsVisible))
                 {
+                    item.Cells["Amount"].Value = Math.Round(item.Cells["Qty"].Value.ToDecimal() * item.Cells["UnitPrice"].Value.ToDecimal(), 2);
                     amnt += item.Cells["Amount"].Value.ToDecimal();
                 }
                 txtTotal.Value = amnt;
@@ -1557,8 +1577,28 @@ namespace StockControl
             btnAddPart_Click(null, null);
         }
 
-
-
+        private void btnGetPrice_Click(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                if (dgvData.Rows.Count > 0 && dgvData.CurrentCell != null)
+                {
+                    var itemNo = dgvData.CurrentCell.RowInfo.Cells["ItemNo"].Value.ToSt();
+                    var reqDate = dgvData.CurrentCell.RowInfo.Cells["ReqDate"].Value.ToDateTime();
+                    if (itemNo != "" && reqDate != null)
+                        dgvData.CurrentCell.RowInfo.Cells["UnitPrice"].Value = baseClass.GetPriceList(itemNo, reqDate.Value.Date);
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
     }
 
 
