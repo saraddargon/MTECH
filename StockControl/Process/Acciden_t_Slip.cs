@@ -351,6 +351,7 @@ namespace StockControl
 
         private void ClearData()
         {
+            ddlType.Text = "";
             cbShipforJob.Checked = true;
             txtJobCard.Text = "";
             //txtTempJobCard.Text = "";
@@ -1496,6 +1497,50 @@ namespace StockControl
             //    }
             //}
         }
+        private void Insert_data_New_Location_None()
+        {
+
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+
+                string JobCard = txtJobCard.Text;
+                string Refid = txtRefidJobNo.Text;
+
+                btnNew_Click(null, null);
+                txtJobCard.Text = JobCard;
+                txtRefidJobNo.Text = Refid;
+
+                int dgvNo = 0;
+                var r = (from ix in db.sp_051_Job_list_2(JobCard,ddlType.Text)
+                         select ix).ToList();
+                if (r.Count > 0)
+                {
+
+                    foreach (var vv in r)
+                    {
+                        dgvNo = dgvData.Rows.Count() + 1;
+                        //PCSBaseUOM = dbClss.Con_UOM(vv.CodeNo, vv.BaseUOM);
+                        //if (PCSBaseUOM <= 0)
+                        //    PCSBaseUOM = 1;
+                        //AC_PCSUnit = dbClss.TDe(vv.PCSUnit) * PCSBaseUOM;
+
+                        Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescriptioin
+                                        , dbClss.TDe(vv.RemainQty), vv.QtyPlan, vv.QtyShip
+                                        , vv.UnitShip, dbClss.TDe(vv.PCSUnit)
+                                        , dbClss.TDe(vv.UnitCost)
+                                        , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, 0
+                                        , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM), dbClss.TDe(vv.QtyUsed)
+                                        , vv.GroupType, vv.Type, dbClss.TInt(vv.idCSTMPODt), dbClss.TInt(vv.id)
+                                        , vv.UnitPlan, vv.UnitUsed
+                                        , Math.Round((dbClss.TDe(vv.QtyShip) * dbClss.TDe(vv.PCSUnit)), 2)
+                                        );
+
+                    }
+                }
+                Cal_Amount();
+
+            }
+        }
         private void Insert_data_New_Location()
         {
 
@@ -1515,7 +1560,7 @@ namespace StockControl
                 //txtLocation.Text = loca;
                 
                 int dgvNo = 0;
-                var r = (from ix in db.sp_051_Job_list_2(JobCard)
+                var r = (from ix in db.sp_051_Job_list_2(JobCard,ddlType.Text)
                          select ix).ToList();
                 if (r.Count > 0)
                 {
@@ -1529,12 +1574,15 @@ namespace StockControl
                         //AC_PCSUnit = dbClss.TDe(vv.PCSUnit) * PCSBaseUOM;
                        
                         Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescriptioin
-                                        , dbClss.TDe( vv.RemainQty), vv.QtyPlan, vv.QtyShip
+                                        , dbClss.TDe( vv.RemainQty), dbClss.TDe(vv.QtyPlan), dbClss.TDe(vv.QtyShip)
                                         , vv.UnitShip, dbClss.TDe(vv.PCSUnit)
                                         , dbClss.TDe(vv.UnitCost)
                                         , vv.Amount, vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark,0
                                         , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM),dbClss.TDe(vv.QtyUsed)
-                                        ,vv.GroupType,vv.Type, dbClss.TInt(vv.idCSTMPODt),dbClss.TInt(vv.id));
+                                        ,vv.GroupType,vv.Type, dbClss.TInt(vv.idCSTMPODt),dbClss.TInt(vv.id)
+                                        , vv.UnitPlan, vv.UnitUsed
+                                        , Math.Round((dbClss.TDe(vv.QtyShip) * dbClss.TDe(vv.PCSUnit)), 2)
+                                        );
 
                     }
                 }
@@ -1547,6 +1595,7 @@ namespace StockControl
            , decimal StandardCost,decimal Amount,string LotNo,string SerialNo,string MachineName,string LineName
             ,string Remark,int id,string Location,string BaseUOM,decimal BasePCSUOM
             ,decimal QtyUsed,string GroupType,string Type, int idCSTMPODt,int idProductionOrderRM
+            , string UnitPlan, string UnitUsed, decimal Qty
             )
         {
             
@@ -1588,6 +1637,9 @@ namespace StockControl
                 ee.Cells["Type"].Value = Type;
                 ee.Cells["idCSTMPODt"].Value = idCSTMPODt;
                 ee.Cells["idProductionOrderRM"].Value = idProductionOrderRM;
+                ee.Cells["UnitPlan"].Value = UnitPlan;
+                ee.Cells["UnitUsed"].Value = UnitUsed;
+                ee.Cells["Qty"].Value = Qty;
 
                 //if (GroupCode != "Other")
                 //{
@@ -1828,35 +1880,39 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 var p = (from ix in db.mh_ProductionOrderRMs select ix)
-                     .Where
-                     (a => a.JobNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Active == true
+                         .Where
+                         (a => a.JobNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper() && a.Active == true
 
-                     ).ToList();
+                         ).ToList();
                 if (p.Count > 0)
                 {
                     if (dbClss.TBo(p.FirstOrDefault().Active) == true)
                     {
-                        //txtTempJobCard.Text = dbClss.TSt(p.FirstOrDefault().TempNo);
-                        txtRefidJobNo.Text = dbClss.TSt(p.FirstOrDefault().id);
-                        //txtLocation.Text = dbClss.TSt(p.FirstOrDefault().Location);
-                        Insert_data_New_Location();
+                        txtRefidJobNo.Text = dbClss.TSt(p.FirstOrDefault().id);                      
                     }
                     else if (dbClss.TBo(p.FirstOrDefault().Active) == false)
                     {
-                        //txtTempJobCard.Text = "";
                         txtJobCard.Text = "";
                         txtRefidJobNo.Text = "0";
-                        //txtLocation.Text = "";
                         MessageBox.Show("ใบงานการผลิตดังกล่าวถูกปิดไปแล้ว กรุณาระบุใบงานการผลิตใหม่");
+                        return;
                     }
 
                 }
                 else
                 {
                     txtJobCard.Text = "";
-                    //txtTempJobCard.Text = "";
                     txtRefidJobNo.Text = "0";
-                    //txtLocation.Text = "";
+                    return;
+                }
+
+                if (ddlType.Text=="None")
+                {
+                    Insert_data_New_Location_None();
+                }
+                else if (ddlType.Text == "CutStock")
+                {
+                    Insert_data_New_Location();
                 }
             }
         }
@@ -1865,11 +1921,18 @@ namespace StockControl
         {
             try
             {
-                if (txtJobCard.Text.Trim() == "")
-                    return;
-
+                
                 if (e.KeyValue == 13 || e.KeyValue == 9)
                 {
+                    if (txtJobCard.Text.Trim() == "")
+                        return;
+
+                    if (ddlType.Text.Trim() == "")
+                    {
+                        MessageBox.Show("เลือกประเภท !!!");
+                        return;
+                    }
+
                     Add_JobCard();
                 }
             }
@@ -1893,7 +1956,7 @@ namespace StockControl
 
         private void txtJobCard_Leave(object sender, EventArgs e)
         {
-            Add_JobCard();
+           // Add_JobCard();
         }
 
         private void txtJobCard_TextChanged(object sender, EventArgs e)

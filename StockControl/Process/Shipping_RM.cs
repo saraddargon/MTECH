@@ -1105,7 +1105,7 @@ namespace StockControl
                             //string dgvUOM = dbClss.TSt(e.Row.Cells["UnitShip"].Value);
                             string CodeNo = dbClss.TSt(e.Row.Cells["CodeNo"].Value);
                             decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
-                            string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
+                            //string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
                             decimal BasePCSUOM = dbClss.TDe(e.Row.Cells["BasePCSUOM"].Value);// dbClss.Con_UOM(CodeNo, BaseUOM);
 
                             //using (DataClasses1DataContext db = new DataClasses1DataContext())
@@ -1166,7 +1166,7 @@ namespace StockControl
                         
                         //Cal Remain Qty
                         decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
-                        string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
+                        //string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
                         decimal BasePCSUOM  = dbClss.TDe(e.Row.Cells["BasePCSUOM"].Value);//dbClss.Con_UOM(CodeNo, BaseUOM);
 
                         decimal QTY = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["QtyShip"].Value), out QTY);
@@ -1921,7 +1921,7 @@ namespace StockControl
 
         private void txtJobCard_Leave(object sender, EventArgs e)
         {
-            Add_JobCard();
+            //Add_JobCard();
         }
 
         private void txtJobCard_TextChanged(object sender, EventArgs e)

@@ -445,10 +445,10 @@
             gridViewDecimalColumn1.Width = 112;
             gridViewTextBoxColumn5.EnableExpressionEditor = false;
             gridViewTextBoxColumn5.FieldName = "BaseUOM";
-            gridViewTextBoxColumn5.HeaderText = "หน่วยสต็อก";
+            gridViewTextBoxColumn5.HeaderText = "หน่วยสต็อกปัจจุบัน";
             gridViewTextBoxColumn5.Name = "BaseUOM";
             gridViewTextBoxColumn5.ReadOnly = true;
-            gridViewTextBoxColumn5.Width = 95;
+            gridViewTextBoxColumn5.Width = 105;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "QtyPlan";
             gridViewDecimalColumn2.FormatString = "{0:N2}";
