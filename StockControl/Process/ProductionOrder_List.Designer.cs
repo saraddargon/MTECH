@@ -338,6 +338,7 @@
             this.radButtonElement5.Name = "radButtonElement5";
             this.radButtonElement5.Text = "Production List";
             this.radButtonElement5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.radButtonElement5.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.radButtonElement5.Click += new System.EventHandler(this.radButtonElement5_Click);
             // 
             // radMenuItem1
