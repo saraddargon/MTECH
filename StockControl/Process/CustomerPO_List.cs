@@ -199,6 +199,7 @@ namespace StockControl
                         return;
                     var m = new ProductionOrder(jobNo);
                     m.ShowDialog();
+                    DataLoad();
                 }
                 else
                 {
@@ -312,6 +313,7 @@ namespace StockControl
                     }
                     var so = new SaleOrder(a);
                     so.ShowDialog();
+                    DataLoad();
                 }
                 else
                 {

@@ -389,9 +389,22 @@ namespace StockControl
                 txtidCstmPODt.Text = "";
                 txtOutQty.Text = "";
                 //txtRemark.Text = "";
-                var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo && !x.CloseJob && x.Active).FirstOrDefault();
+                var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo && x.Active).FirstOrDefault();
                 if (m != null)
                 {
+                    if (m.CloseJob)
+                    {
+                        baseClass.Warning("Job No. ถูกปิดไปแล้ว. \n");
+                        txtJobNo.Text = "";
+                        return;
+                    }
+                    if (m.SeqStatus != 2)
+                    {
+                        baseClass.Warning("- สถานะ Job No. ยังไม่ Approve.");
+                        txtJobNo.Text = "";
+                        return;
+                    }
+
                     txtFGName.Text = m.FGName;
                     txtFGNo.Text = m.FGNo;
                     //txtQty.Text = m.Qty.ToSt();
@@ -400,7 +413,10 @@ namespace StockControl
                     txtidCstmPODt.Text = m.RefDocId.ToSt();
                 }
                 else
-                    baseClass.Warning("Job not found.\n");
+                {
+                    baseClass.Warning("ไม่พบ Job No.\n");
+                    txtJobNo.Text = "";
+                }
             }
         }
 

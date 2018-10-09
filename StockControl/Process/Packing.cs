@@ -248,11 +248,11 @@ namespace StockControl
                             , hd => hd.JobNo
                             , dt => dt.JobNo
                             , (hd, dt) => new { hd, dt }).ToList();
-                        if(p.Count > 0)
+                        if (p.Count > 0)
                         {
                             if (p.FirstOrDefault().hd.OutQty - qty <= 0) //จะรับเต็มปิด job ได้ไหม ต้องเช็คว่าเบิก RM ไปเกินหรือป่าว
                             {
-                                if(p.Where(x=>x.dt.OutQty < 0).Count() > 0) //เบิก RM เข้ามาเกิน
+                                if (p.Where(x => x.dt.OutQty < 0).Count() > 0) //เบิก RM เข้ามาเกิน
                                 {
                                     err += $"- “{JobNo}:” จำนวนเบิกใช้ 'วัตถุดิบ' เกินกำหนด กรุณาทำ Return RM หรือ Accident Slip กรณีไม่สามารถคืนวัตถุดิบได้ \n";
                                     break;
@@ -687,12 +687,12 @@ namespace StockControl
                     {
                         if (m.SeqStatus != 2)
                         {
-                            baseClass.Warning($"- Job no {JobNo} status not Approved.\n");
+                            baseClass.Warning($"- Job no {JobNo} สถานะยังไม่ Approve.\n");
                             return;
                         }
                         if (m.OutQty <= 0 || m.CloseJob)
                         {
-                            baseClass.Warning($"- Job no {JobNo} is already Completed.\n");
+                            baseClass.Warning($"- Job no {JobNo} สถานะ Completed แล้ว.\n");
                             return;
                         }
 
@@ -704,6 +704,7 @@ namespace StockControl
 
                         var costAll = m.CostOverhead;
                         var dt = db.mh_ProductionOrderRMs.Where(x => x.JobNo == m.JobNo && x.Active).ToList();
+
                         var dt2 = db.mh_ProductionOrderRM_2s.Where(x => x.JobNo == m.JobNo && x.Active).ToList();
                         costAll += dt.Sum(x => x.CostOverall);
                         costAll += dt2.Sum(x => x.TotalCost);

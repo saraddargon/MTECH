@@ -244,6 +244,7 @@ namespace StockControl
                     {
                         SaleOrder a = new SaleOrder(temp);
                         a.ShowDialog();
+                        DataLoad();
                     }
                 }
             }

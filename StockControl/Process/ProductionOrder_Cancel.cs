@@ -429,11 +429,13 @@ namespace StockControl
                     if (m.CloseJob)
                     {
                         baseClass.Warning("Job No. ถูกปิดไปแล้ว. \n");
+                        txtJobNo.Text = "";
                         return;
                     }
                     if (m.SeqStatus != 2)
                     {
                         baseClass.Warning("สถานะของ Job No. ยังไม่ Approve.\n");
+                        txtJobNo.Text = "";
                         return;
                     }
 
@@ -445,6 +447,7 @@ namespace StockControl
                     if (pk.Count > 0)
                     {
                         baseClass.Warning("- Job ถูกรับเข้าแล้ว.\n");
+                        txtJobNo.Text = "";
                         return;
                     }
 
