@@ -56,9 +56,13 @@
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn13 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn14 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn9 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn10 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn15 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn16 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn17 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreatePO));
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn10 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn18 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.Data.SortDescriptor sortDescriptor1 = new Telerik.WinControls.Data.SortDescriptor();
             Telerik.WinControls.Data.SortDescriptor sortDescriptor2 = new Telerik.WinControls.Data.SortDescriptor();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition2 = new Telerik.WinControls.UI.TableViewDefinition();
@@ -71,7 +75,6 @@
             Telerik.WinControls.Data.SortDescriptor sortDescriptor5 = new Telerik.WinControls.Data.SortDescriptor();
             Telerik.WinControls.Data.SortDescriptor sortDescriptor6 = new Telerik.WinControls.Data.SortDescriptor();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition4 = new Telerik.WinControls.UI.TableViewDefinition();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreatePO));
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -87,6 +90,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.openPRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnFootter = new Telerik.WinControls.UI.RadPanel();
+            this.btnCal = new Telerik.WinControls.UI.RadButton();
             this.cbvat = new Telerik.WinControls.UI.RadCheckBox();
             this.cbUsefixunit = new Telerik.WinControls.UI.RadCheckBox();
             this.cbvatDetail = new Telerik.WinControls.UI.RadCheckBox();
@@ -160,9 +164,11 @@
             this.txtSeqStatus = new Telerik.WinControls.UI.RadTextBox();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radRibbonBarButtonGroup2 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
+            this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
             this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
-            this.btnCal = new Telerik.WinControls.UI.RadButton();
+            this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -192,10 +198,9 @@
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
-            this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
-            this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
+            this.radRibbonBarGroup11 = new Telerik.WinControls.UI.RadRibbonBarGroup();
+            this.btnchangeQty = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -203,6 +208,7 @@
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pnFootter)).BeginInit();
             this.pnFootter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbvat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbUsefixunit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbvatDetail)).BeginInit();
@@ -285,7 +291,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
@@ -346,6 +351,7 @@
             gridViewTextBoxColumn1.FieldName = "No";
             gridViewTextBoxColumn1.HeaderText = "ลำดับ";
             gridViewTextBoxColumn1.Name = "dgvNo";
+            gridViewTextBoxColumn1.ReadOnly = true;
             gridViewTextBoxColumn1.Width = 45;
             gridViewTextBoxColumn2.EnableExpressionEditor = false;
             gridViewTextBoxColumn2.FieldName = "CodeNo";
@@ -393,7 +399,7 @@
             gridViewMultiComboBoxColumn2.FieldName = "Unit";
             gridViewMultiComboBoxColumn2.HeaderText = "หน่วย";
             gridViewMultiComboBoxColumn2.Name = "dgvUnit";
-            gridViewMultiComboBoxColumn2.Width = 95;
+            gridViewMultiComboBoxColumn2.Width = 68;
             gridViewDecimalColumn3.EnableExpressionEditor = false;
             gridViewDecimalColumn3.FieldName = "PCSUnit";
             gridViewDecimalColumn3.FormatString = "{0:N2}";
@@ -503,6 +509,7 @@
             gridViewCheckBoxColumn1.EnableExpressionEditor = false;
             gridViewCheckBoxColumn1.FieldName = "Discon_B";
             gridViewCheckBoxColumn1.HeaderText = "Discon";
+            gridViewCheckBoxColumn1.IsVisible = false;
             gridViewCheckBoxColumn1.MinWidth = 20;
             gridViewCheckBoxColumn1.Name = "dgvDiscon_B";
             gridViewCheckBoxColumn1.ReadOnly = true;
@@ -524,6 +531,29 @@
             gridViewTextBoxColumn9.IsVisible = false;
             gridViewTextBoxColumn9.Name = "idCSTMPODt";
             gridViewTextBoxColumn9.ReadOnly = true;
+            gridViewDecimalColumn15.EnableExpressionEditor = false;
+            gridViewDecimalColumn15.FieldName = "ChangeQty";
+            gridViewDecimalColumn15.FormatString = "{0:N2}";
+            gridViewDecimalColumn15.HeaderText = "Change Qty";
+            gridViewDecimalColumn15.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            gridViewDecimalColumn15.Name = "dgvChangeQty";
+            gridViewDecimalColumn15.Width = 100;
+            gridViewDecimalColumn16.EnableExpressionEditor = false;
+            gridViewDecimalColumn16.FieldName = "BackOrder2";
+            gridViewDecimalColumn16.HeaderText = "BackOrder2";
+            gridViewDecimalColumn16.IsVisible = false;
+            gridViewDecimalColumn16.Name = "dgvBackOrder2";
+            gridViewDecimalColumn16.ReadOnly = true;
+            gridViewDecimalColumn17.EnableExpressionEditor = false;
+            gridViewDecimalColumn17.FieldName = "OrderQty2";
+            gridViewDecimalColumn17.FormatString = "{0:N2}";
+            gridViewDecimalColumn17.HeaderText = "OrderQty2";
+            gridViewDecimalColumn17.IsVisible = false;
+            gridViewDecimalColumn17.Name = "dgvOrderQty2";
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
@@ -551,7 +581,10 @@
             gridViewCheckBoxColumn1,
             gridViewDecimalColumn13,
             gridViewDecimalColumn14,
-            gridViewTextBoxColumn9});
+            gridViewTextBoxColumn9,
+            gridViewDecimalColumn15,
+            gridViewDecimalColumn16,
+            gridViewDecimalColumn17});
             this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.dgvData.Name = "dgvData";
@@ -634,12 +667,14 @@
             this.btnDiscon_Item.Name = "btnDiscon_Item";
             this.btnDiscon_Item.Size = new System.Drawing.Size(150, 22);
             this.btnDiscon_Item.Text = "Discon";
+            this.btnDiscon_Item.Visible = false;
             this.btnDiscon_Item.Click += new System.EventHandler(this.btnDiscon_Item_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator3.Visible = false;
             // 
             // openPRToolStripMenuItem
             // 
@@ -676,6 +711,21 @@
             this.pnFootter.Name = "pnFootter";
             this.pnFootter.Size = new System.Drawing.Size(1008, 124);
             this.pnFootter.TabIndex = 1;
+            // 
+            // btnCal
+            // 
+            this.btnCal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCal.Image = ((System.Drawing.Image)(resources.GetObject("btnCal.Image")));
+            this.btnCal.Location = new System.Drawing.Point(714, 28);
+            this.btnCal.Name = "btnCal";
+            this.btnCal.Size = new System.Drawing.Size(49, 20);
+            this.btnCal.TabIndex = 12;
+            this.btnCal.TabStop = false;
+            this.btnCal.Text = "Cal.";
+            this.btnCal.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCal.ThemeName = "Office2010Blue";
+            this.btnCal.Click += new System.EventHandler(this.btnCal_Click);
             // 
             // cbvat
             // 
@@ -1151,15 +1201,15 @@
             gridViewTextBoxColumn10.ReadOnly = true;
             gridViewTextBoxColumn10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             gridViewTextBoxColumn10.Width = 129;
-            gridViewDecimalColumn15.EnableExpressionEditor = false;
-            gridViewDecimalColumn15.FieldName = "Rate";
-            gridViewDecimalColumn15.HeaderText = "Rate";
-            gridViewDecimalColumn15.Name = "Rate";
-            gridViewDecimalColumn15.ReadOnly = true;
-            gridViewDecimalColumn15.Width = 80;
+            gridViewDecimalColumn18.EnableExpressionEditor = false;
+            gridViewDecimalColumn18.FieldName = "Rate";
+            gridViewDecimalColumn18.HeaderText = "Rate";
+            gridViewDecimalColumn18.Name = "Rate";
+            gridViewDecimalColumn18.ReadOnly = true;
+            gridViewDecimalColumn18.Width = 80;
             this.cboVatType.EditorControl.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn10,
-            gridViewDecimalColumn15});
+            gridViewDecimalColumn18});
             this.cboVatType.EditorControl.MasterTemplate.EnableFiltering = true;
             this.cboVatType.EditorControl.MasterTemplate.EnableGrouping = false;
             this.cboVatType.EditorControl.MasterTemplate.ShowFilteringRow = false;
@@ -1639,7 +1689,7 @@
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(222, 34);
             this.lblStatus.TabIndex = 8;
-            this.lblStatus.Text = "Waiting Approve";
+            this.lblStatus.Text = "Waiting";
             this.lblStatus.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // radLabel9
@@ -1677,6 +1727,20 @@
             this.radRibbonBarButtonGroup2.ShowBackColor = false;
             this.radRibbonBarButtonGroup2.Text = "radRibbonBarButtonGroup2";
             // 
+            // btnFilter
+            // 
+            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Text = "Filter";
+            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // Unfilter
+            // 
+            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
+            this.Unfilter.Name = "Unfilter";
+            this.Unfilter.Text = "Un Filter";
+            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
             // radRibbonBarButtonGroup5
             // 
             this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
@@ -1696,20 +1760,13 @@
             this.radRibbonBarGroup7.Name = "radRibbonBarGroup7";
             this.radRibbonBarGroup7.Text = "List Item";
             // 
-            // btnCal
+            // radButtonElement2
             // 
-            this.btnCal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCal.Image = ((System.Drawing.Image)(resources.GetObject("btnCal.Image")));
-            this.btnCal.Location = new System.Drawing.Point(714, 28);
-            this.btnCal.Name = "btnCal";
-            this.btnCal.Size = new System.Drawing.Size(49, 20);
-            this.btnCal.TabIndex = 12;
-            this.btnCal.TabStop = false;
-            this.btnCal.Text = "Cal.";
-            this.btnCal.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnCal.ThemeName = "Office2010Blue";
-            this.btnCal.Click += new System.EventHandler(this.btnCal_Click);
+            this.radButtonElement2.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement2.Image")));
+            this.radButtonElement2.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radButtonElement2.Name = "radButtonElement2";
+            this.radButtonElement2.Text = "รายการ";
+            this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // radRibbonBar1
             // 
@@ -1756,6 +1813,7 @@
             this.radRibbonBarGroup6,
             this.radRibbonBarGroup8,
             this.radRibbonBarGroup9,
+            this.radRibbonBarGroup11,
             this.radRibbonBarGroup10});
             this.ribbonTab1.Name = "ribbonTab1";
             this.ribbonTab1.Text = "Action";
@@ -1942,6 +2000,7 @@
             this.btnDiscon});
             this.radRibbonBarGroup9.Name = "radRibbonBarGroup9";
             this.radRibbonBarGroup9.Text = "บันทึกยกเลิก";
+            this.radRibbonBarGroup9.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
             // btnDiscon
             // 
@@ -1988,28 +2047,6 @@
             this.radMenuItem2.Text = "History View";
             this.radMenuItem2.Click += new System.EventHandler(this.radMenuItem2_Click);
             // 
-            // btnFilter
-            // 
-            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
-            this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Text = "Filter";
-            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            // 
-            // Unfilter
-            // 
-            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
-            this.Unfilter.Name = "Unfilter";
-            this.Unfilter.Text = "Un Filter";
-            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            // 
-            // radButtonElement2
-            // 
-            this.radButtonElement2.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement2.Image")));
-            this.radButtonElement2.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radButtonElement2.Name = "radButtonElement2";
-            this.radButtonElement2.Text = "รายการ";
-            this.radButtonElement2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
             // radButtonElement1
             // 
             this.radButtonElement1.Image = ((System.Drawing.Image)(resources.GetObject("radButtonElement1.Image")));
@@ -2017,6 +2054,22 @@
             this.radButtonElement1.Name = "radButtonElement1";
             this.radButtonElement1.Text = "รายการ";
             this.radButtonElement1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // radRibbonBarGroup11
+            // 
+            this.radRibbonBarGroup11.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnchangeQty});
+            this.radRibbonBarGroup11.Name = "radRibbonBarGroup11";
+            this.radRibbonBarGroup11.Text = "Change Q\'ty";
+            // 
+            // btnchangeQty
+            // 
+            this.btnchangeQty.Image = ((System.Drawing.Image)(resources.GetObject("btnchangeQty.Image")));
+            this.btnchangeQty.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnchangeQty.Name = "btnchangeQty";
+            this.btnchangeQty.Text = "ปรับจำนวน";
+            this.btnchangeQty.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnchangeQty.Click += new System.EventHandler(this.btnchangeQty_Click);
             // 
             // CreatePO
             // 
@@ -2047,6 +2100,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pnFootter)).EndInit();
             this.pnFootter.ResumeLayout(false);
             this.pnFootter.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbvat)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbUsefixunit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbvatDetail)).EndInit();
@@ -2133,7 +2187,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
@@ -2267,5 +2320,7 @@
         private Telerik.WinControls.UI.RadTextBox txtSeqStatus;
         private Telerik.WinControls.UI.RadTextBox txtVersion;
         private Telerik.WinControls.UI.RadLabel radLabel31;
+        private Telerik.WinControls.UI.RadRibbonBarGroup radRibbonBarGroup11;
+        private Telerik.WinControls.UI.RadButtonElement btnchangeQty;
     }
 }
