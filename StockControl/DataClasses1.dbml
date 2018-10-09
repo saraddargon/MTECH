@@ -4815,35 +4815,6 @@
     <Parameter Name="CreateDate" Parameter="createDate" Type="System.DateTime" DbType="DateTime" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.sp_051_Job_list_2" Method="sp_051_Job_list_2">
-    <Parameter Name="JobNo" Parameter="jobNo" Type="System.String" DbType="VarChar(50)" />
-    <ElementType Name="sp_051_Job_list_2Result">
-      <Column Name="JobNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CodeNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="ItemDescriptioin" Type="System.String" DbType="VarChar(512) NOT NULL" CanBeNull="false" />
-      <Column Name="QtyUsed" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="QtyPlan" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="QtyShip" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
-      <Column Name="RemainQty" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
-      <Column Name="UnitShip" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="UnitCost" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
-      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
-      <Column Name="LotNo" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="SerialNo" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="MachineName" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="LineName" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="Remark" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Location" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="BaseUOM" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="BasePCSUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="GroupType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.sp_070_PackingList_Search" Method="sp_070_PackingList_Search">
     <Parameter Name="PKno" Parameter="pKno" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="ItemNo" Parameter="itemNo" Type="System.String" DbType="NVarChar(50)" />
@@ -5370,6 +5341,38 @@
       <Column Name="FGNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="FGName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="JobQty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_051_Job_list_2" Method="sp_051_Job_list_2">
+    <Parameter Name="JobNo" Parameter="jobNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Type" Parameter="type" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="sp_051_Job_list_2Result">
+      <Column Name="JobNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CodeNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ItemDescriptioin" Type="System.String" DbType="VarChar(512) NOT NULL" CanBeNull="false" />
+      <Column Name="QtyUsed" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="UnitUsed" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="QtyPlan" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitPlan" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="QtyShip" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="RemainQty" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
+      <Column Name="UnitShip" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitCost" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="LotNo" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="SerialNo" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="MachineName" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="LineName" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="BaseUOM" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="BasePCSUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="GroupType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="idCSTMPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>
