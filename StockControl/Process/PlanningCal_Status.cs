@@ -190,7 +190,7 @@ namespace StockControl
                                 ApproveBy = "",
                                 DemandType = 1,
                                 SeqStatus = 2,
-                                ApproveDate  =DateTime.Now,
+                                ApproveDate = DateTime.Now,
                                 SandApproveDate = DateTime.Now,
                                 VatGroup = 0,
                             };
@@ -713,14 +713,13 @@ namespace StockControl
                         t = new ItemData(b.Component);
                         itemDatas.Add(t);
                     }
-                    
+
                     decimal useQ = Math.Round(b.Qty * gPlan.UseQty, 2);
                     decimal yieldItem = 0.00m;
                     if (b.chk_YieldOperation.ToBool())
-                    {
                         yieldItem = Math.Ceiling((exYield / 100) * useQ);
-                    }
-                    decimal useQAll = Math.Round(useQ * b.PCSUnit.ToDecimal(), 2) + yieldItem;
+                    useQ += yieldItem;
+                    decimal useQAll = Math.Round(useQ * b.PCSUnit.ToDecimal(), 2);
                     var sumStockCstmPO = 0.00m; //Stock Qty + BackOrder = Stock All for this CUstomerPO dt
                     var sumStockFree = 0.00m; //Stock Free not on CUstomer PO ใดๆ
                     sumStockCstmPO = t.findStock_CustomerPO(data.DocId);

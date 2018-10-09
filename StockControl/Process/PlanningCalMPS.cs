@@ -592,10 +592,18 @@ namespace StockControl
                         var bom = db.tb_BomHDs.Where(x => x.id == itemFG.BillOfMaterials).FirstOrDefault();
                         if (bom == null) continue;
                         var rowDt = db.tb_BomDTs.Where(x => x.BomNo == bom.BomNo).ToList();
+                        var exYield = 100 - bom.YieldOperation.ToDecimal();
                         foreach (var r in rowDt)
                         {
                             var itemA = db.mh_Items.Where(x => x.InternalNo == r.Component).FirstOrDefault();
                             if (itemA == null) continue;
+                            var useQ = Math.Round(m.Qty * r.Qty, 2);
+                            decimal yieldItem = 0.00m;
+                            if (r.chk_YieldOperation.ToBool())
+                                yieldItem = Math.Ceiling((exYield / 100) * useQ);
+                            useQ += yieldItem;
+                            var useQAll = Math.Round(useQ * r.PCSUnit.ToDecimal(), 2);
+
                             var dt = new mh_ProductionOrderRM
                             {
                                 Active = true,
@@ -605,8 +613,8 @@ namespace StockControl
                                 ItemNo = itemA.InternalNo,
                                 JobNo = m.JobNo,
                                 PCSUnit = r.PCSUnit.ToDecimal(),
-                                Qty = m.Qty,
-                                OutQty = m.Qty * r.Qty,
+                                Qty = useQ,
+                                OutQty = useQAll,
                                 Type = itemA.Type,
                                 UOM = r.Unit,
                                 CostOverall = 0.00m,
