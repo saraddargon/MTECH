@@ -68,7 +68,9 @@ namespace StockControl
                         txtFGNo.Text = j.FGNo;
                         txtFGName.Text = j.FGName;
                         txtQty.Text = m.Qty.ToSt();
-                        txtOutQty.Text = j.OutQty.ToSt();
+                        txtJobQty.Text = m.JobQty.ToSt();
+                        txtOutQty.Text = m.OutQty.ToSt();
+                        txtUOM.Text = m.UOM;
                         txtidCstmPODt.Text = m.idCstmPODt.ToSt();
                         txtSPNo.Text = m.DocNo;
                         txtSeqStatus.Text = m.SeqStatus.ToSt();
@@ -144,13 +146,13 @@ namespace StockControl
                             if (canQ > outQ)
                                 err += "- จำนวนยกเลิก มากกว่าจำนวนคงเหลือ.\n";
 
-                            var pk = db.mh_PackingDts.Where(x => x.Active && x.idJob == m.id)
-                                .Join(db.mh_Packings.Where(x => x.Active)
-                                , dt => dt.PackingNo
-                                , hd => hd.PackingNo
-                                , (dt, hd) => new { hd, dt }).ToList();
-                            if (pk.Count > 0)
-                                err += "- Job ถูกรับเข้าแล้ว.\n";
+                            //var pk = db.mh_PackingDts.Where(x => x.Active && x.idJob == m.id)
+                            //    .Join(db.mh_Packings.Where(x => x.Active)
+                            //    , dt => dt.PackingNo
+                            //    , hd => hd.PackingNo
+                            //    , (dt, hd) => new { hd, dt }).ToList();
+                            //if (pk.Count > 0)
+                            //    err += "- Job ถูกรับเข้าแล้ว.\n";
                         }
                     }
                 }
@@ -204,6 +206,8 @@ namespace StockControl
                                 Qty = txtQty.Value.ToDecimal(),
                                 SeqStatus = 0,
                                 UOM = j.UOM,
+                                JobQty = txtJobQty.Text.ToDecimal(),
+                                OutQty = txtOutQty.Text.ToDecimal(),
                             };
                             db.mh_ProductionOrder_CancelQties.InsertOnSubmit(m);
                             db.SubmitChanges();
@@ -235,6 +239,8 @@ namespace StockControl
             txtFGName.Text = "";
             txtQty.Value = 0;
             txtidCstmPODt.Text = "";
+            txtUOM.Text = "";
+            txtJobQty.Text = "";
             txtOutQty.Text = "";
             txtRemark.Text = "";
             btnNew.Enabled = true;
@@ -422,6 +428,8 @@ namespace StockControl
                 txtQty.Text = "";
                 txtidCstmPODt.Text = "";
                 txtOutQty.Text = "";
+                txtJobQty.Text = "";
+                txtUOM.Text = "";
                 //txtRemark.Text = "";
                 var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo && x.Active).FirstOrDefault();
                 if (m != null)
@@ -434,28 +442,29 @@ namespace StockControl
                     }
                     if (m.SeqStatus != 2)
                     {
-                        baseClass.Warning("สถานะของ Job No. ยังไม่ Approve.\n");
+                        baseClass.Warning("สถานะของ Job No. ยังไม่ Approved.\n");
                         txtJobNo.Text = "";
                         return;
                     }
 
-                    var pk = db.mh_PackingDts.Where(x => x.Active && x.idJob == m.id)
-                        .Join(db.mh_Packings.Where(x => x.Active)
-                        , dt => dt.PackingNo
-                        , hd => hd.PackingNo
-                        , (dt, hd) => new { hd, dt }).ToList();
-                    if (pk.Count > 0)
-                    {
-                        baseClass.Warning("- Job ถูกรับเข้าแล้ว.\n");
-                        txtJobNo.Text = "";
-                        return;
-                    }
+                    //var pk = db.mh_PackingDts.Where(x => x.Active && x.idJob == m.id)
+                    //    .Join(db.mh_Packings.Where(x => x.Active)
+                    //    , dt => dt.PackingNo
+                    //    , hd => hd.PackingNo
+                    //    , (dt, hd) => new { hd, dt }).ToList();
+                    //if (pk.Count > 0)
+                    //{
+                    //    baseClass.Warning("- Job ถูกรับเข้าแล้ว.\n");
+                    //    txtJobNo.Text = "";
+                    //    return;
+                    //}
 
                     txtFGName.Text = m.FGName;
                     txtFGNo.Text = m.FGNo;
-                    //txtQty.Text = m.Qty.ToSt();
-                    txtOutQty.Text = m.OutQty.ToSt();
                     txtidCstmPODt.Text = m.RefDocId.ToSt();
+                    txtUOM.Text = m.UOM;
+                    txtJobQty.Text = m.Qty.ToString("0.00");
+                    txtOutQty.Text = m.OutQty.ToSt();
                     txtQty.Focus();
                 }
                 else

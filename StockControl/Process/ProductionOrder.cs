@@ -404,6 +404,8 @@ namespace StockControl
             dgvPurchase.Rows.Clear();
             dgvShipHistory.DataSource = null;
             dgvShipHistory.Rows.Clear();
+            dgvReceiveFG.DataSource = null;
+            dgvReceiveFG.Rows.Clear();
 
             t_JobNo = "";
         }
