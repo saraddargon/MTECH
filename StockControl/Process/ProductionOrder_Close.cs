@@ -345,7 +345,7 @@ namespace StockControl
         {
             //ShippingCancelList a = new ShippingCancelList();
             //a.Show();
-            var p = new ProductionOrder_CancelList(1);
+            var p = new ProductionOrder_CloseList(1);
             p.ShowDialog();
             if(p.retDoc != "")
             {

@@ -520,11 +520,13 @@ namespace StockControl
                         m.FGNo = item.Cells["ItemNo"].Value.ToSt();
                         m.ReqDate = item.Cells["ReqDate"].Value.ToDateTime().Value;
                         var reqDate = m.ReqDate.Date;
-                        var lot = db.mh_LotFGs.Where(x => x.LotDate == reqDate).FirstOrDefault();
-                        if (lot != null)
-                            m.LotNo = lot.LotNo;
-                        else
-                            m.LotNo = "";
+                        //var lot = db.mh_LotFGs.Where(x => x.LotDate == reqDate).FirstOrDefault();
+                        //if (lot != null)
+                        //    m.LotNo = lot.LotNo;
+                        //else
+                        //    m.LotNo = "";
+                        var runLot = dbClss.GetNo(42, 2);
+                        m.LotNo = runLot;
                         m.Qty = item.Cells["Qty"].Value.ToDecimal();
                         m.PCSUnit = item.Cells["PCSUnit"].Value.ToDecimal();
                         m.OutQty = m.Qty;
@@ -603,7 +605,7 @@ namespace StockControl
                                 ItemNo = itemA.InternalNo,
                                 JobNo = m.JobNo,
                                 PCSUnit = r.PCSUnit.ToDecimal(),
-                                Qty = m.Qty * r.Qty,
+                                Qty = m.Qty,
                                 OutQty = m.Qty * r.Qty,
                                 Type = itemA.Type,
                                 UOM = r.Unit,

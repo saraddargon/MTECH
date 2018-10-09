@@ -716,5 +716,11 @@
         <elementListCompartment Id="b4745604-a1d6-434f-8112-216513eed283" absoluteBounds="15.515, 25.21, 1.9700000000000002, 5.826131184895833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="242b7c73-d0e6-443f-8aee-73d788bcdf62" isExpanded="false" absoluteBounds="15.5, 26, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/mh_ProductionOrder_CancelQty" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3923fac4-45e8-4f30-a2ff-9975ba80edd4" absoluteBounds="15.515, 26.46, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

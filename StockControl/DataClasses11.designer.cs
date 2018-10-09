@@ -372,6 +372,9 @@ namespace StockControl
     partial void Insertmh_ProductionOrder(mh_ProductionOrder instance);
     partial void Updatemh_ProductionOrder(mh_ProductionOrder instance);
     partial void Deletemh_ProductionOrder(mh_ProductionOrder instance);
+    partial void Insertmh_ProductionOrder_CancelQty(mh_ProductionOrder_CancelQty instance);
+    partial void Updatemh_ProductionOrder_CancelQty(mh_ProductionOrder_CancelQty instance);
+    partial void Deletemh_ProductionOrder_CancelQty(mh_ProductionOrder_CancelQty instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -1345,6 +1348,14 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<mh_ProductionOrder>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_ProductionOrder_CancelQty> mh_ProductionOrder_CancelQties
+		{
+			get
+			{
+				return this.GetTable<mh_ProductionOrder_CancelQty>();
 			}
 		}
 		
@@ -47661,6 +47672,380 @@ namespace StockControl
 					this._ProductionDate = value;
 					this.SendPropertyChanged("ProductionDate");
 					this.OnProductionDateChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_ProductionOrder_CancelQty")]
+	public partial class mh_ProductionOrder_CancelQty : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _DocNo;
+		
+		private System.DateTime _DocDate;
+		
+		private string _JobNo;
+		
+		private decimal _Qty;
+		
+		private string _UOM;
+		
+		private decimal _PCSUnit;
+		
+		private System.Nullable<int> _SeqStatus;
+		
+		private string _ApproveBy;
+		
+		private System.Nullable<System.DateTime> _ApproveDate;
+		
+		private bool _Active;
+		
+		private string _CreateBy;
+		
+		private System.DateTime _CreateDate;
+		
+		private string _UpdateBy;
+		
+		private System.DateTime _UpdateDate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnDocNoChanging(string value);
+    partial void OnDocNoChanged();
+    partial void OnDocDateChanging(System.DateTime value);
+    partial void OnDocDateChanged();
+    partial void OnJobNoChanging(string value);
+    partial void OnJobNoChanged();
+    partial void OnQtyChanging(decimal value);
+    partial void OnQtyChanged();
+    partial void OnUOMChanging(string value);
+    partial void OnUOMChanged();
+    partial void OnPCSUnitChanging(decimal value);
+    partial void OnPCSUnitChanged();
+    partial void OnSeqStatusChanging(System.Nullable<int> value);
+    partial void OnSeqStatusChanged();
+    partial void OnApproveByChanging(string value);
+    partial void OnApproveByChanged();
+    partial void OnApproveDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnApproveDateChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnCreateByChanging(string value);
+    partial void OnCreateByChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
+    partial void OnUpdateByChanging(string value);
+    partial void OnUpdateByChanged();
+    partial void OnUpdateDateChanging(System.DateTime value);
+    partial void OnUpdateDateChanged();
+    #endregion
+		
+		public mh_ProductionOrder_CancelQty()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNo", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string DocNo
+		{
+			get
+			{
+				return this._DocNo;
+			}
+			set
+			{
+				if ((this._DocNo != value))
+				{
+					this.OnDocNoChanging(value);
+					this.SendPropertyChanging();
+					this._DocNo = value;
+					this.SendPropertyChanged("DocNo");
+					this.OnDocNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocDate", DbType="DateTime NOT NULL")]
+		public System.DateTime DocDate
+		{
+			get
+			{
+				return this._DocDate;
+			}
+			set
+			{
+				if ((this._DocDate != value))
+				{
+					this.OnDocDateChanging(value);
+					this.SendPropertyChanging();
+					this._DocDate = value;
+					this.SendPropertyChanged("DocDate");
+					this.OnDocDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobNo", DbType="NVarChar(50)")]
+		public string JobNo
+		{
+			get
+			{
+				return this._JobNo;
+			}
+			set
+			{
+				if ((this._JobNo != value))
+				{
+					this.OnJobNoChanging(value);
+					this.SendPropertyChanging();
+					this._JobNo = value;
+					this.SendPropertyChanged("JobNo");
+					this.OnJobNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Qty
+		{
+			get
+			{
+				return this._Qty;
+			}
+			set
+			{
+				if ((this._Qty != value))
+				{
+					this.OnQtyChanging(value);
+					this.SendPropertyChanging();
+					this._Qty = value;
+					this.SendPropertyChanged("Qty");
+					this.OnQtyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UOM", DbType="NVarChar(50)")]
+		public string UOM
+		{
+			get
+			{
+				return this._UOM;
+			}
+			set
+			{
+				if ((this._UOM != value))
+				{
+					this.OnUOMChanging(value);
+					this.SendPropertyChanging();
+					this._UOM = value;
+					this.SendPropertyChanged("UOM");
+					this.OnUOMChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2) NOT NULL")]
+		public decimal PCSUnit
+		{
+			get
+			{
+				return this._PCSUnit;
+			}
+			set
+			{
+				if ((this._PCSUnit != value))
+				{
+					this.OnPCSUnitChanging(value);
+					this.SendPropertyChanging();
+					this._PCSUnit = value;
+					this.SendPropertyChanged("PCSUnit");
+					this.OnPCSUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SeqStatus", DbType="Int")]
+		public System.Nullable<int> SeqStatus
+		{
+			get
+			{
+				return this._SeqStatus;
+			}
+			set
+			{
+				if ((this._SeqStatus != value))
+				{
+					this.OnSeqStatusChanging(value);
+					this.SendPropertyChanging();
+					this._SeqStatus = value;
+					this.SendPropertyChanged("SeqStatus");
+					this.OnSeqStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApproveBy", DbType="NVarChar(50)")]
+		public string ApproveBy
+		{
+			get
+			{
+				return this._ApproveBy;
+			}
+			set
+			{
+				if ((this._ApproveBy != value))
+				{
+					this.OnApproveByChanging(value);
+					this.SendPropertyChanging();
+					this._ApproveBy = value;
+					this.SendPropertyChanged("ApproveBy");
+					this.OnApproveByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApproveDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ApproveDate
+		{
+			get
+			{
+				return this._ApproveDate;
+			}
+			set
+			{
+				if ((this._ApproveDate != value))
+				{
+					this.OnApproveDateChanging(value);
+					this.SendPropertyChanging();
+					this._ApproveDate = value;
+					this.SendPropertyChanged("ApproveDate");
+					this.OnApproveDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="NVarChar(50)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this.OnCreateByChanging(value);
+					this.SendPropertyChanging();
+					this._CreateBy = value;
+					this.SendPropertyChanged("CreateBy");
+					this.OnCreateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="NVarChar(50)")]
+		public string UpdateBy
+		{
+			get
+			{
+				return this._UpdateBy;
+			}
+			set
+			{
+				if ((this._UpdateBy != value))
+				{
+					this.OnUpdateByChanging(value);
+					this.SendPropertyChanging();
+					this._UpdateBy = value;
+					this.SendPropertyChanged("UpdateBy");
+					this.OnUpdateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime UpdateDate
+		{
+			get
+			{
+				return this._UpdateDate;
+			}
+			set
+			{
+				if ((this._UpdateDate != value))
+				{
+					this.OnUpdateDateChanging(value);
+					this.SendPropertyChanging();
+					this._UpdateDate = value;
+					this.SendPropertyChanged("UpdateDate");
+					this.OnUpdateDateChanged();
 				}
 			}
 		}

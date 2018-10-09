@@ -154,14 +154,35 @@ namespace StockControl
                             if (shipH == null) continue;
                             var tool = db.mh_Items.Where(x => x.InternalNo == s.CodeNo).FirstOrDefault();
                             if (tool == null) continue;
-                            addRow2(s.id, s.CodeNo, tool.InternalName, s.QTY.Value, s.UnitShip, s.PCSUnit.ToDecimal()
+                            addRow2(s.id, s.CodeNo, tool.InternalName, s.QTY.Value, s.UnitShip, Math.Round(s.PCSUnit.ToDecimal(), 2)
                                 , tool.GroupType, tool.Type, tool.InventoryGroup, s.ShippingNo
                                 , shipH.ShipDate.Value.Date, s.Status);
                         }
-                        //var ship2 = db.tb_
+                        //****Load Receive FG
+                        //Receive From Packing
+                        var pkList = db.mh_PackingDts.Where(x => x.Active && x.idJob == t.id)
+                            .Join(db.mh_Packings.Where(x => x.Active)
+                            , dt => dt.PackingNo
+                            , hd => hd.PackingNo
+                            , (dt, hd) => new { hd, dt }).ToList();
+                        foreach (var pk in pkList)
+                        {
+                            addRow3(pk.dt.id.ToSt(), "Receive Job", pk.hd.PackingNo, pk.dt.Qty
+                                , pk.dt.UOM, pk.dt.PCSUnit, pk.hd.PackingDate, pk.hd.CreateBy
+                                , "Completed");
+                        }
+                        //Cancel FG Q'ty from Sale document
+                        var pdCancel = db.mh_ProductionOrder_CancelQties.Where(x => x.Active && x.SeqStatus == 2 && x.JobNo == t_JobNo).ToList();
+                        foreach(var pd in pdCancel)
+                        {
+                            addRow3(pd.DocNo, "Cancel Q'ty FG", pd.DocNo, pd.Qty, pd.UOM, pd.PCSUnit, pd.DocDate, pd.CreateBy, "Completed");
+                        }
+
 
                         SetRowNo1(dgvData);
                         SetRowNo1(dgvPurchase);
+                        SetRowNo1(dgvShipHistory);
+                        SetRowNo1(dgvReceiveFG);
                         btnView_Click(null, null);
                         txtJobNo.ReadOnly = true;
                     }
@@ -224,6 +245,20 @@ namespace StockControl
             rowe.Cells["InvGroup"].Value = InvGroup;
             rowe.Cells["RefNo"].Value = RefNo;
             rowe.Cells["ShipDate"].Value = ShipDate;
+            rowe.Cells["Status"].Value = Status;
+        }
+        private void addRow3(string id, string ReceiveType, string RefNo, decimal Qty, string UOM, decimal PCSUnit
+            , DateTime ReceiveDate, string ReceiveBy, string Status)
+        {
+            var rowe = dgvReceiveFG.Rows.AddNew();
+            rowe.Cells["id"].Value = id;
+            rowe.Cells["ReceiveType"].Value = ReceiveType;
+            rowe.Cells["RefNo"].Value = RefNo;
+            rowe.Cells["Qty"].Value = Qty;
+            rowe.Cells["UOM"].Value = UOM;
+            rowe.Cells["PCSUnit"].Value = PCSUnit;
+            rowe.Cells["ReceiveDate"].Value = ReceiveDate;
+            rowe.Cells["ReceiveBy"].Value = ReceiveBy;
             rowe.Cells["Status"].Value = Status;
         }
 
@@ -1692,6 +1727,9 @@ namespace StockControl
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
+        private void MasterTemplate_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

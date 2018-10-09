@@ -409,11 +409,11 @@
     <Compile Include="Process\ProductionOrder_Close.Designer.cs">
       <DependentUpon>ProductionOrder_Close.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\ProductionOrder_CancelList.cs">
+    <Compile Include="Process\ProductionOrder_CloseList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\ProductionOrder_CancelList.Designer.cs">
-      <DependentUpon>ProductionOrder_CancelList.cs</DependentUpon>
+    <Compile Include="Process\ProductionOrder_CloseList.Designer.cs">
+      <DependentUpon>ProductionOrder_CloseList.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Shipping_RM_List.cs">
       <SubType>Form</SubType>
@@ -1331,8 +1331,8 @@
     <EmbeddedResource Include="Process\ProductionOrder_Close.resx">
       <DependentUpon>ProductionOrder_Close.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\ProductionOrder_CancelList.resx">
-      <DependentUpon>ProductionOrder_CancelList.cs</DependentUpon>
+    <EmbeddedResource Include="Process\ProductionOrder_CloseList.resx">
+      <DependentUpon>ProductionOrder_CloseList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Shipping_RM_List.resx">
       <DependentUpon>Shipping_RM_List.cs</DependentUpon>

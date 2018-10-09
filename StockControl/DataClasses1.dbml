@@ -2177,6 +2177,24 @@
       <Column Name="ProductionDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.mh_ProductionOrder_CancelQty" Member="mh_ProductionOrder_CancelQties">
+    <Type Name="mh_ProductionOrder_CancelQty">
+      <Column Name="DocNo" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DocDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="JobNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="SeqStatus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ApproveBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ApproveDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CreateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UpdateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">
     <ElementType Name="Sp_ADM03_OpenFormSelectResult">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />

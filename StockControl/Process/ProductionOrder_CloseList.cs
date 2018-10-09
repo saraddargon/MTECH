@@ -11,15 +11,15 @@ using Telerik.WinControls.UI;
 
 namespace StockControl
 {
-    public partial class ProductionOrder_CancelList : Telerik.WinControls.UI.RadRibbonForm
+    public partial class ProductionOrder_CloseList : Telerik.WinControls.UI.RadRibbonForm
     {
         int ts = 0;
         public string retDoc = "";
-        public ProductionOrder_CancelList()
+        public ProductionOrder_CloseList()
         {
             InitializeComponent();
         }
-        public ProductionOrder_CancelList(int ts)
+        public ProductionOrder_CloseList(int ts)
         {
             this.ts = ts;
             InitializeComponent();
