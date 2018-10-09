@@ -121,12 +121,14 @@ namespace StockControl
                         txtidJob.Text = t.id.ToSt();
                         txtSeqStatus.Text = t.SeqStatus.ToSt();
 
-                        if (txtSeqStatus.Text.ToInt() == 2)
+                        if (t.CloseJob)
+                            txtStatus.Text = "Completed";
+                        else if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
+                            txtStatus.Text = "Process";
+                        else if (txtSeqStatus.Text.ToInt() == 2)
                             txtStatus.Text = "Approved";
                         else if (txtSeqStatus.Text.ToInt() == 1)
                             txtStatus.Text = "Waiting Approve";
-                        else if (t.CloseJob)
-                            txtStatus.Text = "Completed";
                         else
                             txtStatus.Text = "Waiting";
 
@@ -467,7 +469,12 @@ namespace StockControl
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (txtFGNo.Text == "") return;
-            if (Math.Round(txtFGQty.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal())
+            if(txtOutQty.Value.ToDecimal() == 0)
+            {
+                baseClass.Warning("- ไม่สามารถลบได้เนื่องจากสถานะเป็น 'Completed'.\n");
+                return;
+            }
+            else if (Math.Round(txtFGQty.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal())
             {
                 baseClass.Warning("- ไม่สามารถลบได้เนื่องจากสถานะเป็น 'Process'.\n");
                 return;

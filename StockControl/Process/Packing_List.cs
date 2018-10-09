@@ -173,10 +173,12 @@ namespace StockControl
                     int idDt = row.Cells["idCstmPODt"].Value.ToInt();
                     using (var db = new DataClasses1DataContext())
                     {
-                        var hd = db.mh_CustomerPODTs.Where(x => x.id == idDt && !x.forSafetyStock).FirstOrDefault();
+                        //var hd = db.mh_CustomerPODTs.Where(x => x.id == idDt && !x.forSafetyStock).FirstOrDefault();
+                        var hd = db.mh_SaleOrderDTs.Where(x => x.id == idDt && !x.forSafetyStock).FirstOrDefault();
                         if(hd != null)
                         {
-                            var c = new CustomerPO(hd.idCustomerPO);
+                            //var c = new CustomerPO(hd.idCustomerPO);
+                            var c = new SaleOrder(hd.SONo);
                             c.ShowDialog();
                         }
                     }
