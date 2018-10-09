@@ -395,7 +395,7 @@ namespace StockControl
                     var m = db.sp_065_PrintTag_JobNo(JobNo).ToList();
                     foreach (var mm in m)
                     {
-                        addRow(mm.ItemNo, mm.ItemName, mm.Qty, mm.UOM, mm.PCSUnit, mm.UnitPrice, mm.Amount
+                        addRow(DateTime.Now, mm.ItemNo, mm.ItemName, mm.Qty, mm.UOM, mm.PCSUnit, mm.UnitPrice, mm.Amount
                             , mm.LotNo, mm.Location, mm.ShelfNo, mm.JobNo, mm.CustomerPONo, mm.idCustomerPO
                             , mm.idJob, mm.idCstmPODt, mm.Type, mm.GroupType, mm.InvGroup);
                     }
@@ -412,11 +412,12 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
         }
 
-        private void addRow(string itemNo, string itemName, decimal qty, string uOM, decimal pCSUnit, decimal unitPrice, decimal? amount
+        private void addRow(DateTime ProdDate, string itemNo, string itemName, decimal qty, string uOM, decimal pCSUnit, decimal unitPrice, decimal? amount
             , string lotNo, string location, string shelfNo, string jobNo, string customerPONo, int idCustomerPO, int idJob, int idCstmPODt
             , string Type, string GroupType, string InvGroup)
         {
             var rowe = dgvData.Rows.AddNew();
+            rowe.Cells["ProductionDate"].Value = ProdDate;
             rowe.Cells["ItemNo"].Value = itemNo;
             rowe.Cells["ItemName"].Value = itemName;
             rowe.Cells["Qty"].Value = qty;
@@ -529,6 +530,15 @@ namespace StockControl
                                 temp_tagCount--;
                             }
                             db.SubmitChanges();
+
+                            //Save Production Date
+                            DateTime ProductionDate = row.Cells["ProductionDate"].Value.ToDateTime().Value.Date;
+                            var p = db.mh_ProductionOrders.Where(x => x.JobNo == JobNo).FirstOrDefault();
+                            if(p != null)
+                            {
+                                p.ProductionDate = ProductionDate;
+                                db.SubmitChanges();
+                            }
                         }
 
                         if(rNo > 0)
