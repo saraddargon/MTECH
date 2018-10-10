@@ -414,7 +414,7 @@ namespace StockControl
             Ac = "New";
 
            // getมาไว้ก่อน แต่ยังไมได้ save
-            txtSHNo.Text = StockControl.dbClss.GetNo(35, 0);
+            txtSHNo.Text = StockControl.dbClss.GetNo(44, 0);
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -723,7 +723,7 @@ namespace StockControl
                     this.Cursor = Cursors.WaitCursor;
 
                     if (Ac.Equals("New"))
-                        txtSHNo.Text = StockControl.dbClss.GetNo(35, 2);
+                        txtSHNo.Text = StockControl.dbClss.GetNo(44, 2);
 
                     if (!txtSHNo.Text.Equals(""))
                     {
@@ -1803,7 +1803,7 @@ namespace StockControl
                 txtCodeNo.Text = "";
 
                 this.Cursor = Cursors.WaitCursor;
-                Accident_Slip_List sc = new Accident_Slip_List(txtSHNo, txtCodeNo,"Accident_Slip");
+                Accident_Slip_CutStock_List sc = new Accident_Slip_CutStock_List(txtSHNo, txtCodeNo,"Accident_Slip");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
