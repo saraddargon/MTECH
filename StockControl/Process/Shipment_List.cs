@@ -210,10 +210,15 @@ namespace StockControl
                 else if (sType == 2)
                 {
                     dgvData.EndEdit();
+                    
+                    int a = 0;
                     foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
                     {
                         RetDT.Add(rowinfo);
+                        a = 1;
                     }
+                    if(a==0)
+                        RetDT.Add(dgvData.CurrentRow);
                     this.Close();
                 }
 
@@ -255,9 +260,15 @@ namespace StockControl
                 else if (sType == 2)
                 {
                     dgvData.EndEdit();
+                    int a = 0;
                     foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
                     {
                         RetDT.Add(rowinfo);
+                        a = 1;
+                    }
+                    if(a==0)
+                    {
+                        RetDT.Add(dgvData.CurrentRow);
                     }
                     this.Close();
                 }

@@ -560,6 +560,7 @@
             gridViewTextBoxColumn17.FieldName = "CreateBy";
             gridViewTextBoxColumn17.HeaderText = "CreateBy";
             gridViewTextBoxColumn17.Name = "CreateBy";
+            gridViewTextBoxColumn17.ReadOnly = true;
             gridViewTextBoxColumn17.Width = 100;
             gridViewDateTimeColumn1.EnableExpressionEditor = false;
             gridViewDateTimeColumn1.FieldName = "SSDate";
@@ -567,6 +568,7 @@
             gridViewDateTimeColumn1.FormatString = "{0:dd/MM/yyyy}";
             gridViewDateTimeColumn1.HeaderText = "Shipment Date";
             gridViewDateTimeColumn1.Name = "ShipmentDate";
+            gridViewDateTimeColumn1.ReadOnly = true;
             gridViewDateTimeColumn1.Width = 114;
             gridViewTextBoxColumn18.EnableExpressionEditor = false;
             gridViewTextBoxColumn18.HeaderText = "column1";
