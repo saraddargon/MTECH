@@ -553,6 +553,12 @@ namespace StockControl
         {
 
         }
+
+        private void btnPrintRCDL_Click(object sender, EventArgs e)
+        {
+            var clist = new CustomerPO_List_Print();
+            clist.ShowDialog();
+        }
     }
 
 
