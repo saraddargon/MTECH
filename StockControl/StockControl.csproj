@@ -145,6 +145,12 @@
     <Compile Include="Process\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Acciden_t_Slip_CutStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Acciden_t_Slip_CutStock.Designer.cs">
+      <DependentUpon>Acciden_t_Slip_CutStock.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\PriceList_List.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1210,6 +1216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Acciden_t_Slip_CutStock.resx">
+      <DependentUpon>Acciden_t_Slip_CutStock.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\PriceList_List.resx">
       <DependentUpon>PriceList_List.cs</DependentUpon>

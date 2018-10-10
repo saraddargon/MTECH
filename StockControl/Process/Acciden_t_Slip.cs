@@ -53,23 +53,29 @@ namespace StockControl
         }
         private void GETDTRow()
         {
-            dt_h.Columns.Add(new DataColumn("ShippingNo", typeof(string)));
-            dt_h.Columns.Add(new DataColumn("ShipName", typeof(string)));
-            dt_h.Columns.Add(new DataColumn("ShipDate", typeof(DateTime)));
+            dt_h.Columns.Add(new DataColumn("DocNo", typeof(string)));
+            dt_h.Columns.Add(new DataColumn("DocBy", typeof(string)));
+            dt_h.Columns.Add(new DataColumn("DocDate", typeof(DateTime)));
             dt_h.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
             dt_h.Columns.Add(new DataColumn("CreateBy", typeof(string)));
-            dt_h.Columns.Add(new DataColumn("UpdateDate", typeof(DateTime)));
-            dt_h.Columns.Add(new DataColumn("UpdateBy", typeof(string)));
+            dt_h.Columns.Add(new DataColumn("Accident_Type", typeof(string)));
+            dt_h.Columns.Add(new DataColumn("Type", typeof(string)));
             dt_h.Columns.Add(new DataColumn("Remark", typeof(string)));
             dt_h.Columns.Add(new DataColumn("Status", typeof(string)));
             dt_h.Columns.Add(new DataColumn("JobCard", typeof(string)));
             dt_h.Columns.Add(new DataColumn("TempJobCard", typeof(string)));
             dt_h.Columns.Add(new DataColumn("Location", typeof(string)));
-            dt_h.Columns.Add(new DataColumn("ToLocation", typeof(string)));
+            dt_h.Columns.Add(new DataColumn("id", typeof(int)));
+            dt_h.Columns.Add(new DataColumn("BarCode", typeof(Image)));
+            dt_h.Columns.Add(new DataColumn("SeqStatus", typeof(int)));
+            dt_h.Columns.Add(new DataColumn("SendApproveBy", typeof(string)));
+            dt_h.Columns.Add(new DataColumn("SendApproveDate", typeof(DateTime)));
+            dt_h.Columns.Add(new DataColumn("ApproveBy", typeof(string)));
+            dt_h.Columns.Add(new DataColumn("ApproveDate", typeof(DateTime)));
 
-            dt_d.Columns.Add(new DataColumn("ShippingNo", typeof(string)));
-            dt_d.Columns.Add(new DataColumn("ShipType", typeof(string)));
-            dt_d.Columns.Add(new DataColumn("Seq", typeof(int)));          
+            dt_d.Columns.Add(new DataColumn("id", typeof(int)));
+            dt_d.Columns.Add(new DataColumn("DocNo", typeof(string)));
+            dt_d.Columns.Add(new DataColumn("Seq", typeof(int)));         
             dt_d.Columns.Add(new DataColumn("CodeNo", typeof(string)));
             dt_d.Columns.Add(new DataColumn("ItemNo", typeof(string)));
             dt_d.Columns.Add(new DataColumn("ItemDescription", typeof(string)));
@@ -81,17 +87,20 @@ namespace StockControl
             dt_d.Columns.Add(new DataColumn("PCSUnit", typeof(decimal)));
             dt_d.Columns.Add(new DataColumn("SerialNo", typeof(string)));
             dt_d.Columns.Add(new DataColumn("LotNo", typeof(string)));
-            dt_d.Columns.Add(new DataColumn("Calbit", typeof(bool)));
-            dt_d.Columns.Add(new DataColumn("ClearFlag", typeof(bool)));
-            dt_d.Columns.Add(new DataColumn("ClearDate", typeof(bool)));
+          
             dt_d.Columns.Add(new DataColumn("Status", typeof(string)));
-            dt_d.Columns.Add(new DataColumn("BarCode", typeof(Image)));
+            dt_d.Columns.Add(new DataColumn("BaseUOM", typeof(string)));
+            dt_d.Columns.Add(new DataColumn("BasePCSUOM", typeof(decimal)));
             dt_d.Columns.Add(new DataColumn("Location", typeof(string)));
             dt_d.Columns.Add(new DataColumn("ToLocation", typeof(string)));
-            dt_d.Columns.Add(new DataColumn("idProductionOrderRM", typeof(string)));
-            
+            dt_d.Columns.Add(new DataColumn("idCSTMPODt", typeof(int)));
+            dt_d.Columns.Add(new DataColumn("idProductionOrderRM", typeof(int)));
+            dt_d.Columns.Add(new DataColumn("UnitCost", typeof(decimal)));
+            dt_d.Columns.Add(new DataColumn("Refid", typeof(int)));
+            dt_d.Columns.Add(new DataColumn("RefNo", typeof(string)));
+       
 
-        }
+    }
 
         private void Unit_Load(object sender, EventArgs e)
         {
@@ -179,15 +188,14 @@ namespace StockControl
 
                     try
                     {
-                        var g = (from ix in db.tb_ShippingHs select ix).Where(a => a.ShippingNo == txtSHNo.Text.Trim()).ToList();
+                        var g = (from ix in db.mh_Accident_SlipHs select ix).Where(a => a.DocNo == txtSHNo.Text.Trim()).ToList();
                         if (g.Count() > 0)
                         {
                             DateTime? temp_date = null;
                             txtRemark.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Remark);
-                            
-                            //txtTempJobCard.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TempJobCard);
                             txtJobCard.Text = StockControl.dbClss.TSt(g.FirstOrDefault().JobCard);
-                            //txtLocation.Text = dbClss.TSt(g.FirstOrDefault().ToLocation);
+                            ddlType.Text = dbClss.TSt(g.FirstOrDefault().Type);
+                            txtSHNo.Text = dbClss.TSt(g.FirstOrDefault().DocNo);
 
                             if (txtJobCard.Text != "")
                             {
@@ -204,21 +212,17 @@ namespace StockControl
                             else
                                 cbShipforJob.Checked = false;
 
-                            if (!StockControl.dbClss.TSt(g.FirstOrDefault().ShipDate).Equals(""))
-                                dtRequire.Value = Convert.ToDateTime(g.FirstOrDefault().ShipDate);
+                            if (!StockControl.dbClss.TSt(g.FirstOrDefault().DocDate).Equals(""))
+                                dtRequire.Value = Convert.ToDateTime(g.FirstOrDefault().DocDate);
                             else
                                 dtRequire.Value = Convert.ToDateTime(temp_date);
 
-
+                            txtSHName.Text = StockControl.dbClss.TSt(g.FirstOrDefault().DocBy);
                             txtCreateBy.Text = StockControl.dbClss.TSt(g.FirstOrDefault().CreateBy);
-                            if (!StockControl.dbClss.TSt(g.FirstOrDefault().UpdateBy).Equals(""))
-                                txtCreateBy.Text = StockControl.dbClss.TSt(g.FirstOrDefault().UpdateBy);
+                           
                             if (!StockControl.dbClss.TSt(g.FirstOrDefault().CreateDate).Equals(""))
                             {
-                                if (!StockControl.dbClss.TSt(g.FirstOrDefault().UpdateDate).Equals(""))
-                                    txtCreateDate.Text = Convert.ToDateTime(g.FirstOrDefault().UpdateDate).ToString("dd/MMM/yyyy");
-                                else
-                                    txtCreateDate.Text = Convert.ToDateTime(g.FirstOrDefault().CreateDate).ToString("dd/MMM/yyyy");
+                                txtCreateDate.Text = Convert.ToDateTime(g.FirstOrDefault().CreateDate).ToString("dd/MMM/yyyy");
                             }
                             else
                                 txtCreateDate.Text = "";
@@ -226,8 +230,9 @@ namespace StockControl
                             //lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
                             if (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Cancel"))
                             {
+                                ddlType.Enabled = false;
                                 btnSave.Enabled = false;
-                                //btnDelete.Enabled = false;
+                                btnDel.Enabled = false;
                                 //btnView.Enabled = false;
                                 //btnEdit.Enabled = false;
                                 lblStatus.Text = "Cancel";
@@ -238,8 +243,9 @@ namespace StockControl
                             else if
                                 (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Process"))
                             {
+                                ddlType.Enabled = false;
                                 btnSave.Enabled = false;
-                                //btnDelete.Enabled = false;
+                                btnDel.Enabled = false;
                                 //btnView.Enabled = false;
                                 //btnEdit.Enabled = false;
                                 lblStatus.Text = "Process";
@@ -251,8 +257,9 @@ namespace StockControl
                                 (StockControl.dbClss.TSt(g.FirstOrDefault().Status).Equals("Completed"))
                                 
                             {
+                                ddlType.Enabled = false;
                                 btnSave.Enabled = false;
-                                //btnDelete.Enabled = false;
+                                btnDel.Enabled = false;
                                 //btnView.Enabled = false;
                                 //btnEdit.Enabled = false;
                                 lblStatus.Text = "Completed";
@@ -264,7 +271,7 @@ namespace StockControl
                             {
                                 btnNew.Enabled = true;
                                 btnSave.Enabled = true;
-                                //btnDelete.Enabled = true;
+                                btnDel.Enabled = true;
                                 //btnView.Enabled = true;
                                 //btnEdit.Enabled = true;
                                 lblStatus.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Status);
@@ -274,8 +281,8 @@ namespace StockControl
                             dt_h = StockControl.dbClss.LINQToDataTable(g);
 
                             //Detail
-                            var d = (from ix in db.tb_Shippings select ix)
-                            .Where(a => a.ShippingNo == txtSHNo.Text.Trim()
+                            var d = (from ix in db.mh_Accident_Slips select ix)
+                            .Where(a => a.DocNo == txtSHNo.Text.Trim()
                                 && a.Status != "Cancel").ToList();
                             if (d.Count() > 0)
                             {
@@ -298,11 +305,13 @@ namespace StockControl
                                     {
                                         x.Cells["GroupType"].Value = dbClss.TSt(p.FirstOrDefault().GroupType);
                                         x.Cells["Type"].Value = dbClss.TSt(p.FirstOrDefault().InventoryGroup);
+                                        x.Cells["UnitUsed"].Value = dbClss.TSt(p.FirstOrDefault().BaseUOM);
                                     }
 
-                                    x.Cells["QtyUsed"].Value = dbClss.TDe( db.Get_ShipQty(Convert.ToString(x.Cells["CodeNo"].Value),txtJobCard.Text));
+                                    // x.Cells["QtyUsed"].Value = dbClss.TDe( db.Get_ShipQty(Convert.ToString(x.Cells["CodeNo"].Value),txtJobCard.Text));
 
-                                    //id = Convert.ToInt32(x.Cells["id"].Value);
+                                    x.Cells["Qty"].Value = Math.Round((dbClss.TDe(x.Cells["QtyUsed"].Value) * dbClss.TDe(x.Cells["PCSUnit"].Value)),2);
+
                                     var s = (from ix in db.tb_Stocks select ix)
                                    .Where(a => a.DocNo == txtSHNo.Text.Trim()
                                        //&& a.Refid == id)
@@ -315,6 +324,15 @@ namespace StockControl
                                         x.Cells["RemainQty"].Value = Convert.ToDecimal(s.RemainQty);
                                         x.Cells["UnitCost"].Value = Convert.ToDecimal(s.UnitCost);
                                         x.Cells["Amount"].Value = Math.Abs(Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QtyShip"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
+                                    }
+
+                                    var prm = (from ix in db.mh_ProductionOrderRMs select ix)
+                                        .Where
+                                        (a => a.id  == Convert.ToInt16(x.Cells["idProductionOrderRM"].Value)).ToList();
+                                    if (prm.Count > 0)
+                                    {
+                                        x.Cells["QtyPlan"].Value = dbClss.TDe(prm.FirstOrDefault().Qty);
+                                        x.Cells["UnitPlan"].Value = dbClss.TSt(prm.FirstOrDefault().UOM);
                                     }
                                 }
                             }
@@ -375,6 +393,7 @@ namespace StockControl
         {
             if (Condition.Equals("-") || Condition.Equals("New"))
             {
+                ddlType.Enabled = ss;
                 txtSHName.Enabled = ss;
                 txtRemark.Enabled = ss;
                 dtRequire.Enabled = ss;
@@ -385,6 +404,7 @@ namespace StockControl
             }
             else if (Condition.Equals("View"))
             {
+                ddlType.Enabled = ss;
                 txtSHName.Enabled = ss;
                 txtRemark.Enabled = ss;
                 dtRequire.Enabled = ss;
@@ -396,6 +416,7 @@ namespace StockControl
 
             else if (Condition.Equals("Edit"))
             {
+                ddlType.Enabled = ss;
                 txtSHName.Enabled = ss;
                 txtRemark.Enabled = ss;
                 dtRequire.Enabled = ss;
@@ -458,6 +479,8 @@ namespace StockControl
                     txtRefidJobNo.Text = "0";
                 }
 
+                if (ddlType.Text.Equals(""))
+                    err += "- “ประเภท:” เป็นค่าว่าง \n";
                 if (txtSHName.Text.Equals(""))
                     err += "- “ผู้เบิกสินค้า:” เป็นค่าว่าง \n";
                 if (dtRequire.Text.Equals(""))
@@ -2260,8 +2283,8 @@ namespace StockControl
                     using (DataClasses1DataContext db = new DataClasses1DataContext())
                     {
 
-                        MessageBox.Show("รอเช็คเรื่องการปิดจอบแล้วจะ ลบไมไม่ได้");
-                        return;
+                        //MessageBox.Show("รอเช็คเรื่องการปิดจอบแล้วจะ ลบไมไม่ได้");
+                        //return;
 
                         var unit1 = (from ix in db.mh_Accident_SlipHs
                                      where ix.Status != "Cancel"
@@ -2290,7 +2313,7 @@ namespace StockControl
                                             ss.Status = "Cancel";
                                             db.SubmitChanges();
                                             //update Stock backorder
-                                            db.sp_010_Update_StockItem(Convert.ToString(ss.CodeNo), "BackOrder");
+                                            //db.sp_010_Update_StockItem(Convert.ToString(ss.CodeNo), "BackOrder");
                                         }
 
                                     }

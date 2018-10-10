@@ -304,27 +304,25 @@ namespace StockControl
                     //{
                     //    Status = "";
                     //}
-                    var r = (from d in db.tb_Shippings
-                             join h in db.tb_ShippingHs on d.ShippingNo equals h.ShippingNo
+                    var r = (from d in db.mh_Accident_Slips
+                             join h in db.mh_Accident_SlipHs on d.DocNo equals h.DocNo
                              //join i in db.mh_Items on d.CodeNo equals i.InternalNo
 
                              where h.Status != "Cancel" //&& d.verticalID == VerticalID
                                    && d.Status != "Cancel"
-                                 && d.ShippingNo.Contains(txtSHNo.Text.Trim())
+                                 && d.DocNo.Contains(txtSHNo.Text.Trim())
                                  && h.JobCard != ""
-                                 && h.ShippingNo.Substring(0, 2)== "AS"
+                                 && h.DocNo.Substring(0, 2)== "AS"
 
-                                 && (((h.ShipDate >= inclusiveStart
-                                   && h.ShipDate < exclusiveEnd)
+                                 && (((h.DocDate >= inclusiveStart
+                                   && h.DocDate < exclusiveEnd)
                                    && cbDate.Checked == true)
                                 || (cbDate.Checked == false))
 
-                             //&& ((Convert.ToDateTime(h.ShipDate.Value)) >= (Convert.ToDateTime(dtDate1.Value)))
-                             //&& ((Convert.ToDateTime(h.ShipDate.Value)) <= (Convert.ToDateTime(dtDate2.Value)))
-
+                            
                              select new
                              {
-                                 ShippingNo = d.ShippingNo,
+                                 ShippingNo = d.DocNo,
                                  CodeNo = d.CodeNo,
                                  ItemNo = d.ItemNo,
                                  ItemDescription = d.ItemDescription,
@@ -334,7 +332,7 @@ namespace StockControl
                                  ////LeadTime = i.Leadtime,
                                  //MaxStock = i.MaximumQty,
                                  //MinStock = i.MinimumQty,
-                                 ShipName = h.ShipName,
+                                 ShipName = h.DocBy,
                                  CreateDate = h.CreateDate,
 
                                  CreateBy = h.CreateBy,
