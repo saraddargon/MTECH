@@ -494,8 +494,16 @@ namespace StockControl
                         //    err += "- “จำนวนเบิก:” ต้องมากกว่า 0 \n";
                         //}
                         //else 
-                        if (StockControl.dbClss.TInt(rowInfo.Cells["QtyShip"].Value) != (0))
+                        if (StockControl.dbClss.TInt(rowInfo.Cells["QtyShip"].Value) != (0)
+                            && StockControl.dbClss.TInt(rowInfo.Cells["Qty"].Value) != (0)
+                            )
                         {
+                            if (StockControl.dbClss.TDe(rowInfo.Cells["PCSUnit"].Value) <= 0)
+                            {
+                                err += "- “จำนวน/หน่วย:” น้อยกว่า 0 \n";
+                                break;
+                            }
+
                             c += 1;
 
                             CodeNo = "";
@@ -1169,6 +1177,10 @@ namespace StockControl
                         
                         //Cal Remain Qty
                         decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
+                        if (PCSUnit <= 0)
+                        {
+                            MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
+                        }
                         //string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
                         decimal BasePCSUOM  = dbClss.TDe(e.Row.Cells["BasePCSUOM"].Value);//dbClss.Con_UOM(CodeNo, BaseUOM);
 
@@ -1210,7 +1222,11 @@ namespace StockControl
 
                             //Cal Remain Qty
                             decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
-                            string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
+                            if (PCSUnit <= 0)
+                            {
+                                MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
+                            }
+                            //string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
                             decimal BasePCSUOM = dbClss.TDe(e.Row.Cells["BasePCSUOM"].Value);// dbClss.Con_UOM(CodeNo, BaseUOM);
 
                             decimal QTY = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["QtyShip"].Value), out QTY);

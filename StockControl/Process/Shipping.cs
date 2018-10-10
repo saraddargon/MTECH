@@ -1164,6 +1164,10 @@ namespace StockControl
                         
                         //Cal Remain Qty
                         decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
+                        if (PCSUnit <= 0)
+                        {
+                            MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
+                        }
                         string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
                         decimal BasePCSUOM  = dbClss.Con_UOM(CodeNo, BaseUOM);
 
@@ -1198,6 +1202,10 @@ namespace StockControl
 
                             //Cal Remain Qty
                             decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
+                            if (PCSUnit <= 0)
+                            {
+                                MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
+                            }
                             string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
                             decimal BasePCSUOM  = dbClss.Con_UOM(CodeNo, BaseUOM);
 
