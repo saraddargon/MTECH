@@ -474,8 +474,15 @@ namespace StockControl
                         //    err += "- “จำนวนเบิก:” ต้องมากกว่า 0 \n";
                         //}
                         //else 
-                        if (StockControl.dbClss.TInt(rowInfo.Cells["QtyShip"].Value) != (0))
+                        if (StockControl.dbClss.TInt(rowInfo.Cells["QtyShip"].Value) != (0)
+                            && StockControl.dbClss.TInt(rowInfo.Cells["Qty"].Value) != (0)
+                            )
                         {
+                            if (StockControl.dbClss.TDe(rowInfo.Cells["PCSUnit"].Value) <= 0)
+                            {
+                                err += "- “จำนวน/หน่วย:” น้อยกว่า 0 \n";
+                                break;
+                            }
                             c += 1;
                             
                                 CodeNo = "";
@@ -1144,9 +1151,13 @@ namespace StockControl
                         string dgvUOM = dbClss.TSt(e.Row.Cells["UnitShip"].Value);
                         string CodeNo = dbClss.TSt(e.Row.Cells["CodeNo"].Value);
                         e.Row.Cells["PCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
-                        
+                       
                         //Cal Remain Qty
                         decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
+                        if(PCSUnit<=0)
+                        {
+                            MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
+                        }
                         //string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
                         decimal BasePCSUOM  = dbClss.TDe(e.Row.Cells["BasePCSUOM"].Value);//dbClss.Con_UOM(CodeNo, BaseUOM);
 
@@ -1186,9 +1197,13 @@ namespace StockControl
                             string dgvUOM = dbClss.TSt(e.Row.Cells["UnitShip"].Value);
                             string CodeNo = dbClss.TSt(e.Row.Cells["CodeNo"].Value);
                             e.Row.Cells["PCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
-
+                            
                             //Cal Remain Qty
                             decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
+                            if (PCSUnit <= 0)
+                            {
+                                MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
+                            }
                             string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
                             decimal BasePCSUOM = dbClss.TDe(e.Row.Cells["BasePCSUOM"].Value);// dbClss.Con_UOM(CodeNo, BaseUOM);
 
@@ -1562,13 +1577,14 @@ namespace StockControl
                     var r = (from ix in db.mh_Accident_Slips
                              .Where(ab => ab.DocNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper()
                              && ab.Status != "Cancel" && ab.Status != "Completed"
-                             && Convert.ToDecimal(ab.OutShip) >0
+                             && Convert.ToDecimal(ab.OutShip) > 0
                              )
                              select ix).ToList();
                     if (r.Count > 0)
                     {
                         string GroupType = "";
                         string Type = "";
+                        decimal RemainQty = 0;
                         foreach (var vv in r)
                         {
                             dgvNo = dgvData.Rows.Count() + 1;
@@ -1584,8 +1600,10 @@ namespace StockControl
                                 GroupType = dbClss.TSt(p.FirstOrDefault().GroupType);
                                 Type = dbClss.TSt(p.FirstOrDefault().Type);
                             }
+                            RemainQty =dbClss.TDe(db.Cal_QTY_Remain_Location(vv.CodeNo, "SafetyStock", 0, vv.Location, 0));
+
                             Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
-                                            , dbClss.TDe(vv.OutShip), dbClss.TDe(vv.OutShip), dbClss.TDe(vv.OutShip)
+                                            , RemainQty, dbClss.TDe(vv.OutShip), dbClss.TDe(vv.OutShip)
                                             , vv.UnitShip, dbClss.TDe(vv.PCSUnit)
                                             , dbClss.TDe(vv.UnitCost)
                                             , Math.Round((dbClss.TDe(vv.UnitCost) * dbClss.TDe(vv.OutShip)), 2)
@@ -1594,13 +1612,15 @@ namespace StockControl
                                             , GroupType, Type, dbClss.TInt(vv.idCSTMPODt), dbClss.TInt(vv.idProductionOrderRM)
                                             , vv.UnitShip, vv.BaseUOM
                                             , Math.Round((dbClss.TDe(vv.OutShip) * dbClss.TDe(vv.PCSUnit)), 2)
-                                            ,vv.id
+                                            , vv.id
                                             );
 
                         }
                     }
                     Cal_Amount();
                 }
+                else
+                    MessageBox.Show("not found.");
             }
         }
         private void Add_Item(int Row, string CodeNo, string ItemNo

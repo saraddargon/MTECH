@@ -760,6 +760,7 @@
             this.txtTotal.Size = new System.Drawing.Size(92, 19);
             this.txtTotal.TabIndex = 8;
             this.txtTotal.TabStop = false;
+            this.txtTotal.Visible = false;
             // 
             // radLabel6
             // 
@@ -770,6 +771,7 @@
             this.radLabel6.Size = new System.Drawing.Size(67, 17);
             this.radLabel6.TabIndex = 8;
             this.radLabel6.Text = "จำนวน (รวม)";
+            this.radLabel6.Visible = false;
             // 
             // radPanel1
             // 

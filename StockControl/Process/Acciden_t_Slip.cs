@@ -310,20 +310,33 @@ namespace StockControl
 
                                     // x.Cells["QtyUsed"].Value = dbClss.TDe( db.Get_ShipQty(Convert.ToString(x.Cells["CodeNo"].Value),txtJobCard.Text));
 
-                                    x.Cells["Qty"].Value = Math.Round((dbClss.TDe(x.Cells["QtyUsed"].Value) * dbClss.TDe(x.Cells["PCSUnit"].Value)),2);
-
-                                    var s = (from ix in db.tb_Stocks select ix)
-                                   .Where(a => a.DocNo == txtSHNo.Text.Trim()
-                                       //&& a.Refid == id)
-                                       && a.Location == Convert.ToString(x.Cells["Location"].Value)
-                                       && a.CodeNo == Convert.ToString(x.Cells["CodeNo"].Value)).OrderByDescending(ab => ab.id)
-
-                                       .FirstOrDefault();
-                                    if (s != null)
+                                    x.Cells["Qty"].Value = Math.Round((dbClss.TDe(x.Cells["QtyShip"].Value) * dbClss.TDe(x.Cells["PCSUnit"].Value)),2);
+                                    
+                                    if (ddlType.Text == "CutStock")
                                     {
-                                        x.Cells["RemainQty"].Value = Convert.ToDecimal(s.RemainQty);
-                                        x.Cells["UnitCost"].Value = Convert.ToDecimal(s.UnitCost);
-                                        x.Cells["Amount"].Value = Math.Abs(Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QtyShip"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
+                                        var s = (from ix in db.tb_Stocks select ix)
+                                       .Where(a => a.DocNo == txtSHNo.Text.Trim()
+                                           //&& a.Refid == id)
+                                           && a.Location == Convert.ToString(x.Cells["Location"].Value)
+                                           && a.CodeNo == Convert.ToString(x.Cells["CodeNo"].Value)).OrderByDescending(ab => ab.id)
+
+                                           .FirstOrDefault();
+                                        if (s != null)
+                                        {
+                                            x.Cells["RemainQty"].Value = Convert.ToDecimal(s.RemainQty);
+                                            x.Cells["UnitCost"].Value = Convert.ToDecimal(s.UnitCost);
+                                            x.Cells["Amount"].Value = Math.Abs(Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QtyShip"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
+                                        }
+                                        else
+                                        {
+                                            x.Cells["RemainQty"].Value = dbClss.TDe(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["CodeNo"].Value), "SafetyStock", 0, Convert.ToString(x.Cells["Location"].Value), 0));
+                                            x.Cells["Amount"].Value = Math.Round((dbClss.TDe(x.Cells["UnitCost"].Value) * dbClss.TDe(x.Cells["QtyUsed"].Value)), 2);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        x.Cells["RemainQty"].Value = dbClss.TDe(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["CodeNo"].Value), "SafetyStock", 0, Convert.ToString(x.Cells["Location"].Value), 0));
+                                        x.Cells["Amount"].Value = Math.Round((dbClss.TDe(x.Cells["UnitCost"].Value)* dbClss.TDe(x.Cells["QtyUsed"].Value)),2);
                                     }
 
                                     var prm = (from ix in db.mh_ProductionOrderRMs select ix)
@@ -333,6 +346,8 @@ namespace StockControl
                                     {
                                         x.Cells["QtyPlan"].Value = dbClss.TDe(prm.FirstOrDefault().Qty);
                                         x.Cells["UnitPlan"].Value = dbClss.TSt(prm.FirstOrDefault().UOM);
+                                        x.Cells["QtyUsed"].Value = dbClss.TDe(db.Get_ShipQty(Convert.ToString(x.Cells["CodeNo"].Value), txtJobCard.Text));
+                                        x.Cells["UnitUsed"].Value = x.Cells["BaseUOM"].Value;
                                     }
                                 }
                             }
@@ -510,8 +525,16 @@ namespace StockControl
                         //    err += "- “จำนวนเบิก:” ต้องมากกว่า 0 \n";
                         //}
                         //else 
-                        if (StockControl.dbClss.TInt(rowInfo.Cells["QtyShip"].Value) != (0))
+                        if (StockControl.dbClss.TInt(rowInfo.Cells["QtyShip"].Value) != (0)
+                           && StockControl.dbClss.TInt(rowInfo.Cells["Qty"].Value) != (0)
+                            )
                         {
+                            if (StockControl.dbClss.TDe(rowInfo.Cells["PCSUnit"].Value) <= 0)
+                            {
+                                err += "- “จำนวน/หน่วย:” น้อยกว่า 0 \n";
+                                break;
+                            }
+
                             c += 1;
                             //CutStock ต้องระบุจำนวน
                             //None ไม่ต้องระบุจำนวน
@@ -813,7 +836,8 @@ namespace StockControl
                     gg.Accident_Type = "RM";
                     gg.Remark = txtRemark.Text;
                     gg.JobCard = txtJobCard.Text.Trim();                   
-                    gg.BarCode = barcode;                  
+                    gg.BarCode = barcode;
+                    gg.Type = ddlType.Text;                
                     db.mh_Accident_SlipHs.InsertOnSubmit(gg);
                     db.SubmitChanges();
 
@@ -851,7 +875,11 @@ namespace StockControl
                                 u.ItemNo = StockControl.dbClss.TSt(g.Cells["ItemNo"].Value);
                                 u.ItemDescription = StockControl.dbClss.TSt(g.Cells["ItemDescription"].Value);
                                 u.QTY = StockControl.dbClss.TDe(g.Cells["QtyShip"].Value);
-                                u.OutShip = StockControl.dbClss.TDe(g.Cells["QtyShip"].Value);
+                                if (ddlType.Text == "None")
+                                    u.OutShip = 0;
+                                else
+                                    u.OutShip = StockControl.dbClss.TDe(g.Cells["QtyShip"].Value);
+
                                 u.Remark = StockControl.dbClss.TSt(g.Cells["Remark"].Value);
                                 u.LineName = StockControl.dbClss.TSt(g.Cells["LineName"].Value);
                                 u.MachineName = StockControl.dbClss.TSt(g.Cells["MachineName"].Value);
@@ -1341,6 +1369,10 @@ namespace StockControl
                         
                         //Cal Remain Qty
                         decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
+                        if (PCSUnit <= 0)
+                        {
+                            MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
+                        }
                         //string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
                         decimal BasePCSUOM  = dbClss.TDe(e.Row.Cells["BasePCSUOM"].Value);//dbClss.Con_UOM(CodeNo, BaseUOM);
 
@@ -1382,6 +1414,10 @@ namespace StockControl
 
                             //Cal Remain Qty
                             decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
+                            if (PCSUnit <= 0)
+                            {
+                                MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
+                            }
                             string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
                             decimal BasePCSUOM = dbClss.TDe(e.Row.Cells["BasePCSUOM"].Value);// dbClss.Con_UOM(CodeNo, BaseUOM);
 
@@ -1697,10 +1733,11 @@ namespace StockControl
 
                 string JobCard = txtJobCard.Text;
                 string Refid = txtRefidJobNo.Text;
-
+                string Type = ddlType.Text;
                 btnNew_Click(null, null);
                 txtJobCard.Text = JobCard;
                 txtRefidJobNo.Text = Refid;
+                ddlType.Text = Type;
 
                 int dgvNo = 0;
                 var r = (from ix in db.sp_051_Job_list_2(JobCard,ddlType.Text)
@@ -1743,9 +1780,10 @@ namespace StockControl
                 //string TempJob = txtTempJobCard.Text;
                 string  Refid = txtRefidJobNo.Text  ;
                 //string loca = txtLocation.Text;
-
+                string Type = ddlType.Text;
                 btnNew_Click(null, null);
                 txtJobCard.Text = JobCard;
+                ddlType.Text = Type;
 
                 //txtTempJobCard.Text = TempJob;
                 txtRefidJobNo.Text = Refid;
