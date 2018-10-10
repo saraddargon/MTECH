@@ -328,6 +328,7 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     db.mh_Planning_TEMPs.DeleteAllOnSubmit(db.mh_Planning_TEMPs);
+                    //db.mh_PlanningMPS_TEMPs.DeleteAllOnSubmit(db.mh_PlanningMPS_TEMPs);
                     //db.mh_CapacityLoad_TEMPs.DeleteAllOnSubmit(db.mh_CapacityLoad_TEMPs);
                     //db.mh_CalendarLoad_TEMPs.DeleteAllOnSubmit(db.mh_CalendarLoad_TEMPs);
                     db.mh_StockReserves.DeleteAllOnSubmit(db.mh_StockReserves);
@@ -640,7 +641,7 @@ namespace StockControl
                                 VATType = tool.VatType,
                                 VendorName = tool.VendorName,
                                 VendorNo = tool.VendorNo,
-                                DeliveryDate = item.Cells["DueDate"].Value.ToDateTime().Value.Date
+                                DeliveryDate = item.Cells["DueDate"].Value.ToDateTime().Value.Date,
                             };
                             db.mh_PurchaseRequestLines.InsertOnSubmit(dt);
                         }
