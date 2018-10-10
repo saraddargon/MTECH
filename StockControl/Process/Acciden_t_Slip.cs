@@ -734,6 +734,7 @@ namespace StockControl
                                     , dbClss.TInt(g.Cells["idCSTMPODt"].Value)
                                     , dbClss.TInt(g.Cells["idProductionOrderRM"].Value)
                                     , 0
+                                    ,0
                                     );
 
 
@@ -850,6 +851,7 @@ namespace StockControl
                                 u.ItemNo = StockControl.dbClss.TSt(g.Cells["ItemNo"].Value);
                                 u.ItemDescription = StockControl.dbClss.TSt(g.Cells["ItemDescription"].Value);
                                 u.QTY = StockControl.dbClss.TDe(g.Cells["QtyShip"].Value);
+                                u.OutShip = StockControl.dbClss.TDe(g.Cells["QtyShip"].Value);
                                 u.Remark = StockControl.dbClss.TSt(g.Cells["Remark"].Value);
                                 u.LineName = StockControl.dbClss.TSt(g.Cells["LineName"].Value);
                                 u.MachineName = StockControl.dbClss.TSt(g.Cells["MachineName"].Value);
@@ -865,7 +867,6 @@ namespace StockControl
                                 u.ToLocation = dbClss.TSt(g.Cells["Location"].Value);
                                 u.BaseUOM = BaseUOM;
                                 u.BasePCSUOM = BasePCSUOM;
-
                                 db.mh_Accident_Slips.InsertOnSubmit(u);
                                 db.SubmitChanges();                               
                                 dbClss.AddHistory(this.Name, "เพิ่ม Accident", "เพิ่มรายการ Accident [" + u.CodeNo + "]", txtSHNo.Text);

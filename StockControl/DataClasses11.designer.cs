@@ -375,12 +375,12 @@ namespace StockControl
     partial void Insertmh_ProductionOrder_CancelQty(mh_ProductionOrder_CancelQty instance);
     partial void Updatemh_ProductionOrder_CancelQty(mh_ProductionOrder_CancelQty instance);
     partial void Deletemh_ProductionOrder_CancelQty(mh_ProductionOrder_CancelQty instance);
-    partial void Insertmh_Accident_Slip(mh_Accident_Slip instance);
-    partial void Updatemh_Accident_Slip(mh_Accident_Slip instance);
-    partial void Deletemh_Accident_Slip(mh_Accident_Slip instance);
     partial void Insertmh_Accident_SlipH(mh_Accident_SlipH instance);
     partial void Updatemh_Accident_SlipH(mh_Accident_SlipH instance);
     partial void Deletemh_Accident_SlipH(mh_Accident_SlipH instance);
+    partial void Insertmh_Accident_Slip(mh_Accident_Slip instance);
+    partial void Updatemh_Accident_Slip(mh_Accident_Slip instance);
+    partial void Deletemh_Accident_Slip(mh_Accident_Slip instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -1365,19 +1365,19 @@ namespace StockControl
 			}
 		}
 		
-		public System.Data.Linq.Table<mh_Accident_Slip> mh_Accident_Slips
-		{
-			get
-			{
-				return this.GetTable<mh_Accident_Slip>();
-			}
-		}
-		
 		public System.Data.Linq.Table<mh_Accident_SlipH> mh_Accident_SlipHs
 		{
 			get
 			{
 				return this.GetTable<mh_Accident_SlipH>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_Accident_Slip> mh_Accident_Slips
+		{
+			get
+			{
+				return this.GetTable<mh_Accident_Slip>();
 			}
 		}
 		
@@ -2376,36 +2376,6 @@ namespace StockControl
 			return ((ISingleResult<sp_081_Get_StockResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_071_Accident_Slip")]
-		public int sp_071_Accident_Slip(
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ShippingNo", DbType="NVarChar(50)")] string shippingNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(50)")] string codeNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTYPlan", DbType="Decimal(18,6)")] System.Nullable<decimal> qTYPlan, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Remark", DbType="NVarChar(512)")] string remark, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LineName", DbType="NVarChar(512)")] string lineName, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="MachineName", DbType="NVarChar(512)")] string machineName, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="SerialNo", DbType="NVarChar(512)")] string serialNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ToLocation", DbType="VarChar(100)")] string toLocation, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BaseUOM", DbType="VarChar(50)")] string baseUOM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BasePCSUOM", DbType="Decimal(18,2)")] System.Nullable<decimal> basePCSUOM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitShip", DbType="VarChar(50)")] string unitShip, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="PCSUnit", DbType="Decimal(18,2)")] System.Nullable<decimal> pCSUnit, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idProductionOrderRM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Free", DbType="Int")] System.Nullable<int> free)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), shippingNo, codeNo, qTYPlan, qTY, remark, lineName, machineName, serialNo, lotNo, status, createBy, refJobNo, refTempJobNo, refidJobNo, location, toLocation, baseUOM, basePCSUOM, unitShip, pCSUnit, idCSTMPODt, idProductionOrderRM, free);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_024_tb_Shipping_ADD")]
 		public int sp_024_tb_Shipping_ADD(
 					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ShippingNo", DbType="NVarChar(50)")] string shippingNo, 
@@ -2519,6 +2489,37 @@ namespace StockControl
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jobNo, type);
 			return ((ISingleResult<sp_051_Job_list_2Result>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_071_Accident_Slip")]
+		public int sp_071_Accident_Slip(
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ShippingNo", DbType="NVarChar(50)")] string shippingNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(50)")] string codeNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTYPlan", DbType="Decimal(18,6)")] System.Nullable<decimal> qTYPlan, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Remark", DbType="NVarChar(512)")] string remark, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LineName", DbType="NVarChar(512)")] string lineName, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="MachineName", DbType="NVarChar(512)")] string machineName, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="SerialNo", DbType="NVarChar(512)")] string serialNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ToLocation", DbType="VarChar(100)")] string toLocation, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BaseUOM", DbType="VarChar(50)")] string baseUOM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BasePCSUOM", DbType="Decimal(18,2)")] System.Nullable<decimal> basePCSUOM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitShip", DbType="VarChar(50)")] string unitShip, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="PCSUnit", DbType="Decimal(18,2)")] System.Nullable<decimal> pCSUnit, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idProductionOrderRM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Free", DbType="Int")] System.Nullable<int> free, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Accidentid", DbType="Int")] System.Nullable<int> accidentid)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), shippingNo, codeNo, qTYPlan, qTY, remark, lineName, machineName, serialNo, lotNo, status, createBy, refJobNo, refTempJobNo, refidJobNo, location, toLocation, baseUOM, basePCSUOM, unitShip, pCSUnit, idCSTMPODt, idProductionOrderRM, free, accidentid);
+			return ((int)(result.ReturnValue));
 		}
 	}
 	
@@ -48268,6 +48269,452 @@ namespace StockControl
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_Accident_SlipH")]
+	public partial class mh_Accident_SlipH : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _DocNo;
+		
+		private string _DocBy;
+		
+		private System.Nullable<System.DateTime> _DocDate;
+		
+		private string _Accident_Type;
+		
+		private string _Type;
+		
+		private string _JobCard;
+		
+		private System.Nullable<System.DateTime> _CreateDate;
+		
+		private string _CreateBy;
+		
+		private string _Remark;
+		
+		private string _Status;
+		
+		private System.Data.Linq.Binary _BarCode;
+		
+		private System.Nullable<int> _SeqStatus;
+		
+		private string _SendApproveBy;
+		
+		private System.Nullable<System.DateTime> _SendApproveDate;
+		
+		private string _ApproveBy;
+		
+		private System.Nullable<System.DateTime> _ApproveDate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnDocNoChanging(string value);
+    partial void OnDocNoChanged();
+    partial void OnDocByChanging(string value);
+    partial void OnDocByChanged();
+    partial void OnDocDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDocDateChanged();
+    partial void OnAccident_TypeChanging(string value);
+    partial void OnAccident_TypeChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnJobCardChanging(string value);
+    partial void OnJobCardChanged();
+    partial void OnCreateDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreateDateChanged();
+    partial void OnCreateByChanging(string value);
+    partial void OnCreateByChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnBarCodeChanging(System.Data.Linq.Binary value);
+    partial void OnBarCodeChanged();
+    partial void OnSeqStatusChanging(System.Nullable<int> value);
+    partial void OnSeqStatusChanged();
+    partial void OnSendApproveByChanging(string value);
+    partial void OnSendApproveByChanged();
+    partial void OnSendApproveDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnSendApproveDateChanged();
+    partial void OnApproveByChanging(string value);
+    partial void OnApproveByChanged();
+    partial void OnApproveDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnApproveDateChanged();
+    #endregion
+		
+		public mh_Accident_SlipH()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNo", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string DocNo
+		{
+			get
+			{
+				return this._DocNo;
+			}
+			set
+			{
+				if ((this._DocNo != value))
+				{
+					this.OnDocNoChanging(value);
+					this.SendPropertyChanging();
+					this._DocNo = value;
+					this.SendPropertyChanged("DocNo");
+					this.OnDocNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocBy", DbType="VarChar(50)")]
+		public string DocBy
+		{
+			get
+			{
+				return this._DocBy;
+			}
+			set
+			{
+				if ((this._DocBy != value))
+				{
+					this.OnDocByChanging(value);
+					this.SendPropertyChanging();
+					this._DocBy = value;
+					this.SendPropertyChanged("DocBy");
+					this.OnDocByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DocDate
+		{
+			get
+			{
+				return this._DocDate;
+			}
+			set
+			{
+				if ((this._DocDate != value))
+				{
+					this.OnDocDateChanging(value);
+					this.SendPropertyChanging();
+					this._DocDate = value;
+					this.SendPropertyChanged("DocDate");
+					this.OnDocDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Accident_Type", DbType="VarChar(50)")]
+		public string Accident_Type
+		{
+			get
+			{
+				return this._Accident_Type;
+			}
+			set
+			{
+				if ((this._Accident_Type != value))
+				{
+					this.OnAccident_TypeChanging(value);
+					this.SendPropertyChanging();
+					this._Accident_Type = value;
+					this.SendPropertyChanged("Accident_Type");
+					this.OnAccident_TypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobCard", DbType="VarChar(50)")]
+		public string JobCard
+		{
+			get
+			{
+				return this._JobCard;
+			}
+			set
+			{
+				if ((this._JobCard != value))
+				{
+					this.OnJobCardChanging(value);
+					this.SendPropertyChanging();
+					this._JobCard = value;
+					this.SendPropertyChanged("JobCard");
+					this.OnJobCardChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="VarChar(50)")]
+		public string CreateBy
+		{
+			get
+			{
+				return this._CreateBy;
+			}
+			set
+			{
+				if ((this._CreateBy != value))
+				{
+					this.OnCreateByChanging(value);
+					this.SendPropertyChanging();
+					this._CreateBy = value;
+					this.SendPropertyChanged("CreateBy");
+					this.OnCreateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(512)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(50)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BarCode", DbType="Image", UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary BarCode
+		{
+			get
+			{
+				return this._BarCode;
+			}
+			set
+			{
+				if ((this._BarCode != value))
+				{
+					this.OnBarCodeChanging(value);
+					this.SendPropertyChanging();
+					this._BarCode = value;
+					this.SendPropertyChanged("BarCode");
+					this.OnBarCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SeqStatus", DbType="Int")]
+		public System.Nullable<int> SeqStatus
+		{
+			get
+			{
+				return this._SeqStatus;
+			}
+			set
+			{
+				if ((this._SeqStatus != value))
+				{
+					this.OnSeqStatusChanging(value);
+					this.SendPropertyChanging();
+					this._SeqStatus = value;
+					this.SendPropertyChanged("SeqStatus");
+					this.OnSeqStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendApproveBy", DbType="VarChar(50)")]
+		public string SendApproveBy
+		{
+			get
+			{
+				return this._SendApproveBy;
+			}
+			set
+			{
+				if ((this._SendApproveBy != value))
+				{
+					this.OnSendApproveByChanging(value);
+					this.SendPropertyChanging();
+					this._SendApproveBy = value;
+					this.SendPropertyChanged("SendApproveBy");
+					this.OnSendApproveByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendApproveDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> SendApproveDate
+		{
+			get
+			{
+				return this._SendApproveDate;
+			}
+			set
+			{
+				if ((this._SendApproveDate != value))
+				{
+					this.OnSendApproveDateChanging(value);
+					this.SendPropertyChanging();
+					this._SendApproveDate = value;
+					this.SendPropertyChanged("SendApproveDate");
+					this.OnSendApproveDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApproveBy", DbType="VarChar(50)")]
+		public string ApproveBy
+		{
+			get
+			{
+				return this._ApproveBy;
+			}
+			set
+			{
+				if ((this._ApproveBy != value))
+				{
+					this.OnApproveByChanging(value);
+					this.SendPropertyChanging();
+					this._ApproveBy = value;
+					this.SendPropertyChanged("ApproveBy");
+					this.OnApproveByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApproveDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ApproveDate
+		{
+			get
+			{
+				return this._ApproveDate;
+			}
+			set
+			{
+				if ((this._ApproveDate != value))
+				{
+					this.OnApproveDateChanging(value);
+					this.SendPropertyChanging();
+					this._ApproveDate = value;
+					this.SendPropertyChanged("ApproveDate");
+					this.OnApproveDateChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_Accident_Slip")]
 	public partial class mh_Accident_Slip : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -48322,6 +48769,8 @@ namespace StockControl
 		
 		private System.Nullable<int> _idProductionOrderRM;
 		
+		private System.Nullable<decimal> _OutShip;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -48374,6 +48823,8 @@ namespace StockControl
     partial void OnidCSTMPODtChanged();
     partial void OnidProductionOrderRMChanging(System.Nullable<int> value);
     partial void OnidProductionOrderRMChanged();
+    partial void OnOutShipChanging(System.Nullable<decimal> value);
+    partial void OnOutShipChanged();
     #endregion
 		
 		public mh_Accident_Slip()
@@ -48861,448 +49312,22 @@ namespace StockControl
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_Accident_SlipH")]
-	public partial class mh_Accident_SlipH : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _DocNo;
-		
-		private string _DocBy;
-		
-		private System.Nullable<System.DateTime> _DocDate;
-		
-		private string _Accident_Type;
-		
-		private string _Type;
-		
-		private string _JobCard;
-		
-		private System.Nullable<System.DateTime> _CreateDate;
-		
-		private string _CreateBy;
-		
-		private string _Remark;
-		
-		private string _Status;
-		
-		private System.Data.Linq.Binary _BarCode;
-		
-		private System.Nullable<int> _SeqStatus;
-		
-		private string _SendApproveBy;
-		
-		private System.Nullable<System.DateTime> _SendApproveDate;
-		
-		private string _ApproveBy;
-		
-		private System.Nullable<System.DateTime> _ApproveDate;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnDocNoChanging(string value);
-    partial void OnDocNoChanged();
-    partial void OnDocByChanging(string value);
-    partial void OnDocByChanged();
-    partial void OnDocDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnDocDateChanged();
-    partial void OnAccident_TypeChanging(string value);
-    partial void OnAccident_TypeChanged();
-    partial void OnTypeChanging(string value);
-    partial void OnTypeChanged();
-    partial void OnJobCardChanging(string value);
-    partial void OnJobCardChanged();
-    partial void OnCreateDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnCreateDateChanged();
-    partial void OnCreateByChanging(string value);
-    partial void OnCreateByChanged();
-    partial void OnRemarkChanging(string value);
-    partial void OnRemarkChanged();
-    partial void OnStatusChanging(string value);
-    partial void OnStatusChanged();
-    partial void OnBarCodeChanging(System.Data.Linq.Binary value);
-    partial void OnBarCodeChanged();
-    partial void OnSeqStatusChanging(System.Nullable<int> value);
-    partial void OnSeqStatusChanged();
-    partial void OnSendApproveByChanging(string value);
-    partial void OnSendApproveByChanged();
-    partial void OnSendApproveDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnSendApproveDateChanged();
-    partial void OnApproveByChanging(string value);
-    partial void OnApproveByChanged();
-    partial void OnApproveDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnApproveDateChanged();
-    #endregion
-		
-		public mh_Accident_SlipH()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutShip", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> OutShip
 		{
 			get
 			{
-				return this._id;
+				return this._OutShip;
 			}
 			set
 			{
-				if ((this._id != value))
+				if ((this._OutShip != value))
 				{
-					this.OnidChanging(value);
+					this.OnOutShipChanging(value);
 					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocNo", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string DocNo
-		{
-			get
-			{
-				return this._DocNo;
-			}
-			set
-			{
-				if ((this._DocNo != value))
-				{
-					this.OnDocNoChanging(value);
-					this.SendPropertyChanging();
-					this._DocNo = value;
-					this.SendPropertyChanged("DocNo");
-					this.OnDocNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocBy", DbType="VarChar(50)")]
-		public string DocBy
-		{
-			get
-			{
-				return this._DocBy;
-			}
-			set
-			{
-				if ((this._DocBy != value))
-				{
-					this.OnDocByChanging(value);
-					this.SendPropertyChanging();
-					this._DocBy = value;
-					this.SendPropertyChanged("DocBy");
-					this.OnDocByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DocDate
-		{
-			get
-			{
-				return this._DocDate;
-			}
-			set
-			{
-				if ((this._DocDate != value))
-				{
-					this.OnDocDateChanging(value);
-					this.SendPropertyChanging();
-					this._DocDate = value;
-					this.SendPropertyChanged("DocDate");
-					this.OnDocDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Accident_Type", DbType="VarChar(50)")]
-		public string Accident_Type
-		{
-			get
-			{
-				return this._Accident_Type;
-			}
-			set
-			{
-				if ((this._Accident_Type != value))
-				{
-					this.OnAccident_TypeChanging(value);
-					this.SendPropertyChanging();
-					this._Accident_Type = value;
-					this.SendPropertyChanged("Accident_Type");
-					this.OnAccident_TypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Type
-		{
-			get
-			{
-				return this._Type;
-			}
-			set
-			{
-				if ((this._Type != value))
-				{
-					this.OnTypeChanging(value);
-					this.SendPropertyChanging();
-					this._Type = value;
-					this.SendPropertyChanged("Type");
-					this.OnTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobCard", DbType="VarChar(50)")]
-		public string JobCard
-		{
-			get
-			{
-				return this._JobCard;
-			}
-			set
-			{
-				if ((this._JobCard != value))
-				{
-					this.OnJobCardChanging(value);
-					this.SendPropertyChanging();
-					this._JobCard = value;
-					this.SendPropertyChanged("JobCard");
-					this.OnJobCardChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this.OnCreateDateChanging(value);
-					this.SendPropertyChanging();
-					this._CreateDate = value;
-					this.SendPropertyChanged("CreateDate");
-					this.OnCreateDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateBy", DbType="VarChar(50)")]
-		public string CreateBy
-		{
-			get
-			{
-				return this._CreateBy;
-			}
-			set
-			{
-				if ((this._CreateBy != value))
-				{
-					this.OnCreateByChanging(value);
-					this.SendPropertyChanging();
-					this._CreateBy = value;
-					this.SendPropertyChanged("CreateBy");
-					this.OnCreateByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(512)")]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this.OnRemarkChanging(value);
-					this.SendPropertyChanging();
-					this._Remark = value;
-					this.SendPropertyChanged("Remark");
-					this.OnRemarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(50)")]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this.OnStatusChanging(value);
-					this.SendPropertyChanging();
-					this._Status = value;
-					this.SendPropertyChanged("Status");
-					this.OnStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BarCode", DbType="Image", UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary BarCode
-		{
-			get
-			{
-				return this._BarCode;
-			}
-			set
-			{
-				if ((this._BarCode != value))
-				{
-					this.OnBarCodeChanging(value);
-					this.SendPropertyChanging();
-					this._BarCode = value;
-					this.SendPropertyChanged("BarCode");
-					this.OnBarCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SeqStatus", DbType="Int")]
-		public System.Nullable<int> SeqStatus
-		{
-			get
-			{
-				return this._SeqStatus;
-			}
-			set
-			{
-				if ((this._SeqStatus != value))
-				{
-					this.OnSeqStatusChanging(value);
-					this.SendPropertyChanging();
-					this._SeqStatus = value;
-					this.SendPropertyChanged("SeqStatus");
-					this.OnSeqStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendApproveBy", DbType="VarChar(50)")]
-		public string SendApproveBy
-		{
-			get
-			{
-				return this._SendApproveBy;
-			}
-			set
-			{
-				if ((this._SendApproveBy != value))
-				{
-					this.OnSendApproveByChanging(value);
-					this.SendPropertyChanging();
-					this._SendApproveBy = value;
-					this.SendPropertyChanged("SendApproveBy");
-					this.OnSendApproveByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendApproveDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> SendApproveDate
-		{
-			get
-			{
-				return this._SendApproveDate;
-			}
-			set
-			{
-				if ((this._SendApproveDate != value))
-				{
-					this.OnSendApproveDateChanging(value);
-					this.SendPropertyChanging();
-					this._SendApproveDate = value;
-					this.SendPropertyChanged("SendApproveDate");
-					this.OnSendApproveDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApproveBy", DbType="VarChar(50)")]
-		public string ApproveBy
-		{
-			get
-			{
-				return this._ApproveBy;
-			}
-			set
-			{
-				if ((this._ApproveBy != value))
-				{
-					this.OnApproveByChanging(value);
-					this.SendPropertyChanging();
-					this._ApproveBy = value;
-					this.SendPropertyChanged("ApproveBy");
-					this.OnApproveByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApproveDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> ApproveDate
-		{
-			get
-			{
-				return this._ApproveDate;
-			}
-			set
-			{
-				if ((this._ApproveDate != value))
-				{
-					this.OnApproveDateChanging(value);
-					this.SendPropertyChanging();
-					this._ApproveDate = value;
-					this.SendPropertyChanged("ApproveDate");
-					this.OnApproveDateChanged();
+					this._OutShip = value;
+					this.SendPropertyChanged("OutShip");
+					this.OnOutShipChanged();
 				}
 			}
 		}

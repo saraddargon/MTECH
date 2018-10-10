@@ -667,7 +667,9 @@ namespace StockControl
                     string SS = "";
                     if (g.IsVisible.Equals(true))
                     {
-                        if (StockControl.dbClss.TInt(g.Cells["QtyShip"].Value) != (0)) // เอาเฉพาะรายการที่ไม่เป็น 0 
+                        if (StockControl.dbClss.TInt(g.Cells["QtyShip"].Value) != (0)
+                            && dbClss.TInt(g.Cells["Accidentid"].Value)>0
+                            ) // เอาเฉพาะรายการที่ไม่เป็น 0 
                         {
                             if (StockControl.dbClss.TInt(g.Cells["id"].Value) <= 0)  //New ใหม่
                             {
@@ -697,6 +699,7 @@ namespace StockControl
                                     , dbClss.TInt(g.Cells["idCSTMPODt"].Value)
                                     , dbClss.TInt(g.Cells["idProductionOrderRM"].Value)
                                     , 0
+                                    , dbClss.TInt(g.Cells["Accidentid"].Value)
                                     );
 
 
@@ -1162,6 +1165,7 @@ namespace StockControl
                             MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
                             e.Row.Cells["QtyShip"].Value = 0;
                             QTY = 0;
+                            Temp = 0;
                         }
                         e.Row.Cells["Qty"].Value = Math.Round(Temp, 2);
 
@@ -1203,6 +1207,7 @@ namespace StockControl
                                 MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
                                 e.Row.Cells["QtyShip"].Value = 0;
                                 QTY = 0;
+                                Temp = 0;
                             }
                             e.Row.Cells["Qty"].Value = Math.Round(Temp, 2);
                         }
@@ -1545,45 +1550,57 @@ namespace StockControl
                 btnNew_Click(null, null);
                 txtJobCard.Text = JobCard;
 
-                int dgvNo = 0;
-                var r = (from ix in db.mh_Accident_Slips
-                         .Where(ab=>ab.DocNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper())
+                var h = (from ix in db.mh_Accident_SlipHs
+                        .Where(ab => ab.DocNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper()
+                        && ab.Status != "Cancel" && ab.Status != "Completed"
+                        && ab.Type == "CutStock"
+                        )                        
                          select ix).ToList();
-                if (r.Count > 0)
+                if (h.Count > 0)
                 {
-                    string GroupType = "";
-                    string Type = "";
-                    foreach (var vv in r)
+                    int dgvNo = 0;
+                    var r = (from ix in db.mh_Accident_Slips
+                             .Where(ab => ab.DocNo.Trim().ToUpper() == txtJobCard.Text.Trim().ToUpper()
+                             && ab.Status != "Cancel" && ab.Status != "Completed"
+                             && Convert.ToDecimal(ab.OutShip) >0
+                             )
+                             select ix).ToList();
+                    if (r.Count > 0)
                     {
-                        dgvNo = dgvData.Rows.Count() + 1;
-                        //PCSBaseUOM = dbClss.Con_UOM(vv.CodeNo, vv.BaseUOM);
-                        //if (PCSBaseUOM <= 0)
-                        //    PCSBaseUOM = 1;
-                        //AC_PCSUnit = dbClss.TDe(vv.PCSUnit) * PCSBaseUOM;
-                        var p = (from ix in db.mh_Items select ix)
-                        .Where
-                        (a => a.InternalNo.Trim().ToUpper() == vv.CodeNo.Trim().ToUpper() && a.Active == true
-                        ).ToList();
+                        string GroupType = "";
+                        string Type = "";
+                        foreach (var vv in r)
                         {
-                            GroupType = dbClss.TSt(p.FirstOrDefault().GroupType);
-                            Type = dbClss.TSt(p.FirstOrDefault().Type);
+                            dgvNo = dgvData.Rows.Count() + 1;
+                            //PCSBaseUOM = dbClss.Con_UOM(vv.CodeNo, vv.BaseUOM);
+                            //if (PCSBaseUOM <= 0)
+                            //    PCSBaseUOM = 1;
+                            //AC_PCSUnit = dbClss.TDe(vv.PCSUnit) * PCSBaseUOM;
+                            var p = (from ix in db.mh_Items select ix)
+                            .Where
+                            (a => a.InternalNo.Trim().ToUpper() == vv.CodeNo.Trim().ToUpper() && a.Active == true
+                            ).ToList();
+                            {
+                                GroupType = dbClss.TSt(p.FirstOrDefault().GroupType);
+                                Type = dbClss.TSt(p.FirstOrDefault().Type);
+                            }
+                            Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
+                                            , dbClss.TDe(vv.OutShip), dbClss.TDe(vv.OutShip), dbClss.TDe(vv.OutShip)
+                                            , vv.UnitShip, dbClss.TDe(vv.PCSUnit)
+                                            , dbClss.TDe(vv.UnitCost)
+                                            , Math.Round((dbClss.TDe(vv.UnitCost) * dbClss.TDe(vv.OutShip)), 2)
+                                            , vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, 0
+                                            , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM), 0// dbClss.TDe(vv.QtyUsed)
+                                            , GroupType, Type, dbClss.TInt(vv.idCSTMPODt), dbClss.TInt(vv.idProductionOrderRM)
+                                            , vv.UnitShip, vv.BaseUOM
+                                            , Math.Round((dbClss.TDe(vv.OutShip) * dbClss.TDe(vv.PCSUnit)), 2)
+                                            ,vv.id
+                                            );
+
                         }
-                        Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
-                                        , dbClss.TDe(vv.QTY), dbClss.TDe(vv.QTY), dbClss.TDe(vv.QTY)
-                                        , vv.UnitShip, dbClss.TDe(vv.PCSUnit)
-                                        , dbClss.TDe(vv.UnitCost)
-                                        , Math.Round((dbClss.TDe(vv.UnitCost)* dbClss.TDe(vv.QTY)), 2)
-                                        , vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, 0
-                                        , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM),0// dbClss.TDe(vv.QtyUsed)
-                                        , GroupType, Type, dbClss.TInt(vv.idCSTMPODt), dbClss.TInt(vv.idProductionOrderRM)
-                                        , vv.UnitShip, vv.BaseUOM
-                                        , Math.Round((dbClss.TDe(vv.QTY) * dbClss.TDe(vv.PCSUnit)), 2)
-                                        );
-
                     }
+                    Cal_Amount();
                 }
-                Cal_Amount();
-
             }
         }
         private void Add_Item(int Row, string CodeNo, string ItemNo
@@ -1591,7 +1608,7 @@ namespace StockControl
            , decimal StandardCost,decimal Amount,string LotNo,string SerialNo,string MachineName,string LineName
             ,string Remark,int id,string Location,string BaseUOM,decimal BasePCSUOM
             ,decimal QtyUsed,string GroupType,string Type, int idCSTMPODt,int idProductionOrderRM
-            , string UnitPlan, string UnitUsed, decimal Qty
+            , string UnitPlan, string UnitUsed, decimal Qty,int Accidentid
             )
         {
             
@@ -1636,13 +1653,14 @@ namespace StockControl
                 ee.Cells["UnitPlan"].Value = UnitPlan;
                 ee.Cells["UnitUsed"].Value = UnitUsed;
                 ee.Cells["Qty"].Value = Qty;
+                ee.Cells["Accidentid"].Value = Accidentid;
 
                 //if (ddlType.Text == "None")
                 //{
-                    //ee.Cells["QtyShip"].ReadOnly = true;
-                    //ee.Cells["UnitShip"].ReadOnly = true;                   
+                //ee.Cells["QtyShip"].ReadOnly = true;
+                //ee.Cells["UnitShip"].ReadOnly = true;                   
                 //}
-               
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError(this.Name, ex.Message + " : Add_Item", this.Name); }
 
