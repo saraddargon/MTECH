@@ -346,7 +346,9 @@ namespace StockControl
                                     {
                                         x.Cells["QtyPlan"].Value = dbClss.TDe(prm.FirstOrDefault().Qty);
                                         x.Cells["UnitPlan"].Value = dbClss.TSt(prm.FirstOrDefault().UOM);
-                                        x.Cells["QtyUsed"].Value = dbClss.TDe(db.Get_ShipQty(Convert.ToString(x.Cells["CodeNo"].Value), txtJobCard.Text));
+                                        x.Cells["QtyUsed"].Value = dbClss.TDe(db.Get_ShipQty(Convert.ToString(x.Cells["CodeNo"].Value), txtJobCard.Text))
+                                                + dbClss.TDe(db.Get_ShipQty(Convert.ToString(x.Cells["CodeNo"].Value), txtSHNo.Text));
+
                                         x.Cells["UnitUsed"].Value = x.Cells["BaseUOM"].Value;
                                     }
                                 }
@@ -1744,7 +1746,7 @@ namespace StockControl
                          select ix).ToList();
                 if (r.Count > 0)
                 {
-
+                    decimal RemainAccident = 0;
                     foreach (var vv in r)
                     {
                         dgvNo = dgvData.Rows.Count() + 1;
@@ -1762,6 +1764,7 @@ namespace StockControl
                                         , vv.GroupType, vv.Type, dbClss.TInt(vv.idCSTMPODt), dbClss.TInt(vv.id)
                                         , vv.UnitPlan, vv.UnitUsed
                                         , Math.Round((dbClss.TDe(vv.QtyShip) * dbClss.TDe(vv.PCSUnit)), 2)
+                                        , RemainAccident
                                         );
 
                     }
@@ -1794,7 +1797,7 @@ namespace StockControl
                          select ix).ToList();
                 if (r.Count > 0)
                 {
-
+                    decimal RemainAccident = 0;
                     foreach (var vv in r)
                     {
                         dgvNo = dgvData.Rows.Count() + 1;
@@ -1812,6 +1815,7 @@ namespace StockControl
                                         ,vv.GroupType,vv.Type, dbClss.TInt(vv.idCSTMPODt),dbClss.TInt(vv.id)
                                         , vv.UnitPlan, vv.UnitUsed
                                         , Math.Round((dbClss.TDe(vv.QtyShip) * dbClss.TDe(vv.PCSUnit)), 2)
+                                        ,RemainAccident
                                         );
 
                     }
@@ -1825,7 +1829,7 @@ namespace StockControl
            , decimal StandardCost,decimal Amount,string LotNo,string SerialNo,string MachineName,string LineName
             ,string Remark,int id,string Location,string BaseUOM,decimal BasePCSUOM
             ,decimal QtyUsed,string GroupType,string Type, int idCSTMPODt,int idProductionOrderRM
-            , string UnitPlan, string UnitUsed, decimal Qty
+            , string UnitPlan, string UnitUsed, decimal Qty,decimal RemainAccident
             )
         {
             
@@ -1870,6 +1874,7 @@ namespace StockControl
                 ee.Cells["UnitPlan"].Value = UnitPlan;
                 ee.Cells["UnitUsed"].Value = UnitUsed;
                 ee.Cells["Qty"].Value = Qty;
+                ee.Cells["RemainAccident"].Value = RemainAccident;
 
                 if (ddlType.Text == "None")
                 {
