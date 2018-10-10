@@ -448,24 +448,6 @@ namespace StockControl
                 db.SubmitChanges();
             }
         }
-        void SaveReserve(List<stockReserve> sReserve)
-        {
-            using (var db = new DataClasses1DataContext())
-            {
-                foreach (var sr in sReserve)
-                {
-                    var s = new mh_StockReserve();
-                    s.idCstmPODt = sr.idCstmPODt;
-                    s.idCstmPODt_Free = sr.idCstmPODt_Free;
-                    s.id_tb_Stock = sr.id_tb_Stock;
-                    s.ItemNo = sr.ItemNo;
-                    s.ReserveQty = sr.ReserveQty;
-                    s.mainNo = 0;
-                    db.mh_StockReserves.InsertOnSubmit(s);
-                    db.SubmitChanges();
-                }
-            }
-        }
 
         private void radButtonElement1_Click(object sender, EventArgs e)
         {

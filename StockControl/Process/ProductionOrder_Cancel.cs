@@ -208,6 +208,7 @@ namespace StockControl
                                 UOM = j.UOM,
                                 JobQty = txtJobQty.Text.ToDecimal(),
                                 OutQty = txtOutQty.Text.ToDecimal(),
+                                CutFG = false,
                             };
                             db.mh_ProductionOrder_CancelQties.InsertOnSubmit(m);
                             db.SubmitChanges();

@@ -643,6 +643,7 @@
             this.btnPrintReport});
             this.radRibbonBarGroup8.Name = "radRibbonBarGroup8";
             this.radRibbonBarGroup8.Text = "Report";
+            this.radRibbonBarGroup8.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             // 
             // btnPrintReport
             // 

@@ -75,9 +75,12 @@ namespace StockControl
                     //var podt_Temp = db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && !x.genPR).ToList();
                     //db.mh_CustomerPODTs.DeleteAllOnSubmit(podt_Temp);
                     //db.SubmitChanges();
-                    var sodt_Temp = db.mh_SaleOrderDTs.Where(x => x.Active && x.forSafetyStock && !x.genPR).ToList();
-                    db.mh_SaleOrderDTs.DeleteAllOnSubmit(sodt_Temp);
-                    db.SubmitChanges();
+                    if (this.MRP)
+                    {
+                        var sodt_Temp = db.mh_SaleOrderDTs.Where(x => x.Active && x.forSafetyStock && !x.genPR).ToList();
+                        db.mh_SaleOrderDTs.DeleteAllOnSubmit(sodt_Temp);
+                        db.SubmitChanges();
+                    }
 
                     ////1.Get Customer P/O (OutPlan) and SaleOrder (OutPlan) [Only not customer P/O]
                     //var poDt = db.mh_CustomerPODTs.Where(x => x.Active
@@ -121,187 +124,190 @@ namespace StockControl
                     }
 
                     //1.1 Reorder Production สำหรับเก็บ Stock ตาม Safety Stock
-                    var tools1 = db.mh_Items.Where(x => x.Active).ToList();
-                    foreach (var item in tools1)
+                    if (this.MRP)
                     {
-                        changeLabel($"Finding Tool(Reorder) for plan...");
-                        var tdata = new ItemData(item.InternalNo);
-                        if (tdata == null) continue;
-                        if (tdata.RepType_enum == ReplenishmentType.Purchase) continue;
-
-                        var reorderQty = 0.00m;
-
-                        //FGTEMPJOByymm-000000
-                        var stockCustomerPO = tdata.findStock_CustomerPO(0);
-                        var stockforSafety = tdata.SafetyStockFG;
-                        var stockAll = stockCustomerPO + stockforSafety;
-                        if (tdata.ReorderType == ReorderType.Fixed)
+                        var tools1 = db.mh_Items.Where(x => x.Active).ToList();
+                        foreach (var item in tools1)
                         {
-                            bool comP = false;
-                            while (!comP)
+                            changeLabel($"Finding Tool(Reorder) for plan...");
+                            var tdata = new ItemData(item.InternalNo);
+                            if (tdata == null) continue;
+                            if (tdata.RepType_enum == ReplenishmentType.Purchase) continue;
+
+                            var reorderQty = 0.00m;
+
+                            //FGTEMPJOByymm-000000
+                            var stockCustomerPO = tdata.findStock_CustomerPO(0);
+                            var stockforSafety = tdata.SafetyStockFG;
+                            var stockAll = stockCustomerPO + stockforSafety;
+                            if (tdata.ReorderType == ReorderType.Fixed)
                             {
-                                if (stockAll + reorderQty < tdata.SafetyStock)
-                                    reorderQty += tdata.ReorderQty;
-                                else
-                                    comP = true;
+                                bool comP = false;
+                                while (!comP)
+                                {
+                                    if (stockAll + reorderQty < tdata.SafetyStock)
+                                        reorderQty += tdata.ReorderQty;
+                                    else
+                                        comP = true;
+                                }
                             }
-                        }
-                        else if (tdata.ReorderType == ReorderType.MinMax)
-                        {
-                            bool comP = false;
-                            while (!comP)
+                            else if (tdata.ReorderType == ReorderType.MinMax)
                             {
-                                if (stockAll + reorderQty <= tdata.MinQty)
-                                    reorderQty += tdata.MaxQty - stockAll;
-                                else
-                                    comP = true;
+                                bool comP = false;
+                                while (!comP)
+                                {
+                                    if (stockAll + reorderQty <= tdata.MinQty)
+                                        reorderQty += tdata.MaxQty - stockAll;
+                                    else
+                                        comP = true;
+                                }
                             }
-                        }
-                        else
-                            reorderQty = tdata.SafetyStock - stockAll;
+                            else
+                                reorderQty = tdata.SafetyStock - stockAll;
 
-                        if (reorderQty == 0) continue;
-                        //Create TEMP JOB P/O
-                        string tempNo = $"SO-SF{DateTime.Now.ToString("yyyyMM")}-0001";
-                        var so = db.mh_SaleOrders.Where(x => x.DemandType == 1 && x.Active
-                            && x.SONo == tempNo).FirstOrDefault();
-                        if (so == null)
-                        {
-                            so = new mh_SaleOrder
+                            if (reorderQty == 0) continue;
+                            //Create TEMP JOB P/O
+                            string tempNo = $"SO-SF{DateTime.Now.ToString("yyyyMM")}-0001";
+                            var so = db.mh_SaleOrders.Where(x => x.DemandType == 1 && x.Active
+                                && x.SONo == tempNo).FirstOrDefault();
+                            if (so == null)
                             {
-                                UpdateBy = ClassLib.Classlib.User,
-                                UpdateDate = DateTime.Now,
-                                CreateDate = DateTime.Now,
-                                CreateBy = ClassLib.Classlib.User,
-                                SONo = tempNo,
-                                CustomerNo = "ForSafety",
-                                CustomerName = "ForSafety",
-                                CustomerAddress = "ForSafety",
-                                SODate = DateTime.Now,
-                                Remark = "For Safety Stock",
-                                TotalPrice = 0,
-                                Vat = false,
-                                VatA = 0,
-                                VatAmnt = 0,
-                                TotalPriceIncVat = 0,
+                                so = new mh_SaleOrder
+                                {
+                                    UpdateBy = ClassLib.Classlib.User,
+                                    UpdateDate = DateTime.Now,
+                                    CreateDate = DateTime.Now,
+                                    CreateBy = ClassLib.Classlib.User,
+                                    SONo = tempNo,
+                                    CustomerNo = "ForSafety",
+                                    CustomerName = "ForSafety",
+                                    CustomerAddress = "ForSafety",
+                                    SODate = DateTime.Now,
+                                    Remark = "For Safety Stock",
+                                    TotalPrice = 0,
+                                    Vat = false,
+                                    VatA = 0,
+                                    VatAmnt = 0,
+                                    TotalPriceIncVat = 0,
+                                    Active = true,
+                                    Status = "Waiting",
+                                    SendApproveBy = "",
+                                    ApproveBy = "",
+                                    DemandType = 1,
+                                    SeqStatus = 2,
+                                    ApproveDate = DateTime.Now,
+                                    SandApproveDate = DateTime.Now,
+                                    VatGroup = 0,
+                                };
+                                db.mh_SaleOrders.InsertOnSubmit(so);
+                            }
+                            else
+                            {
+                                so.UpdateBy = ClassLib.Classlib.User;
+                                so.UpdateDate = DateTime.Now;
+                            }
+                            db.SubmitChanges();
+                            var sodt = new mh_SaleOrderDT
+                            {
+                                ItemNo = tdata.ItemNo,
+                                ItemName = tdata.ItemName,
+                                LocationItem = "Warehouse",
+                                OutPlan = reorderQty,
+                                OutShip = reorderQty,
+                                PCSUnit = tdata.PCSUnit_BaseUOM,
+                                PriceIncVat = false,
+                                Qty = reorderQty,
+                                RefDocNo = "",
+                                RefId = 0,
+                                ReplenishmentType = "Production",
+                                RNo = 1,
+                                SONo = so.SONo,
+                                UnitPrice = 0,
+                                UOM = tdata.BaseUOM,
+                                VatType = "",
+                                Amount = 0,
+                                Description = "",
                                 Active = true,
-                                Status = "Waiting",
-                                SendApproveBy = "",
-                                ApproveBy = "",
-                                DemandType = 1,
-                                SeqStatus = 2,
-                                ApproveDate = DateTime.Now,
-                                SandApproveDate = DateTime.Now,
-                                VatGroup = 0,
+                                genPR = false,
+                                forSafetyStock = true,
+                                OutQty = reorderQty,
+                                ReqDate = dTo,
                             };
-                            db.mh_SaleOrders.InsertOnSubmit(so);
-                        }
-                        else
-                        {
-                            so.UpdateBy = ClassLib.Classlib.User;
-                            so.UpdateDate = DateTime.Now;
-                        }
-                        db.SubmitChanges();
-                        var sodt = new mh_SaleOrderDT
-                        {
-                            ItemNo = tdata.ItemNo,
-                            ItemName = tdata.ItemName,
-                            LocationItem = "Warehouse",
-                            OutPlan = reorderQty,
-                            OutShip = reorderQty,
-                            PCSUnit = tdata.PCSUnit_BaseUOM,
-                            PriceIncVat = false,
-                            Qty = reorderQty,
-                            RefDocNo = "",
-                            RefId = 0,
-                            ReplenishmentType = "Production",
-                            RNo = 1,
-                            SONo = so.SONo,
-                            UnitPrice = 0,
-                            UOM = tdata.BaseUOM,
-                            VatType = "",
-                            Amount = 0,
-                            Description = "",
-                            Active = true,
-                            genPR = false,
-                            forSafetyStock = true,
-                            OutQty = reorderQty,
-                            ReqDate = dTo,
-                        };
-                        db.mh_SaleOrderDTs.InsertOnSubmit(sodt);
-                        db.SubmitChanges();
+                            db.mh_SaleOrderDTs.InsertOnSubmit(sodt);
+                            db.SubmitChanges();
 
-                        listForPlan.Add(new listforPlanning
-                        {
-                            DocId = sodt.id,
-                            DocNo = so.SONo,
-                            DocDate = so.SODate,
-                            ItemNo = sodt.ItemNo,
-                            RepType = tdata.RepType_enum,
-                            ReqDate = sodt.ReqDate,
-                            ReqQty = reorderQty,
-                            PCSUnit = tdata.PCSUnit_BaseUOM,
-                            UOM = tdata.BaseUOM,
-                        });
+                            listForPlan.Add(new listforPlanning
+                            {
+                                DocId = sodt.id,
+                                DocNo = so.SONo,
+                                DocDate = so.SODate,
+                                ItemNo = sodt.ItemNo,
+                                RepType = tdata.RepType_enum,
+                                ReqDate = sodt.ReqDate,
+                                ReqQty = reorderQty,
+                                PCSUnit = tdata.PCSUnit_BaseUOM,
+                                UOM = tdata.BaseUOM,
+                            });
 
-                        if (false)
-                        {
-                            //var po = db.mh_CustomerPOs.Where(x => x.DemandType == 1 
-                            //&& x.Active && x.CustomerPONo == tempNo).FirstOrDefault();
-                            //if (po == null)
-                            //{
-                            //po = new mh_CustomerPO();
-                            //po.CustomerPONo = tempNo;
-                            //po.CustomerNo = "ForSafety";
-                            //po.Active = true;
-                            //po.CreateBy = ClassLib.Classlib.User;
-                            //po.CreateDate = DateTime.Now;
-                            //po.DemandType = 1;
-                            //po.OrderDate = DateTime.Now;
-                            //po.Remark = "Reorder for FG Safety stock";
-                            //po.UpdateBy = ClassLib.Classlib.User;
-                            //po.UpdateDate = DateTime.Now;
-                            //db.mh_CustomerPOs.InsertOnSubmit(po);
-                            //db.SubmitChanges();
-                            //}
-                            //
-                            //var podt = new mh_CustomerPODT
-                            //{
-                            //    Active = true,
-                            //    Amount = Math.Round(reorderQty * tdata.StandardCost, 2),
-                            //    forSafetyStock = true,
-                            //    genPR = false,
-                            //    idCustomerPO = po.id,
-                            //    ItemName = tdata.ItemName,
-                            //    ItemNo = tdata.ItemNo,
-                            //    OutPlan = reorderQty,
-                            //    OutQty = reorderQty,
-                            //    OutSO = reorderQty,
-                            //    PCSUnit = tdata.PCSUnit_BaseUOM,
-                            //    Qty = reorderQty,
-                            //    Remark = "Reorder for Safety Stock",
-                            //    ReplenishmentType = "Production",
-                            //    ReqDate = dTo,
-                            //    ReqReceiveDate = dTo,
-                            //    Status = "Waiting",
-                            //    UnitPrice = tdata.StandardCost,
-                            //    UOM = tdata.BaseUOM,
-                            //};
-                            //db.mh_CustomerPODTs.InsertOnSubmit(podt);
-                            //db.SubmitChanges();
-                            //
-                            //listForPlan.Add(new listforPlanning
-                            //{
-                            //    DocId = podt.id,
-                            //    DocNo = po.CustomerPONo,
-                            //    DocDate = po.OrderDate,
-                            //    ItemNo = tdata.ItemNo,
-                            //    RepType = tdata.RepType_enum,
-                            //    ReqDate = podt.ReqDate,
-                            //    ReqQty = reorderQty,
-                            //    PCSUnit = tdata.PCSUnit_BaseUOM,
-                            //    UOM = tdata.BaseUOM,
-                            //});
+                            if (false)
+                            {
+                                //var po = db.mh_CustomerPOs.Where(x => x.DemandType == 1 
+                                //&& x.Active && x.CustomerPONo == tempNo).FirstOrDefault();
+                                //if (po == null)
+                                //{
+                                //po = new mh_CustomerPO();
+                                //po.CustomerPONo = tempNo;
+                                //po.CustomerNo = "ForSafety";
+                                //po.Active = true;
+                                //po.CreateBy = ClassLib.Classlib.User;
+                                //po.CreateDate = DateTime.Now;
+                                //po.DemandType = 1;
+                                //po.OrderDate = DateTime.Now;
+                                //po.Remark = "Reorder for FG Safety stock";
+                                //po.UpdateBy = ClassLib.Classlib.User;
+                                //po.UpdateDate = DateTime.Now;
+                                //db.mh_CustomerPOs.InsertOnSubmit(po);
+                                //db.SubmitChanges();
+                                //}
+                                //
+                                //var podt = new mh_CustomerPODT
+                                //{
+                                //    Active = true,
+                                //    Amount = Math.Round(reorderQty * tdata.StandardCost, 2),
+                                //    forSafetyStock = true,
+                                //    genPR = false,
+                                //    idCustomerPO = po.id,
+                                //    ItemName = tdata.ItemName,
+                                //    ItemNo = tdata.ItemNo,
+                                //    OutPlan = reorderQty,
+                                //    OutQty = reorderQty,
+                                //    OutSO = reorderQty,
+                                //    PCSUnit = tdata.PCSUnit_BaseUOM,
+                                //    Qty = reorderQty,
+                                //    Remark = "Reorder for Safety Stock",
+                                //    ReplenishmentType = "Production",
+                                //    ReqDate = dTo,
+                                //    ReqReceiveDate = dTo,
+                                //    Status = "Waiting",
+                                //    UnitPrice = tdata.StandardCost,
+                                //    UOM = tdata.BaseUOM,
+                                //};
+                                //db.mh_CustomerPODTs.InsertOnSubmit(podt);
+                                //db.SubmitChanges();
+                                //
+                                //listForPlan.Add(new listforPlanning
+                                //{
+                                //    DocId = podt.id,
+                                //    DocNo = po.CustomerPONo,
+                                //    DocDate = po.OrderDate,
+                                //    ItemNo = tdata.ItemNo,
+                                //    RepType = tdata.RepType_enum,
+                                //    ReqDate = podt.ReqDate,
+                                //    ReqQty = reorderQty,
+                                //    PCSUnit = tdata.PCSUnit_BaseUOM,
+                                //    UOM = tdata.BaseUOM,
+                                //});
+                            }
                         }
                     }
 
@@ -503,6 +509,7 @@ namespace StockControl
                                 var vndr = db.mh_Vendors.Where(x => x.No == gp1.VendorNo).FirstOrDefault();
                                 if (vndr != null)
                                     gp1.EndingDate = gp1.EndingDate.Value.AddDays(vndr.ShippingTime);
+                                gp1.EndingDate = baseClass.setStandardTime(gp1.EndingDate.Value.Date, false);
                                 gp1.DueDate = gp1.EndingDate.Value.Date.AddDays(1);
                                 gp1.ReqDate = gp1.DueDate.AddDays(1);
                                 gridPlans.Add(gp1);
@@ -1175,8 +1182,10 @@ namespace StockControl
             gp1.refNo = 0;
             gp1.mainNo = 0;
             gp1.itemData = itemData;
-            gp1.StartingDate = baseClass.setStandardTime(gp1.ReqDate, true);
-            gp1.EndingDate = baseClass.setStandardTime(gp1.ReqDate, false);
+            //gp1.StartingDate = baseClass.setStandardTime(gp1.ReqDate, true);
+            //gp1.EndingDate = baseClass.setStandardTime(gp1.ReqDate, false);
+            gp1.StartingDate = baseClass.setStandardTime(ReqDate, true);
+            gp1.EndingDate = baseClass.setStandardTime(ReqDate, false);
             return gp1;
         }
         private grid_Planning newGridPlan_PurchaseAfter(grid_Planning gp, DateTime ReqDate, ItemData itemData)
