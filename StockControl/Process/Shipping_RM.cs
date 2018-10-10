@@ -296,7 +296,7 @@ namespace StockControl
                                     }
 
                                     x.Cells["QtyUsed"].Value = dbClss.TDe( db.Get_ShipQty(Convert.ToString(x.Cells["CodeNo"].Value),txtJobCard.Text));
-                                    x.Cells["Qty"].Value = Math.Round((dbClss.TDe(x.Cells["QtyUsed"].Value) * dbClss.TDe(x.Cells["PCSUnit"].Value)), 2);
+                                    x.Cells["Qty"].Value = Math.Round((dbClss.TDe(x.Cells["QtyShip"].Value) * dbClss.TDe(x.Cells["PCSUnit"].Value)), 2);
 
                                     //id = Convert.ToInt32(x.Cells["id"].Value);
                                     var s = (from ix in db.tb_Stocks select ix)

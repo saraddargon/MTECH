@@ -524,7 +524,7 @@
             gridViewDecimalColumn5.ReadOnly = true;
             gridViewDecimalColumn5.Width = 92;
             gridViewDecimalColumn6.EnableExpressionEditor = false;
-            gridViewDecimalColumn6.FieldName = "Qty";
+            gridViewDecimalColumn6.FieldName = "Qty1";
             gridViewDecimalColumn6.FormatString = "{0:N2}";
             gridViewDecimalColumn6.HeaderText = "จำนวนที่เบิกจริง";
             gridViewDecimalColumn6.Name = "Qty";
