@@ -479,6 +479,15 @@ namespace Report
                         rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;
+                case "ReceiveAndDelivery":
+                    {
+                        rptDc.SetParameterValue("@Date1", DateTime.ParseExact(Value[0], "dd/MMM/yyyy", new CultureInfo("en-US")));
+                        rptDc.SetParameterValue("@Date2", DateTime.ParseExact(Value[1], "dd/MMM/yyyy", new CultureInfo("en-US")));
+                    }break;
+                case "DeliveryPlanning":
+                    {
+
+                    }break;
             }
         }
 

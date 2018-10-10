@@ -597,6 +597,7 @@ namespace StockControl
                         gPlan = ProductionE(gPlan, data, tdata, thisMain);
                         if (gPlan == null)
                             return null;
+                        gPlan.DueDate = gPlan.EndingDate.Value.Date.AddDays(1);
                     }
                     //Purchase
                     else if (this.MRP)
@@ -665,8 +666,8 @@ namespace StockControl
                         else
                             q = Math.Ceiling(q);
                         gPlan.Qty = q;
+                        gPlan.DueDate = gPlan.EndingDate.Value.Date.AddDays(1);
                     }
-                    gPlan.DueDate = gPlan.EndingDate.Value.Date.AddDays(1);
 
                     gridPlans.Add(gPlan);
                     return gPlan;

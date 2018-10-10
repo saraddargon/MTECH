@@ -110,6 +110,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectDB.cs" />
+    <Compile Include="CustomerPO_List_Print.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerPO_List_Print.Designer.cs">
+      <DependentUpon>CustomerPO_List_Print.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataClasses1.cs">
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </Compile>
@@ -1211,6 +1217,9 @@
     <None Include="DataClasses1.dbml.layout">
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </None>
+    <EmbeddedResource Include="CustomerPO_List_Print.resx">
+      <DependentUpon>CustomerPO_List_Print.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\Display.resx">
       <DependentUpon>Display.cs</DependentUpon>
     </EmbeddedResource>
