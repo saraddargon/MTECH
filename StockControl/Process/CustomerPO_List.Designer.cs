@@ -85,10 +85,12 @@
             this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
+            this.btnSearch = new Telerik.WinControls.UI.RadButton();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radRibbonBarButtonGroup2 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
+            this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.btnSearch = new Telerik.WinControls.UI.RadButton();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -113,8 +115,6 @@
             this.radRibbonBarGroup6 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnCreateSaleOrder = new Telerik.WinControls.UI.RadButtonElement();
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
-            this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.btnEdit = new Telerik.WinControls.UI.RadButtonElement();
             this.radButtonElement2 = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
@@ -620,26 +620,6 @@
             this.radLabel1.TabIndex = 7;
             this.radLabel1.Text = "Refer Doc No.";
             // 
-            // radRibbonBarButtonGroup2
-            // 
-            this.radRibbonBarButtonGroup2.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.btnFilter,
-            this.Unfilter});
-            this.radRibbonBarButtonGroup2.Name = "radRibbonBarButtonGroup2";
-            this.radRibbonBarButtonGroup2.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.radRibbonBarButtonGroup2.Padding = new System.Windows.Forms.Padding(1);
-            this.radRibbonBarButtonGroup2.ShowBackColor = false;
-            this.radRibbonBarButtonGroup2.Text = "radRibbonBarButtonGroup2";
-            // 
-            // radRibbonBarButtonGroup5
-            // 
-            this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
-            this.radRibbonBarButtonGroup5.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.radRibbonBarButtonGroup5.Padding = new System.Windows.Forms.Padding(1);
-            this.radRibbonBarButtonGroup5.ShowBackColor = false;
-            this.radRibbonBarButtonGroup5.ShowBorder = false;
-            this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
-            // 
             // btnSearch
             // 
             this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
@@ -651,6 +631,40 @@
             this.btnSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSearch.ThemeName = "Office2010Blue";
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // radRibbonBarButtonGroup2
+            // 
+            this.radRibbonBarButtonGroup2.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.btnFilter,
+            this.Unfilter});
+            this.radRibbonBarButtonGroup2.Name = "radRibbonBarButtonGroup2";
+            this.radRibbonBarButtonGroup2.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.radRibbonBarButtonGroup2.Padding = new System.Windows.Forms.Padding(1);
+            this.radRibbonBarButtonGroup2.ShowBackColor = false;
+            this.radRibbonBarButtonGroup2.Text = "radRibbonBarButtonGroup2";
+            // 
+            // btnFilter
+            // 
+            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Text = "Filter";
+            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // Unfilter
+            // 
+            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
+            this.Unfilter.Name = "Unfilter";
+            this.Unfilter.Text = "Un Filter";
+            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // radRibbonBarButtonGroup5
+            // 
+            this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
+            this.radRibbonBarButtonGroup5.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.radRibbonBarButtonGroup5.Padding = new System.Windows.Forms.Padding(1);
+            this.radRibbonBarButtonGroup5.ShowBackColor = false;
+            this.radRibbonBarButtonGroup5.ShowBorder = false;
+            this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
             // radRibbonBar1
             // 
@@ -867,6 +881,7 @@
             this.btnPrintRCDL.Name = "btnPrintRCDL";
             this.btnPrintRCDL.Text = "Receive && Delivery";
             this.btnPrintRCDL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnPrintRCDL.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnPrintRCDL.Click += new System.EventHandler(this.btnPrintRCDL_Click);
             // 
             // radRibbonBarGroup6
@@ -891,20 +906,6 @@
             this.radMenuItem1.Name = "radMenuItem1";
             this.radMenuItem1.Text = "Exit";
             this.radMenuItem1.Click += new System.EventHandler(this.radMenuItem1_Click);
-            // 
-            // btnFilter
-            // 
-            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
-            this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Text = "Filter";
-            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            // 
-            // Unfilter
-            // 
-            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
-            this.Unfilter.Name = "Unfilter";
-            this.Unfilter.Text = "Un Filter";
-            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             // 
             // btnEdit
             // 
