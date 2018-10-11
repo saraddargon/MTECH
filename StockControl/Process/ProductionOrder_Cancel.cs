@@ -145,6 +145,21 @@ namespace StockControl
                                 canQ += d.Sum(x => x.Qty);
                             if (canQ > outQ)
                                 err += "- จำนวนยกเลิก มากกว่าจำนวนคงเหลือ.\n";
+                            else
+                            {
+                                if(outQ - canQ <= 0) //จะปิด job
+                                {
+                                    var rm = db.mh_ProductionOrderRMs.Where(x => x.Active && x.JobNo == jNo && x.OutQty < 0).ToList();
+                                    foreach(var r in rm)
+                                    {
+                                        if(r.OutQty + baseClass.GetQtyAccidenSlip(r.id) < 0)
+                                        {
+                                            err += $"- จำนวนเบิกใช้ 'วัตถุดิบ' เกินกำหนด กรุณาทำ Return RM หรือ Accident Slip กรณีไม่สามารถคืนวัตถุดิบได้ \n";
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
 
                             //var pk = db.mh_PackingDts.Where(x => x.Active && x.idJob == m.id)
                             //    .Join(db.mh_Packings.Where(x => x.Active)
@@ -395,7 +410,16 @@ namespace StockControl
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-
+            //ReportChangeJob.rpt
+            string SPNo = txtSPNo.Text.Trim();
+            if (SPNo != "")
+            {
+                Report.Reportx1.Value = new string[1];
+                Report.Reportx1.Value[0] = SPNo;
+                Report.Reportx1.WReport = "ReportChangeJob";
+                Report.Reportx1 op = new Report.Reportx1("ReportChangeJob.rpt");
+                op.Show();
+            }
         }
 
         private void btnListItem_Click(object sender, EventArgs e)
@@ -503,7 +527,7 @@ namespace StockControl
                 var m = db.mh_ProductionOrder_CancelQties.Where(x => x.DocNo == docNo).FirstOrDefault();
                 if (m != null)
                 {
-                    var j = db.mh_ProductionOrders.Where(x => x.JobNo == m.JobNo && x.Active && x.CloseJob).FirstOrDefault();
+                    var j = db.mh_ProductionOrders.Where(x => x.JobNo == m.JobNo && x.Active && !x.CloseJob).FirstOrDefault();
                     if (j != null)
                     {
                         m.Active = false;
@@ -517,6 +541,7 @@ namespace StockControl
                         db.SubmitChanges();
                         btnDelete.Enabled = false;
                         baseClass.Info("Delete completed.\n");
+                        lbStatus.Text = "Inactive";
                     }
                 }
             }

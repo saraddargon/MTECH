@@ -488,6 +488,10 @@ namespace Report
                     {
 
                     }break;
+                case "ReportChangeJob":
+                    {
+
+                    }break;
             }
         }
 
