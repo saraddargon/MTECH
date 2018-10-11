@@ -92,7 +92,7 @@ namespace StockControl
             dgvData.AutoGenerateColumns = false;
             GETDTRow();
    
-            DefaultItem();
+            //DefaultItem();
             
             btnNew_Click(null, null);
 
@@ -117,48 +117,48 @@ namespace StockControl
             //}
 
         }
-        private void DefaultItem()
-        {
-            using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {
+        //private void DefaultItem()
+        //{
+        //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+        //    {
 
 
 
-                //try
-                //{
+        //        //try
+        //        //{
 
-                //    GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)dgvData.Columns["Location"];
-                //    col.DataSource = (from ix in db.mh_Locations.Where(s => Convert.ToBoolean(s.Active.Equals(true)) && s.Active == true)
-                //                      select new { ix.Code, ix.Name }).ToList();
+        //        //    GridViewMultiComboBoxColumn col = (GridViewMultiComboBoxColumn)dgvData.Columns["Location"];
+        //        //    col.DataSource = (from ix in db.mh_Locations.Where(s => Convert.ToBoolean(s.Active.Equals(true)) && s.Active == true)
+        //        //                      select new { ix.Code, ix.Name }).ToList();
 
-                //    col.DisplayMember = "Code";
-                //    col.ValueMember = "Code";
-                //    col.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
-                //    col.FilteringMode = GridViewFilteringMode.DisplayMember;
+        //        //    col.DisplayMember = "Code";
+        //        //    col.ValueMember = "Code";
+        //        //    col.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
+        //        //    col.FilteringMode = GridViewFilteringMode.DisplayMember;
 
-                //    col.AutoSizeMode = BestFitColumnMode.DisplayedDataCells;
-                //    col.TextAlignment = ContentAlignment.MiddleCenter;
-                //    col.DropDownStyle = RadDropDownStyle.DropDownList;
+        //        //    col.AutoSizeMode = BestFitColumnMode.DisplayedDataCells;
+        //        //    col.TextAlignment = ContentAlignment.MiddleCenter;
+        //        //    col.DropDownStyle = RadDropDownStyle.DropDownList;
 
-                //}
-                try
-                {
-                    GridViewMultiComboBoxColumn Uom = (GridViewMultiComboBoxColumn)dgvData.Columns["UnitShip"];
-                    Uom.DataSource = (from ix in db.mh_Units.Where(s => s.UnitActive == true)
-                                      select new { ix.UnitCode }).ToList();
-                    Uom.DisplayMember = "UnitCode";
-                    Uom.DropDownStyle = RadDropDownStyle.DropDown;
-                }
-                catch { }
-                //col.TextAlignment = ContentAlignment.MiddleCenter;
-                //col.Name = "CodeNo";
-                //this.radGridView1.Columns.Add(col);
+        //        //}
+        //        try
+        //        {
+        //            GridViewMultiComboBoxColumn Uom = (GridViewMultiComboBoxColumn)dgvData.Columns["UnitShip"];
+        //            Uom.DataSource = (from ix in db.mh_Units.Where(s => s.UnitActive == true)
+        //                              select new { ix.UnitCode }).ToList();
+        //            Uom.DisplayMember = "UnitCode";
+        //            Uom.DropDownStyle = RadDropDownStyle.DropDown;
+        //        }
+        //        catch { }
+        //        //col.TextAlignment = ContentAlignment.MiddleCenter;
+        //        //col.Name = "CodeNo";
+        //        //this.radGridView1.Columns.Add(col);
 
-                //this.radGridView1.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
+        //        //this.radGridView1.AutoSizeColumnsMode = GridViewAutoSizeColumnsMode.Fill;
 
-                //this.radGridView1.CellEditorInitialized += radGridView1_CellEditorInitialized;
-            }
-        }
+        //        //this.radGridView1.CellEditorInitialized += radGridView1_CellEditorInitialized;
+        //    }
+        //}
         private void DataLoad()
         {
           
@@ -2010,6 +2010,21 @@ namespace StockControl
                 }
                 if (e.Column.Name.Equals("UnitShip"))
                 {
+                    using (DataClasses1DataContext db = new DataClasses1DataContext())
+                    {
+                        string ItemNo = dbClss.TSt(e.Row.Cells["CodeNo"].Value).Trim().ToUpper();
+
+                        try
+                        {
+                            GridViewMultiComboBoxColumn Uom = (GridViewMultiComboBoxColumn)dgvData.Columns["UnitShip"];
+                            Uom.DataSource = (from ix in db.mh_ItemUOMs.Where(s => s.Active == true && s.ItemNo.ToUpper().Trim() == ItemNo)
+                                              select new { ix.UOMCode }).ToList();
+                            Uom.DisplayMember = "UOMCode";
+                            Uom.DropDownStyle = RadDropDownStyle.DropDown;
+                        }
+                        catch { }
+                    }
+
                     /////////////มีการ เคลียร์ การ Add ก่อน แล้วค่อย Add ใหม่////////////////
                     //Row = e.RowIndex;
                     RadMultiColumnComboBoxElement Comcol = (RadMultiColumnComboBoxElement)e.ActiveEditor;
@@ -2039,8 +2054,8 @@ namespace StockControl
                     Comcol.EditorControl.Columns.Add(new GridViewTextBoxColumn
                     {
                         HeaderText = "UOM",
-                        Name = "UnitCode",
-                        FieldName = "UnitCode",
+                        Name = "UOMCode",
+                        FieldName = "UOMCode",
                         Width = 100,
                         AllowFiltering = true,
                         ReadOnly = false

@@ -408,7 +408,6 @@ namespace StockControl
             dgvData.DataSource = null;
             txtRemark.Text = "";
             txtTotal.Text = (0).ToMoney();
-            txtSHNo.Text = dbClss.GetNo(30, 0);
             txtSONo.Text = "";
         }
 
@@ -642,10 +641,9 @@ namespace StockControl
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            ///
-            /////
-            ////////////////ADDDDD Item//////////////
-            try
+           
+                ////////////////ADDDDD Item//////////////
+                try
             {
                 dgvData.EndInit();
                 if (Ac.Equals("New") || Ac.Equals("Edit"))

@@ -695,7 +695,8 @@ namespace StockControl
                                     , StockControl.dbClss.TSt(g.Cells["MachineName"].Value)
                                     , StockControl.dbClss.TSt(g.Cells["SerialNo"].Value)
                                     , StockControl.dbClss.TSt(g.Cells["LotNo"].Value)
-                                    , "Completed", ClassLib.Classlib.User
+                                    , "Completed"
+                                    , ClassLib.Classlib.User
                                     , txtJobCard.Text.Trim()
                                     , ""//txtTempJobCard.Text.Trim()
                                     , RefidJobNo
@@ -1655,7 +1656,8 @@ namespace StockControl
                                             , vv.LotNo, vv.SerialNo, vv.MachineName, vv.LineName, vv.Remark, 0
                                             , vv.Location, vv.BaseUOM, dbClss.TDe(vv.BasePCSUOM)
                                             , dbClss.TDe(vv.QTY) - dbClss.TDe(vv.OutShip)
-                                            , GroupType, Type, dbClss.TInt(vv.idCSTMPODt), dbClss.TInt(vv.idProductionOrderRM)
+                                            , GroupType, Type, dbClss.TInt(vv.idCSTMPODt)
+                                            , dbClss.TInt(vv.idProductionOrderRM)
                                             , vv.UnitShip, vv.BaseUOM
                                             , Math.Round((dbClss.TDe(vv.OutShip) * dbClss.TDe(vv.PCSUnit)), 2)
                                             , vv.id
