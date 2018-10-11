@@ -365,6 +365,8 @@ namespace StockControl
                 txtEmail.Enabled = ss;
                 txtFax.Enabled = ss;
                 txtTel.Enabled = ss;
+                txtSONo.Enabled = ss;
+                radButton2.Enabled = ss;
 
             }
             else if (Condition.Equals("View"))
@@ -379,6 +381,8 @@ namespace StockControl
                 txtEmail.Enabled = ss;
                 txtFax.Enabled = ss;
                 txtTel.Enabled = ss;
+                txtSONo.Enabled = ss;
+                radButton2.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
@@ -392,6 +396,8 @@ namespace StockControl
                 txtEmail.Enabled = ss;
                 txtFax.Enabled = ss;
                 txtTel.Enabled = ss;
+                txtSONo.Enabled = ss;
+                radButton2.Enabled = ss;
             }
         }
 
@@ -409,13 +415,22 @@ namespace StockControl
             txtRemark.Text = "";
             txtTotal.Text = (0).ToMoney();
             txtSONo.Text = "";
+
+            txtAddress.Text = "";
+            txtFax.Text = "";
+            txtEmail.Text = "";
+            txtTel.Text = "";
+            txtContactName.Text = "";
+            txtSelectCode.Text = "";
+           
         }
 
         private void btnNew_Click(object sender, EventArgs e)
         {
+            
             btnView.Enabled = true;
             btnEdit.Enabled = true;
-            btnNew.Enabled = false;
+            btnNew.Enabled = true;
             btnSave.Enabled = true;
             btnDelete.Enabled = true;
 
@@ -522,6 +537,12 @@ namespace StockControl
                             }
                         }
                         if (Temp == 1)
+                        {
+                            baseClass.Warning("Shipment Status cannot Delete.");
+                            return;
+                        }
+                        var ss = db.mh_Shipments.Where(x => x.SSNo == poNo && x.StatusHD != "Waiting").ToList();
+                        if(ss.Count>0)
                         {
                             baseClass.Warning("Shipment Status cannot Delete.");
                             return;
@@ -1114,56 +1135,57 @@ namespace StockControl
                     if (StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["Status"].Value) == "ADD"
                         || StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["Status"].Value) == "Adding")
                     {
+                        
+                            int id = 0;
+                            int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["id"].Value), out id);
+                            if (id <= 0)
+                                dgvData.Rows.Remove(dgvData.CurrentRow);
 
-                        int id = 0;
-                        int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["id"].Value), out id);
-                        if (id <= 0)
-                            dgvData.Rows.Remove(dgvData.CurrentRow);
-
-                        else
-                        {
-
-                            decimal OutInv = dbClss.TDe(dgvData.CurrentRow.Cells["OutInv"].Value);
-                            decimal Qty = dbClss.TDe(dgvData.CurrentRow.Cells["Qty"].Value);
-                            if (OutInv != Qty)
-                            {
-                                MessageBox.Show("ไม่สามารถทำการลบรายการได้ บางรายการทำ Invoice แล้ว");
-                            }
                             else
-                            { 
-                                string CodeNo = "";
-                                CodeNo = StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["ItemNo"].Value);
-                                if (MessageBox.Show("ต้องการลบรายการ ( " + CodeNo + " ) ออกจากรายการ หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+
+                                decimal OutInv = dbClss.TDe(dgvData.CurrentRow.Cells["OutInv"].Value);
+                                decimal Qty = dbClss.TDe(dgvData.CurrentRow.Cells["Qty"].Value);
+                                if (OutInv != Qty)
                                 {
-                                    dgvData.CurrentRow.IsVisible = false;
+                                    MessageBox.Show("ไม่สามารถทำการลบรายการได้ บางรายการทำ Invoice แล้ว");
                                 }
+                                else
+                                {
+                                    string CodeNo = "";
+                                    CodeNo = StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["ItemNo"].Value);
+                                    if (MessageBox.Show("ต้องการลบรายการ ( " + CodeNo + " ) ออกจากรายการ หรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                                    {
+                                        dgvData.CurrentRow.IsVisible = false;
+                                    }
+                                }
+
+                                //row = dgvData.CurrentCell.RowInfo.Index;
+                                ////btnDelete_Click(null, null);
+                                //using (var db = new DataClasses1DataContext())
+                                //{
+                                //    var mm = db.mh_ShipmentDTs.Where(x => x.id == id 
+                                //    && x.OutInv<=0 ).ToList();
+
+                                //    if (mm.Count>0)
+                                //    {
+                                //        var m = db.mh_ShipmentDTs.Where(x => x.id == id
+                                //        && x.OutInv < -0).ToList();
+
+                                //        m.Active = false;
+                                //        m.Status = "Cancel";
+                                //        m.UpdateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                //        m.UpdateBy = ClassLib.Classlib.User;
+                                //        db.SubmitChanges();
+
+                                //        updateOutSO();
+                                //        dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
+                                //    }
+                                //}
                             }
-                            
-                            //row = dgvData.CurrentCell.RowInfo.Index;
-                            ////btnDelete_Click(null, null);
-                            //using (var db = new DataClasses1DataContext())
-                            //{
-                            //    var mm = db.mh_ShipmentDTs.Where(x => x.id == id 
-                            //    && x.OutInv<=0 ).ToList();
-
-                            //    if (mm.Count>0)
-                            //    {
-                            //        var m = db.mh_ShipmentDTs.Where(x => x.id == id
-                            //        && x.OutInv < -0).ToList();
-
-                            //        m.Active = false;
-                            //        m.Status = "Cancel";
-                            //        m.UpdateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-                            //        m.UpdateBy = ClassLib.Classlib.User;
-                            //        db.SubmitChanges();
-
-                            //        updateOutSO();
-                            //        dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
-                            //    }
-                            //}
-                        }
-                        CallTotal();
-                        Set_Row();
+                            CallTotal();
+                            Set_Row();
+                        
                     }
                     else
                         MessageBox.Show("ไม่สามารถทำการลบรายการได้ สถานะไม่ถูกต้อง");
@@ -1606,7 +1628,9 @@ namespace StockControl
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     var sh = db.mh_SaleOrders.Where(s => s.SONo == txtSONo.Text  
-                        && s.Active == true && Convert.ToInt16(s.SeqStatus)==2).ToList();
+                        && s.Active == true && Convert.ToInt16(s.SeqStatus)==2
+                        && Convert.ToInt16(s.DemandType) != 1
+                        ).ToList();
                     if (sh.Count > 0)
                     {
                         var ShipList = db.mh_SaleOrderDTs.Where(s => s.SONo == txtSONo.Text 

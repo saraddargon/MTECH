@@ -686,6 +686,7 @@ namespace StockControl
             //DateTime? UpdateDate = null;
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
+                int Seq = 0;
                 //decimal UnitCost = 0;
                 foreach (var g in dgvData.Rows)
                 {
@@ -696,6 +697,7 @@ namespace StockControl
                         {
                             if (StockControl.dbClss.TInt(g.Cells["id"].Value) <= 0)  //New ใหม่
                             {
+                                 Seq += 1;
                                 string BaseUOM = dbClss.TSt(g.Cells["BaseUOM"].Value);
                                 decimal BasePCSUOM = dbClss.Con_UOM(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), BaseUOM);
                                 decimal QTY = dbClss.TDe(g.Cells["QTY"].Value);
@@ -721,6 +723,7 @@ namespace StockControl
                                     , dbClss.TInt(g.Cells["Refid_dt"].Value)// StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
                                     , 0//dbClss.TInt(g.Cells["idCSTMPODt"].Value)
                                     , "Accident"
+                                    ,Seq
                                     );
 
                                 //ปรับ OutShip ลง

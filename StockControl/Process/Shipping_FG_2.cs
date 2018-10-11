@@ -295,19 +295,28 @@ namespace StockControl
 
                                     id = Convert.ToInt32(x.Cells["id"].Value);
 
-                                    var s = (from ix in db.tb_Stocks select ix)
-                                       .Where(a => a.DocNo == txtSHNo.Text.Trim()
-                                           //&& a.Refid == id)
-                                           && a.Location == Convert.ToString(x.Cells["Location"].Value)
-                                           && a.CodeNo == Convert.ToString(x.Cells["CodeNo"].Value)).OrderByDescending(ab => ab.id)
-                                           
-                                           .FirstOrDefault();
-                                    if (s != null)
+                                    //var s = (from ix in db.tb_Stocks select ix)
+                                    //   .Where(a => a.DocNo == txtSHNo.Text.Trim()
+                                    //       //&& a.Refid == id)
+                                    //       && a.Location == Convert.ToString(x.Cells["Location"].Value)
+                                    //       && a.CodeNo == Convert.ToString(x.Cells["CodeNo"].Value)).OrderByDescending(ab => ab.id)
+
+                                    //       .FirstOrDefault();
+                                    //if (s != null)
+                                    //{
+                                    //   // x.Cells["RemainQty"].Value = Convert.ToDecimal(s.RemainQty);
+                                    //    x.Cells["StandardCost"].Value = Convert.ToDecimal(s.UnitCost);
+                                    //    x.Cells["Amount"].Value = Math.Abs( Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QTY"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
+                                    //}
+                                    var t = db.mh_ShipmentDTs.Where(ab => ab.Active
+                                       && ab.SSNo.Trim().ToUpper() == dbClss.TSt(x.Cells["RefNo"].Value).Trim().ToUpper()
+                                       && ab.RefId == dbClss.TInt(x.Cells["idCSTMPODt"].Value)
+                                       && ab.Active == true).ToList();
+                                    if (t.Count > 0)
                                     {
-                                        x.Cells["RemainQty"].Value = Convert.ToDecimal(s.RemainQty);
-                                        x.Cells["StandardCost"].Value = Convert.ToDecimal(s.UnitCost);
-                                        x.Cells["Amount"].Value = Math.Abs( Convert.ToDecimal(s.UnitCost) * Convert.ToDecimal(x.Cells["QTY"].Value));//Math.Abs(Convert.ToDecimal(s.AmountCost));
+                                        x.Cells["OutShip"].Value = dbClss.TDe(t.FirstOrDefault().OutShip);
                                     }
+                                        x.Cells["RemainQty"].Value = dbClss.TDe(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["CodeNo"].Value), "CstmPOID", 0, Convert.ToString(x.Cells["Location"].Value), dbClss.TInt(x.Cells["idCSTMPODt"].Value)));
                                 }
                             }
                             Cal_Amount();
@@ -686,6 +695,7 @@ namespace StockControl
             //DateTime? UpdateDate = null;
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
+                int Seq = 0;
                 //decimal UnitCost = 0;
                 foreach (var g in dgvData.Rows)
                 {
@@ -696,6 +706,7 @@ namespace StockControl
                         {
                             if (StockControl.dbClss.TInt(g.Cells["id"].Value) <= 0)  //New ใหม่
                             {
+                                 Seq += 1;
                                 string BaseUOM = dbClss.TSt(g.Cells["BaseUOM"].Value);
                                 decimal BasePCSUOM = dbClss.Con_UOM(StockControl.dbClss.TSt(g.Cells["CodeNo"].Value), BaseUOM);
                                 decimal QTY = dbClss.TDe(g.Cells["QTY"].Value);
@@ -718,9 +729,10 @@ namespace StockControl
                                     , BasePCSUOM
                                     , dbClss.TSt(g.Cells["UnitShip"].Value)
                                     , dbClss.TDe(g.Cells["PCSUnit"].Value)
-                                    , dbClss.TInt(g.Cells["Refid_dt"].Value)// StockControl.dbClss.TDe(g.Cells["PCSUnit"].Value)
+                                    , dbClss.TInt(g.Cells["Refid_dt"].Value)
                                     , dbClss.TInt(g.Cells["idCSTMPODt"].Value)
                                     , "ForSale"
+                                    ,Seq
                                     );
 
                                 //ปรับ OutShip ลง
@@ -1159,22 +1171,35 @@ namespace StockControl
 
                             if (Temp > RemainQty)
                             {
-                                MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
+                                MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือสต็อกได้");
                                 e.Row.Cells["QTY"].Value = 0;
                                 QTY = 0;
                             }
-
+                            else
+                            {
+                                if(Temp>dbClss.TDe(e.Row.Cells["OutShip"].Value))
+                                {
+                                    MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือใบจัดส่งได้");
+                                    e.Row.Cells["QTY"].Value = 0;
+                                    QTY = 0;
+                                }
+                            }
+                            if (PCSUnit <= 0)
+                            {
+                                MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
+                                e.Row.Cells["QTY"].Value = 0;
+                            }
 
                             if (QTY > 0)
                             {
                                 // ใช้ 0 เพราะต้องการเอาราคาล่าสุดของ stock free
                                 // ใช้ -1 คือเอาทุกรายการรับ
-                                int idCSTMPODt = 0;// dbClss.TInt(txtidCSTMPODt.Text);
+                                int idCSTMPODt =  dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
                                 int Free = 0;
                                 if (idCSTMPODt > 0) Free = 0;
                                 //else if (idCSTMPODt == 0) Free = 1;
 
-                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
+                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), Temp, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
                             }
                         }
                     }
@@ -1196,6 +1221,7 @@ namespace StockControl
                         
                         //Cal Remain Qty
                         decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
+                        
                         string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
                         decimal BasePCSUOM  = dbClss.Con_UOM(CodeNo, BaseUOM);
 
@@ -1215,15 +1241,29 @@ namespace StockControl
                             e.Row.Cells["QTY"].Value = 0;
                             QTY = 0;
                         }
+                        else
+                        {
+                            if (Temp > dbClss.TDe(e.Row.Cells["OutShip"].Value))
+                            {
+                                MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือใบจัดส่งได้");
+                                e.Row.Cells["QTY"].Value = 0;
+                                QTY = 0;
+                            }
+                        }
+                        if (PCSUnit <= 0)
+                        {
+                            MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
+                            e.Row.Cells["QTY"].Value = 0;
+                        }
 
                     }
                     else if (dgvData.Columns["Location"].Index == e.ColumnIndex)
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            string Category1 = "CstmPOID";                          
-
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), Category1, 0, Convert.ToString(e.Row.Cells["Location"].Value),0)));
+                            string Category1 = "CstmPOID";
+                            int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), Category1, 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
 
 
                             string dgvUOM = dbClss.TSt(e.Row.Cells["UnitShip"].Value);
@@ -1250,6 +1290,20 @@ namespace StockControl
                                 MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
                                 e.Row.Cells["QTY"].Value = 0;
                                 QTY = 0;
+                            }
+                            else
+                            {
+                                if (Temp > dbClss.TDe(e.Row.Cells["OutShip"].Value))
+                                {
+                                    MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือใบจัดส่งได้");
+                                    e.Row.Cells["QTY"].Value = 0;
+                                    QTY = 0;
+                                }
+                            }
+                            if (PCSUnit <= 0)
+                            {
+                                MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
+                                e.Row.Cells["QTY"].Value = 0;
                             }
                         }
                     }
@@ -2061,11 +2115,12 @@ namespace StockControl
         {
             try
             {
+
+
                 if (baseClass.IsDel($"Do you want to Delete shipping: {txtSHNo.Text} ?"))
                 {
                     using (var db = new DataClasses1DataContext())
                     {
-
                         int temp = 0;
                         DateTime? CalDate = null;
                         DateTime? AppDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
@@ -2094,7 +2149,7 @@ namespace StockControl
                         decimal Qty = 0;
 
                         var g = (from ix in db.tb_Shipping_FGs
-                                 where ix.RefNo == txtSHNo.Text && ix.Active == true
+                                 where ix.ReqNo == txtSHNo.Text && ix.Active == true
                                  select ix).ToList();
                         if (g.Count > 0)
                         {
@@ -2109,6 +2164,7 @@ namespace StockControl
                                     temp += 1;
                                     break;
                                 }
+                               
                             }
                             if (temp > 0)
                             {
@@ -2123,7 +2179,8 @@ namespace StockControl
                                     Qty = dbClss.TDe(vv.Qty);
 
                                     //var s = db.tb_Shippings.Where(x => x.Status != "Cancel" && x.id == Convert.ToInt16(vv.idReceive)).ToList();
-                                    var r = db.tb_Stocks.Where(x => x.Status != "Cancel" && x.id == Convert.ToInt16(vv.idReceive)).ToList();
+                                    var r = db.tb_Stocks.Where(x => x.Status != "Cancel"
+                                    && x.id == Convert.ToInt16(vv.idReceive)).ToList();
                                     if (r.Count > 0)
                                     {
                                         count = 1;
@@ -2243,13 +2300,46 @@ namespace StockControl
                                     }
                                 }
 
+                                foreach (var gg in g)
+                                {
+                                    gg.Active = false;
+                                    db.SubmitChanges();
+                                }
+
+                                var s = (from ix in db.tb_ShippingHs select ix)
+                               .Where(a => a.ShippingNo == txtSHNo.Text.Trim()).ToList();
+                                if (s.Count() > 0)
+                                {
+                                    foreach (var gg in s)
+                                    {
+                                        var ss = (from ix in db.tb_Shippings select ix)
+                                        .Where(a => a.ShippingNo == txtSHNo.Text.Trim()).ToList();
+                                        if (ss.Count() > 0)
+                                        {
+                                            foreach (var ssg in ss)
+                                            {
+                                                ssg.Status = "Cancel";
+                                                db.SubmitChanges();
+                                            }
+                                        }
+
+                                        gg.Status = "Cancel";
+                                        db.SubmitChanges();
+                                    }
+                                }
+
                                 if (count == 1)
                                 {
                                     baseClass.Info("Delete shipping FG complete.");
                                     btnNew_Click(null, null);
                                 }
                             }
+
+                           
+
                         }
+                        else
+                            MessageBox.Show("ไม่พบเลขที่เอกสาร");
                     }
                 }
             }
