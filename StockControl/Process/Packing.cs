@@ -405,24 +405,15 @@ namespace StockControl
                         if (job != null)
                         {
                             job.OutQty -= dt.Qty;
-                            if (job.OutQty < 0)
+                            if (job.OutQty <= 0)
                             {
-                                job.OutQty = 0;
-                                var rm = db.mh_ProductionOrderRMs.Where(x => x.JobNo == job.JobNo && x.OutQty < 0 && x.Active).ToList();
-                                if (rm.Count > 0)
-                                { }
-                                else
-                                {
-                                    job.CloseJob = true;
-                                }
+                                job.CloseJob = true;
                                 //รับครบ
                                 var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == item.Cells["idCstmPODt"].Value.ToInt() && x.TLQty > 0).ToList();
                                 foreach (var ss in slist)
                                     ss.Free = true;
                                 db.SubmitChanges();
                             }
-                            else if (job.OutQty == 0)
-                                job.CloseJob = true;
 
                             dbClss.AddHistory("ProductionOrder", "Job Order Sheet", $"Receive by Packing No {m.PackingNo} : {dt.Qty}", job.JobNo);
                         }
@@ -1121,6 +1112,10 @@ namespace StockControl
                         db.SubmitChanges();
 
                         baseClass.Info("Delete complete.\n");
+                        lblStatus.Text = "Inactive";
+                        btnDelete.Enabled = false;
+                        btnSave.Enabled = false;
+                        btnNew.Enabled = true;
                     }
                 }
             }

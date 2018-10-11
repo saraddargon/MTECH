@@ -207,6 +207,7 @@
             // 
             this.dgvData.BackColor = System.Drawing.Color.White;
             this.dgvData.ColumnChooserSortOrder = Telerik.WinControls.UI.RadSortOrder.Ascending;
+            this.dgvData.ContextMenuStrip = this.contextMenuStrip1;
             this.dgvData.Cursor = System.Windows.Forms.Cursors.Default;
             this.dgvData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvData.EnterKeyMode = Telerik.WinControls.UI.RadGridViewEnterKeyMode.EnterMovesToNextCell;
@@ -868,14 +869,14 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnDeleteRow});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(134, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
             // 
             // btnDeleteRow
             // 
             this.btnDeleteRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnDeleteRow.Image = global::StockControl.Properties.Resources.del;
             this.btnDeleteRow.Name = "btnDeleteRow";
-            this.btnDeleteRow.Size = new System.Drawing.Size(133, 22);
+            this.btnDeleteRow.Size = new System.Drawing.Size(180, 22);
             this.btnDeleteRow.Text = "Delete Row";
             this.btnDeleteRow.Click += new System.EventHandler(this.btnDeleteRow_Click);
             // 
