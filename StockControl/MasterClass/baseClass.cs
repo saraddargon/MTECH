@@ -495,7 +495,7 @@ namespace StockControl
                 s.DocNo = dbClss.GetNo(33, 2); //MOS -- Move stock free to new CustomerPO
                 s.RefNo = id_tb_Stock.ToSt(); //Refer id tb_Stock ของ stock free Customer PO เก่า
                 s.CodeNo = tbst.CodeNo;
-                s.Type = "Move Stock Free to New CustomerPO";
+                s.Type = "Move Stock Free to New Sale Order";
                 s.QTY = ReserveQty;
                 s.Inbound = s.QTY;
                 s.Outbound = 0;
@@ -506,7 +506,7 @@ namespace StockControl
                 s.Type_in_out = "In";
                 s.AmountCost = amntCost;
                 if (s.AmountCost > 0)
-                    s.UnitCost = Math.Round(s.QTY.ToDecimal() / s.AmountCost.ToDecimal(), 2);
+                    s.UnitCost = Math.Round(s.AmountCost.ToDecimal() / s.QTY.ToDecimal(), 2);
                 else
                     s.UnitCost = 0;
 

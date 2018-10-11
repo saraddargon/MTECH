@@ -147,7 +147,6 @@ namespace StockControl
 
         //
 
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DataLoad();

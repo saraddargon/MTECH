@@ -167,15 +167,16 @@ namespace StockControl
                         //****Load Receive FG
                         //Receive From Packing
                         var pkList = db.mh_PackingDts.Where(x => x.Active && x.idJob == t.id)
-                            .Join(db.mh_Packings.Where(x => x.Active)
+                            .Join(db.mh_Packings
                             , dt => dt.PackingNo
                             , hd => hd.PackingNo
                             , (dt, hd) => new { hd, dt }).ToList();
                         foreach (var pk in pkList)
                         {
+                            string StatusS = (pk.hd.Active) ? "Completed" : "Cancel";
                             addRow3(pk.dt.id.ToSt(), "Receive Job", pk.hd.PackingNo, pk.dt.Qty
                                 , pk.dt.UOM, pk.dt.PCSUnit, pk.hd.PackingDate, pk.hd.CreateBy
-                                , "Completed");
+                                , StatusS);
                         }
                         //Cancel FG Q'ty from Sale document
                         var pdCancel = db.mh_ProductionOrder_CancelQties.Where(x => x.Active && x.JobNo == t_JobNo).ToList();
