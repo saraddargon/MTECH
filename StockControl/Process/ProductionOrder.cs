@@ -147,12 +147,12 @@ namespace StockControl
                             outQ += accdQ;
 
                             addRow(dt.id, dt.ItemNo, dt.ItemName, dt.Qty, dt.UOM, dt.PCSUnit
-                                , dt.OutQty, dt.GroupType, dt.Type, dt.InvGroup);
+                                , outQ, dt.GroupType, dt.Type, dt.InvGroup);
                         }
 
-                        //Load Pr in Job
+                        //****Load Pr in Job
                         LoadPRwithJob(t.RefDocId);
-                        //Load Shipping History
+                        //****Load Shipping History
                         var ship1 = db.tb_Shippings.Where(x => x.idCSTMPODt == t.RefDocId && x.Status != "Cancel" && x.ShipType == "ForJob").ToList();
                         foreach (var s in ship1)
                         {
@@ -164,6 +164,37 @@ namespace StockControl
                                 , tool.GroupType, tool.Type, tool.InventoryGroup, s.ShippingNo
                                 , shipH.ShipDate.Value.Date, s.Status);
                         }
+                        //Load Accident Slip --- None
+                        var acc = db.mh_Accident_SlipHs.Where(x => x.JobCard == t_JobNo && x.Status != "Cancel")
+                            .Join(db.mh_Accident_Slips.Where(x => x.Status == "Completed")
+                            , hd => hd.DocNo
+                            , dt => dt.DocNo
+                            , (hd, dt) => new { hd, dt }).ToList();
+                        foreach (var s in acc)
+                        {
+                            var tool = db.mh_Items.Where(x => x.InternalNo == s.dt.CodeNo).FirstOrDefault();
+                            if (tool == null) continue;
+                            var qX = (s.hd.Type == "None") ? -1.00m : 1.00m;
+                            addRow2(s.dt.id, s.dt.CodeNo, s.dt.ItemNo, qX * s.dt.QTY, s.dt.UnitShip, s.dt.PCSUnit,
+                                tool.GroupType, tool.Type, tool.InventoryGroup, s.dt.DocNo
+                                , s.hd.DocDate.Value.Date, s.dt.Status);
+                        }
+                        //Load Return RM
+                        var st = db.tb_StockAdjustHs.Where(x => x.Status == "Completed" && x.ADNo.Substring(0, 2) == "RT")
+                            .Join(db.tb_StockAdjusts.Where(x => x.Status == "Completed" && x.RefJobCard == t_JobNo)
+                            , hd => hd.ADNo
+                            , dt => dt.AdjustNo
+                            , (hd, dt) => new { hd, dt }).ToList();
+                        foreach (var s in st)
+                        {
+                            var tool = db.mh_Items.Where(x => x.InternalNo == s.dt.CodeNo).FirstOrDefault();
+                            if (tool == null) continue;
+                            addRow2(s.dt.id, s.dt.CodeNo, s.dt.ItemNo, -1 * s.dt.Qty.ToDecimal(), s.dt.Unit, s.dt.PCSUnit.ToDecimal(),
+                                tool.GroupType, tool.Type, tool.InventoryGroup, s.dt.AdjustNo
+                                , s.hd.ADDate.Value.Date, s.dt.Status);
+                        }
+                        dgvShipHistory.Columns["ShipDate"].SortOrder = RadSortOrder.Ascending;
+
                         //****Load Receive FG
                         //Receive From Packing
                         var pkList = db.mh_PackingDts.Where(x => x.Active && x.idJob == t.id)
@@ -942,6 +973,14 @@ namespace StockControl
                       o.Cells["RNo"].Value = i;
                       i++;
                   });
+            }
+            else if (Grid.Name == dgvShipHistory.Name)
+            {
+                Grid.Rows.OrderBy(x => x.Cells["ShipDate"].Value.ToDateTime().Value).Where(o => o.IsVisible).ToList().ForEach(o =>
+                {
+                    o.Cells["RNo"].Value = i;
+                    i++;
+                });
             }
             else
             {
