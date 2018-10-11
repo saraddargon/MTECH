@@ -409,7 +409,7 @@ namespace StockControl
                             {
                                 job.CloseJob = true;
                                 //รับครบ
-                                var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == item.Cells["idCstmPODt"].Value.ToInt() && x.TLQty > 0).ToList();
+                                var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == item.Cells["idCstmPODt"].Value.ToInt() && x.TLQty > 0 && x.Type != "Receive By Job").ToList();
                                 foreach (var ss in slist)
                                     ss.Free = true;
                                 db.SubmitChanges();
@@ -488,7 +488,7 @@ namespace StockControl
                             s.Type_in_out = "In";
                             s.AmountCost = dt.Amount;
                             if (s.AmountCost > 0)
-                                s.UnitCost = Math.Round(s.QTY.ToDecimal() / s.AmountCost.ToDecimal(), 2);
+                                s.UnitCost = Math.Round(s.AmountCost.ToDecimal() / s.QTY.ToDecimal(), 6);
                             else
                                 s.UnitCost = 0;
 
@@ -500,7 +500,7 @@ namespace StockControl
                             if (sum_Qty <= 0)
                                 RemainUnitCost = 0;
                             else
-                                RemainUnitCost = Math.Round((Math.Abs(RemainAmount) / Math.Abs(sum_Qty)), 2);
+                                RemainUnitCost = Math.Round((Math.Abs(RemainAmount) / Math.Abs(sum_Qty)), 6);
                             s.RemainQty = sum_Qty;
                             s.RemainUnitCost = RemainUnitCost;
                             s.RemainAmount = RemainAmount;
@@ -960,7 +960,7 @@ namespace StockControl
                     var m = db.tb_Stocks.Where(x => x.RefidJobCode == id && x.RefTempJobCode == pkNo && x.TLQty > 0).ToList();
                     if (m.Count < 1 || m.Sum(x => x.TLQty) != qty)
                     {
-                        mssg += $"- Cannot Delete Packing because Item {itemNo} is already Shipped.\n";
+                        mssg += $"- ไม่สามารถลบเอกสารได้ เนื่องจาก Item {itemNo} ถูกเบิกใช้แล้ว.\n";
                         break;
                     }
 
@@ -1018,7 +1018,7 @@ namespace StockControl
                             //tb_Stock --> Shipping
                             var st = db.tb_Stocks.Where(x => x.RefidJobCode == d.id && x.RefTempJobCode == m.PackingNo
                                 && x.TLQty > 0).ToList();
-                            if (st == null) continue;
+                            if (st.Count <= 0) continue;
                             var tool = db.mh_Items.Where(x => x.InternalNo == d.ItemNo).FirstOrDefault();
                             var uom = db.mh_ItemUOMs.Where(x => x.ItemNo == d.ItemNo && x.UOMCode == tool.BaseUOM).FirstOrDefault();
                             var pcsunit = 1.00m;
@@ -1059,7 +1059,9 @@ namespace StockControl
                                 //stock กลับมาเป็นไม่ฟรี
                                 var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == d.idCstmPODt && x.TLQty > 0).ToList();
                                 foreach (var s1 in slist)
-                                    s1.Free = null;
+                                {
+                                    if(s1.Free.ToBool()) s1.Free = null;
+                                }
                                 db.SubmitChanges();
 
                                 //เขียน ship ออก จาก id tb_Stock

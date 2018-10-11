@@ -553,6 +553,7 @@ namespace StockControl
                                             var q = Math.Round(s.dt.Qty * s.dt.PCSUnit, 2) - s.dt.OutPlan;
                                             po.OutPlan -= q;
                                         }
+                                        po.Status = baseClass.setCustomerPOStatus(po);
                                         if(soAll.Count > 0)
                                             db.SubmitChanges();
                                     }//Customer P/O not null
