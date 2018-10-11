@@ -29,20 +29,20 @@ namespace StockControl
                             if (Item != "" && dt.ItemNo != Item) continue;
                             var tool = db.mh_Items.Where(x => x.InternalNo == dt.ItemNo).FirstOrDefault();
                             var shipQ = 0.00m;
-                            var s = db.mh_SaleOrderDTs.Join(db.mh_SaleOrders,
-                                    dtShip => dtShip.SONo,
+                            var s = db.mh_SaleOrderDTs.Where(x => x.Active && x.RefId == dt.id)
+                                .Join(db.mh_SaleOrders.Where(x => x.Active),
+                                    dtso => dtso.SONo,
                                     hdShip => hdShip.SONo,
-                                    (dtShip, hdShip) => new { dtShip, hdShip }
-                                )
-                                .Where(x => x.dtShip.RefId == dt.id && x.hdShip.Active && x.dtShip.Active).ToList();
+                                    (dtso, hdShip) => new { dtso, hdShip }
+                                ).ToList();
                             foreach (var mm in s)
                             {
                                 //find Shipment
-                                var ss = db.mh_ShipmentDTs.Join(db.mh_Shipments,
+                                var ss = db.mh_ShipmentDTs.Where(x => x.Active && x.RefId == mm.dtso.id)
+                                    .Join(db.mh_Shipments.Where(x => x.Active != null && x.Active.Value),
                                     dtSS => dtSS.SSNo,
                                     hdSS => hdSS.SSNo,
-                                    (dtSS, hdSS) => new { dtSS, hdSS })
-                                    .Where(x => x.hdSS.Active.Value && x.dtSS.Active && x.dtSS.RefId == mm.dtShip.id).ToList();
+                                    (dtSS, hdSS) => new { dtSS, hdSS }).ToList();
                                 if (ss.Count > 0)
                                     shipQ += ss.Sum(x => x.dtSS.Qty).ToDecimal();
                             }
@@ -371,7 +371,7 @@ namespace StockControl
                     //var j = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == s.idCSTMPODt).FirstOrDefault();
                     ////cstmPO job ยังไม่ปิด หรือ เปิดแล้วแต่ยังรับเข้าไม่ครบแสดงว่ายังไม่ปิด ซึ่งแสดงว่าเป็น Stock ปกติ
                     //if (j == null || (j != null && j.OutQty > 0))
-                    if(!s.Free.ToBool())
+                    if (!s.Free.ToBool())
                     {//CustomerPO ยังไม่เปิด Job หรือ เปิดแล้วแต่ยังไม่ปิด Job
                         var s1 = stockCustomerPO.Where(x => x.idCstmPODt == s.idCSTMPODt).FirstOrDefault();
                         if (s1 == null)

@@ -44,11 +44,11 @@
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn3 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn2 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
-            Telerik.WinControls.UI.GridViewHyperlinkColumn gridViewHyperlinkColumn1 = new Telerik.WinControls.UI.GridViewHyperlinkColumn();
-            Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn3 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn4 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn3 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
+            Telerik.WinControls.UI.GridViewHyperlinkColumn gridViewHyperlinkColumn1 = new Telerik.WinControls.UI.GridViewHyperlinkColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn5 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn6 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn7 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn8 = new Telerik.WinControls.UI.GridViewDecimalColumn();
@@ -221,7 +221,7 @@
             conditionalFormattingObject2.Name = "Process";
             conditionalFormattingObject2.RowBackColor = System.Drawing.Color.Empty;
             conditionalFormattingObject2.RowFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            conditionalFormattingObject2.RowForeColor = System.Drawing.Color.Magenta;
+            conditionalFormattingObject2.RowForeColor = System.Drawing.Color.Blue;
             conditionalFormattingObject2.TValue1 = "Process";
             conditionalFormattingObject3.ApplyToRow = true;
             conditionalFormattingObject3.CellBackColor = System.Drawing.Color.Empty;
@@ -281,74 +281,72 @@
             gridViewDecimalColumn1.Name = "Qty";
             gridViewDecimalColumn1.Width = 100;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
-            gridViewDecimalColumn2.FieldName = "Remain";
-            gridViewDecimalColumn2.HeaderText = "Out Standing Q\'ty";
-            gridViewDecimalColumn2.Name = "Remain";
-            gridViewDecimalColumn2.Width = 97;
+            gridViewDecimalColumn2.FieldName = "Shipped";
+            gridViewDecimalColumn2.FormatString = "{0:N2}";
+            gridViewDecimalColumn2.HeaderText = "Shipped";
+            gridViewDecimalColumn2.Name = "Shipped";
+            gridViewDecimalColumn2.Width = 72;
             gridViewDecimalColumn3.EnableExpressionEditor = false;
-            gridViewDecimalColumn3.FieldName = "Shipped";
-            gridViewDecimalColumn3.FormatString = "{0:N2}";
-            gridViewDecimalColumn3.HeaderText = "Shipped";
-            gridViewDecimalColumn3.Name = "Shipped";
-            gridViewDecimalColumn3.Width = 72;
+            gridViewDecimalColumn3.FieldName = "Remain";
+            gridViewDecimalColumn3.HeaderText = "Out Shipment Q\'ty";
+            gridViewDecimalColumn3.Name = "Remain";
+            gridViewDecimalColumn3.Width = 100;
             gridViewCheckBoxColumn2.EnableExpressionEditor = false;
-            gridViewCheckBoxColumn2.FieldName = "Plan";
-            gridViewCheckBoxColumn2.HeaderText = "Plan";
+            gridViewCheckBoxColumn2.FieldName = "SaleOrder";
+            gridViewCheckBoxColumn2.HeaderText = "Sale Order";
             gridViewCheckBoxColumn2.MinWidth = 20;
-            gridViewCheckBoxColumn2.Name = "Plan";
+            gridViewCheckBoxColumn2.Name = "SaleOrder";
             gridViewCheckBoxColumn2.Width = 60;
+            gridViewDecimalColumn4.EnableExpressionEditor = false;
+            gridViewDecimalColumn4.FieldName = "OutSO";
+            gridViewDecimalColumn4.FormatString = "{0:N2}";
+            gridViewDecimalColumn4.HeaderText = "Out SO";
+            gridViewDecimalColumn4.Name = "OutSO";
+            gridViewDecimalColumn4.Width = 70;
+            gridViewCheckBoxColumn3.EnableExpressionEditor = false;
+            gridViewCheckBoxColumn3.FieldName = "Plan";
+            gridViewCheckBoxColumn3.HeaderText = "Plan";
+            gridViewCheckBoxColumn3.MinWidth = 20;
+            gridViewCheckBoxColumn3.Name = "Plan";
+            gridViewCheckBoxColumn3.Width = 60;
             gridViewHyperlinkColumn1.EnableExpressionEditor = false;
             gridViewHyperlinkColumn1.FieldName = "JobNo";
             gridViewHyperlinkColumn1.HeaderText = "Job No";
             gridViewHyperlinkColumn1.IsVisible = false;
             gridViewHyperlinkColumn1.Name = "JobNo";
             gridViewHyperlinkColumn1.Width = 133;
-            gridViewCheckBoxColumn3.EnableExpressionEditor = false;
-            gridViewCheckBoxColumn3.FieldName = "SaleOrder";
-            gridViewCheckBoxColumn3.HeaderText = "Sale Order";
-            gridViewCheckBoxColumn3.MinWidth = 20;
-            gridViewCheckBoxColumn3.Name = "SaleOrder";
-            gridViewCheckBoxColumn3.Width = 63;
+            gridViewDecimalColumn5.EnableExpressionEditor = false;
+            gridViewDecimalColumn5.FieldName = "OutPlan";
+            gridViewDecimalColumn5.FormatString = "{0:N2}";
+            gridViewDecimalColumn5.HeaderText = "Out Plan";
+            gridViewDecimalColumn5.Name = "OutPlan";
+            gridViewDecimalColumn5.Width = 70;
             gridViewTextBoxColumn7.EnableExpressionEditor = false;
             gridViewTextBoxColumn7.FieldName = "UOM";
             gridViewTextBoxColumn7.HeaderText = "UOM";
             gridViewTextBoxColumn7.Name = "UOM";
             gridViewTextBoxColumn7.Width = 65;
-            gridViewDecimalColumn4.EnableExpressionEditor = false;
-            gridViewDecimalColumn4.FieldName = "PCSUnit";
-            gridViewDecimalColumn4.FormatString = "{0:N2}";
-            gridViewDecimalColumn4.HeaderText = "PCS:UOM";
-            gridViewDecimalColumn4.Name = "PCSUnit";
-            gridViewDecimalColumn4.ReadOnly = true;
-            gridViewDecimalColumn4.Width = 70;
-            gridViewDecimalColumn5.EnableExpressionEditor = false;
-            gridViewDecimalColumn5.FieldName = "UnitPrice";
-            gridViewDecimalColumn5.FormatString = "{0:N2}";
-            gridViewDecimalColumn5.HeaderText = "Price:Unit";
-            gridViewDecimalColumn5.IsVisible = false;
-            gridViewDecimalColumn5.Name = "UnitPrice";
-            gridViewDecimalColumn5.Width = 69;
             gridViewDecimalColumn6.EnableExpressionEditor = false;
-            gridViewDecimalColumn6.FieldName = "Amount";
+            gridViewDecimalColumn6.FieldName = "PCSUnit";
             gridViewDecimalColumn6.FormatString = "{0:N2}";
-            gridViewDecimalColumn6.HeaderText = "Amount";
-            gridViewDecimalColumn6.IsVisible = false;
-            gridViewDecimalColumn6.Name = "Amount";
-            gridViewDecimalColumn6.Width = 83;
+            gridViewDecimalColumn6.HeaderText = "PCS:UOM";
+            gridViewDecimalColumn6.Name = "PCSUnit";
+            gridViewDecimalColumn6.ReadOnly = true;
+            gridViewDecimalColumn6.Width = 70;
             gridViewDecimalColumn7.EnableExpressionEditor = false;
-            gridViewDecimalColumn7.FieldName = "OutSO";
+            gridViewDecimalColumn7.FieldName = "UnitPrice";
             gridViewDecimalColumn7.FormatString = "{0:N2}";
-            gridViewDecimalColumn7.HeaderText = "OutSO";
+            gridViewDecimalColumn7.HeaderText = "Price:Unit";
             gridViewDecimalColumn7.IsVisible = false;
-            gridViewDecimalColumn7.Name = "OutSO";
-            gridViewDecimalColumn7.Width = 67;
+            gridViewDecimalColumn7.Name = "UnitPrice";
+            gridViewDecimalColumn7.Width = 69;
             gridViewDecimalColumn8.EnableExpressionEditor = false;
-            gridViewDecimalColumn8.FieldName = "OutPlan";
+            gridViewDecimalColumn8.FieldName = "Amount";
             gridViewDecimalColumn8.FormatString = "{0:N2}";
-            gridViewDecimalColumn8.HeaderText = "Out Plan";
+            gridViewDecimalColumn8.HeaderText = "Amount";
             gridViewDecimalColumn8.IsVisible = false;
-            gridViewDecimalColumn8.Name = "OutPlan";
-            gridViewDecimalColumn8.Width = 63;
+            gridViewDecimalColumn8.Name = "Amount";
+            gridViewDecimalColumn8.Width = 83;
             gridViewTextBoxColumn8.EnableExpressionEditor = false;
             gridViewTextBoxColumn8.FieldName = "id";
             gridViewTextBoxColumn8.HeaderText = "id";
@@ -372,11 +370,11 @@
             gridViewDecimalColumn2,
             gridViewDecimalColumn3,
             gridViewCheckBoxColumn2,
-            gridViewHyperlinkColumn1,
-            gridViewCheckBoxColumn3,
-            gridViewTextBoxColumn7,
             gridViewDecimalColumn4,
+            gridViewCheckBoxColumn3,
+            gridViewHyperlinkColumn1,
             gridViewDecimalColumn5,
+            gridViewTextBoxColumn7,
             gridViewDecimalColumn6,
             gridViewDecimalColumn7,
             gridViewDecimalColumn8,

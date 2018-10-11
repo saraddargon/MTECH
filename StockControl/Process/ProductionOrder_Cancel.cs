@@ -549,7 +549,7 @@ namespace StockControl
 
         private void btnSendApprove_Click(object sender, EventArgs e)
         {
-            if (txtSeqStatus.Text.ToInt() == 0)
+            if (txtSeqStatus.Text.ToInt() <= 1)
             {
                 using (var db = new DataClasses1DataContext())
                 {

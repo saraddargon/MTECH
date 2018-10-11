@@ -421,11 +421,12 @@ namespace StockControl
         public static string setCustomerPOStatus(mh_CustomerPODT dt)
         {
             var fullQty = dt.Qty * dt.PCSUnit;
-            if (dt.OutPlan == fullQty && dt.OutSO == fullQty)
+            var Qty = dt.Qty;
+            if (dt.OutPlan == fullQty && dt.OutSO == Qty)
                 return "Waiting";
             else if (dt.OutPlan == 0 && dt.OutSO == 0)
                 return "Completed";
-            else if (dt.OutPlan != fullQty || dt.OutSO != fullQty)
+            else if (dt.OutPlan != fullQty || dt.OutSO != Qty)
                 return "Process";
             else
                 return "Waiting";
@@ -506,7 +507,7 @@ namespace StockControl
                 s.Type_in_out = "In";
                 s.AmountCost = amntCost;
                 if (s.AmountCost > 0)
-                    s.UnitCost = Math.Round(s.AmountCost.ToDecimal() / s.QTY.ToDecimal(), 2);
+                    s.UnitCost = Math.Round(s.AmountCost.ToDecimal() / s.QTY.ToDecimal(), 6);
                 else
                     s.UnitCost = 0;
 
@@ -518,7 +519,7 @@ namespace StockControl
                 if (sum_Qty <= 0)
                     RemainUnitCost = 0;
                 else
-                    RemainUnitCost = Math.Round((Math.Abs(RemainAmount) / Math.Abs(sum_Qty)), 2);
+                    RemainUnitCost = Math.Round((Math.Abs(RemainAmount) / Math.Abs(sum_Qty)), 6);
                 s.RemainQty = sum_Qty;
                 s.RemainUnitCost = RemainUnitCost;
                 s.RemainAmount = RemainAmount;
