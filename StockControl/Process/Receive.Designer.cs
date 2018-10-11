@@ -474,6 +474,7 @@
             gridViewMultiComboBoxColumn1.FieldName = "Unit";
             gridViewMultiComboBoxColumn1.HeaderText = "หน่วย";
             gridViewMultiComboBoxColumn1.Name = "Unit";
+            gridViewMultiComboBoxColumn1.ReadOnly = true;
             gridViewMultiComboBoxColumn1.Width = 101;
             gridViewDecimalColumn3.EnableExpressionEditor = false;
             gridViewDecimalColumn3.FieldName = "PCSUnit";
@@ -542,6 +543,7 @@
             gridViewMultiComboBoxColumn2.FieldName = "Location";
             gridViewMultiComboBoxColumn2.HeaderText = "สถานที่เก็บ";
             gridViewMultiComboBoxColumn2.Name = "Location";
+            gridViewMultiComboBoxColumn2.ReadOnly = true;
             gridViewMultiComboBoxColumn2.Width = 122;
             gridViewComboBoxColumn1.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
             gridViewComboBoxColumn1.EnableExpressionEditor = false;
