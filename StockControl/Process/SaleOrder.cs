@@ -977,7 +977,7 @@ namespace StockControl
                         //get from price List
                         DateTime? ReqDate = e.Row.Cells["ReqDate"].Value.ToDateTime();
                         if (ReqDate == null) return;
-                        if(e.Row.Cells["RefDocNo"].Value.ToSt() == "")
+                        if (e.Row.Cells["RefDocNo"].Value.ToSt() == "")
                         {
                             var m = baseClass.GetPriceList(itemNo, ReqDate.Value.Date);
                             e.Row.Cells["UnitPrice"].Value = m;
@@ -1173,22 +1173,13 @@ namespace StockControl
                 Ac = "View";
                 Enable_Status(false, "View");
                 this.Cursor = Cursors.WaitCursor;
-                List<GridViewRowInfo> dgvRow_List = new List<GridViewRowInfo>();
-                var selP = new SaleOrder_List2(dgvRow_List);
+                var selP = new SaleOrder_List2(2);
                 selP.ShowDialog();
-                if (dgvRow_List.Count > 0)
+                if (selP.PONo != "")
                 {
-                    string SONo = "";
                     this.Cursor = Cursors.WaitCursor;
-
-                    foreach (GridViewRowInfo ee in dgvRow_List)
-                    {
-                        SONo = dbClss.TSt(ee.Cells["SONo"].Value);
-
-                    }
-
-                    txtSONo.Text = SONo;
-                    t_SONo = SONo;
+                    txtSONo.Text = selP.PONo.ToSt();
+                    t_SONo = selP.PONo.ToSt();
                 }
 
 

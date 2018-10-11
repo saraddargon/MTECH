@@ -1745,7 +1745,7 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    if (txtSeqStatus.Text.ToInt() == 0)
+                    if (txtSeqStatus.Text.ToInt() <= 1)
                     {
                         if (baseClass.IsSendApprove())
                         {

@@ -25,15 +25,9 @@ namespace StockControl
             InitializeComponent();
             this.sType = sType;
         }
-      
+
         List<GridViewRowInfo> RetDT;
-        public SaleOrder_List2(List<GridViewRowInfo> RetDT)
-        {
-            InitializeComponent();
-            this.RetDT = RetDT;
-            sType = 2;
-        }
-        public SaleOrder_List2(List<GridViewRowInfo> RetDT,string CSTMNo)
+        public SaleOrder_List2(List<GridViewRowInfo> RetDT, string CSTMNo)
         {
             InitializeComponent();
             this.RetDT = RetDT;
@@ -50,8 +44,8 @@ namespace StockControl
             InitializeComponent();
             this.PONo = CstmPo;
             this.CstmNo = CstmNo;
-            
-            
+
+
         }
 
 
@@ -130,12 +124,12 @@ namespace StockControl
                 {
                     string dt1 = "";
                     string dt2 = "";
-                    if(cbChkDate.Checked)
+                    if (cbChkDate.Checked)
                     {
                         dt1 = Convert.ToDateTime(dtFrom.Value).ToString("yyyyMMdd");
                         dt2 = Convert.ToDateTime(dtTo.Value).ToString("yyyyMMdd");
                     }
-                    dgvData.DataSource = db.sp_054_SaleOrder_List(txtPONo.Text, "", cbbItem.Text, dt1, dt2,ddlStatus.Text, cbbCSTM.SelectedValue.ToSt(), txtCstmPO.Text );
+                    dgvData.DataSource = db.sp_054_SaleOrder_List(txtPONo.Text, "", cbbItem.Text, dt1, dt2, ddlStatus.Text, cbbCSTM.SelectedValue.ToSt(), txtCstmPO.Text);
                 }
 
 
@@ -185,10 +179,15 @@ namespace StockControl
                 if (sType == 2)
                 {
                     dgvData.EndEdit();
-                    foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
-                    {
-                        RetDT.Add(rowinfo);
-                    }
+
+
+                    if (dgvData.CurrentCell == null) return;
+                    //foreach (GridViewRowInfo rowinfo in dgvData.Rows.Where(o => Convert.ToBoolean(o.Cells["S"].Value)))
+                    //{
+                    //    RetDT.Add(rowinfo);
+                    //}
+                    
+                    PONo = dgvData.CurrentCell.RowInfo.Cells["SONo"].Value.ToSt();
 
                     this.Close();
                 }
@@ -204,7 +203,7 @@ namespace StockControl
                             break;
                         }
                     }
-                    if(temp !="")
+                    if (temp != "")
                     {
                         SaleOrder a = new SaleOrder(temp);
                         a.ShowDialog();
@@ -241,13 +240,21 @@ namespace StockControl
                     temp = dbClss.TSt(e.Row.Cells["SONo"].Value);
                     if (temp != "")
                     {
-                        SaleOrder a = new SaleOrder(temp);
-                        a.ShowDialog();
-                        DataLoad();
+                        if (sType == 2)
+                        {
+                            PONo = temp;   
+                            this.Close();
+                        }
+                        else
+                        {
+                            SaleOrder a = new SaleOrder(temp);
+                            a.ShowDialog();
+                            DataLoad();
+                        }
                     }
                 }
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
 
         }
         void selRow()
@@ -384,7 +391,7 @@ namespace StockControl
                         t = 1;
                         MessageBox.Show("สถานะบางรายการไม่สามารถ สร้างรายการเบิกได้");
                         break;
-                    }                   
+                    }
                 }
                 if (t == 1)
                     return;
