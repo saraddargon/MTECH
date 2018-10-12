@@ -459,9 +459,8 @@ namespace StockControl
             if(cbbMonth.SelectedIndex > 0)
             {
                 Report.Reportx1.Value = new string[2];
-                //DateTime d1 = new DateTime(cbbYY.Text.ToInt(), cbbMonth.SelectedIndex.ToInt(), 1);
-                //Report.Reportx1.Value[0] = d1.ToString("dd/MMM/yyyy");
-                //Report.Reportx1.Value[1] = d1.AddMonths(1).AddDays(-1).ToString("dd/MMM/yyyy");
+                Report.Reportx1.Value[0] = cbbYY.Text.ToSt();
+                Report.Reportx1.Value[1] = cbbMonth.SelectedIndex.ToSt();
                 Report.Reportx1.WReport = "DeliveryPlanning";
                 Report.Reportx1 op = new Report.Reportx1("DeliveryPlanning.rpt");
                 op.Show();

@@ -60,6 +60,8 @@
             this.txtSPNo = new Telerik.WinControls.UI.RadTextBox();
             this.lbCodeNo = new Telerik.WinControls.UI.RadLabel();
             this.txtRemark = new Telerik.WinControls.UI.RadTextBox();
+            this.txtJobQty = new Telerik.WinControls.UI.RadTextBox();
+            this.txtUOM = new Telerik.WinControls.UI.RadTextBox();
             this.txtOutQty = new Telerik.WinControls.UI.RadTextBox();
             this.txtSeqStatus = new Telerik.WinControls.UI.RadTextBox();
             this.txtidCstmPODt = new Telerik.WinControls.UI.RadTextBox();
@@ -67,6 +69,7 @@
             this.lbDesc = new Telerik.WinControls.UI.RadLabel();
             this.radButton1 = new Telerik.WinControls.UI.RadButton();
             this.txtFGName = new Telerik.WinControls.UI.RadTextBox();
+            this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
             this.txtFGNo = new Telerik.WinControls.UI.RadTextBox();
@@ -76,9 +79,6 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
-            this.txtJobQty = new Telerik.WinControls.UI.RadTextBox();
-            this.txtUOM = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -93,6 +93,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtSPNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbCodeNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtJobQty)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUOM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOutQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtidCstmPODt)).BeginInit();
@@ -100,13 +102,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.lbDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbQty)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtJobQty)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUOM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -434,6 +434,26 @@
             this.txtRemark.TabIndex = 4;
             this.txtRemark.ThemeName = "Office2010Blue";
             // 
+            // txtJobQty
+            // 
+            this.txtJobQty.Location = new System.Drawing.Point(165, 128);
+            this.txtJobQty.Name = "txtJobQty";
+            this.txtJobQty.NullText = "Job Q\'ty";
+            this.txtJobQty.ReadOnly = true;
+            this.txtJobQty.Size = new System.Drawing.Size(125, 20);
+            this.txtJobQty.TabIndex = 4;
+            this.txtJobQty.ThemeName = "Office2010Blue";
+            // 
+            // txtUOM
+            // 
+            this.txtUOM.Location = new System.Drawing.Point(296, 127);
+            this.txtUOM.Name = "txtUOM";
+            this.txtUOM.NullText = "UOM";
+            this.txtUOM.ReadOnly = true;
+            this.txtUOM.Size = new System.Drawing.Size(91, 20);
+            this.txtUOM.TabIndex = 4;
+            this.txtUOM.ThemeName = "Office2010Blue";
+            // 
             // txtOutQty
             // 
             this.txtOutQty.Location = new System.Drawing.Point(165, 154);
@@ -470,6 +490,7 @@
             this.txtJobNo.BackColor = System.Drawing.SystemColors.Info;
             this.txtJobNo.Location = new System.Drawing.Point(165, 50);
             this.txtJobNo.Name = "txtJobNo";
+            this.txtJobNo.ReadOnly = true;
             this.txtJobNo.Size = new System.Drawing.Size(125, 20);
             this.txtJobNo.TabIndex = 4;
             this.txtJobNo.ThemeName = "Office2010Blue";
@@ -504,13 +525,22 @@
             this.txtFGName.TabIndex = 4;
             this.txtFGName.ThemeName = "Office2010Blue";
             // 
+            // radLabel5
+            // 
+            this.radLabel5.Location = new System.Drawing.Point(108, 129);
+            this.radLabel5.Name = "radLabel5";
+            this.radLabel5.Size = new System.Drawing.Size(47, 18);
+            this.radLabel5.TabIndex = 0;
+            this.radLabel5.Text = "Job Q\'ty";
+            // 
             // radLabel4
             // 
             this.radLabel4.Location = new System.Drawing.Point(111, 207);
             this.radLabel4.Name = "radLabel4";
-            this.radLabel4.Size = new System.Drawing.Size(44, 18);
+            this.radLabel4.Size = new System.Drawing.Size(42, 18);
             this.radLabel4.TabIndex = 0;
-            this.radLabel4.Text = "Remark";
+            this.radLabel4.Text = "Reason";
+            this.radLabel4.Click += new System.EventHandler(this.radLabel4_Click);
             // 
             // radLabel3
             // 
@@ -572,34 +602,6 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
-            // radLabel5
-            // 
-            this.radLabel5.Location = new System.Drawing.Point(108, 129);
-            this.radLabel5.Name = "radLabel5";
-            this.radLabel5.Size = new System.Drawing.Size(47, 18);
-            this.radLabel5.TabIndex = 0;
-            this.radLabel5.Text = "Job Q\'ty";
-            // 
-            // txtJobQty
-            // 
-            this.txtJobQty.Location = new System.Drawing.Point(165, 128);
-            this.txtJobQty.Name = "txtJobQty";
-            this.txtJobQty.NullText = "Job Q\'ty";
-            this.txtJobQty.ReadOnly = true;
-            this.txtJobQty.Size = new System.Drawing.Size(125, 20);
-            this.txtJobQty.TabIndex = 4;
-            this.txtJobQty.ThemeName = "Office2010Blue";
-            // 
-            // txtUOM
-            // 
-            this.txtUOM.Location = new System.Drawing.Point(296, 127);
-            this.txtUOM.Name = "txtUOM";
-            this.txtUOM.NullText = "UOM";
-            this.txtUOM.ReadOnly = true;
-            this.txtUOM.Size = new System.Drawing.Size(91, 20);
-            this.txtUOM.TabIndex = 4;
-            this.txtUOM.ThemeName = "Office2010Blue";
-            // 
             // ProductionOrder_Cancel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -634,6 +636,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtSPNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbCodeNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtJobQty)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUOM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOutQty)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSeqStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtidCstmPODt)).EndInit();
@@ -641,13 +645,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.lbDesc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbQty)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtJobQty)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUOM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

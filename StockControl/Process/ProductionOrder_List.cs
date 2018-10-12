@@ -40,8 +40,8 @@ namespace StockControl
             dtTo.Value = DateTime.Now;
             //radGridView1.ReadOnly = true;
             cbbStatus.SelectedIndex = 3; //Process
-            if (sType == 3)
-                cbbStatus.SelectedIndex = 2; //Approved
+            //if (sType == 3)
+            //    cbbStatus.SelectedIndex = 2; //Approved
 
             using (var db = new DataClasses1DataContext())
             {

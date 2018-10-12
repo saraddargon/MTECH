@@ -186,7 +186,7 @@ namespace StockControl
                     //{
                     //    RetDT.Add(rowinfo);
                     //}
-                    
+
                     PONo = dgvData.CurrentCell.RowInfo.Cells["SONo"].Value.ToSt();
 
                     this.Close();
@@ -242,7 +242,7 @@ namespace StockControl
                     {
                         if (sType == 2)
                         {
-                            PONo = temp;   
+                            PONo = temp;
                             this.Close();
                         }
                         else
@@ -412,6 +412,12 @@ namespace StockControl
         {
             dgvData.EndEdit();
             CreateShipment();
+        }
+
+        private void cbbCSTM_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbbCSTM.SelectedIndex > 0)
+                txtCSTMNo.Text = cbbCSTM.SelectedValue.ToSt();
         }
     }
 

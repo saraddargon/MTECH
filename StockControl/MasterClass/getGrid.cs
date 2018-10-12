@@ -362,6 +362,9 @@ namespace StockControl
                 else this.PCSUnit_PurchaseUOM = 1;
                 this.StandardCost = t.StandardCost;
 
+                if (ItemNo == "PHT-T-001")
+                { }
+
                 //**Stock Customer P/O --> BackOrder Q'ty for Customer P/O, Receive stock Q'ty for Customer P/O
                 //find Received stock Q'ty for Customer P/O idDt ,,, reserve or not reserve(if job closed)
                 var st = db.tb_Stocks.Where(x => x.CodeNo == this.ItemNo

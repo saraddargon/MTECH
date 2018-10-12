@@ -181,7 +181,7 @@ namespace StockControl
         private void radGridView1_CellDoubleClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             ////select Item from Double click
-            if(e.RowIndex >= 0)
+            if (e.RowIndex >= 0)
                 selRow();
 
         }
@@ -443,7 +443,7 @@ namespace StockControl
                             {
                                 c += 1;
                                 if (a < 8) continue;
-                                if (c ==4)
+                                if (c == 4)
                                 { }
                                 string f = field.ToSt().Trim();
                                 switch (c)
@@ -558,6 +558,12 @@ namespace StockControl
         {
             var clist = new CustomerPO_List_Print();
             clist.ShowDialog();
+        }
+
+        private void cbbCSTM_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbbCSTM.SelectedIndex > 0)
+                txtCSTMNo.Text = cbbCSTM.SelectedValue.ToSt();
         }
     }
 

@@ -93,6 +93,8 @@ namespace StockControl
                         x.ReadOnly = false;
                     else if (x.Name == "TagCount")
                         x.ReadOnly = false;
+                    else if (x.Name == "ProductionDate")
+                        x.ReadOnly = false;
                     else
                         x.ReadOnly = true;
                 });

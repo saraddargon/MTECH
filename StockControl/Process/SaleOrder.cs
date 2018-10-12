@@ -1579,6 +1579,7 @@ namespace StockControl
                     var reqDate = dgvData.CurrentCell.RowInfo.Cells["ReqDate"].Value.ToDateTime();
                     if (itemNo != "" && reqDate != null)
                         dgvData.CurrentCell.RowInfo.Cells["UnitPrice"].Value = baseClass.GetPriceList(itemNo, reqDate.Value.Date);
+                    CallTotal();
                 }
             }
             catch (Exception ex)

@@ -564,5 +564,10 @@ namespace StockControl
             else
                 baseClass.Warning("สถานะไม่สามารถส่ง Approve ได้.\n");
         }
+
+        private void radLabel4_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

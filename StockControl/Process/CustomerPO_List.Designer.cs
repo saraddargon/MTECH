@@ -562,6 +562,7 @@
             this.cbbCSTM.TabIndex = 10;
             this.cbbCSTM.TabStop = false;
             this.cbbCSTM.ThemeName = "Office2010Blue";
+            this.cbbCSTM.SelectedIndexChanged += new System.EventHandler(this.cbbCSTM_SelectedIndexChanged);
             // 
             // txtCSTMNo
             // 

@@ -486,12 +486,18 @@ namespace Report
                     }break;
                 case "DeliveryPlanning":
                     {
-
-                    }break;
+                        rptDc.SetParameterValue("@yy", Convert.ToInt32(Value[0]));
+                        rptDc.SetParameterValue("@mm", Convert.ToInt32(Value[1]));
+                        rptDc.SetParameterValue("@DateNow", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
                 case "ReportChangeJob":
                     {
 
-                    }break;
+                        rptDc.SetParameterValue("@DocNo", Convert.ToString(Value[0]));
+                        rptDc.SetParameterValue("@DateNow", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
             }
         }
 
