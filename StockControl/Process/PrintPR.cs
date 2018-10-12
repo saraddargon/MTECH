@@ -511,24 +511,24 @@ namespace StockControl
                     }
                     else if (Type.Equals("Receive"))
                     {
-                        var g = (from ix in db.sp_R006_ReportReceive(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
-                        if (g.Count() > 0)
-                        {
+                        //var g = (from ix in db.sp_R006_ReportReceive(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        //if (g.Count() > 0)
+                        //{
                             Report.Reportx1.Value = new string[2];
                             Report.Reportx1.Value[0] = PRNo1;
                             Report.Reportx1.Value[1] = PRNo2;
                             Report.Reportx1.WReport = "ReportReceive2";
                             Report.Reportx1 op = new Report.Reportx1("ReportReceive2.rpt");
                             op.Show();
-                        }
-                        else
-                            MessageBox.Show("not found.");
+                        //}
+                        //else
+                        //    MessageBox.Show("not found.");
                     }
                     else if (Type.Equals("Shipping"))
                     {
-                        var g = (from ix in db.sp_R007_ReportShipping(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
-                        if (g.Count() > 0)
-                        {
+                        //var g = (from ix in db.sp_R007_ReportShipping(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        //if (g.Count() > 0)
+                        //{
                             Report.Reportx1.Value = new string[2];
                             Report.Reportx1.Value[0] = PRNo1;
                             Report.Reportx1.Value[1] = PRNo2;
@@ -537,9 +537,9 @@ namespace StockControl
                             Report.Reportx1 op = new Report.Reportx1("ReportShipping2.rpt");
 
                             op.Show();
-                        }
-                        else
-                            MessageBox.Show("not found.");
+                        //}
+                        //else
+                        //    MessageBox.Show("not found.");
                     }
                     else if (Type.Equals("ShippingToDay"))
                     {
@@ -572,33 +572,33 @@ namespace StockControl
                     }
                     else if (Type.Equals("AdjustStock"))
                     {
-                        var g = (from ix in db.sp_R008_ReportAdjustStock(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
-                        if (g.Count() > 0)
-                        {
+                        //var g = (from ix in db.sp_R008_ReportAdjustStock(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        //if (g.Count() > 0)
+                        //{
                             Report.Reportx1.Value = new string[2];
                             Report.Reportx1.Value[0] = PRNo1;
                             Report.Reportx1.Value[1] = PRNo2;
                             Report.Reportx1.WReport = "ReportAdjustStock";
                             Report.Reportx1 op = new Report.Reportx1("ReportAdjustStock.rpt");
                             op.Show();
-                        }
-                        else
-                            MessageBox.Show("not found.");
+                        //}
+                        //else
+                        //    MessageBox.Show("not found.");
                     }
                     else if (Type.Equals("JobCard"))
                     {
-                        var g = (from ix in db.sp_R010_Report_JobCard(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
-                        if (g.Count() > 0)
-                        {
+                        //var g = (from ix in db.sp_R010_Report_JobCard(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        //if (g.Count() > 0)
+                        //{
                             Report.Reportx1.Value = new string[2];
                             Report.Reportx1.Value[0] = PRNo1;
                             Report.Reportx1.Value[1] = PRNo2;
                             Report.Reportx1.WReport = "JobCard";
                             Report.Reportx1 op = new Report.Reportx1("JobCard.rpt");
                             op.Show();
-                        }
-                        else
-                            MessageBox.Show("not found.");
+                        //}
+                        //else
+                        //    MessageBox.Show("not found.");
                     }
                     else if (Type.Equals("ReportStockMovement"))
                     {
@@ -611,9 +611,9 @@ namespace StockControl
                             dt1 = Convert.ToDateTime((dtDate1.Value), new CultureInfo("en-US")).ToString("yyyyMMdd");
                             dt2 = Convert.ToDateTime((dtDate2.Value), new CultureInfo("en-US")).ToString("yyyyMMdd");
                         }
-                        var g = (from ix in db.sp_R009_Stock_Movement(PRNo1, PRNo2,dt1,dt2,ddlLocation.Text, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
-                        if (g.Count() > 0)
-                        {
+                        //var g = (from ix in db.sp_R009_Stock_Movement(PRNo1, PRNo2,dt1,dt2,ddlLocation.Text, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        //if (g.Count() > 0)
+                        //{
                             Report.Reportx1.Value = new string[5];
                             Report.Reportx1.Value[0] = PRNo1;
                             Report.Reportx1.Value[1] = PRNo2;                            
@@ -623,24 +623,24 @@ namespace StockControl
                             Report.Reportx1.WReport = "ReportStockMovement";
                             Report.Reportx1 op = new Report.Reportx1("ReportStockMovement.rpt");
                             op.Show();
-                        }
-                        else
-                            MessageBox.Show("not found.");
+                        //}
+                        //else
+                        //    MessageBox.Show("not found.");
                     }
                     else if (Type.Equals("Claim"))
                     {
-                        var g = (from ix in db.sp_R017_ReportClaim(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
-                        if (g.Count() > 0)
-                        {
+                        //var g = (from ix in db.sp_R017_ReportClaim(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        //if (g.Count() > 0)
+                        //{
                             Report.Reportx1.Value = new string[2];
                             Report.Reportx1.Value[0] = PRNo1;
                             Report.Reportx1.Value[1] = PRNo2;
                             Report.Reportx1.WReport = "ReportClaim";
                             Report.Reportx1 op = new Report.Reportx1("ReportClaim.rpt");
                             op.Show();
-                        }
-                        else
-                            MessageBox.Show("not found.");
+                        //}
+                        //else
+                        //    MessageBox.Show("not found.");
                     }
                     else if (Type.Equals("SellFG"))
                     {
@@ -674,9 +674,9 @@ namespace StockControl
                             MM = ddlMonth.Text;
                         }
 
-                        var g = (from ix in db.sp_R019_ReportShippingAVG(YYYY,MM,PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
-                        if (g.Count() > 0)
-                        {
+                        //var g = (from ix in db.sp_R019_ReportShippingAVG(YYYY,MM,PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        //if (g.Count() > 0)
+                        //{
                             Report.Reportx1.Value = new string[4];
                             Report.Reportx1.Value[0] = ddlYear.Text;
                             Report.Reportx1.Value[1] = ddlMonth.Text;
@@ -685,17 +685,17 @@ namespace StockControl
                             Report.Reportx1.WReport = "ReportShippingAVG";
                             Report.Reportx1 op = new Report.Reportx1("ReportShippingAVG.rpt");
                             op.Show();
-                        }
-                        else
-                            MessageBox.Show("not found.");
+                        //}
+                        //else
+                        //    MessageBox.Show("not found.");
                     }
                     else if (Type.Equals("ReportProductionOrder"))
                     {
-                        string Dt1 = "";
-                        string Dt2 = "";
-                        var g = (from ix in db.sp_R022_ReportProductsOrder(PRNo1, PRNo2, Dt1, Dt2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
-                        if (g.Count() > 0)
-                        {
+                        //string Dt1 = "";
+                        //string Dt2 = "";
+                        //var g = (from ix in db.sp_R022_ReportProductsOrder(PRNo1, PRNo2, Dt1, Dt2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        //if (g.Count() > 0)
+                        //{
                             
                             Report.Reportx1.Value = new string[4];
                             Report.Reportx1.Value[0] = PRNo1;
@@ -705,17 +705,17 @@ namespace StockControl
                             Report.Reportx1.WReport = "ReporProductionOrder";
                             Report.Reportx1 op = new Report.Reportx1("ReporProductionOrder.rpt");
                             op.Show();
-                        }
-                        else
-                            MessageBox.Show("not found.");
+                        //}
+                        //else
+                        //    MessageBox.Show("not found.");
                     }
                     else if (Type.Equals("ReportAccidentSlip"))
                     {
-                        //string Dt1 = "";
-                        //string Dt2 = "";
-                        var g = (from ix in db.sp_R007_ReportShipping(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
-                        if (g.Count() > 0)
-                        {
+                        ////string Dt1 = "";
+                        ////string Dt2 = "";
+                        //var g = (from ix in db.sp_R007_ReportShipping(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        //if (g.Count() > 0)
+                        //{
 
                             Report.Reportx1.Value = new string[2];
                             Report.Reportx1.Value[0] = PRNo1;
@@ -723,9 +723,9 @@ namespace StockControl
                             Report.Reportx1.WReport = "ReportAccidentSlip";
                             Report.Reportx1 op = new Report.Reportx1("ReportAccidentSlip.rpt");
                             op.Show();
-                        }
-                        else
-                            MessageBox.Show("not found.");
+                        //}
+                        //else
+                        //    MessageBox.Show("not found.");
                     }
                     else if (Type.Equals("PackingList"))
                     {

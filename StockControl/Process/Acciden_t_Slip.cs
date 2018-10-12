@@ -1301,6 +1301,8 @@ namespace StockControl
                         {
                             e.Row.Cells["QtyShip"].Value = 0;
                             e.Row.Cells["Qty"].Value = 0;
+                            e.Row.Cells["UnitCost"].Value = 0;
+                            e.Row.Cells["Amount"].Value = 0;
                             MessageBox.Show("หน่วยเบิกเป็นค่าว่าง");
                         }
                         else
@@ -1339,16 +1341,18 @@ namespace StockControl
                                 e.Row.Cells["QtyShip"].Value = 0;
                                 QTY = 0;
                                 Temp = 0;
+                                e.Row.Cells["UnitCost"].Value = 0;
+                                e.Row.Cells["Amount"].Value = 0;
                             }
 
-                            if (QTY > 0)
+                            if (Temp > 0)
                             {
-                                int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
+                                int idCSTMPODt = 0; //dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
                                 int Free = 0;//---1;
                                 if (idCSTMPODt > 0) Free = 0;
                                 //else if (idCSTMPODt == 0) Free = 1;
 
-                                e.Row.Cells["UnitCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
+                                e.Row.Cells["UnitCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), Temp, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
                             }
                             e.Row.Cells["Qty"].Value = Math.Round(Temp, 2);
                         }
@@ -1393,6 +1397,8 @@ namespace StockControl
                             MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
                             e.Row.Cells["QtyShip"].Value = 0;
                             QTY = 0;
+                            e.Row.Cells["UnitCost"].Value = 0;
+                            e.Row.Cells["Amount"].Value = 0;
                         }
                         e.Row.Cells["Qty"].Value = Math.Round(Temp, 2);
 
@@ -1401,10 +1407,10 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
-                            string Category = "Invoice";
-                            if (idCSTMPODt > 0) Category = "CstmPOID";
-                            else if (idCSTMPODt == 0) Category = "SafetyStock";
+                            int idCSTMPODt = 0;// dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
+                            string Category = "SafetyStock";
+                            //if (idCSTMPODt > 0) Category = "CstmPOID";
+                            //else if (idCSTMPODt == 0) Category = "SafetyStock";
 
                             e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value)
                                 , Category, 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
@@ -1438,6 +1444,8 @@ namespace StockControl
                                 MessageBox.Show("ไม่สามารถเบิกเกินจำนวนคงเหลือได้");
                                 e.Row.Cells["QtyShip"].Value = 0;
                                 QTY = 0;
+                                e.Row.Cells["UnitCost"].Value = 0;
+                                e.Row.Cells["Amount"].Value = 0;
                             }
                             e.Row.Cells["Qty"].Value = Math.Round(Temp, 2);
                         }
