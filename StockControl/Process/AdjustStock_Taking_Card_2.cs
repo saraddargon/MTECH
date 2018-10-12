@@ -317,7 +317,7 @@ namespace StockControl
                 {
 
                     int Temp = 0;
-                    var ck = db.mh_CheckStock_Lists.Where(x => x.CheckStatus == "Waiting").ToList();
+                    var ck = db.mh_CheckStock_Lists.Where(x => x.CheckStatus != "Completed" && x.CheckStatus != "Cancel").ToList();
                     if (ck.Count > 0)
                     {
                         MessageBox.Show("มี ListNo ค้างเลขที่ : " + dbClss.TSt(ck.FirstOrDefault().CheckNo));
@@ -352,14 +352,14 @@ namespace StockControl
                     if (MessageBox.Show("ต้องการสร้าง List Check Stock หรือไม่? \n ", "ListStock", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         int Temp = 0;
-                        var ck = db.mh_CheckStock_Lists.Where(x => x.CheckStatus == "Waiting").ToList();
+                        var ck = db.mh_CheckStock_Lists.Where(x => x.CheckStatus != "Completed" && x.CheckStatus != "Cancel").ToList();
                         if (ck.Count > 0)
                         {
                             if (MessageBox.Show("รายการเช็คสต็อกบางรายการยังไม่ถูกปิด ต้องการปิดและสร้างรายการเช็คสต็อกใหม่หรือไม่ ?", "Check Stock", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
                                 Temp = 0;
                                 var g = (from ix in db.mh_CheckStock_Lists select ix)
-                               .Where(a => a.CheckStatus == "Waiting").OrderByDescending(ab => ab.id).ToList();
+                               .Where(a => a.CheckStatus != "Completed" && a.CheckStatus != "Cancel").OrderByDescending(ab => ab.id).ToList();
                                 if (g.Count > 0)
                                 {
                                     foreach (var ss in g)
@@ -381,7 +381,7 @@ namespace StockControl
                             MessageBox.Show("สร้างรายการเช็คสต็อกสำเร็จ.");
 
                             var g = (from ix in db.mh_CheckStock_Lists select ix)
-                                .Where(a => a.CheckStatus == "Waiting").OrderByDescending(ab => ab.id).ToList();
+                                .Where(a => a.CheckStatus != "Completed" && a.CheckStatus != "Cancel").OrderByDescending(ab => ab.id).ToList();
                             if (g.Count() > 0)
                             {
                                 txtListNo.Text = dbClss.TSt(g.FirstOrDefault().CheckNo);
@@ -450,7 +450,7 @@ namespace StockControl
             {
 
                 var c = (from ix in db.mh_CheckStock_Lists select ix)
-                        .Where(a => a.CheckStatus == "Waiting"
+                        .Where(a => a.CheckStatus != "Completed" && a.CheckStatus !="Cancel"
                         //&& a.SeqStatus == 2
                         && a.CheckNo.Trim().ToUpper() == txtListNo1.Text.Trim().ToUpper()).ToList();
                 if (c.Count > 0)
@@ -509,7 +509,7 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 var c = (from ix in db.mh_CheckStock_Lists select ix)
-                 .Where(a => a.CheckStatus == "Waiting"
+                 .Where(a => a.CheckStatus == "Process"
                  && a.SeqStatus == 2
                  && Convert.ToString(a.ApproveBy) != ""
                  && a.CheckNo.Trim().ToUpper() == txtListNo1.Text.Trim().ToUpper()
@@ -597,7 +597,7 @@ namespace StockControl
                 //else //สร้างใหม่
                 {
                     var c = (from ix in db.mh_CheckStock_Lists select ix)
-                    .Where(a => a.CheckStatus == "Waiting"
+                    .Where(a => a.CheckStatus == "Process"
                     && a.SeqStatus == 2
                     && Convert.ToString(a.ApproveBy) != ""
                     && a.CheckNo.Trim().ToUpper() == txtListNo1.Text.Trim().ToUpper()
@@ -674,7 +674,7 @@ namespace StockControl
                 string Location = "";
                 string ShelfNo = "";
                 var c = (from ix in db.mh_CheckStock_Lists select ix)
-                     .Where(a => a.CheckStatus == "Waiting"
+                     .Where(a => a.CheckStatus == "Process"
                      && a.SeqStatus == 2
                      && Convert.ToString(a.ApproveBy) != ""
                      && a.CheckNo.Trim().ToUpper() == ADNo.Trim().ToUpper()
@@ -834,15 +834,15 @@ namespace StockControl
                     }
                 }
                 var up = (from ix in db.mh_CheckStock_Lists select ix)
-                    .Where(a => a.CheckStatus == "Waiting"
+                    .Where(a => a.CheckStatus != "Completed" && a.CheckStatus != "Cancel"
                     && a.SeqStatus == 2
                     && Convert.ToString(a.ApproveBy) != ""
                     && a.CheckNo.Trim().ToUpper() == ADNo.Trim().ToUpper()
                     //&& Convert.ToBoolean(a.InputOK) == true
                     )                    .ToList();
-                if (c.Count > 0)
+                if (up.Count > 0)
                 {
-                    foreach (var ss in c)
+                    foreach (var ss in up)
                     {
                         ss.CheckStatus = "Completed";
                         db.SubmitChanges();
@@ -859,7 +859,7 @@ namespace StockControl
                     using (var db = new DataClasses1DataContext())
                     {
                         var c = (from ix in db.mh_CheckStock_Lists select ix)
-                        .Where(a => a.CheckStatus == "Waiting"
+                        .Where(a => a.CheckStatus == "Waiting" 
                         && a.CheckNo.Trim().ToUpper() == txtListNo1.Text.Trim().ToUpper()
                         && Convert.ToBoolean(a.InputOK) == true
                         ).ToList();

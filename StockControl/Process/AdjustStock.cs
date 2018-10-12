@@ -744,7 +744,7 @@ namespace StockControl
                                 gg.RefTempJobCode = vv.RefTempJobCard;
                                 gg.LotNo = vv.LotNo;
                                 gg.idCSTMPODt = vv.idCSTMPODt;
-
+                                gg.Free = true;
                                 db.tb_Stocks.InsertOnSubmit(gg);
                                 db.SubmitChanges();
 
@@ -1109,6 +1109,8 @@ namespace StockControl
                         string dgvUOM = dbClss.TSt(e.Row.Cells["Unit"].Value);
                         string CodeNo = dbClss.TSt(e.Row.Cells["CodeNo"].Value);
                         e.Row.Cells["PCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
+                        if (dbClss.TDe(e.Row.Cells["PCSUnit"].Value) <= 0)
+                            MessageBox.Show("จำนวน/หน่วย น้อยกว่า 0");
                     }
                 }
 

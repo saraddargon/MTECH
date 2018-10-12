@@ -1231,7 +1231,8 @@ namespace StockControl
                                 StandardCost = Math.Round((StockControl.dbClss.TDe(g.Cells["Amount"].Value) / StockControl.dbClss.TDe(g.Cells["QTYTrue"].Value)), 2);
 
                                 var c = (from ix in db.mh_CheckStock_Lists select ix)
-                                  .Where(a => a.CheckStatus == "Waiting" && a.id == id).ToList();
+                                  .Where(a => a.CheckStatus == "Waiting" 
+                                  && a.id == id).ToList();
                                 if (c.Count > 0)
                                 {
                                     foreach (var ss in c)
@@ -1890,25 +1891,25 @@ namespace StockControl
         {
             try
             {
-                PrintPR a = new PrintPR(txtADNo.Text, txtADNo.Text, "AdjustStock");
-                a.ShowDialog();
+                //PrintPR a = new PrintPR(txtADNo.Text, txtADNo.Text, "AdjustStock");
+                //a.ShowDialog();
 
-                //using (DataClasses1DataContext db = new DataClasses1DataContext())
-                //{
-                //    var g = (from ix in db.sp_R004_ReportShipping(txtSHNo.Text, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
-                //    if (g.Count() > 0)
-                //    {
-
-                //        Report.Reportx1.Value = new string[2];
-                //        Report.Reportx1.Value[0] = txtSHNo.Text;
-                //        Report.Reportx1.WReport = "ReportShipping";
-                //        Report.Reportx1 op = new Report.Reportx1("ReportShipping.rpt");
-                //        op.Show();
-
-                //    }
-                //    else
-                //        MessageBox.Show("not found.");
-                //}
+                try
+                {
+                    string ListNo = txtADNo.Text.Trim();
+                    if (ListNo != "")
+                    {
+                        Report.Reportx1.Value = new string[1];
+                        Report.Reportx1.Value[0] = ListNo;
+                        Report.Reportx1.WReport = "CheckStockList";
+                        Report.Reportx1 op = new Report.Reportx1("ReportCheckStock.rpt");
+                        op.Show();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    baseClass.Error(ex.Message);
+                }
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
