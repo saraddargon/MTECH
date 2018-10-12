@@ -76,6 +76,11 @@ namespace StockControl
             btnCompareData.Enabled = true;
             btnCompleted.Enabled = true;
             btnPrintReport.Enabled = true;
+
+          
+            btnSendApprove.Enabled = true;
+            btnUpdateStockTaking.Enabled = true;
+          
         }
 
         private void btnView_Click(object sender, EventArgs e)
@@ -424,6 +429,11 @@ namespace StockControl
 
                         //    }
                         //}
+
+                        btnGetList.Enabled = false;
+                        btnSendApprove.Enabled = false;
+                        btnUpdateStockTaking.Enabled = false;
+                        btnCompleted.Enabled = false;
                     }
                     else
                     {
