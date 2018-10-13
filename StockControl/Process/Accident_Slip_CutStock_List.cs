@@ -922,12 +922,12 @@ namespace StockControl
                 if (dgvData.Rows.Count > 0)
                     SHNo = StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["ShippingNo"].Value);
 
-                if (TypeShip == "ShipFGAccident")
-                {
-                    PrintPR a = new PrintPR(SHNo, SHNo, "ReportAccidentSlip");
-                    a.ShowDialog();
-                }
-                else
+                //if (TypeShip == "ShipFGAccident")
+                //{
+                //    PrintPR a = new PrintPR(SHNo, SHNo, "ReportAccidentSlip");
+                //    a.ShowDialog();
+                //}
+                //else
                 {
                     PrintPR a = new PrintPR(SHNo, SHNo, "Shipping");
                     a.ShowDialog();

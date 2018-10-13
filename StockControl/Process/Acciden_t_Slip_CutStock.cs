@@ -1912,7 +1912,7 @@ namespace StockControl
         {
             try
             {
-                PrintPR a = new PrintPR(txtSHNo.Text, txtSHNo.Text, "ReportAccidentSlip");
+                PrintPR a = new PrintPR(txtSHNo.Text, txtSHNo.Text, "Shipping");
                 a.ShowDialog();
 
                 //using (DataClasses1DataContext db = new DataClasses1DataContext())
