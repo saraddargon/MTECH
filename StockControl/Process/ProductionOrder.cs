@@ -91,6 +91,7 @@ namespace StockControl
                     if (t != null)
                     {
                         txtJobNo.Text = t.JobNo;
+                        txtRev.Text = t.Rev;
                         txtRefDocNo.Text = t.RefDocNo;
                         txtRefDocNo_TEMP.Text = t.RefDocNo_TEMP;
                         txtRefDocId.Text = t.RefDocId.ToSt();
@@ -400,6 +401,7 @@ namespace StockControl
         private void ClearData()
         {
             txtJobNo.Text = "";
+            txtRev.Text = "";
             txtRefDocId.Text = "0";
             txtRefDocNo.Text = "";
             txtFGNo.Text = "";
@@ -476,6 +478,7 @@ namespace StockControl
             btnDel_Item.Enabled = false;
             btnAddPart.Enabled = false;
 
+            txtRev.ReadOnly = true;
             //dgvData.ReadOnly = true;
 
             Enable_Status(false, "View");
@@ -496,11 +499,14 @@ namespace StockControl
             btnDel_Item.Enabled = true;
             btnAddPart.Enabled = true;
 
+            txtRev.ReadOnly = false;
             //dgvData.ReadOnly = false;
 
             Enable_Status(true, "Edit");
             lblStatus.Text = "Edit";
             Ac = "Edit";
+
+            txtRev.Focus();
 
         }
 
@@ -599,8 +605,10 @@ namespace StockControl
                             db.SubmitChanges();
                             AddHistory($"Remove Job Order Sheet {m.JobNo}", m.JobNo);
 
+                            btnSave.Enabled = false;
                             baseClass.Info("Delete complete.\n");
                             this.Close();
+
                         }
                     }
                 }
@@ -652,12 +660,49 @@ namespace StockControl
                     if (Check_Save())
                         return;
                     else if (baseClass.IsSave())
-                        SaveE();
+                        SaveRev();
+                    //SaveE();
                 }
                 else
                     MessageBox.Show("ไม่สามารถบันทึกได้เนื่องจากสถานะไม่ใช่ 'New' หรือ 'Edit'");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+            finally { this.Cursor = Cursors.Default; }
+        }
+        void SaveRev()
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    string jobNo = txtJobNo.Text.Trim();
+                    var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo).FirstOrDefault();
+                    if (m != null)
+                    {
+                        if (m.Rev != txtRev.Text.Trim()) AddHistory($"Revision from {m.Rev} to {txtRev.Text.Trim()}", m.JobNo);
+                        m.Rev = txtRev.Text.Trim();
+                        m.UpdateDate = DateTime.Now;
+                        m.UpdateBy = ClassLib.Classlib.User;
+                        db.SubmitChanges();
+
+                        var docno = jobNo;
+                        baseClass.Info("Save complete(s).");
+                        ClearData();
+                        t_JobNo = docno;
+                        DataLoad();
+                    }
+                    else
+                    {
+                        baseClass.Warning("Job Order Sheet not found.\n");
+                        btnView_Click(null, null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
             finally { this.Cursor = Cursors.Default; }
         }
         void SaveE()
@@ -681,6 +726,7 @@ namespace StockControl
                         m.CreateDate = DateTime.Now;
                         m.JobDate = DateTime.Now.Date;
                         m.JobNo = dbClss.GetNo(29, 2);
+                        m.Rev = "0";
                         m.SeqStatus = 0;
                         db.mh_ProductionOrders.InsertOnSubmit(m);
                         newJob = true;
@@ -699,8 +745,9 @@ namespace StockControl
                         if (m.UOM != txtUOM.Text) AddHistory($" {m.UOM} to {txtUOM.Text}", m.JobNo);
                         if (m.ReqDate != txtReqDate.Text.ToDateTime().Value) AddHistory($" {m.ReqDate} to {txtReqDate.Text.ToDateTime().Value}", m.JobNo);
                         if (m.EndingDate != txtEndingDate.Text.ToDateTime().Value) AddHistory($"Ending Date from {m.EndingDate} to {txtEndingDate.Text.ToDateTime().Value}", m.JobNo);
-
+                        if (m.Rev != txtRev.Text.Trim()) AddHistory($"Revision from {m.Rev} to {txtRev.Text.Trim()}", m.JobNo);
                     }
+                    m.Rev = txtRev.Text;
                     m.Active = true;
                     m.EndingDate = txtEndingDate.Text.ToDateTime().Value;
                     m.FGName = txtFGName.Text;
