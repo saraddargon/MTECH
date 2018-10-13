@@ -10,6 +10,7 @@ using Microsoft.VisualBasic.FileIO;
 using Telerik.WinControls.UI;
 using Telerik.WinControls;
 using Telerik.WinControls.Data;
+using System.IO;
 
 namespace StockControl
 {
@@ -275,14 +276,32 @@ namespace StockControl
                             }
                         }
                     }
-
+                    byte[] Signature = null;
+                    Boolean Sig = false;
+                    string Pa = "";
                     foreach (var g in dgvData.Rows)
                     {
                         if(g.IsVisible)
                         { 
                             if (Convert.ToBoolean(g.Cells["dgvC"].Value))
                             {
-                               
+                                Signature = null;
+                                Sig = false;
+                                Pa = dbClss.TSt(g.Cells["Browse"].Value);
+                                if (!Pa.Equals(""))
+                                {
+                                    System.Drawing.Image img = Image.FromFile(Pa);
+                                    ////System.Drawing.Image img = System.Drawing.Image.FromStream(Signature.InputStream, true, true);
+                                    System.Drawing.Bitmap bm = new System.Drawing.Bitmap(img, new System.Drawing.Size(613, 273));
+
+                                    //Image image2D = dbclass.QRBarcode2D(Data2D);
+                                    //// แปลง Image เป็น Byte เพิ่อนำเข้า SQL                    
+                                    Signature = dbClss.ImageToByteArray(bm);
+                                    Sig = true;
+                                }
+                                if (Convert.ToBoolean(g.Cells["Sig_FlagDel"].Value).Equals(true))
+                                    Sig = true;
+
                                 if (Convert.ToInt16(g.Cells["id"].Value)<=0)
                                 {
                                     var a = (from ix in db.tb_Users
@@ -300,6 +319,10 @@ namespace StockControl
                                         gy.CreateDate = DateTime.Now;
                                         gy.CreateBy = ClassLib.Classlib.User;
                                         gy.Status = Convert.ToBoolean(g.Cells["Status"].Value);
+                                        gy.Signature_bit = Sig;
+                                        gy.Signature = Signature;
+                                        if (Signature == null)
+                                            gy.Signature_bit = false;
 
                                         db.tb_Users.InsertOnSubmit(gy);
                                         db.SubmitChanges();
@@ -325,7 +348,14 @@ namespace StockControl
                                         unit1.Status = Convert.ToBoolean(g.Cells["Status"].Value);
                                         unit1.ModifyDate = DateTime.Now;
                                         unit1.ModifyBy = ClassLib.Classlib.User;
-
+                                        
+                                        if (Sig)
+                                        {
+                                            unit1.Signature_bit = Sig;
+                                            unit1.Signature = Signature;
+                                            if(Signature==null)
+                                                unit1.Signature_bit = false;
+                                        }
                                         C += 1;
 
                                         db.SubmitChanges();
@@ -514,8 +544,31 @@ namespace StockControl
                     }
                     catch { }
                 }
-                
-                
+                else if (!dbClss.TSt(dgvData.CurrentRow.Cells["Browse"].Value).Equals(""))
+                {
+                    string PathAttachFile = dbClss.TSt(dgvData.CurrentRow.Cells["Browse"].Value);
+                    string Extension = Path.GetExtension(PathAttachFile);
+                    if (!Extension.ToUpper().Equals(".JPEG")
+                        && !Extension.ToUpper().Equals(".JPG"))
+                    {
+                        dgvData.CurrentRow.Cells["Browse"].Value = null;
+                    }
+                    else
+                    {
+                        System.IO.FileInfo sizex = new System.IO.FileInfo(PathAttachFile);
+                        if (!(sizex.Length > 1024857))
+                        {
+                            dgvData.CurrentRow.Cells["Browse"].Value = PathAttachFile;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Size Limit 1 MB");
+                            dgvData.CurrentRow.Cells["Browse"].Value = null;
+                        }
+                    }
+                }
+
+
 
                 if (e.RowIndex == -1)
                     SendKeys.Send("{ENTER}");
@@ -850,6 +903,13 @@ namespace StockControl
             {
                 if (dgvData.Columns["dgvDel"].Index == e.ColumnIndex)  //dgvDel
                     Delete_Item();
+                else if (dgvData.Columns["Del_Signature"].Index == e.ColumnIndex)
+                {
+                    dgvData.CurrentRow.Cells["Sig_FlagDel"].Value = true;
+                    dgvData.CurrentRow.Cells["Browse"].Value = "";
+                    dgvData.CurrentRow.Cells["dgvC"].Value = true;
+                    MessageBox.Show("completed.");
+                }
             }
             catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -1060,6 +1120,74 @@ namespace StockControl
                 FilterDescriptor filterDescriptor = new FilterDescriptor(mccbEl.DisplayMember, FilterOperator.Contains, string.Empty);
                 mccbEl.EditorControl.MasterTemplate.FilterDescriptors.Add(filterDescriptor);
             }
+        }
+
+        private void แสดงลายเซนToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string Pa = dbClss.TSt(dgvData.CurrentRow.Cells["Browse"].Value);
+                string IM = dbClss.TSt(dgvData.CurrentRow.Cells["Signature"].Value);
+
+
+                if (!Pa.Equals(""))
+                {
+                    Show_Signature a = new Show_Signature(Pa);
+                    a.ShowDialog();
+                }
+                else
+                {
+                    string temp = dbClss.TSt(dgvData.CurrentRow.Cells["UserID"].Value);
+                    if (!temp.Equals(""))
+                    {
+                        //var G = (from a in getDb._3_User_Select(temp, "") select a).ToList();
+                        //if (G.Count > 0)
+                        //{
+                        //    DataTable DT = dbclass.LINQToDataTable(G);
+                        //    Reportx1 po = new Reportx1("TestSignature.rpt", DT, "FromDT");
+                        //    po.Show();
+                        //}
+
+                        PrintSignature(temp);
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+        private void PrintSignature(string User1)
+        {
+            string User = User1;
+            string Pass = "";
+
+            string Rpt = "Signature.rpt";
+            Report.Reportx1.WReport = "Signature";
+            Report.Reportx1.Value = new string[2];
+            Report.Reportx1.Value[0] = User;
+            Report.Reportx1.Value[1] = Pass;
+            Report.Reportx1 op = new Report.Reportx1(Rpt);//Rpt,Dt,PUR_TravellingReq
+            op.Show();
+
+            //Report.Reportx1.Value = new string[4];
+            //Report.Reportx1.Value[0] = PartNo;
+            //Report.Reportx1.Value[1] = BomNo;
+            //Report.Reportx1.Value[2] = "";
+            //Report.Reportx1.Value[3] = "";
+            //Report.Reportx1.WReport = "Bom";
+            //Report.Reportx1 op = new Report.Reportx1("Bom.rpt");
+            //op.Show();
+
+        }
+
+        private void แสดงลายเซนทงหมดToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+
+                PrintSignature("");
+
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }

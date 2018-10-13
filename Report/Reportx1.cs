@@ -498,6 +498,13 @@ namespace Report
                         rptDc.SetParameterValue("@DateNow", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;
+                case "Signature":
+                    {
+                        rptDc.SetParameterValue("@User", Convert.ToString(Value[0]));
+                        rptDc.SetParameterValue("@Pass", Convert.ToString(Value[1]));
+                        rptDc.SetParameterValue("@DataTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
             }
         }
 

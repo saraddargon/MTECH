@@ -659,7 +659,7 @@ namespace StockControl
             return dtReturn;
         }
 
-        private static byte[] ImageToByteArray(System.Drawing.Image imageIn)
+        public static byte[] ImageToByteArray(System.Drawing.Image imageIn)
         {
             try
             {
@@ -671,6 +671,7 @@ namespace StockControl
             }
             catch (Exception ex) { return null; }
         }
+       
         //Barcode 2D
         public static byte[] SaveQRCode2D(string Condition)
         {
