@@ -1763,26 +1763,6 @@
       <Column Name="SeqStatus" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_ProductTAG" Member="mh_ProductTAGs">
-    <Type Name="mh_ProductTAG">
-      <Column Name="Machine" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="UserID" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="PartNo" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Seq" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="PartName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CSTMShot" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
-      <Column Name="CSTMItem" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CustItem2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="LotNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="OFTAG" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="CustomerName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
-      <Column Name="PathPic" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
-      <Column Name="BOMNo" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="QRCode" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="SHIFT" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.mh_PackingDt" Member="mh_PackingDts">
     <Type Name="mh_PackingDt">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -2268,6 +2248,27 @@
       <Column Name="M4" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="M5" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="M6" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_ProductTAG" Member="mh_ProductTAGs">
+    <Type Name="mh_ProductTAG">
+      <Column Name="Machine" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PartNo" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Seq" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PartName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CSTMShot" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="CSTMItem" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustItem2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LotNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OFTAG" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="CustomerName" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="PathPic" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="BOMNo" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="QRCode" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="SHIFT" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ProdDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">
@@ -4449,29 +4450,6 @@
       <Column Name="RefId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.sp_065_PrintTag_JobNo" Method="sp_065_PrintTag_JobNo">
-    <Parameter Name="JobNo" Parameter="jobNo" Type="System.String" DbType="NVarChar(50)" />
-    <ElementType Name="sp_065_PrintTag_JobNoResult">
-      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="UnitPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(37,4)" CanBeNull="true" />
-      <Column Name="LotNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Location" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="ShelfNo" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="JobNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CustomerPONo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="idJob" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="idCstmPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="idCustomerPO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="GroupType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="InvGroup" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.sp_059_ApproveList" Method="sp_059_ApproveList">
     <Parameter Name="Docno" Parameter="docno" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="Type" Parameter="type" Type="System.String" DbType="NVarChar(50)" />
@@ -5368,5 +5346,30 @@
     <Parameter Name="Condition" Parameter="condition" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="Seq" Parameter="seq" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_065_PrintTag_JobNo" Method="sp_065_PrintTag_JobNo">
+    <Parameter Name="JobNo" Parameter="jobNo" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="sp_065_PrintTag_JobNoResult">
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Qty" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(37,4)" CanBeNull="true" />
+      <Column Name="LotNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ShelfNo" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="JobNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerPONo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idJob" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idCstmPODt" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idCustomerPO" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GroupType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="InvGroup" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CstmNo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CstmName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
   </Function>
 </Database>

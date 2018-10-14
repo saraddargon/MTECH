@@ -880,6 +880,7 @@
             this.btnPrintRCDL.Name = "btnPrintRCDL";
             this.btnPrintRCDL.Text = "Receive && Delivery";
             this.btnPrintRCDL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnPrintRCDL.Visibility = Telerik.WinControls.ElementVisibility.Collapsed;
             this.btnPrintRCDL.Click += new System.EventHandler(this.btnPrintRCDL_Click);
             // 
             // radRibbonBarGroup6
