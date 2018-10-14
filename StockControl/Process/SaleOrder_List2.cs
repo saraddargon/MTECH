@@ -419,6 +419,12 @@ namespace StockControl
             if (cbbCSTM.SelectedIndex > 0)
                 txtCSTMNo.Text = cbbCSTM.SelectedValue.ToSt();
         }
+
+        private void btnRCDL_Click(object sender, EventArgs e)
+        {
+            var clist = new CustomerPO_List_Print();
+            clist.ShowDialog();
+        }
     }
 
 
