@@ -482,7 +482,7 @@ namespace Report
                 case "ReceiveAndDelivery":
                     {
                         rptDc.SetParameterValue("@Date1", DateTime.ParseExact(Value[0], "dd/MMM/yyyy", new CultureInfo("en-US")));
-                        rptDc.SetParameterValue("@Date2", DateTime.ParseExact(Value[1], "dd/MMM/yyyy", new CultureInfo("en-US")));
+                        rptDc.SetParameterValue("@Date2", DateTime.ParseExact(Value[1], "dd/MMM/yyyy", new CultureInfo("en-US")).AddDays(1).AddMinutes(-1));
                     }break;
                 case "DeliveryPlanning":
                     {

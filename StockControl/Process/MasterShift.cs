@@ -247,7 +247,7 @@ namespace StockControl
 
                 if (row >= 0)
                 {
-                    string CodeTemp = Convert.ToString(radGridView1.Rows[row].Cells["id"].Value);
+                    string CodeTemp = Convert.ToString(radGridView1.Rows[row].Cells["dgvCodetemp"].Value);
                     radGridView1.EndEdit();
                     if (MessageBox.Show("ต้องการลบรายการหรือไม่ ?", "ลบรายการ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {

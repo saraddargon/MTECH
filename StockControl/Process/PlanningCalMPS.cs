@@ -494,6 +494,7 @@ namespace StockControl
                         m.CreateDate = DateTime.Now;
                         m.JobDate = DateTime.Now.Date;
                         m.JobNo = dbClss.GetNo(29, 2);
+                        m.Rev = "0";
                         //
                         m.Active = true;
                         m.CloseJob = false;
@@ -697,8 +698,8 @@ namespace StockControl
                             db.SubmitChanges();
                         }
 
-                        //Send to Approve
-                        db.sp_062_mh_ApproveList_Add(m.JobNo, "Job Req", ClassLib.Classlib.User);
+                        ////Send to Approve
+                        //db.sp_062_mh_ApproveList_Add(m.JobNo, "Job Req", ClassLib.Classlib.User);
                     }
                     DataLoad();
 

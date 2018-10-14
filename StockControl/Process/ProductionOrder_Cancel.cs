@@ -29,7 +29,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name);
+            HistoryView hw = new HistoryView(this.Name, this.txtSPNo.Text);
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }
@@ -43,7 +43,7 @@ namespace StockControl
         {
             // txtCNNo.Text = StockControl.dbClss.GetNo(6, 0);
             string tNo = txtSPNo.Text;
-            ClearData();
+            btnNew_Click(null, null);
             if (tNo != "")
             {
                 txtSPNo.Text = tNo;
@@ -56,11 +56,13 @@ namespace StockControl
             using (var db = new DataClasses1DataContext())
             {
                 string docNo = txtSPNo.Text.Trim();
+                ClearData();
                 var m = db.mh_ProductionOrder_CancelQties.Where(x => x.DocNo == docNo).FirstOrDefault();
                 if (m != null)
                 {
                     btnDelete.Enabled = true;
                     btnSave.Enabled = false;
+                    btnView.Enabled = true;
                     var j = db.mh_ProductionOrders.Where(x => x.JobNo == m.JobNo).FirstOrDefault();
                     if (j != null)
                     {
@@ -75,17 +77,36 @@ namespace StockControl
                         txtSPNo.Text = m.DocNo;
                         txtSeqStatus.Text = m.SeqStatus.ToSt();
                         txtRemark.Text = m.Remark;
-                        if (m.SeqStatus == 0)
+
+                        cbR1.Checked = m.R1;
+                        cbR2.Checked = m.R2;
+                        cbR3.Checked = m.R3;
+                        cbR4.Checked = m.R4;
+                        cbR5.Checked = m.R5;
+                        cbR6.Checked = m.R6;
+
+                        txtM1.Text = m.M1;
+                        txtM2.Text = m.M2;
+                        txtM3.Text = m.M3;
+                        txtM4.Text = m.M4;
+                        txtM5.Text = m.M5;
+                        txtM6.Text = m.M6;
+
+                        btnView_Click(null, null);
+                        if (!m.Active || txtSeqStatus.Text.ToInt() > 0)
+                        {
+                            btnEdit.Enabled = false;
+                            btnDelete.Enabled = false;
+                        }
+
+                        if (!m.Active)
+                            lbStatus.Text = "Inactive";
+                        else if (m.SeqStatus == 0)
                             lbStatus.Text = "Waiting";
                         else if (m.SeqStatus == 1)
                             lbStatus.Text = "Waiting Approve";
                         else
                             lbStatus.Text = "Approved";
-
-                        if (!m.Active)
-                            btnDelete.Enabled = false;
-                        else
-                            btnDelete.Enabled = true;
                     }
                 }
             }
@@ -99,26 +120,87 @@ namespace StockControl
 
         private void btnNew_Click(object sender, EventArgs e)
         {
+            btnEdit_Click(null, null);
             ClearData();
             //radGridView1.ReadOnly = false;
             //radGridView1.AllowAddNewRow = false;
             //radGridView1.Rows.AddNew();
+            btnSave.Enabled = true;
+            btnEdit.Enabled = false;
+            btnView.Enabled = false;
+            btnDelete.Enabled = false;
+
+            lbStatus.Text = "New";
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            // radGridView1.ReadOnly = false;
-            //// btnEdit.Enabled = false;
-            // btnView.Enabled = true;
-            // radGridView1.AllowAddNewRow = false;
-            //DataLoad();
+
+            txtJobNo.ReadOnly = false;
+            txtQty.ReadOnly = false;
+            txtRemark.ReadOnly = false;
+
+            btnSave.Enabled = true;
+            btnEdit.Enabled = false;
+            btnView.Enabled = true;
+            btnDelete.Enabled = true;
+
+            cbR1.ReadOnly = false;
+            cbR2.ReadOnly = false;
+            cbR3.ReadOnly = false;
+            cbR4.ReadOnly = false;
+            cbR5.ReadOnly = false;
+            cbR6.ReadOnly = false;
+            txtR6.ReadOnly = false;
+
+            txtM1.ReadOnly = false;
+            txtM2.ReadOnly = false;
+            txtM3.ReadOnly = false;
+            txtM4.ReadOnly = false;
+            txtM5.ReadOnly = false;
+            txtM6.ReadOnly = false;
+
+            lbStatus.Text = "Edit";
         }
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            txtJobNo.ReadOnly = true;
+            txtQty.ReadOnly = true;
+            txtRemark.ReadOnly = true;
+
+            btnSave.Enabled = false;
+            btnEdit.Enabled = true;
+            btnView.Enabled = false;
+            btnDelete.Enabled = true;
+
+            cbR1.ReadOnly = true;
+            cbR2.ReadOnly = true;
+            cbR3.ReadOnly = true;
+            cbR4.ReadOnly = true;
+            cbR5.ReadOnly = true;
+            cbR6.ReadOnly = true;
+            txtR6.ReadOnly = true;
+
+            txtM1.ReadOnly = true;
+            txtM2.ReadOnly = true;
+            txtM3.ReadOnly = true;
+            txtM4.ReadOnly = true;
+            txtM5.ReadOnly = true;
+            txtM6.ReadOnly = true;
+
+            lbStatus.Text = "View";
+        }
+
+
+
         private bool Check_Save()
         {
             bool re = true;
             string err = "";
             try
             {
+                if (txtSeqStatus.Text.ToInt() > 0)
+                    err += "- สถานะไม่สามารถบันทึกได้.\n";
                 if (txtJobNo.Text == "")
                     err += "- กรุณาใส่ Job No.\n";
                 using (var db = new DataClasses1DataContext())
@@ -131,43 +213,42 @@ namespace StockControl
                     {
                         if (m.CloseJob)
                             err += "- สถานะของ Job ปิดแล้ว.\n";
-                        else if (m.OutQty < txtQty.Value.ToDecimal())
-                            err += "- จำนวนยกเลิก มากกว่าจำนวนคงเหลือ.\n";
                         else if (txtQty.Value.ToDecimal() <= 0)
-                            err += "- กรุุณากรอกจำนวนที่ต้องการยกเลิก. \n";
+                            err += "- กรุุณากรอกจำนวนที่ต้องการ (Change Q'ty). \n";
                         else
                         {
-                            var outQ = m.OutQty;
-                            var canQ = txtQty.Value.ToDecimal();
-                            //out Qty Waiting
-                            var d = db.mh_ProductionOrder_CancelQties.Where(x => x.SeqStatus != 2 && x.Active && x.JobNo == jNo).ToList();
-                            if (d.Count > 0)
-                                canQ += d.Sum(x => x.Qty);
-                            if (canQ > outQ)
-                                err += "- จำนวนยกเลิก มากกว่าจำนวนคงเหลือ.\n";
-                            else
-                            {
-                                if(outQ - canQ <= 0) //จะปิด job
-                                {
-                                    var rm = db.mh_ProductionOrderRMs.Where(x => x.Active && x.JobNo == jNo && x.OutQty < 0).ToList();
-                                    foreach(var r in rm)
-                                    {
-                                        if(r.OutQty + baseClass.GetQtyAccidenSlip(r.id) < 0)
-                                        {
-                                            err += $"- จำนวนเบิกใช้ 'วัตถุดิบ' เกินกำหนด กรุณาทำ Return RM หรือ Accident Slip กรณีไม่สามารถคืนวัตถุดิบได้ \n";
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
+                            var rc = db.mh_PackingDts.Where(x => x.idJob == m.id && x.Active).ToList();
+                            var rcQ = 0.00m;
+                            if (rc.Count > 0)
+                                rcQ = rc.Sum(x => x.Qty);
+                            var jobQ = txtJobQty.Text.ToDecimal();
+                            var changeQ = txtQty.Value.ToDecimal();
+                            if (changeQ < rcQ)
+                                err += "- จำนวนที่ต้องการเปลี่ยนแปลง มีค่าน้อยกว่า จำนวนที่ถูกรับเข้าไปแล้ว.\n";
 
-                            //var pk = db.mh_PackingDts.Where(x => x.Active && x.idJob == m.id)
-                            //    .Join(db.mh_Packings.Where(x => x.Active)
-                            //    , dt => dt.PackingNo
-                            //    , hd => hd.PackingNo
-                            //    , (dt, hd) => new { hd, dt }).ToList();
-                            //if (pk.Count > 0)
-                            //    err += "- Job ถูกรับเข้าแล้ว.\n";
+                            //var outQ = m.OutQty;
+                            //var canQ = txtQty.Value.ToDecimal();
+                            ////out Qty Waiting
+                            //var d = db.mh_ProductionOrder_CancelQties.Where(x => x.SeqStatus != 2 && x.Active && x.JobNo == jNo).ToList();
+                            //if (d.Count > 0)
+                            //    canQ += d.Sum(x => x.Qty);
+                            //if (canQ > outQ)
+                            //    err += "- จำนวนยกเลิก มากกว่าจำนวนคงเหลือ.\n";
+                            //else
+                            //{
+                            //    if (outQ - canQ <= 0) //จะปิด job
+                            //    {
+                            //        var rm = db.mh_ProductionOrderRMs.Where(x => x.Active && x.JobNo == jNo && x.OutQty < 0).ToList();
+                            //        foreach (var r in rm)
+                            //        {
+                            //            if (r.OutQty + baseClass.GetQtyAccidenSlip(r.id) < 0)
+                            //            {
+                            //                err += $"- จำนวนเบิกใช้ 'วัตถุดิบ' เกินกำหนด กรุณาทำ Return RM หรือ Accident Slip กรณีไม่สามารถคืนวัตถุดิบได้ \n";
+                            //                break;
+                            //            }
+                            //        }
+                            //    }
+                            //}
                         }
                     }
                 }
@@ -203,7 +284,13 @@ namespace StockControl
                         string jobNo = txtJobNo.Text.Trim();
                         var m = db.mh_ProductionOrder_CancelQties.Where(x => x.DocNo == spNo).FirstOrDefault();
                         var j = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo).FirstOrDefault();
-                        if (m == null && j != null)
+                        if (j == null)
+                        {
+                            baseClass.Error("- ไม่พบใบสั่งผลิต (Job Order Sheet No.).\n");
+                            return;
+                        }
+                        //
+                        if (m == null)
                         {
                             m = new mh_ProductionOrder_CancelQty
                             {
@@ -224,18 +311,48 @@ namespace StockControl
                                 JobQty = txtJobQty.Text.ToDecimal(),
                                 OutQty = txtOutQty.Text.ToDecimal(),
                                 CutFG = false,
+                                R1 = cbR1.Checked,
+                                R2 = cbR2.Checked,
+                                R3 = cbR3.Checked,
+                                R4 = cbR4.Checked,
+                                R5 = cbR5.Checked,
+                                R6 = cbR6.Checked,
+                                M1 = (cbR1.Checked) ? txtM1.Text : "",
+                                M2 = (cbR2.Checked) ? txtM2.Text : "",
+                                M3 = (cbR3.Checked) ? txtM3.Text : "",
+                                M4 = (cbR4.Checked) ? txtM4.Text : "",
+                                M5 = (cbR5.Checked) ? txtM5.Text : "",
+                                M6 = (cbR6.Checked) ? txtM6.Text : "",
+                                R6_Text = (cbR6.Checked) ? txtR6.Text : "",
                             };
                             db.mh_ProductionOrder_CancelQties.InsertOnSubmit(m);
-                            db.SubmitChanges();
-
-                            //j.OutQty -= m.Qty;
-                            //j.CloseJob = true;
-                            j.UpdateBy = ClassLib.Classlib.User;
-                            j.UpdateDate = DateTime.Now;
-                            db.SubmitChanges();
-
-                            txtSPNo.Text = m.DocNo;
+                            
+                            AddHistory($"New Change Job Document", m.DocNo);                            
                         }
+                        else
+                        {
+                            if (m.JobNo != txtJobNo.Text) AddHistory($"Job Order No From {m.JobNo} to {txtJobNo.Text}", m.DocNo);
+                            if (m.Qty != txtQty.Value.ToDecimal()) AddHistory($"Change Q'ty from {m.Qty} to {txtQty.Value.ToDecimal()}", m.DocNo);
+
+                            m.JobNo = txtJobNo.Text;
+                            m.Qty = txtQty.Value.ToDecimal();
+                            m.R1 = cbR1.Checked;
+                            m.R2 = cbR2.Checked;
+                            m.R3 = cbR3.Checked;
+                            m.R4 = cbR4.Checked;
+                            m.R5 = cbR5.Checked;
+                            m.R6 = cbR6.Checked;
+                            m.M1 = (cbR1.Checked) ? txtM1.Text : "";
+                            m.M2 = (cbR2.Checked) ? txtM2.Text : "";
+                            m.M3 = (cbR3.Checked) ? txtM3.Text : "";
+                            m.M4 = (cbR4.Checked) ? txtM4.Text : "";
+                            m.M5 = (cbR5.Checked) ? txtM5.Text : "";
+                            m.M6 = (cbR6.Checked) ? txtM6.Text : "";
+                            m.Remark = txtRemark.Text;
+                            m.R6_Text = (cbR6.Checked) ? txtR6.Text : "";
+                        }
+                        db.SubmitChanges();
+                        txtSPNo.Text = m.DocNo;
                     }
 
                     DataLoad();
@@ -248,9 +365,16 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
         }
 
+        void AddHistory(string Detail, string DocNo)
+        {
+            dbClss.AddHistory(this.Name, "Change Job", Detail, DocNo);
+
+        }
+
         private void ClearData()
         {
             txtJobNo.Text = "";
+            txtJobNo_TEMP.Text = "";
             txtFGNo.Text = "";
             txtFGName.Text = "";
             txtQty.Value = 0;
@@ -263,7 +387,24 @@ namespace StockControl
             btnSave.Enabled = true;
             btnDelete.Enabled = false;
             txtSeqStatus.Text = "";
-            lbStatus.Text = "New";
+            //lbStatus.Text = "New";
+
+            cbR1.Checked = false;
+            cbR2.Checked = false;
+            cbR3.Checked = false;
+            cbR4.Checked = false;
+            cbR5.Checked = false;
+            cbR6.Checked = false;
+            txtR6.Text = "";
+            txtM1.Text = "";
+            txtM3.Text = "";
+            txtM2.Text = "";
+            txtM4.Text = "";
+            txtM5.Text = "";
+            txtM6.Text = "";
+
+            cbR1_ToggleStateChanged(null, null);
+
             txtSPNo.Text = StockControl.dbClss.GetNo(43, 0);
         }
 
@@ -448,14 +589,15 @@ namespace StockControl
             using (var db = new DataClasses1DataContext())
             {
                 string jobNo = txtJobNo.Text.Trim();
-                txtFGName.Text = "";
+                txtJobNo.Text = "";
                 txtFGNo.Text = "";
-                txtQty.Text = "";
-                txtidCstmPODt.Text = "";
-                txtOutQty.Text = "";
-                txtJobQty.Text = "";
+                txtFGName.Text = "";
+                txtJobQty.Text = "0.00";
                 txtUOM.Text = "";
-                //txtRemark.Text = "";
+                txtOutQty.Text = "0.00";
+                txtQty.Value = 0;
+                txtidCstmPODt.Text = "";
+                txtJobNo_TEMP.Text = "";
                 var m = db.mh_ProductionOrders.Where(x => x.JobNo == jobNo && x.Active).FirstOrDefault();
                 if (m != null)
                 {
@@ -463,12 +605,14 @@ namespace StockControl
                     {
                         baseClass.Warning("Job No. ถูกปิดไปแล้ว. \n");
                         txtJobNo.Text = "";
+                        txtJobNo_TEMP.Text = "";
                         return;
                     }
                     if (m.SeqStatus != 2)
                     {
                         baseClass.Warning("สถานะของ Job No. ยังไม่ Approved.\n");
                         txtJobNo.Text = "";
+                        txtJobNo_TEMP.Text = "";
                         return;
                     }
 
@@ -484,6 +628,8 @@ namespace StockControl
                     //    return;
                     //}
 
+                    txtJobNo.Text = jobNo;
+                    txtJobNo_TEMP.Text = txtJobNo.Text;
                     txtFGName.Text = m.FGName;
                     txtFGNo.Text = m.FGNo;
                     txtidCstmPODt.Text = m.RefDocId.ToSt();
@@ -491,6 +637,7 @@ namespace StockControl
                     txtJobQty.Text = m.Qty.ToString("0.00");
                     txtOutQty.Text = m.OutQty.ToSt();
                     txtQty.Focus();
+
                 }
                 else
                 {
@@ -534,15 +681,15 @@ namespace StockControl
                         m.UpdateDate = DateTime.Now;
                         m.UpdateBy = ClassLib.Classlib.User;
 
-                        //j.Qty += j.Qty;
-                        //j.CloseJob = false;
-                        j.UpdateBy = ClassLib.Classlib.User;
-                        j.UpdateDate = DateTime.Now;
+                        AddHistory("Delete Document", m.DocNo);
+
                         db.SubmitChanges();
                         btnDelete.Enabled = false;
                         baseClass.Info("Delete completed.\n");
                         lbStatus.Text = "Inactive";
                     }
+                    else
+                        baseClass.Warning("- ไม่พบเอกสารใบสั่งผลิต (Job Order Sheet).\n");
                 }
             }
         }
@@ -569,5 +716,17 @@ namespace StockControl
         {
 
         }
+
+        private void cbR1_ToggleStateChanged(object sender, StateChangedEventArgs args)
+        {
+            txtM1.Enabled = cbR1.Checked;
+            txtM2.Enabled = cbR2.Checked;
+            txtM3.Enabled = cbR3.Checked;
+            txtM4.Enabled = cbR4.Checked;
+            txtM5.Enabled = cbR5.Checked;
+            txtM6.Enabled = cbR6.Checked;
+            txtR6.Enabled = cbR6.Checked;
+        }
+
     }
 }
