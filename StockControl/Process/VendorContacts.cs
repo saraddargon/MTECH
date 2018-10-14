@@ -848,12 +848,12 @@ namespace StockControl
                     var m = db.mh_VendorItems.Where(x => x.id == idDt).FirstOrDefault();
                     if (m != null)
                     {
-                        m.Active = true;
+                        m.Active = false;
                         db.SubmitChanges();
                     }
                 }
             }
-            dgvData.Rows.Remove(rowe);
+            dgvData2.Rows.Remove(rowe);
             setRowNo();
         }
         void setRowNo()
