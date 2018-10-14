@@ -507,12 +507,12 @@ namespace StockControl
                         Report.Reportx1 op = new Report.Reportx1("ReportCheckStock.rpt");
                         op.Show();
                     }
-                    else if (Type == "Job Cancel")
+                    else if (Type == "Job Cancel" || Type=="Change Job")
                     {
                         Report.Reportx1.Value = new string[1];
                         Report.Reportx1.Value[0] = ApproveDocuNo;
-                        Report.Reportx1.WReport = "CheckStockList";
-                        Report.Reportx1 op = new Report.Reportx1("ReportCheckStock.rpt");
+                        Report.Reportx1.WReport = "ReportChangeJob";
+                        Report.Reportx1 op = new Report.Reportx1("ReportChangeJob.rpt");
                         op.Show();
                     }
 
