@@ -3054,16 +3054,16 @@ namespace StockControl
 
         private void chkGET_ToggleStateChanged(object sender, Telerik.WinControls.UI.StateChangedEventArgs args)
         {
-            if (chkGET.Checked.Equals(true))
-            {
-                btnGET.Enabled = false;
-                txtInternalNo.Enabled = true;
-            }
-            else
-            {
-                btnGET.Enabled = true;
-                txtInternalNo.Enabled = false;
-            }
+            //if (chkGET.Checked.Equals(true))
+            //{
+            //    btnGET.Enabled = false;
+            //    txtInternalNo.Enabled = true;
+            //}
+            //else
+            //{
+            //    btnGET.Enabled = true;
+            //    txtInternalNo.Enabled = false;
+            //}
         }
 
         private void btnPrintStockCard_Click(object sender, EventArgs e)

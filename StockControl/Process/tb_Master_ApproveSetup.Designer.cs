@@ -274,7 +274,7 @@
             // 
             radListDataItem1.Text = "Sale Order";
             radListDataItem2.Text = "Job Req";
-            radListDataItem3.Text = "Job Cancel";
+            radListDataItem3.Text = "Change Job";
             radListDataItem4.Text = "Purchase Order";
             radListDataItem5.Text = "Taking Stock";
             radListDataItem6.Text = "Price List";

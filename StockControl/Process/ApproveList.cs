@@ -507,6 +507,14 @@ namespace StockControl
                         Report.Reportx1 op = new Report.Reportx1("ReportCheckStock.rpt");
                         op.Show();
                     }
+                    else if (Type == "Job Cancel")
+                    {
+                        Report.Reportx1.Value = new string[1];
+                        Report.Reportx1.Value[0] = ApproveDocuNo;
+                        Report.Reportx1.WReport = "CheckStockList";
+                        Report.Reportx1 op = new Report.Reportx1("ReportCheckStock.rpt");
+                        op.Show();
+                    }
 
                 }
             }
