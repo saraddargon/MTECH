@@ -289,7 +289,7 @@
             this.radPageView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radPageView1.Location = new System.Drawing.Point(0, 200);
             this.radPageView1.Name = "radPageView1";
-            this.radPageView1.SelectedPage = this.radPageViewPage1;
+            this.radPageView1.SelectedPage = this.radPageViewPage4;
             this.radPageView1.Size = new System.Drawing.Size(1037, 330);
             this.radPageView1.TabIndex = 18;
             ((Telerik.WinControls.UI.RadPageViewStripElement)(this.radPageView1.GetChildAt(0))).StripButtons = Telerik.WinControls.UI.StripViewButtons.Scroll;
@@ -772,7 +772,7 @@
             gridViewTextBoxColumn29.FieldName = "ReceiveType";
             gridViewTextBoxColumn29.HeaderText = "Receive Type";
             gridViewTextBoxColumn29.Name = "ReceiveType";
-            gridViewTextBoxColumn29.Width = 100;
+            gridViewTextBoxColumn29.Width = 120;
             gridViewTextBoxColumn30.EnableExpressionEditor = false;
             gridViewTextBoxColumn30.FieldName = "RefNo";
             gridViewTextBoxColumn30.HeaderText = "Ref No.";

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 31.25, 30.75" name="DataClasses1">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 31.25, 31.75" name="DataClasses1">
   <DataContextMoniker Name="/DataClasses1DataContext" />
   <nestedChildShapes>
     <classShape Id="41fe0188-9cec-4a7f-a488-218e964a17e9" isExpanded="false" absoluteBounds="0.75, 0.75, 2, 0.44999999999999996">
@@ -716,12 +716,6 @@
         <elementListCompartment Id="cda7078d-437d-4245-90f9-2f14ae8040b2" absoluteBounds="20.515, 2.96, 1.9700000000000002, 5.826131184895833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="765eb2b9-db48-4785-90d2-4619aa2edda0" isExpanded="false" absoluteBounds="5.875, 27.75, 2, 0.45">
-      <DataClassMoniker Name="/DataClasses1DataContext/mh_ProductionOrder_CancelQty" />
-      <nestedChildShapes>
-        <elementListCompartment Id="41e3c86d-5ded-4f01-b11c-4f4000c42e41" absoluteBounds="5.8900000000000006, 28.21, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="3e25de0f-08ba-4c92-aaff-a3034ecc7243" isExpanded="false" absoluteBounds="0.75, 9.375, 2, 0.45">
       <DataClassMoniker Name="/DataClasses1DataContext/tb_User" />
       <nestedChildShapes>
@@ -732,6 +726,12 @@
       <DataClassMoniker Name="/DataClasses1DataContext/mh_ProductionOrder" />
       <nestedChildShapes>
         <elementListCompartment Id="31d1eae9-5cc5-43f2-9b52-2b5a3473d7fe" absoluteBounds="15.64, 25.085, 1.9700000000000002, 6.0184326171875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6678282b-3221-4466-a3cc-dba454b6b2a3" isExpanded="false" absoluteBounds="8.75, 31, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/mh_ProductionOrder_CancelQty" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bb7ae69b-db09-4eb9-b38b-1eac7782baf2" absoluteBounds="8.765, 31.46, 1.9700000000000002, 6.403035481770833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
