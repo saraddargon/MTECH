@@ -397,9 +397,10 @@ namespace StockControl
                     var m = db.sp_065_PrintTag_JobNo(JobNo).ToList();
                     foreach (var mm in m)
                     {
+                        var so = db.mh_SaleOrderDTs.Where(x => x.id == mm.idCstmPODt).FirstOrDefault();
                         addRow(DateTime.Now, mm.ItemNo, mm.ItemName, mm.Qty, mm.UOM, mm.PCSUnit, mm.UnitPrice, mm.Amount
                             , mm.LotNo, mm.Location, mm.ShelfNo, mm.JobNo, mm.CustomerPONo, mm.idCustomerPO
-                            , mm.idJob, mm.idCstmPODt, mm.Type, mm.GroupType, mm.InvGroup);
+                            , mm.idJob, mm.idCstmPODt, mm.Type, mm.GroupType, mm.InvGroup, mm.CstmNo, mm.CstmName);
                     }
                     setRowNo();
                     txtJobNo.Text = "";
@@ -416,7 +417,7 @@ namespace StockControl
 
         private void addRow(DateTime ProdDate, string itemNo, string itemName, decimal qty, string uOM, decimal pCSUnit, decimal unitPrice, decimal? amount
             , string lotNo, string location, string shelfNo, string jobNo, string customerPONo, int idCustomerPO, int idJob, int idCstmPODt
-            , string Type, string GroupType, string InvGroup)
+            , string Type, string GroupType, string InvGroup, string cstmNo, string cstmName)
         {
             var rowe = dgvData.Rows.AddNew();
             rowe.Cells["ProductionDate"].Value = ProdDate;
@@ -439,6 +440,8 @@ namespace StockControl
             rowe.Cells["GroupType"].Value = GroupType;
             rowe.Cells["InvGroup"].Value = InvGroup;
             rowe.Cells["TagCount"].Value = 1;
+            rowe.Cells["CstmNo"].Value = cstmNo;
+            rowe.Cells["CstmName"].Value = cstmName;
         }
 
         void setRowNo()
@@ -506,6 +509,7 @@ namespace StockControl
                             decimal q2 = Qty - Math.Round(q1 * (TagCount - 1), 0);
                             var temp_tagCount = TagCount;
                             int ofTag = 0;
+
                             while (temp_tagCount > 0)
                             {
                                 ofTag++;
@@ -525,8 +529,11 @@ namespace StockControl
                                     Qty = (last) ? q2 : q1,
                                     QRCode = qrCode,
                                     Machine = "",
-                                    BOMNo = "",
+                                    BOMNo = row.Cells["JobNo"].Value.ToSt(),
                                     OFTAG = ofTag.ToSt(),
+                                    CustomerName = row.Cells["CstmName"].Value.ToSt(),
+                                    CSTMShot = row.Cells["CstmNo"].Value.ToSt(),
+                                    ProdDate = row.Cells["ProductionDate"].Value.ToDateTime().Value.Date,
                                 };
                                 db.mh_ProductTAGs.InsertOnSubmit(m);
                                 temp_tagCount--;
