@@ -206,7 +206,7 @@ namespace StockControl
                         foreach (var pk in pkList)
                         {
                             string StatusS = (pk.hd.Active) ? "Completed" : "Cancel";
-                            addRow3(pk.dt.id.ToSt(), "Receive Job", pk.hd.PackingNo, pk.dt.Qty
+                            addRow3(pk.dt.id.ToSt(), "รับจากใบผลิต", pk.hd.PackingNo, pk.dt.Qty
                                 , pk.dt.UOM, pk.dt.PCSUnit, pk.hd.PackingDate, pk.hd.CreateBy
                                 , StatusS);
                         }
@@ -215,14 +215,14 @@ namespace StockControl
                         foreach (var pd in pdCancel)
                         {
                             string SS = (pd.SeqStatus == 0) ? "Waiting" : (pd.SeqStatus == 1) ? "Waiting Approve" : "Completed";
-                            addRow3(pd.DocNo, "Cancel Q'ty FG", pd.DocNo, pd.Qty, pd.UOM, pd.PCSUnit, pd.DocDate, pd.CreateBy, SS);
+                            addRow3(pd.DocNo, "เอกสารการเปลี่ยนแปลง", pd.DocNo, pd.Qty, pd.UOM, pd.PCSUnit, pd.DocDate, pd.CreateBy, SS);
                         }
-                        //Close Job Special
-                        var pdClose = db.mh_ProductionOrder_CloseSpecials.Where(x => x.Active && x.JobNo == t_JobNo).ToList();
-                        foreach (var pd in pdClose)
-                        {
-                            addRow3(pd.DocNo, "Close Job (Special)", pd.DocNo, pd.Qty, pd.UOM, pd.PCSUnit, pd.CreateDate, pd.CreateBy, "Completed");
-                        }
+                        ////Close Job Special
+                        //var pdClose = db.mh_ProductionOrder_CloseSpecials.Where(x => x.Active && x.JobNo == t_JobNo).ToList();
+                        //foreach (var pd in pdClose)
+                        //{
+                        //    addRow3(pd.DocNo, "Close Job (Special)", pd.DocNo, pd.Qty, pd.UOM, pd.PCSUnit, pd.CreateDate, pd.CreateBy, "Completed");
+                        //}
                         dgvReceiveFG.Columns["ReceiveDate"].SortOrder = RadSortOrder.Ascending;
 
 
@@ -479,6 +479,7 @@ namespace StockControl
             btnAddPart.Enabled = false;
 
             txtRev.ReadOnly = true;
+            txtFGQty.ReadOnly = true;
             //dgvData.ReadOnly = true;
 
             Enable_Status(false, "View");
@@ -500,6 +501,7 @@ namespace StockControl
             btnAddPart.Enabled = true;
 
             txtRev.ReadOnly = false;
+            txtFGQty.ReadOnly = false;
             //dgvData.ReadOnly = false;
 
             Enable_Status(true, "Edit");
@@ -623,20 +625,28 @@ namespace StockControl
             string err = "";
             try
             {
-                //if (txtCodeNo.Text.Equals(""))
-                //    err += " “รหัสพาร์ท:” เป็นค่าว่าง \n";
+                ////if (txtCodeNo.Text.Equals(""))
+                ////    err += " “รหัสพาร์ท:” เป็นค่าว่าง \n";
 
-                if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
-                    err += "- ไม่สามารถบันทึกได้เนื่องจากสถานะเป็น 'Process'.\n";
-                //else if (txtStatus.Text == "Approved")
-                //    err += "- Cannot Save because Status is 'Approved'.\n";
-                else if (txtSeqStatus.Text.ToInt() > 0)
+                //if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
+                //    err += "- ไม่สามารถบันทึกได้เนื่องจากสถานะเป็น 'Process'.\n";
+                ////else if (txtStatus.Text == "Approved")
+                ////    err += "- Cannot Save because Status is 'Approved'.\n";
+                //else if (txtSeqStatus.Text.ToInt() > 0)
+                //{
+                //    string StatusNow = (txtSeqStatus.Text.ToInt() == 1) ? "Waiting Approve" : "Approved";
+                //    baseClass.Warning($"- ไม่สามารถบันทึกได้เนื่องจากสถานะเป็น '{StatusNow}'.\n");
+                //}
+
+                var allPk = dgvReceiveFG.Rows.Where(x => x.Cells["ReceiveType"].Value.ToSt() == "รับจากใบผลิต").ToList();
+                if(allPk.Count > 0)
                 {
-                    string StatusNow = (txtSeqStatus.Text.ToInt() == 1) ? "Waiting Approve" : "Approved";
-                    baseClass.Warning($"- ไม่สามารถบันทึกได้เนื่องจากสถานะเป็น '{StatusNow}'.\n");
+                    var rcQ = dgvReceiveFG.Rows.Where(x => x.Cells["ReceiveType"].Value.ToSt() == "รับจากใบผลิต").Sum(x => x.Cells["Qty"].Value.ToDecimal());
+                    if(txtFGQty.Value.ToDecimal() < rcQ)
+                    {
+                        err += "- ไม่สามารถแก้ไขได้ เนื่องจาก 'จำนวน FG Q'ty' น้อยกว่า 'จำนวนที่รับจากใบผลิต'.\n";
+                    }
                 }
-
-
 
                 if (!err.Equals(""))
                     baseClass.Warning(err);
@@ -646,7 +656,7 @@ namespace StockControl
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dbClss.AddError("CreatePO", ex.Message, this.Name);
+                dbClss.AddError("JobOrderSheet", ex.Message, this.Name);
             }
 
             return re;
@@ -681,7 +691,33 @@ namespace StockControl
                     if (m != null)
                     {
                         if (m.Rev != txtRev.Text.Trim()) AddHistory($"Revision from {m.Rev} to {txtRev.Text.Trim()}", m.JobNo);
-                        m.Rev = txtRev.Text.Trim();
+                        m.Rev = txtRev.Text.Trim(); //change reversion
+                        if (m.Qty != txtFGQty.Value.ToDecimal())
+                        {
+                            //change FG Qty
+                            AddHistory($"FG Q'ty from {m.Qty} to {txtFGQty.Value.ToDecimal()}", m.JobNo);
+                            var oldQ = m.Qty;
+                            var newQ = txtFGQty.Value.ToDecimal();
+                            var outQ = m.OutQty;
+                            var recQ = 0.00m;// oldQ - outQ;
+                            if(dgvReceiveFG.Rows.Where(x => x.Cells["ReceiveType"].Value.ToSt() == "รับจากใบผลิต").Count() > 0)
+                                recQ = dgvReceiveFG.Rows.Where(x => x.Cells["ReceiveType"].Value.ToSt() == "รับจากใบผลิต").Sum(x => x.Cells["Qty"].Value.ToDecimal());
+                            m.Qty = newQ;
+                            m.OutQty = newQ - recQ;
+                            var so = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();
+                            if (so != null)
+                                so.OutQty = m.OutQty;
+                            if (m.OutQty <= 0)
+                            {
+                                if (m.CloseJob != true) AddHistory($"Close Job Order Sheet", m.JobNo);
+                                m.CloseJob = true;
+                            }
+                            else
+                            {
+                                if (m.CloseJob != false) AddHistory($"Cancel Close Job Order Sheet", m.JobNo);
+                                m.CloseJob = false;
+                            }
+                        }
                         m.UpdateDate = DateTime.Now;
                         m.UpdateBy = ClassLib.Classlib.User;
                         db.SubmitChanges();
