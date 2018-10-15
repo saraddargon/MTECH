@@ -475,9 +475,11 @@ namespace StockControl
                         gg.CustomerNo = txtCustomerNo.Text;
                         gg.Size = txtSize.Text;
                         gg.PackingSTD = dbClss.TDe(sePackingSTD.Value);
+                        gg.Model = txtModel.Text;
+                   
                         if(dtRevDate.Text !="")
                         {
-                           gg.RevDate =  Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
+                           gg.RevDate =  Convert.ToDateTime(dtRevDate.Value, new CultureInfo("en-US"));
                         }
                         if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                         {
@@ -518,6 +520,8 @@ namespace StockControl
                     gg.CustomerNo = txtCustomerNo.Text;
                     gg.Size = txtSize.Text;
                     gg.PackingSTD = dbClss.TDe(sePackingSTD.Value);
+                    gg.Model = txtModel.Text;
+
                     if (dtRevDate.Text != "")
                     {
                         gg.RevDate = Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
@@ -709,6 +713,9 @@ namespace StockControl
                 sePackingSTD.Enabled = ss;
                 txtSize.Enabled = ss;
                 txtCustomerNo.Enabled = ss;
+                txtModel.Enabled = ss;
+                dtRevDate.Enabled = ss;
+
             }
             else if (Condition.Equals("View"))
             {
@@ -726,6 +733,8 @@ namespace StockControl
                 sePackingSTD.Enabled = ss;
                 txtSize.Enabled = ss;
                 txtCustomerNo.Enabled = ss;
+                txtModel.Enabled = ss;
+                dtRevDate.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
@@ -743,6 +752,8 @@ namespace StockControl
                 sePackingSTD.Enabled = ss;
                 txtSize.Enabled = ss;
                 txtCustomerNo.Enabled = ss;
+                txtModel.Enabled = ss;
+                dtRevDate.Enabled = ss;
             }
         }
        
@@ -756,8 +767,9 @@ namespace StockControl
             dtBegin.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             dtEnd.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             dtRevDate.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
-            dtBegin.SetToNullValue();
-            dtEnd.SetToNullValue();
+            //dtBegin.SetToNullValue();
+            //dtEnd.SetToNullValue();
+
             dgvData.Rows.Clear();
             dgvData.DataSource = null;
             txtid_Customer.Text = "";
@@ -866,21 +878,25 @@ namespace StockControl
                 }
                 if (txtBomNo.Text.Equals(""))
                     err += "- “รหัสบอม:” เป็นค่าว่าง \n";
+                if (txtModel.Text.Equals(""))
+                    err += "- “รุ่น(Model):” เป็นค่าว่าง \n";
+                if (dtRevDate.Text.Equals(""))
+                    err += "- “Revision Date:” เป็นค่าว่าง \n";
                 //if (dtRequire.Text.Equals(""))
                 //    err += "- “วันที่ต้องการ:” เป็นค่าว่าง \n";
 
-                if (!dtBegin.Text.Equals("") || !dtEnd.Text.Equals(""))
-                {
-                    if (!dtEnd.Text.Equals(""))
-                    {
-                        if (Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US")).CompareTo(Convert.ToDateTime(dtEnd.Value, new CultureInfo("en-US"))) > 0)
-                            err += "- “วันที่เริ่ม มากกว่า วันที่สิ้นสุด” ไม่ได้ \n";
-                    }
-                }
-                else if(!dtBegin.Text.Equals(""))
-                {
-                    dtEnd.Value = dtBegin.Value;
-                }
+                //if (!dtBegin.Text.Equals("") || !dtEnd.Text.Equals(""))
+                //{
+                //    if (!dtEnd.Text.Equals(""))
+                //    {
+                //        if (Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US")).CompareTo(Convert.ToDateTime(dtEnd.Value, new CultureInfo("en-US"))) > 0)
+                //            err += "- “วันที่เริ่ม มากกว่า วันที่สิ้นสุด” ไม่ได้ \n";
+                //    }
+                //}
+                //else if(!dtBegin.Text.Equals(""))
+                //{
+                //    dtEnd.Value = dtBegin.Value;
+                //}
                 //else
                 //{
 
