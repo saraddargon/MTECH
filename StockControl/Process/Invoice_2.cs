@@ -293,7 +293,8 @@ namespace StockControl
                     bool fRow = true;
                     foreach (var id in idList)
                     {
-                        var c = db.mh_ShipmentDTs.Where(x => x.id == id && x.OutInv > 0 && x.OutShip == 0).ToList();
+                        var c = db.mh_ShipmentDTs.Where(x => x.id == id && x.OutInv > 0 && x.OutShip == 0
+                        ).ToList();
                         if (c.Count > 0)
                         {
                             
