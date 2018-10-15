@@ -210,6 +210,25 @@ namespace StockControl
                     dtDate2.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     panel2.Location = new Point(panel2.Location.X, 30);
                 }
+                else if (Type== "ListPurchaseAndPR")
+                {
+                    lblName.Visible = false;
+                    txtPRNo1.Visible = false;
+                    txtPRNo2.Visible = false;
+                    radLabel37.Visible = false;
+
+                    cbDate.Checked = true;
+                    cbDate.ReadOnly = true;
+                    cbDate.Visible = true;
+                    dtDate1.Visible = true;
+                    dtDate2.Visible = true;
+                    lblToDate.Visible = true;
+
+                    dtDate1.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                    dtDate2.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+
+                    this.Size = new Size(400, 500);
+                }
             }
         }
 
@@ -734,6 +753,16 @@ namespace StockControl
                         Report.Reportx1.Value[1] = dtDate2.Value.Date.ToString("dd/MMM/yyyy");
                         Report.Reportx1.WReport = "PackingList";
                         Report.Reportx1 op = new Report.Reportx1("ReceiveFG.rpt");
+                        op.Show();
+                    }
+                    else if(Type.Equals("ListPurchaseAndPR"))
+                    {
+                        Report.Reportx1.Value = new string[2];
+                        
+                        Report.Reportx1.Value[0] = dtDate1.Value.Date.ToString("dd/MMM/yyyy");
+                        Report.Reportx1.Value[1] = dtDate2.Value.Date.ToString("dd/MMM/yyyy");
+                        Report.Reportx1.WReport = "ListPurchaseAndPR";
+                        Report.Reportx1 op = new Report.Reportx1("ListPurchaseAndPR.rpt");
                         op.Show();
                     }
                 }
