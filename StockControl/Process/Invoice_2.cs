@@ -1657,8 +1657,9 @@ namespace StockControl
                 if (cbVat.Checked)
                     vat = amnt * Math.Round(vatA / 100, 2);
                 txtVatAmnt.Value = vat;
-
                 txtGrandTotal.Value = amnt + dbClss.TDe(txtVatAmnt.Value);
+                a
+
             }
             catch (Exception ex) { MessageBox.Show("err2: " + ex.Message); }
         }
@@ -2025,6 +2026,74 @@ namespace StockControl
                 FilterDescriptor filterDescriptor = new FilterDescriptor(mccbEl.DisplayMember, FilterOperator.Contains, string.Empty);
                 mccbEl.EditorControl.MasterTemplate.FilterDescriptors.Add(filterDescriptor);
             }
+        }
+
+        private void dtInvDate_ValueChanged(object sender, EventArgs e)
+        {
+            Cal_Credit_Date();
+        }
+        private void Cal_Credit_Date()
+        {
+            try
+            {
+                if (dtInvDate.Text != "")
+                {
+                    int Credit = dbClss.TInt(txtCredit.Text);
+                    DateTime dtNow = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                    dtNow = dtInvDate.Value;
+                    
+                    DateTime Credit_Date = Convert.ToDateTime(dtInvDate.Value, new CultureInfo("en-US"));
+                    Credit_Date = dtNow.AddDays(Credit);
+                    dtCredit_Date.Value = Credit_Date;
+                }
+                else
+                    dtCredit_Date.Value = dtInvDate.Value;
+
+            }catch(Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void txtLessPoDiscountAmountPersen_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                dbClss.CheckDigitDecimal(e);
+                //LessPoDiscountAmountPersen_KeyPress((char)13);
+            }
+            catch { }
+        }
+
+        private void txtLessPoDiscountAmount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                dbClss.CheckDigitDecimal(e);
+                //LessPoDiscountAmountPersen_KeyPress((char)13);
+            }
+            catch { }
+        }
+
+        private void txtDeposit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                dbClss.CheckDigitDecimal(e);
+                //LessPoDiscountAmountPersen_KeyPress((char)13);
+            }
+            catch { }
+        }
+
+        private void txtCredit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                dbClss.CheckDigitDecimal(e);
+            }
+            catch { }
+        }
+
+        private void txtCredit_TextChanged(object sender, EventArgs e)
+        {
+            Cal_Credit_Date();
         }
     }
 
