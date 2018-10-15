@@ -358,6 +358,7 @@ namespace StockControl
             txtLessPoDiscountAmount.Text = "0.00";
             txtLessPoDiscountAmountPersen.Text = "0.00";
             txtVat.Text = "0.00";
+            txtVattax.Text = "7";
             lbTotalOrder.Text = "0.00";
             cbVat.Checked = true;
             txtDeposit.Text = "0.00";
@@ -990,6 +991,13 @@ namespace StockControl
                 dgvData.EndEdit();
                 if (e.RowIndex >= -1)
                 {
+                    decimal UnitCost = 0;
+                    decimal Qty = 0;
+                    decimal PA = 0;
+                    decimal ExtendedCost = 0;
+                    int cal = 0;
+                    int A = 0;
+
                     var itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
                     if (e.Column.Name.Equals("Qty") || (e.Column.Name.Equals("PCSUnit")))
                     {
@@ -1033,6 +1041,7 @@ namespace StockControl
                                     var m = Math.Round(e.Row.Cells["UnitPrice"].Value.ToDecimal() * e.Row.Cells["Qty"].Value.ToDecimal(), 2);
                                     dgvData.Rows[e.RowIndex].Cells["Amount"].Value = m;
                                 }
+                                cal = 1;
                             }
                         }
                         // else   if (Type_Button == 2) //SO
@@ -1126,10 +1135,32 @@ namespace StockControl
                         }
                         else
                             dgvData.Rows[e.RowIndex].Cells["Amount"].Value = 0;
+                        
+                        decimal.TryParse(Convert.ToString(dgvData.Rows[e.RowIndex].Cells["Qty"].Value), out Qty);
+                        decimal.TryParse(Convert.ToString(dgvData.Rows[e.RowIndex].Cells["UnitPrice"].Value), out UnitCost);
+                        decimal.TryParse(Convert.ToString(dgvData.Rows[e.RowIndex].Cells["dgvDiscountAmount"].Value), out PA);
+                        decimal.TryParse(Convert.ToString(dgvData.Rows[e.RowIndex].Cells["Amount"].Value), out ExtendedCost);
+                        cal = 1;
+
 
                         //e.Row.Cells["OutShip"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         //e.Row.Cells["OutPlan"].Value = e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal();
                         //CallTotal();
+                    }
+                    else if (dgvData.Columns["dgvDiscount"].Index == e.ColumnIndex)
+                    {
+                        cal = 1;
+                        A = 1;
+                        LastDiscount = false;
+                        //discount %
+                    }
+                    else if (dgvData.Columns["dgvDiscountAmount"].Index == e.ColumnIndex)
+                    {
+                        //discount amount
+                        LastDiscount = false;
+                        cal = 1;
+                        A = 2;
+
                     }
 
                     else if (e.Column.Name.Equals("Unit"))
@@ -1229,11 +1260,145 @@ namespace StockControl
                     //        }
                     //    }
                     //}
-                        e.Row.Cells["dgvC"].Value = "T";
+                    if (A > 0)
+                    {
+                        decimal PC = 0;
+                        decimal AM = 0;
+                        cal = 1;
+
+                        decimal.TryParse(Convert.ToString(dgvData.Rows[e.RowIndex].Cells["Qty"].Value), out Qty);
+                        decimal.TryParse(Convert.ToString(dgvData.Rows[e.RowIndex].Cells["UnitPrice"].Value), out UnitCost);
+                        decimal.TryParse(Convert.ToString(dgvData.Rows[e.RowIndex].Cells["dgvDiscount"].Value), out PC);
+                        decimal.TryParse(Convert.ToString(dgvData.Rows[e.RowIndex].Cells["dgvDiscountAmount"].Value), out PA);
+
+
+                        //calculate Discount
+
+                        if (A == 1 && PC > 0) //%
+                        {
+                            AM = (Qty * UnitCost);
+                            dgvData.Rows[e.RowIndex].Cells["dgvDF"].Value = 1;
+                            dgvData.Rows[e.RowIndex].Cells["dgvDiscountAmount"].Value = (AM * PC / 100);
+                            dgvData.Rows[e.RowIndex].Cells["dgvDiscountExt"].Value = (AM * PC / 100);
+                        }
+                        else if (A == 2 && PA > 0) //AM
+                        {
+                            AM = (Qty * UnitCost);
+                            dgvData.Rows[e.RowIndex].Cells["dgvDF"].Value = 2;
+                            dgvData.Rows[e.RowIndex].Cells["dgvDiscount"].Value = (PA / AM) * 100;
+                            dgvData.Rows[e.RowIndex].Cells["dgvDiscountExt"].Value = PA;
+                        }
+
+
+
+                        if (PA > (UnitCost * Qty))
+                        {
+                            MessageBox.Show("ส่วนลดเกิน ยอด Amount!!!");
+                            dgvData.Rows[e.RowIndex].Cells["dgvDiscount"].Value = 0;
+                            dgvData.Rows[e.RowIndex].Cells["dgvDiscountAmount"].Value = 0;
+                            dgvData.Rows[e.RowIndex].Cells["dgvDiscountExt"].Value = 0;
+                        }
+
+                    }
+
+                    if (cal > 0)
+                    {
+
+                        //dgvDataOrder.Rows[e.RowIndex].Cells["dgvExtendedCost"].Value = UnitCost;
+                        //dgvDataOrder.Rows[e.RowIndex].Cells["dgvAmount"].Value = (Qty*UnitCost);
+                        //dgvDataOrder.Rows[e.RowIndex].Cells["dgvNetofTAX"].Value = (Qty * UnitCost)-PA;
+                        //dgvDataOrder.Rows[e.RowIndex].Cells["dgvVatAmount"].Value = ((Qty * UnitCost)-PA) * vat / 100;
+                        //dgvDataOrder.Rows[e.RowIndex].Cells["dgvSubTotal"].Value = ((Qty * UnitCost)-PA) * vat / 100 + ((Qty * UnitCost)-PA);
+                        //CallListDiscount();
+
+                        if (LastDiscount)
+                        {
+                            if (lastDiscountAmount)
+                            {
+                                CallDiscontLast(true);
+                                CallSumDiscountLast(true);
+                            }
+                            else
+                            {
+                                CallDiscontLast(false);
+                                CallSumDiscountLast(false);
+                            }
+                        }
+                        else
+                        {
+                            CallListDiscount();
+                        }
+
+                        //CallTotal();
+
+                    }
+
+                    e.Row.Cells["dgvC"].Value = "T";
                     CallTotal();
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+        private void CallListDiscount()
+        {
+            decimal UnitCost = 0;
+            decimal ExtendedCost = 0;
+            decimal Qty = 0;
+            decimal PA = 0;
+            decimal PR = 0;
+            decimal SumP = 0;
+            decimal SumA = 0;
+            int DF = 0;
+            try
+            {
+                dgvData.EndEdit();
+                foreach (var r2 in dgvData.Rows)
+                {
+                    UnitCost = 0;
+                    Qty = 0;
+                    PA = 0;
+                    PR = 0;
+
+                    decimal.TryParse(Convert.ToString(r2.Cells["Qty"].Value), out Qty);
+                    decimal.TryParse(Convert.ToString(r2.Cells["UnitPrice"].Value), out UnitCost);
+                    decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscountAmount"].Value), out PA);
+                    decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscount"].Value), out PR);
+                    decimal.TryParse(Convert.ToString(r2.Cells["Amount"].Value), out ExtendedCost);
+
+                    //MessageBox.Show(" % "+PR.ToString());
+                    if (PR > 0)
+                    {
+                        if (Convert.ToInt32(r2.Cells["dgvDF"].Value).Equals(1))
+                        {
+                            //MessageBox.Show(" x% " + PR.ToString());
+                            PA = (ExtendedCost * PR / 100);
+                            r2.Cells["dgvDiscountAmount"].Value = (ExtendedCost * PR / 100);
+                            r2.Cells["dgvDiscountExt"].Value = (ExtendedCost * PR / 100);
+                        }
+                        else
+                        {
+                            //MessageBox.Show(" z% " + PR.ToString());
+                            //PA = ((Qty * UnitCost) * PR / 100);
+                            r2.Cells["dgvDiscount"].Value = (PA / ExtendedCost) * 100;
+                            r2.Cells["dgvDiscountAmount"].Value = PA;
+                            r2.Cells["dgvDiscountExt"].Value = PA;
+                        }
+                    }
+                    else
+                    {
+                        PA = 0;
+                    }
+
+                    r2.Cells["dgvNetofTAX"].Value = ExtendedCost - PA;
+
+                    SumP += ExtendedCost;
+                    SumA += PA;
+                }
+
+                txtLessPoDiscountAmountPersen.Text = ((SumA / SumP) * 100).ToString("##0.00");
+                txtLessPoDiscountAmount.Text = (SumA).ToString("###,###,##0.00");
+            }
+            catch { }
         }
         private void MasterTemplate_CellBeginEdit(object sender, GridViewCellCancelEventArgs e)
         {
@@ -1685,8 +1850,8 @@ namespace StockControl
                         Qty = 0;
                         PA = 0;
                         
-                        decimal.TryParse(Convert.ToString(r2.Cells["dgvOrderQty"].Value), out Qty);
-                        decimal.TryParse(Convert.ToString(r2.Cells["dgvCost"].Value), out UnitCost);
+                        decimal.TryParse(Convert.ToString(r2.Cells["Qty"].Value), out Qty);
+                        decimal.TryParse(Convert.ToString(r2.Cells["UnitPrice"].Value), out UnitCost);
                         decimal.TryParse(Convert.ToString(r2.Cells["Amount"].Value), out ExtendedCost);
                         decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscountAmount"].Value), out PA);
                         
@@ -1738,15 +1903,15 @@ namespace StockControl
         {
             try
             {
-                //lbOrderSubtotal.Text = txtTotalOrder.Text;
                 txtAfterDiscount.Text = txtTotalsumDiscount.Text;
+                txtAfter_Deposit.Text = ( dbClss.TDe(txtAfterDiscount.Text) - dbClss.TDe(txtDeposit.Text)).ToString("N2");
 
                 lbTotalOrder.Text = "";
-                //txtTotalTax.Text = txtTotalTax_Taxes.Text;
-
                 decimal netAmount = 0;
                 decimal PlusTax = 0;
-                decimal.TryParse(txtAfterDiscount.Text, out netAmount);
+                //decimal.TryParse(txtAfterDiscount.Text, out netAmount);
+                decimal.TryParse(txtAfter_Deposit.Text, out netAmount);
+
                 txtPlusExcededTax.Text = ((netAmount * dbClss.TDe(txtVattax.Text)) / 100).ToString("N2");
                 txtVat.Text = txtPlusExcededTax.Text;
                 decimal.TryParse(txtPlusExcededTax.Text, out PlusTax);
@@ -2179,7 +2344,7 @@ namespace StockControl
             try
             {
                 dbClss.CheckDigitDecimal(e);
-                //LessPoDiscountAmountPersen_KeyPress((char)13);
+                LessPoDiscountAmountPersen_KeyPress((char)13);
             }
             catch { }
         }
@@ -2502,6 +2667,14 @@ namespace StockControl
                 getTotal();
         }
         private void txtLessPoDiscountAmount_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                LessPoDiscountAmount_KeyPress((char)13);
+            }
+        }
+
+        private void txtDeposit_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Tab)
             {
