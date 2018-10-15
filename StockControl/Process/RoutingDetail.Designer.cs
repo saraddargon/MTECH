@@ -100,6 +100,7 @@
             this.radMenuSeparatorItem2 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.RMenu6 = new Telerik.WinControls.UI.RadMenuItem();
             this.radContextMenuManager1 = new Telerik.WinControls.UI.RadContextMenuManager();
+            this.radLabel9 = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -125,6 +126,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingNo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -515,6 +517,7 @@
             this.radPanel1.Controls.Add(this.radLabel8);
             this.radPanel1.Controls.Add(this.radLabel7);
             this.radPanel1.Controls.Add(this.radLabel6);
+            this.radPanel1.Controls.Add(this.radLabel9);
             this.radPanel1.Controls.Add(this.radLabel5);
             this.radPanel1.Controls.Add(this.radLabel3);
             this.radPanel1.Controls.Add(this.radLabel1);
@@ -766,6 +769,14 @@
             this.RMenu6.Name = "RMenu6";
             this.RMenu6.Text = "Delete Row";
             // 
+            // radLabel9
+            // 
+            this.radLabel9.Location = new System.Drawing.Point(35, 114);
+            this.radLabel9.Name = "radLabel9";
+            this.radLabel9.Size = new System.Drawing.Size(49, 18);
+            this.radLabel9.TabIndex = 1;
+            this.radLabel9.Text = "Capacity";
+            // 
             // RoutingDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -810,6 +821,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingNo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -874,5 +886,6 @@
         private Telerik.WinControls.UI.RadLabel radLabel6;
         private Telerik.WinControls.UI.RadLabel radLabel5;
         private Telerik.WinControls.UI.RadButton btnCal;
+        private Telerik.WinControls.UI.RadLabel radLabel9;
     }
 }

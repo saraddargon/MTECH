@@ -412,6 +412,14 @@ namespace StockControl
                             else
                                 return "";
                         }
+                    case PathCode.PriceList:
+                        {
+                            var a = m.Where(x => x.PathCode == "PriceList").FirstOrDefault();
+                            if (a != null)
+                                return a.PathFile;
+                            else
+                                return "";
+                        }
                     default: return "";
                 }
             }
@@ -738,6 +746,7 @@ namespace StockControl
     {
         Vendor,
         Customer,
+        PriceList,
     }
 
 
