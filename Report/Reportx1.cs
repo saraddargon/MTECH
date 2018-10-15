@@ -349,6 +349,12 @@ namespace Report
                         rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;
+                case "ReportStockCard":
+                    {
+                        rptDc.SetParameterValue("@USERID", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
                 case "JobCard_Cost":
                     {
                         rptDc.SetParameterValue("@JobCard", Convert.ToString(Value[0].ToString()));

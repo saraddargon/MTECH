@@ -697,7 +697,7 @@ namespace StockControl
             if (radGridView1.Rows.Count > 0)
                 CodeNo = StockControl.dbClss.TSt(radGridView1.CurrentRow.Cells["InternalNo"].Value);
 
-            PrintPR a = new PrintPR(CodeNo, CodeNo, "ReportStockMovement");
+            PrintPR a = new PrintPR(CodeNo, CodeNo, "ReportStockCard");
             a.ShowDialog();
         }
 

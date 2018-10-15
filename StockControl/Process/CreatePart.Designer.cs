@@ -123,11 +123,16 @@
             this.cboRouting = new Telerik.WinControls.UI.RadMultiColumnComboBox();
             this.txtidRouting = new Telerik.WinControls.UI.RadTextBox();
             this.radGroupBox3 = new Telerik.WinControls.UI.RadGroupBox();
+            this.btnDeleteDWG = new Telerik.WinControls.UI.RadButton();
             this.chkDWG = new Telerik.WinControls.UI.RadCheckBox();
+            this.btnAddDWG = new Telerik.WinControls.UI.RadButton();
             this.radLabel49 = new Telerik.WinControls.UI.RadLabel();
             this.lblTempAddFile = new Telerik.WinControls.UI.RadLabel();
             this.lblPath = new Telerik.WinControls.UI.RadLabel();
             this.txtDrawing = new Telerik.WinControls.UI.RadTextBox();
+            this.btnOpenDWG = new Telerik.WinControls.UI.RadButton();
+            this.txtPathDWG = new Telerik.WinControls.UI.RadTextBox();
+            this.btnGET = new Telerik.WinControls.UI.RadButton();
             this.seStandardPrice = new Telerik.WinControls.UI.RadSpinEditor();
             this.seStandardCost = new Telerik.WinControls.UI.RadSpinEditor();
             this.seInternalLeadTime = new Telerik.WinControls.UI.RadSpinEditor();
@@ -237,12 +242,9 @@
             this.radLabel56 = new Telerik.WinControls.UI.RadLabel();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radRibbonBarButtonGroup2 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
+            this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.btnDeleteDWG = new Telerik.WinControls.UI.RadButton();
-            this.btnAddDWG = new Telerik.WinControls.UI.RadButton();
-            this.btnOpenDWG = new Telerik.WinControls.UI.RadButton();
-            this.txtPathDWG = new Telerik.WinControls.UI.RadTextBox();
-            this.btnGET = new Telerik.WinControls.UI.RadButton();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -273,8 +275,6 @@
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
-            this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).BeginInit();
@@ -298,11 +298,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtidRouting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox3)).BeginInit();
             this.radGroupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnDeleteDWG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkDWG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAddDWG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel49)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblTempAddFile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblPath)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDrawing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpenDWG)).BeginInit();
+            this.btnOpenDWG.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPathDWG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnGET)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seStandardPrice)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seStandardCost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seInternalLeadTime)).BeginInit();
@@ -429,12 +435,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtVersion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel54)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel56)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnDeleteDWG)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnAddDWG)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOpenDWG)).BeginInit();
-            this.btnOpenDWG.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPathDWG)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnGET)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
@@ -482,10 +482,10 @@
             // radPageViewPage1
             // 
             this.radPageViewPage1.Controls.Add(this.radPanel1);
-            this.radPageViewPage1.ItemSize = new System.Drawing.SizeF(65F, 24F);
-            this.radPageViewPage1.Location = new System.Drawing.Point(10, 33);
+            this.radPageViewPage1.ItemSize = new System.Drawing.SizeF(69F, 28F);
+            this.radPageViewPage1.Location = new System.Drawing.Point(10, 37);
             this.radPageViewPage1.Name = "radPageViewPage1";
-            this.radPageViewPage1.Size = new System.Drawing.Size(1029, 530);
+            this.radPageViewPage1.Size = new System.Drawing.Size(1029, 526);
             this.radPageViewPage1.Text = "รายละเอียด";
             // 
             // radPanel1
@@ -570,7 +570,7 @@
             this.radPanel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(1029, 530);
+            this.radPanel1.Size = new System.Drawing.Size(1029, 526);
             this.radPanel1.TabIndex = 1;
             this.radPanel1.TabStop = false;
             this.radPanel1.ThemeName = "ControlDefault";
@@ -817,6 +817,19 @@
             this.radGroupBox3.Text = "รายละเอียดอื่นๆ";
             this.radGroupBox3.ThemeName = "Office2010Blue";
             // 
+            // btnDeleteDWG
+            // 
+            this.btnDeleteDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteDWG.Image")));
+            this.btnDeleteDWG.Location = new System.Drawing.Point(222, 57);
+            this.btnDeleteDWG.Name = "btnDeleteDWG";
+            this.btnDeleteDWG.Size = new System.Drawing.Size(97, 24);
+            this.btnDeleteDWG.TabIndex = 28;
+            this.btnDeleteDWG.TabStop = false;
+            this.btnDeleteDWG.Text = "Delete file..";
+            this.btnDeleteDWG.ThemeName = "Office2010Blue";
+            this.btnDeleteDWG.Click += new System.EventHandler(this.radButton2_Click);
+            // 
             // chkDWG
             // 
             this.chkDWG.Enabled = false;
@@ -824,6 +837,19 @@
             this.chkDWG.Name = "chkDWG";
             this.chkDWG.Size = new System.Drawing.Size(15, 15);
             this.chkDWG.TabIndex = 7;
+            // 
+            // btnAddDWG
+            // 
+            this.btnAddDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnAddDWG.Image")));
+            this.btnAddDWG.Location = new System.Drawing.Point(131, 57);
+            this.btnAddDWG.Name = "btnAddDWG";
+            this.btnAddDWG.Size = new System.Drawing.Size(85, 24);
+            this.btnAddDWG.TabIndex = 27;
+            this.btnAddDWG.TabStop = false;
+            this.btnAddDWG.Text = "Add file..";
+            this.btnAddDWG.ThemeName = "Office2010Blue";
+            this.btnAddDWG.Click += new System.EventHandler(this.radButton1_Click);
             // 
             // radLabel49
             // 
@@ -867,6 +893,48 @@
             this.txtDrawing.TabIndex = 24;
             this.txtDrawing.ThemeName = "Office2010Blue";
             this.txtDrawing.TextChanged += new System.EventHandler(this.radTextBox12_TextChanged);
+            // 
+            // btnOpenDWG
+            // 
+            this.btnOpenDWG.Controls.Add(this.txtPathDWG);
+            this.btnOpenDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOpenDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenDWG.Image")));
+            this.btnOpenDWG.Location = new System.Drawing.Point(65, 57);
+            this.btnOpenDWG.Name = "btnOpenDWG";
+            this.btnOpenDWG.Size = new System.Drawing.Size(58, 24);
+            this.btnOpenDWG.TabIndex = 26;
+            this.btnOpenDWG.TabStop = false;
+            this.btnOpenDWG.Text = "Open...";
+            this.btnOpenDWG.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnOpenDWG.ThemeName = "Office2010Blue";
+            this.btnOpenDWG.Click += new System.EventHandler(this.btnOpenDWG_Click);
+            // 
+            // txtPathDWG
+            // 
+            this.txtPathDWG.Enabled = false;
+            this.txtPathDWG.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPathDWG.Location = new System.Drawing.Point(0, 30);
+            this.txtPathDWG.Name = "txtPathDWG";
+            this.txtPathDWG.Size = new System.Drawing.Size(85, 20);
+            this.txtPathDWG.TabIndex = 3;
+            this.txtPathDWG.ThemeName = "Office2010Blue";
+            this.txtPathDWG.TextChanged += new System.EventHandler(this.radTextBox12_TextChanged);
+            // 
+            // btnGET
+            // 
+            this.btnGET.Enabled = false;
+            this.btnGET.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGET.Image = ((System.Drawing.Image)(resources.GetObject("btnGET.Image")));
+            this.btnGET.Location = new System.Drawing.Point(287, 7);
+            this.btnGET.Name = "btnGET";
+            this.btnGET.Size = new System.Drawing.Size(49, 20);
+            this.btnGET.TabIndex = 4;
+            this.btnGET.TabStop = false;
+            this.btnGET.Text = "GET";
+            this.btnGET.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnGET.ThemeName = "Office2010Blue";
+            this.btnGET.Visible = false;
+            this.btnGET.Click += new System.EventHandler(this.btnGET_Click);
             // 
             // seStandardPrice
             // 
@@ -2495,7 +2563,7 @@
             // 
             this.radPageViewPage2.Controls.Add(this.panel3);
             this.radPageViewPage2.Controls.Add(this.panel2);
-            this.radPageViewPage2.ItemSize = new System.Drawing.SizeF(35F, 24F);
+            this.radPageViewPage2.ItemSize = new System.Drawing.SizeF(39F, 28F);
             this.radPageViewPage2.Location = new System.Drawing.Point(10, 37);
             this.radPageViewPage2.Name = "radPageViewPage2";
             this.radPageViewPage2.Size = new System.Drawing.Size(1029, 526);
@@ -2748,6 +2816,20 @@
             this.radRibbonBarButtonGroup2.ShowBackColor = false;
             this.radRibbonBarButtonGroup2.Text = "radRibbonBarButtonGroup2";
             // 
+            // btnFilter
+            // 
+            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Text = "Filter";
+            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // Unfilter
+            // 
+            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
+            this.Unfilter.Name = "Unfilter";
+            this.Unfilter.Text = "Un Filter";
+            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
             // radRibbonBarButtonGroup5
             // 
             this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
@@ -2756,74 +2838,6 @@
             this.radRibbonBarButtonGroup5.ShowBackColor = false;
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
-            // 
-            // btnDeleteDWG
-            // 
-            this.btnDeleteDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteDWG.Image")));
-            this.btnDeleteDWG.Location = new System.Drawing.Point(222, 57);
-            this.btnDeleteDWG.Name = "btnDeleteDWG";
-            this.btnDeleteDWG.Size = new System.Drawing.Size(97, 24);
-            this.btnDeleteDWG.TabIndex = 28;
-            this.btnDeleteDWG.TabStop = false;
-            this.btnDeleteDWG.Text = "Delete file..";
-            this.btnDeleteDWG.ThemeName = "Office2010Blue";
-            this.btnDeleteDWG.Click += new System.EventHandler(this.radButton2_Click);
-            // 
-            // btnAddDWG
-            // 
-            this.btnAddDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnAddDWG.Image")));
-            this.btnAddDWG.Location = new System.Drawing.Point(131, 57);
-            this.btnAddDWG.Name = "btnAddDWG";
-            this.btnAddDWG.Size = new System.Drawing.Size(85, 24);
-            this.btnAddDWG.TabIndex = 27;
-            this.btnAddDWG.TabStop = false;
-            this.btnAddDWG.Text = "Add file..";
-            this.btnAddDWG.ThemeName = "Office2010Blue";
-            this.btnAddDWG.Click += new System.EventHandler(this.radButton1_Click);
-            // 
-            // btnOpenDWG
-            // 
-            this.btnOpenDWG.Controls.Add(this.txtPathDWG);
-            this.btnOpenDWG.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenDWG.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenDWG.Image")));
-            this.btnOpenDWG.Location = new System.Drawing.Point(65, 57);
-            this.btnOpenDWG.Name = "btnOpenDWG";
-            this.btnOpenDWG.Size = new System.Drawing.Size(58, 24);
-            this.btnOpenDWG.TabIndex = 26;
-            this.btnOpenDWG.TabStop = false;
-            this.btnOpenDWG.Text = "Open...";
-            this.btnOpenDWG.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOpenDWG.ThemeName = "Office2010Blue";
-            this.btnOpenDWG.Click += new System.EventHandler(this.btnOpenDWG_Click);
-            // 
-            // txtPathDWG
-            // 
-            this.txtPathDWG.Enabled = false;
-            this.txtPathDWG.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPathDWG.Location = new System.Drawing.Point(0, 30);
-            this.txtPathDWG.Name = "txtPathDWG";
-            this.txtPathDWG.Size = new System.Drawing.Size(85, 20);
-            this.txtPathDWG.TabIndex = 3;
-            this.txtPathDWG.ThemeName = "Office2010Blue";
-            this.txtPathDWG.TextChanged += new System.EventHandler(this.radTextBox12_TextChanged);
-            // 
-            // btnGET
-            // 
-            this.btnGET.Enabled = false;
-            this.btnGET.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGET.Image = ((System.Drawing.Image)(resources.GetObject("btnGET.Image")));
-            this.btnGET.Location = new System.Drawing.Point(287, 7);
-            this.btnGET.Name = "btnGET";
-            this.btnGET.Size = new System.Drawing.Size(49, 20);
-            this.btnGET.TabIndex = 4;
-            this.btnGET.TabStop = false;
-            this.btnGET.Text = "GET";
-            this.btnGET.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnGET.ThemeName = "Office2010Blue";
-            this.btnGET.Visible = false;
-            this.btnGET.Click += new System.EventHandler(this.btnGET_Click);
             // 
             // radRibbonBar1
             // 
@@ -3114,20 +3128,6 @@
             this.radMenuItem2.Text = "History View";
             this.radMenuItem2.Click += new System.EventHandler(this.radMenuItem2_Click);
             // 
-            // btnFilter
-            // 
-            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
-            this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Text = "Filter";
-            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            // 
-            // Unfilter
-            // 
-            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
-            this.Unfilter.Name = "Unfilter";
-            this.Unfilter.Text = "Un Filter";
-            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            // 
             // CreatePart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3177,11 +3177,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox3)).EndInit();
             this.radGroupBox3.ResumeLayout(false);
             this.radGroupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnDeleteDWG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkDWG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAddDWG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel49)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblTempAddFile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblPath)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDrawing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpenDWG)).EndInit();
+            this.btnOpenDWG.ResumeLayout(false);
+            this.btnOpenDWG.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPathDWG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnGET)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seStandardPrice)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seStandardCost)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seInternalLeadTime)).EndInit();
@@ -3310,13 +3317,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtVersion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel54)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel56)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnDeleteDWG)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnAddDWG)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOpenDWG)).EndInit();
-            this.btnOpenDWG.ResumeLayout(false);
-            this.btnOpenDWG.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPathDWG)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnGET)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);

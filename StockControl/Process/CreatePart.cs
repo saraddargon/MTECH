@@ -3069,7 +3069,7 @@ namespace StockControl
         private void btnPrintStockCard_Click(object sender, EventArgs e)
         {
 
-            PrintPR a = new PrintPR(txtInternalNo.Text, txtInternalNo.Text, "ReportStockMovement");
+            PrintPR a = new PrintPR(txtInternalNo.Text, txtInternalNo.Text, "ReportStockCard");
             a.ShowDialog();
 
         }
