@@ -499,39 +499,39 @@ namespace StockControl
                             err += "- “รหัสพาร์ท:” เป็นค่าว่าง \n";
                         if (StockControl.dbClss.TDe(rowInfo.Cells["QTY"].Value) <= 0)
                             err += "- “จำนวนย้ายคืน:” น้อยกว่า 0 \n";
-                        else
-                        {
+                        //else
+                        //{
 
-                            CodeNo = StockControl.dbClss.TSt(rowInfo.Cells["CodeNo"].Value);
-                            PCSUnit = StockControl.dbClss.TDe(rowInfo.Cells["PCSUnit"].Value);
-                            using (DataClasses1DataContext db = new DataClasses1DataContext())
-                            {
-                                var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == CodeNo).ToList();
-                                if (g.Count() > 0)
-                                {
-                                    BaseUOM = dbClss.TSt(g.FirstOrDefault().BaseUOM);
-                                    //BasePCSUOM = dbClss.Con_UOM(CodeNo, BaseUom);
-                                }
-                            }
-                            // BaseUOM = StockControl.dbClss.TSt(rowInfo.Cells["BaseUOM"].Value);
-                            BasePCSUOM = BasePCSUOM = dbClss.Con_UOM(CodeNo, BaseUOM);
+                        //    CodeNo = StockControl.dbClss.TSt(rowInfo.Cells["CodeNo"].Value);
+                        //    PCSUnit = StockControl.dbClss.TDe(rowInfo.Cells["PCSUnit"].Value);
+                        //    using (DataClasses1DataContext db = new DataClasses1DataContext())
+                        //    {
+                        //        var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == CodeNo).ToList();
+                        //        if (g.Count() > 0)
+                        //        {
+                        //            BaseUOM = dbClss.TSt(g.FirstOrDefault().BaseUOM);
+                        //            //BasePCSUOM = dbClss.Con_UOM(CodeNo, BaseUom);
+                        //        }
+                        //    }
+                        //    // BaseUOM = StockControl.dbClss.TSt(rowInfo.Cells["BaseUOM"].Value);
+                        //    BasePCSUOM = BasePCSUOM = dbClss.Con_UOM(CodeNo, BaseUOM);
 
 
-                            QTY = StockControl.dbClss.TDe(rowInfo.Cells["QTY"].Value);
-                            RemainQty = StockControl.dbClss.TDe(rowInfo.Cells["RemainQty"].Value);
+                        //    QTY = StockControl.dbClss.TDe(rowInfo.Cells["QTY"].Value);
+                        //    RemainQty = StockControl.dbClss.TDe(rowInfo.Cells["RemainQty"].Value);
 
-                            if (BasePCSUOM <= 0)
-                                BasePCSUOM = 1;
+                        //    if (BasePCSUOM <= 0)
+                        //        BasePCSUOM = 1;
 
-                            decimal Temp = 0;
-                            Temp = BasePCSUOM * PCSUnit * QTY;
+                        //    decimal Temp = 0;
+                        //    Temp = BasePCSUOM * PCSUnit * QTY;
                             
-                            if (Temp > RemainQty)
-                            {
-                                cnk = true;
-                                err += "- “จำนวนย้ายคืน:” มากกว่าจำนวนคงเหลือคงคลังไม่ได้ \n";
-                            }
-                        }
+                        //    if (Temp > RemainQty)
+                        //    {
+                        //        cnk = true;
+                        //        err += "- “จำนวนย้ายคืน:” มากกว่าจำนวนคงเหลือคงคลังไม่ได้ \n";
+                        //    }
+                        //}
                         if (StockControl.dbClss.TSt(rowInfo.Cells["Unit"].Value).Equals(""))
                             err += "- “หน่วย:” เป็นค่าว่าง \n";
                         if (StockControl.dbClss.TDe(rowInfo.Cells["PCSUnit"].Value) <= 0)
@@ -543,7 +543,6 @@ namespace StockControl
                         //if(StockControl.dbClss.TSt(rowInfo.Cells["Location"].Value) == StockControl.dbClss.TSt(rowInfo.Cells["ToLocation"].Value))
                         //    err += "- “'จากสถานที่เก็บ' และ 'ไปยังสถานที่เก็บ':” ไม่สามารถเป็นสถานทีเดียวกันได้ \n";
                         
-
                     }
                 }
 

@@ -1897,25 +1897,22 @@ namespace StockControl
         {
             try
             {
-                PrintPR a = new PrintPR(txtSHNo.Text, txtSHNo.Text, "Shipping");
-                a.ShowDialog();
+                //PrintPR a = new PrintPR(txtSHNo.Text, txtSHNo.Text, "Shipping");
+                //a.ShowDialog();
+                
+                try
+                {
+                    if (txtSHNo.Text.Trim() != "")
+                    {
+                        Report.Reportx1.Value = new string[1];
+                        Report.Reportx1.Value[0] = txtSHNo.Text;
+                        Report.Reportx1.WReport = "PickSlip";
+                        Report.Reportx1 op = new Report.Reportx1("PickSlip_FG.rpt");
+                        op.Show();
+                    }
 
-                //using (DataClasses1DataContext db = new DataClasses1DataContext())
-                //{
-                //    var g = (from ix in db.sp_R004_ReportShipping(txtSHNo.Text, DateTime.Now) select ix).ToList();
-                //    if (g.Count() > 0)
-                //    {
-
-                //        Report.Reportx1.Value = new string[2];
-                //        Report.Reportx1.Value[0] = txtSHNo.Text;
-                //        Report.Reportx1.WReport = "ReportShipping";
-                //        Report.Reportx1 op = new Report.Reportx1("ReportShipping.rpt");
-                //        op.Show();
-
-                //    }
-                //    else
-                //        MessageBox.Show("not found.");
-                //}
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
