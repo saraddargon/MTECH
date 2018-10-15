@@ -2319,6 +2319,28 @@
       <Column Name="AttachFile" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.mh_StockCard" Member="mh_StockCards">
+    <Type Name="mh_StockCard">
+      <Column Name="USERID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Shelf" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dFrom" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dTo" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="No" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocumentRef" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SubCust" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="StartQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="InQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OutQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="RemainQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+    </Type>
+  </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">
     <ElementType Name="Sp_ADM03_OpenFormSelectResult">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -5527,5 +5549,11 @@
       <Column Name="D31_2" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="D31_3" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.sp_getStockBefore" Method="sp_getStockBefore" IsComposable="true">
+    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="dateN" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Decimal" />
   </Function>
 </Database>

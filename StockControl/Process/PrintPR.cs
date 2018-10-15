@@ -15,7 +15,7 @@ namespace StockControl
 {
     public partial class PrintPR : Telerik.WinControls.UI.RadRibbonForm
     {
-        public PrintPR(string PR1xx,string PR2xx,string Typexx)
+        public PrintPR(string PR1xx, string PR2xx, string Typexx)
         {
             InitializeComponent();
             PR1 = PR1xx;
@@ -26,7 +26,7 @@ namespace StockControl
         }
         Telerik.WinControls.UI.RadTextBox CodeNo_tt = new Telerik.WinControls.UI.RadTextBox();
         int screen = 0;
-        public PrintPR(Telerik.WinControls.UI.RadTextBox  CodeNox)
+        public PrintPR(Telerik.WinControls.UI.RadTextBox CodeNox)
         {
             InitializeComponent();
             CodeNo_tt = CodeNox;
@@ -119,6 +119,40 @@ namespace StockControl
                     dtDate1.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     dtDate2.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                 }
+                else if (Type.Equals("ReportStockCard"))
+                {
+                    lblName.Text = "เลขที่รหัสทูล";
+
+                    txtPRNo1.ReadOnly = true;
+                    txtPRNo2.ReadOnly = true;
+
+                    cbDate.Visible = true;
+                    dtDate1.Visible = true;
+                    dtDate2.Visible = true;
+                    lblToDate.Visible = true;
+                    lblLocation.Visible = true;
+                    ddlLocation.Visible = true;
+
+                    ddlLocation.DataSource = null;
+                    ddlLocation.DisplayMember = "Code";
+                    ddlLocation.ValueMember = "Code";
+                    var g = (from ix in db.mh_Locations select ix).Where(s => s.Active == true && s.Active == true).ToList();
+
+                    List<string> a = new List<string>();
+                    if (g.Count > 0)
+                    {
+                        foreach (var gg in g)
+                            a.Add(gg.Code);
+                    }
+                    //a.Add("");
+                    ddlLocation.DataSource = a;
+                    ddlLocation.Text = "";
+
+                    //ddlLocation.SelectedIndex = 1;
+
+                    dtDate1.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                    dtDate2.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                }
                 else if (Type.Equals("ReceiveMonth"))
                 {
                     lblName.Text = "เลขที่รับ";
@@ -186,7 +220,7 @@ namespace StockControl
                     dtDate2.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
 
                 }
-                else if(Type == "ReportProductionOrder")
+                else if (Type == "ReportProductionOrder")
                 {
                     lblName.Text = "เลขที่เอกสาร";
                 }
@@ -194,7 +228,7 @@ namespace StockControl
                 {
                     lblName.Text = "เลขที่เอกสาร";
                 }
-                else if(Type == "PackingList")
+                else if (Type == "PackingList")
                 {
                     txtPRNo1.Visible = false;
                     txtPRNo2.Visible = false;
@@ -210,7 +244,7 @@ namespace StockControl
                     dtDate2.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     panel2.Location = new Point(panel2.Location.X, 30);
                 }
-                else if (Type== "ListPurchaseAndPR")
+                else if (Type == "ListPurchaseAndPR")
                 {
                     lblName.Visible = false;
                     txtPRNo1.Visible = false;
@@ -237,22 +271,22 @@ namespace StockControl
             //dt.Rows.Clear();
             try
             {
-               
+
                 this.Cursor = Cursors.WaitCursor;
                 //using (DataClasses1DataContext db = new DataClasses1DataContext())
                 //{
-                   
-                    
-                       
+
+
+
                 //}
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
             this.Cursor = Cursors.Default;
 
 
             //    radGridView1.DataSource = dt;
         }
-     
+
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -261,17 +295,17 @@ namespace StockControl
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void btnView_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-         
+
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -329,7 +363,7 @@ namespace StockControl
                     string YYYY = "";
                     string MM = "";
 
-                    if(cbDate.Checked)
+                    if (cbDate.Checked)
                     {
                         dt11 = dtDate1.Value.ToString("yyyyMMdd");
                         dt22 = dtDate2.Value.ToString("yyyyMMdd");
@@ -347,7 +381,7 @@ namespace StockControl
                         YYYY = ddlYear.Text;
                         MM = ddlMonth.Text;
                     }
-                    var Data = db.sp_R016_Receive_Month(txtPRNo1.Text, txtPRNo2.Text, dt11, dt22, YYYY + MM, Convert.ToDateTime(DateTime.Now,new CultureInfo("en-US"))).ToList();
+                    var Data = db.sp_R016_Receive_Month(txtPRNo1.Text, txtPRNo2.Text, dt11, dt22, YYYY + MM, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))).ToList();
                     if (Data != null)
                     {
                         if (Data.Count > 0)
@@ -371,7 +405,7 @@ namespace StockControl
                                 {
                                     var ws_rm = package.Workbook.Worksheets[1];
                                     ws_rm.Cells[1, 1].Value = "ใบบันทึกรับสินค้าประจำวัน ";
-                                    if(cbYYYYMM.Checked)
+                                    if (cbYYYYMM.Checked)
                                         ws_rm.Cells[2, 1].Value = "ประจำเดือน " + dbClss.Month_(ddlMonth.Text) + " " + ddlYear.Text; //ประจำเดือน มกราคม 2018
 
                                     //" + ConnectDB.ConnectDB.Around + "/" + ConnectDB.ConnectDB.YYYY + " (" + String.Format("{0:dd MMM yy}", ConnectDB.ConnectDB.StartDate) + " - " + String.Format("{0:dd MMM yy}", ConnectDB.ConnectDB.EndDate) + ")";
@@ -394,13 +428,13 @@ namespace StockControl
                         }
                     }
                 }
-                
+
 
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
-       
+
 
         private void btnFilter1_Click(object sender, EventArgs e)
         {
@@ -419,7 +453,7 @@ namespace StockControl
 
         private void radButtonElement1_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -442,25 +476,25 @@ namespace StockControl
                     a.ShowDialog();
                     this.Close();
                 }
-               
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
-        
+
         DataTable dt_Kanban = new DataTable();
 
         private void Set_dt_Print()
         {
-          
+
 
         }
-       
+
         private void btn_Print_Barcode_Click(object sender, EventArgs e)
         {
             try
             {
                 dt_Kanban.Rows.Clear();
-               
+
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
                     var g = (from ix in db.tb_Items select ix).Where(a => a.CodeNo == txtPRNo2.Text).ToList();
@@ -498,7 +532,7 @@ namespace StockControl
                 {
                     if (Type.Equals("PR"))
                     {
-                       
+
                         var g = (from ix in db.sp_R005_ReportPR(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
                         if (g.Count() > 0)
                         {
@@ -533,12 +567,12 @@ namespace StockControl
                         //var g = (from ix in db.sp_R006_ReportReceive(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
                         //if (g.Count() > 0)
                         //{
-                            Report.Reportx1.Value = new string[2];
-                            Report.Reportx1.Value[0] = PRNo1;
-                            Report.Reportx1.Value[1] = PRNo2;
-                            Report.Reportx1.WReport = "ReportReceive2";
-                            Report.Reportx1 op = new Report.Reportx1("ReportReceive2.rpt");
-                            op.Show();
+                        Report.Reportx1.Value = new string[2];
+                        Report.Reportx1.Value[0] = PRNo1;
+                        Report.Reportx1.Value[1] = PRNo2;
+                        Report.Reportx1.WReport = "ReportReceive2";
+                        Report.Reportx1 op = new Report.Reportx1("ReportReceive2.rpt");
+                        op.Show();
                         //}
                         //else
                         //    MessageBox.Show("not found.");
@@ -548,14 +582,14 @@ namespace StockControl
                         //var g = (from ix in db.sp_R007_ReportShipping(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
                         //if (g.Count() > 0)
                         //{
-                            Report.Reportx1.Value = new string[2];
-                            Report.Reportx1.Value[0] = PRNo1;
-                            Report.Reportx1.Value[1] = PRNo2;
-                            Report.Reportx1.WReport = "ReportShipping2";
-                            //Report.Reportx1 op = new Report.Reportx1("ReportShipping2.rpt");
-                            Report.Reportx1 op = new Report.Reportx1("ReportShipping2.rpt");
+                        Report.Reportx1.Value = new string[2];
+                        Report.Reportx1.Value[0] = PRNo1;
+                        Report.Reportx1.Value[1] = PRNo2;
+                        Report.Reportx1.WReport = "ReportShipping2";
+                        //Report.Reportx1 op = new Report.Reportx1("ReportShipping2.rpt");
+                        Report.Reportx1 op = new Report.Reportx1("ReportShipping2.rpt");
 
-                            op.Show();
+                        op.Show();
                         //}
                         //else
                         //    MessageBox.Show("not found.");
@@ -572,7 +606,7 @@ namespace StockControl
                             dt2 = Convert.ToDateTime((dtDate2.Value), new CultureInfo("en-US")).ToString("yyyyMMdd");
                         }
 
-                        var g = (from ix in db.sp_R021_ReportShipping_Today(PRNo1, PRNo2, dt1,dt2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        var g = (from ix in db.sp_R021_ReportShipping_Today(PRNo1, PRNo2, dt1, dt2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
                         if (g.Count() > 0)
                         {
                             Report.Reportx1.Value = new string[4];
@@ -594,12 +628,12 @@ namespace StockControl
                         //var g = (from ix in db.sp_R008_ReportAdjustStock(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
                         //if (g.Count() > 0)
                         //{
-                            Report.Reportx1.Value = new string[2];
-                            Report.Reportx1.Value[0] = PRNo1;
-                            Report.Reportx1.Value[1] = PRNo2;
-                            Report.Reportx1.WReport = "ReportAdjustStock";
-                            Report.Reportx1 op = new Report.Reportx1("ReportAdjustStock.rpt");
-                            op.Show();
+                        Report.Reportx1.Value = new string[2];
+                        Report.Reportx1.Value[0] = PRNo1;
+                        Report.Reportx1.Value[1] = PRNo2;
+                        Report.Reportx1.WReport = "ReportAdjustStock";
+                        Report.Reportx1 op = new Report.Reportx1("ReportAdjustStock.rpt");
+                        op.Show();
                         //}
                         //else
                         //    MessageBox.Show("not found.");
@@ -609,12 +643,12 @@ namespace StockControl
                         //var g = (from ix in db.sp_R010_Report_JobCard(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
                         //if (g.Count() > 0)
                         //{
-                            Report.Reportx1.Value = new string[2];
-                            Report.Reportx1.Value[0] = PRNo1;
-                            Report.Reportx1.Value[1] = PRNo2;
-                            Report.Reportx1.WReport = "JobCard";
-                            Report.Reportx1 op = new Report.Reportx1("JobCard.rpt");
-                            op.Show();
+                        Report.Reportx1.Value = new string[2];
+                        Report.Reportx1.Value[0] = PRNo1;
+                        Report.Reportx1.Value[1] = PRNo2;
+                        Report.Reportx1.WReport = "JobCard";
+                        Report.Reportx1 op = new Report.Reportx1("JobCard.rpt");
+                        op.Show();
                         //}
                         //else
                         //    MessageBox.Show("not found.");
@@ -623,25 +657,152 @@ namespace StockControl
                     {
                         string dt1 = "";
                         string dt2 = "";
-                        
-                        if(cbDate.Checked)
+
+                        if (cbDate.Checked)
                         {
-                           // Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))
+                            // Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))
                             dt1 = Convert.ToDateTime((dtDate1.Value), new CultureInfo("en-US")).ToString("yyyyMMdd");
                             dt2 = Convert.ToDateTime((dtDate2.Value), new CultureInfo("en-US")).ToString("yyyyMMdd");
                         }
                         //var g = (from ix in db.sp_R009_Stock_Movement(PRNo1, PRNo2,dt1,dt2,ddlLocation.Text, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
                         //if (g.Count() > 0)
                         //{
-                            Report.Reportx1.Value = new string[5];
-                            Report.Reportx1.Value[0] = PRNo1;
-                            Report.Reportx1.Value[1] = PRNo2;                            
-                            Report.Reportx1.Value[2] = dt1;
-                            Report.Reportx1.Value[3] = dt2;
-                            Report.Reportx1.Value[4] = ddlLocation.Text;
-                            Report.Reportx1.WReport = "ReportStockMovement";
-                            Report.Reportx1 op = new Report.Reportx1("ReportStockMovement.rpt");
-                            op.Show();
+                        Report.Reportx1.Value = new string[5];
+                        Report.Reportx1.Value[0] = PRNo1;
+                        Report.Reportx1.Value[1] = PRNo2;
+                        Report.Reportx1.Value[2] = dt1;
+                        Report.Reportx1.Value[3] = dt2;
+                        Report.Reportx1.Value[4] = ddlLocation.Text;
+                        Report.Reportx1.WReport = "ReportStockMovement";
+                        Report.Reportx1 op = new Report.Reportx1("ReportStockMovement.rpt");
+                        op.Show();
+                        //}
+                        //else
+                        //    MessageBox.Show("not found.");
+                    }
+                    else if (Type.Equals("ReportStockCard"))
+                    {
+                        string dt1 = "";
+                        string dt2 = "";
+
+                        if (cbDate.Checked)
+                        {
+                            // Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))
+                            dt1 = Convert.ToDateTime((dtDate1.Value), new CultureInfo("en-US")).ToString("yyyyMMdd");
+                            dt2 = Convert.ToDateTime((dtDate2.Value), new CultureInfo("en-US")).ToString("yyyyMMdd");
+                        }
+
+                        ddlLocation.Text = "Warehouse";
+
+                        //clear user
+                        var del = db.mh_StockCards.Where(x => x.USERID == ClassLib.Classlib.User).ToList();
+                        db.mh_StockCards.DeleteAllOnSubmit(del);
+                        db.SubmitChanges();
+
+                        var stBefore = db.sp_getStockBefore(PR1, ddlLocation.Text, dtDate1.Value.Date);
+                        var rem = stBefore.ToDecimal();
+
+                        var tool = db.mh_Items.Where(x => x.InternalNo == PR1).FirstOrDefault();
+                        if (tool == null)
+                        {
+                            baseClass.Error("ไม่พบทูล");
+                            return;
+                        }
+                        var tooluom = db.mh_ItemUOMs.Where(x => x.UOMCode == tool.BaseUOM && x.ItemNo == tool.InternalNo).FirstOrDefault();
+                        var pcsunit = 1.00m;
+                        if (tooluom != null) pcsunit = tooluom.QuantityPer;
+                        int rNo = 1;
+                        var scard = new mh_StockCard
+                        {
+                            ItemNo = PR1,
+                            ItemName = tool.InternalName,
+                            dFrom = dtDate1.Value.Date,
+                            dTo = dtDate2.Value.Date,
+                            DocumentRef = "ยอดยกมา",
+                            Location = ddlLocation.Text,
+                            No = rNo,
+                            UOM = tool.BaseUOM,
+                            USERID = ClassLib.Classlib.User,
+                            Shelf = tool.ShelfNo,
+                            SubCust = "",
+                            PCSUnit = pcsunit,
+                            Date = dtDate1.Value.Date,
+                            StartQty = rem,
+                            InQty = 0,
+                            OutQty = 0,
+                            RemainQty = rem,
+                        };
+                        db.mh_StockCards.InsertOnSubmit(scard);
+                        db.SubmitChanges();
+
+                        DateTime dFrom = dtDate1.Value.Date;
+                        DateTime dTo = dtDate2.Value.Date.AddDays(1).AddMinutes(-1);
+
+                        var st = db.tb_Stocks.Where(x => x.CodeNo == PRNo1 && x.CreateDate >= dFrom
+                            && x.CreateDate <= dTo
+                            && x.Location == ddlLocation.Text
+                            ).OrderBy(x => x.CreateDate).ToList();
+                        foreach (var s in st)
+                        {
+                            rNo++;
+                            string sName = "";
+                            if (s.DocNo.ToSt().Length > 2)
+                            {
+                                if (s.DocNo.ToSt().Substring(0, 2) == "RC")
+                                {
+                                    //receive
+                                    var po = db.mh_PurchaseOrders.Where(x => x.PONo == s.RefNo).FirstOrDefault();
+                                    if (po != null) sName = po.VendorName.ToSt();
+                                }
+                                else if (s.DocNo.ToSt().Substring(0, 2) == "")
+                                {
+                                    var sm = db.mh_Shipments.Where(x => x.SSNo == s.RefJobCode).FirstOrDefault();
+                                    if (sm != null) sName = sm.CustomerName;
+                                }
+                            }
+
+                            var startQ = rem;
+                            var inQ = 0.00m;
+                            var outQ = 0.00m;
+                            if (s.Type_in_out == "In")
+                                inQ = s.QTY.ToDecimal();
+                            else
+                                outQ = s.QTY.ToDecimal();
+                            rem = startQ + inQ + outQ;
+
+                            var sc = new mh_StockCard
+                            {
+                                ItemNo = PR1,
+                                ItemName = tool.InternalName,
+                                dFrom = dtDate1.Value.Date,
+                                dTo = dtDate2.Value.Date,
+                                DocumentRef = s.DocNo,
+                                Location = ddlLocation.Text,
+                                No = rNo,
+                                UOM = tool.BaseUOM,
+                                USERID = ClassLib.Classlib.User,
+                                Shelf = tool.ShelfNo,
+                                SubCust = sName,
+                                PCSUnit = pcsunit,
+                                Date = s.CreateDate,
+                                StartQty = startQ,
+                                InQty = inQ,
+                                OutQty = outQ,
+                                RemainQty = rem,
+                            };
+                            db.mh_StockCards.InsertOnSubmit(sc);
+                            db.SubmitChanges();
+                        }
+
+
+                        //var g = (from ix in db.sp_R009_Stock_Movement(PRNo1, PRNo2,dt1,dt2,ddlLocation.Text, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                        //if (g.Count() > 0)
+                        //{
+                        Report.Reportx1.Value = new string[1];
+                        Report.Reportx1.Value[0] = ClassLib.Classlib.User;
+                        Report.Reportx1.WReport = "ReportStockCard";
+                        Report.Reportx1 op = new Report.Reportx1("StockCard.rpt");
+                        op.Show();
                         //}
                         //else
                         //    MessageBox.Show("not found.");
@@ -651,12 +812,12 @@ namespace StockControl
                         //var g = (from ix in db.sp_R017_ReportClaim(PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
                         //if (g.Count() > 0)
                         //{
-                            Report.Reportx1.Value = new string[2];
-                            Report.Reportx1.Value[0] = PRNo1;
-                            Report.Reportx1.Value[1] = PRNo2;
-                            Report.Reportx1.WReport = "ReportClaim";
-                            Report.Reportx1 op = new Report.Reportx1("ReportClaim.rpt");
-                            op.Show();
+                        Report.Reportx1.Value = new string[2];
+                        Report.Reportx1.Value[0] = PRNo1;
+                        Report.Reportx1.Value[1] = PRNo2;
+                        Report.Reportx1.WReport = "ReportClaim";
+                        Report.Reportx1 op = new Report.Reportx1("ReportClaim.rpt");
+                        op.Show();
                         //}
                         //else
                         //    MessageBox.Show("not found.");
@@ -696,14 +857,14 @@ namespace StockControl
                         //var g = (from ix in db.sp_R019_ReportShippingAVG(YYYY,MM,PRNo1, PRNo2, Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
                         //if (g.Count() > 0)
                         //{
-                            Report.Reportx1.Value = new string[4];
-                            Report.Reportx1.Value[0] = ddlYear.Text;
-                            Report.Reportx1.Value[1] = ddlMonth.Text;
-                            Report.Reportx1.Value[2] = PRNo1;
-                            Report.Reportx1.Value[3] = PRNo2;
-                            Report.Reportx1.WReport = "ReportShippingAVG";
-                            Report.Reportx1 op = new Report.Reportx1("ReportShippingAVG.rpt");
-                            op.Show();
+                        Report.Reportx1.Value = new string[4];
+                        Report.Reportx1.Value[0] = ddlYear.Text;
+                        Report.Reportx1.Value[1] = ddlMonth.Text;
+                        Report.Reportx1.Value[2] = PRNo1;
+                        Report.Reportx1.Value[3] = PRNo2;
+                        Report.Reportx1.WReport = "ReportShippingAVG";
+                        Report.Reportx1 op = new Report.Reportx1("ReportShippingAVG.rpt");
+                        op.Show();
                         //}
                         //else
                         //    MessageBox.Show("not found.");
@@ -717,13 +878,13 @@ namespace StockControl
                         //{
 
                         Report.Reportx1.Value = new string[4];
-                            Report.Reportx1.Value[0] = PRNo1;
-                            Report.Reportx1.Value[1] = PRNo2;
-                            Report.Reportx1.Value[2] = Dt1;
-                            Report.Reportx1.Value[3] = Dt2;
-                            Report.Reportx1.WReport = "ReporProductionOrder";
-                            Report.Reportx1 op = new Report.Reportx1("ReporProductionOrder.rpt");
-                            op.Show();
+                        Report.Reportx1.Value[0] = PRNo1;
+                        Report.Reportx1.Value[1] = PRNo2;
+                        Report.Reportx1.Value[2] = Dt1;
+                        Report.Reportx1.Value[3] = Dt2;
+                        Report.Reportx1.WReport = "ReporProductionOrder";
+                        Report.Reportx1 op = new Report.Reportx1("ReporProductionOrder.rpt");
+                        op.Show();
                         //}
                         //else
                         //    MessageBox.Show("not found.");
@@ -736,12 +897,12 @@ namespace StockControl
                         //if (g.Count() > 0)
                         //{
 
-                            Report.Reportx1.Value = new string[2];
-                            Report.Reportx1.Value[0] = PRNo1;
-                            Report.Reportx1.Value[1] = PRNo2;                           
-                            Report.Reportx1.WReport = "ReportAccidentSlip";
-                            Report.Reportx1 op = new Report.Reportx1("ReportAccidentSlip.rpt");
-                            op.Show();
+                        Report.Reportx1.Value = new string[2];
+                        Report.Reportx1.Value[0] = PRNo1;
+                        Report.Reportx1.Value[1] = PRNo2;
+                        Report.Reportx1.WReport = "ReportAccidentSlip";
+                        Report.Reportx1 op = new Report.Reportx1("ReportAccidentSlip.rpt");
+                        op.Show();
                         //}
                         //else
                         //    MessageBox.Show("not found.");
@@ -755,10 +916,10 @@ namespace StockControl
                         Report.Reportx1 op = new Report.Reportx1("ReceiveFG.rpt");
                         op.Show();
                     }
-                    else if(Type.Equals("ListPurchaseAndPR"))
+                    else if (Type.Equals("ListPurchaseAndPR"))
                     {
                         Report.Reportx1.Value = new string[2];
-                        
+
                         Report.Reportx1.Value[0] = dtDate1.Value.Date.ToString("dd/MMM/yyyy");
                         Report.Reportx1.Value[1] = dtDate2.Value.Date.ToString("dd/MMM/yyyy");
                         Report.Reportx1.WReport = "ListPurchaseAndPR";
