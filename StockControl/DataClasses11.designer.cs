@@ -2522,6 +2522,13 @@ namespace StockControl
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jobNo);
 			return ((ISingleResult<sp_065_PrintTag_JobNoResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.RP_MH_CustomerPOSUmmary")]
+		public ISingleResult<RP_MH_CustomerPOSUmmaryResult> RP_MH_CustomerPOSUmmary([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> yy, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> mm, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ItemNo", DbType="NVarChar(50)")] string itemNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DateNow", DbType="DateTime")] System.Nullable<System.DateTime> dateNow)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), yy, mm, itemNo, dateNow);
+			return ((ISingleResult<RP_MH_CustomerPOSUmmaryResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ErrorLog")]
@@ -86071,6 +86078,1796 @@ namespace StockControl
 				if ((this._CstmName != value))
 				{
 					this._CstmName = value;
+				}
+			}
+		}
+	}
+	
+	public partial class RP_MH_CustomerPOSUmmaryResult
+	{
+		
+		private string _CustomerNo;
+		
+		private string _CustomerName;
+		
+		private string _ItemNo;
+		
+		private System.Nullable<int> _YY;
+		
+		private System.Nullable<int> _MM;
+		
+		private System.Nullable<decimal> _Dall;
+		
+		private System.Nullable<decimal> _D1_1;
+		
+		private System.Nullable<decimal> _D1_2;
+		
+		private System.Nullable<decimal> _D1_3;
+		
+		private System.Nullable<decimal> _D2_1;
+		
+		private System.Nullable<decimal> _D2_2;
+		
+		private System.Nullable<decimal> _D2_3;
+		
+		private System.Nullable<decimal> _D3_1;
+		
+		private System.Nullable<decimal> _D3_2;
+		
+		private System.Nullable<decimal> _D3_3;
+		
+		private System.Nullable<decimal> _D4_1;
+		
+		private System.Nullable<decimal> _D4_2;
+		
+		private System.Nullable<decimal> _D4_3;
+		
+		private System.Nullable<decimal> _D5_1;
+		
+		private System.Nullable<decimal> _D5_2;
+		
+		private System.Nullable<decimal> _D5_3;
+		
+		private System.Nullable<decimal> _D6_1;
+		
+		private System.Nullable<decimal> _D6_2;
+		
+		private System.Nullable<decimal> _D6_3;
+		
+		private System.Nullable<decimal> _D7_1;
+		
+		private System.Nullable<decimal> _D7_2;
+		
+		private System.Nullable<decimal> _D7_3;
+		
+		private System.Nullable<decimal> _D8_1;
+		
+		private System.Nullable<decimal> _D8_2;
+		
+		private System.Nullable<decimal> _D8_3;
+		
+		private System.Nullable<decimal> _D9_1;
+		
+		private System.Nullable<decimal> _D9_2;
+		
+		private System.Nullable<decimal> _D9_3;
+		
+		private System.Nullable<decimal> _D10_1;
+		
+		private System.Nullable<decimal> _D10_2;
+		
+		private System.Nullable<decimal> _D10_3;
+		
+		private System.Nullable<decimal> _D11_1;
+		
+		private System.Nullable<decimal> _D11_2;
+		
+		private System.Nullable<decimal> _D11_3;
+		
+		private System.Nullable<decimal> _D12_1;
+		
+		private System.Nullable<decimal> _D12_2;
+		
+		private System.Nullable<decimal> _D12_3;
+		
+		private System.Nullable<decimal> _D13_1;
+		
+		private System.Nullable<decimal> _D13_2;
+		
+		private System.Nullable<decimal> _D13_3;
+		
+		private System.Nullable<decimal> _D14_1;
+		
+		private System.Nullable<decimal> _D14_2;
+		
+		private System.Nullable<decimal> _D14_3;
+		
+		private System.Nullable<decimal> _D15_1;
+		
+		private System.Nullable<decimal> _D15_2;
+		
+		private System.Nullable<decimal> _D15_3;
+		
+		private System.Nullable<decimal> _D16_1;
+		
+		private System.Nullable<decimal> _D16_2;
+		
+		private System.Nullable<decimal> _D16_3;
+		
+		private System.Nullable<decimal> _D17_1;
+		
+		private System.Nullable<decimal> _D17_2;
+		
+		private System.Nullable<decimal> _D17_3;
+		
+		private System.Nullable<decimal> _D18_1;
+		
+		private System.Nullable<decimal> _D18_2;
+		
+		private System.Nullable<decimal> _D18_3;
+		
+		private System.Nullable<decimal> _D19_1;
+		
+		private System.Nullable<decimal> _D19_2;
+		
+		private System.Nullable<decimal> _D19_3;
+		
+		private System.Nullable<decimal> _D20_1;
+		
+		private System.Nullable<decimal> _D20_2;
+		
+		private System.Nullable<decimal> _D20_3;
+		
+		private System.Nullable<decimal> _D21_1;
+		
+		private System.Nullable<decimal> _D21_2;
+		
+		private System.Nullable<decimal> _D21_3;
+		
+		private System.Nullable<decimal> _D22_1;
+		
+		private System.Nullable<decimal> _D22_2;
+		
+		private System.Nullable<decimal> _D22_3;
+		
+		private System.Nullable<decimal> _D23_1;
+		
+		private System.Nullable<decimal> _D23_2;
+		
+		private System.Nullable<decimal> _D23_3;
+		
+		private System.Nullable<decimal> _D24_1;
+		
+		private System.Nullable<decimal> _D24_2;
+		
+		private System.Nullable<decimal> _D24_3;
+		
+		private System.Nullable<decimal> _D25_1;
+		
+		private System.Nullable<decimal> _D25_2;
+		
+		private System.Nullable<decimal> _D25_3;
+		
+		private System.Nullable<decimal> _D26_1;
+		
+		private System.Nullable<decimal> _D26_2;
+		
+		private System.Nullable<decimal> _D26_3;
+		
+		private System.Nullable<decimal> _D27_1;
+		
+		private System.Nullable<decimal> _D27_2;
+		
+		private System.Nullable<decimal> _D27_3;
+		
+		private System.Nullable<decimal> _D28_1;
+		
+		private System.Nullable<decimal> _D28_2;
+		
+		private System.Nullable<decimal> _D28_3;
+		
+		private System.Nullable<decimal> _D29_1;
+		
+		private System.Nullable<decimal> _D29_2;
+		
+		private System.Nullable<decimal> _D29_3;
+		
+		private System.Nullable<decimal> _D30_1;
+		
+		private System.Nullable<decimal> _D30_2;
+		
+		private System.Nullable<decimal> _D30_3;
+		
+		private System.Nullable<decimal> _D31_1;
+		
+		private System.Nullable<decimal> _D31_2;
+		
+		private System.Nullable<decimal> _D31_3;
+		
+		public RP_MH_CustomerPOSUmmaryResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerNo", DbType="NVarChar(50)")]
+		public string CustomerNo
+		{
+			get
+			{
+				return this._CustomerNo;
+			}
+			set
+			{
+				if ((this._CustomerNo != value))
+				{
+					this._CustomerNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string CustomerName
+		{
+			get
+			{
+				return this._CustomerName;
+			}
+			set
+			{
+				if ((this._CustomerName != value))
+				{
+					this._CustomerName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50)")]
+		public string ItemNo
+		{
+			get
+			{
+				return this._ItemNo;
+			}
+			set
+			{
+				if ((this._ItemNo != value))
+				{
+					this._ItemNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_YY", DbType="Int")]
+		public System.Nullable<int> YY
+		{
+			get
+			{
+				return this._YY;
+			}
+			set
+			{
+				if ((this._YY != value))
+				{
+					this._YY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MM", DbType="Int")]
+		public System.Nullable<int> MM
+		{
+			get
+			{
+				return this._MM;
+			}
+			set
+			{
+				if ((this._MM != value))
+				{
+					this._MM = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dall", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Dall
+		{
+			get
+			{
+				return this._Dall;
+			}
+			set
+			{
+				if ((this._Dall != value))
+				{
+					this._Dall = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D1_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D1_1
+		{
+			get
+			{
+				return this._D1_1;
+			}
+			set
+			{
+				if ((this._D1_1 != value))
+				{
+					this._D1_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D1_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D1_2
+		{
+			get
+			{
+				return this._D1_2;
+			}
+			set
+			{
+				if ((this._D1_2 != value))
+				{
+					this._D1_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D1_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D1_3
+		{
+			get
+			{
+				return this._D1_3;
+			}
+			set
+			{
+				if ((this._D1_3 != value))
+				{
+					this._D1_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D2_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D2_1
+		{
+			get
+			{
+				return this._D2_1;
+			}
+			set
+			{
+				if ((this._D2_1 != value))
+				{
+					this._D2_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D2_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D2_2
+		{
+			get
+			{
+				return this._D2_2;
+			}
+			set
+			{
+				if ((this._D2_2 != value))
+				{
+					this._D2_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D2_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D2_3
+		{
+			get
+			{
+				return this._D2_3;
+			}
+			set
+			{
+				if ((this._D2_3 != value))
+				{
+					this._D2_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D3_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D3_1
+		{
+			get
+			{
+				return this._D3_1;
+			}
+			set
+			{
+				if ((this._D3_1 != value))
+				{
+					this._D3_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D3_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D3_2
+		{
+			get
+			{
+				return this._D3_2;
+			}
+			set
+			{
+				if ((this._D3_2 != value))
+				{
+					this._D3_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D3_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D3_3
+		{
+			get
+			{
+				return this._D3_3;
+			}
+			set
+			{
+				if ((this._D3_3 != value))
+				{
+					this._D3_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D4_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D4_1
+		{
+			get
+			{
+				return this._D4_1;
+			}
+			set
+			{
+				if ((this._D4_1 != value))
+				{
+					this._D4_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D4_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D4_2
+		{
+			get
+			{
+				return this._D4_2;
+			}
+			set
+			{
+				if ((this._D4_2 != value))
+				{
+					this._D4_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D4_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D4_3
+		{
+			get
+			{
+				return this._D4_3;
+			}
+			set
+			{
+				if ((this._D4_3 != value))
+				{
+					this._D4_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D5_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D5_1
+		{
+			get
+			{
+				return this._D5_1;
+			}
+			set
+			{
+				if ((this._D5_1 != value))
+				{
+					this._D5_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D5_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D5_2
+		{
+			get
+			{
+				return this._D5_2;
+			}
+			set
+			{
+				if ((this._D5_2 != value))
+				{
+					this._D5_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D5_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D5_3
+		{
+			get
+			{
+				return this._D5_3;
+			}
+			set
+			{
+				if ((this._D5_3 != value))
+				{
+					this._D5_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D6_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D6_1
+		{
+			get
+			{
+				return this._D6_1;
+			}
+			set
+			{
+				if ((this._D6_1 != value))
+				{
+					this._D6_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D6_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D6_2
+		{
+			get
+			{
+				return this._D6_2;
+			}
+			set
+			{
+				if ((this._D6_2 != value))
+				{
+					this._D6_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D6_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D6_3
+		{
+			get
+			{
+				return this._D6_3;
+			}
+			set
+			{
+				if ((this._D6_3 != value))
+				{
+					this._D6_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D7_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D7_1
+		{
+			get
+			{
+				return this._D7_1;
+			}
+			set
+			{
+				if ((this._D7_1 != value))
+				{
+					this._D7_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D7_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D7_2
+		{
+			get
+			{
+				return this._D7_2;
+			}
+			set
+			{
+				if ((this._D7_2 != value))
+				{
+					this._D7_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D7_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D7_3
+		{
+			get
+			{
+				return this._D7_3;
+			}
+			set
+			{
+				if ((this._D7_3 != value))
+				{
+					this._D7_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D8_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D8_1
+		{
+			get
+			{
+				return this._D8_1;
+			}
+			set
+			{
+				if ((this._D8_1 != value))
+				{
+					this._D8_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D8_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D8_2
+		{
+			get
+			{
+				return this._D8_2;
+			}
+			set
+			{
+				if ((this._D8_2 != value))
+				{
+					this._D8_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D8_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D8_3
+		{
+			get
+			{
+				return this._D8_3;
+			}
+			set
+			{
+				if ((this._D8_3 != value))
+				{
+					this._D8_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D9_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D9_1
+		{
+			get
+			{
+				return this._D9_1;
+			}
+			set
+			{
+				if ((this._D9_1 != value))
+				{
+					this._D9_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D9_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D9_2
+		{
+			get
+			{
+				return this._D9_2;
+			}
+			set
+			{
+				if ((this._D9_2 != value))
+				{
+					this._D9_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D9_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D9_3
+		{
+			get
+			{
+				return this._D9_3;
+			}
+			set
+			{
+				if ((this._D9_3 != value))
+				{
+					this._D9_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D10_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D10_1
+		{
+			get
+			{
+				return this._D10_1;
+			}
+			set
+			{
+				if ((this._D10_1 != value))
+				{
+					this._D10_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D10_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D10_2
+		{
+			get
+			{
+				return this._D10_2;
+			}
+			set
+			{
+				if ((this._D10_2 != value))
+				{
+					this._D10_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D10_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D10_3
+		{
+			get
+			{
+				return this._D10_3;
+			}
+			set
+			{
+				if ((this._D10_3 != value))
+				{
+					this._D10_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D11_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D11_1
+		{
+			get
+			{
+				return this._D11_1;
+			}
+			set
+			{
+				if ((this._D11_1 != value))
+				{
+					this._D11_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D11_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D11_2
+		{
+			get
+			{
+				return this._D11_2;
+			}
+			set
+			{
+				if ((this._D11_2 != value))
+				{
+					this._D11_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D11_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D11_3
+		{
+			get
+			{
+				return this._D11_3;
+			}
+			set
+			{
+				if ((this._D11_3 != value))
+				{
+					this._D11_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D12_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D12_1
+		{
+			get
+			{
+				return this._D12_1;
+			}
+			set
+			{
+				if ((this._D12_1 != value))
+				{
+					this._D12_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D12_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D12_2
+		{
+			get
+			{
+				return this._D12_2;
+			}
+			set
+			{
+				if ((this._D12_2 != value))
+				{
+					this._D12_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D12_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D12_3
+		{
+			get
+			{
+				return this._D12_3;
+			}
+			set
+			{
+				if ((this._D12_3 != value))
+				{
+					this._D12_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D13_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D13_1
+		{
+			get
+			{
+				return this._D13_1;
+			}
+			set
+			{
+				if ((this._D13_1 != value))
+				{
+					this._D13_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D13_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D13_2
+		{
+			get
+			{
+				return this._D13_2;
+			}
+			set
+			{
+				if ((this._D13_2 != value))
+				{
+					this._D13_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D13_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D13_3
+		{
+			get
+			{
+				return this._D13_3;
+			}
+			set
+			{
+				if ((this._D13_3 != value))
+				{
+					this._D13_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D14_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D14_1
+		{
+			get
+			{
+				return this._D14_1;
+			}
+			set
+			{
+				if ((this._D14_1 != value))
+				{
+					this._D14_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D14_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D14_2
+		{
+			get
+			{
+				return this._D14_2;
+			}
+			set
+			{
+				if ((this._D14_2 != value))
+				{
+					this._D14_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D14_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D14_3
+		{
+			get
+			{
+				return this._D14_3;
+			}
+			set
+			{
+				if ((this._D14_3 != value))
+				{
+					this._D14_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D15_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D15_1
+		{
+			get
+			{
+				return this._D15_1;
+			}
+			set
+			{
+				if ((this._D15_1 != value))
+				{
+					this._D15_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D15_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D15_2
+		{
+			get
+			{
+				return this._D15_2;
+			}
+			set
+			{
+				if ((this._D15_2 != value))
+				{
+					this._D15_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D15_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D15_3
+		{
+			get
+			{
+				return this._D15_3;
+			}
+			set
+			{
+				if ((this._D15_3 != value))
+				{
+					this._D15_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D16_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D16_1
+		{
+			get
+			{
+				return this._D16_1;
+			}
+			set
+			{
+				if ((this._D16_1 != value))
+				{
+					this._D16_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D16_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D16_2
+		{
+			get
+			{
+				return this._D16_2;
+			}
+			set
+			{
+				if ((this._D16_2 != value))
+				{
+					this._D16_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D16_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D16_3
+		{
+			get
+			{
+				return this._D16_3;
+			}
+			set
+			{
+				if ((this._D16_3 != value))
+				{
+					this._D16_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D17_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D17_1
+		{
+			get
+			{
+				return this._D17_1;
+			}
+			set
+			{
+				if ((this._D17_1 != value))
+				{
+					this._D17_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D17_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D17_2
+		{
+			get
+			{
+				return this._D17_2;
+			}
+			set
+			{
+				if ((this._D17_2 != value))
+				{
+					this._D17_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D17_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D17_3
+		{
+			get
+			{
+				return this._D17_3;
+			}
+			set
+			{
+				if ((this._D17_3 != value))
+				{
+					this._D17_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D18_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D18_1
+		{
+			get
+			{
+				return this._D18_1;
+			}
+			set
+			{
+				if ((this._D18_1 != value))
+				{
+					this._D18_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D18_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D18_2
+		{
+			get
+			{
+				return this._D18_2;
+			}
+			set
+			{
+				if ((this._D18_2 != value))
+				{
+					this._D18_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D18_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D18_3
+		{
+			get
+			{
+				return this._D18_3;
+			}
+			set
+			{
+				if ((this._D18_3 != value))
+				{
+					this._D18_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D19_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D19_1
+		{
+			get
+			{
+				return this._D19_1;
+			}
+			set
+			{
+				if ((this._D19_1 != value))
+				{
+					this._D19_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D19_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D19_2
+		{
+			get
+			{
+				return this._D19_2;
+			}
+			set
+			{
+				if ((this._D19_2 != value))
+				{
+					this._D19_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D19_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D19_3
+		{
+			get
+			{
+				return this._D19_3;
+			}
+			set
+			{
+				if ((this._D19_3 != value))
+				{
+					this._D19_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D20_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D20_1
+		{
+			get
+			{
+				return this._D20_1;
+			}
+			set
+			{
+				if ((this._D20_1 != value))
+				{
+					this._D20_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D20_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D20_2
+		{
+			get
+			{
+				return this._D20_2;
+			}
+			set
+			{
+				if ((this._D20_2 != value))
+				{
+					this._D20_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D20_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D20_3
+		{
+			get
+			{
+				return this._D20_3;
+			}
+			set
+			{
+				if ((this._D20_3 != value))
+				{
+					this._D20_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D21_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D21_1
+		{
+			get
+			{
+				return this._D21_1;
+			}
+			set
+			{
+				if ((this._D21_1 != value))
+				{
+					this._D21_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D21_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D21_2
+		{
+			get
+			{
+				return this._D21_2;
+			}
+			set
+			{
+				if ((this._D21_2 != value))
+				{
+					this._D21_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D21_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D21_3
+		{
+			get
+			{
+				return this._D21_3;
+			}
+			set
+			{
+				if ((this._D21_3 != value))
+				{
+					this._D21_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D22_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D22_1
+		{
+			get
+			{
+				return this._D22_1;
+			}
+			set
+			{
+				if ((this._D22_1 != value))
+				{
+					this._D22_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D22_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D22_2
+		{
+			get
+			{
+				return this._D22_2;
+			}
+			set
+			{
+				if ((this._D22_2 != value))
+				{
+					this._D22_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D22_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D22_3
+		{
+			get
+			{
+				return this._D22_3;
+			}
+			set
+			{
+				if ((this._D22_3 != value))
+				{
+					this._D22_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D23_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D23_1
+		{
+			get
+			{
+				return this._D23_1;
+			}
+			set
+			{
+				if ((this._D23_1 != value))
+				{
+					this._D23_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D23_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D23_2
+		{
+			get
+			{
+				return this._D23_2;
+			}
+			set
+			{
+				if ((this._D23_2 != value))
+				{
+					this._D23_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D23_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D23_3
+		{
+			get
+			{
+				return this._D23_3;
+			}
+			set
+			{
+				if ((this._D23_3 != value))
+				{
+					this._D23_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D24_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D24_1
+		{
+			get
+			{
+				return this._D24_1;
+			}
+			set
+			{
+				if ((this._D24_1 != value))
+				{
+					this._D24_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D24_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D24_2
+		{
+			get
+			{
+				return this._D24_2;
+			}
+			set
+			{
+				if ((this._D24_2 != value))
+				{
+					this._D24_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D24_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D24_3
+		{
+			get
+			{
+				return this._D24_3;
+			}
+			set
+			{
+				if ((this._D24_3 != value))
+				{
+					this._D24_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D25_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D25_1
+		{
+			get
+			{
+				return this._D25_1;
+			}
+			set
+			{
+				if ((this._D25_1 != value))
+				{
+					this._D25_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D25_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D25_2
+		{
+			get
+			{
+				return this._D25_2;
+			}
+			set
+			{
+				if ((this._D25_2 != value))
+				{
+					this._D25_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D25_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D25_3
+		{
+			get
+			{
+				return this._D25_3;
+			}
+			set
+			{
+				if ((this._D25_3 != value))
+				{
+					this._D25_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D26_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D26_1
+		{
+			get
+			{
+				return this._D26_1;
+			}
+			set
+			{
+				if ((this._D26_1 != value))
+				{
+					this._D26_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D26_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D26_2
+		{
+			get
+			{
+				return this._D26_2;
+			}
+			set
+			{
+				if ((this._D26_2 != value))
+				{
+					this._D26_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D26_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D26_3
+		{
+			get
+			{
+				return this._D26_3;
+			}
+			set
+			{
+				if ((this._D26_3 != value))
+				{
+					this._D26_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D27_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D27_1
+		{
+			get
+			{
+				return this._D27_1;
+			}
+			set
+			{
+				if ((this._D27_1 != value))
+				{
+					this._D27_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D27_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D27_2
+		{
+			get
+			{
+				return this._D27_2;
+			}
+			set
+			{
+				if ((this._D27_2 != value))
+				{
+					this._D27_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D27_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D27_3
+		{
+			get
+			{
+				return this._D27_3;
+			}
+			set
+			{
+				if ((this._D27_3 != value))
+				{
+					this._D27_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D28_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D28_1
+		{
+			get
+			{
+				return this._D28_1;
+			}
+			set
+			{
+				if ((this._D28_1 != value))
+				{
+					this._D28_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D28_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D28_2
+		{
+			get
+			{
+				return this._D28_2;
+			}
+			set
+			{
+				if ((this._D28_2 != value))
+				{
+					this._D28_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D28_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D28_3
+		{
+			get
+			{
+				return this._D28_3;
+			}
+			set
+			{
+				if ((this._D28_3 != value))
+				{
+					this._D28_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D29_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D29_1
+		{
+			get
+			{
+				return this._D29_1;
+			}
+			set
+			{
+				if ((this._D29_1 != value))
+				{
+					this._D29_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D29_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D29_2
+		{
+			get
+			{
+				return this._D29_2;
+			}
+			set
+			{
+				if ((this._D29_2 != value))
+				{
+					this._D29_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D29_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D29_3
+		{
+			get
+			{
+				return this._D29_3;
+			}
+			set
+			{
+				if ((this._D29_3 != value))
+				{
+					this._D29_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D30_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D30_1
+		{
+			get
+			{
+				return this._D30_1;
+			}
+			set
+			{
+				if ((this._D30_1 != value))
+				{
+					this._D30_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D30_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D30_2
+		{
+			get
+			{
+				return this._D30_2;
+			}
+			set
+			{
+				if ((this._D30_2 != value))
+				{
+					this._D30_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D30_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D30_3
+		{
+			get
+			{
+				return this._D30_3;
+			}
+			set
+			{
+				if ((this._D30_3 != value))
+				{
+					this._D30_3 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D31_1", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D31_1
+		{
+			get
+			{
+				return this._D31_1;
+			}
+			set
+			{
+				if ((this._D31_1 != value))
+				{
+					this._D31_1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D31_2", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D31_2
+		{
+			get
+			{
+				return this._D31_2;
+			}
+			set
+			{
+				if ((this._D31_2 != value))
+				{
+					this._D31_2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_D31_3", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> D31_3
+		{
+			get
+			{
+				return this._D31_3;
+			}
+			set
+			{
+				if ((this._D31_3 != value))
+				{
+					this._D31_3 = value;
 				}
 			}
 		}

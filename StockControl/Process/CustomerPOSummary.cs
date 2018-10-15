@@ -52,7 +52,7 @@ namespace StockControl
                 }
                 cbbYY.Text = DateTime.Now.Year.ToSt();
 
-                cbbMonth.Items.Add("");
+                //cbbMonth.Items.Add("");
                 int mm = 1;
                 while (mm <= 12)
                 {
@@ -60,7 +60,7 @@ namespace StockControl
                     cbbMonth.Items.Add(dTemp.ToString("MMM"));
                     mm++;
                 }
-                cbbMonth.SelectedIndex = DateTime.Now.Month;
+                cbbMonth.SelectedIndex = DateTime.Now.Month - 1;
 
                 var item = db.mh_Items.Where(x => x.Active && x.InventoryGroup == "FG")
                     .Select(x => new ItemCombo { Item = x.InternalNo, ItemName = x.InternalName }).ToList();
@@ -92,19 +92,21 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     int yy = cbbYY.Text.ToInt();
-                    int mm = cbbMonth.SelectedIndex;
+                    int mm = cbbMonth.SelectedIndex + 1;
                     string ItemNo = cbbItem.SelectedValue.ToSt();
 
-                    if (mm > 0)
-                    {
-                        var m = db.sp_080_CustomerPOSummary_SELECT2(yy, mm, ItemNo).ToList();
-                        dgvData.DataSource = m;
-                    }
-                    else
-                    {
-                        var m = db.sp_080_CustomerPOSummary_SELECT(yy, ItemNo).ToList();
-                        dgvData.DataSource = m;
-                    }
+                    //if (mm > 0)
+                    //{
+                    //    var m = db.sp_080_CustomerPOSummary_SELECT2(yy, mm, ItemNo).ToList();
+                    //    dgvData.DataSource = m;
+                    //}
+                    //else
+                    //{
+                    //    var m = db.sp_080_CustomerPOSummary_SELECT(yy, ItemNo).ToList();
+                    //    dgvData.DataSource = m;
+                    //}
+                    var m = db.RP_MH_CustomerPOSUmmary(yy, mm, ItemNo, DateTime.Now).ToList();
+                    dgvData.DataSource = m;
 
                     dgvData.Rows.ToList().ForEach(x =>
                     {
@@ -153,7 +155,7 @@ namespace StockControl
             if (cbbMonth.SelectedIndex > 0)
             {
                 //add Month Col
-                DateTime dTemp = new DateTime(2018, cbbMonth.SelectedIndex, 1);
+                DateTime dTemp = new DateTime(2018, cbbMonth.SelectedIndex + 1, 1);
                 dgvData.Columns.Insert(dgvData.Columns.Count - 1, new GridViewDecimalColumn
                 {
                     HeaderText = "MM",
@@ -165,7 +167,7 @@ namespace StockControl
                 col_del_list.Add("MM");
 
                 int dd = 1;
-                int ddMax = DateTime.DaysInMonth(cbbYY.Text.ToInt(), cbbMonth.SelectedIndex);
+                int ddMax = DateTime.DaysInMonth(cbbYY.Text.ToInt(), cbbMonth.SelectedIndex + 1);
                 while (dd <= ddMax)
                 {
                     int cCol = dgvData.Columns.Count;
@@ -174,7 +176,7 @@ namespace StockControl
                     {
                         HeaderText = dd.ToSt(),
                         Name = cName,
-                        FieldName = cName,
+                        FieldName = cName + "_1",
                         FormatString = "{0:N2}",
                         Width = 70,
                     };
@@ -458,9 +460,10 @@ namespace StockControl
         {
             if(cbbMonth.SelectedIndex > 0)
             {
-                Report.Reportx1.Value = new string[2];
+                Report.Reportx1.Value = new string[3];
                 Report.Reportx1.Value[0] = cbbYY.Text.ToSt();
-                Report.Reportx1.Value[1] = cbbMonth.SelectedIndex.ToSt();
+                Report.Reportx1.Value[1] = (cbbMonth.SelectedIndex + 1).ToSt();
+                Report.Reportx1.Value[2] = cbbItem.SelectedValue.ToSt();
                 Report.Reportx1.WReport = "DeliveryPlanning";
                 Report.Reportx1 op = new Report.Reportx1("DeliveryPlanning.rpt");
                 op.Show();
