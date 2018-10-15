@@ -448,6 +448,12 @@ namespace Report
                         rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;
+                case "PickSlip_RM":
+                    {
+                        rptDc.SetParameterValue("@ShipmentNo", Convert.ToString(Value[0].ToString()));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
                 case "CheckStockList":
                     {
                         rptDc.SetParameterValue("@CheckNo", Convert.ToString(Value[0].ToString()));
@@ -488,6 +494,7 @@ namespace Report
                     {
                         rptDc.SetParameterValue("@yy", Convert.ToInt32(Value[0]));
                         rptDc.SetParameterValue("@mm", Convert.ToInt32(Value[1]));
+                        rptDc.SetParameterValue("@ItemNo", Convert.ToString(Value[2]));
                         rptDc.SetParameterValue("@DateNow", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;

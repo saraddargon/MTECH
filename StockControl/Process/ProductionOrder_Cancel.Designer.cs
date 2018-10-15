@@ -33,6 +33,7 @@
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup7 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnNew = new Telerik.WinControls.UI.RadButtonElement();
+            this.btnSave = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarGroup5 = new Telerik.WinControls.UI.RadRibbonBarGroup();
             this.btnView = new Telerik.WinControls.UI.RadButtonElement();
             this.btnEdit = new Telerik.WinControls.UI.RadButtonElement();
@@ -52,6 +53,7 @@
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
             this.panel1 = new System.Windows.Forms.Panel();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
+            this.txtR6 = new Telerik.WinControls.UI.RadTextBox();
             this.txtM6 = new Telerik.WinControls.UI.RadTextBox();
             this.txtM4 = new Telerik.WinControls.UI.RadTextBox();
             this.txtM2 = new Telerik.WinControls.UI.RadTextBox();
@@ -92,13 +94,12 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.btnSave = new Telerik.WinControls.UI.RadButtonElement();
-            this.txtR6 = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             this.radPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtR6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtM6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtM4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtM2)).BeginInit();
@@ -135,7 +136,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbQty)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtR6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -168,7 +168,7 @@
             this.radMenuSeparatorItem1,
             this.radMenuItem2});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Cancel Job (FG Q\'ty)";
+            this.radRibbonBar1.Text = "Change Job Order Sheet";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
             // 
@@ -202,6 +202,15 @@
             this.btnNew.Text = "เพิ่มใหม่";
             this.btnNew.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Text = "บันทึกรายการ";
+            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // radRibbonBarGroup5
             // 
@@ -342,7 +351,7 @@
             // 
             this.radLabelElement1.Name = "radLabelElement1";
             this.radStatusStrip1.SetSpring(this.radLabelElement1, false);
-            this.radLabelElement1.Text = "Status : Cancel Job (FG Q\'ty)";
+            this.radLabelElement1.Text = "Status : Change Job Order Sheet";
             this.radLabelElement1.TextWrap = true;
             // 
             // panel1
@@ -399,6 +408,13 @@
             this.radPanel1.Size = new System.Drawing.Size(924, 360);
             this.radPanel1.TabIndex = 0;
             this.radPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.radPanel1_Paint);
+            // 
+            // txtR6
+            // 
+            this.txtR6.Location = new System.Drawing.Point(477, 244);
+            this.txtR6.Name = "txtR6";
+            this.txtR6.Size = new System.Drawing.Size(105, 20);
+            this.txtR6.TabIndex = 8;
             // 
             // txtM6
             // 
@@ -760,22 +776,6 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
-            // btnSave
-            // 
-            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
-            this.btnSave.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Text = "บันทึกรายการ";
-            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // txtR6
-            // 
-            this.txtR6.Location = new System.Drawing.Point(477, 244);
-            this.txtR6.Name = "txtR6";
-            this.txtR6.Size = new System.Drawing.Size(105, 20);
-            this.txtR6.TabIndex = 8;
-            // 
             // ProductionOrder_Cancel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -792,7 +792,7 @@
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Cancel Job (FG Q\'ty)";
+            this.Text = "Change Job Order Sheet";
             this.Load += new System.EventHandler(this.Unit_Load);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Unit_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
@@ -801,6 +801,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
             this.radPanel1.ResumeLayout(false);
             this.radPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtR6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtM6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtM4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtM2)).EndInit();
@@ -837,7 +838,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFGNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbQty)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtR6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

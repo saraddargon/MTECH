@@ -440,6 +440,24 @@ namespace StockControl
             rowe.Cells["GroupType"].Value = GroupType;
             rowe.Cells["InvGroup"].Value = InvGroup;
             rowe.Cells["TagCount"].Value = 1;
+            rowe.Cells["PackingSTD"].Value = 1;
+            using (var db = new DataClasses1DataContext())
+            {
+                var t = db.mh_Items.Where(x => x.InternalNo == itemNo).FirstOrDefault();
+                if (t != null)
+                {
+                    var b = db.tb_BomHDs.Where(x => x.id == t.BillOfMaterials).FirstOrDefault();
+                    if(b != null)
+                    {
+                        var std = b.PackingSTD.ToDecimal();
+                        if(std > 0)
+                        {
+                            rowe.Cells["PackingSTD"].Value = std;
+                            rowe.Cells["TagCount"].Value = Math.Ceiling(qty / std);
+                        }
+                    }
+                }
+            }
             rowe.Cells["CstmNo"].Value = cstmNo;
             rowe.Cells["CstmName"].Value = cstmName;
         }
@@ -485,8 +503,8 @@ namespace StockControl
                 if (dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).Count() > 0)
                 {
                     var rowlist = dgvData.Rows.Where(x => x.Cells["S"].Value.ToBool()).ToList();
-                    
-                    if(rowlist.Where(x=>x.Cells["TagCount"].Value.ToDecimal() <= 0).Count() > 0)
+
+                    if (rowlist.Where(x => x.Cells["TagCount"].Value.ToDecimal() <= 0).Count() > 0)
                     {
                         baseClass.Warning("Tag cannot less than 1.");
                         return;
@@ -518,7 +536,7 @@ namespace StockControl
 
                                 string qr = $"{JobNo},{((last) ? q2 : q1)},{printDate},{ofTag}";
                                 byte[] qrCode = dbClss.SaveQRCode2D(qr);
-                                
+
                                 var m = new mh_ProductTAG
                                 {
                                     UserID = ClassLib.Classlib.User,
@@ -543,14 +561,14 @@ namespace StockControl
                             //Save Production Date
                             DateTime ProductionDate = row.Cells["ProductionDate"].Value.ToDateTime().Value.Date;
                             var p = db.mh_ProductionOrders.Where(x => x.JobNo == JobNo).FirstOrDefault();
-                            if(p != null)
+                            if (p != null)
                             {
                                 p.ProductionDate = ProductionDate;
                                 db.SubmitChanges();
                             }
                         }
 
-                        if(rNo > 0)
+                        if (rNo > 0)
                         {
                             Report.Reportx1.Value = new string[2];
                             Report.Reportx1.Value[0] = ""; //BomNo
