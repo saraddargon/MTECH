@@ -1658,7 +1658,6 @@ namespace StockControl
                     vat = amnt * Math.Round(vatA / 100, 2);
                 txtVatAmnt.Value = vat;
                 txtGrandTotal.Value = amnt + dbClss.TDe(txtVatAmnt.Value);
-                a
 
             }
             catch (Exception ex) { MessageBox.Show("err2: " + ex.Message); }
