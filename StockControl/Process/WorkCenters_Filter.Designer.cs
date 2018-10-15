@@ -39,6 +39,8 @@
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cbbWork = new Telerik.WinControls.UI.RadDropDownList();
+            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.dtTo = new Telerik.WinControls.UI.RadDateTimePicker();
@@ -52,17 +54,15 @@
             this.btnImport = new Telerik.WinControls.UI.RadButtonElement();
             this.btnExport = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup1 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.cbbWork = new Telerik.WinControls.UI.RadDropDownList();
-            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbWork)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtTo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtFrom)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cbbWork)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,7 +95,7 @@
             this.radMenuSeparatorItem1,
             this.radMenuItem2});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Capacity Filter";
+            this.radRibbonBar1.Text = "Cycle Time Filter";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
             // 
@@ -158,7 +158,7 @@
             // 
             this.radLabelElement1.Name = "radLabelElement1";
             this.radStatusStrip1.SetSpring(this.radLabelElement1, false);
-            this.radLabelElement1.Text = "Status : Capacity Filter";
+            this.radLabelElement1.Text = "Status : Cycle Time Filter";
             this.radLabelElement1.TextWrap = true;
             // 
             // panel1
@@ -175,6 +175,23 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(549, 268);
             this.panel1.TabIndex = 2;
+            // 
+            // cbbWork
+            // 
+            this.cbbWork.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
+            this.cbbWork.Location = new System.Drawing.Point(129, 111);
+            this.cbbWork.Name = "cbbWork";
+            this.cbbWork.Size = new System.Drawing.Size(209, 20);
+            this.cbbWork.TabIndex = 4;
+            this.cbbWork.ThemeName = "Office2010Blue";
+            // 
+            // radLabel3
+            // 
+            this.radLabel3.Location = new System.Drawing.Point(37, 111);
+            this.radLabel3.Name = "radLabel3";
+            this.radLabel3.Size = new System.Drawing.Size(69, 18);
+            this.radLabel3.TabIndex = 3;
+            this.radLabel3.Text = "Work Center";
             // 
             // radLabel2
             // 
@@ -294,23 +311,6 @@
             this.radRibbonBarButtonGroup1.Text = "radRibbonBarButtonGroup1";
             this.radRibbonBarButtonGroup1.UseCompatibleTextRendering = false;
             // 
-            // cbbWork
-            // 
-            this.cbbWork.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            this.cbbWork.Location = new System.Drawing.Point(129, 111);
-            this.cbbWork.Name = "cbbWork";
-            this.cbbWork.Size = new System.Drawing.Size(209, 20);
-            this.cbbWork.TabIndex = 4;
-            this.cbbWork.ThemeName = "Office2010Blue";
-            // 
-            // radLabel3
-            // 
-            this.radLabel3.Location = new System.Drawing.Point(37, 111);
-            this.radLabel3.Name = "radLabel3";
-            this.radLabel3.Size = new System.Drawing.Size(69, 18);
-            this.radLabel3.TabIndex = 3;
-            this.radLabel3.Text = "Work Center";
-            // 
             // WorkCenters_Filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -327,18 +327,18 @@
             // 
             this.RootElement.ApplyShapeToControl = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Capacity Filter";
+            this.Text = "Cycle Time Filter";
             this.Load += new System.EventHandler(this.Unit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbWork)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtTo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtFrom)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cbbWork)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
