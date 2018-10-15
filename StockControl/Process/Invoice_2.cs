@@ -193,20 +193,96 @@ namespace StockControl
                             Type_Button = 3;
                         lblStatus.Text = mh.StatusHD;
 
+                        lbTotalOrder.Text = StockControl.dbClss.TDe(mh.TotalPriceIncVat).ToString("##,###,##0.00");
+                        txtLessPoDiscountAmount.Text = StockControl.dbClss.TDe(mh.Discount).ToString("##,###,##0.00");
+                        txtLessPoDiscountAmountPersen.Text = StockControl.dbClss.TDe(mh.Discpct).ToString("##,###,##0.00");
+                        txtAfterDiscount.Text = StockControl.dbClss.TDe(mh.AfterDiscount).ToString("##,###,##0.00");
+                        lbOrderSubtotal.Text = StockControl.dbClss.TDe(mh.TotalPrice).ToString("##,###,##0.00");
+                        txtVat.Text = StockControl.dbClss.TDe(mh.VatAmnt).ToString("##,###,##0.00");
+                        txtVattax.Text = StockControl.dbClss.TDe(mh.VatA).ToString("##,###,##0.00");
+
+                        //cbvatDetail.Checked = StockControl.dbClss.TBo(mh.VatDetail);
+                        if (StockControl.dbClss.TDe(txtVat.Text) > 0)
+                            cbVat.Checked = true;
+                        else
+                            cbVat.Checked = false;
+
+
                         var list1 = db.mh_InvoiceDTs.Where(w => w.IVNo == txtIVNo.Text && !w.Status.Equals("Cancel")).ToList();
                         if (list1.Count > 0)
                         {
+                            
+
+                            if (list1.FirstOrDefault().DF.Equals(4))
+                            {
+                                LastDiscount = true;
+                                lastDiscountAmount = false;
+
+                            }
+                            else if (list1.FirstOrDefault().DF.Equals(5))
+                            {
+                                LastDiscount = true;
+                                lastDiscountAmount = true;
+                            }
+                            if (LastDiscount)
+                            {
+                                if (lastDiscountAmount)
+                                {
+                                    CallDiscontLast(true);
+                                    CallSumDiscountLast(true);
+                                }
+                                else
+                                {
+                                    CallDiscontLast(false);
+                                    CallSumDiscountLast(false);
+                                }
+                            }
+
+
                             dgvData.DataSource = list1;
                         }
+                        CalTAX1();
+                        CallTotal();
+                        btnCal_Click(null, null);
+                        if (cbvatDetail.Checked)
+                            getTotal();
+
                         btnSave.Enabled = false;
                         SetRowNo1(dgvData);
 
-                        CallTotal();
+                        //CallTotal();
                     }
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
+        }
+        private void CalTAX1()
+        {
+            try
+            {
+
+                ////decimal TaxAmount = 0;
+                //decimal TaxBase = 0;
+                //decimal RateA = 0;
+                //decimal.TryParse(txtRate.Text, out RateA);
+                //decimal.TryParse(txtTotalsumDiscount.Text, out TaxBase);
+                //decimal SumTax = 0;
+
+                //foreach (var rd in dgvDataTaxes.Rows)
+                //{
+                //    RateA = 0;
+
+                //    rd.Cells["dgvTaxBase"].Value = TaxBase * 1;
+                //    rd.Cells["dgvTaxAmount"].Value = TaxBase * RateA / 100;
+                //    SumTax += (TaxBase * RateA / 100);
+                //}
+
+
+                //txtTotalTax_Taxes.Text = (SumTax).ToString("###,###,##0.00");
+                CalSubtotal();
+            }
+            catch (Exception ex) { MessageBox.Show("CalTax : " + ex.Message); }
         }
         private void LoadFromId()
         {
@@ -536,8 +612,17 @@ namespace StockControl
             {
                 if (cboCustomer.Text=="")
                     err += " “Customer Name:” is empty \n";
+                if (txtTax_identification_number.Text == "")
+                    err += " “เลขประจำตัวผู้เสียภาษี:” is empty \n";
+                if (ddlPayment.Text == "")
+                    err += " “ประเภทการจ่ายเงิน:” is empty \n";
                 if (dtSODate.Text == "")
                     err += " “Delivery Date:” is empty \n";
+                if (dtInvDate.Text == "")
+                    err += " “Invoice Date:” is empty \n";
+                if (dtCredit_Date.Text == "")
+                    err += " “วันที่ครบกำหนด:” is empty \n";
+
 
                 if (dgvData.Rows.Where(x => x.IsVisible).Count() < 1)
                     err += " “Items:” is empty \n";
@@ -656,6 +741,23 @@ namespace StockControl
                         sh1.ContactName = txtContactName.Text;
                         sh1.Active = true;
                         sh1.Type = Type_Button.ToSt();
+                        sh1.AfterDiscount = dbClss.TDe(txtAfterDiscount.Text);
+                        sh1.Discount = StockControl.dbClss.TDe(txtLessPoDiscountAmount.Text);
+                        sh1.Discpct = StockControl.dbClss.TDe(txtLessPoDiscountAmountPersen.Text);
+                        sh1.After_Deposit = dbClss.TDe(txtAfter_Deposit.Text);
+                        sh1.Deposit = dbClss.TDe(txtDeposit.Text);
+                        sh1.Rate = 1;
+                        sh1.Transport = txtTransport.Text;
+                        sh1.Sales_area = txtSales_area.Text;
+                        sh1.Sales_person = txtSales_person.Text;
+                        sh1.Reference = txtReference.Text;
+                        sh1.Payment = ddlPayment.Text;
+                        sh1.Credit = dbClss.TInt(txtCredit.Text);
+                        if(dtCredit_Date.Text !="")
+                            sh1.Credit_Date = Convert.ToDateTime(dtCredit_Date.Value);
+                        sh1.InvDate = Convert.ToDateTime(dtInvDate.Value);
+                        sh1.Tax_identification_number = txtTax_identification_number.Text;
+
                         db.mh_InvoiceHDs.InsertOnSubmit(sh1);
                         db.SubmitChanges();
 
@@ -684,7 +786,12 @@ namespace StockControl
                             nd.Status = "Complete";
                             nd.RefId = Convert.ToInt16(rd.Cells["RefId"].Value);
                             nd.Active = Convert.ToBoolean(true);
-                          
+                            nd.DF = dbClss.TInt(rd.Cells["dgvDF"].Value);
+                            nd.Discount = dbClss.TDe(rd.Cells["dgvDiscount"].Value);
+                            nd.DiscountAmount = dbClss.TDe(rd.Cells["dgvDiscountAmount"].Value);
+                            nd.ExtendedCost = dbClss.TDe(rd.Cells["dgvExtendedCost"].Value);
+                            nd.Rate = 1;
+
                             db.mh_InvoiceDTs.InsertOnSubmit(nd);
                             db.SubmitChanges();
 
