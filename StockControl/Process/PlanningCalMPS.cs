@@ -137,8 +137,8 @@ namespace StockControl
             {
                 if (e.Column.Name.Equals("S") && e.Row.Cells["S"].Value.ToBool())
                 {
-                    if (e.Row.Cells["Status"].Value.ToSt() == "Over Due")
-                        e.Row.Cells["S"].Value = false;
+                    //if (e.Row.Cells["Status"].Value.ToSt() == "Over Due")
+                    //    e.Row.Cells["S"].Value = false;
                 }
             }
         }
@@ -308,7 +308,7 @@ namespace StockControl
             {
                 if (e.Column.Name.Equals("S"))
                 {
-                    e.Cancel = e.Row.Cells["Status"].Value.Equals("Over Due");
+                    //e.Cancel = e.Row.Cells["Status"].Value.Equals("Over Due");
                 }
             }
         }
