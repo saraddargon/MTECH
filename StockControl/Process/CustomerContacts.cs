@@ -151,6 +151,7 @@ namespace StockControl
                     cbVatRegis.Checked = g.VATRegistration;
                     cbPriceIncVat.Checked = g.PriceIncludeingVat;
                     cbActive.Checked = g.Active;
+                    txtVatRegisNo.Text = g.VatRegisNo;
                     var m = db.mh_CustomerContacts.Where(w => w.idCustomer == id && w.Active).ToList();
                     dgvData.AutoGenerateColumns = false;
                     dgvData.DataSource = null;
@@ -214,7 +215,7 @@ namespace StockControl
                     bool newDoc = false;
                     int id = txtid.Text.ToInt();
                     var cstm = db.mh_Customers.Where(x => x.id == id).FirstOrDefault();
-                    if(cstm == null)
+                    if (cstm == null)
                     {
                         newDoc = true;
                         cstm = new mh_Customer();
@@ -226,20 +227,22 @@ namespace StockControl
                     if (!newDoc)
                     {
                         //dbClss.AddHistory(this.Name, "Customer Contact", $" {} to {}", cstm.No);
-                        if(cstm.BranchCode != txtBranchCOde.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Branchcode {cstm.BranchCode} to {txtBranchCOde.Text}", cstm.No);
-                        if(cstm.No != txtNo.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer No {cstm.No} to {txtNo.Text}", cstm.No);
-                        if(cstm.Name != txtName.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer Name {cstm.Name} to {txtName.Text}", cstm.No);
-                        if(cstm.Address != txtAddress.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Address {cstm.Address} to {txtAddress.Text}", cstm.No);
-                        if(cstm.CreditLimit != txtCreditLimit.Value.ToDecimal()) dbClss.AddHistory(this.Name, "Customer Contact", $"Credit Limit {cstm.CreditLimit} to {txtCreditLimit.Value.ToDecimal()}", cstm.No);
-                        if(cstm.ShippingTime != txtShippingTime.Value.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Shipping Time {cstm.ShippingTime} to {txtShippingTime.Value.ToInt()}", cstm.No);
-                        if(cstm.AttachFile != txtAttachFile.Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Attach file {cstm.AttachFile} to {txtAttachFile.Value.ToSt()}", cstm.No);
-                        if(cstm.VATRegistration != cbVatRegis.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Vat Regis. {cstm.VATRegistration} to {cbVatRegis.Checked}", cstm.No);
-                        if(cstm.PriceIncludeingVat != cbPriceIncVat.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Price Inc. Vat {cstm.PriceIncludeingVat} to {cbPriceIncVat.Checked}", cstm.No);
-                        if(cstm.ShippingAddress != txtShippingAddress.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Shipping Address {cstm.ShippingAddress} to {txtShippingAddress.Text}", cstm.No);
-                        if(cstm.CustomerGroup != cbbCustomerGroup.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer Group {cstm.CustomerGroup} to {cbbCustomerGroup.SelectedValue.ToInt()}", cstm.No);
-                        if(cstm.VatGroup != cbbVatGroup.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Vat Group {cstm.VatGroup} to {cbbVatGroup.SelectedValue.ToInt()}", cstm.No);
-                        if(cstm.DefaultCurrency != cbbCurrency.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Currency {cstm.DefaultCurrency} to {cbbCurrency.SelectedValue.ToInt()}", cstm.No);
-                        if(cstm.Active != cbActive.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Status Customer {cbActive.Checked}", cstm.No);
+                        if (cstm.BranchCode != txtBranchCOde.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Branchcode {cstm.BranchCode} to {txtBranchCOde.Text}", cstm.No);
+                        if (cstm.No != txtNo.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer No {cstm.No} to {txtNo.Text}", cstm.No);
+                        if (cstm.Name != txtName.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer Name {cstm.Name} to {txtName.Text}", cstm.No);
+                        if (cstm.Address != txtAddress.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Address {cstm.Address} to {txtAddress.Text}", cstm.No);
+                        if (cstm.CreditLimit != txtCreditLimit.Value.ToDecimal()) dbClss.AddHistory(this.Name, "Customer Contact", $"Credit Limit {cstm.CreditLimit} to {txtCreditLimit.Value.ToDecimal()}", cstm.No);
+                        if (cstm.ShippingTime != txtShippingTime.Value.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Shipping Time {cstm.ShippingTime} to {txtShippingTime.Value.ToInt()}", cstm.No);
+                        if (cstm.AttachFile != txtAttachFile.Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Attach file {cstm.AttachFile} to {txtAttachFile.Value.ToSt()}", cstm.No);
+                        if (cstm.VATRegistration != cbVatRegis.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Vat Regis. {cstm.VATRegistration} to {cbVatRegis.Checked}", cstm.No);
+                        if (cstm.PriceIncludeingVat != cbPriceIncVat.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Price Inc. Vat {cstm.PriceIncludeingVat} to {cbPriceIncVat.Checked}", cstm.No);
+                        if (cstm.ShippingAddress != txtShippingAddress.Text) dbClss.AddHistory(this.Name, "Customer Contact", $"Shipping Address {cstm.ShippingAddress} to {txtShippingAddress.Text}", cstm.No);
+                        if (cstm.CustomerGroup != cbbCustomerGroup.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Customer Group {cstm.CustomerGroup} to {cbbCustomerGroup.SelectedValue.ToInt()}", cstm.No);
+                        if (cstm.VatGroup != cbbVatGroup.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Vat Group {cstm.VatGroup} to {cbbVatGroup.SelectedValue.ToInt()}", cstm.No);
+                        if (cstm.DefaultCurrency != cbbCurrency.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Currency {cstm.DefaultCurrency} to {cbbCurrency.SelectedValue.ToInt()}", cstm.No);
+                        if (cstm.Active != cbActive.Checked) dbClss.AddHistory(this.Name, "Customer Contact", $"Status Customer {cbActive.Checked}", cstm.No);
+                        if (cstm.VatRegisNo.ToSt() != txtVatRegisNo.Text.Trim()) dbClss.AddHistory(this.Name, "Customer Contact", $"Vat Registration No. from {cstm.VatRegisNo.ToSt()} to {txtVatRegisNo.Text.Trim()}", cstm.No);
+
                     }
 
                     cstm.BranchCode = txtBranchCOde.Text;
@@ -256,6 +259,7 @@ namespace StockControl
                     cstm.VatGroup = cbbVatGroup.SelectedValue.ToInt();
                     cstm.DefaultCurrency = cbbCurrency.SelectedValue.ToInt();
                     cstm.Active = cbActive.Checked;
+                    cstm.VatRegisNo = txtVatRegisNo.Text.Trim();
                     db.SubmitChanges();
                     //file
                     string fullPath = txtAttachFile.Value.ToSt();
@@ -299,11 +303,11 @@ namespace StockControl
 
                         if (!newC)
                         {
-                            if(con.Def != c.Cells["Def"].Value.ToBool()) dbClss.AddHistory(this.Name, "Customer Contact", $"Default from {con.Def} to {c.Cells["Def"].Value.ToBool()}", cstm.No);
-                            if(con.ContactName != c.Cells["ContactName"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Contact Name from {con.ContactName} to {c.Cells["ContactName"].Value.ToSt()}", cstm.No);
-                            if(con.Tel != c.Cells["Tel"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Telephone no. from {con.Tel} to {c.Cells["Tel"].Value.ToSt()}", cstm.No);
-                            if(con.Fax != c.Cells["Fax"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Fax no. from {con.Fax} to {c.Cells["Fax"].Value.ToSt()}", cstm.No);
-                            if(con.Email != c.Cells["Email"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Email from {con.Email} to {c.Cells["Email"].Value.ToSt()}", cstm.No);
+                            if (con.Def != c.Cells["Def"].Value.ToBool()) dbClss.AddHistory(this.Name, "Customer Contact", $"Default from {con.Def} to {c.Cells["Def"].Value.ToBool()}", cstm.No);
+                            if (con.ContactName != c.Cells["ContactName"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Contact Name from {con.ContactName} to {c.Cells["ContactName"].Value.ToSt()}", cstm.No);
+                            if (con.Tel != c.Cells["Tel"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Telephone no. from {con.Tel} to {c.Cells["Tel"].Value.ToSt()}", cstm.No);
+                            if (con.Fax != c.Cells["Fax"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Fax no. from {con.Fax} to {c.Cells["Fax"].Value.ToSt()}", cstm.No);
+                            if (con.Email != c.Cells["Email"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Email from {con.Email} to {c.Cells["Email"].Value.ToSt()}", cstm.No);
                         }
 
                         con.idCustomer = cstm.id;
@@ -331,7 +335,7 @@ namespace StockControl
                         int idDt = dgvData.Rows[0].Cells["id"].Value.ToInt();
                         dgvData.Rows[0].Cells["Def"].Value = true;
                         var m = db.mh_CustomerContacts.Where(x => x.id == idDt).FirstOrDefault();
-                        if(m != null)
+                        if (m != null)
                             m.Def = true;
                         db.SubmitChanges();
                     }
@@ -361,7 +365,7 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     var cstm = db.mh_Customers.Where(x => x.id == id).FirstOrDefault();
-                    if(cstm != null)
+                    if (cstm != null)
                     {
                         cstm.Active = false;
                         db.SubmitChanges();
@@ -376,7 +380,7 @@ namespace StockControl
                 MessageBox.Show(ex.Message);
                 dbClss.AddError("Delete Cusomter Contact", ex.Message, this.Name);
             }
-            
+
 
 
             return ck;
@@ -477,7 +481,7 @@ namespace StockControl
                     err += "- Vat Group is empty.\n";
                 if (cbbCurrency.SelectedValue.ToInt() == 0)
                     err += "- Currency is empty.\n";
-                if(dgvData.Rows.Count == 0)
+                if (dgvData.Rows.Count == 0)
                 {
                     err += "- Contact data is empty.\n";
                 }
@@ -486,6 +490,8 @@ namespace StockControl
                     if (dgvData.Rows.Where(x => x.Cells["Def"].Value.ToBool()).Count() == 0)
                         err += "- Not set Default Contact.\n";
                 }
+                if (txtVatRegisNo.Text.Trim() == "")
+                    err += "- Vat Regis no. is empty.\n";
 
                 if (!err.Equals(""))
                     MessageBox.Show(err);
@@ -804,7 +810,7 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     var m = db.mh_CustomerContacts.Where(x => x.id == idDt).FirstOrDefault();
-                    if(m != null)
+                    if (m != null)
                     {
                         m.Active = false;
                         db.SubmitChanges();

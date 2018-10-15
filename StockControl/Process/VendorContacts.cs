@@ -150,6 +150,7 @@ namespace StockControl
                     cbVatRegis.Checked = g.VATRegistration;
                     cbPriceIncVat.Checked = g.PriceIncludeingVat;
                     cbActive.Checked = g.Active;
+                    txtVatRegisNo.Text = g.VatRegisNo;
 
                     var m = db.mh_VendorContacts.Where(w => w.VendorId == id && w.Active).ToList();
                     dgvData.AutoGenerateColumns = false;
@@ -235,6 +236,7 @@ namespace StockControl
                         if (vndr.VatGroup != cbbVatGroup.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Vendor", $"Vat Group from {vndr.VatGroup} to {cbbVatGroup.SelectedValue.ToInt()}", vNo);
                         if (vndr.DefaultCurrency != cbbCurrency.SelectedValue.ToInt()) dbClss.AddHistory(this.Name, "Vendor", $"Default Currency from {vndr.DefaultCurrency} to {cbbCurrency.SelectedValue.ToInt()}", vNo);
                         if (vndr.Active != cbActive.Checked) dbClss.AddHistory(this.Name, "Vendor", $"Status Active from {vndr.Active} to {cbActive.Checked}", vNo);
+                        if (vndr.VatRegisNo.ToSt() != txtVatRegisNo.Text.Trim()) dbClss.AddHistory(this.Name, "Vendor", $"Vat Registration No. from {vndr.VatRegisNo} to {txtVatRegisNo.Text.Trim()}", vNo);
                         if (txtAttachFile.Value.ToSt() != "")
                         {
                             if (vndr.AttachFile != Path.GetFileName(txtAttachFile.Value.ToSt()))
@@ -254,6 +256,7 @@ namespace StockControl
                     vndr.VatGroup = cbbVatGroup.SelectedValue.ToInt();
                     vndr.DefaultCurrency = cbbCurrency.SelectedValue.ToInt();
                     vndr.Active = cbActive.Checked;
+                    vndr.VatRegisNo = txtVatRegisNo.Text.Trim();
                     db.SubmitChanges();
                     //file
                     string fullPath = txtAttachFile.Value.ToSt();
@@ -512,6 +515,8 @@ namespace StockControl
                     err += "- Vat Group is empty.\n";
                 if (cbbCurrency.SelectedValue.ToInt() == 0)
                     err += "- Currency is empty.\n";
+                if (txtVatRegisNo.Text.Trim() == "")
+                    err += "- Vat Regis No. is empty.\n";
                 if (dgvData.Rows.Count == 0)
                 {
                     err += "- Vendor contact is empty.\n";
