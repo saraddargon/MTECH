@@ -728,10 +728,10 @@
         <elementListCompartment Id="aeff2de3-3343-40cf-afd2-1460a262296b" absoluteBounds="5.39, 28.21, 1.9700000000000002, 4.4800211588541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="a15d08b4-caea-461e-910e-b1c88101fcd2" isExpanded="false" absoluteBounds="14.5, 26.75, 2, 0.45">
+    <classShape Id="e8e1e3a8-7aab-4906-b0d2-98be3956d61a" absoluteBounds="16.875, 27.375, 2, 5.4246240234375">
       <DataClassMoniker Name="/DataClasses1DataContext/tb_BomHD" />
       <nestedChildShapes>
-        <elementListCompartment Id="31f22043-3e7f-40be-8266-c09493f61917" absoluteBounds="14.515, 27.21, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="2c859149-9f96-472e-a82b-fb5b42b96416" absoluteBounds="16.89, 27.835, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

@@ -217,6 +217,7 @@ namespace StockControl
                                  ,PackingSTD = a.PackingSTD
                                  ,Size = a.Size
                                  ,RevDate = a.RevDate
+                                 ,Model = a.Model
 
                              }//.Where(ab => ab.VendorNo.Contains(Vendorno))
                               ).ToList();
@@ -256,6 +257,7 @@ namespace StockControl
                         txtSize.Text = dbClss.TSt(g.FirstOrDefault().Size);
                         sePackingSTD.Value = dbClss.TDe(g.FirstOrDefault().PackingSTD);
                         dtRevDate.Value = Convert.ToDateTime(g.FirstOrDefault().RevDate, new CultureInfo("en-US"));
+                        txtModel.Text = dbClss.TSt(g.FirstOrDefault().Model);
 
                         txtCreateby.Text = StockControl.dbClss.TSt(g.FirstOrDefault().CreateBy);
                         DateTime temp = Convert.ToDateTime(g.FirstOrDefault().CreateDate,new CultureInfo("en-US"));
@@ -762,6 +764,7 @@ namespace StockControl
             txtCustomerNo.Text = "";
             txtSize.Text = "";
             sePackingSTD.Value = 0;
+            txtModel.Text = "";
 
             txtRemarkHD.Text = "";
             dt_HD.Rows.Clear();

@@ -50336,6 +50336,8 @@ namespace StockControl
 		
 		private string _BomNo;
 		
+		private string _Model;
+		
 		private string _Year_;
 		
 		private string _Month_;
@@ -50386,6 +50388,8 @@ namespace StockControl
     partial void OnPartNoChanged();
     partial void OnBomNoChanging(string value);
     partial void OnBomNoChanged();
+    partial void OnModelChanging(string value);
+    partial void OnModelChanged();
     partial void OnYear_Changing(string value);
     partial void OnYear_Changed();
     partial void OnMonth_Changing(string value);
@@ -50489,6 +50493,26 @@ namespace StockControl
 					this._BomNo = value;
 					this.SendPropertyChanged("BomNo");
 					this.OnBomNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Model", DbType="VarChar(100)")]
+		public string Model
+		{
+			get
+			{
+				return this._Model;
+			}
+			set
+			{
+				if ((this._Model != value))
+				{
+					this.OnModelChanging(value);
+					this.SendPropertyChanging();
+					this._Model = value;
+					this.SendPropertyChanged("Model");
+					this.OnModelChanged();
 				}
 			}
 		}

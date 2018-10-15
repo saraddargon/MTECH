@@ -2295,6 +2295,7 @@
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="PartNo" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="BomNo" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Model" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="Year_" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
       <Column Name="Month_" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
       <Column Name="PartName" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
