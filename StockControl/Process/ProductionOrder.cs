@@ -1681,14 +1681,26 @@ namespace StockControl
                                     }
                                     else
                                     {
-                                        var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, idJob, 0, idWorkCenter);
-                                        capacityLoad.Add(capaLoad);
+                                        var diffTime = (timeEnd - timeStart).TotalMinutes.ToDecimal();
 
-                                        wl.CapacityAlocateX += CapaUseX;
-                                        wl.CapacityAlocate += CapaUse;
-                                        CapaUseX = 0;
-                                        CapaUse = 0;
+                                        //wl.CapacityAlocateX += CapaUseX;
+                                        //wl.CapacityAlocate += CapaUse;
+                                        //CapaUseX = 0;
+                                        //CapaUse = 0;
+                                        wl.CapacityAlocateX += diffTime;
+                                        wl.CapacityAlocate += diffTime;
+                                        CapaUseX -= diffTime;
+                                        CapaUse -= diffTime;
+                                        var tCapa = diffTime;
+                                        if (CapaUse < 0)
+                                        {
+                                            tCapa = tCapa + CapaUse; // a + (-b)
+                                            CapaUse = 0;
+                                        }
                                         foundTime = true;
+
+                                        var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, thisMain, 0, idWorkCenter);
+                                        capacityLoad.Add(capaLoad);
                                     }
 
                                     if (foundTime)
