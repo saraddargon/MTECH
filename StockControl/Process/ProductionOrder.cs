@@ -1865,9 +1865,9 @@ namespace StockControl
             {
                 Report.Reportx1.Value = new string[1];
                 Report.Reportx1.Value[0] = txtJobNo.Text.Trim();
-                Report.Reportx1.WReport = "ProductionRM";
+                Report.Reportx1.WReport = "PickSlip";
                 //Report.Reportx1 op = new Report.Reportx1("ReportShipping2.rpt");
-                Report.Reportx1 op = new Report.Reportx1("Movement_InOut.rpt");
+                Report.Reportx1 op = new Report.Reportx1("PickSlip.rpt");
 
                 op.Show();
             }
