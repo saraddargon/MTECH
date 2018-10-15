@@ -1699,7 +1699,7 @@ namespace StockControl
                                         }
                                         foundTime = true;
 
-                                        var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, thisMain, 0, idWorkCenter);
+                                        var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, idJob, 0, idWorkCenter);
                                         capacityLoad.Add(capaLoad);
                                     }
 
