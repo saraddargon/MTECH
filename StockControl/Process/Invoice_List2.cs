@@ -306,7 +306,7 @@ namespace StockControl
                     Report.Reportx1.Value[0] = InvNo;
                     Report.Reportx1.Value[1] = InvNo;
                     Report.Reportx1.WReport = "Invoice";
-                    Report.Reportx1 op = new Report.Reportx1("Invoice.rpt");
+                    Report.Reportx1 op = new Report.Reportx1("InvoiceDot.rpt");
                     op.Show();
                 }
             }
