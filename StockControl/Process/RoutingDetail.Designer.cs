@@ -454,7 +454,6 @@
             gridViewDecimalColumn3.FieldName = "RunTime";
             gridViewDecimalColumn3.HeaderText = "Run Time";
             gridViewDecimalColumn3.Name = "RunTime";
-            gridViewDecimalColumn3.ReadOnly = true;
             gridViewDecimalColumn3.Width = 86;
             gridViewDecimalColumn4.EnableExpressionEditor = false;
             gridViewDecimalColumn4.FieldName = "UnitCost";

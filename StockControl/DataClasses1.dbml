@@ -855,16 +855,6 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_Routing" Member="mh_Routings">
-    <Type Name="mh_Routing">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="RoutingNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="RoutingName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="RoutingUOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.mh_RoutingDT" Member="mh_RoutingDTs">
     <Type Name="mh_RoutingDT">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -2296,6 +2286,23 @@
       <Column Name="OutShip" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
       <Column Name="OutPlan" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
       <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_Routing" Member="mh_Routings">
+    <Type Name="mh_Routing">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoutingNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RoutingName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="RoutingUOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="idBOMHD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Default_" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Version" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Min" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Hr" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Day" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Month" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">
