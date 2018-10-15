@@ -86092,6 +86092,8 @@ namespace StockControl
 		
 		private string _ItemNo;
 		
+		private string _ItemName;
+		
 		private System.Nullable<int> _YY;
 		
 		private System.Nullable<int> _MM;
@@ -86332,6 +86334,22 @@ namespace StockControl
 				if ((this._ItemNo != value))
 				{
 					this._ItemNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this._ItemName = value;
 				}
 			}
 		}

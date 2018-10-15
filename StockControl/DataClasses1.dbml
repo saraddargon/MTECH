@@ -5429,6 +5429,7 @@
       <Column Name="CustomerNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="CustomerName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="YY" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="MM" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Dall" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
