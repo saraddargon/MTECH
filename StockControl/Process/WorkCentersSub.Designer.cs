@@ -429,7 +429,7 @@
             gridViewDecimalColumn1.Width = 100;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "Capacity";
-            gridViewDecimalColumn2.HeaderText = "Capacity";
+            gridViewDecimalColumn2.HeaderText = "Cycle Time";
             gridViewDecimalColumn2.Name = "Capacity";
             gridViewDecimalColumn2.Width = 77;
             gridViewTextBoxColumn7.EnableExpressionEditor = false;

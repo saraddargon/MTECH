@@ -354,7 +354,8 @@
             this.btnCalendar.Image = ((System.Drawing.Image)(resources.GetObject("btnCalendar.Image")));
             this.btnCalendar.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnCalendar.Name = "btnCalendar";
-            this.btnCalendar.Text = "Capacity\r\nAvailable";
+            this.btnCalendar.Text = "Cycle Time \r\nAvailable";
+            this.btnCalendar.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnCalendar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnCalendar.Click += new System.EventHandler(this.btnCalendar_Click);
             // 
@@ -479,7 +480,7 @@
             gridViewDecimalColumn1.Width = 104;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "Capacity";
-            gridViewDecimalColumn2.HeaderText = "Capacity";
+            gridViewDecimalColumn2.HeaderText = "Cycle Time";
             gridViewDecimalColumn2.Name = "Capacity";
             gridViewDecimalColumn2.Width = 78;
             gridViewComboBoxColumn2.EnableExpressionEditor = false;

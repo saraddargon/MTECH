@@ -171,11 +171,23 @@ namespace StockControl
                 txtRoutingName.Text = g.RoutingName.ToSt();
                 cbbUOM.SelectedValue = g.RoutingUOM;
                 txtDescription.Text = g.Description;
+                txtMin.Value = g.Min.ToDecimal();
+                txtHr.Value = g.Hr.ToDecimal();
+                txtDay.Value = g.Day.ToDecimal();
+                txtMonth.Value = g.Month.ToDecimal();
 
                 var dt = db.mh_RoutingDTs.Where(x => x.RoutingId == RoutingId && x.Active).OrderBy(x => x.RNo).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(dt);
                 dgvData.DataSource = null;
                 dgvData.DataSource = dt2;
+
+                foreach (var item in dgvData.Rows)
+                {
+                    var w = db.mh_WorkCenters.Where(x => x.id == item.Cells["WorkCenter"].Value.ToInt()).FirstOrDefault();
+                    var m = 0.00m;
+                    if (w != null) m = w.Capacity;
+                    item.Cells["Capacity"].Value = m;
+                }
 
             }
 
@@ -191,6 +203,8 @@ namespace StockControl
             int C = 0;
             try
             {
+                CalE();
+
                 int Rid = txtid.Text.ToInt();
                 string RoutingNo = txtRoutingNo.Text.Trim();
                 string RoutingName = txtRoutingName.Text.Trim();
@@ -212,6 +226,10 @@ namespace StockControl
                     hd.Description = Description;
                     hd.RoutingUOM = UOM;
                     hd.Active = true;
+                    hd.Min = txtMin.Value.ToDecimal();
+                    hd.Hr = txtHr.Value.ToDecimal();
+                    hd.Day = txtDay.Value.ToDecimal();
+                    hd.Month = txtMonth.Value.ToDecimal();
                     db.SubmitChanges();
                     txtid.Text = hd.id.ToSt();
                     RoutingId = hd.id;
@@ -436,6 +454,7 @@ namespace StockControl
                         {
                             e.Row.Cells["Description"].Value = t.WorkCenterName;
                             e.Row.Cells["UnitCost"].Value = t.CostPerUOM;
+                            e.Row.Cells["Capacity"].Value = t.Capacity;
                         }
                     }
                 }
@@ -666,5 +685,43 @@ namespace StockControl
                 a.DropDownSizingMode = SizingMode.UpDownAndRightBottom;
             }
         }
+
+        private void btnCal_Click(object sender, EventArgs e)
+        {
+            CalE();
+        }
+        void CalE()
+        {
+            txtMin.Value = 0;
+            txtHr.Value = 0;
+            txtDay.Value = 0;
+            txtMonth.Value = 0;
+
+            var setup = 0.00m;
+            var wait = 0.00m;
+            var run = 0.00m;
+            var allCapa = 0.00m;
+
+            using (var db = new DataClasses1DataContext())
+            {
+                foreach (var item in dgvData.Rows)
+                {
+                    int idWorkCenter = item.Cells["WorkCenter"].Value.ToInt();
+                    var w = db.mh_WorkCenters.Where(x => x.id == idWorkCenter).FirstOrDefault();
+                    if (w == null) continue;
+                    allCapa += w.Capacity;
+                    setup += item.Cells["SetupTime"].Value.ToDecimal();
+                    wait += item.Cells["WaitTime"].Value.ToDecimal();
+                    run += item.Cells["RunTime"].Value.ToDecimal();
+                }
+            }
+
+            var allMin = Math.Round((allCapa / (setup + wait + run)) / dgvData.Rows.Count, 2);
+            txtMin.Value = allMin;
+            txtHr.Value = Math.Round(allMin * 60, 2);
+            txtDay.Value = Math.Round(allMin * 60 * 24, 2);
+            txtMonth.Value = Math.Round(allMin * 60 * 24 * 22, 2);
+        }
+
     }
 }

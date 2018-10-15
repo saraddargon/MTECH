@@ -141,7 +141,7 @@
             this.btnCapaView.Image = ((System.Drawing.Image)(resources.GetObject("btnCapaView.Image")));
             this.btnCapaView.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnCapaView.Name = "btnCapaView";
-            this.btnCapaView.Text = "<html><p>Capacity</p><p>Available</p></html>";
+            this.btnCapaView.Text = "<html><p>Cycle Time</p><p>Available</p></html>";
             this.btnCapaView.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnCapaView.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnCapaView.Click += new System.EventHandler(this.btnCapaView_Click);
