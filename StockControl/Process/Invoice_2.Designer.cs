@@ -46,6 +46,14 @@
             Telerik.WinControls.UI.GridViewDateTimeColumn gridViewDateTimeColumn1 = new Telerik.WinControls.UI.GridViewDateTimeColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn8 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn9 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn6 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn7 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn8 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn9 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn10 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn11 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn12 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn13 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Invoice_2));
             Telerik.WinControls.UI.RadListDataItem radListDataItem1 = new Telerik.WinControls.UI.RadListDataItem();
@@ -71,11 +79,11 @@
             this.radLabel18 = new Telerik.WinControls.UI.RadLabel();
             this.txtLessPoDiscountAmountPersen = new Telerik.WinControls.UI.RadTextBox();
             this.txtLessPoDiscountAmount = new Telerik.WinControls.UI.RadTextBox();
-            this.txtVatA = new Telerik.WinControls.UI.RadMaskedEditBox();
+            this.txtVattax = new Telerik.WinControls.UI.RadMaskedEditBox();
             this.cbVat = new Telerik.WinControls.UI.RadCheckBox();
-            this.txtGrandTotal = new Telerik.WinControls.UI.RadMaskedEditBox();
-            this.txtVatAmnt = new Telerik.WinControls.UI.RadMaskedEditBox();
-            this.txtTotal = new Telerik.WinControls.UI.RadMaskedEditBox();
+            this.lbTotalOrder = new Telerik.WinControls.UI.RadMaskedEditBox();
+            this.txtVat = new Telerik.WinControls.UI.RadMaskedEditBox();
+            this.lbOrderSubtotal = new Telerik.WinControls.UI.RadMaskedEditBox();
             this.txtRemark = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel6 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel12 = new Telerik.WinControls.UI.RadLabel();
@@ -159,6 +167,10 @@
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
+            this.txtPlusExcededTax = new Telerik.WinControls.UI.RadTextBox();
+            this.txtTotalsumDiscount = new Telerik.WinControls.UI.RadTextBox();
+            this.cbvatDetail = new Telerik.WinControls.UI.RadCheckBox();
+            this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -176,11 +188,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel18)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLessPoDiscountAmountPersen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLessPoDiscountAmount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtVatA)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtVattax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbVat)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtGrandTotal)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtVatAmnt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTotal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbTotalOrder)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtVat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbOrderSubtotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel12)).BeginInit();
@@ -237,6 +249,10 @@
             this.radGroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPlusExcededTax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalsumDiscount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbvatDetail)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -396,6 +412,59 @@
             gridViewTextBoxColumn9.HeaderText = "RefId";
             gridViewTextBoxColumn9.IsVisible = false;
             gridViewTextBoxColumn9.Name = "RefId";
+            gridViewDecimalColumn6.EnableExpressionEditor = false;
+            gridViewDecimalColumn6.FieldName = "ExtendedCost";
+            gridViewDecimalColumn6.FormatString = "{0:N2}";
+            gridViewDecimalColumn6.HeaderText = "ExtendedCost";
+            gridViewDecimalColumn6.Name = "dgvExtendedCost";
+            gridViewDecimalColumn6.Width = 114;
+            gridViewDecimalColumn7.EnableExpressionEditor = false;
+            gridViewDecimalColumn7.FieldName = "Discount";
+            gridViewDecimalColumn7.FormatString = "{0:N2}";
+            gridViewDecimalColumn7.HeaderText = "Discount";
+            gridViewDecimalColumn7.Name = "dgvDiscount";
+            gridViewDecimalColumn7.ReadOnly = true;
+            gridViewDecimalColumn7.Width = 92;
+            gridViewDecimalColumn8.EnableExpressionEditor = false;
+            gridViewDecimalColumn8.FieldName = "DiscountP";
+            gridViewDecimalColumn8.FormatString = "{0:N2}";
+            gridViewDecimalColumn8.HeaderText = "DiscountAmount";
+            gridViewDecimalColumn8.Name = "dgvDiscountAmount";
+            gridViewDecimalColumn8.ReadOnly = true;
+            gridViewDecimalColumn8.Width = 111;
+            gridViewDecimalColumn9.EnableExpressionEditor = false;
+            gridViewDecimalColumn9.FieldName = "DiscountE";
+            gridViewDecimalColumn9.FormatString = "{0:N2}";
+            gridViewDecimalColumn9.HeaderText = "Discount Ext. Cost";
+            gridViewDecimalColumn9.Name = "dgvDiscountExt";
+            gridViewDecimalColumn9.ReadOnly = true;
+            gridViewDecimalColumn9.Width = 120;
+            gridViewDecimalColumn10.EnableExpressionEditor = false;
+            gridViewDecimalColumn10.FieldName = "NetofTAX";
+            gridViewDecimalColumn10.FormatString = "{0:N2}";
+            gridViewDecimalColumn10.HeaderText = "NetofTAX";
+            gridViewDecimalColumn10.Name = "dgvNetofTAX";
+            gridViewDecimalColumn10.ReadOnly = true;
+            gridViewDecimalColumn10.Width = 108;
+            gridViewDecimalColumn11.EnableExpressionEditor = false;
+            gridViewDecimalColumn11.FieldName = "VatAmount";
+            gridViewDecimalColumn11.FormatString = "{0:N2}";
+            gridViewDecimalColumn11.HeaderText = "VatAmount";
+            gridViewDecimalColumn11.Name = "dgvVatAmount";
+            gridViewDecimalColumn11.ReadOnly = true;
+            gridViewDecimalColumn11.Width = 107;
+            gridViewDecimalColumn12.EnableExpressionEditor = false;
+            gridViewDecimalColumn12.FieldName = "SubTotal";
+            gridViewDecimalColumn12.FormatString = "{0:N2}";
+            gridViewDecimalColumn12.HeaderText = "SubTotal";
+            gridViewDecimalColumn12.Name = "dgvSubTotal";
+            gridViewDecimalColumn12.ReadOnly = true;
+            gridViewDecimalColumn12.Width = 99;
+            gridViewDecimalColumn13.EnableExpressionEditor = false;
+            gridViewDecimalColumn13.FieldName = "DF";
+            gridViewDecimalColumn13.HeaderText = "DF";
+            gridViewDecimalColumn13.Name = "dgvDF";
+            gridViewDecimalColumn13.ReadOnly = true;
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
@@ -413,7 +482,15 @@
             gridViewTextBoxColumn7,
             gridViewDateTimeColumn1,
             gridViewTextBoxColumn8,
-            gridViewTextBoxColumn9});
+            gridViewTextBoxColumn9,
+            gridViewDecimalColumn6,
+            gridViewDecimalColumn7,
+            gridViewDecimalColumn8,
+            gridViewDecimalColumn9,
+            gridViewDecimalColumn10,
+            gridViewDecimalColumn11,
+            gridViewDecimalColumn12,
+            gridViewDecimalColumn13});
             this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.dgvData.Name = "dgvData";
@@ -475,6 +552,10 @@
             // pnFootter
             // 
             this.pnFootter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.pnFootter.Controls.Add(this.cbvatDetail);
+            this.pnFootter.Controls.Add(this.radLabel4);
+            this.pnFootter.Controls.Add(this.txtPlusExcededTax);
+            this.pnFootter.Controls.Add(this.txtTotalsumDiscount);
             this.pnFootter.Controls.Add(this.btnCal);
             this.pnFootter.Controls.Add(this.radLabel30);
             this.pnFootter.Controls.Add(this.radLabel29);
@@ -485,11 +566,11 @@
             this.pnFootter.Controls.Add(this.radLabel18);
             this.pnFootter.Controls.Add(this.txtLessPoDiscountAmountPersen);
             this.pnFootter.Controls.Add(this.txtLessPoDiscountAmount);
-            this.pnFootter.Controls.Add(this.txtVatA);
+            this.pnFootter.Controls.Add(this.txtVattax);
             this.pnFootter.Controls.Add(this.cbVat);
-            this.pnFootter.Controls.Add(this.txtGrandTotal);
-            this.pnFootter.Controls.Add(this.txtVatAmnt);
-            this.pnFootter.Controls.Add(this.txtTotal);
+            this.pnFootter.Controls.Add(this.lbTotalOrder);
+            this.pnFootter.Controls.Add(this.txtVat);
+            this.pnFootter.Controls.Add(this.lbOrderSubtotal);
             this.pnFootter.Controls.Add(this.txtRemark);
             this.pnFootter.Controls.Add(this.radLabel6);
             this.pnFootter.Controls.Add(this.radLabel12);
@@ -514,6 +595,7 @@
             this.btnCal.Text = "Cal.";
             this.btnCal.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCal.ThemeName = "Office2010Blue";
+            this.btnCal.Click += new System.EventHandler(this.btnCal_Click);
             // 
             // radLabel30
             // 
@@ -610,6 +692,7 @@
             this.txtLessPoDiscountAmountPersen.TabIndex = 16;
             this.txtLessPoDiscountAmountPersen.Text = "0.00";
             this.txtLessPoDiscountAmountPersen.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLessPoDiscountAmountPersen_KeyPress);
+            this.txtLessPoDiscountAmountPersen.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtLessPoDiscountAmountPersen_PreviewKeyDown);
             // 
             // txtLessPoDiscountAmount
             // 
@@ -623,20 +706,21 @@
             this.txtLessPoDiscountAmount.TabIndex = 17;
             this.txtLessPoDiscountAmount.Text = "0.00";
             this.txtLessPoDiscountAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLessPoDiscountAmount_KeyPress);
+            this.txtLessPoDiscountAmount.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtLessPoDiscountAmount_PreviewKeyDown);
             // 
-            // txtVatA
+            // txtVattax
             // 
-            this.txtVatA.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtVatA.Location = new System.Drawing.Point(632, 115);
-            this.txtVatA.Mask = "n2";
-            this.txtVatA.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
-            this.txtVatA.Name = "txtVatA";
-            this.txtVatA.Size = new System.Drawing.Size(46, 20);
-            this.txtVatA.TabIndex = 14;
-            this.txtVatA.TabStop = false;
-            this.txtVatA.Text = "7.00";
-            this.txtVatA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtVatA.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVatA_KeyDown);
+            this.txtVattax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtVattax.Location = new System.Drawing.Point(632, 115);
+            this.txtVattax.Mask = "n2";
+            this.txtVattax.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            this.txtVattax.Name = "txtVattax";
+            this.txtVattax.Size = new System.Drawing.Size(46, 20);
+            this.txtVattax.TabIndex = 14;
+            this.txtVattax.TabStop = false;
+            this.txtVattax.Text = "7.00";
+            this.txtVattax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtVattax.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVatA_KeyDown);
             // 
             // cbVat
             // 
@@ -648,47 +732,47 @@
             this.cbVat.Text = "Vat";
             this.cbVat.ToggleStateChanged += new Telerik.WinControls.UI.StateChangedEventHandler(this.cbVat_ToggleStateChanged);
             // 
-            // txtGrandTotal
+            // lbTotalOrder
             // 
-            this.txtGrandTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtGrandTotal.Location = new System.Drawing.Point(706, 138);
-            this.txtGrandTotal.Mask = "n2";
-            this.txtGrandTotal.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
-            this.txtGrandTotal.Name = "txtGrandTotal";
-            this.txtGrandTotal.ReadOnly = true;
-            this.txtGrandTotal.Size = new System.Drawing.Size(140, 20);
-            this.txtGrandTotal.TabIndex = 12;
-            this.txtGrandTotal.TabStop = false;
-            this.txtGrandTotal.Text = "0.00";
-            this.txtGrandTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.lbTotalOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbTotalOrder.Location = new System.Drawing.Point(706, 138);
+            this.lbTotalOrder.Mask = "n2";
+            this.lbTotalOrder.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            this.lbTotalOrder.Name = "lbTotalOrder";
+            this.lbTotalOrder.ReadOnly = true;
+            this.lbTotalOrder.Size = new System.Drawing.Size(140, 20);
+            this.lbTotalOrder.TabIndex = 12;
+            this.lbTotalOrder.TabStop = false;
+            this.lbTotalOrder.Text = "0.00";
+            this.lbTotalOrder.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // txtVatAmnt
+            // txtVat
             // 
-            this.txtVatAmnt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtVatAmnt.Location = new System.Drawing.Point(706, 115);
-            this.txtVatAmnt.Mask = "n2";
-            this.txtVatAmnt.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
-            this.txtVatAmnt.Name = "txtVatAmnt";
-            this.txtVatAmnt.ReadOnly = true;
-            this.txtVatAmnt.Size = new System.Drawing.Size(140, 20);
-            this.txtVatAmnt.TabIndex = 12;
-            this.txtVatAmnt.TabStop = false;
-            this.txtVatAmnt.Text = "0.00";
-            this.txtVatAmnt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtVat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtVat.Location = new System.Drawing.Point(706, 115);
+            this.txtVat.Mask = "n2";
+            this.txtVat.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            this.txtVat.Name = "txtVat";
+            this.txtVat.ReadOnly = true;
+            this.txtVat.Size = new System.Drawing.Size(140, 20);
+            this.txtVat.TabIndex = 12;
+            this.txtVat.TabStop = false;
+            this.txtVat.Text = "0.00";
+            this.txtVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // txtTotal
+            // lbOrderSubtotal
             // 
-            this.txtTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTotal.Location = new System.Drawing.Point(706, 7);
-            this.txtTotal.Mask = "n2";
-            this.txtTotal.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
-            this.txtTotal.Name = "txtTotal";
-            this.txtTotal.ReadOnly = true;
-            this.txtTotal.Size = new System.Drawing.Size(140, 20);
-            this.txtTotal.TabIndex = 12;
-            this.txtTotal.TabStop = false;
-            this.txtTotal.Text = "0.00";
-            this.txtTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.lbOrderSubtotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbOrderSubtotal.Location = new System.Drawing.Point(706, 7);
+            this.lbOrderSubtotal.Mask = "n2";
+            this.lbOrderSubtotal.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            this.lbOrderSubtotal.Name = "lbOrderSubtotal";
+            this.lbOrderSubtotal.ReadOnly = true;
+            this.lbOrderSubtotal.Size = new System.Drawing.Size(140, 20);
+            this.lbOrderSubtotal.TabIndex = 12;
+            this.lbOrderSubtotal.TabStop = false;
+            this.lbOrderSubtotal.Text = "0.00";
+            this.lbOrderSubtotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtRemark
             // 
@@ -1495,6 +1579,53 @@
             this.radButtonElement1.Text = "รายการ";
             this.radButtonElement1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // txtPlusExcededTax
+            // 
+            this.txtPlusExcededTax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPlusExcededTax.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPlusExcededTax.Location = new System.Drawing.Point(447, 138);
+            this.txtPlusExcededTax.Name = "txtPlusExcededTax";
+            this.txtPlusExcededTax.NullText = "0.00";
+            this.txtPlusExcededTax.ReadOnly = true;
+            this.txtPlusExcededTax.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtPlusExcededTax.Size = new System.Drawing.Size(74, 19);
+            this.txtPlusExcededTax.TabIndex = 21;
+            this.txtPlusExcededTax.Text = "0.00";
+            // 
+            // txtTotalsumDiscount
+            // 
+            this.txtTotalsumDiscount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTotalsumDiscount.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTotalsumDiscount.Location = new System.Drawing.Point(527, 138);
+            this.txtTotalsumDiscount.Name = "txtTotalsumDiscount";
+            this.txtTotalsumDiscount.NullText = "0.00";
+            this.txtTotalsumDiscount.ReadOnly = true;
+            this.txtTotalsumDiscount.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtTotalsumDiscount.Size = new System.Drawing.Size(74, 19);
+            this.txtTotalsumDiscount.TabIndex = 22;
+            this.txtTotalsumDiscount.Text = "0.00";
+            // 
+            // cbvatDetail
+            // 
+            this.cbvatDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbvatDetail.Location = new System.Drawing.Point(448, 117);
+            this.cbvatDetail.Name = "cbvatDetail";
+            this.cbvatDetail.Size = new System.Drawing.Size(15, 15);
+            this.cbvatDetail.TabIndex = 24;
+            this.cbvatDetail.Visible = false;
+            // 
+            // radLabel4
+            // 
+            this.radLabel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radLabel4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel4.Location = new System.Drawing.Point(469, 115);
+            this.radLabel4.Name = "radLabel4";
+            this.radLabel4.Size = new System.Drawing.Size(99, 17);
+            this.radLabel4.TabIndex = 23;
+            this.radLabel4.Text = "รวม Vat จากรายการ";
+            this.radLabel4.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.radLabel4.Visible = false;
+            // 
             // Invoice_2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1533,11 +1664,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel18)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLessPoDiscountAmountPersen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLessPoDiscountAmount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtVatA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtVattax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbVat)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtGrandTotal)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtVatAmnt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTotal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbTotalOrder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtVat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbOrderSubtotal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel12)).EndInit();
@@ -1596,6 +1727,10 @@
             this.radGroupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPlusExcededTax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalsumDiscount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbvatDetail)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1661,12 +1796,12 @@
         private Telerik.WinControls.UI.RadTextBox txtRemark;
         private Telerik.WinControls.UI.RadLabel radLabel6;
         private System.Windows.Forms.ToolStripMenuItem btnAddPart;
-        private Telerik.WinControls.UI.RadMaskedEditBox txtTotal;
-        private Telerik.WinControls.UI.RadMaskedEditBox txtVatA;
+        private Telerik.WinControls.UI.RadMaskedEditBox lbOrderSubtotal;
+        private Telerik.WinControls.UI.RadMaskedEditBox txtVattax;
         private Telerik.WinControls.UI.RadCheckBox cbVat;
-        private Telerik.WinControls.UI.RadMaskedEditBox txtVatAmnt;
+        private Telerik.WinControls.UI.RadMaskedEditBox txtVat;
         private Telerik.WinControls.UI.RadLabel radLabel12;
-        private Telerik.WinControls.UI.RadMaskedEditBox txtGrandTotal;
+        private Telerik.WinControls.UI.RadMaskedEditBox lbTotalOrder;
         private Telerik.WinControls.UI.RadLabel radLabel13;
         private Telerik.WinControls.UI.RadTextBox txtCSTMNo;
         private Telerik.WinControls.UI.RadDropDownList cboCustomer;
@@ -1712,5 +1847,9 @@
         private Telerik.WinControls.UI.RadLabel radLabel29;
         private Telerik.WinControls.UI.RadTextBox txtAfter_Deposit;
         private Telerik.WinControls.UI.RadTextBox txtDeposit;
+        private Telerik.WinControls.UI.RadTextBox txtPlusExcededTax;
+        private Telerik.WinControls.UI.RadTextBox txtTotalsumDiscount;
+        private Telerik.WinControls.UI.RadCheckBox cbvatDetail;
+        private Telerik.WinControls.UI.RadLabel radLabel4;
     }
 }

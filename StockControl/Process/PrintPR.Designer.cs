@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrintPR));
-            Telerik.WinControls.UI.RadListDataItem radListDataItem13 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem14 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem15 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem16 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem17 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem18 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem19 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem20 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem21 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem22 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem23 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem24 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem1 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem2 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem3 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem4 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem5 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem6 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem7 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem8 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem9 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem10 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem11 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem12 = new Telerik.WinControls.UI.RadListDataItem();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -61,17 +61,18 @@
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
             this.panel1 = new System.Windows.Forms.Panel();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.dtDate1 = new Telerik.WinControls.UI.RadDateTimePicker();
             this.ddlLocation = new Telerik.WinControls.UI.RadDropDownList();
+            this.lblLocation = new Telerik.WinControls.UI.RadLabel();
+            this.lblToDate = new Telerik.WinControls.UI.RadLabel();
+            this.dtDate2 = new Telerik.WinControls.UI.RadDateTimePicker();
             this.ddlYear = new Telerik.WinControls.UI.RadDropDownList();
             this.ddlMonth = new Telerik.WinControls.UI.RadDropDownList();
             this.cbYYYYMM = new Telerik.WinControls.UI.RadCheckBox();
             this.cbDate = new Telerik.WinControls.UI.RadCheckBox();
-            this.dtDate2 = new Telerik.WinControls.UI.RadDateTimePicker();
-            this.dtDate1 = new Telerik.WinControls.UI.RadDateTimePicker();
-            this.lblToDate = new Telerik.WinControls.UI.RadLabel();
             this.txtPRNo1 = new Telerik.WinControls.UI.RadTextBox();
             this.lblName = new Telerik.WinControls.UI.RadLabel();
-            this.lblLocation = new Telerik.WinControls.UI.RadLabel();
             this.txtPRNo2 = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel37 = new Telerik.WinControls.UI.RadLabel();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
@@ -79,26 +80,25 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             this.radPanel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtDate1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlLocation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lblLocation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lblToDate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtDate2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbYYYYMM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbDate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtDate2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtDate1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lblToDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPRNo1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblName)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lblLocation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPRNo2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel37)).BeginInit();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -276,7 +276,7 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 437);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 435);
             this.radStatusStrip1.Name = "radStatusStrip1";
             this.radStatusStrip1.Size = new System.Drawing.Size(392, 26);
             this.radStatusStrip1.SizingGrip = false;
@@ -297,7 +297,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(392, 277);
+            this.panel1.Size = new System.Drawing.Size(392, 275);
             this.panel1.TabIndex = 2;
             // 
             // radPanel1
@@ -315,9 +315,35 @@
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(392, 277);
+            this.radPanel1.Size = new System.Drawing.Size(392, 275);
             this.radPanel1.TabIndex = 1;
             this.radPanel1.ThemeName = "Office2010Blue";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.dtDate1);
+            this.panel2.Controls.Add(this.ddlLocation);
+            this.panel2.Controls.Add(this.lblLocation);
+            this.panel2.Controls.Add(this.lblToDate);
+            this.panel2.Controls.Add(this.dtDate2);
+            this.panel2.Location = new System.Drawing.Point(50, 146);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(263, 105);
+            this.panel2.TabIndex = 36;
+            // 
+            // dtDate1
+            // 
+            this.dtDate1.CustomFormat = "dd/MMM/yyyy";
+            this.dtDate1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtDate1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtDate1.Location = new System.Drawing.Point(71, 8);
+            this.dtDate1.Name = "dtDate1";
+            this.dtDate1.Size = new System.Drawing.Size(147, 19);
+            this.dtDate1.TabIndex = 24;
+            this.dtDate1.TabStop = false;
+            this.dtDate1.Text = "16/May/2017";
+            this.dtDate1.ThemeName = "Office2010Blue";
+            this.dtDate1.Value = new System.DateTime(2017, 5, 16, 21, 48, 34, 546);
             // 
             // ddlLocation
             // 
@@ -327,6 +353,38 @@
             this.ddlLocation.TabIndex = 35;
             this.ddlLocation.ThemeName = "Office2010Blue";
             this.ddlLocation.Visible = false;
+            // 
+            // lblLocation
+            // 
+            this.lblLocation.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLocation.Location = new System.Drawing.Point(7, 59);
+            this.lblLocation.Name = "lblLocation";
+            this.lblLocation.Size = new System.Drawing.Size(58, 17);
+            this.lblLocation.TabIndex = 4;
+            this.lblLocation.Text = "สถานที่เก็บ";
+            this.lblLocation.Visible = false;
+            // 
+            // lblToDate
+            // 
+            this.lblToDate.Location = new System.Drawing.Point(47, 33);
+            this.lblToDate.Name = "lblToDate";
+            this.lblToDate.Size = new System.Drawing.Size(18, 18);
+            this.lblToDate.TabIndex = 22;
+            this.lblToDate.Text = "ถึง";
+            // 
+            // dtDate2
+            // 
+            this.dtDate2.CustomFormat = "dd/MMM/yyyy";
+            this.dtDate2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtDate2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtDate2.Location = new System.Drawing.Point(71, 33);
+            this.dtDate2.Name = "dtDate2";
+            this.dtDate2.Size = new System.Drawing.Size(147, 19);
+            this.dtDate2.TabIndex = 23;
+            this.dtDate2.TabStop = false;
+            this.dtDate2.Text = "16/May/2017";
+            this.dtDate2.ThemeName = "Office2010Blue";
+            this.dtDate2.Value = new System.DateTime(2017, 5, 16, 21, 48, 34, 546);
             // 
             // ddlYear
             // 
@@ -341,30 +399,30 @@
             // ddlMonth
             // 
             this.ddlMonth.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            radListDataItem13.Text = "01";
-            radListDataItem14.Text = "02";
-            radListDataItem15.Text = "03";
-            radListDataItem16.Text = "04";
-            radListDataItem17.Text = "05";
-            radListDataItem18.Text = "06";
-            radListDataItem19.Text = "07";
-            radListDataItem20.Text = "08";
-            radListDataItem21.Text = "09";
-            radListDataItem22.Text = "10";
-            radListDataItem23.Text = "11";
-            radListDataItem24.Text = "12";
-            this.ddlMonth.Items.Add(radListDataItem13);
-            this.ddlMonth.Items.Add(radListDataItem14);
-            this.ddlMonth.Items.Add(radListDataItem15);
-            this.ddlMonth.Items.Add(radListDataItem16);
-            this.ddlMonth.Items.Add(radListDataItem17);
-            this.ddlMonth.Items.Add(radListDataItem18);
-            this.ddlMonth.Items.Add(radListDataItem19);
-            this.ddlMonth.Items.Add(radListDataItem20);
-            this.ddlMonth.Items.Add(radListDataItem21);
-            this.ddlMonth.Items.Add(radListDataItem22);
-            this.ddlMonth.Items.Add(radListDataItem23);
-            this.ddlMonth.Items.Add(radListDataItem24);
+            radListDataItem1.Text = "01";
+            radListDataItem2.Text = "02";
+            radListDataItem3.Text = "03";
+            radListDataItem4.Text = "04";
+            radListDataItem5.Text = "05";
+            radListDataItem6.Text = "06";
+            radListDataItem7.Text = "07";
+            radListDataItem8.Text = "08";
+            radListDataItem9.Text = "09";
+            radListDataItem10.Text = "10";
+            radListDataItem11.Text = "11";
+            radListDataItem12.Text = "12";
+            this.ddlMonth.Items.Add(radListDataItem1);
+            this.ddlMonth.Items.Add(radListDataItem2);
+            this.ddlMonth.Items.Add(radListDataItem3);
+            this.ddlMonth.Items.Add(radListDataItem4);
+            this.ddlMonth.Items.Add(radListDataItem5);
+            this.ddlMonth.Items.Add(radListDataItem6);
+            this.ddlMonth.Items.Add(radListDataItem7);
+            this.ddlMonth.Items.Add(radListDataItem8);
+            this.ddlMonth.Items.Add(radListDataItem9);
+            this.ddlMonth.Items.Add(radListDataItem10);
+            this.ddlMonth.Items.Add(radListDataItem11);
+            this.ddlMonth.Items.Add(radListDataItem12);
             this.ddlMonth.Location = new System.Drawing.Point(213, 30);
             this.ddlMonth.Name = "ddlMonth";
             this.ddlMonth.Size = new System.Drawing.Size(58, 20);
@@ -392,42 +450,6 @@
             this.cbDate.TabIndex = 25;
             this.cbDate.Text = "ช่วงวันที่";
             // 
-            // dtDate2
-            // 
-            this.dtDate2.CustomFormat = "dd/MMM/yyyy";
-            this.dtDate2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtDate2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtDate2.Location = new System.Drawing.Point(71, 33);
-            this.dtDate2.Name = "dtDate2";
-            this.dtDate2.Size = new System.Drawing.Size(147, 19);
-            this.dtDate2.TabIndex = 23;
-            this.dtDate2.TabStop = false;
-            this.dtDate2.Text = "16/May/2017";
-            this.dtDate2.ThemeName = "Office2010Blue";
-            this.dtDate2.Value = new System.DateTime(2017, 5, 16, 21, 48, 34, 546);
-            // 
-            // dtDate1
-            // 
-            this.dtDate1.CustomFormat = "dd/MMM/yyyy";
-            this.dtDate1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtDate1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtDate1.Location = new System.Drawing.Point(71, 8);
-            this.dtDate1.Name = "dtDate1";
-            this.dtDate1.Size = new System.Drawing.Size(147, 19);
-            this.dtDate1.TabIndex = 24;
-            this.dtDate1.TabStop = false;
-            this.dtDate1.Text = "16/May/2017";
-            this.dtDate1.ThemeName = "Office2010Blue";
-            this.dtDate1.Value = new System.DateTime(2017, 5, 16, 21, 48, 34, 546);
-            // 
-            // lblToDate
-            // 
-            this.lblToDate.Location = new System.Drawing.Point(47, 33);
-            this.lblToDate.Name = "lblToDate";
-            this.lblToDate.Size = new System.Drawing.Size(18, 18);
-            this.lblToDate.TabIndex = 22;
-            this.lblToDate.Text = "ถึง";
-            // 
             // txtPRNo1
             // 
             this.txtPRNo1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -446,16 +468,6 @@
             this.lblName.TabIndex = 4;
             this.lblName.Text = "เลขที่ใบสั่งซื้อ";
             this.lblName.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            // 
-            // lblLocation
-            // 
-            this.lblLocation.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLocation.Location = new System.Drawing.Point(7, 59);
-            this.lblLocation.Name = "lblLocation";
-            this.lblLocation.Size = new System.Drawing.Size(58, 17);
-            this.lblLocation.TabIndex = 4;
-            this.lblLocation.Text = "สถานที่เก็บ";
-            this.lblLocation.Visible = false;
             // 
             // txtPRNo2
             // 
@@ -509,23 +521,11 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.dtDate1);
-            this.panel2.Controls.Add(this.ddlLocation);
-            this.panel2.Controls.Add(this.lblLocation);
-            this.panel2.Controls.Add(this.lblToDate);
-            this.panel2.Controls.Add(this.dtDate2);
-            this.panel2.Location = new System.Drawing.Point(50, 146);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(263, 105);
-            this.panel2.TabIndex = 36;
-            // 
             // PrintPR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 463);
+            this.ClientSize = new System.Drawing.Size(392, 461);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);
@@ -546,21 +546,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
             this.radPanel1.ResumeLayout(false);
             this.radPanel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtDate1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlLocation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lblLocation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lblToDate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtDate2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlYear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ddlMonth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbYYYYMM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbDate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtDate2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtDate1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lblToDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPRNo1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lblName)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lblLocation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPRNo2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel37)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -517,5 +517,12 @@ namespace StockControl
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+
+        private void btnListPR_PO_Click(object sender, EventArgs e)
+        {
+            PrintPR a = new PrintPR("","", "ListPurchaseAndPR");
+            a.ShowDialog();
+
+        }
     }
 }

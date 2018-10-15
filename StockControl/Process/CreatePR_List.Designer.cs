@@ -97,6 +97,7 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.btnListPR_PO = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -270,7 +271,8 @@
             // 
             this.radRibbonBarGroup2.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.btn_PrintPR,
-            this.btn_Print_Barcode});
+            this.btn_Print_Barcode,
+            this.btnListPR_PO});
             this.radRibbonBarGroup2.Name = "radRibbonBarGroup2";
             this.radRibbonBarGroup2.Text = "Print Document";
             // 
@@ -740,6 +742,15 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
+            // btnListPR_PO
+            // 
+            this.btnListPR_PO.Image = ((System.Drawing.Image)(resources.GetObject("btnListPR_PO.Image")));
+            this.btnListPR_PO.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnListPR_PO.Name = "btnListPR_PO";
+            this.btnListPR_PO.Text = "รายงานการขอซื้อ";
+            this.btnListPR_PO.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnListPR_PO.Click += new System.EventHandler(this.btnListPR_PO_Click);
+            // 
             // CreatePR_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -839,5 +850,6 @@
         private Telerik.WinControls.UI.RadCheckBox cbDate;
         private Telerik.WinControls.UI.RadLabel radLabel5;
         private Telerik.WinControls.UI.RadDropDownList ddlStatus;
+        private Telerik.WinControls.UI.RadButtonElement btnListPR_PO;
     }
 }
