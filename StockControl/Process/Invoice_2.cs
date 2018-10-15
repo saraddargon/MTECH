@@ -173,8 +173,8 @@ namespace StockControl
                     if(mh!=null)
                     {
                         txtTel.Text = mh.Tel;
-                        txtTotal.Text = mh.TotalPrice.ToString();
-                        txtGrandTotal.Text = mh.TotalPriceIncVat.ToString();
+                        lbOrderSubtotal.Text = mh.TotalPrice.ToString();
+                        lbTotalOrder.Text = mh.TotalPriceIncVat.ToString();
                         txtFax.Text = mh.Fax;
                         txtEmail.Text = mh.Email;
                         txtContactName.Text = mh.ContactName;
@@ -183,7 +183,7 @@ namespace StockControl
                         txtRemark.Text = mh.Remark;
                         txtCSTMNo.Text = mh.CustomerNo;
                         dtSODate.Value = mh.SSDate;
-                        txtVatA.Text = mh.VatA.ToSt();
+                        txtVattax.Text = mh.VatA.ToSt();
                         cbVat.Checked = mh.Vat;
                         if (mh.Type.ToSt() == "1")
                             Type_Button = 1;
@@ -297,7 +297,7 @@ namespace StockControl
                 dgvData.ReadOnly = false;
                 txtRemark.Enabled = ss;
                 cbVat.Enabled = ss;
-                txtVatA.Enabled = ss;
+                txtVattax.Enabled = ss;
                 txtContactName.Enabled = ss;
                 txtEmail.Enabled = ss;
                 txtFax.Enabled = ss;
@@ -311,7 +311,7 @@ namespace StockControl
                 dgvData.ReadOnly = true;
                 txtRemark.Enabled = ss;
                 cbVat.Enabled = ss;
-                txtVatA.Enabled = ss;
+                txtVattax.Enabled = ss;
                 txtEmail.Enabled = ss;
                 txtFax.Enabled = ss;
                 txtTel.Enabled = ss;
@@ -324,7 +324,7 @@ namespace StockControl
                 dgvData.ReadOnly = false;
                 txtRemark.Enabled = ss;
                 cbVat.Enabled = ss;
-                txtVatA.Enabled = ss;
+                txtVattax.Enabled = ss;
                 txtEmail.Enabled = ss;
                 txtFax.Enabled = ss;
                 txtTel.Enabled = ss;
@@ -357,11 +357,14 @@ namespace StockControl
             dtInvDate.Value = DateTime.Now;
             txtLessPoDiscountAmount.Text = "0.00";
             txtLessPoDiscountAmountPersen.Text = "0.00";
-            txtVatAmnt.Text = "0.00";
-            txtGrandTotal.Text = "0.00";
+            txtVat.Text = "0.00";
+            lbTotalOrder.Text = "0.00";
             cbVat.Checked = true;
             txtDeposit.Text = "0.00";
             txtAfter_Deposit.Text = "0.00";
+            cbvatDetail.Checked = false;
+            txtPlusExcededTax.Text = "0.00";
+            txtTotalsumDiscount.Text = "0.00";
 
 
             dtSODate.Value = DateTime.Now;
@@ -370,7 +373,7 @@ namespace StockControl
             dgvData.Rows.Clear();
             dgvData.DataSource = null;
             txtRemark.Text = "";
-            txtTotal.Text = (0).ToMoney();
+            lbOrderSubtotal.Text = (0).ToMoney();
             txtIVNo.Text = dbClss.GetNo(31, 0);
 
             Type_Button = 0;
@@ -623,10 +626,10 @@ namespace StockControl
                         decimal totalPrice = 0;
                         decimal vatAmount = 0;
                         decimal grantotal = 0;
-                        decimal.TryParse(txtGrandTotal.Text, out grantotal);
-                        decimal.TryParse(txtVatAmnt.Text, out vatAmount);
-                        decimal.TryParse(txtTotal.Text, out totalPrice);
-                        decimal.TryParse(txtVatA.Text, out vatA);
+                        decimal.TryParse(lbTotalOrder.Text, out grantotal);
+                        decimal.TryParse(txtVat.Text, out vatAmount);
+                        decimal.TryParse(lbOrderSubtotal.Text, out totalPrice);
+                        decimal.TryParse(txtVattax.Text, out vatA);
 
                         mh_InvoiceHD sh1 = new mh_InvoiceHD();
                         sh1.IVNo = txtIVNo.Text;
@@ -1642,28 +1645,116 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
         }
 
+        //private void CallTotal()
+        //{
+        //    try
+        //    {
+        //        decimal amnt = 0.00m;
+        //        foreach (var item in dgvData.Rows.Where(x => x.IsVisible))
+        //        {
+        //            amnt += item.Cells["Amount"].Value.ToDecimal();
+        //        }
+        //        lbOrderSubtotal.Value = amnt;
+        //        var vat = 0.00m;
+        //        var vatA = txtVatA.Value.ToDecimal();
+        //        if (cbVat.Checked)
+        //            vat = amnt * Math.Round(vatA / 100, 2);
+        //        txtVatAmnt.Value = vat;
+        //        txtGrandTotal.Value = amnt + dbClss.TDe(txtVatAmnt.Value);
+
+
+        //    }
+        //    catch (Exception ex) { MessageBox.Show("err2: " + ex.Message); }
+        //}
         private void CallTotal()
         {
             try
             {
-                decimal amnt = 0.00m;
-                foreach (var item in dgvData.Rows.Where(x => x.IsVisible))
+                decimal UnitCost = 0;
+                decimal ExtendedCost = 0;
+                decimal Qty = 0;
+                decimal PA = 0;
+                //decimal PR = 0;
+                decimal RC = 0;
+                //bool hanfix = false;
+                foreach (var r2 in dgvData.Rows)
                 {
-                    amnt += item.Cells["Amount"].Value.ToDecimal();
-                }
-                txtTotal.Value = amnt;
-                var vat = 0.00m;
-                var vatA = txtVatA.Value.ToDecimal();
-                if (cbVat.Checked)
-                    vat = amnt * Math.Round(vatA / 100, 2);
-                txtVatAmnt.Value = vat;
-                txtGrandTotal.Value = amnt + dbClss.TDe(txtVatAmnt.Value);
-                
+                    if (r2.IsVisible)
+                    {
+                        UnitCost = 0;
+                        Qty = 0;
+                        PA = 0;
+                        
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvOrderQty"].Value), out Qty);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvCost"].Value), out UnitCost);
+                        decimal.TryParse(Convert.ToString(r2.Cells["Amount"].Value), out ExtendedCost);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscountAmount"].Value), out PA);
+                        
+                        r2.Cells["dgvDiscountExt"].Value = PA;
+                        ExtendedCost = (Qty * UnitCost);
+                        r2.Cells["dgvExtendedCost"].Value = Convert.ToDecimal(Math.Round(Convert.ToDecimal(UnitCost), 2, MidpointRounding.AwayFromZero));
+                        r2.Cells["Amount"].Value = ExtendedCost;
+                        r2.Cells["dgvNetofTAX"].Value = ExtendedCost - PA;
 
+
+                        string a = dbClss.TSt(ExtendedCost - PA);
+                        decimal aa = 0;
+                        aa = Convert.ToDecimal(Math.Round(Convert.ToDecimal(a), 6, MidpointRounding.AwayFromZero));
+
+
+
+                        r2.Cells["dgvNetofTAX"].Value = ExtendedCost - PA;//Convert.ToDecimal(Math.Round(Convert.ToDecimal(a), 6, MidpointRounding.AwayFromZero));
+                      r2.Cells["dgvVatAmount"].Value = (ExtendedCost - PA) * dbClss.TDe(txtVattax.Text) / 100;
+                      
+                        r2.Cells["dgvSubTotal"].Value = (ExtendedCost - PA) + ((ExtendedCost - PA) * dbClss.TDe(txtVattax.Text) / 100);
+
+                    }
+                    
+                    decimal Sumtotal = 0;
+                    decimal Total = 0;
+                    decimal SumTotal2 = 0;
+                    //string Currency = "THB";
+                    foreach (var rd in dgvData.Rows)
+                    {
+                        if (rd.IsVisible)
+                        {
+                            Total = 0;
+                            decimal.TryParse(Convert.ToString(rd.Cells["Amount"].Value), out Total);
+                            Sumtotal += Total;
+                            SumTotal2 += (Convert.ToDecimal(rd.Cells["Amount"].Value) - Convert.ToDecimal(rd.Cells["dgvDiscountExt"].Value));
+                            //Currency = (Convert.ToString(rd.Cells["dgvCurrency"].Value));
+                        }
+                    }
+                    txtTotalsumDiscount.Text = (SumTotal2).ToString("###,###,##0.00");
+                    lbOrderSubtotal.Text = (Sumtotal).ToString("###,###,##0.00");
+                }
+                //lbCurrency1.Text = Currency;
+                //CalTAX1();
+                CalSubtotal();
             }
             catch (Exception ex) { MessageBox.Show("err2: " + ex.Message); }
         }
+        private void CalSubtotal()
+        {
+            try
+            {
+                //lbOrderSubtotal.Text = txtTotalOrder.Text;
+                txtAfterDiscount.Text = txtTotalsumDiscount.Text;
 
+                lbTotalOrder.Text = "";
+                //txtTotalTax.Text = txtTotalTax_Taxes.Text;
+
+                decimal netAmount = 0;
+                decimal PlusTax = 0;
+                decimal.TryParse(txtAfterDiscount.Text, out netAmount);
+                txtPlusExcededTax.Text = ((netAmount * dbClss.TDe(txtVattax.Text)) / 100).ToString("N2");
+                txtVat.Text = txtPlusExcededTax.Text;
+                decimal.TryParse(txtPlusExcededTax.Text, out PlusTax);
+                lbTotalOrder.Text = (netAmount + PlusTax).ToString("###,###,##0.00");
+
+            }
+            catch { }
+        }
         private void cbbCSTM_SelectedIndexChanged(object sender, EventArgs e)
         {
         }
@@ -1742,7 +1833,18 @@ namespace StockControl
 
         private void cbVat_ToggleStateChanged(object sender, StateChangedEventArgs args)
         {
-            CallTotal();
+            //CallTotal();
+            if (cbVat.Checked.Equals(false))
+            {
+                txtVattax.Text = "0";
+            }
+            //else
+            //{
+            //    cboVatType_SelectedIndexChanged(null, null);
+            //    // txtVattax.Text = "7";
+            //}
+            LessPoDiscountAmount_KeyPress((char)13);
+            //getTotal();
         }
 
         private void txtVatA_KeyDown(object sender, KeyEventArgs e)
@@ -2057,7 +2159,7 @@ namespace StockControl
             try
             {
                 dbClss.CheckDigitDecimal(e);
-                //LessPoDiscountAmountPersen_KeyPress((char)13);
+                LessPoDiscountAmountPersen_KeyPress((char)13);
             }
             catch { }
         }
@@ -2066,8 +2168,8 @@ namespace StockControl
         {
             try
             {
-                dbClss.CheckDigitDecimal(e);
-                //LessPoDiscountAmountPersen_KeyPress((char)13);
+                StockControl.dbClss.CheckDigitDecimal(e);
+                LessPoDiscountAmount_KeyPress(e.KeyChar);
             }
             catch { }
         }
@@ -2094,6 +2196,317 @@ namespace StockControl
         private void txtCredit_TextChanged(object sender, EventArgs e)
         {
             Cal_Credit_Date();
+        }
+
+        private void btnCal_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LessPoDiscountAmount_KeyPress((char)13);
+            }
+            catch { }
+        }
+        bool LastDiscount = false;
+        bool lastDiscountAmount = false;
+        private void LessPoDiscountAmount_KeyPress(char keys)
+        {
+            LastDiscount = true;
+            lastDiscountAmount = true;
+            //EditData = true;
+            if (keys == 13) // Discount Amount
+            {
+                try
+                {
+                    //คือเมื่อมีการกด Enter ให้ทำการคำนวณ
+                    CallDiscontLast(true);
+                    //CallListDiscount();
+                    //CallListDiscount();
+                    CallTotal();
+                    CallSumDiscountLast(true);
+                }
+                catch { }
+            }
+            if (cbvatDetail.Checked)
+                getTotal();
+        }
+        private void CallDiscontLast(bool am)
+        {
+            try
+            {
+                decimal TaxBase = 0;
+                decimal Amount = 0;
+                decimal DisP = 0;
+                decimal DisA = 0;
+
+                decimal.TryParse(lbOrderSubtotal.Text, out TaxBase);
+                decimal.TryParse(txtLessPoDiscountAmount.Text, out DisA);
+                decimal.TryParse(txtLessPoDiscountAmountPersen.Text, out DisP);
+                //decimal SumDis = 0;
+                dgvData.EndEdit();
+                foreach (var r2 in dgvData.Rows)
+                {
+                    if (r2.IsVisible)
+                    {
+                        Amount = 0;
+                        decimal.TryParse(Convert.ToString(r2.Cells["Amount"].Value), out Amount);
+                        if (!am) // Persent
+                        {
+                            //r2.Cells["dgvdiscount"].Value = (Amount*DisP) / 100;
+                            r2.Cells["dgvDF"].Value = 4;
+                            r2.Cells["dgvDiscountAmount"].Value = ((Amount * DisP) / 100);
+                            r2.Cells["dgvDiscountExt"].Value = ((Amount * DisP) / 100);
+                            r2.Cells["dgvDiscount"].Value = (((Amount * DisP) / 100) / Amount) * 100;
+                            // SumDis += ((Amount * DisP) / 100);
+                        }
+                        else // Amount
+                        {
+                            // MessageBox.Show("xx" + TaxBase+","+Amount);
+
+                            r2.Cells["dgvDF"].Value = 5;
+                            r2.Cells["dgvDiscountAmount"].Value = ((Amount * DisA) / TaxBase);
+                            r2.Cells["dgvDiscountExt"].Value = ((Amount * DisA) / TaxBase);
+                            r2.Cells["dgvDiscount"].Value = (((Amount * DisA) / TaxBase) / Amount) * 100;
+                        }
+                    }
+                }
+
+            }
+            catch { }
+        }
+        private void CallSumDiscountLast(bool am)
+        {
+            try
+            {
+                decimal UnitCost = 0;
+                decimal ExtendedCost = 0;
+                decimal Qty = 0;
+                decimal PA = 0;
+                decimal PR = 0;
+                decimal SumP = 0;
+                decimal SumA = 0;
+                dgvData.EndEdit();
+                foreach (var r2 in dgvData.Rows)
+                {
+                    if (r2.IsVisible)
+                    {
+                        UnitCost = 0;
+                        Qty = 0;
+                        PA = 0;
+                        PR = 0;
+
+                        decimal.TryParse(Convert.ToString(r2.Cells["Qty"].Value), out Qty);
+                        decimal.TryParse(Convert.ToString(r2.Cells["UnitPrice"].Value), out UnitCost);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscountAmount"].Value), out PA);
+                        decimal.TryParse(Convert.ToString(r2.Cells["dgvDiscount"].Value), out PR);
+                        decimal.TryParse(Convert.ToString(r2.Cells["Amount"].Value), out ExtendedCost);
+
+                        SumP += ExtendedCost;
+                        SumA += PA;
+                    }
+                }
+                if (am)
+                {
+                    txtLessPoDiscountAmountPersen.Text = ((SumA / SumP) * 100).ToString("##0.00");
+                }
+                else
+                {
+
+                    txtLessPoDiscountAmount.Text = (SumA).ToString("###,###,##0.00");
+                }
+            }
+            catch { }
+        }
+        private void getTotal()
+        {
+            try
+            {
+                dgvData.EndEdit();
+                if (dgvData.Rows.Count > 0)
+                {
+                    double Total = 0;
+                    double Discount = 0;
+                    double afDiscount = 0;
+                    double vat = 0;
+                    //  double Grantotal = 0;
+                    double VatDetail = 0;
+                    double TotalSum = 0;
+                    double.TryParse(txtLessPoDiscountAmount.Text, out Discount);
+                    double vat1x = 7;
+                    double.TryParse(txtVattax.Text, out vat1x);
+
+                    double vat2x = vat1x + 100;
+                    double vat3x = vat2x / 100;
+                    double vat4x = vat3x - 1;
+
+                    double FxCost = 0;
+
+                    foreach (GridViewRowInfo rd in dgvData.Rows)
+                    {
+                        if (rd.IsVisible)
+                        {
+                            
+                            Total += Convert.ToDouble(rd.Cells["dgvExtendedCost"].Value);
+                            VatDetail += Convert.ToDouble(rd.Cells["dgvExtendedCost"].Value) * vat4x;
+
+                            //}
+                        }
+                    }
+
+                    TotalSum = Total;
+                    ///////////////////////
+                    if (cbvatDetail.Checked)
+                    {
+
+                        //Total = Math.Round((Total - VatDetail),2, MidpointRounding.ToEven);
+                        double.TryParse(txtLessPoDiscountAmount.Text, out Discount);
+                        if (Discount > 0)
+                        {
+                            //Total = System.Math.Floor((Total / 1.07) * 100) / 100;                           
+                            lbOrderSubtotal.Text = (TotalSum).ToString("##,###,##0.00");
+                        }
+                        else
+                        {
+                            Total = System.Math.Floor((Total / vat3x) * 100) / 100;
+                            lbOrderSubtotal.Text = (Total).ToString("##,###,##0.00");
+                        }
+                    }
+                    else
+                    {
+                        lbOrderSubtotal.Text = Total.ToString("##,###,##0.00");
+                    }
+                    ////////////////////////////
+                    if (cbvatDetail.Checked)
+                    {
+                        if (Discount > 0)
+                        {
+                            //สำหรับส่วนลด หลักจากรวม vat ในรายการ
+                            afDiscount = System.Math.Floor(((Total - Discount) * 100 / vat2x) * 100) / 100;
+                            txtAfterDiscount.Text = afDiscount.ToString("##,###,##0.00");
+                        }
+                        else
+                        {
+
+                            afDiscount = (Total - Discount);
+                            txtAfterDiscount.Text = afDiscount.ToString("##,###,##0.00");
+                        }
+                    }
+                    else
+                    {
+                        afDiscount = (Total - Discount);
+                        txtAfterDiscount.Text = afDiscount.ToString("##,###,##0.00");
+                    }
+
+                    txtAfter_Deposit.Text = (dbClss.TDe(txtAfterDiscount.Text) - dbClss.TDe(txtDeposit.Text)).ToString("##,###,##0.00");
+                   
+                    ////////////////////////////
+                    if (cbVat.Checked)
+                    {
+                        //vat = afDiscount * vat4x;
+                        vat = dbClss.TDo(txtAfter_Deposit.Text) * vat4x;
+                        txtVat.Text = vat.ToString("##,###,##0.00");
+
+                    }
+                    else
+                    {
+                        if (cbvatDetail.Checked)
+                        {
+                            vat = afDiscount * vat4x;
+                            txtVat.Text = vat.ToString("##,###,##0.00");
+                        }
+                        else
+                        {
+                            vat = 0;
+                            txtVat.Text = "0.00";
+                        }
+                    }
+                    
+                    //lbTotalOrder.Text = (afDiscount + vat).ToString("##,###,##0.00");
+                    lbTotalOrder.Text = (dbClss.TDo(txtAfter_Deposit.Text) + vat).ToString("##,###,##0.00");
+
+                    //if (chkVATDetail.Checked)
+                    //{
+                    //    if (Discount > 0)
+                    //    {
+                    //        txtGrandTotal.Text = (Total - Discount).ToString("##,###,##0.00"); 
+                    //    }
+                    //}
+                    //////////หาทศนิยม///////////////
+                    if (cbvatDetail.Checked)
+                    {
+                        double Total2 = 0;
+                        double vat2 = 0;
+                        double GrandTx = 0;
+                        double Pus = 0;
+                        double.TryParse(lbOrderSubtotal.Text, out Total2);
+                        double.TryParse(txtVattax.Text, out vat2);
+                        double.TryParse(lbTotalOrder.Text, out GrandTx);
+                        if (Discount > 0)
+                        {
+                            if (GrandTx != (TotalSum - Discount))
+                            {
+                                Pus = Math.Abs(GrandTx - (TotalSum - Discount));
+                                // Total = Total + Pus;                               
+                                txtAfterDiscount.Text = (afDiscount + Pus).ToString("##,###,##0.00");
+                                lbTotalOrder.Text = (afDiscount + vat + Pus).ToString("##,###,##0.00");
+                            }
+                        }
+                        else
+                        {
+                            if (GrandTx != (TotalSum))
+                            {
+                                Pus = Math.Abs(GrandTx - (TotalSum));
+                                Total = Total + Pus;
+                                lbOrderSubtotal.Text = (Total).ToString("##,###,##0.00");
+                                txtAfterDiscount.Text = (afDiscount + Pus).ToString("##,###,##0.00");
+                                lbTotalOrder.Text = (afDiscount + vat + Pus).ToString("##,###,##0.00");
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void txtLessPoDiscountAmountPersen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+
+                LessPoDiscountAmountPersen_KeyPress((char)13);
+
+            }
+        }
+        private void LessPoDiscountAmountPersen_KeyPress(char Keys)
+        {
+            LastDiscount = true;
+            lastDiscountAmount = false;
+            //EditData = true;
+            if (Keys == 13)  // Discount %
+            {
+                try
+                {
+                    //คือเมื่อมีการกด Enter ให้ทำการคำนวณ
+                    CallDiscontLast(false);
+                    // CallListDiscount();                    
+                    CallTotal();
+                    CallSumDiscountLast(false);
+
+
+
+                }
+                catch { }
+            }
+            if (cbvatDetail.Checked)
+                getTotal();
+        }
+        private void txtLessPoDiscountAmount_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                LessPoDiscountAmount_KeyPress((char)13);
+            }
         }
     }
 
