@@ -689,20 +689,20 @@ namespace StockControl
                 {
                     if (Ac.Equals("New"))
                     {
-                        //ถ้ามีการใส่เลขที่ PR เช็คดูว่ามีการใส่เลขนี้แล้วหรือไม่ ถ้ามีให้ใส่เลขอื่น
-                        if (!txtSHNo.Text.Equals(""))
-                        {
-                            var p = (from ix in db.mh_Shipments
-                                     where ix.SSNo.ToUpper().Trim() == txtSHNo.Text.Trim()
-                                     && ix.Active == true
-                                     select ix).ToList();
-                            if (p.Count > 0)  //มีรายการในระบบ
-                            {
-                                MessageBox.Show("เลขที่ใบเบิกถูกใช้ไปแล้ว กรุณาใส่เลขใหม่");
-                                return;
-                            }
-                        }
-                        else
+                        ////ถ้ามีการใส่เลขที่ PR เช็คดูว่ามีการใส่เลขนี้แล้วหรือไม่ ถ้ามีให้ใส่เลขอื่น
+                        //if (!txtSHNo.Text.Equals(""))
+                        //{
+                        //    var p = (from ix in db.mh_Shipments
+                        //             where ix.SSNo.ToUpper().Trim() == txtSHNo.Text.Trim()
+                        //             && ix.Active == true
+                        //             select ix).ToList();
+                        //    if (p.Count > 0)  //มีรายการในระบบ
+                        //    {
+                        //        MessageBox.Show("เลขที่ใบเบิกถูกใช้ไปแล้ว กรุณาใส่เลขใหม่");
+                        //        return;
+                        //    }
+                        //}
+                        //else
                             txtSHNo.Text = dbClss.GetNo(30, 2);
                     }
 
