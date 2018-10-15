@@ -345,6 +345,24 @@ namespace StockControl
             txtTel.Text = "";
             txtContactName.Text = "";
             txtSelectCode.Text = "";
+            txtSales_area.Text = "";
+            txtSales_person.Text = "";
+            ddlPayment.Text = "";
+            txtCredit.Text = "";
+            txtAfterDiscount.Text = "0.00";
+            txtTax_identification_number.Text = "";
+            txtTransport.Text = "";
+            txtReference.Text = "";
+            dtCredit_Date.Value = DateTime.Now;
+            dtInvDate.Value = DateTime.Now;
+            txtLessPoDiscountAmount.Text = "0.00";
+            txtLessPoDiscountAmountPersen.Text = "0.00";
+            txtVatAmnt.Text = "0.00";
+            txtGrandTotal.Text = "0.00";
+            cbVat.Checked = true;
+            txtDeposit.Text = "0.00";
+            txtAfter_Deposit.Text = "0.00";
+
 
             dtSODate.Value = DateTime.Now;
             txtIVNo.Text = "";
