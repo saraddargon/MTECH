@@ -10,6 +10,7 @@ using Microsoft.VisualBasic.FileIO;
 using System.Globalization;
 using ClassLib;
 using Microsoft.VisualBasic;
+using System.IO;
 
 namespace StockControl
 {
@@ -23,7 +24,7 @@ namespace StockControl
         }
         Telerik.WinControls.UI.RadTextBox CodeNo_tt = new Telerik.WinControls.UI.RadTextBox();
         int screen = 0;
-        public ApproveList(Telerik.WinControls.UI.RadTextBox  CodeNox)
+        public ApproveList(Telerik.WinControls.UI.RadTextBox CodeNox)
         {
             InitializeComponent();
             CodeNo_tt = CodeNox;
@@ -56,7 +57,7 @@ namespace StockControl
         private void Unit_Load(object sender, EventArgs e)
         {
             LoadDefault();
-            dtDateFrom.Value = Convert.ToDateTime( DateTime.Now,new CultureInfo("en-US"));
+            dtDateFrom.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             dtDateTo.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             //Set_dt_Print();
             //radGridView1.ReadOnly = true;
@@ -75,17 +76,17 @@ namespace StockControl
                 {
                     var g = (from ix in db.mh_ApproveSetups.Where(s => s.Active == 1 && s.UserID.ToUpper().Trim() == UserID.ToUpper().Trim())
                              select new { ix.ApproveType }).ToList();
-                    if(g.Count>0)
+                    if (g.Count > 0)
                     {
-                        foreach(var gg in g)
+                        foreach (var gg in g)
                         {
-                           ddlType.Items.Add(gg.ApproveType);
+                            ddlType.Items.Add(gg.ApproveType);
                         }
-                        
+
                     }
                 }
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void DataLoad()
         {
@@ -104,7 +105,7 @@ namespace StockControl
                         dt1 = Convert.ToDateTime(dtDateFrom.Value).ToString("yyyyMMdd");
                         dt2 = Convert.ToDateTime(dtDateTo.Value).ToString("yyyyMMdd");
                     }
-                    radGridView1.DataSource = db.sp_059_ApproveList(txtDocNo.Text,ddlType.Text,ddlStatus.Text, Classlib.User);
+                    radGridView1.DataSource = db.sp_059_ApproveList(txtDocNo.Text, ddlType.Text, ddlStatus.Text, Classlib.User);
                     dbClss.SetRowNo(radGridView1);
                 }
 
@@ -172,11 +173,11 @@ namespace StockControl
             //DateTime date2 = new DateTime(2009, 8, 1, 12, 0, 0);
             result = DateTime.Compare(date1, date2);
 
-            
+
 
             return result;
         }
-       
+
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -284,8 +285,8 @@ namespace StockControl
                             Type = dbClss.TSt(rd.Cells["ApproveType"].Value);
                             id = dbClss.TInt(rd.Cells["id"].Value);
 
-                            if ((dbClss.TSt(rd.Cells["Status"].Value)=="Waiting") || (dbClss.TSt(rd.Cells["Status"].Value) == "Reject"))
-                                 db.sp_064_mh_ApproveList_Update2(id, DocNo, Type, ClassLib.Classlib.User, "", "Approve");
+                            if ((dbClss.TSt(rd.Cells["Status"].Value) == "Waiting") || (dbClss.TSt(rd.Cells["Status"].Value) == "Reject"))
+                                db.sp_064_mh_ApproveList_Update2(id, DocNo, Type, ClassLib.Classlib.User, "", "Approve");
                             ////Old-------------------------
                             //var g = (from ix in db.mh_ApproveLists
                             //         where ix.id == id && ix.Status == "Waiting"
@@ -343,7 +344,7 @@ namespace StockControl
                 }
             }
 
-                this.Cursor = Cursors.Default;
+            this.Cursor = Cursors.Default;
             ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
             ClassLib.Memory.Heap();
         }
@@ -376,7 +377,7 @@ namespace StockControl
                     }
                 }
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -404,14 +405,14 @@ namespace StockControl
             //    }
             //}
             //catch (Exception ex) { MessageBox.Show(ex.Message); }
-            
+
         }
-        
+
         DataTable dt_Kanban = new DataTable();
 
         private void Set_dt_Print()
         {
-          
+
             dt_Kanban.Columns.Add(new DataColumn("CodeNo", typeof(string)));
             dt_Kanban.Columns.Add(new DataColumn("PartNo", typeof(string)));
             dt_Kanban.Columns.Add(new DataColumn("PartDescription", typeof(string)));
@@ -426,7 +427,7 @@ namespace StockControl
             dt_Kanban.Columns.Add(new DataColumn("BarCode", typeof(Image)));
 
         }
-       
+
         private void btn_Print_Barcode_Click(object sender, EventArgs e)
         {
             //try
@@ -461,7 +462,7 @@ namespace StockControl
         {
             try
             {
-                
+
                 //dt_ShelfTag.Rows.Clear();
                 string ApproveDocuNo = "";
                 if (radGridView1.Rows.Count > 0)
@@ -507,13 +508,40 @@ namespace StockControl
                         Report.Reportx1 op = new Report.Reportx1("ReportCheckStock.rpt");
                         op.Show();
                     }
-                    else if (Type == "Job Cancel" || Type=="Change Job")
+                    else if (Type == "Job Cancel" || Type == "Change Job")
                     {
                         Report.Reportx1.Value = new string[1];
                         Report.Reportx1.Value[0] = ApproveDocuNo;
                         Report.Reportx1.WReport = "ReportChangeJob";
                         Report.Reportx1 op = new Report.Reportx1("ReportChangeJob.rpt");
                         op.Show();
+                    }
+                    else if (Type == "Price List")
+                    {
+                        using (var db = new DataClasses1DataContext())
+                        {
+                            var m = db.mh_PriceLists.Where(x => x.PriceListCode == ApproveDocuNo).FirstOrDefault();
+                            if (m != null)
+                            {
+                                if (m.AttachFile.ToSt() != "")
+                                {
+                                    try
+                                    {
+                                        System.Diagnostics.Process.Start(Path.Combine(baseClass.GetPathServer(PathCode.PriceList), m.AttachFile));
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        baseClass.Error(ex.Message);
+                                    }
+                                }
+                                else
+                                    baseClass.Warning("ไม่มีไฟล์แนบ.");
+                            }
+                            else
+                            {
+                                baseClass.Warning("ไม่พบเลขที่เอกสาร.");
+                            }
+                        }
                     }
 
                 }

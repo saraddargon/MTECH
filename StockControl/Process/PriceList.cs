@@ -11,6 +11,7 @@ using Telerik.WinControls.UI;
 using System.Globalization;
 using Telerik.WinControls;
 using Telerik.WinControls.Data;
+using System.IO;
 
 namespace StockControl
 {
@@ -25,7 +26,7 @@ namespace StockControl
             InitializeComponent();
             SHNo_t = SHNo;
         }
-       
+
         string SHNo_t = "";
         string CodeNo_t = "";
         string Ac = "";
@@ -68,10 +69,12 @@ namespace StockControl
 
         private void Unit_Load(object sender, EventArgs e)
         {
-           
-            GETDTRow();   
+            var op = rdBrowse.Dialog as OpenFileDialog;
+            op.Filter = "(*.pdf)|*.pdf";
+
+            GETDTRow();
             //DefaultItem();
-            
+
             btnNew_Click(null, null);
 
             if (!SHNo_t.Equals(""))
@@ -79,14 +82,14 @@ namespace StockControl
                 btnNew.Enabled = true;
                 txtPriceListCode.Text = SHNo_t;
                 DataLoad();
-                Ac = "View";               
-            }          
+                Ac = "View";
+            }
         }
         private void DefaultItem()
         {
             using (DataClasses1DataContext db = new DataClasses1DataContext())
-            {               
-              
+            {
+
             }
         }
         private void DataLoad()
@@ -129,21 +132,25 @@ namespace StockControl
                             txtCreateDate.Text = Convert.ToDateTime(g.FirstOrDefault().CreateDate).ToString("dd/MMM/yyyy");
                             txtPriceListCode.Enabled = false;
                             txtRemark.Text = dbClss.TSt(g.FirstOrDefault().Remark);
+                            if(g.FirstOrDefault().AttachFile.ToSt() != "")
+                            {
+                                rdBrowse.Value = g.FirstOrDefault().AttachFile.ToSt();
+                                txtBrowse.Text = Path.Combine(baseClass.GetPathServer(PathCode.PriceList), g.FirstOrDefault().AttachFile);
+                            }
 
-                            
                             if (lblStatus.Text == "Approve")
                             {
                                 btnSendApprove.Enabled = false;
                                 btnSave.Enabled = false;
                                 btnEdit.Enabled = false;
                             }
-                            else if  (lblStatus.Text == "Waiting" || lblStatus.Text == "Waiting Approve")
+                            else if (lblStatus.Text == "Waiting" || lblStatus.Text == "Waiting Approve")
                             {
                                 btnEdit.Enabled = true;
                                 btnSave.Enabled = true;
                                 btnSendApprove.Enabled = true;
                                 btnView.Enabled = false;
-                               
+
                             }
                             btnNew.Enabled = true;
 
@@ -157,7 +164,7 @@ namespace StockControl
             }
             catch { }
             finally { this.Cursor = Cursors.Default; }
-            
+
 
         }
         private bool CheckDuplicate(string code)
@@ -189,10 +196,12 @@ namespace StockControl
             txtInternalNo.Text = "";
             txtCreateDate.Text = DateTime.Now.ToString("dd/MMM/yyyy");
             txtRemark.Text = "";
+            rdBrowse.Value = "";
+            txtBrowse.Text = "";
 
             lblStatus.Text = "-";
         }
-      private void Enable_Status(bool ss,string Condition)
+        private void Enable_Status(bool ss, string Condition)
         {
             if (Condition.Equals("-") || Condition.Equals("New"))
             {
@@ -277,9 +286,9 @@ namespace StockControl
                 //else
                 if (!txtPriceListCode.Text.Equals(""))
                 {
-                    if(Ac=="New")
+                    if (Ac == "New")
                     {
-                        if(CheckDuplicate(txtPriceListCode.Text))
+                        if (CheckDuplicate(txtPriceListCode.Text))
                             err += "- “เลขทีอ้างอิงซ้ำ” \n";
                     }
                 }
@@ -290,7 +299,6 @@ namespace StockControl
 
                 if (dtEndDate.Text.Equals(""))
                     err += "- “วันทีสิ้นสุด:” เป็นค่าว่าง \n";
-
 
                 if (!err.Equals(""))
                     MessageBox.Show(err);
@@ -309,6 +317,7 @@ namespace StockControl
         {
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
+                mh_PriceList pl = new mh_PriceList();
                 var g = (from ix in db.mh_PriceLists
                          where ix.PriceListCode.Trim() == txtPriceListCode.Text.Trim() && ix.Status != "Cancel"
                          select ix).ToList();
@@ -319,7 +328,6 @@ namespace StockControl
                         var gg = (from ix in db.mh_PriceLists
                                   where ix.PriceListCode.Trim() == txtPriceListCode.Text.Trim() && ix.Status != "Cancel"
                                   select ix).First();
-
                         //gg.CreateBy = ClassLib.Classlib.User;
                         //gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                         gg.ModifyBy = ClassLib.Classlib.User;
@@ -331,7 +339,7 @@ namespace StockControl
 
                         if (!txtInternalNo.Text.Trim().Equals(row["InternalNo"].ToString()))
                         {
-                            gg.InternalNo = txtInternalNo.Text;                           
+                            gg.InternalNo = txtInternalNo.Text;
                             dbClss.AddHistory(this.Name, "แก้ไข PriceList", "แก้ไขรหัสสินค้า [" + txtInternalNo.Text.Trim() + " เดิม :" + row["InternalNo"].ToString() + "]", txtPriceListCode.Text);
                         }
                         if (!seUnitPrice.Text.Trim().Equals(row["UnitPrice"].ToString()))
@@ -341,7 +349,7 @@ namespace StockControl
                         }
                         if (!dtStartDate.Value.ToString("yyyyMMdd").Equals(Convert.ToDateTime(row["StartDate"]).ToString("yyyyMMdd")))
                         {
-                            gg.StartDate = Convert.ToDateTime(dtStartDate.Value,new CultureInfo("en-US"));
+                            gg.StartDate = Convert.ToDateTime(dtStartDate.Value, new CultureInfo("en-US"));
                             dbClss.AddHistory(this.Name, "แก้ไข PriceList", "แก้ไขวันทีเริ่มใช [" + dtStartDate.Text.Trim() + " เดิม :" + row["StartDate"].ToString() + "]", txtPriceListCode.Text);
                         }
                         if (!dtEndDate.Value.ToString("yyyyMMdd").Equals(Convert.ToDateTime(row["EndDate"]).ToString("yyyyMMdd")))
@@ -355,6 +363,7 @@ namespace StockControl
                             dbClss.AddHistory(this.Name, "แก้ไข PriceList", "แก้ไขหมายเหตุ [" + txtRemark.Text.Trim() + " เดิม :" + row["Remark"].ToString() + "]", txtPriceListCode.Text);
                         }
                         db.SubmitChanges();
+                        pl = gg;
                     }
                 }
                 else //สร้างใหม่
@@ -364,7 +373,7 @@ namespace StockControl
 
                     DateTime? UpdateDate = null;
 
-                    mh_PriceList gg = new mh_PriceList();                   
+                    mh_PriceList gg = new mh_PriceList();
                     gg.PriceListCode = txtPriceListCode.Text;
                     gg.StartDate = Convert.ToDateTime(dtStartDate.Value, new CultureInfo("en-US"));
                     gg.EndDate = Convert.ToDateTime(dtEndDate.Value, new CultureInfo("en-US"));
@@ -377,57 +386,83 @@ namespace StockControl
                     gg.UnitPrice = dbClss.TDe(seUnitPrice.Value);
 
                     gg.Status = "Waiting";
-                 
+
                     db.mh_PriceLists.InsertOnSubmit(gg);
                     db.SubmitChanges();
+                    pl = gg;
 
                     dbClss.AddHistory(this.Name, "แก้ไข PriceList", "สร้าง การเบิกสินค้า [" + txtPriceListCode.Text.Trim() + "]", txtPriceListCode.Text);
                 }
+
+                //upload file
+                if(rdBrowse.Value.ToSt() != "" && pl.AttachFile.ToSt() != rdBrowse.Value.ToSt())
+                {
+                    //new update
+                    string fileName = pl.PriceListCode.ToSt() + "_" + Path.GetFileName(rdBrowse.Value.ToSt());
+                    string crrPath = Path.Combine(baseClass.GetPathServer(PathCode.PriceList), fileName);
+                    try
+                    {
+                        File.Copy(rdBrowse.Value.ToSt(), crrPath, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        baseClass.Error(ex.Message);
+                        return;
+                    }
+
+                    pl.AttachFile = fileName;
+                    db.SubmitChanges();
+                }
+                else if(rdBrowse.Value == "")
+                {
+                    pl.AttachFile = "";
+                    db.SubmitChanges();
+                }
             }
         }
-     
+
         private void btnSave_Click(object sender, EventArgs e)
         {
-            
-                if (Ac.Equals("New") || Ac.Equals("Edit"))
-                {
-                    if (Check_Save())
-                        return;
-                    if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        this.Cursor = Cursors.WaitCursor;
 
-                    if (Ac.Equals("New")  && txtPriceListCode.Text=="")
+            if (Ac.Equals("New") || Ac.Equals("Edit"))
+            {
+                if (Check_Save())
+                    return;
+                if (MessageBox.Show("ต้องการบันทึก ?", "บันทึก", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+
+                    if (Ac.Equals("New") && txtPriceListCode.Text == "")
                         txtPriceListCode.Text = StockControl.dbClss.GetNo(41, 2);
 
                     if (!txtPriceListCode.Text.Equals(""))
                     {
                         SaveHerder();
-                      
-                        
+
+
                         DataLoad();
                         btnNew.Enabled = true;
                         //btnDel_Item.Enabled = false;
-                        
+
                         MessageBox.Show("บันทึกสำเร็จ!");
-                        btnRefresh_Click(null,null);
+                        btnRefresh_Click(null, null);
                     }
                     else
                     {
                         MessageBox.Show("ไม่สามารถโหลดเลขที่เอกสารได้ ติดต่อแผนก IT");
                     }
-                    }
                 }
+            }
         }
-        
-        
-      
-      
+
+
+
+
         private void radGridView1_CellEndEdit(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
         {
             //try
             //{
-               
+
             //    if (e.RowIndex >= -1)
             //    {
 
@@ -507,7 +542,7 @@ namespace StockControl
             //            string dgvUOM = dbClss.TSt(e.Row.Cells["UnitShip"].Value);
             //            string CodeNo = dbClss.TSt(e.Row.Cells["CodeNo"].Value);
             //            e.Row.Cells["PCSUnit"].Value = dbClss.Con_UOM(CodeNo, dgvUOM);
-                        
+
             //            //Cal Remain Qty
             //            decimal PCSUnit = dbClss.TDe(e.Row.Cells["PCSUnit"].Value);
             //            string BaseUOM = dbClss.TSt(e.Row.Cells["BaseUOM"].Value);
@@ -569,7 +604,7 @@ namespace StockControl
             //}
             //catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
-        private decimal Check_RemainStock(string InternalNo,decimal PCSUnit,string BaseUnit,decimal BasePCSUnit,decimal QTY, decimal RemainQty)
+        private decimal Check_RemainStock(string InternalNo, decimal PCSUnit, string BaseUnit, decimal BasePCSUnit, decimal QTY, decimal RemainQty)
         {
             decimal re = 0;
 
@@ -577,23 +612,23 @@ namespace StockControl
             string CodeNo = InternalNo;
             string BaseUOM = BaseUnit;
             decimal BasePCSUOM = BasePCSUnit;
-            
+
             if (BasePCSUOM <= 0)
                 BasePCSUOM = 1;
 
-           
+
             re = BasePCSUOM * PCSUnit * QTY;
 
 
 
             return re;
         }
-        private decimal Get_UnitCostFIFO(string CodeNo, decimal Qty,string Location,int idCSTMPODt,int Free)
+        private decimal Get_UnitCostFIFO(string CodeNo, decimal Qty, string Location, int idCSTMPODt, int Free)
         {
             decimal re = 0;
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                re = dbClss.TDe(db.Get_AvgCost_FIFO(CodeNo, Qty, Location, idCSTMPODt,Free));
+                re = dbClss.TDe(db.Get_AvgCost_FIFO(CodeNo, Qty, Location, idCSTMPODt, Free));
             }
             return re;
         }
@@ -624,7 +659,7 @@ namespace StockControl
             }
         }
 
-       
+
 
         int row = -1;
         private void radGridView1_CellClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
@@ -638,7 +673,7 @@ namespace StockControl
             //dbClss.ExportGridXlSX(dgvData);
         }
 
-      
+
         private void btnFilter1_Click(object sender, EventArgs e)
         {
             //dgvData.EnableFiltering = true;
@@ -704,12 +739,12 @@ namespace StockControl
 
         private void cboModelName_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+
         }
 
         //private void cboYear_SelectedIndexChanged(object sender, Telerik.WinControls.UI.Data.PositionChangedEventArgs e)
         //{
-            
+
         //}
 
         private void radLabel5_Click(object sender, EventArgs e)
@@ -736,8 +771,8 @@ namespace StockControl
         {
             btnView_Click(null, null);
             DataLoad();
-           
-           
+
+
         }
 
         private void txtCodeNo_KeyPress(object sender, KeyPressEventArgs e)
@@ -751,11 +786,11 @@ namespace StockControl
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
-      
-   
-   
-      
-    
+
+
+
+
+
         private void dgvData_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
@@ -816,7 +851,7 @@ namespace StockControl
                 Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
-                PriceList_List sc = new PriceList_List(txtPriceListCode,"PriceList");
+                PriceList_List sc = new PriceList_List(txtPriceListCode, "PriceList");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -824,7 +859,7 @@ namespace StockControl
 
                 ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
                 ClassLib.Memory.Heap();
-               
+
                 if (!txtPriceListCode.Text.Equals(""))
                 {
 
@@ -834,7 +869,7 @@ namespace StockControl
                     btnSave.Enabled = false;
                     btnNew.Enabled = true;
                 }
-                
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError(this.Name, ex.Message + " : radButtonElement1_Click", this.Name); }
 
@@ -987,7 +1022,7 @@ namespace StockControl
                         ReadOnly = false
                     }
                    );
-                   
+
 
                     //dgvDataDetail.CellEditorInitialized += MasterTemplate_CellEditorInitialized;
 
@@ -1066,7 +1101,7 @@ namespace StockControl
                 {
                     using (var db = new DataClasses1DataContext())
                     {
-                        
+
                         //var g = (from ix in db.tb_Shipping_FGs
                         //         where ix.RefNo == txtPriceListCode.Text && ix.Active == true
                         //         select ix).ToList();
@@ -1089,7 +1124,7 @@ namespace StockControl
                         //        MessageBox.Show("บางรายการถูกนำไปสร้างใบแจ้งหนี้ (Invoice) แล้ว ไม่สามารถทำรายการได้");
                         //        return;
                         //    }                          
-                                
+
                         //    }                        
                     }
                 }
@@ -1103,7 +1138,7 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    if (lblStatus.Text == "Waiting" || Ac == "Edit" || Ac=="New"
+                    if (lblStatus.Text == "Waiting" || Ac == "Edit" || Ac == "New"
                         )
                     {
                         if (baseClass.IsSendApprove())
@@ -1162,7 +1197,7 @@ namespace StockControl
                 if (e.KeyChar == 13)
                 {
                     DataLoad();
-              
+
 
                 }
             }
@@ -1179,7 +1214,7 @@ namespace StockControl
                     this.Cursor = Cursors.WaitCursor;
                     using (DataClasses1DataContext db = new DataClasses1DataContext())
                     {
-                        
+
                         var d1 = (from ix in db.mh_Items select ix)
                             .Where(a => a.InternalNo == CodeNo.Trim() && a.Active == true
 
@@ -1191,7 +1226,7 @@ namespace StockControl
 
                             ).First();
                             txtInternalNo.Text = d.InternalNo;
-                       
+
                         }
                         else
                             txtInternalNo.Text = "";
@@ -1215,6 +1250,41 @@ namespace StockControl
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtBrowse.Text.Trim() != "")
+                    System.Diagnostics.Process.Start(txtBrowse.Text);
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+        }
+
+        private void btnDelFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(txtBrowse.Text != "" && baseClass.Question("ต้องการลบ ไฟล์แนบ ?"))
+                {
+                    txtBrowse.Text = "";
+                    rdBrowse.Value = "";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                baseClass.Error(ex.Message);
+            }
+        }
+
+        private void rdBrowse_ValueChanged(object sender, EventArgs e)
+        {
+            txtBrowse.Text = rdBrowse.Value;
         }
     }
 }

@@ -35,6 +35,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.radPanel2 = new Telerik.WinControls.UI.RadPanel();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
+            this.btnAdd_Item = new Telerik.WinControls.UI.RadButton();
             this.seUnitPrice = new Telerik.WinControls.UI.RadSpinEditor();
             this.txtCreateDate = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
@@ -42,6 +43,8 @@
             this.radLabel8 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel13 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel7 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel9 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel12 = new Telerik.WinControls.UI.RadLabel();
             this.radGroupBox1 = new Telerik.WinControls.UI.RadGroupBox();
             this.lblStatus = new Telerik.WinControls.UI.RadLabel();
@@ -49,21 +52,20 @@
             this.dtStartDate = new Telerik.WinControls.UI.RadDateTimePicker();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel6 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel11 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel4 = new Telerik.WinControls.UI.RadLabel();
             this.txtPriceListCode = new Telerik.WinControls.UI.RadTextBox();
+            this.txtRemark = new Telerik.WinControls.UI.RadTextBox();
             this.txtInternalNo = new Telerik.WinControls.UI.RadTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnDel_Item = new System.Windows.Forms.ToolStripMenuItem();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
             this.radRibbonBarButtonGroup2 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
+            this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
-            this.radLabel7 = new Telerik.WinControls.UI.RadLabel();
-            this.radLabel9 = new Telerik.WinControls.UI.RadLabel();
-            this.txtRemark = new Telerik.WinControls.UI.RadTextBox();
-            this.radLabel11 = new Telerik.WinControls.UI.RadLabel();
-            this.btnAdd_Item = new Telerik.WinControls.UI.RadButton();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
             this.radRibbonBarGroup1 = new Telerik.WinControls.UI.RadRibbonBarGroup();
@@ -89,13 +91,17 @@
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
-            this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
-            this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
+            this.radLabel14 = new Telerik.WinControls.UI.RadLabel();
+            this.rdBrowse = new Telerik.WinControls.UI.RadBrowseEditor();
+            this.btnOpen = new Telerik.WinControls.UI.RadButton();
+            this.btnDelFile = new Telerik.WinControls.UI.RadButton();
+            this.txtBrowse = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             this.radPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAdd_Item)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seUnitPrice)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCreateDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).BeginInit();
@@ -103,6 +109,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).BeginInit();
             this.radGroupBox1.SuspendLayout();
@@ -111,18 +119,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtStartDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPriceListCode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtInternalNo)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnAdd_Item)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rdBrowse)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnDelFile)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtBrowse)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -130,7 +140,7 @@
             // 
             this.radStatusStrip1.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radLabelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 429);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 467);
             this.radStatusStrip1.Name = "radStatusStrip1";
             this.radStatusStrip1.Size = new System.Drawing.Size(718, 26);
             this.radStatusStrip1.SizingGrip = false;
@@ -151,13 +161,13 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(718, 269);
+            this.panel1.Size = new System.Drawing.Size(718, 307);
             this.panel1.TabIndex = 2;
             // 
             // radPanel2
             // 
             this.radPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.radPanel2.Location = new System.Drawing.Point(0, 232);
+            this.radPanel2.Location = new System.Drawing.Point(0, 270);
             this.radPanel2.Name = "radPanel2";
             this.radPanel2.Size = new System.Drawing.Size(718, 37);
             this.radPanel2.TabIndex = 1;
@@ -167,6 +177,9 @@
             // radPanel1
             // 
             this.radPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(237)))), ((int)(((byte)(250)))));
+            this.radPanel1.Controls.Add(this.btnDelFile);
+            this.radPanel1.Controls.Add(this.btnOpen);
+            this.radPanel1.Controls.Add(this.rdBrowse);
             this.radPanel1.Controls.Add(this.btnAdd_Item);
             this.radPanel1.Controls.Add(this.seUnitPrice);
             this.radPanel1.Controls.Add(this.txtCreateDate);
@@ -183,10 +196,12 @@
             this.radPanel1.Controls.Add(this.dtStartDate);
             this.radPanel1.Controls.Add(this.radLabel1);
             this.radPanel1.Controls.Add(this.radLabel6);
+            this.radPanel1.Controls.Add(this.radLabel14);
             this.radPanel1.Controls.Add(this.radLabel11);
             this.radPanel1.Controls.Add(this.radLabel2);
             this.radPanel1.Controls.Add(this.radLabel5);
             this.radPanel1.Controls.Add(this.radLabel4);
+            this.radPanel1.Controls.Add(this.txtBrowse);
             this.radPanel1.Controls.Add(this.txtPriceListCode);
             this.radPanel1.Controls.Add(this.txtRemark);
             this.radPanel1.Controls.Add(this.txtInternalNo);
@@ -194,11 +209,22 @@
             this.radPanel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(718, 269);
+            this.radPanel1.Size = new System.Drawing.Size(718, 307);
             this.radPanel1.TabIndex = 0;
             this.radPanel1.TabStop = false;
             this.radPanel1.ThemeName = "Office2010Blue";
             this.radPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.radPanel1_Paint);
+            // 
+            // btnAdd_Item
+            // 
+            this.btnAdd_Item.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd_Item.Image")));
+            this.btnAdd_Item.Location = new System.Drawing.Point(248, 47);
+            this.btnAdd_Item.Name = "btnAdd_Item";
+            this.btnAdd_Item.Size = new System.Drawing.Size(49, 26);
+            this.btnAdd_Item.TabIndex = 20;
+            this.btnAdd_Item.Text = "   เลือก";
+            this.btnAdd_Item.ThemeName = "Office2010Blue";
+            this.btnAdd_Item.Click += new System.EventHandler(this.btnAdd_Item_Click);
             // 
             // seUnitPrice
             // 
@@ -272,6 +298,26 @@
             this.radLabel13.Size = new System.Drawing.Size(12, 17);
             this.radLabel13.TabIndex = 18;
             this.radLabel13.Text = "*";
+            // 
+            // radLabel7
+            // 
+            this.radLabel7.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel7.ForeColor = System.Drawing.Color.Red;
+            this.radLabel7.Location = new System.Drawing.Point(110, 32);
+            this.radLabel7.Name = "radLabel7";
+            this.radLabel7.Size = new System.Drawing.Size(12, 17);
+            this.radLabel7.TabIndex = 17;
+            this.radLabel7.Text = "*";
+            // 
+            // radLabel9
+            // 
+            this.radLabel9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel9.ForeColor = System.Drawing.Color.Red;
+            this.radLabel9.Location = new System.Drawing.Point(110, 80);
+            this.radLabel9.Name = "radLabel9";
+            this.radLabel9.Size = new System.Drawing.Size(12, 17);
+            this.radLabel9.TabIndex = 17;
+            this.radLabel9.Text = "*";
             // 
             // radLabel12
             // 
@@ -354,6 +400,16 @@
             this.radLabel6.Text = "ราคาขาย";
             this.radLabel6.Click += new System.EventHandler(this.radLabel5_Click);
             // 
+            // radLabel11
+            // 
+            this.radLabel11.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel11.Location = new System.Drawing.Point(37, 174);
+            this.radLabel11.Name = "radLabel11";
+            this.radLabel11.Size = new System.Drawing.Size(51, 17);
+            this.radLabel11.TabIndex = 8;
+            this.radLabel11.Text = "หมายเหตุ";
+            this.radLabel11.Click += new System.EventHandler(this.radLabel5_Click);
+            // 
             // radLabel2
             // 
             this.radLabel2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -396,6 +452,17 @@
             this.txtPriceListCode.TabStop = false;
             this.txtPriceListCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPriceListCode_KeyPress);
             // 
+            // txtRemark
+            // 
+            this.txtRemark.AutoSize = false;
+            this.txtRemark.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRemark.Location = new System.Drawing.Point(123, 172);
+            this.txtRemark.Multiline = true;
+            this.txtRemark.Name = "txtRemark";
+            this.txtRemark.Size = new System.Drawing.Size(119, 52);
+            this.txtRemark.TabIndex = 2;
+            this.txtRemark.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtInternalNo_KeyPress);
+            // 
             // txtInternalNo
             // 
             this.txtInternalNo.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -432,6 +499,20 @@
             this.radRibbonBarButtonGroup2.ShowBackColor = false;
             this.radRibbonBarButtonGroup2.Text = "radRibbonBarButtonGroup2";
             // 
+            // btnFilter
+            // 
+            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Text = "Filter";
+            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // Unfilter
+            // 
+            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
+            this.Unfilter.Name = "Unfilter";
+            this.Unfilter.Text = "Un Filter";
+            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
             // radRibbonBarButtonGroup5
             // 
             this.radRibbonBarButtonGroup5.Name = "radRibbonBarButtonGroup5";
@@ -440,58 +521,6 @@
             this.radRibbonBarButtonGroup5.ShowBackColor = false;
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
-            // 
-            // radLabel7
-            // 
-            this.radLabel7.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel7.ForeColor = System.Drawing.Color.Red;
-            this.radLabel7.Location = new System.Drawing.Point(110, 32);
-            this.radLabel7.Name = "radLabel7";
-            this.radLabel7.Size = new System.Drawing.Size(12, 17);
-            this.radLabel7.TabIndex = 17;
-            this.radLabel7.Text = "*";
-            // 
-            // radLabel9
-            // 
-            this.radLabel9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel9.ForeColor = System.Drawing.Color.Red;
-            this.radLabel9.Location = new System.Drawing.Point(110, 80);
-            this.radLabel9.Name = "radLabel9";
-            this.radLabel9.Size = new System.Drawing.Size(12, 17);
-            this.radLabel9.TabIndex = 17;
-            this.radLabel9.Text = "*";
-            // 
-            // txtRemark
-            // 
-            this.txtRemark.AutoSize = false;
-            this.txtRemark.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRemark.Location = new System.Drawing.Point(123, 149);
-            this.txtRemark.Multiline = true;
-            this.txtRemark.Name = "txtRemark";
-            this.txtRemark.Size = new System.Drawing.Size(119, 52);
-            this.txtRemark.TabIndex = 2;
-            this.txtRemark.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtInternalNo_KeyPress);
-            // 
-            // radLabel11
-            // 
-            this.radLabel11.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel11.Location = new System.Drawing.Point(37, 151);
-            this.radLabel11.Name = "radLabel11";
-            this.radLabel11.Size = new System.Drawing.Size(51, 17);
-            this.radLabel11.TabIndex = 8;
-            this.radLabel11.Text = "หมายเหตุ";
-            this.radLabel11.Click += new System.EventHandler(this.radLabel5_Click);
-            // 
-            // btnAdd_Item
-            // 
-            this.btnAdd_Item.Image = ((System.Drawing.Image)(resources.GetObject("btnAdd_Item.Image")));
-            this.btnAdd_Item.Location = new System.Drawing.Point(248, 47);
-            this.btnAdd_Item.Name = "btnAdd_Item";
-            this.btnAdd_Item.Size = new System.Drawing.Size(49, 26);
-            this.btnAdd_Item.TabIndex = 20;
-            this.btnAdd_Item.Text = "   เลือก";
-            this.btnAdd_Item.ThemeName = "Office2010Blue";
-            this.btnAdd_Item.Click += new System.EventHandler(this.btnAdd_Item_Click);
             // 
             // radRibbonBar1
             // 
@@ -739,25 +768,60 @@
             this.radMenuItem2.Text = "History View";
             this.radMenuItem2.Click += new System.EventHandler(this.radMenuItem2_Click);
             // 
-            // btnFilter
+            // radLabel14
             // 
-            this.btnFilter.Image = ((System.Drawing.Image)(resources.GetObject("btnFilter.Image")));
-            this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Text = "Filter";
-            this.btnFilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.radLabel14.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel14.Location = new System.Drawing.Point(37, 148);
+            this.radLabel14.Name = "radLabel14";
+            this.radLabel14.Size = new System.Drawing.Size(48, 17);
+            this.radLabel14.TabIndex = 8;
+            this.radLabel14.Text = "ไฟล์แนบ";
+            this.radLabel14.Click += new System.EventHandler(this.radLabel5_Click);
             // 
-            // Unfilter
+            // rdBrowse
             // 
-            this.Unfilter.Image = ((System.Drawing.Image)(resources.GetObject("Unfilter.Image")));
-            this.Unfilter.Name = "Unfilter";
-            this.Unfilter.Text = "Un Filter";
-            this.Unfilter.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.rdBrowse.Location = new System.Drawing.Point(123, 147);
+            this.rdBrowse.Name = "rdBrowse";
+            this.rdBrowse.Size = new System.Drawing.Size(174, 20);
+            this.rdBrowse.TabIndex = 21;
+            this.rdBrowse.ValueChanged += new System.EventHandler(this.rdBrowse_ValueChanged);
+            // 
+            // btnOpen
+            // 
+            this.btnOpen.Location = new System.Drawing.Point(307, 144);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(44, 24);
+            this.btnOpen.TabIndex = 22;
+            this.btnOpen.Text = "เปิด";
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            // 
+            // btnDelFile
+            // 
+            this.btnDelFile.Location = new System.Drawing.Point(357, 144);
+            this.btnDelFile.Name = "btnDelFile";
+            this.btnDelFile.Size = new System.Drawing.Size(44, 24);
+            this.btnDelFile.TabIndex = 22;
+            this.btnDelFile.Text = "ลบ";
+            this.btnDelFile.Click += new System.EventHandler(this.btnDelFile_Click);
+            // 
+            // txtBrowse
+            // 
+            this.txtBrowse.AcceptsReturn = true;
+            this.txtBrowse.BackColor = System.Drawing.Color.White;
+            this.txtBrowse.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBrowse.Location = new System.Drawing.Point(282, 174);
+            this.txtBrowse.Name = "txtBrowse";
+            this.txtBrowse.Size = new System.Drawing.Size(119, 19);
+            this.txtBrowse.TabIndex = 4;
+            this.txtBrowse.TabStop = false;
+            this.txtBrowse.Visible = false;
+            this.txtBrowse.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPriceListCode_KeyPress);
             // 
             // PriceList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(718, 455);
+            this.ClientSize = new System.Drawing.Size(718, 493);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);
@@ -779,6 +843,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
             this.radPanel1.ResumeLayout(false);
             this.radPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAdd_Item)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seUnitPrice)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCreateDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).EndInit();
@@ -786,6 +851,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).EndInit();
             this.radGroupBox1.ResumeLayout(false);
@@ -794,18 +861,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtStartDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPriceListCode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtInternalNo)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtRemark)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnAdd_Item)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rdBrowse)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOpen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnDelFile)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtBrowse)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -875,5 +944,10 @@
         private Telerik.WinControls.UI.RadLabel radLabel9;
         private Telerik.WinControls.UI.RadLabel radLabel11;
         private Telerik.WinControls.UI.RadTextBox txtRemark;
+        private Telerik.WinControls.UI.RadBrowseEditor rdBrowse;
+        private Telerik.WinControls.UI.RadLabel radLabel14;
+        private Telerik.WinControls.UI.RadButton btnDelFile;
+        private Telerik.WinControls.UI.RadButton btnOpen;
+        private Telerik.WinControls.UI.RadTextBox txtBrowse;
     }
 }
