@@ -200,6 +200,17 @@ namespace StockControl
                         lbOrderSubtotal.Text = StockControl.dbClss.TDe(mh.TotalPrice).ToString("##,###,##0.00");
                         txtVat.Text = StockControl.dbClss.TDe(mh.VatAmnt).ToString("##,###,##0.00");
                         txtVattax.Text = StockControl.dbClss.TDe(mh.VatA).ToString("##,###,##0.00");
+                        txtTransport.Text = dbClss.TSt(mh.Transport);
+                        txtDeposit.Text = dbClss.TDe(mh.Deposit).ToString("##,###,##0.00");
+                        txtAfter_Deposit.Text = dbClss.TDe(mh.After_Deposit).ToString("##,###,##0.00");
+                        ddlPayment.Text = dbClss.TSt(mh.Payment);
+                        txtSales_area.Text = dbClss.TSt(mh.Sales_area);
+                        txtSales_person.Text = dbClss.TSt(mh.Sales_person);
+                        txtReference.Text = dbClss.TSt(mh.Reference);
+                        txtCredit.Text = dbClss.TInt(mh.Credit).ToString("N0");
+                        dtCredit_Date.Value = Convert.ToDateTime(mh.Credit_Date);
+                        txtTax_identification_number.Text = dbClss.TSt(mh.Tax_identification_number);
+                        dtInvDate.Value = Convert.ToDateTime(mh.InvDate);
 
                         cbvatDetail.Checked = StockControl.dbClss.TBo(mh.VatDetail);
                         if (StockControl.dbClss.TDe(txtVat.Text) > 0)
@@ -293,14 +304,15 @@ namespace StockControl
                     bool fRow = true;
                     foreach (var id in idList)
                     {
-                        var c = db.mh_ShipmentDTs.Where(x => x.id == id && x.OutInv > 0 && x.OutShip == 0
+                        var c = db.mh_ShipmentDTs.Where(x => x.Status != "Cancel" 
+                        && x.id == id && x.OutInv > 0 //&& x.OutShip == 0
                         ).ToList();
                         if (c.Count > 0)
                         {
                             
                             if (c.Count > 0)
                             {
-                                var dd = db.mh_Shipments.Where(x => x.SSNo == c.FirstOrDefault().SSNo.ToSt()).ToList();
+                                var dd = db.mh_Shipments.Where(x => x.StatusHD != "Cancel" &&  x.SSNo == c.FirstOrDefault().SSNo.ToSt()).ToList();
                                 if (dd.Count > 0)
                                 {
                                     txtCSTMNo.Text = dbClss.TSt(dd.FirstOrDefault().CustomerNo);
@@ -698,7 +710,7 @@ namespace StockControl
                 txtIVNo.Text = dbClss.GetNo(31, 2);
                 string sono = txtIVNo.Text;
                 string cstmNo = txtContactName.Text;
-                CallTotal();
+                btnCal_Click(null, null);
 
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
@@ -754,6 +766,8 @@ namespace StockControl
                         sh1.Reference = txtReference.Text;
                         sh1.Payment = ddlPayment.Text;
                         sh1.Credit = dbClss.TInt(txtCredit.Text);
+                       
+
                         if(dtCredit_Date.Text !="")
                             sh1.Credit_Date = Convert.ToDateTime(dtCredit_Date.Value);
                         sh1.InvDate = Convert.ToDateTime(dtInvDate.Value);
@@ -1884,7 +1898,7 @@ namespace StockControl
                 Report.Reportx1.Value[0] = InvNo;
                 Report.Reportx1.Value[1] = InvNo;
                 Report.Reportx1.WReport = "Invoice";
-                Report.Reportx1 op = new Report.Reportx1("Invoice.rpt");
+                Report.Reportx1 op = new Report.Reportx1("InvoiceDot.rpt");
                 op.Show();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -2112,6 +2126,11 @@ namespace StockControl
             {
                 txtVattax.Text = "0";
             }
+            else
+            {
+                if(txtVattax.Text=="0"||txtVattax.Text =="")
+                    txtVattax.Text = "7";
+            }
             //else
             //{
             //    cboVatType_SelectedIndexChanged(null, null);
@@ -2156,7 +2175,7 @@ namespace StockControl
 
                         using (var db = new DataClasses1DataContext())
                         {
-                            var c = db.mh_ShipmentDTs.Where(x => x.id == id && x.OutInv>0 && x.OutShip==0 ).ToList();
+                            var c = db.mh_ShipmentDTs.Where(x => x.Status != "Cancel" && x.id == id && x.OutInv>0 && x.OutShip==0 ).ToList();
                             if (c.Count > 0)
                             {
                                 //mh_ShipmentDT im = db.mh_ShipmentDTs
@@ -2185,7 +2204,7 @@ namespace StockControl
                                 //}
                                 if (c.Count > 0)
                                 {
-                                    var dd = db.mh_Shipments.Where(x => x.SSNo == c.FirstOrDefault().SSNo.ToSt()).ToList();
+                                    var dd = db.mh_Shipments.Where(x => x.StatusHD != "Cancel" && x.SSNo == c.FirstOrDefault().SSNo.ToSt()).ToList();
                                 if (dd.Count > 0)
                                 {
                                     txtCSTMNo.Text = dbClss.TSt(dd.FirstOrDefault().CustomerNo);
@@ -2296,6 +2315,7 @@ namespace StockControl
                                 txtFax.Text = rd.Fax;
                                 txtTel.Text = rd.Tel;
                                
+                               
                             }
                         }
 
@@ -2304,6 +2324,7 @@ namespace StockControl
                         {
                             txtAddress.Text = mc.ShippingAddress;
                             txtCSTMNo.Text = mc.No;
+                            txtTax_identification_number.Text = mc.VatRegisNo;
                         }
 
                     }
@@ -2453,7 +2474,7 @@ namespace StockControl
             try
             {
                 dbClss.CheckDigitDecimal(e);
-                LessPoDiscountAmountPersen_KeyPress((char)13);
+                btnCal_Click(null, null);
             }
             catch { }
         }
@@ -2660,13 +2681,13 @@ namespace StockControl
                         else
                         {
 
-                            afDiscount = (Total - Discount);
+                            afDiscount = Math.Round((Total - Discount),2);
                             txtAfterDiscount.Text = afDiscount.ToString("##,###,##0.00");
                         }
                     }
                     else
                     {
-                        afDiscount = (Total - Discount);
+                        afDiscount = Math.Round((Total - Discount),2);
                         txtAfterDiscount.Text = afDiscount.ToString("##,###,##0.00");
                     }
 
@@ -2787,7 +2808,8 @@ namespace StockControl
         {
             if (e.KeyCode == Keys.Tab)
             {
-                LessPoDiscountAmount_KeyPress((char)13);
+                //LessPoDiscountAmount_KeyPress((char)13);
+                btnCal_Click(null, null);
             }
         }
     }

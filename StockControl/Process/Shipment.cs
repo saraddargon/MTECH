@@ -199,6 +199,15 @@ namespace StockControl
                                 rd.Cells["Qty"].ReadOnly = true;
                                 rd.Cells["UnitPrice"].ReadOnly = true;
                                 rd.Cells["RefDocNo"].ReadOnly = true;
+
+                                var v = (from ix in db.mh_SaleOrderDTs
+                                         where ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt()) && ix.Active == true
+                                         select ix).ToList();
+                                if (v.Count > 0)
+                                {
+                                    rd.Cells["Remain"].Value = dbClss.TDe(v.FirstOrDefault().OutShip);
+                                }
+
                             }
                             //foreach (var rd in list1)
                             //{
