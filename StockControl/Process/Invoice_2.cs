@@ -201,7 +201,7 @@ namespace StockControl
                         txtVat.Text = StockControl.dbClss.TDe(mh.VatAmnt).ToString("##,###,##0.00");
                         txtVattax.Text = StockControl.dbClss.TDe(mh.VatA).ToString("##,###,##0.00");
 
-                        //cbvatDetail.Checked = StockControl.dbClss.TBo(mh.VatDetail);
+                        cbvatDetail.Checked = StockControl.dbClss.TBo(mh.VatDetail);
                         if (StockControl.dbClss.TDe(txtVat.Text) > 0)
                             cbVat.Checked = true;
                         else
@@ -757,6 +757,7 @@ namespace StockControl
                             sh1.Credit_Date = Convert.ToDateTime(dtCredit_Date.Value);
                         sh1.InvDate = Convert.ToDateTime(dtInvDate.Value);
                         sh1.Tax_identification_number = txtTax_identification_number.Text;
+                        sh1.VatDetail = dbClss.TBo(cbvatDetail.Checked);
 
                         db.mh_InvoiceHDs.InsertOnSubmit(sh1);
                         db.SubmitChanges();

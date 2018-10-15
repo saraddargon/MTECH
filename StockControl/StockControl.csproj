@@ -145,6 +145,12 @@
     </Compile>
     <Compile Include="MasterClass\baseClass.cs" />
     <Compile Include="MasterClass\getGrid.cs" />
+    <Compile Include="Process\Customer_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Customer_List.Designer.cs">
+      <DependentUpon>Customer_List.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Show_Signature.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1234,6 +1240,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Mainfrom.resx">
       <DependentUpon>Mainfrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Customer_List.resx">
+      <DependentUpon>Customer_List.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Show_Signature.resx">
       <DependentUpon>Show_Signature.cs</DependentUpon>
