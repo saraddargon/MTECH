@@ -212,6 +212,12 @@ namespace StockControl
                                  , Version = a.Version
                                  ,
                                  YieldOperation = a.YieldOperation
+                                 ,CustomerNo = a.CustomerNo
+                                 ,id_Customer = a.id_Customer
+                                 ,PackingSTD = a.PackingSTD
+                                 ,Size = a.Size
+                                 ,RevDate = a.RevDate
+                                 ,Model = a.Model
 
                              }//.Where(ab => ab.VendorNo.Contains(Vendorno))
                               ).ToList();
@@ -246,6 +252,12 @@ namespace StockControl
                         txtMonth_.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Month_);
                         txtVersion.Text = dbClss.TSt(g.FirstOrDefault().Version);
                         seYieldoperation.Value = dbClss.TDe(g.FirstOrDefault().YieldOperation);
+                        txtCustomerNo.Text = dbClss.TSt(g.FirstOrDefault().CustomerNo);
+                        txtid_Customer.Text = dbClss.TSt(g.FirstOrDefault().id_Customer);
+                        txtSize.Text = dbClss.TSt(g.FirstOrDefault().Size);
+                        sePackingSTD.Value = dbClss.TDe(g.FirstOrDefault().PackingSTD);
+                        dtRevDate.Value = Convert.ToDateTime(g.FirstOrDefault().RevDate, new CultureInfo("en-US"));
+                        txtModel.Text = dbClss.TSt(g.FirstOrDefault().Model);
 
                         txtCreateby.Text = StockControl.dbClss.TSt(g.FirstOrDefault().CreateBy);
                         DateTime temp = Convert.ToDateTime(g.FirstOrDefault().CreateDate,new CultureInfo("en-US"));
@@ -459,6 +471,14 @@ namespace StockControl
                         gg.Version = txtVersion.Text.Trim();
                         gg.Status = "Process";
                         gg.YieldOperation = dbClss.TDe(seYieldoperation.Value);
+                        gg.id_Customer = dbClss.TInt(txtid_Customer.Text);
+                        gg.CustomerNo = txtCustomerNo.Text;
+                        gg.Size = txtSize.Text;
+                        gg.PackingSTD = dbClss.TDe(sePackingSTD.Value);
+                        if(dtRevDate.Text !="")
+                        {
+                           gg.RevDate =  Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
+                        }
                         if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                         {
                             gg.StartDate = Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
@@ -494,6 +514,14 @@ namespace StockControl
                     gg.Version = txtVersion.Text.Trim();
                     gg.Status = "Process";
                     gg.YieldOperation = dbClss.TDe(seYieldoperation.Value);
+                    gg.id_Customer = dbClss.TInt(txtid_Customer.Text);
+                    gg.CustomerNo = txtCustomerNo.Text;
+                    gg.Size = txtSize.Text;
+                    gg.PackingSTD = dbClss.TDe(sePackingSTD.Value);
+                    if (dtRevDate.Text != "")
+                    {
+                        gg.RevDate = Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
+                    }
 
                     if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                     {
@@ -678,6 +706,9 @@ namespace StockControl
                 btnDel_Item.Enabled = ss;
                 txtVersion.Enabled = ss;
                 seYieldoperation.Enabled = ss;
+                sePackingSTD.Enabled = ss;
+                txtSize.Enabled = ss;
+                txtCustomerNo.Enabled = ss;
             }
             else if (Condition.Equals("View"))
             {
@@ -692,6 +723,9 @@ namespace StockControl
                 btnDel_Item.Enabled = ss;
                 txtVersion.Enabled = ss;
                 seYieldoperation.Enabled = ss;
+                sePackingSTD.Enabled = ss;
+                txtSize.Enabled = ss;
+                txtCustomerNo.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
@@ -706,6 +740,9 @@ namespace StockControl
                 btnDel_Item.Enabled = ss;
                 txtVersion.Enabled = ss;
                 seYieldoperation.Enabled = ss;
+                sePackingSTD.Enabled = ss;
+                txtSize.Enabled = ss;
+                txtCustomerNo.Enabled = ss;
             }
         }
        
@@ -718,10 +755,17 @@ namespace StockControl
             txtTypePart.Text = "";
             dtBegin.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             dtEnd.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            dtRevDate.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             dtBegin.SetToNullValue();
             dtEnd.SetToNullValue();
             dgvData.Rows.Clear();
             dgvData.DataSource = null;
+            txtid_Customer.Text = "";
+            txtCustomerNo.Text = "";
+            txtSize.Text = "";
+            sePackingSTD.Value = 0;
+            txtModel.Text = "";
+
             txtRemarkHD.Text = "";
             dt_HD.Rows.Clear();
             dt_DT.Rows.Clear();
@@ -1769,5 +1813,59 @@ namespace StockControl
             }catch(Exception ex) { MessageBox.Show(ex.Message); }
 
             }
+
+        private void btnCustomer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                this.Cursor = Cursors.WaitCursor;
+
+                Customer_List sc = new Customer_List(txtCustomerNo);
+                this.Cursor = Cursors.Default;
+                sc.ShowDialog();
+                Load_Customer();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+                ClassLib.Memory.Heap();
+                
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError("Bom", ex.Message + " : btnFind_Click", this.Name); }
+
+        }
+        private void Load_Customer()
+        {
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                var g = db.mh_Customers.Where(x => x.Active && x.No.Trim().ToUpper()
+                == txtCustomerNo.Text.Trim().ToUpper()).ToList();
+                if (g.Count > 0)
+                {
+                    txtCustomerNo.Text = dbClss.TSt(g.FirstOrDefault().No);
+                    txtid_Customer.Text = dbClss.TSt(g.FirstOrDefault().id);
+                }
+                else
+                {
+                    txtCustomerNo.Text = "";
+                    txtid_Customer.Text = "";
+                }
+            }
+        }
+
+        private void txtCustomerNo_Leave(object sender, EventArgs e)
+        {
+            Load_Customer();
+        }
+
+        private void txtCustomerNo_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab || e.KeyCode == Keys.Enter)
+            {
+                Load_Customer();
+            }
+        }
+
     }
 }

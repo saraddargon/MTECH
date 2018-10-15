@@ -120,9 +120,9 @@ namespace StockControl
                                 dtStartDate.Value = a.Value;
 
                             if (dbClss.TSt(g.FirstOrDefault().EndDate) != "")
-                                dtStartDate.Value = Convert.ToDateTime(g.FirstOrDefault().EndDate);
+                                dtEndDate.Value = Convert.ToDateTime(g.FirstOrDefault().EndDate);
                             else
-                                dtStartDate.Value = a.Value;
+                                dtEndDate.Value = a.Value;
 
                             lblStatus.Text = dbClss.TSt(g.FirstOrDefault().Status);
                             txtCreateBy.Text = dbClss.TSt(g.FirstOrDefault().CreateBy);
