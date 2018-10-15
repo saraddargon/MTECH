@@ -216,6 +216,7 @@ namespace StockControl
                                  ,id_Customer = a.id_Customer
                                  ,PackingSTD = a.PackingSTD
                                  ,Size = a.Size
+                                 ,RevDate = a.RevDate
 
                              }//.Where(ab => ab.VendorNo.Contains(Vendorno))
                               ).ToList();
@@ -254,6 +255,7 @@ namespace StockControl
                         txtid_Customer.Text = dbClss.TSt(g.FirstOrDefault().id_Customer);
                         txtSize.Text = dbClss.TSt(g.FirstOrDefault().Size);
                         sePackingSTD.Value = dbClss.TDe(g.FirstOrDefault().PackingSTD);
+                        dtRevDate.Value = Convert.ToDateTime(g.FirstOrDefault().RevDate, new CultureInfo("en-US"));
 
                         txtCreateby.Text = StockControl.dbClss.TSt(g.FirstOrDefault().CreateBy);
                         DateTime temp = Convert.ToDateTime(g.FirstOrDefault().CreateDate,new CultureInfo("en-US"));
@@ -471,7 +473,10 @@ namespace StockControl
                         gg.CustomerNo = txtCustomerNo.Text;
                         gg.Size = txtSize.Text;
                         gg.PackingSTD = dbClss.TDe(sePackingSTD.Value);
-
+                        if(dtRevDate.Text !="")
+                        {
+                           gg.RevDate =  Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
+                        }
                         if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                         {
                             gg.StartDate = Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
@@ -511,6 +516,10 @@ namespace StockControl
                     gg.CustomerNo = txtCustomerNo.Text;
                     gg.Size = txtSize.Text;
                     gg.PackingSTD = dbClss.TDe(sePackingSTD.Value);
+                    if (dtRevDate.Text != "")
+                    {
+                        gg.RevDate = Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
+                    }
 
                     if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                     {
@@ -744,6 +753,7 @@ namespace StockControl
             txtTypePart.Text = "";
             dtBegin.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             dtEnd.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+            dtRevDate.Value = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
             dtBegin.SetToNullValue();
             dtEnd.SetToNullValue();
             dgvData.Rows.Clear();
