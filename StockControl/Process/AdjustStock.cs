@@ -270,8 +270,8 @@ namespace StockControl
                                         
                                          QTY = d.Qty,
                                          
-                                         RemainQty = (Convert.ToDecimal(db.Cal_QTY(d.CodeNo, "", 0))),// i.StockInv,
-                                         Unit = d.Unit,
+                                         RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(d.CodeNo), "Free", 0, d.Location, 0))),//(Convert.ToDecimal(db.Cal_QTY(d.CodeNo, "", 0))),// i.StockInv,
+                            Unit = d.Unit,
                                          PCSUnit = d.PCSUnit,
                                          MaxStock = i.MaximumQty,
                                          MinStock = i.MinimumQty,

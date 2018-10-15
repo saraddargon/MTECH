@@ -753,8 +753,14 @@ namespace StockControl
                     if (!txtClaimNo.Text.Equals(""))
                     {
                         SaveDetail();
-                        
-                      
+
+                        string ClaimNo = txtClaimNo.Text;
+                        btnSave.Enabled = false;
+                        btnNew.Enabled = true;
+                        ClearData();
+                        Enable_Status(false, "View");
+                        txtClaimNo.Text = ClaimNo;
+
                         MessageBox.Show("บันทึกสำเร็จ!");
                         btnRefresh_Click(null, null);
                     }

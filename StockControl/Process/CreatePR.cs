@@ -1184,7 +1184,7 @@ namespace StockControl
                                 if (g.Count > 0)
                                 {
 
-                                    string ItemDescription = StockControl.dbClss.TSt(g.FirstOrDefault().InternalName);
+                                    string ItemDescription = StockControl.dbClss.TSt(g.FirstOrDefault().InternalDescription);
                                     string GroupCode = StockControl.dbClss.TSt(g.FirstOrDefault().GroupType);
                                     decimal OrderQty = dbClss.TDe(e.Row.Cells["dgvCost"].Value);
                                     decimal PCSUOM = dbClss.Con_UOM(CodeNo, StockControl.dbClss.TSt(g.FirstOrDefault().PurchaseUOM));
@@ -1193,6 +1193,7 @@ namespace StockControl
                                     string Status = "Adding";
                                     string VATType = dbClss.TSt(g.FirstOrDefault().VatType);
                                     e.Row.Cells["dgvCodeNo"].Value = CodeNo;
+                                    e.Row.Cells["dgvItemName"].Value = dbClss.TSt(g.FirstOrDefault().InternalName);
                                     e.Row.Cells["dgvItemDesc"].Value = ItemDescription;
                                     e.Row.Cells["dgvGroupCode"].Value = GroupCode;
                                     //e.Row.Cells["dgvOrderQty"].Value = OrderQty;
@@ -1224,6 +1225,7 @@ namespace StockControl
                                     string VATType = "";
                                     e.Row.Cells["dgvCodeNo"].Value = CodeNo;
                                     e.Row.Cells["dgvItemDesc"].Value = ItemDescription;
+                                    e.Row.Cells["dgvItemName"].Value = "";
                                     e.Row.Cells["dgvGroupCode"].Value = GroupCode;
                                     //e.Row.Cells["dgvOrderQty"].Value = OrderQty;
                                     e.Row.Cells["dgvPCSUOM"].Value = PCSUOM;

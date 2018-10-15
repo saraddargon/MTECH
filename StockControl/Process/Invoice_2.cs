@@ -335,9 +335,19 @@ namespace StockControl
         private void ClearData()
         {
             // txtCSTMNo.Text = "";
+            cboCustomer.SelectedIndex = -1;
+            cboCustomer.Text = "";
+            txtCSTMNo.Text = "";
+            txtContactName.Text = "";
+            txtAddress.Text = "";
+            txtFax.Text = "";
+            txtEmail.Text = "";
+            txtTel.Text = "";
+            txtContactName.Text = "";
+            txtSelectCode.Text = "";
+
             dtSODate.Value = DateTime.Now;
             txtIVNo.Text = "";
-            txtCSTMNo.Text = "";
             dtSODate.Value = DateTime.Today;
             dgvData.Rows.Clear();
             dgvData.DataSource = null;
@@ -471,6 +481,7 @@ namespace StockControl
                                 gg.Active = false;
                                 gg.UpdateBy = Classlib.User;
                                 gg.UpdateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                                db.SubmitChanges();
 
                                 dbClss.AddHistory(this.Name, "ลบ Invoice", "Delete Invoice [" + txtIVNo.Text.Trim() + "]", txtIVNo.Text);
                                 updateOutSO();

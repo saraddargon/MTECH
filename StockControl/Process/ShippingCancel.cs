@@ -440,7 +440,11 @@ namespace StockControl
                                 Location = s.Location;
                             }
                         }
-
+                        string LotNo = "";
+                        if (LotNo == "")
+                        {
+                            LotNo = dbClss.Get_Lot(DateTime.Now.ToString("yyyyMMdd"));
+                        }
                         tb_Stock gg = new tb_Stock();
                         gg.AppDate = AppDate;
                         gg.Seq = Seq;
@@ -477,6 +481,8 @@ namespace StockControl
                         gg.Location = Location;
                         gg.ShelfNo = ShelfNo;
                         gg.idCSTMPODt = dbClss.TInt(s1.FirstOrDefault().idCSTMPODt);
+                        gg.Free = true;
+                        gg.LotNo = LotNo;
 
                         gg.RefidJobCode = dbClss.TInt(s1.FirstOrDefault().RefidJobCode);
                         gg.RefJobCode = dbClss.TSt(s1.FirstOrDefault().RefJobCode);
@@ -666,6 +672,12 @@ namespace StockControl
                         }
                     }
 
+                   string  LotNo = "";
+                    if (LotNo == "")
+                    {
+                        LotNo = dbClss.Get_Lot(DateTime.Now.ToString("yyyyMMdd"));
+                    }
+
                     tb_Stock gg = new tb_Stock();
                     gg.AppDate = AppDate;
                     gg.Seq = Seq;
@@ -704,7 +716,8 @@ namespace StockControl
                     gg.RefTempJobCode = dbClss.TSt(s1.FirstOrDefault().RefTempJobCode);
                     gg.RefJobCode = dbClss.TSt(s1.FirstOrDefault().RefJobCode);
                     gg.RefidJobCode = dbClss.TInt(s1.FirstOrDefault().RefidJobCode);
-
+                    gg.Free = true;
+                    gg.LotNo = LotNo;
                     db.tb_Stocks.InsertOnSubmit(gg);
                     db.SubmitChanges();
 
