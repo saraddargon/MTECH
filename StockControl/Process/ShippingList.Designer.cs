@@ -151,7 +151,7 @@
             this.radMenuSeparatorItem1,
             this.radMenuItem2});
             this.radRibbonBar1.TabIndex = 0;
-            this.radRibbonBar1.Text = "Shipping List (รายการเบิกสินค้าออก)";
+            this.radRibbonBar1.Text = "ShippingList (รายการเบิกสินค้าออก)";
             this.radRibbonBar1.ThemeName = "Office2010Blue";
             this.radRibbonBar1.Click += new System.EventHandler(this.radRibbonBar1_Click);
             // 

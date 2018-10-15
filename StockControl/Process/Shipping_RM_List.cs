@@ -931,8 +931,13 @@ namespace StockControl
                 }
                 else
                 {
-                    PrintPR a = new PrintPR(SHNo, SHNo, "Shipping");
-                    a.ShowDialog();
+                    Report.Reportx1.Value = new string[1];
+                    Report.Reportx1.Value[0] = SHNo;
+                    Report.Reportx1.WReport = "PickSlip";
+                    Report.Reportx1 op = new Report.Reportx1("PickSlip_FG.rpt");
+                    op.Show();
+                    //PrintPR a = new PrintPR(SHNo, SHNo, "Shipping");
+                    //a.ShowDialog();
                 }
             }
             catch { }

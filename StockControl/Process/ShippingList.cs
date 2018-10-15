@@ -152,6 +152,19 @@ namespace StockControl
                                  //&& (h.ShipDate >= inclusiveStart
                                  //       && h.ShipDate < exclusiveEnd)
                                  && h.ShippingNo.Substring(0, 2) == "SH"
+                                 && (h.ShippingNo.Substring(2, 1) == "0"
+                                 || h.ShippingNo.Substring(2, 1) == "1"
+                                  || h.ShippingNo.Substring(2, 1) == "2"
+                                   || h.ShippingNo.Substring(2, 1) == "3"
+                                    || h.ShippingNo.Substring(2,1) == "4"
+                                     || h.ShippingNo.Substring(2, 1) == "5"
+                                      || h.ShippingNo.Substring(2, 1) == "6"
+                                       || h.ShippingNo.Substring(2, 1) == "7"
+                                        || h.ShippingNo.Substring(2, 1) == "8"
+                                        || h.ShippingNo.Substring(2, 1) == "9"
+                                    )
+
+
                                  && (((h.ShipDate >= inclusiveStart
                                    && h.ShipDate < exclusiveEnd)
                                    && cbDate.Checked == true)
@@ -193,6 +206,9 @@ namespace StockControl
                     int rowcount = 0;
                     foreach (var x in dgvData.Rows)
                     {
+                        //string abc = dbClss.TSt(x.Cells["ShippingNo"].Value);
+                        //string a = abc.Substring(2, 1);
+
                         rowcount += 1;
                         x.Cells["dgvNo"].Value = rowcount;
                     }
@@ -931,8 +947,14 @@ namespace StockControl
                 }
                 else
                 {
-                    PrintPR a = new PrintPR(SHNo, SHNo, "Shipping");
-                    a.ShowDialog();
+                    Report.Reportx1.Value = new string[1];
+                    Report.Reportx1.Value[0] = SHNo;
+                    Report.Reportx1.WReport = "PickSlip";
+                    Report.Reportx1 op = new Report.Reportx1("PickSlip_FG.rpt");
+                    op.Show();
+
+                    //PrintPR a = new PrintPR(SHNo, SHNo, "Shipping");
+                    //a.ShowDialog();
                 }
             }
             catch { }
