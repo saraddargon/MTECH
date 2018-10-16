@@ -305,6 +305,8 @@ namespace StockControl
                             if (con.Tel != c.Cells["Tel"].Value.ToSt()) dbClss.AddHistory(this.Name, "Vendor", $"Telephone from {con.Tel} to {c.Cells["Tel"].Value.ToSt()}", txtNo.Text);
                             if (con.Fax != c.Cells["Fax"].Value.ToSt()) dbClss.AddHistory(this.Name, "Vendor", $"Fax from {con.Fax} to {c.Cells["Fax"].Value.ToSt()}", txtNo.Text);
                             if (con.Email != c.Cells["Email"].Value.ToSt()) dbClss.AddHistory(this.Name, "Vendor", $"Email from {con.Email} to {c.Cells["Email"].Value.ToSt()}", txtNo.Text);
+                            if (con.Mobile != c.Cells["Mobile"].Value.ToSt()) dbClss.AddHistory(this.Name, "Vendor", $"Mobile from {con.Mobile} to {c.Cells["Mobile"].Value.ToSt()}", txtNo.Text);
+
                         }
 
                         con.Def = c.Cells["Def"].Value.ToBool();
@@ -313,6 +315,7 @@ namespace StockControl
                         con.Tel = c.Cells["Tel"].Value.ToSt();
                         con.Fax = c.Cells["Fax"].Value.ToSt();
                         con.Email = c.Cells["Email"].Value.ToSt();
+                        con.Mobile = c.Cells["Mobile"].Value.ToSt();
                         con.Active = true;
                         if (idDT <= 0)
                             db.mh_VendorContacts.InsertOnSubmit(con);
@@ -322,6 +325,7 @@ namespace StockControl
                             vndr.PhoneNo = con.Tel;
                             vndr.FaxNo = con.Fax;
                             vndr.Email = con.Email;
+                            vndr.Mobile = con.Mobile;
                         }
                         db.SubmitChanges();
                     }

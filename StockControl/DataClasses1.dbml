@@ -696,33 +696,6 @@
       <Column Name="WorkType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_WorkCenter" Member="mh_WorkCenters">
-    <Type Name="mh_WorkCenter">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="WorkCenterNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="WorkCenterName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Decription" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Calendar" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.mh_WorkCenterSub" Member="mh_WorkCenterSubs">
-    <Type Name="mh_WorkCenterSub">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="idWorkCenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="SubWorkNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SubWorkName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="WType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.tb_Claim" Member="tb_Claims">
     <Type Name="tb_Claim">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -810,20 +783,6 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_RoutingDT" Member="mh_RoutingDTs">
-    <Type Name="mh_RoutingDT">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="RoutingId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="RNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="idWorkCenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="SetupTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="RunTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="WaitTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="UnitCost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.mh_CustomerPO" Member="mh_CustomerPOs">
     <Type Name="mh_CustomerPO">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -895,30 +854,6 @@
       <Column Name="AvgCost" Type="System.Decimal" DbType="Decimal(18,6)" CanBeNull="true" />
       <Column Name="Location" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="TypePart" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.mh_CustomerContacts" Member="mh_CustomerContacts">
-    <Type Name="mh_CustomerContact">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Def" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="idCustomer" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ContactName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Tel" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="Fax" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.mh_VendorContacts" Member="mh_VendorContacts">
-    <Type Name="mh_VendorContact">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Def" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="VendorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ContactName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Tel" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="Fax" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.mh_LotFG" Member="mh_LotFGs">
@@ -2151,53 +2086,6 @@
       <Column Name="Month" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_Customers" Member="mh_Customers">
-    <Type Name="mh_Customer">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="No" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Address" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="VATRegistration" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="PhoneNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="FaxNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="ContactName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="CreditLimit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="CustomerGroup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="VatGroup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DefaultCurrency" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ShippingTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PriceIncludeingVat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="ShippingAddress" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="AttachFile" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="BranchCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="VatRegisNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.mh_Vendors" Member="mh_Vendors">
-    <Type Name="mh_Vendor">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="No" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Address" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="VATRegistration" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="PhoneNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="FaxNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="ContactName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="VendorGroup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="VatGroup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DefaultCurrency" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ShippingTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PriceIncludeingVat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="ReceivingAddress" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="AttachFile" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="BranchCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="VatRegisNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.mh_InvoiceHD" Member="mh_InvoiceHDs">
     <Type Name="mh_InvoiceHD">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -2339,6 +2227,126 @@
       <Column Name="OutQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="RemainQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_RoutingDT" Member="mh_RoutingDTs">
+    <Type Name="mh_RoutingDT">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoutingId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idWorkCenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="SetupTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="RunTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="WaitTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitCost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_WorkCenter" Member="mh_WorkCenters">
+    <Type Name="mh_WorkCenter">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WorkCenterNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="WorkCenterName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Decription" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Calendar" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CycleTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CapacityHour" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_WorkCenterSub" Member="mh_WorkCenterSubs">
+    <Type Name="mh_WorkCenterSub">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idWorkCenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SubWorkNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SubWorkName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="WType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CycleTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CapacityHour" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_VendorContacts" Member="mh_VendorContacts">
+    <Type Name="mh_VendorContact">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Def" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="VendorId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ContactName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Tel" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Mobile" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Fax" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_Vendors" Member="mh_Vendors">
+    <Type Name="mh_Vendor">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="No" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="VATRegistration" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Mobile" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="FaxNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ContactName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="VendorGroup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VatGroup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultCurrency" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ShippingTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PriceIncludeingVat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ReceivingAddress" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="AttachFile" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="BranchCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="VatRegisNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_CustomerContacts" Member="mh_CustomerContacts">
+    <Type Name="mh_CustomerContact">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Def" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="idCustomer" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ContactName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Tel" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Mobile" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Fax" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_Customers" Member="mh_Customers">
+    <Type Name="mh_Customer">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="No" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="VATRegistration" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Mobile" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="FaxNo" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ContactName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CreditLimit" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerGroup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VatGroup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultCurrency" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ShippingTime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PriceIncludeingVat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ShippingAddress" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="AttachFile" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="BranchCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="VatRegisNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">

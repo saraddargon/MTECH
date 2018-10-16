@@ -40,6 +40,8 @@
             Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn3 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn4 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn2 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
@@ -480,9 +482,23 @@
             gridViewDecimalColumn1.Width = 104;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "Capacity";
-            gridViewDecimalColumn2.HeaderText = "Cycle Time";
+            gridViewDecimalColumn2.HeaderText = "Capacity";
+            gridViewDecimalColumn2.IsVisible = false;
             gridViewDecimalColumn2.Name = "Capacity";
             gridViewDecimalColumn2.Width = 78;
+            gridViewDecimalColumn3.EnableExpressionEditor = false;
+            gridViewDecimalColumn3.FieldName = "CycleTime";
+            gridViewDecimalColumn3.FormatString = "{0:N2}";
+            gridViewDecimalColumn3.HeaderText = "Cycle Time (MS)";
+            gridViewDecimalColumn3.Name = "CycleTime";
+            gridViewDecimalColumn3.ReadOnly = true;
+            gridViewDecimalColumn3.Width = 100;
+            gridViewDecimalColumn4.EnableExpressionEditor = false;
+            gridViewDecimalColumn4.FieldName = "CapacityHour";
+            gridViewDecimalColumn4.FormatString = "{0:N2}";
+            gridViewDecimalColumn4.HeaderText = "CAP(UPS:HR)";
+            gridViewDecimalColumn4.Name = "CapacityHour";
+            gridViewDecimalColumn4.Width = 100;
             gridViewComboBoxColumn2.EnableExpressionEditor = false;
             gridViewComboBoxColumn2.FieldName = "Calendar";
             gridViewComboBoxColumn2.HeaderText = "Calendar";
@@ -499,6 +515,8 @@
             gridViewComboBoxColumn1,
             gridViewDecimalColumn1,
             gridViewDecimalColumn2,
+            gridViewDecimalColumn3,
+            gridViewDecimalColumn4,
             gridViewComboBoxColumn2});
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition1;

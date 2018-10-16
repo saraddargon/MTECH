@@ -185,8 +185,17 @@ namespace StockControl
                 {
                     var w = db.mh_WorkCenters.Where(x => x.id == item.Cells["WorkCenter"].Value.ToInt()).FirstOrDefault();
                     var m = 0.00m;
-                    if (w != null) m = w.Capacity;
-                    item.Cells["Capacity"].Value = m;
+                    var c = 0.00m;
+                    if (w != null)
+                    {
+                        m = w.CapacityHour;
+                        c = w.CycleTime;
+                    }
+                    item.Cells["CycleTime"].Value = c;
+                    item.Cells["Capacity"].Value = m; //Hour
+                    item.Cells["CapacityHour"].Value = m;
+                    item.Cells["CapacityDay"].Value = Math.Round(m * 8, 2);
+                    item.Cells["CapacityMonth"].Value = Math.Round(m * 8 * 26, 2);
                 }
 
             }
@@ -335,6 +344,8 @@ namespace StockControl
             rowe.Cells["No"].Value = rowe.Index + 1;
             rowe.Cells["RunTime"].Value = 1;
 
+            rowe.Height = 25;
+
         }
         private void EditClick()
         {
@@ -454,11 +465,14 @@ namespace StockControl
                         {
                             e.Row.Cells["Description"].Value = t.WorkCenterName;
                             e.Row.Cells["UnitCost"].Value = t.CostPerUOM;
-                            e.Row.Cells["Capacity"].Value = t.Capacity;
+                            e.Row.Cells["CycleTime"].Value = t.CycleTime;
+                            e.Row.Cells["Capacity"].Value = t.CapacityHour;
+                            e.Row.Cells["CapacityHour"].Value = t.CapacityHour;
+                            e.Row.Cells["CapacityDay"].Value = Math.Round(t.CapacityHour * 8, 2);
+                            e.Row.Cells["CapacityMonth"].Value = Math.Round(t.CapacityHour * 8 * 26, 2);
                         }
                     }
                 }
-
 
             }
             catch (Exception ex) { }
@@ -698,30 +712,40 @@ namespace StockControl
             txtMonth.Value = 0;
 
             var setup = 0.00m;
-            var wait = 0.00m;
-            var run = 0.00m;
-            var allCapa = 0.00m;
-
             using (var db = new DataClasses1DataContext())
             {
+                var minCapa = -1.00m;
                 foreach (var item in dgvData.Rows)
                 {
-                    int idWorkCenter = item.Cells["WorkCenter"].Value.ToInt();
-                    var w = db.mh_WorkCenters.Where(x => x.id == idWorkCenter).FirstOrDefault();
-                    if (w == null) continue;
-                    allCapa += w.Capacity;
-                    setup += item.Cells["SetupTime"].Value.ToDecimal();
-                    wait += item.Cells["WaitTime"].Value.ToDecimal();
-                    run += item.Cells["RunTime"].Value.ToDecimal();
+                    var t = item.Cells["Capacity"].Value.ToDecimal();
+                    var s = item.Cells["SetupTime"].Value.ToDecimal();
+                    if (minCapa < 0)
+                    {
+                        minCapa = t;
+                        setup = s;
+                    }
+                    if (t <= minCapa)
+                    {
+                        minCapa = t;
+                        if(t == minCapa && s < setup)
+                        {
+                            setup = s;
+                        }
+                    }
                 }
+
+                txtHr.Value = minCapa;
+                txtDay.Value = Math.Round(minCapa * 8, 2);
+                txtMonth.Value = Math.Round(minCapa * 8 * 26, 2);
+
+                //6 นาที ผลิตได้ 600 ตัว
             }
 
-            var allMin = Math.Round((allCapa / (setup + wait + run)) / dgvData.Rows.Count, 2);
-            txtMin.Value = allMin;
-            txtHr.Value = Math.Round(allMin * 60, 2);
-            txtDay.Value = Math.Round(allMin * 60 * 24, 2);
-            txtMonth.Value = Math.Round(allMin * 60 * 24 * 22, 2);
+            //var allMin = Math.Round((allCapa / (setup + wait + run)) / dgvData.Rows.Count, 2);
+            //txtMin.Value = allMin;
+            //txtHr.Value = Math.Round(allMin * 60, 2);
+            //txtDay.Value = Math.Round(allMin * 60 * 24, 2);
+            //txtMonth.Value = Math.Round(allMin * 60 * 24 * 26, 2);
         }
-
     }
 }

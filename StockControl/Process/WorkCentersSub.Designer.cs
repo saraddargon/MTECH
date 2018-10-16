@@ -40,6 +40,8 @@
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn7 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn3 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn4 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
@@ -133,7 +135,7 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(845, 160);
+            this.radRibbonBar1.Size = new System.Drawing.Size(957, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
@@ -339,7 +341,7 @@
             this.radLabelElement1});
             this.radStatusStrip1.Location = new System.Drawing.Point(0, 609);
             this.radStatusStrip1.Name = "radStatusStrip1";
-            this.radStatusStrip1.Size = new System.Drawing.Size(845, 26);
+            this.radStatusStrip1.Size = new System.Drawing.Size(957, 26);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
             // 
@@ -358,7 +360,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(845, 449);
+            this.panel1.Size = new System.Drawing.Size(957, 449);
             this.panel1.TabIndex = 2;
             // 
             // dgvData
@@ -429,7 +431,8 @@
             gridViewDecimalColumn1.Width = 100;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "Capacity";
-            gridViewDecimalColumn2.HeaderText = "Cycle Time";
+            gridViewDecimalColumn2.HeaderText = "Capacity";
+            gridViewDecimalColumn2.IsVisible = false;
             gridViewDecimalColumn2.Name = "Capacity";
             gridViewDecimalColumn2.Width = 77;
             gridViewTextBoxColumn7.EnableExpressionEditor = false;
@@ -437,6 +440,18 @@
             gridViewTextBoxColumn7.HeaderText = "id";
             gridViewTextBoxColumn7.IsVisible = false;
             gridViewTextBoxColumn7.Name = "id";
+            gridViewDecimalColumn3.EnableExpressionEditor = false;
+            gridViewDecimalColumn3.FieldName = "CycleTime";
+            gridViewDecimalColumn3.FormatString = "{0:N2}";
+            gridViewDecimalColumn3.HeaderText = "Cycle Time (MS)";
+            gridViewDecimalColumn3.Name = "CycleTime";
+            gridViewDecimalColumn3.Width = 100;
+            gridViewDecimalColumn4.EnableExpressionEditor = false;
+            gridViewDecimalColumn4.FieldName = "CapacityHour";
+            gridViewDecimalColumn4.FormatString = "{0:N2}";
+            gridViewDecimalColumn4.HeaderText = "CAP(UPS:HR)";
+            gridViewDecimalColumn4.Name = "CapacityHour";
+            gridViewDecimalColumn4.Width = 100;
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
@@ -447,14 +462,16 @@
             gridViewTextBoxColumn6,
             gridViewDecimalColumn1,
             gridViewDecimalColumn2,
-            gridViewTextBoxColumn7});
+            gridViewTextBoxColumn7,
+            gridViewDecimalColumn3,
+            gridViewDecimalColumn4});
             this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.dgvData.Name = "dgvData";
             this.radContextMenuManager1.SetRadContextMenu(this.dgvData, this.radContextMenu1);
             this.dgvData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgvData.ShowGroupPanel = false;
-            this.dgvData.Size = new System.Drawing.Size(845, 353);
+            this.dgvData.Size = new System.Drawing.Size(957, 353);
             this.dgvData.TabIndex = 2;
             this.dgvData.ThemeName = "Office2010Blue";
             this.dgvData.CellEndEdit += new Telerik.WinControls.UI.GridViewCellEventHandler(this.dgvData_CellEndEdit);
@@ -475,7 +492,7 @@
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(845, 96);
+            this.radPanel1.Size = new System.Drawing.Size(957, 96);
             this.radPanel1.TabIndex = 1;
             // 
             // cbbCalendar
@@ -646,7 +663,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(845, 635);
+            this.ClientSize = new System.Drawing.Size(957, 635);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.radStatusStrip1);
             this.Controls.Add(this.radRibbonBar1);
