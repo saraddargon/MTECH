@@ -2175,7 +2175,9 @@ namespace StockControl
 
                         using (var db = new DataClasses1DataContext())
                         {
-                            var c = db.mh_ShipmentDTs.Where(x => x.Status != "Cancel" && x.id == id && x.OutInv>0 && x.OutShip==0 ).ToList();
+                            var c = db.mh_ShipmentDTs.Where(x => x.Status != "Cancel" 
+                            && x.id == id && x.OutInv>0 //&& x.OutShip==0 
+                            ).ToList();
                             if (c.Count > 0)
                             {
                                 //mh_ShipmentDT im = db.mh_ShipmentDTs
@@ -2204,7 +2206,8 @@ namespace StockControl
                                 //}
                                 if (c.Count > 0)
                                 {
-                                    var dd = db.mh_Shipments.Where(x => x.StatusHD != "Cancel" && x.SSNo == c.FirstOrDefault().SSNo.ToSt()).ToList();
+                                    var dd = db.mh_Shipments.Where(x => x.StatusHD != "Cancel" 
+                                    && x.SSNo == c.FirstOrDefault().SSNo.ToSt()).ToList();
                                 if (dd.Count > 0)
                                 {
                                     txtCSTMNo.Text = dbClss.TSt(dd.FirstOrDefault().CustomerNo);
