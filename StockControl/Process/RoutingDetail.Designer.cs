@@ -45,6 +45,7 @@
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn6 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn7 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn8 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn9 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
             this.radRibbonBar1 = new Telerik.WinControls.UI.RadRibbonBar();
             this.ribbonTab1 = new Telerik.WinControls.UI.RibbonTab();
@@ -483,19 +484,24 @@
             gridViewDecimalColumn6.ReadOnly = true;
             gridViewDecimalColumn6.Width = 100;
             gridViewDecimalColumn7.EnableExpressionEditor = false;
-            gridViewDecimalColumn7.FieldName = "CapacityDay";
-            gridViewDecimalColumn7.FormatString = "{0:N2}";
-            gridViewDecimalColumn7.HeaderText = "CAP (Day)";
-            gridViewDecimalColumn7.Name = "CapacityDay";
-            gridViewDecimalColumn7.ReadOnly = true;
+            gridViewDecimalColumn7.FieldName = "CapacityHour";
+            gridViewDecimalColumn7.HeaderText = "HR";
+            gridViewDecimalColumn7.Name = "CapacityHour";
             gridViewDecimalColumn7.Width = 100;
             gridViewDecimalColumn8.EnableExpressionEditor = false;
-            gridViewDecimalColumn8.FieldName = "CapacityMonth";
+            gridViewDecimalColumn8.FieldName = "CapacityDay";
             gridViewDecimalColumn8.FormatString = "{0:N2}";
-            gridViewDecimalColumn8.HeaderText = "CAP (Month)";
-            gridViewDecimalColumn8.Name = "CapacityMonth";
+            gridViewDecimalColumn8.HeaderText = "DAY";
+            gridViewDecimalColumn8.Name = "CapacityDay";
             gridViewDecimalColumn8.ReadOnly = true;
             gridViewDecimalColumn8.Width = 100;
+            gridViewDecimalColumn9.EnableExpressionEditor = false;
+            gridViewDecimalColumn9.FieldName = "CapacityMonth";
+            gridViewDecimalColumn9.FormatString = "{0:N2}";
+            gridViewDecimalColumn9.HeaderText = "MONTH";
+            gridViewDecimalColumn9.Name = "CapacityMonth";
+            gridViewDecimalColumn9.ReadOnly = true;
+            gridViewDecimalColumn9.Width = 100;
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
             gridViewTextBoxColumn1,
             gridViewTextBoxColumn2,
@@ -511,7 +517,8 @@
             gridViewDecimalColumn5,
             gridViewDecimalColumn6,
             gridViewDecimalColumn7,
-            gridViewDecimalColumn8});
+            gridViewDecimalColumn8,
+            gridViewDecimalColumn9});
             this.dgvData.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             this.dgvData.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.dgvData.Name = "dgvData";

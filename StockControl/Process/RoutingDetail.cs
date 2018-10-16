@@ -193,6 +193,7 @@ namespace StockControl
                     }
                     item.Cells["CycleTime"].Value = c;
                     item.Cells["Capacity"].Value = m; //Hour
+                    item.Cells["CapacityHour"].Value = m;
                     item.Cells["CapacityDay"].Value = Math.Round(m * 8, 2);
                     item.Cells["CapacityMonth"].Value = Math.Round(m * 8 * 26, 2);
                 }
@@ -464,6 +465,7 @@ namespace StockControl
                             e.Row.Cells["UnitCost"].Value = t.CostPerUOM;
                             e.Row.Cells["CycleTime"].Value = t.CycleTime;
                             e.Row.Cells["Capacity"].Value = t.CapacityHour;
+                            e.Row.Cells["CapacityHour"].Value = t.CapacityHour;
                             e.Row.Cells["CapacityDay"].Value = Math.Round(t.CapacityHour * 8, 2);
                             e.Row.Cells["CapacityMonth"].Value = Math.Round(t.CapacityHour * 8 * 26, 2);
                         }
