@@ -43,14 +43,15 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn10 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn11 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn12 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn13 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn1 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn1 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn2 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.GridViewComboBoxColumn gridViewComboBoxColumn3 = new Telerik.WinControls.UI.GridViewComboBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn2 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn2 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn13 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn14 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn15 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn3 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
             Telerik.WinControls.Data.SortDescriptor sortDescriptor1 = new Telerik.WinControls.Data.SortDescriptor();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
@@ -487,10 +488,15 @@
             gridViewTextBoxColumn11.Name = "FaxNo";
             gridViewTextBoxColumn11.Width = 89;
             gridViewTextBoxColumn12.EnableExpressionEditor = false;
-            gridViewTextBoxColumn12.FieldName = "Email";
-            gridViewTextBoxColumn12.HeaderText = "Email";
-            gridViewTextBoxColumn12.Name = "Email";
-            gridViewTextBoxColumn12.Width = 143;
+            gridViewTextBoxColumn12.FieldName = "Mobile";
+            gridViewTextBoxColumn12.HeaderText = "Mobile";
+            gridViewTextBoxColumn12.Name = "Mobile";
+            gridViewTextBoxColumn12.Width = 90;
+            gridViewTextBoxColumn13.EnableExpressionEditor = false;
+            gridViewTextBoxColumn13.FieldName = "Email";
+            gridViewTextBoxColumn13.HeaderText = "Email";
+            gridViewTextBoxColumn13.Name = "Email";
+            gridViewTextBoxColumn13.Width = 143;
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "CreditLimit";
             gridViewDecimalColumn1.HeaderText = "Credit Limit";
@@ -522,16 +528,16 @@
             gridViewCheckBoxColumn2.MinWidth = 20;
             gridViewCheckBoxColumn2.Name = "PriceIncludeVat";
             gridViewCheckBoxColumn2.Width = 93;
-            gridViewTextBoxColumn13.EnableExpressionEditor = false;
-            gridViewTextBoxColumn13.FieldName = "ShippingAddress";
-            gridViewTextBoxColumn13.HeaderText = "Shipping Address";
-            gridViewTextBoxColumn13.Name = "ReceiveAddress";
-            gridViewTextBoxColumn13.Width = 162;
             gridViewTextBoxColumn14.EnableExpressionEditor = false;
-            gridViewTextBoxColumn14.FieldName = "AttachFile";
-            gridViewTextBoxColumn14.HeaderText = "Attach file";
-            gridViewTextBoxColumn14.Name = "AttachFile";
-            gridViewTextBoxColumn14.Width = 170;
+            gridViewTextBoxColumn14.FieldName = "ShippingAddress";
+            gridViewTextBoxColumn14.HeaderText = "Shipping Address";
+            gridViewTextBoxColumn14.Name = "ReceiveAddress";
+            gridViewTextBoxColumn14.Width = 162;
+            gridViewTextBoxColumn15.EnableExpressionEditor = false;
+            gridViewTextBoxColumn15.FieldName = "AttachFile";
+            gridViewTextBoxColumn15.HeaderText = "Attach file";
+            gridViewTextBoxColumn15.Name = "AttachFile";
+            gridViewTextBoxColumn15.Width = 170;
             gridViewCheckBoxColumn3.EnableExpressionEditor = false;
             gridViewCheckBoxColumn3.FieldName = "Active";
             gridViewCheckBoxColumn3.HeaderText = "Active";
@@ -552,14 +558,15 @@
             gridViewTextBoxColumn10,
             gridViewTextBoxColumn11,
             gridViewTextBoxColumn12,
+            gridViewTextBoxColumn13,
             gridViewDecimalColumn1,
             gridViewComboBoxColumn1,
             gridViewComboBoxColumn2,
             gridViewComboBoxColumn3,
             gridViewDecimalColumn2,
             gridViewCheckBoxColumn2,
-            gridViewTextBoxColumn13,
             gridViewTextBoxColumn14,
+            gridViewTextBoxColumn15,
             gridViewCheckBoxColumn3});
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;
             sortDescriptor1.PropertyName = "VendorNo";

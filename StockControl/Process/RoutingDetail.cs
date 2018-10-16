@@ -344,6 +344,8 @@ namespace StockControl
             rowe.Cells["No"].Value = rowe.Index + 1;
             rowe.Cells["RunTime"].Value = 1;
 
+            rowe.Height = 25;
+
         }
         private void EditClick()
         {

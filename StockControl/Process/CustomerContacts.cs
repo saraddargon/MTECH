@@ -308,6 +308,7 @@ namespace StockControl
                             if (con.Tel != c.Cells["Tel"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Telephone no. from {con.Tel} to {c.Cells["Tel"].Value.ToSt()}", cstm.No);
                             if (con.Fax != c.Cells["Fax"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Fax no. from {con.Fax} to {c.Cells["Fax"].Value.ToSt()}", cstm.No);
                             if (con.Email != c.Cells["Email"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Email from {con.Email} to {c.Cells["Email"].Value.ToSt()}", cstm.No);
+                            if (con.Mobile != c.Cells["Mobile"].Value.ToSt()) dbClss.AddHistory(this.Name, "Customer Contact", $"Mobile from {con.Mobile} to {c.Cells["Mobile"].Value.ToSt()}", cstm.No);
                         }
 
                         con.idCustomer = cstm.id;
@@ -316,6 +317,7 @@ namespace StockControl
                         con.Tel = c.Cells["Tel"].Value.ToSt();
                         con.Fax = c.Cells["Fax"].Value.ToSt();
                         con.Email = c.Cells["Email"].Value.ToSt();
+                        con.Mobile = c.Cells["Mobile"].Value.ToSt();
                         con.Active = true;
                         if (con.Def)
                         {
@@ -323,6 +325,7 @@ namespace StockControl
                             cstm.PhoneNo = con.Tel;
                             cstm.FaxNo = con.Fax;
                             cstm.Email = con.Email;
+                            cstm.Mobile = con.Mobile;
                         }
                         db.SubmitChanges();
                     }
