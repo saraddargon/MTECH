@@ -489,14 +489,14 @@
             gridViewDecimalColumn3.EnableExpressionEditor = false;
             gridViewDecimalColumn3.FieldName = "CycleTime";
             gridViewDecimalColumn3.FormatString = "{0:N2}";
-            gridViewDecimalColumn3.HeaderText = "Cycle Time";
+            gridViewDecimalColumn3.HeaderText = "Cycle Time (MS)";
             gridViewDecimalColumn3.Name = "CycleTime";
             gridViewDecimalColumn3.ReadOnly = true;
             gridViewDecimalColumn3.Width = 100;
             gridViewDecimalColumn4.EnableExpressionEditor = false;
             gridViewDecimalColumn4.FieldName = "CapacityHour";
             gridViewDecimalColumn4.FormatString = "{0:N2}";
-            gridViewDecimalColumn4.HeaderText = "Capacity (Hour)";
+            gridViewDecimalColumn4.HeaderText = "CAP(UPS:HR)";
             gridViewDecimalColumn4.Name = "CapacityHour";
             gridViewDecimalColumn4.Width = 100;
             gridViewComboBoxColumn2.EnableExpressionEditor = false;

@@ -443,13 +443,13 @@
             gridViewDecimalColumn3.EnableExpressionEditor = false;
             gridViewDecimalColumn3.FieldName = "CycleTime";
             gridViewDecimalColumn3.FormatString = "{0:N2}";
-            gridViewDecimalColumn3.HeaderText = "CycleTime (sec.)";
+            gridViewDecimalColumn3.HeaderText = "Cycle Time (MS)";
             gridViewDecimalColumn3.Name = "CycleTime";
             gridViewDecimalColumn3.Width = 100;
             gridViewDecimalColumn4.EnableExpressionEditor = false;
             gridViewDecimalColumn4.FieldName = "CapacityHour";
             gridViewDecimalColumn4.FormatString = "{0:N2}";
-            gridViewDecimalColumn4.HeaderText = "Capacity (Hr.)";
+            gridViewDecimalColumn4.HeaderText = "CAP(UPS:HR)";
             gridViewDecimalColumn4.Name = "CapacityHour";
             gridViewDecimalColumn4.Width = 100;
             this.dgvData.MasterTemplate.Columns.AddRange(new Telerik.WinControls.UI.GridViewDataColumn[] {
