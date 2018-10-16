@@ -250,7 +250,24 @@ namespace StockControl
                             }
 
 
+                            string CustomerPartNo = "";
+                            string CustomerPartName = "";
                             dgvData.DataSource = list1;
+                            foreach (GridViewRowInfo rd in dgvData.Rows)
+                            {
+                                CustomerPartNo = "";
+                                CustomerPartName = "";
+                                var t = db.mh_Items.Where(x => x.InternalNo.ToUpper().Trim() == dbClss.TSt(rd.Cells["ItemNo"].Value).ToUpper().Trim())
+                                    .ToList();
+                                if (t.Count > 0)
+                                {
+                                    CustomerPartNo = dbClss.TSt(t.FirstOrDefault().CustomerPartNo);
+                                    CustomerPartName = dbClss.TSt(t.FirstOrDefault().CustomerPartName);
+                                }
+                                rd.Cells["CustomerPartNo"].Value = CustomerPartNo;
+                                rd.Cells["CustomerPartName"].Value = CustomerPartName;
+
+                            }
                         }
                         CalTAX1();
                         CallTotal();
@@ -321,13 +338,15 @@ namespace StockControl
                                     cbbCSTM_SelectedIndexChanged(null, null);
                                     //txtRemark.Text = "";// c.RemarkHD;
 
-                                    //decimal Cost = 0;
-                                    //var t = db.mh_Items.Where(x => x.InternalNo == c.FirstOrDefault().ItemNo.ToSt()).ToList();
-                                    //if (t.Count > 0)
-                                    //{
-                                    //    Cost = dbClss.TDe(t.FirstOrDefault().StandardPrice);
-                                    //}
-
+                                    string CustomerPartNo = "";
+                                    string CustomerPartName = "";
+                                    var t = db.mh_Items.Where(x => x.InternalNo.ToUpper().Trim() == dbClss.TSt(c.FirstOrDefault().ItemNo).ToUpper().Trim())
+                                        .ToList();
+                                    if (t.Count > 0)
+                                    {
+                                        CustomerPartNo = dbClss.TSt(t.FirstOrDefault().CustomerPartNo);
+                                        CustomerPartName = dbClss.TSt(t.FirstOrDefault().CustomerPartName);
+                                    }
 
                                     var rowE = dgvData.Rows.AddNew();
                                     addRow(rowE.Index, DateTime.Now,
@@ -340,7 +359,8 @@ namespace StockControl
 
                                         , false, 0, 0, 0, "Waiting", "Waiting"
                                         , c.FirstOrDefault().SSNo, dbClss.TInt(c.FirstOrDefault().id)
-                                        , dbClss.TDe(c.FirstOrDefault().OutInv), "T", "SH");
+                                        , dbClss.TDe(c.FirstOrDefault().OutInv), "T", "SH"
+                                        , CustomerPartNo, CustomerPartName);
                                     
                                 }
                             }
@@ -1652,7 +1672,9 @@ namespace StockControl
         void addRow(int rowIndex, DateTime ReqDate, string ItemNo, string ItemName, string Desc
             , string Location, decimal Qty, string UOM, decimal PCSUnit, decimal UnitPrice, decimal Amount
             , bool PriceIncVat, decimal OutShip, decimal OutPlan, int id, string Status, string PlanStatus            
-            , string RefDocNo, int RefId,decimal OutInv, string dgvC,string TypeADD)
+            , string RefDocNo, int RefId,decimal OutInv, string dgvC,string TypeADD
+            ,string CustomerPartNo,string CustomerPartName
+            )
         {
             var rowE = dgvData.Rows[rowIndex];
             try
@@ -1681,7 +1703,8 @@ namespace StockControl
                 rowE.Cells["dgvC"].Value = dgvC; //if Edit row -> value = T
                                                  //rowE.Cells["PlanStatus"].Value = PlanStatus;
                                                  //rowE.Cells["OutPlan"].Value = OutPlan;
-
+                rowE.Cells["CustomerPartName"].Value = CustomerPartName;
+                rowE.Cells["CustomerPartNo"].Value = CustomerPartNo;
                 rowE.Cells["ItemNo"].ReadOnly = true;
                 rowE.Cells["ItemName"].ReadOnly = true;
                 rowE.Cells["Description"].ReadOnly = true;
@@ -2088,7 +2111,7 @@ namespace StockControl
                             addRow(rowE.Index, DateTime.Now, itemNo, t.InternalName, t.InternalDescription, t.Location
                                 , 1, t.BaseUOM, PCSUnit, dbClss.TDe(t.StandardPrice), dbClss.TDe(t.StandardPrice) * 1
                                 , false, 1 * PCSUnit, 1 * PCSUnit, 0, "Waiting", "Waiting",
-                                 "", 0,0, "T","Item");
+                                 "", 0,0, "T","Item",dbClss.TSt(t.CustomerPartNo),dbClss.TSt(t.CustomerPartName));
                         }
                     }
                     SetRowNo1(dgvData);
@@ -2216,13 +2239,17 @@ namespace StockControl
                                     cbbCSTM_SelectedIndexChanged(null, null);
                                         //txtRemark.Text = "";// c.RemarkHD;
                                         //decimal Cost = 0;
-                                        //var t = db.mh_Items.Where(x => x.InternalNo == c.FirstOrDefault().ItemNo.ToSt()).ToList();
-                                        //if (t.Count > 0)
-                                        //{
-                                        //    Cost = dbClss.TDe(t.FirstOrDefault().StandardPrice);
-                                        //}
+                                        string CustomerPartNo = "";
+                                        string CustomerPartName = "";
+                                        var t = db.mh_Items.Where(x => x.InternalNo == c.FirstOrDefault().ItemNo.ToSt())
+                                            .ToList();
+                                        if (t.Count > 0)
+                                        {
+                                            CustomerPartNo = dbClss.TSt(t.FirstOrDefault().CustomerPartNo);
+                                            CustomerPartName = dbClss.TSt(t.FirstOrDefault().CustomerPartName);
+                                        }
 
-                                            var rowE = dgvData.Rows.AddNew();
+                                        var rowE = dgvData.Rows.AddNew();
                                         addRow(rowE.Index, DateTime.Now,
                                             c.FirstOrDefault().ItemNo
                                             , c.FirstOrDefault().ItemName, c.FirstOrDefault().Description
@@ -2235,7 +2262,7 @@ namespace StockControl
                                             , false, 0, 0, 0, "Waiting", "Waiting"
                                             , c.FirstOrDefault().SSNo
                                             , dbClss.TInt(c.FirstOrDefault().id)
-                                            ,dbClss.TDe(c.FirstOrDefault().OutInv), "T", "SH");
+                                            ,dbClss.TDe(c.FirstOrDefault().OutInv), "T", "SH",CustomerPartNo,CustomerPartName);
                                                 
                                         
                                     }
@@ -2392,6 +2419,16 @@ namespace StockControl
                                     decimal PCSUnit = Convert.ToDecimal(im.PCSUnit);//dbClss.Con_UOM(itemNo, UOM);
                                     decimal StandardPrice = Convert.ToDecimal(im.UnitPrice);
 
+                                    string CustomerPartNo = "";
+                                    string CustomerPartName = "";
+                                    var t = db.mh_Items.Where(x => x.InternalNo.ToUpper().Trim() == dbClss.TSt(im.ItemNo).ToUpper().Trim())
+                                        .ToList();
+                                    if (t.Count > 0)
+                                    {
+                                        CustomerPartNo = dbClss.TSt(t.FirstOrDefault().CustomerPartNo);
+                                        CustomerPartName = dbClss.TSt(t.FirstOrDefault().CustomerPartName);
+                                    }
+
                                     RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(itemNo, "Invoice", 0, Location,0)));
                                     if (RemainQty > 0)
                                     {
@@ -2399,7 +2436,7 @@ namespace StockControl
                                         addRow(rowE.Index, DateTime.Now, itemNo, InternalName, InternalDescription, Location
                                             , 0, UOM, PCSUnit, StandardPrice, StandardPrice * 0
                                             , false, 0 * PCSUnit, 0 * PCSUnit, 0, "Waiting", "Waiting",
-                                             "", 0,0, "T", "SO");
+                                             "", 0,0, "T", "SO", CustomerPartNo, CustomerPartName);
                                     }
                                 }
                             }

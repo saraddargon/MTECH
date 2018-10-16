@@ -894,8 +894,11 @@ namespace StockControl
                     else if (Condition == "ReservationStock")
                         re = dbClss.TSt(g.FirstOrDefault().ReservationStock);
                     else if (Condition == "UnReservationStock")
-                        re = dbClss.TSt(g.FirstOrDefault().UnReservationStock);                  
+                        re = dbClss.TSt(g.FirstOrDefault().UnReservationStock);
+                    else if (Condition == "BackOrderSaleOrder")
+                        re = dbClss.TSt(g.FirstOrDefault().BackOrderSaleOrder);
 
+                    
                 }
             }
             return re;

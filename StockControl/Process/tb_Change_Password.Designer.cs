@@ -58,6 +58,13 @@
             this.radStatusStrip1 = new Telerik.WinControls.UI.RadStatusStrip();
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtPassNew = new Telerik.WinControls.UI.RadTextBox();
+            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
+            this.txtPassold = new Telerik.WinControls.UI.RadTextBox();
+            this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
+            this.txtUserName = new Telerik.WinControls.UI.RadTextBox();
+            this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
+            this.txtPasswordOld_Sis = new Telerik.WinControls.UI.RadTextBox();
             this.txtUserID = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel37 = new Telerik.WinControls.UI.RadLabel();
             this.office2010BlueTheme1 = new Telerik.WinControls.Themes.Office2010BlueTheme();
@@ -72,25 +79,18 @@
             this.RMenu5 = new Telerik.WinControls.UI.RadMenuItem();
             this.RMenu6 = new Telerik.WinControls.UI.RadMenuItem();
             this.radContextMenuManager1 = new Telerik.WinControls.UI.RadContextMenuManager();
-            this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
-            this.txtUserName = new Telerik.WinControls.UI.RadTextBox();
-            this.radLabel2 = new Telerik.WinControls.UI.RadLabel();
-            this.txtPassold = new Telerik.WinControls.UI.RadTextBox();
-            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
-            this.txtPassNew = new Telerik.WinControls.UI.RadTextBox();
-            this.txtPasswordOld_Sis = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassNew)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassold)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUserName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPasswordOld_Sis)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUserID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel37)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUserName)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPassold)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPassNew)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPasswordOld_Sis)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -383,6 +383,77 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(411, 202);
             this.panel1.TabIndex = 2;
+            this.panel1.TabStop = true;
+            // 
+            // txtPassNew
+            // 
+            this.txtPassNew.BackColor = System.Drawing.SystemColors.Window;
+            this.txtPassNew.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassNew.Location = new System.Drawing.Point(127, 110);
+            this.txtPassNew.Name = "txtPassNew";
+            this.txtPassNew.PasswordChar = '*';
+            this.txtPassNew.Size = new System.Drawing.Size(155, 19);
+            this.txtPassNew.TabIndex = 3;
+            // 
+            // radLabel3
+            // 
+            this.radLabel3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel3.Location = new System.Drawing.Point(35, 108);
+            this.radLabel3.Name = "radLabel3";
+            this.radLabel3.Size = new System.Drawing.Size(86, 17);
+            this.radLabel3.TabIndex = 8;
+            this.radLabel3.Text = "Password New :";
+            // 
+            // txtPassold
+            // 
+            this.txtPassold.BackColor = System.Drawing.SystemColors.Window;
+            this.txtPassold.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassold.Location = new System.Drawing.Point(127, 85);
+            this.txtPassold.Name = "txtPassold";
+            this.txtPassold.PasswordChar = '*';
+            this.txtPassold.Size = new System.Drawing.Size(155, 19);
+            this.txtPassold.TabIndex = 2;
+            // 
+            // radLabel2
+            // 
+            this.radLabel2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel2.Location = new System.Drawing.Point(40, 85);
+            this.radLabel2.Name = "radLabel2";
+            this.radLabel2.Size = new System.Drawing.Size(81, 17);
+            this.radLabel2.TabIndex = 8;
+            this.radLabel2.Text = "Password Old :";
+            // 
+            // txtUserName
+            // 
+            this.txtUserName.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.txtUserName.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUserName.Location = new System.Drawing.Point(127, 60);
+            this.txtUserName.Name = "txtUserName";
+            this.txtUserName.ReadOnly = true;
+            this.txtUserName.Size = new System.Drawing.Size(155, 19);
+            this.txtUserName.TabIndex = 1;
+            this.txtUserName.TabStop = false;
+            // 
+            // radLabel1
+            // 
+            this.radLabel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel1.Location = new System.Drawing.Point(52, 62);
+            this.radLabel1.Name = "radLabel1";
+            this.radLabel1.Size = new System.Drawing.Size(69, 17);
+            this.radLabel1.TabIndex = 8;
+            this.radLabel1.Text = "User Name :";
+            // 
+            // txtPasswordOld_Sis
+            // 
+            this.txtPasswordOld_Sis.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.txtPasswordOld_Sis.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPasswordOld_Sis.Location = new System.Drawing.Point(288, 85);
+            this.txtPasswordOld_Sis.Name = "txtPasswordOld_Sis";
+            this.txtPasswordOld_Sis.ReadOnly = true;
+            this.txtPasswordOld_Sis.Size = new System.Drawing.Size(93, 19);
+            this.txtPasswordOld_Sis.TabIndex = 4;
+            this.txtPasswordOld_Sis.TabStop = false;
+            this.txtPasswordOld_Sis.Visible = false;
             // 
             // txtUserID
             // 
@@ -392,7 +463,8 @@
             this.txtUserID.Name = "txtUserID";
             this.txtUserID.ReadOnly = true;
             this.txtUserID.Size = new System.Drawing.Size(155, 19);
-            this.txtUserID.TabIndex = 18;
+            this.txtUserID.TabIndex = 0;
+            this.txtUserID.TabStop = false;
             // 
             // radLabel37
             // 
@@ -481,74 +553,6 @@
             this.RMenu6.Name = "RMenu6";
             this.RMenu6.Text = "ลบรายการ";
             // 
-            // radLabel1
-            // 
-            this.radLabel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel1.Location = new System.Drawing.Point(52, 62);
-            this.radLabel1.Name = "radLabel1";
-            this.radLabel1.Size = new System.Drawing.Size(69, 17);
-            this.radLabel1.TabIndex = 8;
-            this.radLabel1.Text = "User Name :";
-            // 
-            // txtUserName
-            // 
-            this.txtUserName.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtUserName.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUserName.Location = new System.Drawing.Point(127, 60);
-            this.txtUserName.Name = "txtUserName";
-            this.txtUserName.ReadOnly = true;
-            this.txtUserName.Size = new System.Drawing.Size(155, 19);
-            this.txtUserName.TabIndex = 18;
-            // 
-            // radLabel2
-            // 
-            this.radLabel2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel2.Location = new System.Drawing.Point(40, 85);
-            this.radLabel2.Name = "radLabel2";
-            this.radLabel2.Size = new System.Drawing.Size(81, 17);
-            this.radLabel2.TabIndex = 8;
-            this.radLabel2.Text = "Password Old :";
-            // 
-            // txtPassold
-            // 
-            this.txtPassold.BackColor = System.Drawing.SystemColors.Window;
-            this.txtPassold.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassold.Location = new System.Drawing.Point(127, 85);
-            this.txtPassold.Name = "txtPassold";
-            this.txtPassold.PasswordChar = '*';
-            this.txtPassold.Size = new System.Drawing.Size(155, 19);
-            this.txtPassold.TabIndex = 18;
-            // 
-            // radLabel3
-            // 
-            this.radLabel3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel3.Location = new System.Drawing.Point(35, 108);
-            this.radLabel3.Name = "radLabel3";
-            this.radLabel3.Size = new System.Drawing.Size(86, 17);
-            this.radLabel3.TabIndex = 8;
-            this.radLabel3.Text = "Password New :";
-            // 
-            // txtPassNew
-            // 
-            this.txtPassNew.BackColor = System.Drawing.SystemColors.Window;
-            this.txtPassNew.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassNew.Location = new System.Drawing.Point(127, 110);
-            this.txtPassNew.Name = "txtPassNew";
-            this.txtPassNew.PasswordChar = '*';
-            this.txtPassNew.Size = new System.Drawing.Size(155, 19);
-            this.txtPassNew.TabIndex = 18;
-            // 
-            // txtPasswordOld_Sis
-            // 
-            this.txtPasswordOld_Sis.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtPasswordOld_Sis.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPasswordOld_Sis.Location = new System.Drawing.Point(288, 85);
-            this.txtPasswordOld_Sis.Name = "txtPasswordOld_Sis";
-            this.txtPasswordOld_Sis.ReadOnly = true;
-            this.txtPasswordOld_Sis.Size = new System.Drawing.Size(93, 19);
-            this.txtPasswordOld_Sis.TabIndex = 18;
-            this.txtPasswordOld_Sis.Visible = false;
-            // 
             // tb_Change_Password
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -572,15 +576,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassNew)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassold)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUserName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPasswordOld_Sis)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUserID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel37)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUserName)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPassold)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPassNew)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPasswordOld_Sis)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -151,6 +151,12 @@
     <Compile Include="Process\Customer_List.Designer.cs">
       <DependentUpon>Customer_List.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Print_PRList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Print_PRList.Designer.cs">
+      <DependentUpon>Print_PRList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Show_Signature.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1243,6 +1249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Customer_List.resx">
       <DependentUpon>Customer_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Print_PRList.resx">
+      <DependentUpon>Print_PRList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Show_Signature.resx">
       <DependentUpon>Show_Signature.cs</DependentUpon>

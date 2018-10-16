@@ -50,6 +50,7 @@
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn5 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn6 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn7 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn8 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn13 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn14 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn15 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
@@ -57,12 +58,12 @@
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn17 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn18 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn19 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
-            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn8 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn9 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn2 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn10 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewCheckBoxColumn gridViewCheckBoxColumn2 = new Telerik.WinControls.UI.GridViewCheckBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn11 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn12 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn13 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn20 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn21 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.TableViewDefinition tableViewDefinition1 = new Telerik.WinControls.UI.TableViewDefinition();
@@ -543,7 +544,14 @@
             gridViewDecimalColumn7.HeaderText = "CurrentJob Stock";
             gridViewDecimalColumn7.Name = "CurrentJob_FGStock";
             gridViewDecimalColumn7.ReadOnly = true;
-            gridViewDecimalColumn7.Width = 140;
+            gridViewDecimalColumn7.Width = 122;
+            gridViewDecimalColumn8.EnableExpressionEditor = false;
+            gridViewDecimalColumn8.FieldName = "BackOrderSaleOrder";
+            gridViewDecimalColumn8.FormatString = "{0:N2}";
+            gridViewDecimalColumn8.HeaderText = "สินค้ารอ ship FG";
+            gridViewDecimalColumn8.Name = "BackOrderSaleOrder";
+            gridViewDecimalColumn8.ReadOnly = true;
+            gridViewDecimalColumn8.Width = 97;
             gridViewTextBoxColumn13.EnableExpressionEditor = false;
             gridViewTextBoxColumn13.FieldName = "Location";
             gridViewTextBoxColumn13.HeaderText = "สถานที่เก็บ";
@@ -586,17 +594,17 @@
             gridViewTextBoxColumn19.Name = "ReorderType";
             gridViewTextBoxColumn19.ReadOnly = true;
             gridViewTextBoxColumn19.Width = 120;
-            gridViewDecimalColumn8.EnableExpressionEditor = false;
-            gridViewDecimalColumn8.FieldName = "ReorderQty";
-            gridViewDecimalColumn8.HeaderText = "จำนวนสั่งซื้อ";
-            gridViewDecimalColumn8.Name = "ReorderQty";
-            gridViewDecimalColumn8.ReadOnly = true;
-            gridViewDecimalColumn8.Width = 98;
             gridViewDecimalColumn9.EnableExpressionEditor = false;
-            gridViewDecimalColumn9.FieldName = "ReorderPoint";
-            gridViewDecimalColumn9.HeaderText = "จุดสั่งซื้อ";
-            gridViewDecimalColumn9.Name = "ReorderPoint";
+            gridViewDecimalColumn9.FieldName = "ReorderQty";
+            gridViewDecimalColumn9.HeaderText = "จำนวนสั่งซื้อ";
+            gridViewDecimalColumn9.Name = "ReorderQty";
             gridViewDecimalColumn9.ReadOnly = true;
+            gridViewDecimalColumn9.Width = 98;
+            gridViewDecimalColumn10.EnableExpressionEditor = false;
+            gridViewDecimalColumn10.FieldName = "ReorderPoint";
+            gridViewDecimalColumn10.HeaderText = "จุดสั่งซื้อ";
+            gridViewDecimalColumn10.Name = "ReorderPoint";
+            gridViewDecimalColumn10.ReadOnly = true;
             gridViewCheckBoxColumn2.EnableExpressionEditor = false;
             gridViewCheckBoxColumn2.FieldName = "Inspection";
             gridViewCheckBoxColumn2.HeaderText = "Inspection";
@@ -604,24 +612,24 @@
             gridViewCheckBoxColumn2.Name = "Inspection";
             gridViewCheckBoxColumn2.ReadOnly = true;
             gridViewCheckBoxColumn2.Width = 73;
-            gridViewDecimalColumn10.EnableExpressionEditor = false;
-            gridViewDecimalColumn10.FieldName = "MinimumQty";
-            gridViewDecimalColumn10.HeaderText = "Minimum Stock";
-            gridViewDecimalColumn10.Name = "MinimumQty";
-            gridViewDecimalColumn10.Width = 103;
             gridViewDecimalColumn11.EnableExpressionEditor = false;
-            gridViewDecimalColumn11.FieldName = "MaximumQty";
-            gridViewDecimalColumn11.HeaderText = "Maximum Stock";
-            gridViewDecimalColumn11.Name = "MaximumQty";
-            gridViewDecimalColumn11.ReadOnly = true;
-            gridViewDecimalColumn11.Width = 98;
+            gridViewDecimalColumn11.FieldName = "MinimumQty";
+            gridViewDecimalColumn11.HeaderText = "Minimum Stock";
+            gridViewDecimalColumn11.Name = "MinimumQty";
+            gridViewDecimalColumn11.Width = 103;
             gridViewDecimalColumn12.EnableExpressionEditor = false;
-            gridViewDecimalColumn12.FieldName = "SafetyStock";
-            gridViewDecimalColumn12.FormatString = "{0:N2}";
-            gridViewDecimalColumn12.HeaderText = "Set Safety Stock";
-            gridViewDecimalColumn12.Name = "SafetyStock";
+            gridViewDecimalColumn12.FieldName = "MaximumQty";
+            gridViewDecimalColumn12.HeaderText = "Maximum Stock";
+            gridViewDecimalColumn12.Name = "MaximumQty";
             gridViewDecimalColumn12.ReadOnly = true;
-            gridViewDecimalColumn12.Width = 103;
+            gridViewDecimalColumn12.Width = 98;
+            gridViewDecimalColumn13.EnableExpressionEditor = false;
+            gridViewDecimalColumn13.FieldName = "SafetyStock";
+            gridViewDecimalColumn13.FormatString = "{0:N2}";
+            gridViewDecimalColumn13.HeaderText = "Set Safety Stock";
+            gridViewDecimalColumn13.Name = "SafetyStock";
+            gridViewDecimalColumn13.ReadOnly = true;
+            gridViewDecimalColumn13.Width = 103;
             gridViewTextBoxColumn20.EnableExpressionEditor = false;
             gridViewTextBoxColumn20.FieldName = "CreateBy";
             gridViewTextBoxColumn20.HeaderText = "ผู้สร้าง";
@@ -655,6 +663,7 @@
             gridViewDecimalColumn5,
             gridViewDecimalColumn6,
             gridViewDecimalColumn7,
+            gridViewDecimalColumn8,
             gridViewTextBoxColumn13,
             gridViewTextBoxColumn14,
             gridViewTextBoxColumn15,
@@ -662,12 +671,12 @@
             gridViewTextBoxColumn17,
             gridViewTextBoxColumn18,
             gridViewTextBoxColumn19,
-            gridViewDecimalColumn8,
             gridViewDecimalColumn9,
-            gridViewCheckBoxColumn2,
             gridViewDecimalColumn10,
+            gridViewCheckBoxColumn2,
             gridViewDecimalColumn11,
             gridViewDecimalColumn12,
+            gridViewDecimalColumn13,
             gridViewTextBoxColumn20,
             gridViewTextBoxColumn21});
             this.radGridView1.MasterTemplate.SelectionMode = Telerik.WinControls.UI.GridViewSelectionMode.CellSelect;

@@ -520,7 +520,7 @@ namespace StockControl
 
         private void btnListPR_PO_Click(object sender, EventArgs e)
         {
-            PrintPR a = new PrintPR("","", "ListPurchaseAndPR");
+            Print_PRList a = new Print_PRList("","", "ListPurchaseAndPR");
             a.ShowDialog();
 
         }

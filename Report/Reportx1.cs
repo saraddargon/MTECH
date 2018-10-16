@@ -522,7 +522,9 @@ namespace Report
                     {
                         rptDc.SetParameterValue("@Date1", DateTime.ParseExact(Value[0], "dd/MMM/yyyy", new CultureInfo("en-US")));
                         rptDc.SetParameterValue("@Date2", DateTime.ParseExact(Value[1], "dd/MMM/yyyy", new CultureInfo("en-US")).AddDays(1).AddMinutes(-1));
-                        //rptDc.SetParameterValue("@DataTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                        rptDc.SetParameterValue("@GroupType", Convert.ToString(Value[2]));
+                        rptDc.SetParameterValue("@Status", Convert.ToString(Value[3]));
+                        rptDc.SetParameterValue("@DateTime", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;
             }

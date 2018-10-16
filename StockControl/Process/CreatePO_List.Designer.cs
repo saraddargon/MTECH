@@ -99,6 +99,7 @@
             this.btnFilter = new Telerik.WinControls.UI.RadButtonElement();
             this.Unfilter = new Telerik.WinControls.UI.RadButtonElement();
             this.radRibbonBarButtonGroup5 = new Telerik.WinControls.UI.RadRibbonBarButtonGroup();
+            this.btn_Print_POList = new Telerik.WinControls.UI.RadButtonElement();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -272,7 +273,8 @@
             // 
             this.radRibbonBarGroup2.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.btn_PrintPR,
-            this.btn_Print_Barcode});
+            this.btn_Print_Barcode,
+            this.btn_Print_POList});
             this.radRibbonBarGroup2.Name = "radRibbonBarGroup2";
             this.radRibbonBarGroup2.Text = "Print Document";
             // 
@@ -741,6 +743,15 @@
             this.radRibbonBarButtonGroup5.ShowBorder = false;
             this.radRibbonBarButtonGroup5.Text = "radRibbonBarButtonGroup4";
             // 
+            // btn_Print_POList
+            // 
+            this.btn_Print_POList.Image = ((System.Drawing.Image)(resources.GetObject("btn_Print_POList.Image")));
+            this.btn_Print_POList.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btn_Print_POList.Name = "btn_Print_POList";
+            this.btn_Print_POList.Text = "รายงานการสั่งซื้อ";
+            this.btn_Print_POList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btn_Print_POList.Click += new System.EventHandler(this.btn_Print_POList_Click);
+            // 
             // CreatePO_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -840,5 +851,6 @@
         private Telerik.WinControls.UI.RadCheckBox cbDate;
         private Telerik.WinControls.UI.RadDropDownList ddlStatus;
         private Telerik.WinControls.UI.RadLabel radLabel5;
+        private Telerik.WinControls.UI.RadButtonElement btn_Print_POList;
     }
 }

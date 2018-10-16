@@ -449,5 +449,12 @@ namespace StockControl
             //Report.Reportx1 op = new Report.Reportx1("ReportItemList.rpt");
             //op.Show();
         }
+
+        private void btn_Print_POList_Click(object sender, EventArgs e)
+        {
+
+            Print_PRList a = new Print_PRList("", "", "ListPurchaseAndPR");
+            a.ShowDialog();
+        }
     }
 }

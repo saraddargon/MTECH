@@ -246,6 +246,7 @@ namespace StockControl
                             x.Cells["BackOrderStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "BackOrderStock"));
                             x.Cells["ReservationStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "ReservationStock"));
                             x.Cells["UnReservationStock"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "UnReservationStock"));
+                            x.Cells["BackOrderSaleOrder"].Value = dbClss.TDe(dbClss.Get_Stock(Convert.ToString(x.Cells["InternalNo"].Value), Convert.ToString(x.Cells["Location"].Value), 0, "BackOrderSaleOrder"));
 
                         }
                         dbClss.SetRowNo1(radGridView1);

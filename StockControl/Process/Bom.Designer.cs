@@ -64,8 +64,10 @@
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
             this.sePackingSTD = new Telerik.WinControls.UI.RadSpinEditor();
             this.seYieldoperation = new Telerik.WinControls.UI.RadSpinEditor();
+            this.txtModel = new Telerik.WinControls.UI.RadTextBox();
             this.txtSize = new Telerik.WinControls.UI.RadTextBox();
             this.txtVersion = new Telerik.WinControls.UI.RadTextBox();
+            this.radLabel19 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel17 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel16 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel14 = new Telerik.WinControls.UI.RadLabel();
@@ -75,6 +77,8 @@
             this.btnFind = new System.Windows.Forms.Button();
             this.radGroupBox1 = new Telerik.WinControls.UI.RadGroupBox();
             this.lblStatus = new Telerik.WinControls.UI.RadLabel();
+            this.dtRevDate = new Telerik.WinControls.UI.RadDateTimePicker();
+            this.radLabel18 = new Telerik.WinControls.UI.RadLabel();
             this.dtEnd = new Telerik.WinControls.UI.RadDateTimePicker();
             this.radLabel9 = new Telerik.WinControls.UI.RadLabel();
             this.dtBegin = new Telerik.WinControls.UI.RadDateTimePicker();
@@ -129,10 +133,6 @@
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
             this.radButtonElement1 = new Telerik.WinControls.UI.RadButtonElement();
-            this.radLabel18 = new Telerik.WinControls.UI.RadLabel();
-            this.dtRevDate = new Telerik.WinControls.UI.RadDateTimePicker();
-            this.radLabel19 = new Telerik.WinControls.UI.RadLabel();
-            this.txtModel = new Telerik.WinControls.UI.RadTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -150,8 +150,10 @@
             this.radPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sePackingSTD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seYieldoperation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtModel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtVersion)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel19)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).BeginInit();
@@ -159,6 +161,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).BeginInit();
             this.radGroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtRevDate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel18)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtEnd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtBegin)).BeginInit();
@@ -181,10 +185,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtBomNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPartNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel18)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtRevDate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel19)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtModel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -530,7 +530,7 @@
             // sePackingSTD
             // 
             this.sePackingSTD.DecimalPlaces = 2;
-            this.sePackingSTD.Location = new System.Drawing.Point(103, 83);
+            this.sePackingSTD.Location = new System.Drawing.Point(411, 60);
             this.sePackingSTD.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -544,7 +544,7 @@
             // seYieldoperation
             // 
             this.seYieldoperation.DecimalPlaces = 2;
-            this.seYieldoperation.Location = new System.Drawing.Point(103, 59);
+            this.seYieldoperation.Location = new System.Drawing.Point(411, 36);
             this.seYieldoperation.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -555,11 +555,20 @@
             this.seYieldoperation.TabIndex = 21;
             this.seYieldoperation.TabStop = false;
             // 
+            // txtModel
+            // 
+            this.txtModel.BackColor = System.Drawing.Color.White;
+            this.txtModel.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtModel.Location = new System.Drawing.Point(103, 105);
+            this.txtModel.Name = "txtModel";
+            this.txtModel.Size = new System.Drawing.Size(218, 19);
+            this.txtModel.TabIndex = 18;
+            // 
             // txtSize
             // 
             this.txtSize.BackColor = System.Drawing.Color.White;
             this.txtSize.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSize.Location = new System.Drawing.Point(343, 130);
+            this.txtSize.Location = new System.Drawing.Point(103, 128);
             this.txtSize.Name = "txtSize";
             this.txtSize.Size = new System.Drawing.Size(218, 19);
             this.txtSize.TabIndex = 18;
@@ -568,15 +577,24 @@
             // 
             this.txtVersion.BackColor = System.Drawing.Color.White;
             this.txtVersion.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtVersion.Location = new System.Drawing.Point(103, 107);
+            this.txtVersion.Location = new System.Drawing.Point(411, 84);
             this.txtVersion.Name = "txtVersion";
             this.txtVersion.Size = new System.Drawing.Size(105, 19);
             this.txtVersion.TabIndex = 18;
             // 
+            // radLabel19
+            // 
+            this.radLabel19.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel19.Location = new System.Drawing.Point(61, 107);
+            this.radLabel19.Name = "radLabel19";
+            this.radLabel19.Size = new System.Drawing.Size(36, 17);
+            this.radLabel19.TabIndex = 17;
+            this.radLabel19.Text = "Model";
+            // 
             // radLabel17
             // 
             this.radLabel17.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel17.Location = new System.Drawing.Point(29, 86);
+            this.radLabel17.Location = new System.Drawing.Point(337, 63);
             this.radLabel17.Name = "radLabel17";
             this.radLabel17.Size = new System.Drawing.Size(69, 17);
             this.radLabel17.TabIndex = 17;
@@ -585,7 +603,7 @@
             // radLabel16
             // 
             this.radLabel16.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel16.Location = new System.Drawing.Point(304, 130);
+            this.radLabel16.Location = new System.Drawing.Point(64, 128);
             this.radLabel16.Name = "radLabel16";
             this.radLabel16.Size = new System.Drawing.Size(33, 17);
             this.radLabel16.TabIndex = 17;
@@ -594,7 +612,7 @@
             // radLabel14
             // 
             this.radLabel14.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel14.Location = new System.Drawing.Point(15, 60);
+            this.radLabel14.Location = new System.Drawing.Point(323, 37);
             this.radLabel14.Name = "radLabel14";
             this.radLabel14.Size = new System.Drawing.Size(83, 17);
             this.radLabel14.TabIndex = 17;
@@ -603,7 +621,7 @@
             // radLabel13
             // 
             this.radLabel13.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel13.Location = new System.Drawing.Point(42, 107);
+            this.radLabel13.Location = new System.Drawing.Point(350, 84);
             this.radLabel13.Name = "radLabel13";
             this.radLabel13.Size = new System.Drawing.Size(53, 17);
             this.radLabel13.TabIndex = 17;
@@ -635,7 +653,7 @@
             this.btnCustomer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.WhiteSmoke;
             this.btnCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCustomer.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomer.Image")));
-            this.btnCustomer.Location = new System.Drawing.Point(450, 89);
+            this.btnCustomer.Location = new System.Drawing.Point(518, 129);
             this.btnCustomer.Name = "btnCustomer";
             this.btnCustomer.Size = new System.Drawing.Size(19, 18);
             this.btnCustomer.TabIndex = 16;
@@ -685,12 +703,35 @@
             this.lblStatus.Text = "New";
             this.lblStatus.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // dtRevDate
+            // 
+            this.dtRevDate.CustomFormat = "dd/MMM/yyyy";
+            this.dtRevDate.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtRevDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtRevDate.Location = new System.Drawing.Point(411, 107);
+            this.dtRevDate.Name = "dtRevDate";
+            this.dtRevDate.Size = new System.Drawing.Size(105, 19);
+            this.dtRevDate.TabIndex = 7;
+            this.dtRevDate.TabStop = false;
+            this.dtRevDate.Text = "16/May/2017";
+            this.dtRevDate.Value = new System.DateTime(2017, 5, 16, 21, 5, 21, 301);
+            // 
+            // radLabel18
+            // 
+            this.radLabel18.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel18.Location = new System.Drawing.Point(327, 107);
+            this.radLabel18.Name = "radLabel18";
+            this.radLabel18.Size = new System.Drawing.Size(74, 17);
+            this.radLabel18.TabIndex = 8;
+            this.radLabel18.Text = "Revision Date";
+            this.radLabel18.Click += new System.EventHandler(this.radLabel5_Click);
+            // 
             // dtEnd
             // 
             this.dtEnd.CustomFormat = "dd/MMM/yyyy";
             this.dtEnd.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtEnd.Location = new System.Drawing.Point(632, 41);
+            this.dtEnd.Location = new System.Drawing.Point(632, 40);
             this.dtEnd.Name = "dtEnd";
             this.dtEnd.Size = new System.Drawing.Size(98, 19);
             this.dtEnd.TabIndex = 7;
@@ -702,7 +743,7 @@
             // radLabel9
             // 
             this.radLabel9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel9.Location = new System.Drawing.Point(604, 41);
+            this.radLabel9.Location = new System.Drawing.Point(604, 40);
             this.radLabel9.Name = "radLabel9";
             this.radLabel9.Size = new System.Drawing.Size(18, 17);
             this.radLabel9.TabIndex = 8;
@@ -715,7 +756,7 @@
             this.dtBegin.CustomFormat = "dd/MMM/yyyy";
             this.dtBegin.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtBegin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtBegin.Location = new System.Drawing.Point(632, 16);
+            this.dtBegin.Location = new System.Drawing.Point(632, 15);
             this.dtBegin.Name = "dtBegin";
             this.dtBegin.Size = new System.Drawing.Size(98, 19);
             this.dtBegin.TabIndex = 6;
@@ -727,7 +768,7 @@
             // radLabel5
             // 
             this.radLabel5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel5.Location = new System.Drawing.Point(584, 16);
+            this.radLabel5.Location = new System.Drawing.Point(584, 15);
             this.radLabel5.Name = "radLabel5";
             this.radLabel5.Size = new System.Drawing.Size(42, 17);
             this.radLabel5.TabIndex = 8;
@@ -762,7 +803,7 @@
             // radLabel1
             // 
             this.radLabel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel1.Location = new System.Drawing.Point(278, 37);
+            this.radLabel1.Location = new System.Drawing.Point(38, 81);
             this.radLabel1.Name = "radLabel1";
             this.radLabel1.Size = new System.Drawing.Size(59, 17);
             this.radLabel1.TabIndex = 8;
@@ -772,7 +813,7 @@
             // radLabel3
             // 
             this.radLabel3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel3.Location = new System.Drawing.Point(291, 17);
+            this.radLabel3.Location = new System.Drawing.Point(51, 61);
             this.radLabel3.Name = "radLabel3";
             this.radLabel3.Size = new System.Drawing.Size(46, 17);
             this.radLabel3.TabIndex = 8;
@@ -782,7 +823,7 @@
             // radLabel11
             // 
             this.radLabel11.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel11.Location = new System.Drawing.Point(269, 62);
+            this.radLabel11.Location = new System.Drawing.Point(337, 14);
             this.radLabel11.Name = "radLabel11";
             this.radLabel11.Size = new System.Drawing.Size(68, 17);
             this.radLabel11.TabIndex = 8;
@@ -791,7 +832,7 @@
             // radLabel15
             // 
             this.radLabel15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel15.Location = new System.Drawing.Point(285, 86);
+            this.radLabel15.Location = new System.Drawing.Point(353, 131);
             this.radLabel15.Name = "radLabel15";
             this.radLabel15.Size = new System.Drawing.Size(52, 17);
             this.radLabel15.TabIndex = 8;
@@ -845,7 +886,7 @@
             // 
             this.txtid_Customer.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtid_Customer.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtid_Customer.Location = new System.Drawing.Point(475, 85);
+            this.txtid_Customer.Location = new System.Drawing.Point(543, 129);
             this.txtid_Customer.Name = "txtid_Customer";
             this.txtid_Customer.ReadOnly = true;
             this.txtid_Customer.Size = new System.Drawing.Size(68, 19);
@@ -857,10 +898,10 @@
             // 
             this.txtTypePart.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtTypePart.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTypePart.Location = new System.Drawing.Point(343, 62);
+            this.txtTypePart.Location = new System.Drawing.Point(411, 14);
             this.txtTypePart.Name = "txtTypePart";
             this.txtTypePart.ReadOnly = true;
-            this.txtTypePart.Size = new System.Drawing.Size(101, 19);
+            this.txtTypePart.Size = new System.Drawing.Size(105, 19);
             this.txtTypePart.TabIndex = 5;
             this.txtTypePart.TabStop = false;
             // 
@@ -868,7 +909,7 @@
             // 
             this.txtDescription.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtDescription.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescription.Location = new System.Drawing.Point(343, 38);
+            this.txtDescription.Location = new System.Drawing.Point(103, 82);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.ReadOnly = true;
             this.txtDescription.Size = new System.Drawing.Size(218, 19);
@@ -879,7 +920,7 @@
             // 
             this.txtPartName.BackColor = System.Drawing.Color.WhiteSmoke;
             this.txtPartName.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPartName.Location = new System.Drawing.Point(343, 15);
+            this.txtPartName.Location = new System.Drawing.Point(103, 59);
             this.txtPartName.Name = "txtPartName";
             this.txtPartName.ReadOnly = true;
             this.txtPartName.Size = new System.Drawing.Size(218, 19);
@@ -889,9 +930,9 @@
             // txtCustomerNo
             // 
             this.txtCustomerNo.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCustomerNo.Location = new System.Drawing.Point(343, 85);
+            this.txtCustomerNo.Location = new System.Drawing.Point(411, 129);
             this.txtCustomerNo.Name = "txtCustomerNo";
-            this.txtCustomerNo.Size = new System.Drawing.Size(101, 19);
+            this.txtCustomerNo.Size = new System.Drawing.Size(105, 19);
             this.txtCustomerNo.TabIndex = 2;
             this.txtCustomerNo.Leave += new System.EventHandler(this.txtCustomerNo_Leave);
             this.txtCustomerNo.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtCustomerNo_PreviewKeyDown);
@@ -1218,47 +1259,6 @@
             this.radButtonElement1.Text = "รายการ";
             this.radButtonElement1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // radLabel18
-            // 
-            this.radLabel18.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel18.Location = new System.Drawing.Point(19, 130);
-            this.radLabel18.Name = "radLabel18";
-            this.radLabel18.Size = new System.Drawing.Size(74, 17);
-            this.radLabel18.TabIndex = 8;
-            this.radLabel18.Text = "Revision Date";
-            this.radLabel18.Click += new System.EventHandler(this.radLabel5_Click);
-            // 
-            // dtRevDate
-            // 
-            this.dtRevDate.CustomFormat = "dd/MMM/yyyy";
-            this.dtRevDate.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtRevDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtRevDate.Location = new System.Drawing.Point(103, 130);
-            this.dtRevDate.Name = "dtRevDate";
-            this.dtRevDate.Size = new System.Drawing.Size(105, 19);
-            this.dtRevDate.TabIndex = 7;
-            this.dtRevDate.TabStop = false;
-            this.dtRevDate.Text = "16/May/2017";
-            this.dtRevDate.Value = new System.DateTime(2017, 5, 16, 21, 5, 21, 301);
-            // 
-            // radLabel19
-            // 
-            this.radLabel19.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel19.Location = new System.Drawing.Point(319, 107);
-            this.radLabel19.Name = "radLabel19";
-            this.radLabel19.Size = new System.Drawing.Size(18, 17);
-            this.radLabel19.TabIndex = 17;
-            this.radLabel19.Text = "รุ่น";
-            // 
-            // txtModel
-            // 
-            this.txtModel.BackColor = System.Drawing.Color.White;
-            this.txtModel.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtModel.Location = new System.Drawing.Point(343, 107);
-            this.txtModel.Name = "txtModel";
-            this.txtModel.Size = new System.Drawing.Size(218, 19);
-            this.txtModel.TabIndex = 18;
-            // 
             // Bom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1299,8 +1299,10 @@
             this.radPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sePackingSTD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seYieldoperation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtModel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtVersion)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel19)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel14)).EndInit();
@@ -1308,6 +1310,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).EndInit();
             this.radGroupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.lblStatus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtRevDate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel18)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtEnd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtBegin)).EndInit();
@@ -1330,10 +1334,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtBomNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPartNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel18)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dtRevDate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel19)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtModel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
