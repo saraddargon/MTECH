@@ -691,7 +691,7 @@ namespace StockControl
             var gPlan = gPlanN;
             using (var db = new DataClasses1DataContext())
             {
-                if (gPlan.ItemNo == "TBK-T-0001" || gPlan.ItemNo == "MET-T-001")
+                if (gPlan.ItemNo.Contains("GSC"))
                 { }
 
                 bool RMready = true;
@@ -708,6 +708,11 @@ namespace StockControl
                 if (boms.Count == 0)
                     RMready = false; //ถ้าไม่มี Bom จะไม่แพลน
                 var bomHd = db.tb_BomHDs.Where(x => x.BomNo == tdata.BomNo).FirstOrDefault();
+                if(bomHd == null)
+                {
+                    RMready = false;
+                    return null;
+                }
                 //var yield = bomHd.YieldOperation.ToDecimal();
                 var exYield = 100 - bomHd.YieldOperation.ToDecimal();
 
