@@ -414,7 +414,7 @@ namespace StockControl
                         Report.Reportx1.Value[2] = "";
                         Report.Reportx1.Value[3] = "";
                         Report.Reportx1.WReport = "Bom";
-                        Report.Reportx1 op = new Report.Reportx1("Bom.rpt");
+                        Report.Reportx1 op = new Report.Reportx1("BillOfMaterial.rpt");
                         op.Show();
 
                     }
