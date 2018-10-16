@@ -34,7 +34,7 @@ namespace StockControl
                 key.SetValue("ForceLargerFonts", isForce, RegistryValueKind.DWord);
                 key.Close();
             }
-            catch { }
+            catch (Exception ex) { System.Windows.Forms.MessageBox.Show(ex.Message); }
         }
         public static void getConfig()
         {
