@@ -1641,18 +1641,37 @@ namespace StockControl
         {
             try
             {
-                //btnEdit.Enabled = true;
-                //btnNew.Enabled = true;
-                ////Cleardata();
+                if (Ac == "New" || Ac == "Edit")
+                { }
+                else
+                {
+                    return;
+                }
+
+                ////btnEdit.Enabled = true;
+                ////btnNew.Enabled = true;
+                //////Cleardata();
+                //string PartT = txtPartNo.Text;
+                //string bNo = txtBomNo.Text;
+                //string cAc = Ac;
+                //btnNew_Click(null, null);
+                //if (cAc == "New")
+                //    txtBomNo.Text = bNo;
+                //txtPartNo.Text = PartT;
+                ////Enable_Status(false, "View");
                 string PartT = txtPartNo.Text;
-                btnNew_Click(null, null);
-                txtPartNo.Text = PartT;
-                //Enable_Status(false, "View");
 
                 this.Cursor = Cursors.WaitCursor;
                 ListPart sc = new ListPart(txtPartNo, "FG-SEMI","Bom");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
+                if(PartT != txtPartNo.Text)
+                {
+                    if (Ac == "New")
+                    { }
+                    else
+                        btnNew_Click(null, null);
+                }
 
                 Load_Part();
 
@@ -1674,6 +1693,13 @@ namespace StockControl
         {
             try
             {
+                if (Ac == "New" || Ac == "Edit")
+                { }
+                else
+                {
+                    return;
+                }
+
                 //btnEdit.Enabled = true;
                 //btnNew.Enabled = true;
                 //Cleardata();
@@ -1834,7 +1860,14 @@ namespace StockControl
         {
             try
             {
-                
+
+                if (Ac == "New" || Ac == "Edit")
+                { }
+                else
+                {
+                    return;
+                }
+
                 this.Cursor = Cursors.WaitCursor;
 
                 Customer_List sc = new Customer_List(txtCustomerNo);
