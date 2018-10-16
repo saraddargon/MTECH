@@ -236,16 +236,21 @@ namespace StockControl
 
 
                     //Sub-Work Centers
-                    decimal sumCapa = 0.00m;
+                    //decimal sumCapa = 0.00m;
+                    decimal sumCapaHr = 0.00m;
                     decimal sumCost = 0.00m;
+                    var sumCycle = 0.00m;
                     foreach (var item in dgvData.Rows)
                     {
                         newDoc = false;
                         decimal CostPerUOM = item.Cells["CostPerUOM"].Value.ToDecimal();
                         decimal Capacity = item.Cells["Capacity"].Value.ToDecimal();
-                        sumCapa += Capacity;
+                        decimal CapacityHour = item.Cells["CapacityHour"].Value.ToDecimal();
+                        decimal CycleTime = item.Cells["CycleTime"].Value.ToDecimal();
+                        //sumCapa += Capacity;
+                        sumCapaHr += CapacityHour;
                         sumCost += CostPerUOM;
-
+                        sumCycle += CycleTime;
                         //if (item.Cells["dgvC"].Value.ToSt() == "") continue;
 
                         int id = item.Cells["id"].Value.ToInt();
@@ -285,6 +290,8 @@ namespace StockControl
                         ws.CostPerUOM = CostPerUOM;
                         ws.Capacity = Capacity;
                         ws.Description = Description;
+                        ws.CapacityHour = CapacityHour;
+                        ws.CycleTime = CycleTime;
 
                         if (id == 0)
                             db.mh_WorkCenterSubs.InsertOnSubmit(ws);
@@ -297,7 +304,11 @@ namespace StockControl
                     if (w != null && dgvData.Rows.Count > 0)
                     {
                         w.CostPerUOM = sumCost;
-                        w.Capacity = sumCapa;
+                        //w.Capacity = sumCapa;
+                        //w.CapacityHour = sumCapa * 60;
+                        w.CapacityHour = sumCapaHr;
+                        w.Capacity = Math.Round(sumCapaHr / 60, 2);
+                        w.CycleTime = sumCycle;
                         db.SubmitChanges();
                     }
                 }
@@ -755,6 +766,13 @@ namespace StockControl
             if (e.RowIndex >= 0)
             {
                 e.Row.Cells["dgvC"].Value = "T";
+                if (e.Column.Name.Equals("CapacityHour"))
+                {
+                    var m = e.Row.Cells["CapacityHour"].Value.ToDecimal();
+                    if (m < 0)
+                        e.Row.Cells["CapacityHour"].Value = 0.00m;
+                    e.Row.Cells["Capacity"].Value = Math.Round(m / 60, 2);
+                }
             }
         }
     }

@@ -696,33 +696,6 @@
       <Column Name="WorkType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_WorkCenter" Member="mh_WorkCenters">
-    <Type Name="mh_WorkCenter">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="WorkCenterNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="WorkCenterName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Decription" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Calendar" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.mh_WorkCenterSub" Member="mh_WorkCenterSubs">
-    <Type Name="mh_WorkCenterSub">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="idWorkCenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="SubWorkNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SubWorkName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="WType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.tb_Claim" Member="tb_Claims">
     <Type Name="tb_Claim">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -807,20 +780,6 @@
       <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
       <Column Name="idWorkCenters" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="SubWorkId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.mh_RoutingDT" Member="mh_RoutingDTs">
-    <Type Name="mh_RoutingDT">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="RoutingId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="RNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="idWorkCenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="SetupTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="RunTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="WaitTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="UnitCost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
@@ -2339,6 +2298,51 @@
       <Column Name="OutQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="RemainQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_RoutingDT" Member="mh_RoutingDTs">
+    <Type Name="mh_RoutingDT">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoutingId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idWorkCenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="SetupTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="RunTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="WaitTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitCost" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_WorkCenter" Member="mh_WorkCenters">
+    <Type Name="mh_WorkCenter">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WorkCenterNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="WorkCenterName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Decription" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Calendar" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CycleTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CapacityHour" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_WorkCenterSub" Member="mh_WorkCenterSubs">
+    <Type Name="mh_WorkCenterSub">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idWorkCenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SubWorkNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SubWorkName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="UOM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CostPerUOM" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Capacity" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="WType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CycleTime" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="CapacityHour" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">

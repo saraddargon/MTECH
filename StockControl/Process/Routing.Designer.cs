@@ -455,7 +455,7 @@
             gridViewDecimalColumn4.EnableExpressionEditor = false;
             gridViewDecimalColumn4.FieldName = "Month";
             gridViewDecimalColumn4.FormatString = "{0:N2}";
-            gridViewDecimalColumn4.HeaderText = "Month (22 Days)";
+            gridViewDecimalColumn4.HeaderText = "Month (26 Days)";
             gridViewDecimalColumn4.Name = "Month";
             gridViewDecimalColumn4.ReadOnly = true;
             gridViewDecimalColumn4.Width = 100;
