@@ -1584,7 +1584,7 @@ namespace StockControl
                                             , vv.Unit
                                             , dbClss.TDe(vv.PCSUnit)
                                             , dbClss.TDe(vv.UnitPrice)
-                                            , vv.Amount, "", "", "", "", "", 0
+                                            , dbClss.TDe(vv.Amount), "", "", "", "", "", 0
                                             , vv.LocationItem
                                             , dbClss.TDe(vv.Qty)
                                             , dbClss.TDe(vv.OutShip)

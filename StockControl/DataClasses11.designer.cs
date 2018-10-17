@@ -2220,46 +2220,6 @@ namespace StockControl
 			return ((ISingleResult<sp_008_Stock_SelectResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_041_tb_Adjust_Stock")]
-		public int sp_041_tb_Adjust_Stock([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ADNo", DbType="NVarChar(50)")] string aDNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(50)")] string codeNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(50)")] string location, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), aDNo, codeNo, qTY, createBy, refJobNo, refTempJobNo, refidJobNo, location, idCSTMPODt);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_052_Reture_RM")]
-		public int sp_052_Reture_RM(
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ReturnNo", DbType="NVarChar(50)")] string returnNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(50)")] string codeNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Remark", DbType="NVarChar(512)")] string remark, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LineName", DbType="NVarChar(512)")] string lineName, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="MachineName", DbType="NVarChar(512)")] string machineName, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="SerialNo", DbType="NVarChar(512)")] string serialNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BaseUOM", DbType="VarChar(50)")] string baseUOM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BasePCSUOM", DbType="Decimal(18,2)")] System.Nullable<decimal> basePCSUOM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitShip", DbType="VarChar(50)")] string unitShip, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="PCSUnit", DbType="Decimal(18,2)")] System.Nullable<decimal> pCSUnit, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), returnNo, codeNo, qTY, remark, lineName, machineName, serialNo, lotNo, status, createBy, refJobNo, refTempJobNo, refidJobNo, location, baseUOM, basePCSUOM, unitShip, pCSUnit, idCSTMPODt);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_057_Cut_Stock")]
-		public int sp_057_Cut_Stock([global::System.Data.Linq.Mapping.ParameterAttribute(Name="No", DbType="NVarChar(50)")] string no, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(50)")] string codeNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(50)")] string location, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="App", DbType="VarChar(10)")] string app, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type", DbType="VarChar(50)")] string type, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type_i", DbType="Int")] System.Nullable<int> type_i, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ReceiveID", DbType="Int")] System.Nullable<int> receiveID, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idProductionOrderRM)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), no, codeNo, qTY, createBy, refJobNo, refTempJobNo, refidJobNo, location, app, type, type_i, receiveID, idCSTMPODt, lotNo, idProductionOrderRM);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_074_CheckStock_List")]
 		public int sp_074_CheckStock_List([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CheckBy", DbType="VarChar(50)")] string checkBy)
 		{
@@ -2288,20 +2248,6 @@ namespace StockControl
 			return ((ISingleResult<sp_021_PR_ListResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_077_Accident_FG")]
-		public ISingleResult<sp_077_Accident_FGResult> sp_077_Accident_FG([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SONo", DbType="VarChar(50)")] string sONo)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sONo);
-			return ((ISingleResult<sp_077_Accident_FGResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_075_Shipping_FG")]
-		public ISingleResult<sp_075_Shipping_FGResult> sp_075_Shipping_FG([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SONo", DbType="VarChar(50)")] string sONo)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sONo);
-			return ((ISingleResult<sp_075_Shipping_FGResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_079_JobChart")]
 		public ISingleResult<sp_079_JobChartResult> sp_079_JobChart([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobNo", DbType="NVarChar(50)")] string jobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> dFrom, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> dTo)
 		{
@@ -2328,36 +2274,6 @@ namespace StockControl
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), yy, itemNo);
 			return ((ISingleResult<sp_080_CustomerPOSummary_SELECTResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_024_tb_Shipping_ADD")]
-		public int sp_024_tb_Shipping_ADD(
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ShippingNo", DbType="NVarChar(50)")] string shippingNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(50)")] string codeNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTYPlan", DbType="Decimal(18,6)")] System.Nullable<decimal> qTYPlan, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Remark", DbType="NVarChar(512)")] string remark, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LineName", DbType="NVarChar(512)")] string lineName, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="MachineName", DbType="NVarChar(512)")] string machineName, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="SerialNo", DbType="NVarChar(512)")] string serialNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ToLocation", DbType="VarChar(100)")] string toLocation, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BaseUOM", DbType="VarChar(50)")] string baseUOM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BasePCSUOM", DbType="Decimal(18,2)")] System.Nullable<decimal> basePCSUOM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitShip", DbType="VarChar(50)")] string unitShip, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="PCSUnit", DbType="Decimal(18,2)")] System.Nullable<decimal> pCSUnit, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idProductionOrderRM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Free", DbType="Int")] System.Nullable<int> free)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), shippingNo, codeNo, qTYPlan, qTY, remark, lineName, machineName, serialNo, lotNo, status, createBy, refJobNo, refTempJobNo, refidJobNo, location, toLocation, baseUOM, basePCSUOM, unitShip, pCSUnit, idCSTMPODt, idProductionOrderRM, free);
-			return ((int)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Get_AvgCost_FIFO", IsComposable=true)]
@@ -2445,72 +2361,11 @@ namespace StockControl
 			return ((ISingleResult<sp_051_Job_list_2Result>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_071_Accident_Slip")]
-		public int sp_071_Accident_Slip(
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ShippingNo", DbType="NVarChar(50)")] string shippingNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(50)")] string codeNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTYPlan", DbType="Decimal(18,6)")] System.Nullable<decimal> qTYPlan, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Remark", DbType="NVarChar(512)")] string remark, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LineName", DbType="NVarChar(512)")] string lineName, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="MachineName", DbType="NVarChar(512)")] string machineName, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="SerialNo", DbType="NVarChar(512)")] string serialNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ToLocation", DbType="VarChar(100)")] string toLocation, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BaseUOM", DbType="VarChar(50)")] string baseUOM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BasePCSUOM", DbType="Decimal(18,2)")] System.Nullable<decimal> basePCSUOM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitShip", DbType="VarChar(50)")] string unitShip, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="PCSUnit", DbType="Decimal(18,2)")] System.Nullable<decimal> pCSUnit, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idProductionOrderRM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Free", DbType="Int")] System.Nullable<int> free, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Accidentid", DbType="Int")] System.Nullable<int> accidentid)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), shippingNo, codeNo, qTYPlan, qTY, remark, lineName, machineName, serialNo, lotNo, status, createBy, refJobNo, refTempJobNo, refidJobNo, location, toLocation, baseUOM, basePCSUOM, unitShip, pCSUnit, idCSTMPODt, idProductionOrderRM, free, accidentid);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_068_Shipment_List")]
 		public ISingleResult<sp_068_Shipment_ListResult> sp_068_Shipment_List([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SONo", DbType="VarChar(50)")] string sONo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CSTMName", DbType="VarChar(100)")] string cSTMName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ItemNo", DbType="VarChar(100)")] string itemNo, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(8)")] string dt1, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(8)")] string dt2, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="VarChar(100)")] string status, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CSTMNo", DbType="NVarChar(50)")] string cSTMNo)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sONo, cSTMName, itemNo, dt1, dt2, status, cSTMNo);
 			return ((ISingleResult<sp_068_Shipment_ListResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_076_Shipping_FG_ADD")]
-		public int sp_076_Shipping_FG_ADD(
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ShippingNo", DbType="NVarChar(50)")] string shippingNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(50)")] string codeNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTYPlan", DbType="Decimal(18,6)")] System.Nullable<decimal> qTYPlan, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Remark", DbType="NVarChar(512)")] string remark, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LineName", DbType="NVarChar(512)")] string lineName, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="MachineName", DbType="NVarChar(512)")] string machineName, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="SerialNo", DbType="NVarChar(512)")] string serialNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefNo", DbType="VarChar(50)")] string refNo, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Refid_H", DbType="Int")] System.Nullable<int> refid_H, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ToLocation", DbType="VarChar(100)")] string toLocation, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BaseUOM", DbType="VarChar(50)")] string baseUOM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BasePCSUOM", DbType="Decimal(18,2)")] System.Nullable<decimal> basePCSUOM, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitShip", DbType="VarChar(50)")] string unitShip, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="PCSUnit", DbType="Decimal(18,2)")] System.Nullable<decimal> pCSUnit, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Refid_dt", DbType="Int")] System.Nullable<int> refid_dt, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Condition", DbType="VarChar(50)")] string condition, 
-					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Seq", DbType="Int")] System.Nullable<int> seq)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), shippingNo, codeNo, qTYPlan, qTY, remark, lineName, machineName, serialNo, lotNo, status, createBy, refNo, refid_H, location, toLocation, baseUOM, basePCSUOM, unitShip, pCSUnit, refid_dt, idCSTMPODt, condition, seq);
-			return ((int)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_065_PrintTag_JobNo")]
@@ -2552,6 +2407,151 @@ namespace StockControl
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sONo, cSTMName, itemNo, dt1, dt2, status, cSTMNo, pONo);
 			return ((ISingleResult<sp_054_SaleOrder_ListResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_041_tb_Adjust_Stock")]
+		public int sp_041_tb_Adjust_Stock([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ADNo", DbType="NVarChar(50)")] string aDNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(250)")] string codeNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(50)")] string location, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), aDNo, codeNo, qTY, createBy, refJobNo, refTempJobNo, refidJobNo, location, idCSTMPODt);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_024_tb_Shipping_ADD")]
+		public int sp_024_tb_Shipping_ADD(
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ShippingNo", DbType="NVarChar(50)")] string shippingNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(250)")] string codeNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTYPlan", DbType="Decimal(18,6)")] System.Nullable<decimal> qTYPlan, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Remark", DbType="NVarChar(512)")] string remark, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LineName", DbType="NVarChar(512)")] string lineName, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="MachineName", DbType="NVarChar(512)")] string machineName, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="SerialNo", DbType="NVarChar(512)")] string serialNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ToLocation", DbType="VarChar(100)")] string toLocation, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BaseUOM", DbType="VarChar(50)")] string baseUOM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BasePCSUOM", DbType="Decimal(18,2)")] System.Nullable<decimal> basePCSUOM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitShip", DbType="VarChar(50)")] string unitShip, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="PCSUnit", DbType="Decimal(18,2)")] System.Nullable<decimal> pCSUnit, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idProductionOrderRM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Free", DbType="Int")] System.Nullable<int> free)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), shippingNo, codeNo, qTYPlan, qTY, remark, lineName, machineName, serialNo, lotNo, status, createBy, refJobNo, refTempJobNo, refidJobNo, location, toLocation, baseUOM, basePCSUOM, unitShip, pCSUnit, idCSTMPODt, idProductionOrderRM, free);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_052_Reture_RM")]
+		public int sp_052_Reture_RM(
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ReturnNo", DbType="NVarChar(50)")] string returnNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(250)")] string codeNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Remark", DbType="NVarChar(512)")] string remark, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LineName", DbType="NVarChar(512)")] string lineName, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="MachineName", DbType="NVarChar(512)")] string machineName, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="SerialNo", DbType="NVarChar(512)")] string serialNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BaseUOM", DbType="VarChar(50)")] string baseUOM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BasePCSUOM", DbType="Decimal(18,2)")] System.Nullable<decimal> basePCSUOM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitShip", DbType="VarChar(50)")] string unitShip, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="PCSUnit", DbType="Decimal(18,2)")] System.Nullable<decimal> pCSUnit, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), returnNo, codeNo, qTY, remark, lineName, machineName, serialNo, lotNo, status, createBy, refJobNo, refTempJobNo, refidJobNo, location, baseUOM, basePCSUOM, unitShip, pCSUnit, idCSTMPODt);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_057_Cut_Stock")]
+		public int sp_057_Cut_Stock([global::System.Data.Linq.Mapping.ParameterAttribute(Name="No", DbType="NVarChar(50)")] string no, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(250)")] string codeNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(50)")] string location, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="App", DbType="VarChar(10)")] string app, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type", DbType="VarChar(50)")] string type, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Type_i", DbType="Int")] System.Nullable<int> type_i, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ReceiveID", DbType="Int")] System.Nullable<int> receiveID, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idProductionOrderRM)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), no, codeNo, qTY, createBy, refJobNo, refTempJobNo, refidJobNo, location, app, type, type_i, receiveID, idCSTMPODt, lotNo, idProductionOrderRM);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_071_Accident_Slip")]
+		public int sp_071_Accident_Slip(
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ShippingNo", DbType="NVarChar(50)")] string shippingNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(250)")] string codeNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTYPlan", DbType="Decimal(18,6)")] System.Nullable<decimal> qTYPlan, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Remark", DbType="NVarChar(512)")] string remark, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LineName", DbType="NVarChar(512)")] string lineName, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="MachineName", DbType="NVarChar(512)")] string machineName, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="SerialNo", DbType="NVarChar(512)")] string serialNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefJobNo", DbType="VarChar(50)")] string refJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefTempJobNo", DbType="VarChar(50)")] string refTempJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefidJobNo", DbType="Int")] System.Nullable<int> refidJobNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ToLocation", DbType="VarChar(100)")] string toLocation, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BaseUOM", DbType="VarChar(50)")] string baseUOM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BasePCSUOM", DbType="Decimal(18,2)")] System.Nullable<decimal> basePCSUOM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitShip", DbType="VarChar(50)")] string unitShip, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="PCSUnit", DbType="Decimal(18,2)")] System.Nullable<decimal> pCSUnit, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idProductionOrderRM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Free", DbType="Int")] System.Nullable<int> free, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Accidentid", DbType="Int")] System.Nullable<int> accidentid)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), shippingNo, codeNo, qTYPlan, qTY, remark, lineName, machineName, serialNo, lotNo, status, createBy, refJobNo, refTempJobNo, refidJobNo, location, toLocation, baseUOM, basePCSUOM, unitShip, pCSUnit, idCSTMPODt, idProductionOrderRM, free, accidentid);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_075_Shipping_FG")]
+		public ISingleResult<sp_075_Shipping_FGResult> sp_075_Shipping_FG([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SONo", DbType="VarChar(50)")] string sONo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sONo);
+			return ((ISingleResult<sp_075_Shipping_FGResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_076_Shipping_FG_ADD")]
+		public int sp_076_Shipping_FG_ADD(
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ShippingNo", DbType="NVarChar(50)")] string shippingNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CodeNo", DbType="NVarChar(250)")] string codeNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTYPlan", DbType="Decimal(18,6)")] System.Nullable<decimal> qTYPlan, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="QTY", DbType="Decimal(18,6)")] System.Nullable<decimal> qTY, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Remark", DbType="NVarChar(512)")] string remark, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LineName", DbType="NVarChar(512)")] string lineName, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="MachineName", DbType="NVarChar(512)")] string machineName, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="SerialNo", DbType="NVarChar(512)")] string serialNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="LotNo", DbType="NVarChar(512)")] string lotNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Status", DbType="NVarChar(50)")] string status, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreateBy", DbType="VarChar(50)")] string createBy, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="RefNo", DbType="VarChar(50)")] string refNo, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Refid_H", DbType="Int")] System.Nullable<int> refid_H, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Location", DbType="VarChar(100)")] string location, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="ToLocation", DbType="VarChar(100)")] string toLocation, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BaseUOM", DbType="VarChar(50)")] string baseUOM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="BasePCSUOM", DbType="Decimal(18,2)")] System.Nullable<decimal> basePCSUOM, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="UnitShip", DbType="VarChar(50)")] string unitShip, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="PCSUnit", DbType="Decimal(18,2)")] System.Nullable<decimal> pCSUnit, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Refid_dt", DbType="Int")] System.Nullable<int> refid_dt, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idCSTMPODt, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Condition", DbType="VarChar(50)")] string condition, 
+					[global::System.Data.Linq.Mapping.ParameterAttribute(Name="Seq", DbType="Int")] System.Nullable<int> seq)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), shippingNo, codeNo, qTYPlan, qTY, remark, lineName, machineName, serialNo, lotNo, status, createBy, refNo, refid_H, location, toLocation, baseUOM, basePCSUOM, unitShip, pCSUnit, refid_dt, idCSTMPODt, condition, seq);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_077_Accident_FG")]
+		public ISingleResult<sp_077_Accident_FGResult> sp_077_Accident_FG([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SONo", DbType="VarChar(50)")] string sONo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sONo);
+			return ((ISingleResult<sp_077_Accident_FGResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -80483,922 +80483,6 @@ namespace StockControl
 		}
 	}
 	
-	public partial class sp_077_Accident_FGResult
-	{
-		
-		private string _SSNo;
-		
-		private System.Nullable<System.DateTime> _SSDate;
-		
-		private string _ItemNo;
-		
-		private string _ItemName;
-		
-		private string _Description;
-		
-		private System.Nullable<decimal> _Stock;
-		
-		private decimal _Qty;
-		
-		private System.Nullable<decimal> _ShipQty;
-		
-		private decimal _OutShip;
-		
-		private System.Nullable<decimal> _OutInv;
-		
-		private string _Unit;
-		
-		private decimal _PCSUnit;
-		
-		private string _CustomerNo;
-		
-		private string _CustomerName;
-		
-		private string _temp;
-		
-		private string _RefDocNo;
-		
-		private int _id;
-		
-		private int _RefId;
-		
-		private System.Nullable<bool> _DL;
-		
-		private decimal _UnitPrice;
-		
-		private decimal _Amount;
-		
-		private string _LocationItem;
-		
-		private string _BaseUOM;
-		
-		private int _idCSTMPODt;
-		
-		private System.Nullable<int> _Hid;
-		
-		public sp_077_Accident_FGResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SSNo", DbType="NVarChar(50)")]
-		public string SSNo
-		{
-			get
-			{
-				return this._SSNo;
-			}
-			set
-			{
-				if ((this._SSNo != value))
-				{
-					this._SSNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SSDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> SSDate
-		{
-			get
-			{
-				return this._SSDate;
-			}
-			set
-			{
-				if ((this._SSDate != value))
-				{
-					this._SSDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50)")]
-		public string ItemNo
-		{
-			get
-			{
-				return this._ItemNo;
-			}
-			set
-			{
-				if ((this._ItemNo != value))
-				{
-					this._ItemNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(100)")]
-		public string ItemName
-		{
-			get
-			{
-				return this._ItemName;
-			}
-			set
-			{
-				if ((this._ItemName != value))
-				{
-					this._ItemName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(200)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this._Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stock", DbType="Decimal(18,6)")]
-		public System.Nullable<decimal> Stock
-		{
-			get
-			{
-				return this._Stock;
-			}
-			set
-			{
-				if ((this._Stock != value))
-				{
-					this._Stock = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Qty
-		{
-			get
-			{
-				return this._Qty;
-			}
-			set
-			{
-				if ((this._Qty != value))
-				{
-					this._Qty = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShipQty", DbType="Decimal(19,2)")]
-		public System.Nullable<decimal> ShipQty
-		{
-			get
-			{
-				return this._ShipQty;
-			}
-			set
-			{
-				if ((this._ShipQty != value))
-				{
-					this._ShipQty = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutShip", DbType="Decimal(18,2) NOT NULL")]
-		public decimal OutShip
-		{
-			get
-			{
-				return this._OutShip;
-			}
-			set
-			{
-				if ((this._OutShip != value))
-				{
-					this._OutShip = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutInv", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> OutInv
-		{
-			get
-			{
-				return this._OutInv;
-			}
-			set
-			{
-				if ((this._OutInv != value))
-				{
-					this._OutInv = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="NVarChar(50)")]
-		public string Unit
-		{
-			get
-			{
-				return this._Unit;
-			}
-			set
-			{
-				if ((this._Unit != value))
-				{
-					this._Unit = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2) NOT NULL")]
-		public decimal PCSUnit
-		{
-			get
-			{
-				return this._PCSUnit;
-			}
-			set
-			{
-				if ((this._PCSUnit != value))
-				{
-					this._PCSUnit = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerNo", DbType="NVarChar(50)")]
-		public string CustomerNo
-		{
-			get
-			{
-				return this._CustomerNo;
-			}
-			set
-			{
-				if ((this._CustomerNo != value))
-				{
-					this._CustomerNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="NVarChar(100)")]
-		public string CustomerName
-		{
-			get
-			{
-				return this._CustomerName;
-			}
-			set
-			{
-				if ((this._CustomerName != value))
-				{
-					this._CustomerName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_temp", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string temp
-		{
-			get
-			{
-				return this._temp;
-			}
-			set
-			{
-				if ((this._temp != value))
-				{
-					this._temp = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefDocNo", DbType="NVarChar(50)")]
-		public string RefDocNo
-		{
-			get
-			{
-				return this._RefDocNo;
-			}
-			set
-			{
-				if ((this._RefDocNo != value))
-				{
-					this._RefDocNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this._id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefId", DbType="Int NOT NULL")]
-		public int RefId
-		{
-			get
-			{
-				return this._RefId;
-			}
-			set
-			{
-				if ((this._RefId != value))
-				{
-					this._RefId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DL", DbType="Bit")]
-		public System.Nullable<bool> DL
-		{
-			get
-			{
-				return this._DL;
-			}
-			set
-			{
-				if ((this._DL != value))
-				{
-					this._DL = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPrice", DbType="Decimal(18,2) NOT NULL")]
-		public decimal UnitPrice
-		{
-			get
-			{
-				return this._UnitPrice;
-			}
-			set
-			{
-				if ((this._UnitPrice != value))
-				{
-					this._UnitPrice = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Amount
-		{
-			get
-			{
-				return this._Amount;
-			}
-			set
-			{
-				if ((this._Amount != value))
-				{
-					this._Amount = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LocationItem", DbType="NVarChar(50)")]
-		public string LocationItem
-		{
-			get
-			{
-				return this._LocationItem;
-			}
-			set
-			{
-				if ((this._LocationItem != value))
-				{
-					this._LocationItem = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseUOM", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string BaseUOM
-		{
-			get
-			{
-				return this._BaseUOM;
-			}
-			set
-			{
-				if ((this._BaseUOM != value))
-				{
-					this._BaseUOM = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCSTMPODt", DbType="Int NOT NULL")]
-		public int idCSTMPODt
-		{
-			get
-			{
-				return this._idCSTMPODt;
-			}
-			set
-			{
-				if ((this._idCSTMPODt != value))
-				{
-					this._idCSTMPODt = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hid", DbType="Int")]
-		public System.Nullable<int> Hid
-		{
-			get
-			{
-				return this._Hid;
-			}
-			set
-			{
-				if ((this._Hid != value))
-				{
-					this._Hid = value;
-				}
-			}
-		}
-	}
-	
-	public partial class sp_075_Shipping_FGResult
-	{
-		
-		private string _SSNo;
-		
-		private System.Nullable<System.DateTime> _SSDate;
-		
-		private string _ItemNo;
-		
-		private string _ItemName;
-		
-		private string _Description;
-		
-		private System.Nullable<decimal> _Stock;
-		
-		private decimal _Qty;
-		
-		private System.Nullable<decimal> _ShipQty;
-		
-		private decimal _OutShip;
-		
-		private System.Nullable<decimal> _OutInv;
-		
-		private string _Unit;
-		
-		private decimal _PCSUnit;
-		
-		private string _CustomerNo;
-		
-		private string _CustomerName;
-		
-		private string _temp;
-		
-		private string _RefDocNo;
-		
-		private int _id;
-		
-		private int _RefId;
-		
-		private System.Nullable<bool> _DL;
-		
-		private decimal _UnitPrice;
-		
-		private decimal _Amount;
-		
-		private string _LocationItem;
-		
-		private string _BaseUOM;
-		
-		private int _idCSTMPODt;
-		
-		private System.Nullable<int> _Hid;
-		
-		public sp_075_Shipping_FGResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SSNo", DbType="NVarChar(50)")]
-		public string SSNo
-		{
-			get
-			{
-				return this._SSNo;
-			}
-			set
-			{
-				if ((this._SSNo != value))
-				{
-					this._SSNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SSDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> SSDate
-		{
-			get
-			{
-				return this._SSDate;
-			}
-			set
-			{
-				if ((this._SSDate != value))
-				{
-					this._SSDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(50)")]
-		public string ItemNo
-		{
-			get
-			{
-				return this._ItemNo;
-			}
-			set
-			{
-				if ((this._ItemNo != value))
-				{
-					this._ItemNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(100)")]
-		public string ItemName
-		{
-			get
-			{
-				return this._ItemName;
-			}
-			set
-			{
-				if ((this._ItemName != value))
-				{
-					this._ItemName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(200)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this._Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stock", DbType="Decimal(18,6)")]
-		public System.Nullable<decimal> Stock
-		{
-			get
-			{
-				return this._Stock;
-			}
-			set
-			{
-				if ((this._Stock != value))
-				{
-					this._Stock = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Qty
-		{
-			get
-			{
-				return this._Qty;
-			}
-			set
-			{
-				if ((this._Qty != value))
-				{
-					this._Qty = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShipQty", DbType="Decimal(19,2)")]
-		public System.Nullable<decimal> ShipQty
-		{
-			get
-			{
-				return this._ShipQty;
-			}
-			set
-			{
-				if ((this._ShipQty != value))
-				{
-					this._ShipQty = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutShip", DbType="Decimal(18,2) NOT NULL")]
-		public decimal OutShip
-		{
-			get
-			{
-				return this._OutShip;
-			}
-			set
-			{
-				if ((this._OutShip != value))
-				{
-					this._OutShip = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutInv", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> OutInv
-		{
-			get
-			{
-				return this._OutInv;
-			}
-			set
-			{
-				if ((this._OutInv != value))
-				{
-					this._OutInv = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="NVarChar(50)")]
-		public string Unit
-		{
-			get
-			{
-				return this._Unit;
-			}
-			set
-			{
-				if ((this._Unit != value))
-				{
-					this._Unit = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2) NOT NULL")]
-		public decimal PCSUnit
-		{
-			get
-			{
-				return this._PCSUnit;
-			}
-			set
-			{
-				if ((this._PCSUnit != value))
-				{
-					this._PCSUnit = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerNo", DbType="NVarChar(50)")]
-		public string CustomerNo
-		{
-			get
-			{
-				return this._CustomerNo;
-			}
-			set
-			{
-				if ((this._CustomerNo != value))
-				{
-					this._CustomerNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="NVarChar(100)")]
-		public string CustomerName
-		{
-			get
-			{
-				return this._CustomerName;
-			}
-			set
-			{
-				if ((this._CustomerName != value))
-				{
-					this._CustomerName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_temp", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string temp
-		{
-			get
-			{
-				return this._temp;
-			}
-			set
-			{
-				if ((this._temp != value))
-				{
-					this._temp = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefDocNo", DbType="NVarChar(50)")]
-		public string RefDocNo
-		{
-			get
-			{
-				return this._RefDocNo;
-			}
-			set
-			{
-				if ((this._RefDocNo != value))
-				{
-					this._RefDocNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this._id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefId", DbType="Int NOT NULL")]
-		public int RefId
-		{
-			get
-			{
-				return this._RefId;
-			}
-			set
-			{
-				if ((this._RefId != value))
-				{
-					this._RefId = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DL", DbType="Bit")]
-		public System.Nullable<bool> DL
-		{
-			get
-			{
-				return this._DL;
-			}
-			set
-			{
-				if ((this._DL != value))
-				{
-					this._DL = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPrice", DbType="Decimal(18,2) NOT NULL")]
-		public decimal UnitPrice
-		{
-			get
-			{
-				return this._UnitPrice;
-			}
-			set
-			{
-				if ((this._UnitPrice != value))
-				{
-					this._UnitPrice = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(18,2) NOT NULL")]
-		public decimal Amount
-		{
-			get
-			{
-				return this._Amount;
-			}
-			set
-			{
-				if ((this._Amount != value))
-				{
-					this._Amount = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LocationItem", DbType="NVarChar(50)")]
-		public string LocationItem
-		{
-			get
-			{
-				return this._LocationItem;
-			}
-			set
-			{
-				if ((this._LocationItem != value))
-				{
-					this._LocationItem = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseUOM", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string BaseUOM
-		{
-			get
-			{
-				return this._BaseUOM;
-			}
-			set
-			{
-				if ((this._BaseUOM != value))
-				{
-					this._BaseUOM = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCSTMPODt", DbType="Int NOT NULL")]
-		public int idCSTMPODt
-		{
-			get
-			{
-				return this._idCSTMPODt;
-			}
-			set
-			{
-				if ((this._idCSTMPODt != value))
-				{
-					this._idCSTMPODt = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hid", DbType="Int")]
-		public System.Nullable<int> Hid
-		{
-			get
-			{
-				return this._Hid;
-			}
-			set
-			{
-				if ((this._Hid != value))
-				{
-					this._Hid = value;
-				}
-			}
-		}
-	}
-	
 	public partial class sp_079_JobChartResult
 	{
 		
@@ -88838,6 +87922,922 @@ namespace StockControl
 				if ((this._RefId != value))
 				{
 					this._RefId = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_075_Shipping_FGResult
+	{
+		
+		private string _SSNo;
+		
+		private System.Nullable<System.DateTime> _SSDate;
+		
+		private string _ItemNo;
+		
+		private string _ItemName;
+		
+		private string _Description;
+		
+		private System.Nullable<decimal> _Stock;
+		
+		private decimal _Qty;
+		
+		private System.Nullable<decimal> _ShipQty;
+		
+		private decimal _OutShip;
+		
+		private System.Nullable<decimal> _OutInv;
+		
+		private string _Unit;
+		
+		private decimal _PCSUnit;
+		
+		private string _CustomerNo;
+		
+		private string _CustomerName;
+		
+		private string _temp;
+		
+		private string _RefDocNo;
+		
+		private int _id;
+		
+		private int _RefId;
+		
+		private System.Nullable<bool> _DL;
+		
+		private decimal _UnitPrice;
+		
+		private System.Nullable<decimal> _Amount;
+		
+		private string _LocationItem;
+		
+		private string _BaseUOM;
+		
+		private int _idCSTMPODt;
+		
+		private System.Nullable<int> _Hid;
+		
+		public sp_075_Shipping_FGResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SSNo", DbType="NVarChar(50)")]
+		public string SSNo
+		{
+			get
+			{
+				return this._SSNo;
+			}
+			set
+			{
+				if ((this._SSNo != value))
+				{
+					this._SSNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SSDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> SSDate
+		{
+			get
+			{
+				return this._SSDate;
+			}
+			set
+			{
+				if ((this._SSDate != value))
+				{
+					this._SSDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(100)")]
+		public string ItemNo
+		{
+			get
+			{
+				return this._ItemNo;
+			}
+			set
+			{
+				if ((this._ItemNo != value))
+				{
+					this._ItemNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(500)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this._ItemName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(500)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this._Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stock", DbType="Decimal(18,6)")]
+		public System.Nullable<decimal> Stock
+		{
+			get
+			{
+				return this._Stock;
+			}
+			set
+			{
+				if ((this._Stock != value))
+				{
+					this._Stock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Qty
+		{
+			get
+			{
+				return this._Qty;
+			}
+			set
+			{
+				if ((this._Qty != value))
+				{
+					this._Qty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShipQty", DbType="Decimal(19,2)")]
+		public System.Nullable<decimal> ShipQty
+		{
+			get
+			{
+				return this._ShipQty;
+			}
+			set
+			{
+				if ((this._ShipQty != value))
+				{
+					this._ShipQty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutShip", DbType="Decimal(18,2) NOT NULL")]
+		public decimal OutShip
+		{
+			get
+			{
+				return this._OutShip;
+			}
+			set
+			{
+				if ((this._OutShip != value))
+				{
+					this._OutShip = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutInv", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> OutInv
+		{
+			get
+			{
+				return this._OutInv;
+			}
+			set
+			{
+				if ((this._OutInv != value))
+				{
+					this._OutInv = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="NVarChar(50)")]
+		public string Unit
+		{
+			get
+			{
+				return this._Unit;
+			}
+			set
+			{
+				if ((this._Unit != value))
+				{
+					this._Unit = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2) NOT NULL")]
+		public decimal PCSUnit
+		{
+			get
+			{
+				return this._PCSUnit;
+			}
+			set
+			{
+				if ((this._PCSUnit != value))
+				{
+					this._PCSUnit = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerNo", DbType="NVarChar(50)")]
+		public string CustomerNo
+		{
+			get
+			{
+				return this._CustomerNo;
+			}
+			set
+			{
+				if ((this._CustomerNo != value))
+				{
+					this._CustomerNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="NVarChar(100)")]
+		public string CustomerName
+		{
+			get
+			{
+				return this._CustomerName;
+			}
+			set
+			{
+				if ((this._CustomerName != value))
+				{
+					this._CustomerName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_temp", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string temp
+		{
+			get
+			{
+				return this._temp;
+			}
+			set
+			{
+				if ((this._temp != value))
+				{
+					this._temp = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefDocNo", DbType="NVarChar(50)")]
+		public string RefDocNo
+		{
+			get
+			{
+				return this._RefDocNo;
+			}
+			set
+			{
+				if ((this._RefDocNo != value))
+				{
+					this._RefDocNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefId", DbType="Int NOT NULL")]
+		public int RefId
+		{
+			get
+			{
+				return this._RefId;
+			}
+			set
+			{
+				if ((this._RefId != value))
+				{
+					this._RefId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DL", DbType="Bit")]
+		public System.Nullable<bool> DL
+		{
+			get
+			{
+				return this._DL;
+			}
+			set
+			{
+				if ((this._DL != value))
+				{
+					this._DL = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPrice", DbType="Decimal(18,2) NOT NULL")]
+		public decimal UnitPrice
+		{
+			get
+			{
+				return this._UnitPrice;
+			}
+			set
+			{
+				if ((this._UnitPrice != value))
+				{
+					this._UnitPrice = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(37,4)")]
+		public System.Nullable<decimal> Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this._Amount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LocationItem", DbType="NVarChar(50)")]
+		public string LocationItem
+		{
+			get
+			{
+				return this._LocationItem;
+			}
+			set
+			{
+				if ((this._LocationItem != value))
+				{
+					this._LocationItem = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseUOM", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string BaseUOM
+		{
+			get
+			{
+				return this._BaseUOM;
+			}
+			set
+			{
+				if ((this._BaseUOM != value))
+				{
+					this._BaseUOM = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCSTMPODt", DbType="Int NOT NULL")]
+		public int idCSTMPODt
+		{
+			get
+			{
+				return this._idCSTMPODt;
+			}
+			set
+			{
+				if ((this._idCSTMPODt != value))
+				{
+					this._idCSTMPODt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hid", DbType="Int")]
+		public System.Nullable<int> Hid
+		{
+			get
+			{
+				return this._Hid;
+			}
+			set
+			{
+				if ((this._Hid != value))
+				{
+					this._Hid = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_077_Accident_FGResult
+	{
+		
+		private string _SSNo;
+		
+		private System.Nullable<System.DateTime> _SSDate;
+		
+		private string _ItemNo;
+		
+		private string _ItemName;
+		
+		private string _Description;
+		
+		private System.Nullable<decimal> _Stock;
+		
+		private decimal _Qty;
+		
+		private System.Nullable<decimal> _ShipQty;
+		
+		private decimal _OutShip;
+		
+		private System.Nullable<decimal> _OutInv;
+		
+		private string _Unit;
+		
+		private decimal _PCSUnit;
+		
+		private string _CustomerNo;
+		
+		private string _CustomerName;
+		
+		private string _temp;
+		
+		private string _RefDocNo;
+		
+		private int _id;
+		
+		private int _RefId;
+		
+		private System.Nullable<bool> _DL;
+		
+		private decimal _UnitPrice;
+		
+		private System.Nullable<decimal> _Amount;
+		
+		private string _LocationItem;
+		
+		private string _BaseUOM;
+		
+		private int _idCSTMPODt;
+		
+		private System.Nullable<int> _Hid;
+		
+		public sp_077_Accident_FGResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SSNo", DbType="NVarChar(50)")]
+		public string SSNo
+		{
+			get
+			{
+				return this._SSNo;
+			}
+			set
+			{
+				if ((this._SSNo != value))
+				{
+					this._SSNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SSDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> SSDate
+		{
+			get
+			{
+				return this._SSDate;
+			}
+			set
+			{
+				if ((this._SSDate != value))
+				{
+					this._SSDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemNo", DbType="NVarChar(100)")]
+		public string ItemNo
+		{
+			get
+			{
+				return this._ItemNo;
+			}
+			set
+			{
+				if ((this._ItemNo != value))
+				{
+					this._ItemNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemName", DbType="NVarChar(500)")]
+		public string ItemName
+		{
+			get
+			{
+				return this._ItemName;
+			}
+			set
+			{
+				if ((this._ItemName != value))
+				{
+					this._ItemName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(500)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this._Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Stock", DbType="Decimal(18,6)")]
+		public System.Nullable<decimal> Stock
+		{
+			get
+			{
+				return this._Stock;
+			}
+			set
+			{
+				if ((this._Stock != value))
+				{
+					this._Stock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Qty", DbType="Decimal(18,2) NOT NULL")]
+		public decimal Qty
+		{
+			get
+			{
+				return this._Qty;
+			}
+			set
+			{
+				if ((this._Qty != value))
+				{
+					this._Qty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShipQty", DbType="Decimal(19,2)")]
+		public System.Nullable<decimal> ShipQty
+		{
+			get
+			{
+				return this._ShipQty;
+			}
+			set
+			{
+				if ((this._ShipQty != value))
+				{
+					this._ShipQty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutShip", DbType="Decimal(18,2) NOT NULL")]
+		public decimal OutShip
+		{
+			get
+			{
+				return this._OutShip;
+			}
+			set
+			{
+				if ((this._OutShip != value))
+				{
+					this._OutShip = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutInv", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> OutInv
+		{
+			get
+			{
+				return this._OutInv;
+			}
+			set
+			{
+				if ((this._OutInv != value))
+				{
+					this._OutInv = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="NVarChar(50)")]
+		public string Unit
+		{
+			get
+			{
+				return this._Unit;
+			}
+			set
+			{
+				if ((this._Unit != value))
+				{
+					this._Unit = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PCSUnit", DbType="Decimal(18,2) NOT NULL")]
+		public decimal PCSUnit
+		{
+			get
+			{
+				return this._PCSUnit;
+			}
+			set
+			{
+				if ((this._PCSUnit != value))
+				{
+					this._PCSUnit = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerNo", DbType="NVarChar(50)")]
+		public string CustomerNo
+		{
+			get
+			{
+				return this._CustomerNo;
+			}
+			set
+			{
+				if ((this._CustomerNo != value))
+				{
+					this._CustomerNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerName", DbType="NVarChar(100)")]
+		public string CustomerName
+		{
+			get
+			{
+				return this._CustomerName;
+			}
+			set
+			{
+				if ((this._CustomerName != value))
+				{
+					this._CustomerName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_temp", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string temp
+		{
+			get
+			{
+				return this._temp;
+			}
+			set
+			{
+				if ((this._temp != value))
+				{
+					this._temp = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefDocNo", DbType="NVarChar(50)")]
+		public string RefDocNo
+		{
+			get
+			{
+				return this._RefDocNo;
+			}
+			set
+			{
+				if ((this._RefDocNo != value))
+				{
+					this._RefDocNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RefId", DbType="Int NOT NULL")]
+		public int RefId
+		{
+			get
+			{
+				return this._RefId;
+			}
+			set
+			{
+				if ((this._RefId != value))
+				{
+					this._RefId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DL", DbType="Bit")]
+		public System.Nullable<bool> DL
+		{
+			get
+			{
+				return this._DL;
+			}
+			set
+			{
+				if ((this._DL != value))
+				{
+					this._DL = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitPrice", DbType="Decimal(18,2) NOT NULL")]
+		public decimal UnitPrice
+		{
+			get
+			{
+				return this._UnitPrice;
+			}
+			set
+			{
+				if ((this._UnitPrice != value))
+				{
+					this._UnitPrice = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="Decimal(37,4)")]
+		public System.Nullable<decimal> Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this._Amount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LocationItem", DbType="NVarChar(50)")]
+		public string LocationItem
+		{
+			get
+			{
+				return this._LocationItem;
+			}
+			set
+			{
+				if ((this._LocationItem != value))
+				{
+					this._LocationItem = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BaseUOM", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string BaseUOM
+		{
+			get
+			{
+				return this._BaseUOM;
+			}
+			set
+			{
+				if ((this._BaseUOM != value))
+				{
+					this._BaseUOM = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCSTMPODt", DbType="Int NOT NULL")]
+		public int idCSTMPODt
+		{
+			get
+			{
+				return this._idCSTMPODt;
+			}
+			set
+			{
+				if ((this._idCSTMPODt != value))
+				{
+					this._idCSTMPODt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hid", DbType="Int")]
+		public System.Nullable<int> Hid
+		{
+			get
+			{
+				return this._Hid;
+			}
+			set
+			{
+				if ((this._Hid != value))
+				{
+					this._Hid = value;
 				}
 			}
 		}
