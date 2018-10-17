@@ -13,6 +13,7 @@ using Microsoft.VisualBasic;
 using ClassLib;
 using Telerik.WinControls;
 using Telerik.WinControls.Data;
+using GreatFriends.ThaiBahtText;
 
 namespace StockControl
 {
@@ -793,6 +794,9 @@ namespace StockControl
                         sh1.InvDate = Convert.ToDateTime(dtInvDate.Value);
                         sh1.Tax_identification_number = txtTax_identification_number.Text;
                         sh1.VatDetail = dbClss.TBo(cbvatDetail.Checked);
+                       
+                        string s_ThaiBath = grantotal.ThaiBahtText();
+                        sh1.ThaiBath = s_ThaiBath;
 
                         db.mh_InvoiceHDs.InsertOnSubmit(sh1);
                         db.SubmitChanges();

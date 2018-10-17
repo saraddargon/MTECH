@@ -1547,7 +1547,7 @@ namespace StockControl
         {
             try
             {
-                
+
                 if (Ac.Equals("New") || Ac.Equals("Edit"))
                 {
                     if (Check_Save())
