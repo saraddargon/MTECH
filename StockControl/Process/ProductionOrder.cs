@@ -122,23 +122,6 @@ namespace StockControl
                         txtidJob.Text = t.id.ToSt();
                         txtSeqStatus.Text = t.SeqStatus.ToSt();
 
-                        if (t.CloseJob)
-                            txtStatus.Text = "Completed";
-                        else if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal())
-                            txtStatus.Text = "Process";
-                        else if (txtSeqStatus.Text.ToInt() == 2)
-                            txtStatus.Text = "Approved";
-                        else if (txtSeqStatus.Text.ToInt() == 1)
-                            txtStatus.Text = "Waiting Approve";
-                        else
-                            txtStatus.Text = "Waiting";
-
-                        if (t.CloseJob || txtSeqStatus.Text.ToInt() > 0)
-                        {
-                            btnRecal.Enabled = false;
-                            btnHoldJob.Enabled = false;
-                        }
-
                         //dt
                         var dts = db.mh_ProductionOrderRMs.Where(x => x.JobNo == t.JobNo && x.Active).ToList();
                         foreach (var dt in dts)
@@ -149,6 +132,24 @@ namespace StockControl
 
                             addRow(dt.id, dt.ItemNo, dt.ItemName, dt.Qty, dt.UOM, dt.PCSUnit
                                 , outQ, dt.GroupType, dt.Type, dt.InvGroup);
+                        }
+
+                        if (t.CloseJob)
+                            txtStatus.Text = "Completed";
+                        else if (txtFGQty.Value.ToDecimal() != txtOutQty.Value.ToDecimal()
+                            || dgvData.Rows.Where(x => x.Cells["Shipped"].Value.ToDecimal() > 0).Count() > 0)
+                            txtStatus.Text = "Process";
+                        else if (txtSeqStatus.Text.ToInt() == 2)
+                            txtStatus.Text = "Approved";
+                        else if (txtSeqStatus.Text.ToInt() == 1)
+                            txtStatus.Text = "Waiting Approve";
+                        else
+                            txtStatus.Text = "Waiting";
+
+                        if (t.CloseJob || txtSeqStatus.Text.ToInt() > 0 || lblStatus.Text == "Process")
+                        {
+                            btnRecal.Enabled = false;
+                            btnHoldJob.Enabled = false;
                         }
 
                         //****Load Pr in Job
@@ -520,7 +521,8 @@ namespace StockControl
                 baseClass.Warning("- ไม่สามารถลบได้เนื่องจากสถานะเป็น 'Completed'.\n");
                 return;
             }
-            else if (Math.Round(txtFGQty.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal())
+            else if (Math.Round(txtFGQty.Value.ToDecimal(), 2) != txtOutQty.Value.ToDecimal()
+                            || dgvData.Rows.Where(x => x.Cells["Shipped"].Value.ToDecimal() > 0).Count() > 0)
             {
                 baseClass.Warning("- ไม่สามารถลบได้เนื่องจากสถานะเป็น 'Process'.\n");
                 return;
