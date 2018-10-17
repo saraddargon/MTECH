@@ -959,7 +959,7 @@ namespace StockControl
                                 LotNo = StockControl.dbClss.TSt(g.Cells["LotNo"].Value);
                                 if (LotNo == "")
                                 {
-                                    dbClss.Get_Lot(DateTime.Now.ToString("yyyyMMdd"));
+                                    LotNo =  dbClss.Get_Lot(DateTime.Now.ToString("yyyyMMdd"));
                                 }
 
                                 Seq += 1;
