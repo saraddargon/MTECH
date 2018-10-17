@@ -1536,6 +1536,7 @@ namespace StockControl
                                     if (aTime == null)
                                     {
                                         timeEnd = eTime;
+                                        t_timeEnd = eTime;
                                     }
                                     else
                                     {
@@ -1552,51 +1553,54 @@ namespace StockControl
 
                                     //คำนวน Capacity Time
                                     decimal diffTime = (timeEnd - timeStart).TotalMinutes.ToDecimal();
-                                    if (diffTime >= CapaUseX) //ถ้าเวลาที่หามาได้มากกว่าเวลาที่ ต้องใช้จริงๆ จะต้องปรับให้ เวลาสิ้นสุดเป็นเวลาจริง = CapaUseX
+                                    if(diffTime > 0)
                                     {
-                                        timeEnd = timeStart.Add(TimeSpan.FromMinutes(CapaUseX.ToDouble()));
-
-                                        //ใส่ทุก work ด้วยเวลาเท่ากัน
-                                        foreach (var r in rt)
+                                        if (diffTime >= CapaUseX) //ถ้าเวลาที่หามาได้มากกว่าเวลาที่ ต้องใช้จริงๆ จะต้องปรับให้ เวลาสิ้นสุดเป็นเวลาจริง = CapaUseX
                                         {
-                                            var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, thisMain, 0, r.idWorkCenter);
-                                            capacityLoad.Add(capaLoad);
-                                        }
+                                            timeEnd = timeStart.Add(TimeSpan.FromMinutes(CapaUseX.ToDouble()));
 
-                                        wl.CapacityAlocateX += CapaUseX;
-                                        wl.CapacityAlocate += CapaUse;
-                                        CapaUseX = 0;
-                                        CapaUse = 0;
+                                            //ใส่ทุก work ด้วยเวลาเท่ากัน
+                                            foreach (var r in rt)
+                                            {
+                                                var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, thisMain, 0, r.idWorkCenter);
+                                                capacityLoad.Add(capaLoad);
+                                            }
 
-                                        //ใส่ทุก work ด้วยเวลาเท่ากัน
-                                        foreach (var r in rt)
-                                        {
-                                            var cl = baseClass.newCalendar(autoMe(), r.id, r.idWorkCenter, idCalendar, tempStarting.Value.Date, timeStart, timeEnd, thisMain, -1);
-                                            calLoad.Add(cl);
-                                        }
-                                        break; //CapaUseX หมดแล้ว ออกได้เลย
-                                    }
-                                    else
-                                    {
-                                        wl.CapacityAlocateX += diffTime;
-                                        wl.CapacityAlocate += diffTime;
-                                        CapaUseX -= diffTime;
-                                        CapaUse -= diffTime;
-                                        var tCapa = diffTime;
-                                        if (CapaUse < 0)
-                                        {
-                                            tCapa = tCapa + CapaUse; // a + (-b)
+                                            wl.CapacityAlocateX += CapaUseX;
+                                            wl.CapacityAlocate += CapaUse;
+                                            CapaUseX = 0;
                                             CapaUse = 0;
+
+                                            //ใส่ทุก work ด้วยเวลาเท่ากัน
+                                            foreach (var r in rt)
+                                            {
+                                                var cl = baseClass.newCalendar(autoMe(), r.id, r.idWorkCenter, idCalendar, tempStarting.Value.Date, timeStart, timeEnd, thisMain, -1);
+                                                calLoad.Add(cl);
+                                            }
+                                            break; //CapaUseX หมดแล้ว ออกได้เลย
                                         }
-
-                                        //ใส่ทุก work ด้วยเวลาเท่ากัน
-                                        foreach (var r in rt)
+                                        else
                                         {
-                                            var capaLoad = baseClass.newCapaLoad(diffTime, tCapa, tempStarting.Value.Date, thisMain, 0, r.idWorkCenter);
-                                            capacityLoad.Add(capaLoad);
+                                            wl.CapacityAlocateX += diffTime;
+                                            wl.CapacityAlocate += diffTime;
+                                            CapaUseX -= diffTime;
+                                            CapaUse -= diffTime;
+                                            var tCapa = diffTime;
+                                            if (CapaUse < 0)
+                                            {
+                                                tCapa = tCapa + CapaUse; // a + (-b)
+                                                CapaUse = 0;
+                                            }
 
-                                            var cl = baseClass.newCalendar(autoMe(), r.id, r.idWorkCenter, idCalendar, tempStarting.Value.Date, timeStart, timeEnd, thisMain, -1);
-                                            calLoad.Add(cl);
+                                            //ใส่ทุก work ด้วยเวลาเท่ากัน
+                                            foreach (var r in rt)
+                                            {
+                                                var capaLoad = baseClass.newCapaLoad(diffTime, tCapa, tempStarting.Value.Date, thisMain, 0, r.idWorkCenter);
+                                                capacityLoad.Add(capaLoad);
+
+                                                var cl = baseClass.newCalendar(autoMe(), r.id, r.idWorkCenter, idCalendar, tempStarting.Value.Date, timeStart, timeEnd, thisMain, -1);
+                                                calLoad.Add(cl);
+                                            }
                                         }
                                     }
 
@@ -1654,6 +1658,7 @@ namespace StockControl
                                     wl.CapacityAlocate += diffTime;
                                     CapaUseX -= diffTime;
                                     CapaUse -= diffTime;
+                                    
                                     var tCapa = diffTime;
                                     if (CapaUse < 0)
                                     {
@@ -1692,7 +1697,7 @@ namespace StockControl
                         }
 
 
-                    } while (CapaUseX > 0);
+                    } while (Math.Round(CapaUseX, 2) > 0);
                     gPlan.StartingDate = finalStartingDate;
                     gPlan.EndingDate = finalEndingDate;
                 }

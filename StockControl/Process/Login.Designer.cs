@@ -32,6 +32,7 @@
             Telerik.WinControls.UI.RadListDataItem radListDataItem2 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem3 = new Telerik.WinControls.UI.RadListDataItem();
             Telerik.WinControls.UI.RadListDataItem radListDataItem4 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem5 = new Telerik.WinControls.UI.RadListDataItem();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.txtUser = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
@@ -163,12 +164,14 @@
             // 
             // ddlServer
             // 
-            radListDataItem1.Text = "1.179.133.222,2018";
-            radListDataItem2.Text = "FILE_SERVER";
-            radListDataItem3.Text = "110.170.161.35";
+            radListDataItem1.Text = "PONGSAKORN_S\\SQLEXPRESS2014,1433";
+            radListDataItem2.Text = "1.179.133.222,2018";
+            radListDataItem3.Text = "FILE_SERVER";
+            radListDataItem4.Text = "110.170.161.35";
             this.ddlServer.Items.Add(radListDataItem1);
             this.ddlServer.Items.Add(radListDataItem2);
             this.ddlServer.Items.Add(radListDataItem3);
+            this.ddlServer.Items.Add(radListDataItem4);
             this.ddlServer.Location = new System.Drawing.Point(156, 251);
             this.ddlServer.Name = "ddlServer";
             this.ddlServer.Size = new System.Drawing.Size(131, 20);
@@ -177,8 +180,8 @@
             // 
             // ddlDatabase
             // 
-            radListDataItem4.Text = "dbMTECH";
-            this.ddlDatabase.Items.Add(radListDataItem4);
+            radListDataItem5.Text = "dbMTECH";
+            this.ddlDatabase.Items.Add(radListDataItem5);
             this.ddlDatabase.Location = new System.Drawing.Point(156, 276);
             this.ddlDatabase.Name = "ddlDatabase";
             this.ddlDatabase.Size = new System.Drawing.Size(131, 20);
