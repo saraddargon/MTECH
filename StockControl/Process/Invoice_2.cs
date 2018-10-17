@@ -2160,7 +2160,7 @@ namespace StockControl
             }
             else
             {
-                if(txtVattax.Text=="0"||txtVattax.Text =="")
+                if(txtVattax.Text=="0"||txtVattax.Text ==""||txtVattax.Text=="0.00"||dbClss.TDe(txtVattax.Text)<=0)
                     txtVattax.Text = "7";
             }
             //else
