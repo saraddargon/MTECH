@@ -103,6 +103,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Progress\Telerik UI for WinForms R2 2018\Bin40\TelerikData.dll</HintPath>
     </Reference>
+    <Reference Include="ThaiBahtText, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ThaiBahtText.1.0.103\lib\net40\ThaiBahtText.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ThoughtWorks.QRCode, Version=1.0.2774.19990, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\ThoughtWorks.QRCode.dll</HintPath>
@@ -1805,6 +1809,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>DataClasses11.designer.cs</LastGenOutput>
     </None>
+    <None Include="packages.config" />
     <None Include="Process\Report\Excel_001_Part_Export.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

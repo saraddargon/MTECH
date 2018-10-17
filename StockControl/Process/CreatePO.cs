@@ -12,6 +12,7 @@ using System.Globalization;
 using Microsoft.VisualBasic;
 using Telerik.WinControls.Data;
 using Telerik.WinControls;
+using GreatFriends.ThaiBahtText;
 
 namespace StockControl
 {
@@ -1546,6 +1547,7 @@ namespace StockControl
         {
             try
             {
+                
                 if (Ac.Equals("New") || Ac.Equals("Edit"))
                 {
                     if (Check_Save())
