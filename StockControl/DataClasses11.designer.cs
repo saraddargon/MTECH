@@ -2546,6 +2546,13 @@ namespace StockControl
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), itemNo, location, cSTMID);
 			return ((ISingleResult<sp_081_Get_StockResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_084_FindMaxdayWork")]
+		public ISingleResult<sp_084_FindMaxdayWorkResult> sp_084_FindMaxdayWork([global::System.Data.Linq.Mapping.ParameterAttribute(Name="RoutingId", DbType="Int")] System.Nullable<int> routingId)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), routingId);
+			return ((ISingleResult<sp_084_FindMaxdayWorkResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ErrorLog")]
@@ -88583,6 +88590,50 @@ namespace StockControl
 				if ((this._BackOrderSaleOrder != value))
 				{
 					this._BackOrderSaleOrder = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_084_FindMaxdayWorkResult
+	{
+		
+		private int _idWorkCenter;
+		
+		private System.Nullable<int> _CountDay;
+		
+		public sp_084_FindMaxdayWorkResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idWorkCenter", DbType="Int NOT NULL")]
+		public int idWorkCenter
+		{
+			get
+			{
+				return this._idWorkCenter;
+			}
+			set
+			{
+				if ((this._idWorkCenter != value))
+				{
+					this._idWorkCenter = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CountDay", DbType="Int")]
+		public System.Nullable<int> CountDay
+		{
+			get
+			{
+				return this._CountDay;
+			}
+			set
+			{
+				if ((this._CountDay != value))
+				{
+					this._CountDay = value;
 				}
 			}
 		}

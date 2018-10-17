@@ -5565,4 +5565,11 @@
       <Column Name="BackOrderSaleOrder" Type="System.Decimal" DbType="Decimal(38,2) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
+  <Function Name="dbo.sp_084_FindMaxdayWork" Method="sp_084_FindMaxdayWork">
+    <Parameter Name="RoutingId" Parameter="routingId" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_084_FindMaxdayWorkResult">
+      <Column Name="idWorkCenter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CountDay" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>
