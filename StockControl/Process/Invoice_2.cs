@@ -251,24 +251,24 @@ namespace StockControl
                             }
 
 
-                            string CustomerPartNo = "";
-                            string CustomerPartName = "";
-                            dgvData.DataSource = list1;
-                            foreach (GridViewRowInfo rd in dgvData.Rows)
-                            {
-                                CustomerPartNo = "";
-                                CustomerPartName = "";
-                                var t = db.mh_Items.Where(x => x.InternalNo.ToUpper().Trim() == dbClss.TSt(rd.Cells["ItemNo"].Value).ToUpper().Trim())
-                                    .ToList();
-                                if (t.Count > 0)
-                                {
-                                    CustomerPartNo = dbClss.TSt(t.FirstOrDefault().CustomerPartNo);
-                                    CustomerPartName = dbClss.TSt(t.FirstOrDefault().CustomerPartName);
-                                }
-                                rd.Cells["CustomerPartNo"].Value = CustomerPartNo;
-                                rd.Cells["CustomerPartName"].Value = CustomerPartName;
+                            //string CustomerPartNo = "";
+                            //string CustomerPartName = "";
+                            //dgvData.DataSource = list1;
+                            //foreach (GridViewRowInfo rd in dgvData.Rows)
+                            //{
+                            //    CustomerPartNo = "";
+                            //    CustomerPartName = "";
+                            //    var t = db.mh_Items.Where(x => x.InternalNo.ToUpper().Trim() == dbClss.TSt(rd.Cells["ItemNo"].Value).ToUpper().Trim())
+                            //        .ToList();
+                            //    if (t.Count > 0)
+                            //    {
+                            //        CustomerPartNo = dbClss.TSt(t.FirstOrDefault().CustomerPartNo);
+                            //        CustomerPartName = dbClss.TSt(t.FirstOrDefault().CustomerPartName);
+                            //    }
+                            //    rd.Cells["CustomerPartNo"].Value = CustomerPartNo;
+                            //    rd.Cells["CustomerPartName"].Value = CustomerPartName;
 
-                            }
+                            //}
                         }
                         CalTAX1();
                         CallTotal();
@@ -795,6 +795,7 @@ namespace StockControl
                         sh1.Tax_identification_number = txtTax_identification_number.Text;
                         sh1.VatDetail = dbClss.TBo(cbvatDetail.Checked);
                        
+                        
                         string s_ThaiBath = grantotal.ThaiBahtText();
                         sh1.ThaiBath = s_ThaiBath;
 
@@ -831,6 +832,8 @@ namespace StockControl
                             nd.DiscountAmount = dbClss.TDe(rd.Cells["dgvDiscountAmount"].Value);
                             nd.ExtendedCost = dbClss.TDe(rd.Cells["dgvExtendedCost"].Value);
                             nd.Rate = 1;
+                            nd.CustomerPartNo = dbClss.TSt(rd.Cells["CustomerPartNo"].Value);
+                            nd.CustomerPartName = dbClss.TSt(rd.Cells["CustomerPartName"].Value);
 
                             db.mh_InvoiceDTs.InsertOnSubmit(nd);
                             db.SubmitChanges();
