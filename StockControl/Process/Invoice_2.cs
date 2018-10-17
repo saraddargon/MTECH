@@ -253,7 +253,7 @@ namespace StockControl
 
                             //string CustomerPartNo = "";
                             //string CustomerPartName = "";
-                            //dgvData.DataSource = list1;
+                            dgvData.DataSource = list1;
                             //foreach (GridViewRowInfo rd in dgvData.Rows)
                             //{
                             //    CustomerPartNo = "";
@@ -1908,8 +1908,10 @@ namespace StockControl
             btnEdit.Enabled = true;
             btnView.Enabled = false;
             btnNew.Enabled = true;
+            string InvNo = txtIVNo.Text;
             ClearData();
             Enable_Status(false, "View");
+            txtIVNo.Text = InvNo;
             DataLoad();
             Ac = "View";
 

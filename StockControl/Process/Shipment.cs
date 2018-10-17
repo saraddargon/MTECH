@@ -1289,8 +1289,10 @@ namespace StockControl
             btnEdit.Enabled = true;
             btnView.Enabled = false;
             btnNew.Enabled = true;
+            string SHNo = txtSHNo.Text;
             ClearData();
             Enable_Status(false, "View");
+            txtSHNo.Text = SHNo;
             DataLoad();
             Ac = "View";
             
