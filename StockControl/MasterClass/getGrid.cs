@@ -258,6 +258,8 @@ namespace StockControl
     {
         public string ItemNo { get; set; }
         public string ItemName { get; set; }
+        public string CustomerPartNo { get; set; }
+        public string CustomerPartName { get; set; }
         public ReorderType ReorderType { get; set; }
         public decimal QtyOnHand { get; set; } //Stock Free
         public decimal QtyOnHand_Backup { get; private set; } //Stock Free
@@ -313,6 +315,8 @@ namespace StockControl
                 { }
 
                 this.ItemName = t.InternalName;
+                this.CustomerPartNo = t.CustomerPartNo;
+                this.CustomerPartName = t.CustomerPartName;
                 this.ReorderType = baseClass.getReorderType(t.ReorderType);
                 this.SafetyStock = t.SafetyStock;
                 this.ReorderPoint = t.ReorderPoint.ToDecimal();

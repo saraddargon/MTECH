@@ -239,6 +239,8 @@ namespace StockControl
                                 forSafetyStock = true,
                                 OutQty = reorderQty,
                                 ReqDate = dTo,
+                                CustomerPartName = tdata.CustomerPartName,
+                                CustomerPartNo = tdata.CustomerPartNo,
                             };
                             db.mh_SaleOrderDTs.InsertOnSubmit(sodt);
                             db.SubmitChanges();

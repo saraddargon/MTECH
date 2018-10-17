@@ -233,12 +233,12 @@ namespace StockControl
 
                     int idJob = r.Cells["idJob"].Value.ToInt();
                     var qty = dgvData.Rows.Where(x => x.Cells["idJob"].Value.ToInt() == idJob).Sum(x => x.Cells["Qty"].Value.ToDecimal());
-                    var outQty = r.Cells["OutQty"].Value.ToDecimal();
-                    if (qty > outQty)
-                    {
-                        err += $"- “{JobNo}:” จำนวนที่รับมากกว่าจำนวนคงเหลือ \n";
-                        break;
-                    }
+                    //var outQty = r.Cells["OutQty"].Value.ToDecimal();
+                    //if (qty > outQty)
+                    //{
+                    //    err += $"- “{JobNo}:” จำนวนที่รับมากกว่าจำนวนคงเหลือ \n";
+                    //    break;
+                    //}
 
                     //check Return RM ?
                     using (var db = new DataClasses1DataContext())
@@ -579,11 +579,11 @@ namespace StockControl
                 {
                     if (e.Column.Name.Equals("Qty"))
                     {
-                        if (e.Row.Cells["Qty"].Value.ToDecimal() > e.Row.Cells["OutQty"].Value.ToDecimal())
-                        {
-                            baseClass.Warning("- Cannot Receive Q'ty > Out Qty.\n");
-                            e.Row.Cells["Qty"].Value = beginQty;
-                        }
+                        //if (e.Row.Cells["Qty"].Value.ToDecimal() > e.Row.Cells["OutQty"].Value.ToDecimal())
+                        //{
+                        //    baseClass.Warning("- Cannot Receive Q'ty > Out Qty.\n");
+                        //    e.Row.Cells["Qty"].Value = beginQty;
+                        //}
                     }
                     calAmnt();
                 }
