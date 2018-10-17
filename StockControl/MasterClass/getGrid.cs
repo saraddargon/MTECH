@@ -183,7 +183,10 @@ namespace StockControl
         public string Status
         {
             get {
-                if (DueDate.Date > ReqDate.Date)
+
+                if (RM_BackOrder)
+                    return "Waiting Receive Order";
+                else if (DueDate.Date > ReqDate.Date)
                     return "Over Due";
                 else
                     return "OK";
@@ -232,6 +235,8 @@ namespace StockControl
         public bool root { get; set; } = false;
         public int mainNo { get; set; } = 0;
         public int refNo { get; set; } = 0;
+
+        public bool RM_BackOrder { get; set; } = false;
 
         public ItemData itemData { get; set; }
     }
@@ -495,7 +500,7 @@ namespace StockControl
                         s1.StockAll += s.Qty.ToDecimal();
                     }
                 }
-                
+
                 //var m = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1)
                 //    .Join(db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && x.genPR
                 //        && x.ItemNo == this.ItemNo && x.OutQty > 0)
@@ -530,6 +535,14 @@ namespace StockControl
             var a = stockCustomerPO.Where(x => x.idCstmPODt == idCstmPODt && x.StockAll > 0).ToList();
             if (a.Count > 0)
                 ret = a.Sum(x => x.StockAll);
+            return ret;
+        }
+        public decimal findBackOrder_CustomerPO(int idCstmPODt)
+        {
+            var ret = 0.00m;
+            var a = stockCustomerPO.Where(x => x.idCstmPODt == idCstmPODt && x.StockAll > 0).ToList();
+            if (a.Count > 0)
+                ret = a.Sum(x => x.BackOrder);
             return ret;
         }
         public decimal findStock_Free()

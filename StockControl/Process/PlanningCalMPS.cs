@@ -139,6 +139,8 @@ namespace StockControl
                 {
                     //if (e.Row.Cells["Status"].Value.ToSt() == "Over Due")
                     //    e.Row.Cells["S"].Value = false;
+                    if (e.Row.Cells["Status"].Value.ToSt() == "Waiting Receive Order")
+                        e.Row.Cells["S"].Value = false;
                 }
             }
         }
@@ -309,6 +311,7 @@ namespace StockControl
                 if (e.Column.Name.Equals("S"))
                 {
                     //e.Cancel = e.Row.Cells["Status"].Value.Equals("Over Due");
+                    e.Cancel = e.Row.Cells["Status"].Value.Equals("Waiting Receive Order");
                 }
             }
         }

@@ -87,8 +87,15 @@ namespace StockControl
                     //    && x.ReqDate >= dFrom && x.ReqDate <= dTo
                     //    && x.OutPlan > 0
                     //).OrderBy(x => x.ReqDate).ToList();
+                    var temp_dTo = dTo;
+                    if (this.MRP)
+                    {
+                        //ถ้าเป็น case ซื้อของจะไม่สนใจ วันที่สิ้นสุด
+                        temp_dTo = temp_dTo.AddYears(1000);
+                    }
+
                     var soDt = db.mh_SaleOrderDTs.Where(x => x.Active
-                        && x.ReqDate >= dFrom && x.ReqDate <= dTo
+                        && x.ReqDate >= dFrom && x.ReqDate <= temp_dTo
                         && x.OutPlan > 0).OrderBy(x => x.ReqDate).ToList();
                     foreach (var dt in soDt)
                     {
@@ -1108,7 +1115,7 @@ namespace StockControl
                                     }
                                     foundTime = true;
 
-                                    var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, thisMain, 0, idWorkCenter);
+                                    var capaLoad = baseClass.newCapaLoad(diffTime, tCapa, tempStarting.Value.Date, thisMain, 0, idWorkCenter);
                                     capacityLoad.Add(capaLoad);
                                 }
 
@@ -1197,6 +1204,9 @@ namespace StockControl
                     sumStockFree = t.findStock_Free();
                     if (useQAll <= sumStockCstmPO + sumStockFree) //RM พอ
                     { //3.1 stock is enough can production
+                        var tStock = sumStockCstmPO + sumStockFree - t.findBackOrder_CustomerPO(data.DocId);
+                        gPlan.RM_BackOrder = (useQAll > tStock);
+
                         if (sumStockCstmPO > 0)
                             t.cutStock_CstmPO(data.DocId, ref useQAll);
                         if (useQAll > 0 && sumStockFree > 0)
@@ -1291,11 +1301,11 @@ namespace StockControl
                 if (rt.Count > 0)
                 {
                     var minCapaHr = rt.Min(x => x.workcenter.CapacityHour);
-                    minCapa = Math.Round(minCapaHr / 60, 2);
+                    minCapa = Math.Round(minCapaHr / 60, 9);
                     setupAll = rt.Sum(x => x.SetupTime);
 
                     //หาว่าต้องใช้กี่นาที ในการผลิต ReqQty ตัว
-                    var totalCapaAll = Math.Round(gPlan.UseQty / minCapa, 2);
+                    var totalCapaAll = Math.Round(gPlan.UseQty / minCapa, 9);
                     var CapaUseX = totalCapaAll + setupAll;
                     var CapaUse = totalCapaAll;
 
@@ -1589,7 +1599,7 @@ namespace StockControl
                                     //ใส่เท่าๆกันทุก work
                                     foreach (var r in rt)
                                     {
-                                        var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, thisMain, 0, r.idWorkCenter);
+                                        var capaLoad = baseClass.newCapaLoad(diffTime, tCapa, tempStarting.Value.Date, thisMain, 0, r.idWorkCenter);
                                         capacityLoad.Add(capaLoad);
                                     }
                                 }
