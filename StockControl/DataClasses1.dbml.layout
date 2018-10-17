@@ -722,16 +722,16 @@
         <elementListCompartment Id="3a9ec084-4e31-48ad-b201-95559c141f00" absoluteBounds="18.39, 8.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="0691cf0e-2a5b-44df-b24a-09bb88dd67c2" isExpanded="false" absoluteBounds="18.125, 9.625, 2, 0.45">
-      <DataClassMoniker Name="/DataClasses1DataContext/tb_Receive" />
-      <nestedChildShapes>
-        <elementListCompartment Id="ef5603dc-fd25-45ad-b9a0-526af5c9b091" absoluteBounds="18.14, 10.085, 1.9700000000000002, 8.3260498046875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="7922ed03-ca1a-4499-9d32-7969e3434f6f" isExpanded="false" absoluteBounds="18.125, 10.25, 2, 0.45">
+    <classShape Id="2cc6aac3-8f9d-4ee6-bfb7-bba4c415f4d0" isExpanded="false" absoluteBounds="24.375, 21.75, 2, 0.45">
       <DataClassMoniker Name="/DataClasses1DataContext/tb_Receive_Del" />
       <nestedChildShapes>
-        <elementListCompartment Id="54b8638f-b324-4867-82f9-e2f325eda16e" absoluteBounds="18.14, 10.71, 1.9700000000000002, 7.941446940104167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="891e99fa-6dde-44cd-bf7e-69c611f1c093" absoluteBounds="24.39, 22.21, 1.9700000000000002, 7.941446940104167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="64f85102-ff7f-4544-8f6a-ebfa5dbfd779" isExpanded="false" absoluteBounds="24.375, 21.125, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/tb_Receive" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e3caa613-bdf2-4ac8-aef6-df29d709d6b9" absoluteBounds="24.39, 21.585, 1.9700000000000002, 8.3260498046875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
