@@ -1437,15 +1437,13 @@ namespace StockControl
                         do
                         {
                             //หาวันที่เริ่มต้นที่สามารถจะใช้ได้จาก mh_CapacityAvailable join mh_CapacityLoad
-                            var wl = workLoads.Where(x => x.Date >= tempStarting.Value.Date && x.CapacityAfterX > 0
-                                && x.idWorkCenter == idWorkCenter).OrderBy(x => x.Date).FirstOrDefault();
-                            if (wl == null) //ถ้า WorkLoad เป็น Null ให้ไปหาใหม่จาก Db ตรงๆ
+                            WorkLoad wl = null;
+                            if (workLoads.Count == 0)
                             {
-                                //var w = baseClass.getWorkLoad(tempStarting.Value.Date, null, idWorkCenter).Where(x => x.CapacityAfterX > 0).FirstOrDefault();
                                 var w = baseClass.getWorkLoad_From(tempStarting.Value.Date, idWorkCenter);
                                 if (w == null) //ไม่มีจริงๆ แสดงว่า Capacity หมด ต้องกลับไปคำนวนใหม่
                                 {
-                                    string mssg = "Capacity ไม่เพียงพอ, กรุณาตรวจสอบ Capacity ในโปรแกรม Workcenter.\n";
+                                    string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
                                     baseClass.Warning(mssg);
                                     throw new Exception(mssg);
                                 }
@@ -1453,6 +1451,40 @@ namespace StockControl
                                 {
                                     workLoads.Add(w);
                                     wl = w;
+                                }
+                            }
+                            else
+                            {
+                                while (wl == null)
+                                {
+                                    if (workLoads.Where(x => x.Date == tempStarting.Value.Date && x.CapacityAfterX <= 0 && x.idWorkCenter == idWorkCenter).Count() > 0)
+                                        tempStarting = tempStarting.Value.Date.AddDays(1);
+                                    else
+                                    {
+                                        wl = workLoads.Where(x => x.Date >= tempStarting.Value.Date && x.CapacityAfterX > 0
+                                            && x.idWorkCenter == idWorkCenter).OrderBy(x => x.Date).FirstOrDefault();
+                                        if (wl == null) //ถ้า WorkLoad เป็น Null ให้ไปหาใหม่จาก Db ตรงๆ
+                                        {
+                                            //var w = baseClass.getWorkLoad(tempStarting.Value.Date, null, idWorkCenter).Where(x => x.CapacityAfterX > 0).FirstOrDefault();
+                                            var w = baseClass.getWorkLoad_From(tempStarting.Value.Date, idWorkCenter);
+                                            if (w == null) //ไม่มีจริงๆ แสดงว่า Capacity หมด ต้องกลับไปคำนวนใหม่
+                                            {
+                                                string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
+                                                baseClass.Warning(mssg);
+                                                throw new Exception(mssg);
+                                            }
+                                            else // เจอแล้ว Add ใส่ list ไว้เช็คในรอบถัดไป
+                                            {
+                                                if (workLoads.Where(x => x.Date == w.Date.Date && x.CapacityAfterX <= 0 && x.idWorkCenter == idWorkCenter).Count() > 0)
+                                                {
+                                                    tempStarting = tempStarting.Value.AddDays(1);
+                                                    continue;
+                                                }
+                                                workLoads.Add(w);
+                                                wl = w;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             //กรณีที่ วันที่หามาได้จาก WorkLoad มากกว่าวันปัจจุบันให้เปลี่ยนเป็นเริ่ม Start
@@ -1924,11 +1956,9 @@ namespace StockControl
                         do
                         {
                             //หาวันที่เริ่มต้นที่สามารถจะใช้ได้จาก mh_CapacityAvailable join mh_CapacityLoad
-                            var wl = workLoads.Where(x => x.Date >= tempStarting.Value.Date && x.CapacityAfterX > 0
-                                && x.idWorkCenter == idWorkCenter).OrderBy(x => x.Date).FirstOrDefault();
-                            if (wl == null) //ถ้า WorkLoad เป็น Null ให้ไปหาใหม่จาก Db ตรงๆ
+                            WorkLoad wl = null;
+                            if (workLoads.Count == 0)
                             {
-                                //var w = baseClass.getWorkLoad(tempStarting.Value.Date, null, idWorkCenter).Where(x => x.CapacityAfterX > 0).FirstOrDefault();
                                 var w = baseClass.getWorkLoad_From(tempStarting.Value.Date, idWorkCenter);
                                 if (w == null) //ไม่มีจริงๆ แสดงว่า Capacity หมด ต้องกลับไปคำนวนใหม่
                                 {
@@ -1940,6 +1970,40 @@ namespace StockControl
                                 {
                                     workLoads.Add(w);
                                     wl = w;
+                                }
+                            }
+                            else
+                            {
+                                while (wl == null)
+                                {
+                                    if (workLoads.Where(x => x.Date == tempStarting.Value.Date && x.CapacityAfterX <= 0 && x.idWorkCenter == idWorkCenter).Count() > 0)
+                                        tempStarting = tempStarting.Value.Date.AddDays(1);
+                                    else
+                                    {
+                                        wl = workLoads.Where(x => x.Date >= tempStarting.Value.Date && x.CapacityAfterX > 0
+                                            && x.idWorkCenter == idWorkCenter).OrderBy(x => x.Date).FirstOrDefault();
+                                        if (wl == null) //ถ้า WorkLoad เป็น Null ให้ไปหาใหม่จาก Db ตรงๆ
+                                        {
+                                            //var w = baseClass.getWorkLoad(tempStarting.Value.Date, null, idWorkCenter).Where(x => x.CapacityAfterX > 0).FirstOrDefault();
+                                            var w = baseClass.getWorkLoad_From(tempStarting.Value.Date, idWorkCenter);
+                                            if (w == null) //ไม่มีจริงๆ แสดงว่า Capacity หมด ต้องกลับไปคำนวนใหม่
+                                            {
+                                                string mssg = "Capacity is not available, Please check Capacity Work load on Capacity Calculation (Work Centers).!!!\n";
+                                                baseClass.Warning(mssg);
+                                                throw new Exception(mssg);
+                                            }
+                                            else // เจอแล้ว Add ใส่ list ไว้เช็คในรอบถัดไป
+                                            {
+                                                if (workLoads.Where(x => x.Date == w.Date.Date && x.CapacityAfterX <= 0 && x.idWorkCenter == idWorkCenter).Count() > 0)
+                                                {
+                                                    tempStarting = tempStarting.Value.AddDays(1);
+                                                    continue;
+                                                }
+                                                workLoads.Add(w);
+                                                wl = w;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             //กรณีที่ วันที่หามาได้จาก WorkLoad มากกว่าวันปัจจุบันให้เปลี่ยนเป็นเริ่ม Start
