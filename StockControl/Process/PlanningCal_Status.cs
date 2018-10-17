@@ -1058,7 +1058,7 @@ namespace StockControl
                                     decimal diffTime = (timeEnd - timeStart).TotalMinutes.ToDecimal();
                                     if (diffTime >= CapaUseX) //ถ้าเวลาที่หามาได้มากกว่าเวลาที่ ต้องใช้จริงๆ จะต้องปรับให้ เวลาสิ้นสุดเป็นเวลาจริง = CapaUseX
                                     {
-                                        timeEnd = timeStart.Add(TimeSpan.FromMinutes(CapaUseX.ToDouble()));
+                                        timeEnd = timeStart.Add(TimeSpan.FromMinutes(Math.Round(CapaUseX.ToDouble(), 2)));
 
                                         var capaLoad = baseClass.newCapaLoad(CapaUseX, CapaUse, tempStarting.Value.Date, thisMain, 0, idWorkCenter);
                                         capacityLoad.Add(capaLoad);
@@ -1190,9 +1190,6 @@ namespace StockControl
             var gPlan = gPlanN;
             using (var db = new DataClasses1DataContext())
             {
-                if (gPlan.ItemNo.Contains("GSC"))
-                { }
-
                 bool RMready = true;
                 //manu Unit Time
                 decimal manuTime = 1;
@@ -1359,7 +1356,7 @@ namespace StockControl
                         }
                     }
                     if (idWorkCenter == 0) return null;
-
+                    var firstD = true;
                     //หาว่า Capacity จากต้องใช้ Starting - Ending ใด โดยวนไปจนกว่า CapaUseX จะเป็น 0
                     do
                     {
@@ -1536,28 +1533,31 @@ namespace StockControl
                                     if (aTime == null)
                                     {
                                         timeEnd = eTime;
-                                        t_timeEnd = eTime;
+                                        //t_timeEnd = eTime;
                                     }
                                     else
                                     {
                                         timeEnd = aTime.StartingTime;
                                         t_timeEnd = aTime.EndingTime;
-                                        idCal.Add(aTime.id);
                                     }
 
                                     //หาว่าเป็นเวลาที่อยู่ในช่วงเวลาทำงานไหม
                                     //ถ้าไม่ใช่ช่วงเวลาทำงาน
                                     if (wd.Where(x => timeStart >= x.StartingTime && timeStart <= x.EndingTime
                                                  && timeEnd >= x.StartingTime && timeEnd <= x.EndingTime).Count() < 1)
+                                    {
                                         timeEnd = wd.Where(x => timeStart >= x.StartingTime && timeStart <= x.EndingTime).First().EndingTime;
-
+                                        t_timeEnd = timeEnd;
+                                    }
+                                    else if (aTime != null)
+                                        idCal.Add(aTime.id);
                                     //คำนวน Capacity Time
                                     decimal diffTime = (timeEnd - timeStart).TotalMinutes.ToDecimal();
-                                    if(diffTime > 0)
+                                    if (diffTime > 0)
                                     {
                                         if (diffTime >= CapaUseX) //ถ้าเวลาที่หามาได้มากกว่าเวลาที่ ต้องใช้จริงๆ จะต้องปรับให้ เวลาสิ้นสุดเป็นเวลาจริง = CapaUseX
                                         {
-                                            timeEnd = timeStart.Add(TimeSpan.FromMinutes(CapaUseX.ToDouble()));
+                                            timeEnd = timeStart.Add(TimeSpan.FromMinutes(Math.Round(CapaUseX.ToDouble(), 2)));
 
                                             //ใส่ทุก work ด้วยเวลาเท่ากัน
                                             foreach (var r in rt)
@@ -1576,6 +1576,11 @@ namespace StockControl
                                             {
                                                 var cl = baseClass.newCalendar(autoMe(), r.id, r.idWorkCenter, idCalendar, tempStarting.Value.Date, timeStart, timeEnd, thisMain, -1);
                                                 calLoad.Add(cl);
+                                                if (firstD)
+                                                {
+                                                    finalStartingDate = tempStarting.Value.Date.SetTimeToDate(timeStart);
+                                                    firstD = false;
+                                                }
                                             }
                                             break; //CapaUseX หมดแล้ว ออกได้เลย
                                         }
@@ -1600,18 +1605,29 @@ namespace StockControl
 
                                                 var cl = baseClass.newCalendar(autoMe(), r.id, r.idWorkCenter, idCalendar, tempStarting.Value.Date, timeStart, timeEnd, thisMain, -1);
                                                 calLoad.Add(cl);
+                                                if (firstD)
+                                                {
+                                                    finalStartingDate = tempStarting.Value.Date.SetTimeToDate(timeStart);
+                                                    firstD = false;
+                                                }
                                             }
                                         }
                                     }
 
                                     timeStart = t_timeEnd;
+                                    if (wd.Where(x => timeStart == x.EndingTime).Count() > 0)
+                                    {
+                                        var ww = wd.Where(x => x.StartingTime > timeStart).FirstOrDefault();
+                                        if (ww != null)
+                                            timeStart = ww.StartingTime;
+                                    }
                                 }
                             }
                             else //ไม่ตรงกับเวลาที่ถูกใช้งานใดๆ ให้ลด Capacity
                             {
                                 if (wl.CapacityAfterX >= CapaUseX) //กรณีที่เหลือเวลา Capacity ในวันนั้นเพียงพอ
                                 {
-                                    timeEnd = timeStart.Add(TimeSpan.FromMinutes(CapaUseX.ToDouble()));
+                                    timeEnd = timeStart.Add(TimeSpan.FromMinutes(Math.Round(CapaUseX.ToDouble(), 2)));
                                 }
                                 else //กรณีที่ในวันนั้น Capaciy ไม่เพียงพอ
                                 {
@@ -1658,7 +1674,7 @@ namespace StockControl
                                     wl.CapacityAlocate += diffTime;
                                     CapaUseX -= diffTime;
                                     CapaUse -= diffTime;
-                                    
+
                                     var tCapa = diffTime;
                                     if (CapaUse < 0)
                                     {
@@ -1681,12 +1697,22 @@ namespace StockControl
                                     {
                                         var cl = baseClass.newCalendar(autoMe(), r.id, r.idWorkCenter, idCalendar, tempStarting.Value.Date, timeStart, timeEnd, thisMain, -1);
                                         calLoad.Add(cl);
+                                        if (firstD)
+                                        {
+                                            finalStartingDate = tempStarting.Value.Date.SetTimeToDate(timeStart);
+                                            firstD = false;
+                                        }
                                     }
                                 }
                             }
 
                             tempStarting = tempStarting.Value.Date.SetTimeToDate(timeEnd);
                             //tempStarting = tempStarting.Value.Date.AddHours(timeEnd.Hours).AddMinutes(timeEnd.Minutes).AddMilliseconds(timeEnd.Milliseconds);
+                            //if (firstD)
+                            //{
+                            //    finalStartingDate = tempStarting.Value.Date.SetTimeToDate(timeStart);
+                            //    firstD = false;
+                            //}
                             finalEndingDate = tempStarting.Value;
                         }
                         else //วันดังกล่าวไม่ใช่ Working Day
