@@ -2358,6 +2358,7 @@ namespace StockControl
                             txtFax.Text = mc.FaxNo;
                             txtTel.Text = mc.PhoneNo;
                             txtContactName.Text = mc.ContactName;
+                            
                             //var cm = db.mh_CustomerContacts.Where(ab=>ab.idCustomer== Convert.ToInt16(mc.id) && Convert.ToBoolean(ab.Active)==true && Convert.ToBoolean(ab.Def)==true).ToList();
                             //if (cm.Count > 0)
                             //{
