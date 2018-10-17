@@ -691,9 +691,6 @@ namespace StockControl
             var gPlan = gPlanN;
             using (var db = new DataClasses1DataContext())
             {
-                if (gPlan.ItemNo.Contains("GSC"))
-                { }
-
                 bool RMready = true;
                 //manu Unit Time
                 decimal manuTime = 1;
@@ -708,7 +705,7 @@ namespace StockControl
                 if (boms.Count == 0)
                     RMready = false; //ถ้าไม่มี Bom จะไม่แพลน
                 var bomHd = db.tb_BomHDs.Where(x => x.BomNo == tdata.BomNo).FirstOrDefault();
-                if(bomHd == null)
+                if (bomHd == null)
                 {
                     RMready = false;
                     return null;
@@ -820,22 +817,14 @@ namespace StockControl
                 }
 
                 //วน Routing ของ Item นั้น
-                var rt = db.mh_RoutingDTs.Where(x => x.RoutingId == tdata.Routeid)
+                var rt = db.mh_RoutingDTs.Where(x => x.RoutingId == tdata.Routeid && x.Active)
                     .Join(db.mh_WorkCenters.Where(x => x.Active)
                     , hd => hd.idWorkCenter
                     , workcenter => workcenter.id
                     , (hd, workcenter)
                     => new { hd, hd.idWorkCenter, hd.id, hd.SetupTime, hd.RunTime, hd.WaitTime, workcenter })
                     .ToList();
-                //foreach (var r in rt)
-                //{
-                //    //cal capa
-                //    if (workLoads.Where(x => x.idWorkCenter == r.idWorkCenter).Count() < 1)
-                //    {
-                //        var wls = baseClass.getWorkLoad(dFrom.Date, dTo.Date, r.idWorkCenter);
-                //    }
-                //}
-                //
+
                 foreach (var r in rt)
                 {
                     int idWorkCenter = r.idWorkCenter;
@@ -1147,6 +1136,163 @@ namespace StockControl
                     gPlan.EndingDate = finalEndingDate;
                 }
             }
+
+            return gPlan;
+        }
+
+
+        //update 2018-10-17
+        grid_Planning ProdcutionE_New(grid_Planning gPlanN, calPartData data, ItemData tdata, int thisMain)
+        {
+
+            var gPlan = gPlanN;
+            using (var db = new DataClasses1DataContext())
+            {
+                if (gPlan.ItemNo.Contains("GSC"))
+                { }
+
+                bool RMready = true;
+                //manu Unit Time
+                decimal manuTime = 1;
+                var manuUnit = db.mh_ManufacturingSetups.Select(x => x.ShowCapacityInUOM).FirstOrDefault();
+                if (manuUnit == 2)
+                    manuTime = 60;
+                else if (manuUnit == 3)
+                    manuTime = (24 * 60);
+                //find BOM
+
+                var boms = db.tb_BomDTs.Where(x => x.BomNo == tdata.BomNo).ToList();
+                if (boms.Count == 0)
+                    RMready = false; //ถ้าไม่มี Bom จะไม่แพลน
+                var bomHd = db.tb_BomHDs.Where(x => x.BomNo == tdata.BomNo).FirstOrDefault();
+                if (bomHd == null)
+                {
+                    RMready = false;
+                    return null;
+                }
+                //var yield = bomHd.YieldOperation.ToDecimal();
+                var exYield = 100 - bomHd.YieldOperation.ToDecimal();
+
+                //เช็คว่าทุก RM มีของพอจริงไหม ถ้าไม่พอจะไม่แพลน ถ้าพอจะแพลน
+                foreach (var b in boms)
+                {
+                    //จะผลิตได้ก็ต่อเมื่อมี component พร้อมเท่านั้น
+                    var t = itemDatas.Where(x => x.ItemNo == b.Component).FirstOrDefault();
+                    if (t == null)
+                    {
+                        t = new ItemData(b.Component);
+                        itemDatas.Add(t);
+                    }
+
+                    decimal useQ = Math.Round(b.Qty * gPlan.UseQty, 2);
+                    decimal yieldItem = 0.00m;
+                    if (b.chk_YieldOperation.ToBool())
+                        yieldItem = Math.Ceiling((exYield / 100) * useQ);
+                    useQ += yieldItem;
+                    decimal useQAll = Math.Round(useQ * b.PCSUnit.ToDecimal(), 2);
+                    var sumStockCstmPO = 0.00m; //Stock Qty + BackOrder = Stock All for this CUstomerPO dt
+                    var sumStockFree = 0.00m; //Stock Free not on CUstomer PO ใดๆ
+                    sumStockCstmPO = t.findStock_CustomerPO(data.DocId);
+                    sumStockFree = t.findStock_Free();
+                    if (useQAll <= sumStockCstmPO + sumStockFree) //RM พอ
+                    { //3.1 stock is enough can production
+                        if (sumStockCstmPO > 0)
+                            t.cutStock_CstmPO(data.DocId, ref useQAll);
+                        if (useQAll > 0 && sumStockFree > 0)
+                            t.cutStock_Free(data.DocId, ref useQAll, ref sReserve);
+                    }
+                    else
+                    { //RM ไม่พอ ไม่ผลิต แต่ต้องคำนวนสั่งซื้อ หรือผลิต
+                        var tool = db.mh_Items.Where(x => x.InternalNo == b.Component).FirstOrDefault();
+                        var cd = new calPartData
+                        {
+                            DocId = data.DocId,
+                            DocNo = data.DocNo,
+                            ItemNo = b.Component,
+                            repType = baseClass.getRepType(tool.ReplenishmentType),
+                            ReqDate = data.ReqDate,
+                            ReqQty = useQAll,
+                            mainNo = gPlan.mainNo,
+                            UOM = t.BaseUOM,
+                            PCSUnit = t.PCSUnit_BaseUOM,
+                        };
+                        calPart_19(cd);
+                        RMready = false;
+                    }
+                }
+
+                if (data.alreadyJob) return null; //สร้าง job ไปแล้วไม่ทำ plan
+                if (!RMready) return null; //RM ไม่พอไม่ทำ plan
+                if (this.MRP) return null; //ไม่คำนวน production เพราะทำแค่ MRP
+
+                DateTime? finalStartingDate = null; //วันเริ่มงานจริงๆ
+                DateTime? finalEndingDate = null; //วันสิ้นสุด
+
+                DateTime? tempStarting = null;
+
+                //find Duedate from P/O, P/R
+                var pr = db.mh_PurchaseRequestLines.Where(x => x.SS == 1 && x.idCstmPODt != null && x.idCstmPODt == data.DocId)
+                    .Join(db.mh_PurchaseRequests.Where(x => x.Status != "Cancel")
+                    , dt => dt.PRNo
+                    , hd => hd.PRNo
+                    , (dt, hd) => new { hd, dt }).ToList();
+                foreach (var p in pr)
+                {
+                    //already Create P/O
+                    if (p.dt.RefPOid > 0)
+                    {
+                        var po = db.mh_PurchaseOrderDetails.Where(x => x.id == p.dt.RefPOid && x.SS == 1)
+                            .Join(db.mh_PurchaseOrders.Where(x => x.Status != "Cancel")
+                            , dt => dt.PONo
+                            , hd => hd.PONo
+                            , (dt, hd) => new { hd, dt }).ToList();
+                        if (po.Count > 0)
+                        {
+                            var tdate = tempStarting = po.Max(x => x.dt.DeliveryDate.Value.Date);
+                            if (tempStarting == null || tempStarting < tdate)
+                                tempStarting = tdate;
+                        }
+                        else
+                        {//not found P/O
+                            var tdate = tempStarting = p.dt.DeliveryDate.Value.Date;
+                            if (tempStarting == null || tempStarting < tdate)
+                                tempStarting = tdate;
+                        }
+                    }
+                    //not Create P/O
+                    else
+                    {
+                        var tdate = tempStarting = p.dt.DeliveryDate.Value.Date;
+                        if (tempStarting == null || tempStarting < tdate)
+                            tempStarting = tdate;
+                    }
+                }
+                //find Duedate from SEMI
+                var prod = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == data.DocId).ToList();
+                if (prod.Count > 0)
+                {
+                    var sDate = prod.Max(x => x.EndingDate).Date.AddDays(1);
+                    if (tempStarting < sDate)
+                        tempStarting = sDate;
+                }
+
+                //วน Routing ของ Item นั้น
+                var rt = db.mh_RoutingDTs.Where(x => x.RoutingId == tdata.Routeid)
+                    .Join(db.mh_WorkCenters.Where(x => x.Active)
+                    , hd => hd.idWorkCenter
+                    , workcenter => workcenter.id
+                    , (hd, workcenter)
+                    => new { hd, hd.idWorkCenter, hd.id, hd.SetupTime, hd.RunTime, hd.WaitTime, workcenter })
+                    .ToList();
+                //หา Capa Hr ที่น้อยที่สุด
+                var minCapa = 0.00m;
+                if (rt.Count > 0)
+                {
+
+                }
+
+            }
+
 
             return gPlan;
         }

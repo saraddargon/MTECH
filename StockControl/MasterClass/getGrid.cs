@@ -495,9 +495,7 @@ namespace StockControl
                         s1.StockAll += s.Qty.ToDecimal();
                     }
                 }
-
-                if (this.ItemNo == "TBK-T-0001")
-                { }
+                
                 //var m = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1)
                 //    .Join(db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && x.genPR
                 //        && x.ItemNo == this.ItemNo && x.OutQty > 0)
