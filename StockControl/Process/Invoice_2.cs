@@ -2332,36 +2332,46 @@ namespace StockControl
             try
             {
 
-                
+                txtAddress.Text = "";
+                txtEmail.Text = "";
+                txtFax.Text = "";
+                txtTel.Text = "";
+                txtContactName.Text = "";
+                txtCSTMNo.Text = "";
                 if (!cboCustomer.Text.Equals(""))
                 {
                     txtAddress.Text = "";
                     txtEmail.Text = "";
                     txtFax.Text = "";
                     txtTel.Text = "";
+                    txtContactName.Text = "";
+                    txtCSTMNo.Text = "";
                     using (DataClasses1DataContext db = new DataClasses1DataContext())
                     {
-                        var cm = db.mh_CustomerContacts.ToList();
-                        if (cm.Count > 0)
-                        {
-                            foreach (var rd in cm)
-                            {
-                                // txtAddress.Text =
-                                txtContactName.Text = rd.ContactName;
-                                txtEmail.Text = rd.Email;
-                                txtFax.Text = rd.Fax;
-                                txtTel.Text = rd.Tel;
-                               
-                               
-                            }
-                        }
-
+                     
                         mh_Customer mc = db.mh_Customers.Where(c => c.Name == cboCustomer.Text).FirstOrDefault();
                         if(mc!=null)
                         {
                             txtAddress.Text = mc.ShippingAddress;
                             txtCSTMNo.Text = mc.No;
                             txtTax_identification_number.Text = mc.VatRegisNo;
+                            txtFax.Text = mc.FaxNo;
+                            txtTel.Text = mc.PhoneNo;
+                            txtContactName.Text = mc.ContactName;
+                            
+                            //var cm = db.mh_CustomerContacts.Where(ab=>ab.idCustomer== Convert.ToInt16(mc.id) && Convert.ToBoolean(ab.Active)==true && Convert.ToBoolean(ab.Def)==true).ToList();
+                            //if (cm.Count > 0)
+                            //{
+                            //    foreach (var rd in cm)
+                            //    {
+                            //        // txtAddress.Text =
+                            //        txtContactName.Text = rd.ContactName;
+                            //        txtEmail.Text = rd.Email;
+                            //        txtFax.Text = rd.Fax;
+                            //        txtTel.Text = rd.Tel;
+
+                            //    }
+                            //}
                         }
 
                     }
