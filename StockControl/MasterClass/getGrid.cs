@@ -183,7 +183,10 @@ namespace StockControl
         public string Status
         {
             get {
-                if (DueDate.Date > ReqDate.Date)
+
+                if (RM_BackOrder)
+                    return "Waiting Receive Order";
+                else if (DueDate.Date > ReqDate.Date)
                     return "Over Due";
                 else
                     return "OK";
@@ -233,6 +236,8 @@ namespace StockControl
         public int mainNo { get; set; } = 0;
         public int refNo { get; set; } = 0;
 
+        public bool RM_BackOrder { get; set; } = false;
+
         public ItemData itemData { get; set; }
     }
 
@@ -253,6 +258,8 @@ namespace StockControl
     {
         public string ItemNo { get; set; }
         public string ItemName { get; set; }
+        public string CustomerPartNo { get; set; }
+        public string CustomerPartName { get; set; }
         public ReorderType ReorderType { get; set; }
         public decimal QtyOnHand { get; set; } //Stock Free
         public decimal QtyOnHand_Backup { get; private set; } //Stock Free
@@ -308,6 +315,8 @@ namespace StockControl
                 { }
 
                 this.ItemName = t.InternalName;
+                this.CustomerPartNo = t.CustomerPartNo;
+                this.CustomerPartName = t.CustomerPartName;
                 this.ReorderType = baseClass.getReorderType(t.ReorderType);
                 this.SafetyStock = t.SafetyStock;
                 this.ReorderPoint = t.ReorderPoint.ToDecimal();
@@ -496,8 +505,6 @@ namespace StockControl
                     }
                 }
 
-                if (this.ItemNo == "TBK-T-0001")
-                { }
                 //var m = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1)
                 //    .Join(db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && x.genPR
                 //        && x.ItemNo == this.ItemNo && x.OutQty > 0)
@@ -532,6 +539,14 @@ namespace StockControl
             var a = stockCustomerPO.Where(x => x.idCstmPODt == idCstmPODt && x.StockAll > 0).ToList();
             if (a.Count > 0)
                 ret = a.Sum(x => x.StockAll);
+            return ret;
+        }
+        public decimal findBackOrder_CustomerPO(int idCstmPODt)
+        {
+            var ret = 0.00m;
+            var a = stockCustomerPO.Where(x => x.idCstmPODt == idCstmPODt && x.StockAll > 0).ToList();
+            if (a.Count > 0)
+                ret = a.Sum(x => x.BackOrder);
             return ret;
         }
         public decimal findStock_Free()

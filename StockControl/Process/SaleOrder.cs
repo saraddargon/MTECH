@@ -322,7 +322,9 @@ namespace StockControl
                                         , "T"
                                         , c.FirstOrDefault().genPR
                                         , c.FirstOrDefault().forSafetyStock
-                                        , dd.FirstOrDefault().CustomerNo);
+                                        , dd.FirstOrDefault().CustomerNo
+                                        , t.FirstOrDefault().CustomerPartNo
+                                        , t.FirstOrDefault().CustomerPartName);
 
                                     cbbCSTM.Enabled = false;
                                 }
@@ -818,6 +820,8 @@ namespace StockControl
                     gg.forSafetyStock = false;
                     gg.OutQty = ix.Cells["OutQty"].Value.ToDecimal();
                     gg.ReqDate = ix.Cells["ReqDate"].Value.ToDateTime().Value.Date;
+                    gg.CustomerPartNo = ix.Cells["CustomerPartNo"].Value.ToSt();
+                    gg.CustomerPartName = ix.Cells["CustomerPartName"].Value.ToSt();
 
                     db.SubmitChanges();
 
@@ -942,7 +946,8 @@ namespace StockControl
                                 var cc = db.mh_Customers.Where(x => x.No == txtCSTMNo.Text).First();
                                 addRow(e.RowIndex, DateTime.Now, t.InternalNo, t.InternalName, "", "Warehouse"
                                     , 1, t.BaseUOM, pcsunit, 0, 0, false, 1 * pcsunit, 1 * pcsunit, 1 * pcsunit, 0
-                                    , "Waiting", "Waiting", cc.VatGroup, t.VatType, "", 0, t.ReplenishmentType, "T", false, false, "");
+                                    , "Waiting", "Waiting", cc.VatGroup, t.VatType, "", 0, t.ReplenishmentType, "T", false, false, ""
+                                    , t.CustomerPartNo, t.CustomerPartName);
                             }
                             else
                             {
@@ -996,7 +1001,7 @@ namespace StockControl
             , bool PriceIncVat, decimal OutShip, decimal OutPlan, decimal OutQty, int id
             , string Status, string PlanStatus, int VatGroup, string VatType
             , string RefDocNo, int RefId, string RepType, string dgvC, bool genPR, bool forSafetyStock
-            , string CSTMNo)
+            , string CSTMNo, string CustomerPartNo, string CustomerPartName)
         {
             var rowE = dgvData.Rows[rowIndex];
             try
@@ -1025,6 +1030,8 @@ namespace StockControl
                 rowE.Cells["genPR"].Value = genPR;
                 rowE.Cells["forSafetyStock"].Value = forSafetyStock;
                 rowE.Cells["CSTMNo"].Value = CSTMNo;
+                rowE.Cells["CustomerPartNo"].Value = CustomerPartNo;
+                rowE.Cells["CustomerPartName"].Value = CustomerPartName;
 
                 SetRowNo1(dgvData);
 
@@ -1298,7 +1305,7 @@ namespace StockControl
                         addRow(rowE.Index, DateTime.Now, itemNo, t.InternalName, "", "Warehouse"
                             , 1, t.SalesUOM, u, p, p, false, outso, outplan, outqty
                             , 0, "Waiting", "Waiting", cstm.VatGroup, t.VatType, "", 0, t.ReplenishmentType
-                            , "T", false, false, "");
+                            , "T", false, false, "", t.CustomerPartNo, t.CustomerPartName);
                     }
                     SetRowNo1(dgvData);
                     CallTotal();
@@ -1428,7 +1435,9 @@ namespace StockControl
                                             , dbClss.TInt(c.FirstOrDefault().id)
                                             , dbClss.TSt(t.FirstOrDefault().ReplenishmentType)
                                             , "T"
-                                            , false, false, dd.FirstOrDefault().CustomerNo);
+                                            , false, false, dd.FirstOrDefault().CustomerNo
+                                            , t.FirstOrDefault().CustomerPartNo
+                                            , t.FirstOrDefault().CustomerPartName);
 
                                     }
                                 }
