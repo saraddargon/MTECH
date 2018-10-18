@@ -361,6 +361,7 @@ namespace StockControl
                         txtSeqStatus.Text = dbClss.TInt(g.FirstOrDefault().SeqStatus).ToSt();
                         txtVersion.Text = dbClss.TSt(g.FirstOrDefault().Version);
                         txtQuotation.Text = dbClss.TSt(g.FirstOrDefault().Quotation);
+                        txtRate.Text = dbClss.TSt(g.FirstOrDefault().Rate);
 
                         cbvatDetail.Checked = StockControl.dbClss.TBo(g.FirstOrDefault().VatDetail);
                         if (StockControl.dbClss.TDe(txtVat.Text) > 0)
