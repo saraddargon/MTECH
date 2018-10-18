@@ -73,7 +73,7 @@ namespace StockControl
             });
 
             dgvData.AutoGenerateColumns = false;
-
+            ddlStatus.SelectedIndex = 1;
 
             DataLoad();
         }

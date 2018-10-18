@@ -165,7 +165,7 @@
             // 
             radListDataItem1.Text = "1.179.133.222,2018";
             radListDataItem2.Text = "FILE_SERVER";
-            radListDataItem3.Text = "110.170.161.35";
+            radListDataItem3.Text = "110.170.161.34";
             this.ddlServer.Items.Add(radListDataItem1);
             this.ddlServer.Items.Add(radListDataItem2);
             this.ddlServer.Items.Add(radListDataItem3);
