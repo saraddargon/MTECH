@@ -744,6 +744,7 @@ namespace StockControl
                             ).OrderBy(x => x.CreateDate).ToList();
                         foreach (var s in st)
                         {
+                            string refNo = s.DocNo;
                             rNo++;
                             string sName = "";
                             if (s.DocNo.ToSt().Length > 2)
@@ -753,6 +754,15 @@ namespace StockControl
                                     //receive
                                     var po = db.mh_PurchaseOrders.Where(x => x.PONo == s.RefNo).FirstOrDefault();
                                     if (po != null) sName = po.VendorName.ToSt();
+
+                                    //Recieve from invoice
+                                    var rc = db.tb_ReceiveHs.Where(x => x.RCNo == s.DocNo).FirstOrDefault();
+                                    if (rc != null) refNo = rc.InvoiceNo;
+                                    
+                                }
+                                else if(s.DocNo.ToSt().Substring(0, 2) == "PK") //recive job
+                                {
+                                    refNo = s.RefNo;
                                 }
                                 else if (s.DocNo.ToSt().Substring(0, 2) == "")
                                 {
@@ -776,7 +786,7 @@ namespace StockControl
                                 ItemName = tool.InternalName,
                                 dFrom = dtDate1.Value.Date,
                                 dTo = dtDate2.Value.Date,
-                                DocumentRef = s.DocNo,
+                                DocumentRef = refNo,
                                 Location = ddlLocation.Text,
                                 No = rNo,
                                 UOM = tool.BaseUOM,
