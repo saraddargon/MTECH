@@ -486,24 +486,26 @@ namespace StockControl
                         s1.StockAll += aa;
                     }
                 }
-                //**Item เป็น FG หรือ SEMI ที่เป็นลูกเพื่อไปใช้ใน FG จริงๆของ idCstmPODt
-                if (this.InvGroup_enum != InventoryGroup.RM)
-                {
-                    var prod = db.mh_ProductionOrders.Where(x => x.Active && x.FGNo == this.ItemNo).ToList();
-                    foreach (var s in prod)
-                    {
-                        var s1 = stockCustomerPO.Where(x => x.idCstmPODt == s.RefDocId).FirstOrDefault();
-                        if (s1 == null)
-                        {
-                            s1 = new stockForCustomerDt();
-                            s1.ItemNo = s.FGNo;
-                            stockCustomerPO.Add(s1);
-                        }
-                        s1.idCstmPODt = s.RefDocId.ToInt();
-                        s1.StockQty += s.Qty.ToDecimal();
-                        s1.StockAll += s.Qty.ToDecimal();
-                    }
-                }
+                ////**Item เป็น FG หรือ SEMI ที่เป็นลูกเพื่อไปใช้ใน FG จริงๆของ idCstmPODt
+                //if (this.InvGroup_enum != InventoryGroup.RM)
+                //{
+                //    var prod = db.mh_ProductionOrders.Where(x => x.Active && x.FGNo == this.ItemNo).ToList();
+                //    foreach (var s in prod)
+                //    {
+
+                //        var s1 = stockCustomerPO.Where(x => x.idCstmPODt == s.RefDocId).FirstOrDefault();
+                //        if (s1 == null)
+                //        {
+                //            s1 = new stockForCustomerDt();
+                //            s1.ItemNo = s.FGNo;
+                //            stockCustomerPO.Add(s1);
+                //        }
+
+                //        s1.idCstmPODt = s.RefDocId.ToInt();
+                //        s1.StockQty += s.Qty.ToDecimal();
+                //        s1.StockAll += s.Qty.ToDecimal();
+                //    }
+                //}
 
                 //var m = db.mh_CustomerPOs.Where(x => x.Active && x.DemandType == 1)
                 //    .Join(db.mh_CustomerPODTs.Where(x => x.Active && x.forSafetyStock && x.genPR

@@ -52,11 +52,12 @@
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn3 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn4 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn5 = new Telerik.WinControls.UI.GridViewDecimalColumn();
-            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn9 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn6 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn9 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn7 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn8 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn9 = new Telerik.WinControls.UI.GridViewDecimalColumn();
+            Telerik.WinControls.UI.GridViewDecimalColumn gridViewDecimalColumn10 = new Telerik.WinControls.UI.GridViewDecimalColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn10 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn11 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
             Telerik.WinControls.UI.GridViewTextBoxColumn gridViewTextBoxColumn12 = new Telerik.WinControls.UI.GridViewTextBoxColumn();
@@ -358,13 +359,14 @@
             gridViewDecimalColumn3.EnableExpressionEditor = false;
             gridViewDecimalColumn3.FieldName = "ShipQty";
             gridViewDecimalColumn3.FormatString = "{0:N2}";
-            gridViewDecimalColumn3.HeaderText = "Ship Q\'ty";
+            gridViewDecimalColumn3.HeaderText = "Shipment Q\'ty";
             gridViewDecimalColumn3.Name = "ShipQty";
             gridViewDecimalColumn3.Width = 80;
             gridViewDecimalColumn4.EnableExpressionEditor = false;
             gridViewDecimalColumn4.FieldName = "OutShip";
             gridViewDecimalColumn4.FormatString = "{0:N2}";
-            gridViewDecimalColumn4.HeaderText = "Out Shipped";
+            gridViewDecimalColumn4.HeaderText = "Out Shipment";
+            gridViewDecimalColumn4.IsVisible = false;
             gridViewDecimalColumn4.Name = "OutShip";
             gridViewDecimalColumn4.ReadOnly = true;
             gridViewDecimalColumn4.Width = 80;
@@ -375,35 +377,40 @@
             gridViewDecimalColumn5.IsVisible = false;
             gridViewDecimalColumn5.Name = "InvQty";
             gridViewDecimalColumn5.Width = 80;
+            gridViewDecimalColumn6.EnableExpressionEditor = false;
+            gridViewDecimalColumn6.FieldName = "ShippingQty";
+            gridViewDecimalColumn6.HeaderText = "Shipping Q\'ty";
+            gridViewDecimalColumn6.Name = "ShippingQty";
+            gridViewDecimalColumn6.Width = 100;
             gridViewTextBoxColumn9.EnableExpressionEditor = false;
             gridViewTextBoxColumn9.FieldName = "Unit";
             gridViewTextBoxColumn9.HeaderText = "Unit";
             gridViewTextBoxColumn9.Name = "Unit";
             gridViewTextBoxColumn9.Width = 65;
-            gridViewDecimalColumn6.EnableExpressionEditor = false;
-            gridViewDecimalColumn6.FieldName = "PCSUnit";
-            gridViewDecimalColumn6.HeaderText = "PCSUnit";
-            gridViewDecimalColumn6.IsVisible = false;
-            gridViewDecimalColumn6.Name = "PCSUnit";
             gridViewDecimalColumn7.EnableExpressionEditor = false;
-            gridViewDecimalColumn7.FieldName = "UnitPrice";
-            gridViewDecimalColumn7.FormatString = "{0:N2}";
-            gridViewDecimalColumn7.HeaderText = "Price/Unit";
+            gridViewDecimalColumn7.FieldName = "PCSUnit";
+            gridViewDecimalColumn7.HeaderText = "PCSUnit";
             gridViewDecimalColumn7.IsVisible = false;
-            gridViewDecimalColumn7.Name = "UnitPrice";
-            gridViewDecimalColumn7.Width = 69;
+            gridViewDecimalColumn7.Name = "PCSUnit";
             gridViewDecimalColumn8.EnableExpressionEditor = false;
-            gridViewDecimalColumn8.FieldName = "Amount";
+            gridViewDecimalColumn8.FieldName = "UnitPrice";
             gridViewDecimalColumn8.FormatString = "{0:N2}";
-            gridViewDecimalColumn8.HeaderText = "Amount";
+            gridViewDecimalColumn8.HeaderText = "Price/Unit";
             gridViewDecimalColumn8.IsVisible = false;
-            gridViewDecimalColumn8.Name = "Amount";
-            gridViewDecimalColumn8.Width = 83;
+            gridViewDecimalColumn8.Name = "UnitPrice";
+            gridViewDecimalColumn8.Width = 69;
             gridViewDecimalColumn9.EnableExpressionEditor = false;
-            gridViewDecimalColumn9.FieldName = "OutSO";
-            gridViewDecimalColumn9.HeaderText = "OutSO";
+            gridViewDecimalColumn9.FieldName = "Amount";
+            gridViewDecimalColumn9.FormatString = "{0:N2}";
+            gridViewDecimalColumn9.HeaderText = "Amount";
             gridViewDecimalColumn9.IsVisible = false;
-            gridViewDecimalColumn9.Name = "OutSO";
+            gridViewDecimalColumn9.Name = "Amount";
+            gridViewDecimalColumn9.Width = 83;
+            gridViewDecimalColumn10.EnableExpressionEditor = false;
+            gridViewDecimalColumn10.FieldName = "OutSO";
+            gridViewDecimalColumn10.HeaderText = "OutSO";
+            gridViewDecimalColumn10.IsVisible = false;
+            gridViewDecimalColumn10.Name = "OutSO";
             gridViewTextBoxColumn10.EnableExpressionEditor = false;
             gridViewTextBoxColumn10.FieldName = "Status";
             gridViewTextBoxColumn10.HeaderText = "Status";
@@ -476,11 +483,12 @@
             gridViewDecimalColumn3,
             gridViewDecimalColumn4,
             gridViewDecimalColumn5,
-            gridViewTextBoxColumn9,
             gridViewDecimalColumn6,
+            gridViewTextBoxColumn9,
             gridViewDecimalColumn7,
             gridViewDecimalColumn8,
             gridViewDecimalColumn9,
+            gridViewDecimalColumn10,
             gridViewTextBoxColumn10,
             gridViewTextBoxColumn11,
             gridViewTextBoxColumn12,

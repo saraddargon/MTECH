@@ -703,7 +703,8 @@ namespace StockControl
                             var outQ = m.OutQty;
                             var recQ = 0.00m;// oldQ - outQ;
                             if (dgvReceiveFG.Rows.Where(x => x.Cells["ReceiveType"].Value.ToSt() == "รับจากใบผลิต").Count() > 0)
-                                recQ = dgvReceiveFG.Rows.Where(x => x.Cells["ReceiveType"].Value.ToSt() == "รับจากใบผลิต").Sum(x => x.Cells["Qty"].Value.ToDecimal());
+                                recQ = dgvReceiveFG.Rows.Where(x => x.Cells["ReceiveType"].Value.ToSt() == "รับจากใบผลิต" && x.Cells["Status"].Value.ToSt() != "Cancel")
+                                    .Sum(x => x.Cells["Qty"].Value.ToDecimal());
                             m.Qty = newQ;
                             m.OutQty = newQ - recQ;
                             var so = db.mh_SaleOrderDTs.Where(x => x.id == m.RefDocId).FirstOrDefault();

@@ -1272,51 +1272,51 @@ namespace StockControl
 
                 DateTime? tempStarting = null;
 
-                //find Duedate from P/O, P/R
-                var pr = db.mh_PurchaseRequestLines.Where(x => x.SS == 1 && x.idCstmPODt != null && x.idCstmPODt == data.DocId)
-                    .Join(db.mh_PurchaseRequests.Where(x => x.Status != "Cancel")
-                    , dt => dt.PRNo
-                    , hd => hd.PRNo
-                    , (dt, hd) => new { hd, dt }).ToList();
-                foreach (var p in pr)
-                {
-                    //already Create P/O
-                    if (p.dt.RefPOid > 0)
-                    {
-                        var po = db.mh_PurchaseOrderDetails.Where(x => x.id == p.dt.RefPOid && x.SS == 1)
-                            .Join(db.mh_PurchaseOrders.Where(x => x.Status != "Cancel")
-                            , dt => dt.PONo
-                            , hd => hd.PONo
-                            , (dt, hd) => new { hd, dt }).ToList();
-                        if (po.Count > 0)
-                        {
-                            var tdate = tempStarting = po.Max(x => x.dt.DeliveryDate.Value.Date);
-                            if (tempStarting == null || tempStarting < tdate)
-                                tempStarting = tdate;
-                        }
-                        else
-                        {//not found P/O
-                            var tdate = tempStarting = p.dt.DeliveryDate.Value.Date;
-                            if (tempStarting == null || tempStarting < tdate)
-                                tempStarting = tdate;
-                        }
-                    }
-                    //not Create P/O
-                    else
-                    {
-                        var tdate = tempStarting = p.dt.DeliveryDate.Value.Date;
-                        if (tempStarting == null || tempStarting < tdate)
-                            tempStarting = tdate;
-                    }
-                }
-                //find Duedate from SEMI
-                var prod = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == data.DocId).ToList();
-                if (prod.Count > 0)
-                {
-                    var sDate = prod.Max(x => x.EndingDate).Date.AddDays(1);
-                    if (tempStarting < sDate)
-                        tempStarting = sDate;
-                }
+                ////find Duedate from P/O, P/R
+                //var pr = db.mh_PurchaseRequestLines.Where(x => x.SS == 1 && x.idCstmPODt != null && x.idCstmPODt == data.DocId)
+                //    .Join(db.mh_PurchaseRequests.Where(x => x.Status != "Cancel")
+                //    , dt => dt.PRNo
+                //    , hd => hd.PRNo
+                //    , (dt, hd) => new { hd, dt }).ToList();
+                //foreach (var p in pr)
+                //{
+                //    //already Create P/O
+                //    if (p.dt.RefPOid > 0)
+                //    {
+                //        var po = db.mh_PurchaseOrderDetails.Where(x => x.id == p.dt.RefPOid && x.SS == 1)
+                //            .Join(db.mh_PurchaseOrders.Where(x => x.Status != "Cancel")
+                //            , dt => dt.PONo
+                //            , hd => hd.PONo
+                //            , (dt, hd) => new { hd, dt }).ToList();
+                //        if (po.Count > 0)
+                //        {
+                //            var tdate = tempStarting = po.Max(x => x.dt.DeliveryDate.Value.Date);
+                //            if (tempStarting == null || tempStarting < tdate)
+                //                tempStarting = tdate;
+                //        }
+                //        else
+                //        {//not found P/O
+                //            var tdate = tempStarting = p.dt.DeliveryDate.Value.Date;
+                //            if (tempStarting == null || tempStarting < tdate)
+                //                tempStarting = tdate;
+                //        }
+                //    }
+                //    //not Create P/O
+                //    else
+                //    {
+                //        var tdate = tempStarting = p.dt.DeliveryDate.Value.Date;
+                //        if (tempStarting == null || tempStarting < tdate)
+                //            tempStarting = tdate;
+                //    }
+                //}
+                ////find Duedate from SEMI
+                //var prod = db.mh_ProductionOrders.Where(x => x.Active && x.RefDocId == data.DocId).ToList();
+                //if (prod.Count > 0)
+                //{
+                //    var sDate = prod.Max(x => x.EndingDate).Date.AddDays(1);
+                //    if (tempStarting < sDate)
+                //        tempStarting = sDate;
+                //}
 
                 //วน Routing ของ Item นั้น
                 var rt = db.mh_RoutingDTs.Where(x => x.RoutingId == tdata.Routeid && x.Active)

@@ -88500,6 +88500,8 @@ namespace StockControl
 		
 		private System.Nullable<decimal> _ShipQty;
 		
+		private decimal _ShippingQty;
+		
 		private decimal _OutShip;
 		
 		private int _InvQty;
@@ -88696,6 +88698,22 @@ namespace StockControl
 				if ((this._ShipQty != value))
 				{
 					this._ShipQty = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShippingQty", DbType="Decimal(19,2) NOT NULL")]
+		public decimal ShippingQty
+		{
+			get
+			{
+				return this._ShippingQty;
+			}
+			set
+			{
+				if ((this._ShippingQty != value))
+				{
+					this._ShippingQty = value;
 				}
 			}
 		}
