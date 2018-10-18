@@ -41,22 +41,53 @@ namespace StockControl
             try
             {
                 //string FilePaht = Properties.Settings.Default.dbStockControlConnectionString3;
-                string FilePaht = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Setting.xml");
-                try
+                //string FilePaht = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Setting.xml");
+
+                string FilePaht = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Setting.xml");
+                if (!System.IO.File.Exists(FilePaht))
                 {
-                    //MessageBox.Show(FilePaht);
-                    if (System.IO.File.Exists(FilePaht))
+                    try
                     {
-                        //MessageBox.Show("YES");
-                        System.IO.File.Copy(AppDomain.CurrentDomain.BaseDirectory + "Setting.xml", FilePaht, true);
+                        StringBuilder sb = new StringBuilder();
+                        sb.Remove(0, sb.Length);
+                        sb.Append("<?xml version='1.0' encoding='utf-8' ?>");
+                        sb.Append("<configuration>");
+                        sb.Append("<server>" + server + "</server>");
+                        sb.Append("<dbname>" + dbname + "</dbname>");
+                        //sb.Append("<dbnameJTEKT>" + DbJTekt + "</dbnameJTEKT>");
+                        sb.Append("<userdb>" + Userdb + "</userdb>");
+                        sb.Append("<passdb>" + PassDb + "</passdb>");
+                        sb.Append("<user>" + user + "</user>");
+                        sb.Append("</configuration>");
+                        string StrXml = sb.ToString();
+                        XElement xe = XElement.Parse(StrXml);
+                        xe.Save(FilePaht);
+                        //if (chk == 0)
+                        //    MessageBox.Show("Save Completed");
+                        sb = null;
+                        xe = null;
+                        StrXml = null;
+                        //GetSqlconn();
                     }
-                    else
+                    catch 
                     {
-                        // MessageBox.Show("NO");
-                        System.IO.File.Copy(AppDomain.CurrentDomain.BaseDirectory + "Setting.xml", FilePaht, true);
                     }
                 }
-                catch { }
+                //try
+                //{
+                //    //MessageBox.Show(FilePaht);
+                //    if (System.IO.File.Exists(FilePaht))
+                //    {
+                //        //MessageBox.Show("YES");
+                //        System.IO.File.Copy(AppDomain.CurrentDomain.BaseDirectory + "Setting.xml", FilePaht, true);
+                //    }
+                //    else
+                //    {
+                //        // MessageBox.Show("NO");
+                //        System.IO.File.Copy(AppDomain.CurrentDomain.BaseDirectory + "Setting.xml", FilePaht, true);
+                //    }
+                //}
+                //catch { }
 
                 // XElement Setting2 = XElement.Load(AppDomain.CurrentDomain.BaseDirectory + "Setting.xml");
                 XElement Setting2 = XElement.Load(FilePaht);
@@ -88,7 +119,8 @@ namespace StockControl
                 //  <passdb></passdb>
                 //  <user></user>
                 //</configuration>
-                string FilePaht = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Setting.xml");
+                //string FilePaht = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Setting.xml");
+                string FilePaht = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Setting.xml");
 
                 StringBuilder sb = new StringBuilder();
                 sb.Remove(0, sb.Length);
