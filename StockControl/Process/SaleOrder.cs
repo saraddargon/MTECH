@@ -896,6 +896,48 @@ namespace StockControl
                 {
                     beginItem = itemNo;
                 }
+
+                //return;
+                ////**เปลี่ยน Qty ได้
+                //if (txtSOStatus.Text != "Waiting")
+                //{
+                //    if (e.Column.Name.Equals("Qty"))
+                //    {
+
+                //    }
+                //    else
+                //    {
+                //        e.Cancel = true;
+                //        return;
+                //    }
+                //}
+                //else
+                //{
+                //    //string itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
+                //    if (e.Column.Name.Equals("UOM"))
+                //    {
+                //        using (var db = new DataClasses1DataContext())
+                //        {
+                //            if (e.Row.Cells["RefDocNo"].Value.ToSt() == "")
+                //            {
+                //                var unit = db.mh_ItemUOMs.Where(x => x.ItemNo == itemNo).ToList();
+                //                unit = unit.Where(x => x.Active.ToBool()).ToList();
+                //                var c1 = dgvData.Columns["UOM"] as GridViewComboBoxColumn;
+                //                //c1.ValueMember = "UOMCode";
+                //                //c1.DisplayMember = "UOMCode";
+                //                //c1.DataSource = unit;
+                //                c1.DataSource = unit.Select(x => x.UOMCode).ToList();
+                //            }
+                //            else //มาจาก Customer P/O ไม่สามารถเปลี่ยนหน่วยได้
+                //                e.Cancel = true;
+                //        }
+                //    }
+                //    else if (e.Column.Name.Equals("ItemNo"))
+                //    {
+                //        beginItem = itemNo;
+                //    }
+                //}
+
             }
         }
         private void radGridView1_CellEndEdit(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
