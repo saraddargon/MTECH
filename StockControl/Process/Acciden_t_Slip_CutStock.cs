@@ -1177,7 +1177,7 @@ namespace StockControl
                                 if (idCSTMPODt > 0) Free = 0;
                                 //else if (idCSTMPODt == 0) Free = 1;
 
-                                e.Row.Cells["UnitCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
+                                e.Row.Cells["UnitCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), Temp, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
                             }
                             e.Row.Cells["Qty"].Value = Math.Round(Temp, 2);
                         }
@@ -1232,12 +1232,17 @@ namespace StockControl
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
                             int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
-                            string Category = "Invoice";
-                            if (idCSTMPODt > 0) Category = "CstmPOID";
-                            else if (idCSTMPODt == 0) Category = "SafetyStock";
+                            //string Category = "Invoice";
+                            //if (idCSTMPODt > 0) Category = "CstmPOID";
+                            //else if (idCSTMPODt == 0) Category = "SafetyStock";
 
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value)
-                                , Category, 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
+                            decimal RemainQty1 = 0;
+                            RemainQty1 = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value)
+                                , "SafetyStock", 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
+                            RemainQty1 += (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value)
+                                , "Free", 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
+
+                            e.Row.Cells["RemainQty"].Value = RemainQty1;
 
 
                             string dgvUOM = dbClss.TSt(e.Row.Cells["UnitShip"].Value);
@@ -1646,7 +1651,9 @@ namespace StockControl
                                 GroupType = dbClss.TSt(p.FirstOrDefault().GroupType);
                                 Type = dbClss.TSt(p.FirstOrDefault().Type);
                             }
-                            RemainQty =dbClss.TDe(db.Cal_QTY_Remain_Location(vv.CodeNo, "SafetyStock", 0, vv.Location, 0));
+
+                            RemainQty = dbClss.TDe(db.Cal_QTY_Remain_Location(vv.CodeNo, "SafetyStock", 0, vv.Location, 0));
+                            RemainQty += dbClss.TDe(db.Cal_QTY_Remain_Location(vv.CodeNo, "Free", 0, vv.Location, 0));
 
                             Add_Item(dgvNo, vv.CodeNo, vv.ItemNo, vv.ItemDescription
                                             , RemainQty, dbClss.TDe(vv.OutShip), dbClss.TDe(vv.OutShip)
