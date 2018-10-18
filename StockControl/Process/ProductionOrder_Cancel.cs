@@ -383,7 +383,7 @@ namespace StockControl
                             if (rec.Count > 0) recQ = rec.Sum(x => x.dt.Qty);
                             m.OutQty = newQ - recQ;
                         }
-                        
+
 
                         db.SubmitChanges();
                         txtSPNo.Text = m.DocNo;
@@ -744,9 +744,10 @@ namespace StockControl
 
         private void btnSendApprove_Click(object sender, EventArgs e)
         {
-            if (txtSeqStatus.Text.ToInt() <= 1)
+            using (var db = new DataClasses1DataContext())
             {
-                using (var db = new DataClasses1DataContext())
+                var a = db.mh_ProductionOrder_CancelQties.Where(x => x.DocNo == txtSPNo.Text.Trim() && x.Active).ToList();
+                if (a.Count > 0 && txtSeqStatus.Text.ToInt() <= 1)
                 {
                     if (baseClass.IsSendApprove())
                     {
@@ -755,9 +756,9 @@ namespace StockControl
                         DataLoad();
                     }
                 }
+                else
+                    baseClass.Warning("สถานะไม่สามารถส่ง Approve ได้.\n");
             }
-            else
-                baseClass.Warning("สถานะไม่สามารถส่ง Approve ได้.\n");
         }
 
         private void radLabel4_Click(object sender, EventArgs e)

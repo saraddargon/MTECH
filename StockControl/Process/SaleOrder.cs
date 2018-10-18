@@ -1558,7 +1558,8 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    if (lblStatus.Text == "Waiting" || lblStatus.Text == "Waiting Approve")
+                    var so = db.mh_SaleOrders.Where(x => x.Active && x.SONo.Equals(txtSONo.Text.Trim())).ToList();
+                    if (so.Count > 0 && (lblStatus.Text == "Waiting" || lblStatus.Text == "Waiting Approve"))
                     {
                         if (baseClass.IsSendApprove())
                         {
