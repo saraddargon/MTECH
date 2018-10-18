@@ -656,12 +656,13 @@ namespace StockControl
                 //    e.Cancel = true;
                 //    return;
                 //}
-                if (e.Row.Cells["Status"].Value.ToSt() == "Completed")
-                {
-                    e.Cancel = true;
-                    return;
-                }
-                else if (e.Row.Cells["Status"].Value.ToSt() != "Waiting"
+                //if (e.Row.Cells["Status"].Value.ToSt() == "Completed")
+                //{
+                //    e.Cancel = true;
+                //    return;
+                //}
+                //else 
+                if (e.Row.Cells["Status"].Value.ToSt() != "Waiting"
                     && e.Row.Cells["Status"].Value.ToSt() != "")
                 {
                     if (!e.Column.Name.Equals("Qty"))
