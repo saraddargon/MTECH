@@ -117,30 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="gridViewTextBoxColumn1.HeaderImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAA2JJREFUOE91039M1HUcx/HPH4Dtm+ZMzKDGMMbQDI6GTCMZstTyCqfTTewKzEQE
-        MobDGGHWHbo7D7IAd3EHAQ4oa/3UEk1AusOLuyQjLpEMqjXu4sdO8HugUvTs63HNra3P9vrv83i9//i8
-        P2K75ZJnz8c/+9QGq5xZ45Df6PhFLvxi8D8Z8OfVM79PbTFd7A/bfVIS/57nGp03k444mZfWSO6HP1I/
-        Bkf7pjAq0bt8HO71oe2ROfDdBNrLN8g69StiS2tygAuhqXPIcSVWpLW1ZNR1Uzb4F8VOL0UOL4XfeCm4
-        MMbLtjFyOkYo6PKypsHNyhffWxzgQjxf65BVxVbmrrWgqe1GP/CnH+9XLhfYx8hXcJ6Cc84Ps7d7ikWG
-        q7ccx1LaZurjTwwlhElCY3HIsftbuTvVRHpNN7r+6VmoTH7JOqrAEbJbPeTZvMRUj3LgyyGmu5q5phJM
-        Ri7oFttNDnl5wVnmJley1XyR1/puKXDEPzW7fZisdg+7rWM8XAPGtjIYWsjl8WlcehPX5gnENqNDjsk7
-        jZT0FptNTop+uEF2mwJbh9n5lZtdSkmMBcrOVQJBcEXgLAvn80EffekbVwi1sUuOzjnFnMfeZGNlF/su
-        TSrQw46zbjLPjRJdDQY/FvzdG4K3cSnuIkFPy57Zl1Ab7fKSXZ8RknAEdYWdPKcPTcsQmjPK5Dqo+rbK
-        j2dcwVxvjKLnlcVcyReb/Pj2URs75YiMjwh+VM+6o51k2a+TftpNfJNMhXN28kxvMBMNkUwcnEPspoNE
-        pemWB7hSYLDJD2jeJ0hVSqrRRqZtnKQPZHI/OTmLvxd+7C0J5onCYywo9xCUcnxFgAuxQVnh8GebCY7T
-        kaz/mnT7JKpyF38Mj4N3LzSFMF4SREpuOfc3TbNM2drQ1IqEAL9TEKLSsepwO+vtkPR0AViLYbSCDv0q
-        Vr9wiHtrJ3nk+CCR2gv/UxCnZWVZJ4lNo2TMl9iREMPO0ioWal1EmH9jmfknHqq5yoOlXYSuN90pSHvd
-        fvN2wV3xWmJ1Nta0TBBtcLGkeYLwajdLG4aIMg8QUdlP+DuDhO47z6LHDasDXAhV/qee8M0nfFKiTpYS
-        D8n3qetlyZ93ZWlDrSw9VSNLT1qUmOV71lmm5qe83R/2jDnwnYX4B9gaWPTqleiRAAAAAElFTkSuQmCC
-</value>
-  </data>
   <metadata name="office2010BlueTheme1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnFilter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAABrxJREFUSEuN
