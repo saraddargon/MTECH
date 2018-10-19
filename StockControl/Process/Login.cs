@@ -59,8 +59,8 @@ namespace StockControl
             ddlServer.Text = ConnectDB.server;
             txtUserDb.Text = ConnectDB.Userdb;
             txtPassDb.Text = ConnectDB.PassDb;
-            txtUser.Text = "admin";
-            txtPassword.Text = "1234";
+            //txtUser.Text = "admin";
+            //txtPassword.Text = "1234";
 
 
             this.Size = s1;
