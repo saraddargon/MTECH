@@ -179,14 +179,11 @@ namespace StockControl
                         cbVat.Checked = dbClss.TBo(mh.FirstOrDefault().Vat);
                         lblStatus.Text = dbClss.TSt(mh.FirstOrDefault().StatusHD);
                         dt_HD = StockControl.dbClss.LINQToDataTable(mh);
-                        //var deletTemp = db.mh_ShipmentDTTemps.Where(t => t.UserID == ConnectDB.user && t.SSNo == txtSHNo.Text).ToList();
-                        //if (deletTemp.Count > 0)
-                        //{
-                        //    db.mh_ShipmentDTTemps.DeleteAllOnSubmit(deletTemp);
-                        //}
-
+                        
+                        string Status = "";
                         int rows1 = 0;
-                        var list1 = db.mh_ShipmentDTs.Where(w => w.SSNo == txtSHNo.Text && !w.Status.Equals("Cancel")).ToList();
+                        var list1 = db.mh_ShipmentDTs.Where(w => w.SSNo == txtSHNo.Text 
+                        && !w.Status.Equals("Cancel")).ToList();
                         if (list1.Count > 0)
                         {
                             dt_DT = StockControl.dbClss.LINQToDataTable(list1);
@@ -208,36 +205,19 @@ namespace StockControl
                                     rd.Cells["Remain"].Value = dbClss.TDe(v.FirstOrDefault().OutShip);
                                 }
 
+                                Status = dbClss.TSt(rd.Cells["Status"].Value);
+                                if(Status=="Waiting")
+                                {
+                                    rd.Cells["Qty"].ReadOnly = false;
+                                    rd.Cells["UnitPrice"].ReadOnly = false;
+                                }
+                                else
+                                {
+                                    rd.Cells["Qty"].ReadOnly = true;
+                                    rd.Cells["UnitPrice"].ReadOnly = true;
+                                }                                    
                             }
-                            //foreach (var rd in list1)
-                            //{
-                            //    mh_Item im = db.mh_Items.Where(m => m.InternalNo == rd.ItemNo).FirstOrDefault();
-                            //    if (im != null)
-                            //    {
-                            //        rows1 += 1;
-                            //        mh_ShipmentDTTemp st = new mh_ShipmentDTTemp();
-                            //        st.RNo = rows1;
-                            //        st.SSNo = txtSHNo.Text;
-                            //        st.UserID = ClassLib.Classlib.User;
-                            //        st.ItemNo = rd.ItemNo;
-                            //        st.ItemName = rd.ItemName;
-                            //        st.Description = rd.Description;
-                            //        st.Qty = rd.Qty;
-                            //        st.PCSUnit = rd.PCSUnit;
-                            //        st.LocationItem = rd.LocationItem;
-                            //        st.UnitPrice = rd.UnitPrice;
-                            //        st.Amount = rd.Amount;
-                            //        st.Active = true;
-                            //        st.UOM = rd.UOM;
-                            //        st.RefDocNo = rd.RefDocNo;
-                            //        st.RefId = rd.RefId;
-                            //        st.Status = rd.Status;
-                            //        st.OutInv = rd.OutInv;
-
-                            //        db.mh_ShipmentDTTemps.InsertOnSubmit(st);
-                            //        db.SubmitChanges();
-                            //    }
-                            //}
+                           
                             //LoadShipment();
                         }
 
@@ -249,8 +229,16 @@ namespace StockControl
                         btnView.Enabled = false;
                         btnSave.Enabled = false;
                         CallTotal();
-                    }
-                   
+                        if (lblStatus.Text=="Waiting")
+                        {
+                            btnEdit.Enabled = true;
+                            btnView.Enabled = false;
+                            btnSave.Enabled = true;                       
+                            radButton2.Enabled = true;
+                            cboCustomer.Enabled = true;
+                            txtSONo.Enabled = true;
+                        }                        
+                    }                   
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -297,7 +285,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name, "txtPONo.Text");
+            HistoryView hw = new HistoryView(this.Name, txtSHNo.Text);
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }
@@ -375,7 +363,7 @@ namespace StockControl
                 txtFax.Enabled = ss;
                 txtTel.Enabled = ss;
                 txtSONo.Enabled = ss;
-                radButton2.Enabled = ss;
+                radButton2.Enabled = ss;              
 
             }
             else if (Condition.Equals("View"))
@@ -583,7 +571,6 @@ namespace StockControl
                                 }
                                 
                                 db.SubmitChanges();
-
                                 updateOutSO();
 
                                 baseClass.Info("Delete Shipment complete.");
@@ -759,6 +746,36 @@ namespace StockControl
                          select ix).ToList();
                 if (p.Count > 0)  //มีรายการในระบบ
                 {
+                    var sh1 = (from ix in db.mh_Shipments
+                             where ix.SSNo.ToUpper().Trim() == txtSHNo.Text.Trim()
+                             && ix.Active == true
+                             select ix).First();
+                    
+                    //sh1.SSNo = txtSHNo.Text;
+                    sh1.Remark = txtRemark.Text;
+                    sh1.SSDate = dtSODate.Value;
+                    sh1.Tel = txtTel.Text;
+                    sh1.Email = txtEmail.Text;
+                    sh1.Fax = txtFax.Text;
+                    sh1.UpdateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                    sh1.UpdateBy = ConnectDB.user;
+                    //sh1.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                    //sh1.CreateBy = ConnectDB.user;// ClassLib.Classlib.User;
+                    sh1.CustomerNo = CSTMNo;
+                    sh1.CustomerName = cboCustomer.Text;
+                    sh1.CustomerAddress = txtAddress.Text;
+                    sh1.Vat = cbVat.Checked;
+                    sh1.VatA = vatA;
+                    sh1.VatAmnt = vatAmount;
+                    sh1.TotalPrice = totalPrice;
+                    sh1.TotalPriceIncVat = grantotal;
+                    //sh1.StatusHD = "Waiting";
+                    sh1.ContactName = txtContactName.Text;
+                    //sh1.Active = true;
+                    db.SubmitChanges();
+                    dbClss.AddHistory(this.Name, "แก้ไข Shipment", "แก้ไข Shipment [" + txtSHNo.Text + "]", txtSHNo.Text);
+
+
                     //foreach (DataRow row in dt_HD.Rows)
                     //{
                     //    var gg = (from ix in db.mh_Shipments
@@ -791,7 +808,6 @@ namespace StockControl
                     sh1.UpdateBy = ConnectDB.user;
                     sh1.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     sh1.CreateBy = ConnectDB.user;// ClassLib.Classlib.User;
-
                     sh1.CustomerNo = CSTMNo;
                     sh1.CustomerName = cboCustomer.Text;
                     sh1.CustomerAddress = txtAddress.Text;
@@ -805,7 +821,6 @@ namespace StockControl
                     sh1.Active = true;
                     db.mh_Shipments.InsertOnSubmit(sh1);
                     db.SubmitChanges();
-
                     dbClss.AddHistory(this.Name, "เพิ่ม Shipment", "สร้าง Shipment [" + txtSHNo.Text + "]", txtSHNo.Text);
 
                 }
@@ -817,75 +832,204 @@ namespace StockControl
             {
                 ////Addd DT///
                 dgvData.EndEdit();
-                int Refid = 0;
+                //int Refid = 0;
                 foreach (GridViewRowInfo rd in dgvData.Rows)
                 {
-                    if (rd.IsVisible && dbClss.TInt(rd.Cells["id"].Value)==0)
+                    if (rd.IsVisible)
                     {
-                        mh_ShipmentDT sh1 = new mh_ShipmentDT();
-                        sh1.SSNo = txtSHNo.Text;
-                        sh1.RefDocNo = dbClss.TSt(rd.Cells["RefDocNo"].Value);
-                        sh1.RefId = dbClss.TInt(rd.Cells["RefId"].Value);
-                        sh1.ItemName = dbClss.TSt(rd.Cells["ItemName"].Value);
-                        sh1.Active = true;
-                        sh1.Description = dbClss.TSt(rd.Cells["Description"].Value);
-                        sh1.ItemNo = dbClss.TSt(rd.Cells["ItemNo"].Value);
-                        sh1.Qty = dbClss.TDe(rd.Cells["Qty"].Value);
-                        sh1.UOM = dbClss.TSt(rd.Cells["Unit"].Value);
-                        sh1.PCSUnit = dbClss.TDe(rd.Cells["PCSUnit"].Value);
-                        sh1.UnitPrice = dbClss.TDe(rd.Cells["UnitPrice"].Value);
-                        sh1.Amount = dbClss.TDe(rd.Cells["Amount"].Value);
-                        sh1.OutInv = dbClss.TDe(rd.Cells["Qty"].Value);
-                        //sh1.OutPlan = 0;
-                        sh1.OutShip = dbClss.TDe(rd.Cells["Qty"].Value);
-                        sh1.PriceIncVat = cbVat.Checked;
-                        sh1.ReplenishmentType = dbClss.TSt(rd.Cells["ReplenishmentType"].Value);
-                        sh1.RNo = dbClss.TInt(rd.Cells["RNo"].Value);
-                        sh1.VatType = dbClss.TSt(rd.Cells["VatType"].Value);
-                        sh1.DL = false;
-                        sh1.Active = true;
-                        sh1.Status = "Waiting";
-                        sh1.LocationItem = dbClss.TSt(rd.Cells["LocationItem"].Value);
-                        db.mh_ShipmentDTs.InsertOnSubmit(sh1);
-                        db.SubmitChanges();
-                        dbClss.AddHistory(this.Name, "เพิ่ม Shipment", "สร้าง Shipment [ ItemNo : " + dbClss.TSt(rd.Cells["ItemNo"].Value) +" Qty : "+ dbClss.TSt(rd.Cells["Qty"].Value)+" Unit : "+ dbClss.TSt(rd.Cells["Unit"].Value) + "]", txtSHNo.Text);
-
-                        var v = (from ix in db.mh_SaleOrderDTs
-                                 where
-                                           ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
-                                           && ix.OutShip>0 && ix.Active==true
-                                 select ix).ToList();
-                        if (v.Count > 0)
+                        if (rd.IsVisible && dbClss.TInt(rd.Cells["id"].Value) == 0)
                         {
-                            var p = (from ix in db.mh_SaleOrderDTs
-                                     where
-                                        ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
-                                         && ix.OutShip > 0 && ix.Active == true
-                                     select ix).First();
-
-                            p.OutShip = p.OutShip - Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
-                            
-                            dbClss.AddHistory(this.Name, "ปรับสถานะ mh_SaleOrderDTs ", "ปรับ OutShip เพราะมีการทำ Shipment : " + rd.Cells["ItemNo"].ToSt() + " จำนวน : " + (rd.Cells["Qty"].Value.ToSt())
-                            + " SaleOrderDT :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
-                            + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
-
+                            mh_ShipmentDT sh1 = new mh_ShipmentDT();
+                            sh1.SSNo = txtSHNo.Text;
+                            sh1.RefDocNo = dbClss.TSt(rd.Cells["RefDocNo"].Value);
+                            sh1.RefId = dbClss.TInt(rd.Cells["RefId"].Value);
+                            sh1.ItemName = dbClss.TSt(rd.Cells["ItemName"].Value);
+                            sh1.Active = true;
+                            sh1.Description = dbClss.TSt(rd.Cells["Description"].Value);
+                            sh1.ItemNo = dbClss.TSt(rd.Cells["ItemNo"].Value);
+                            sh1.Qty = dbClss.TDe(rd.Cells["Qty"].Value);
+                            sh1.UOM = dbClss.TSt(rd.Cells["Unit"].Value);
+                            sh1.PCSUnit = dbClss.TDe(rd.Cells["PCSUnit"].Value);
+                            sh1.UnitPrice = dbClss.TDe(rd.Cells["UnitPrice"].Value);
+                            sh1.Amount = dbClss.TDe(rd.Cells["Amount"].Value);
+                            sh1.OutInv = dbClss.TDe(rd.Cells["Qty"].Value);
+                            //sh1.OutPlan = 0;
+                            sh1.OutShip = dbClss.TDe(rd.Cells["Qty"].Value);
+                            sh1.PriceIncVat = cbVat.Checked;
+                            sh1.ReplenishmentType = dbClss.TSt(rd.Cells["ReplenishmentType"].Value);
+                            sh1.RNo = dbClss.TInt(rd.Cells["RNo"].Value);
+                            sh1.VatType = dbClss.TSt(rd.Cells["VatType"].Value);
+                            sh1.DL = false;
+                            sh1.Active = true;
+                            sh1.Status = "Waiting";
+                            sh1.LocationItem = dbClss.TSt(rd.Cells["LocationItem"].Value);
+                            db.mh_ShipmentDTs.InsertOnSubmit(sh1);
                             db.SubmitChanges();
-                            db.sp_058_Cal_SaleOrderHD_Status(p.SONo);
+                            dbClss.AddHistory(this.Name, "เพิ่ม Shipment", "สร้าง Shipment [ ItemNo : " + dbClss.TSt(rd.Cells["ItemNo"].Value) + " Qty : " + dbClss.TSt(rd.Cells["Qty"].Value) + " Unit : " + dbClss.TSt(rd.Cells["Unit"].Value) + "]", txtSHNo.Text);
+
+                            var v = (from ix in db.mh_SaleOrderDTs
+                                     where
+                                               ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
+                                               && ix.OutShip > 0 && ix.Active == true
+                                     select ix).ToList();
+                            if (v.Count > 0)
+                            {
+                                var p = (from ix in db.mh_SaleOrderDTs
+                                         where
+                                            ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
+                                             && ix.OutShip > 0 && ix.Active == true
+                                         select ix).First();
+
+                                p.OutShip = p.OutShip - Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
+                                if (p.OutShip < 0)
+                                    p.OutShip = 0;
+
+                                dbClss.AddHistory(this.Name, "ปรับสถานะ mh_SaleOrderDTs ", "ปรับ OutShip เพราะมีการทำ Shipment : " + rd.Cells["ItemNo"].ToSt() + " จำนวน : " + (rd.Cells["Qty"].Value.ToSt())
+                                + " SaleOrderDT :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
+                                + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
+
+                                db.SubmitChanges();
+                                db.sp_058_Cal_SaleOrderHD_Status(p.SONo);
+                            }
+
+
+                            //mh_SaleOrderDT sd = db.mh_SaleOrderDTs
+                            //    .Where(ss => ss.id == Refid).FirstOrDefault();
+                            //if (sd != null)
+                            //{
+                            //    sd.OutShip = sd.OutShip - Math.Round(Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt()) * mtem.PCSUnit, 2);
+                            //     //db.SubmitChanges();
+                            //}
+                            /////////////////////////
+                            ////db.mh_ShipmentDTs.InsertOnSubmit(sd);
+                            //db.SubmitChanges();
                         }
+                        else
+                        {
+                            if (rd.IsVisible && dbClss.TInt(rd.Cells["id"].Value) >= 0
+                                && dbClss.TSt(rd.Cells["Status"].Value) == "Waiting"
+                                )
+                            {
+                                var h = (from ix in db.mh_ShipmentDTs
+                                         where
+                                                   ix.id == Convert.ToInt16(rd.Cells["id"].Value.ToSt())
+                                                   && ix.Status == "Waiting"
+                                                   && ix.Active == true
+                                                   && ix.OutInv == ix.Qty
+                                                   && ix.OutShip == ix.Qty
+                                         select ix).ToList();
+                                {
+                                    decimal Qty_DT = 0;
+                                    foreach (var sh1 in h)
+                                    {
+                                        Qty_DT = dbClss.TDe(sh1.Qty);
+
+                                        sh1.SSNo = txtSHNo.Text;
+                                        sh1.RefDocNo = dbClss.TSt(rd.Cells["RefDocNo"].Value);
+                                        sh1.RefId = dbClss.TInt(rd.Cells["RefId"].Value);
+                                        sh1.ItemName = dbClss.TSt(rd.Cells["ItemName"].Value);
+                                        sh1.Active = true;
+                                        sh1.Description = dbClss.TSt(rd.Cells["Description"].Value);
+                                        sh1.ItemNo = dbClss.TSt(rd.Cells["ItemNo"].Value);
+                                        sh1.Qty = dbClss.TDe(rd.Cells["Qty"].Value);
+                                        sh1.UOM = dbClss.TSt(rd.Cells["Unit"].Value);
+                                        sh1.PCSUnit = dbClss.TDe(rd.Cells["PCSUnit"].Value);
+                                        sh1.UnitPrice = dbClss.TDe(rd.Cells["UnitPrice"].Value);
+                                        sh1.Amount = dbClss.TDe(rd.Cells["Amount"].Value);
+                                        sh1.OutInv = dbClss.TDe(rd.Cells["Qty"].Value);
+                                        sh1.OutShip = dbClss.TDe(rd.Cells["Qty"].Value);
+                                        sh1.PriceIncVat = cbVat.Checked;
+                                        sh1.ReplenishmentType = dbClss.TSt(rd.Cells["ReplenishmentType"].Value);
+                                        sh1.RNo = dbClss.TInt(rd.Cells["RNo"].Value);
+                                        sh1.VatType = dbClss.TSt(rd.Cells["VatType"].Value);
+                                        sh1.DL = false;
+                                        sh1.Active = true;
+                                        sh1.Status = "Waiting";
+                                        sh1.LocationItem = dbClss.TSt(rd.Cells["LocationItem"].Value);
+                                        db.SubmitChanges();
+                                        dbClss.AddHistory(this.Name, "แก้ไข Shipment", "แก้ไข Shipment [ ItemNo : " + dbClss.TSt(rd.Cells["ItemNo"].Value) + " Qty : " + dbClss.TSt(rd.Cells["Qty"].Value) + " Unit : " + dbClss.TSt(rd.Cells["Unit"].Value) + "]", txtSHNo.Text);
 
 
-                        //mh_SaleOrderDT sd = db.mh_SaleOrderDTs
-                        //    .Where(ss => ss.id == Refid).FirstOrDefault();
-                        //if (sd != null)
-                        //{
-                        //    sd.OutShip = sd.OutShip - Math.Round(Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt()) * mtem.PCSUnit, 2);
-                        //     //db.SubmitChanges();
-                        //}
-                        /////////////////////////
-                        ////db.mh_ShipmentDTs.InsertOnSubmit(sd);
-                        //db.SubmitChanges();
+                                        var v = (from ix in db.mh_SaleOrderDTs
+                                                 where
+                                                           ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
+                                                           && ix.OutShip > 0 && ix.Active == true
+                                                 select ix).ToList();
+                                        if (v.Count > 0)
+                                        {
+                                            var p = (from ix in db.mh_SaleOrderDTs
+                                                     where
+                                                        ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
+                                                         && ix.OutShip > 0 && ix.Active == true
+                                                     select ix).First();
+
+                                            p.OutShip = p.OutShip + Qty_DT;
+                                            if (p.Qty < p.OutShip)
+                                                p.OutShip = p.Qty;
+
+                                            p.OutShip = p.OutShip - Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
+                                            if (p.OutShip < 0)
+                                                p.OutShip = 0;
+
+                                            dbClss.AddHistory(this.Name, "ปรับสถานะ mh_SaleOrderDTs ", "ปรับ OutShip เพราะมีการทำ Shipment : " + rd.Cells["ItemNo"].ToSt() + " จำนวน : " + (rd.Cells["Qty"].Value.ToSt())
+                                            + " SaleOrderDT :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
+                                            + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
+
+                                            db.SubmitChanges();
+                                            db.sp_058_Cal_SaleOrderHD_Status(p.SONo);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
+                    else
+                    {
+                        var h = (from ix in db.mh_ShipmentDTs
+                                 where
+                                           ix.id == Convert.ToInt16(rd.Cells["id"].Value.ToSt())
+                                           && ix.Status == "Waiting"
+                                           && ix.Active == true
+                                           && ix.OutInv == ix.Qty
+                                           && ix.OutShip == ix.Qty
+                                 select ix).ToList();
+                        if(h.Count>0)
+                        {
+                            foreach (var pp in h)
+                            {
+                                pp.Active = false;
+                                pp.Status = "Cancel";
 
+                                var v = (from ix in db.mh_SaleOrderDTs
+                                         where
+                                                   ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
+                                                   && ix.OutShip > 0 && ix.Active == true
+                                         select ix).ToList();
+                                if (v.Count > 0)
+                                {
+                                    var p = (from ix in db.mh_SaleOrderDTs
+                                             where
+                                                ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
+                                                 && ix.OutShip > 0 && ix.Active == true
+                                             select ix).First();
+
+                                    p.OutShip = p.OutShip + dbClss.TDe(pp.Qty);
+                                    if (p.Qty < p.OutShip)
+                                        p.OutShip = p.Qty;
+                                    
+                                    dbClss.AddHistory(this.Name, "ปรับสถานะ mh_SaleOrderDTs ", "ปรับ OutShip เพราะมีการทำ Shipment : " + rd.Cells["ItemNo"].ToSt() + " จำนวน : " + (rd.Cells["Qty"].Value.ToSt())
+                                    + " SaleOrderDT :" + Convert.ToString(rd.Cells["RefDocNo"].Value)
+                                    + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["RefDocNo"].Value));
+
+                                    db.SubmitChanges();
+                                    db.sp_058_Cal_SaleOrderHD_Status(p.SONo);
+                                }
+                                db.SubmitChanges();
+                                dbClss.AddHistory(this.Name, "ลบ Shipment", "ลบ Shipment [ ItemNo : " + dbClss.TSt(rd.Cells["ItemNo"].Value) + " Qty : " + dbClss.TSt(rd.Cells["Qty"].Value) + " Unit : " + dbClss.TSt(rd.Cells["Unit"].Value) + "]", txtSHNo.Text);
+
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1142,7 +1286,9 @@ namespace StockControl
                     this.Cursor = Cursors.WaitCursor;
 
                     if (StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["Status"].Value) == "ADD"
-                        || StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["Status"].Value) == "Adding")
+                        || StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["Status"].Value) == "Adding"
+                        || StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["Status"].Value) == "Waiting"
+                        )
                     {
                         
                             int id = 0;
@@ -1467,7 +1613,10 @@ namespace StockControl
                         //dgvData.DataSource = ShipList;
                         foreach (var gg in ShipList)
                         {
-                            Add_Item("", dbClss.TSt(gg.ItemNo), dbClss.TSt(gg.ItemName)
+
+                            int RR = dgvData.Rows.Count;
+                            RR += 1;
+                            Add_Item(RR.ToSt(), dbClss.TSt(gg.ItemNo), dbClss.TSt(gg.ItemName)
                                 , dbClss.TSt(gg.Description),dbClss.TDe(gg.Qty), dbClss.TDe(gg.Qty)
                                 , dbClss.TSt(gg.UOM), dbClss.TDe(gg.PCSUnit)
                                 , dbClss.TDe(gg.UnitPrice), dbClss.TDe(gg.Amount), "",

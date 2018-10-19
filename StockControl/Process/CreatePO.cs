@@ -794,9 +794,6 @@ namespace StockControl
 
                             dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไข PaymentTerm. [" + PaymentTerm_re + "]", txtPONo.Text);
                         }
-
-                        
-
                         if (dtPaymentTermDate.Text != "")
                             gg.PaymentTerm_Date = Convert.ToDateTime(dtPaymentTermDate.Value);
                        
