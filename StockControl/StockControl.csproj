@@ -51,7 +51,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>scan_barcode.png.ico</ApplicationIcon>
+    <ApplicationIcon>M-TEC.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
@@ -1846,6 +1846,7 @@
     <None Include="Resources\filter_cancel.png" />
     <None Include="Resources\goto.png" />
     <None Include="Resources\if_save_money_93253.png" />
+    <Content Include="M-TEC.ico" />
     <Content Include="scan_barcode.png.ico" />
     <Content Include="Shinko Mold.ico" />
   </ItemGroup>
