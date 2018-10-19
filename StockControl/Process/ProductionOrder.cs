@@ -2490,7 +2490,7 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    if (txtSeqStatus.Text.ToInt() <= 1)
+                    if (db.mh_SaleOrders.Where(x=>x.SONo == txtJobNo.Text.Trim() && x.Active).Count() > 0 && txtSeqStatus.Text.ToInt() <= 1)
                     {
                         if (baseClass.IsSendApprove())
                         {

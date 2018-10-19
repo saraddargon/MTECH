@@ -1670,28 +1670,6 @@
       <Column Name="AttachFile" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.mh_StockCard" Member="mh_StockCards">
-    <Type Name="mh_StockCard">
-      <Column Name="USERID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ItemName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="Location" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Shelf" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="dFrom" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="dTo" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="No" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="DocumentRef" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SubCust" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="StartQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="InQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="OutQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="RemainQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.mh_RoutingDT" Member="mh_RoutingDTs">
     <Type Name="mh_RoutingDT">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -2358,6 +2336,30 @@
       <Column Name="PaymentTerm_Remark" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="PaymentTerm_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="DeliveryDate" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.mh_StockCard" Member="mh_StockCards">
+    <Type Name="mh_StockCard">
+      <Column Name="USERID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ItemName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="UOM" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Shelf" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dFrom" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dTo" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="No" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DocumentRef" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SubCust" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="StartQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="InQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="OutQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="RemainQty" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.Sp_ADM03_OpenFormSelect" Method="Sp_ADM03_OpenFormSelect">

@@ -18,6 +18,7 @@ namespace StockControl
         public Login()
         {
             InitializeComponent();
+            //MessageBox.Show(System.Environment.MachineName);
         }
 
         private void cbConfig_ToggleStateChanged(object sender, Telerik.WinControls.UI.StateChangedEventArgs args)
@@ -59,8 +60,12 @@ namespace StockControl
             ddlServer.Text = ConnectDB.server;
             txtUserDb.Text = ConnectDB.Userdb;
             txtPassDb.Text = ConnectDB.PassDb;
-            //txtUser.Text = "admin";
-            //txtPassword.Text = "1234";
+            if (System.Environment.MachineName == "NB09" || System.Environment.MachineName == "Pongsakorn_s")
+            {
+                txtUser.Text = "admin";
+                txtPassword.Text = "1234";
+
+            }
 
 
             this.Size = s1;

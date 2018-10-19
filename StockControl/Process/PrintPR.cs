@@ -735,16 +735,19 @@ namespace StockControl
                         db.mh_StockCards.InsertOnSubmit(scard);
                         db.SubmitChanges();
 
-                        DateTime dFrom = dtDate1.Value.Date;
-                        DateTime dTo = dtDate2.Value.Date.AddDays(1).AddMinutes(-1);
+                        DateTime? dFrom = (cbDate.Checked) ? (DateTime?)dtDate1.Value.Date : null;
+                        DateTime? dTo = (cbDate.Checked) ? (DateTime?)dtDate2.Value.Date.AddDays(1).AddMinutes(-1) : null;
 
-                        var st = db.tb_Stocks.Where(x => x.CodeNo == PRNo1 && x.CreateDate >= dFrom
-                            && x.CreateDate <= dTo
+                        var st = db.tb_Stocks.Where(x => x.CodeNo == PRNo1
+                            && (dFrom == null || (x.CreateDate >= dFrom && x.CreateDate <= dTo))
                             && x.Location == ddlLocation.Text
                             ).OrderBy(x => x.CreateDate).ToList();
                         foreach (var s in st)
                         {
                             string refNo = s.DocNo;
+                            bool findCustFromJob = false;
+                            string custNo = "";
+                            string custName = "";
                             rNo++;
                             string sName = "";
                             if (s.DocNo.ToSt().Length > 2)
@@ -753,21 +756,64 @@ namespace StockControl
                                 {
                                     //receive
                                     var po = db.mh_PurchaseOrders.Where(x => x.PONo == s.RefNo).FirstOrDefault();
-                                    if (po != null) sName = po.VendorName.ToSt();
+                                    if (po != null)
+                                    {
+                                        sName = po.VendorName.ToSt();
+                                    }
 
                                     //Recieve from invoice
                                     var rc = db.tb_ReceiveHs.Where(x => x.RCNo == s.DocNo).FirstOrDefault();
                                     if (rc != null) refNo = rc.InvoiceNo;
-                                    
+
                                 }
-                                else if(s.DocNo.ToSt().Substring(0, 2) == "PK") //recive job
+                                else if (s.DocNo.ToSt().Substring(0, 2) == "PK") //recive job
                                 {
                                     refNo = s.RefNo;
+                                    findCustFromJob = true;
                                 }
-                                else if (s.DocNo.ToSt().Substring(0, 2) == "")
+                                else if ((s.DocNo.ToSt().Substring(0, 2) == "SH")
+                                    && s.DocNo.ToSt().Substring(2, 1).ToInt() == 0) //Ship not normal
                                 {
+                                    refNo = s.RefJobCode;
+                                    findCustFromJob = true;
+                                    if (s.DocNo.ToSt().Substring(0, 4) == "SHAS")
+                                    {
+                                        var acc = db.mh_Accident_SlipHs.Where(x => x.DocNo == s.RefJobCode).FirstOrDefault();
+                                        if(acc != null)
+                                            refNo = acc.JobCard;
+                                    }
+                                }
+                                else if (s.DocNo.ToSt().Substring(0, 2) == "RT") //Return RM
+                                {
+                                    refNo = s.RefJobCode;
+                                    findCustFromJob = true;
+                                }
+                                else if (s.DocNo.ToSt().Substring(0, 2) == "SE") //Shipment Shipping
+                                {
+                                    refNo = s.DocNo;
                                     var sm = db.mh_Shipments.Where(x => x.SSNo == s.RefJobCode).FirstOrDefault();
-                                    if (sm != null) sName = sm.CustomerName;
+                                    if (sm != null)
+                                    {
+                                        refNo = sm.SSNo;
+                                        sName = sm.CustomerName;
+                                    }
+                                }
+                            }
+
+                            if (findCustFromJob)
+                            {
+                                var pd = db.mh_ProductionOrders.Where(x => x.JobNo == refNo).FirstOrDefault();
+                                if(pd != null)
+                                {
+                                    var so = db.mh_SaleOrderDTs.Where(x => x.id == pd.RefDocId)
+                                        .Join(db.mh_SaleOrders
+                                        , dt => dt.SONo
+                                        , hd => hd.SONo
+                                        , (dt, hd) => new { hd, dt }).ToList();
+                                    if(so.Count > 0)
+                                    {
+                                        sName = so.FirstOrDefault().hd.CustomerName;
+                                    }
                                 }
                             }
 
@@ -799,6 +845,8 @@ namespace StockControl
                                 InQty = inQ,
                                 OutQty = outQ,
                                 RemainQty = rem,
+                                CustNo = custNo,
+                                CustName = custName,
                             };
                             db.mh_StockCards.InsertOnSubmit(sc);
                             db.SubmitChanges();
