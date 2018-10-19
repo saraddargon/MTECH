@@ -89,6 +89,10 @@ namespace StockControl
             dt_POHD.Columns.Add(new DataColumn("VATGroup", typeof(string)));
             dt_POHD.Columns.Add(new DataColumn("VATType", typeof(string)));
             dt_POHD.Columns.Add(new DataColumn("Version", typeof(string)));
+            dt_POHD.Columns.Add(new DataColumn("PaymentTerm", typeof(int)));
+            dt_POHD.Columns.Add(new DataColumn("PaymentTerm_Date", typeof(DateTime)));
+            dt_POHD.Columns.Add(new DataColumn("DeliveryDate", typeof(string)));
+
 
             dt_PODT.Columns.Add(new DataColumn("id", typeof(string)));
             dt_PODT.Columns.Add(new DataColumn("TempPNo", typeof(string)));
@@ -376,7 +380,20 @@ namespace StockControl
                             dtDuedate.Value = Convert.ToDateTime(temp_date);
 
 
+                        if (dbClss.TSt(g.FirstOrDefault().PaymentTerm_Date) != "")
+                            dtPaymentTermDate.Value = Convert.ToDateTime(g.FirstOrDefault().PaymentTerm_Date);
+                        else
+                            dtPaymentTermDate.Value = Convert.ToDateTime(temp_date);
 
+                        if (dbClss.TInt(g.FirstOrDefault().PaymentTerm) == 1)
+                            cbPaymentCash.Checked = true;
+                        else if (dbClss.TInt(g.FirstOrDefault().PaymentTerm) == 2)
+                            cbPaymentCredit.Checked = true;
+                        else if (dbClss.TInt(g.FirstOrDefault().PaymentTerm) == 3)
+                            cbPaymentOther.Checked = true;
+
+                        txtDeliveryDate.Text = dbClss.TSt(g.FirstOrDefault().DeliveryDate);
+                            
 
                         dt_POHD = StockControl.dbClss.LINQToDataTable(g);
 
@@ -456,7 +473,8 @@ namespace StockControl
                                     }
                                     x.Cells["dgvChangeQty"].ReadOnly = true;                                    
                                 }
-                                else if (dbClss.TDe(x.Cells["dgvBackOrder"].Value) <= dbClss.TDe(x.Cells["dgvOrderQty"].Value)
+                                else if (dbClss.TDe(x.Cells["dgvBackOrder"].Value) 
+                                        <= dbClss.TDe(x.Cells["dgvOrderQty"].Value)
                                     && dbClss.TDe(x.Cells["dgvBackOrder"].Value) != 0)
                                 {
                                     x.Cells["dgvStatus"].Value = "Partial";
@@ -755,6 +773,39 @@ namespace StockControl
                         //    gg.GrandTotal = StockControl.dbClss.TDe(txtGrandTotal.Text);
                         //    dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไขราคาสุทธิ [" + txtGrandTotal.Text + "]", txtPONo.Text);
                         //}
+
+                        int PaymentTerm = 0;
+                        if (cbPaymentCash.Checked)
+                            PaymentTerm = 1;
+                        else if (cbPaymentCredit.Checked)
+                            PaymentTerm = 2;
+                        else if (cbPaymentOther.Checked)
+                            PaymentTerm = 3;
+                        if (!PaymentTerm.ToString().Equals(row["PaymentTerm"].ToString()))
+                        {
+                            gg.PaymentTerm = PaymentTerm;
+                            string PaymentTerm_re = "เงินสด (Cash)";
+                            if(PaymentTerm==1)
+                                PaymentTerm_re = "เงินสด (Cash)";
+                           else if (PaymentTerm == 2)
+                                PaymentTerm_re = "เครดิต (Credit)";
+                           else if (PaymentTerm == 3)
+                                PaymentTerm_re = "อื่นๆ (Other)";
+
+                            dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไข PaymentTerm. [" + PaymentTerm_re + "]", txtPONo.Text);
+                        }
+
+                        
+
+                        if (dtPaymentTermDate.Text != "")
+                            gg.PaymentTerm_Date = Convert.ToDateTime(dtPaymentTermDate.Value);
+                       
+                        if (!txtDeliveryDate.Text.Trim().Equals(row["DeliveryDate"].ToString()))
+                        {
+                            gg.DeliveryDate = txtDeliveryDate.Text;
+                            dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไข DeliveryDate. [" + txtDeliveryDate.Text.Trim() + "]", txtPONo.Text);
+                        }
+
                         gg.vat = StockControl.dbClss.TDe(txtVat.Text);
                         gg.VatTax = StockControl.dbClss.TDe(txtVattax.Text);
                         gg.VatDetail = StockControl.dbClss.TBo(cbvatDetail.Checked);
@@ -840,6 +891,17 @@ namespace StockControl
                     gg.VatTax = StockControl.dbClss.TDe(txtVattax.Text);
                     gg.Usefixunit = StockControl.dbClss.TBo(cbUsefixunit.Checked);
                     gg.Version = dbClss.TSt(txtVersion.Text);
+                    int PaymentTerm = 0;
+                    if (cbPaymentCash.Checked)
+                        PaymentTerm = 1;
+                    else if (cbPaymentCredit.Checked)
+                        PaymentTerm = 2;
+                    else if (cbPaymentOther.Checked)
+                        PaymentTerm = 3;
+                    gg.PaymentTerm = PaymentTerm;
+                    if(dtPaymentTermDate.Text !="")
+                        gg.PaymentTerm_Date = Convert.ToDateTime(dtPaymentTermDate.Value);
+                    gg.DeliveryDate = txtDeliveryDate.Text;
 
                     DateTime? Duedate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                     if (!dtDuedate.Text.Equals(""))
@@ -1162,6 +1224,14 @@ namespace StockControl
                 txtVersion.Enabled = ss;
                 txtLessPoDiscountAmountPersen.Enabled = ss;
                 txtAfterDiscount.Enabled = ss;
+
+                txtDeliveryDate.Enabled = ss;
+                cbPaymentCash.Enabled = ss;
+                cbPaymentCredit.Enabled = ss;
+                cbPaymentOther.Enabled = ss;
+                dtPaymentTermDate.Enabled = ss;
+
+
             }
             else if (Condition.Equals("View"))
             {
@@ -1192,6 +1262,12 @@ namespace StockControl
                 txtVersion.Enabled = ss;
                 txtLessPoDiscountAmountPersen.Enabled = ss;
                 txtAfterDiscount.Enabled = ss;
+
+                txtDeliveryDate.Enabled = ss;
+                cbPaymentCash.Enabled = ss;
+                cbPaymentCredit.Enabled = ss;
+                cbPaymentOther.Enabled = ss;
+                dtPaymentTermDate.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
@@ -1222,6 +1298,11 @@ namespace StockControl
                 txtVersion.Enabled = ss;
                 txtLessPoDiscountAmountPersen.Enabled = ss;
                 txtAfterDiscount.Enabled = ss;
+                txtDeliveryDate.Enabled = ss;
+                cbPaymentCash.Enabled = ss;
+                cbPaymentCredit.Enabled = ss;
+                cbPaymentOther.Enabled = ss;
+                dtPaymentTermDate.Enabled = ss;
             }
         }
 
@@ -1261,6 +1342,12 @@ namespace StockControl
             cbvatDetail.Checked = false;
             txtQuotation.Text = "";
             txtVersion.Text = "";
+            txtDeliveryDate.Text = "";
+            cbPaymentCash.Checked = false;
+            cbPaymentCredit.Checked = false;
+            cbPaymentOther.Checked = false;
+            dtPaymentTermDate.Value = DateTime.Now;
+            dtPaymentTermDate.SetToNullValue();
 
             dt_POHD.Rows.Clear();
             dt_PODT.Rows.Clear();
@@ -4042,6 +4129,33 @@ namespace StockControl
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
+        }
+
+        private void cbPaymentOther_ToggleStateChanged(object sender, StateChangedEventArgs args)
+        {
+            if(cbPaymentOther.Checked)
+            {
+                cbPaymentCash.Checked = false;
+                cbPaymentCredit.Checked = false;
+            }
+        }
+
+        private void cbPaymentCredit_ToggleStateChanged(object sender, StateChangedEventArgs args)
+        {
+            if(cbPaymentCredit.Checked)
+            {
+                cbPaymentOther.Checked = false;
+                cbPaymentCash.Checked = false;
+            }
+        }
+
+        private void cbPaymentCash_ToggleStateChanged(object sender, StateChangedEventArgs args)
+        {
+            if(cbPaymentCash.Checked)
+            {
+                cbPaymentCredit.Checked = false;
+                cbPaymentOther.Checked = false;
+            }
         }
     }
 }

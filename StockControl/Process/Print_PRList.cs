@@ -68,17 +68,17 @@ namespace StockControl
                 //dtDate2.Visible = false;
                 //lblToDate.Visible = false;
 
-                this.cboGroupType.AutoFilter = true;
-                FilterDescriptor filter = new FilterDescriptor();
-                filter.PropertyName = this.cboGroupType.DisplayMember;
-                filter.Operator = FilterOperator.Contains;
-                this.cboGroupType.AutoCompleteMode = AutoCompleteMode.Append;
-                this.cboGroupType.EditorControl.MasterTemplate.FilterDescriptors.Add(filter);
-                this.cboGroupType.BestFitColumns();
-                cboGroupType.DisplayMember = "GroupCode";
-                cboGroupType.ValueMember = "GroupCode";
-                cboGroupType.DataSource = db.mh_GroupTypes.Where(s => s.GroupActive == true).ToList();
-                cboGroupType.BestFitColumns();
+                //this.cboGroupType.AutoFilter = true;
+                //FilterDescriptor filter = new FilterDescriptor();
+                //filter.PropertyName = this.cboGroupType.DisplayMember;
+                //filter.Operator = FilterOperator.Contains;
+                //this.cboGroupType.AutoCompleteMode = AutoCompleteMode.Append;
+                //this.cboGroupType.EditorControl.MasterTemplate.FilterDescriptors.Add(filter);
+                //this.cboGroupType.BestFitColumns();
+                //cboGroupType.DisplayMember = "GroupCode";
+                //cboGroupType.ValueMember = "GroupCode";
+                //cboGroupType.DataSource = db.mh_GroupTypes.Where(s => s.GroupActive == true).ToList();
+                //cboGroupType.BestFitColumns();
 
                 if (Type == "ListPurchaseAndPR")
                 {
@@ -282,8 +282,8 @@ namespace StockControl
 
                         Report.Reportx1.Value[0] = dtDate1.Value.Date.ToString("dd/MMM/yyyy");
                         Report.Reportx1.Value[1] = dtDate2.Value.Date.ToString("dd/MMM/yyyy");
-                        Report.Reportx1.Value[2] = cboGroupType.Text;
-                        Report.Reportx1.Value[3] = ddlStatus.Text;
+                        Report.Reportx1.Value[2] = txtPRNo1.Text;
+                        Report.Reportx1.Value[3] = txtPRNo2.Text;
 
                         Report.Reportx1.WReport = "ListPurchaseAndPR";
                         Report.Reportx1 op = new Report.Reportx1("ListPurchaseAndPR.rpt");
