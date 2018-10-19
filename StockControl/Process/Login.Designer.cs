@@ -172,7 +172,7 @@
             this.ddlServer.Location = new System.Drawing.Point(156, 251);
             this.ddlServer.Name = "ddlServer";
             this.ddlServer.Size = new System.Drawing.Size(131, 20);
-            this.ddlServer.TabIndex = 4;
+            this.ddlServer.TabIndex = 7;
             this.ddlServer.ThemeName = "Office2010Blue";
             // 
             // ddlDatabase
@@ -182,7 +182,7 @@
             this.ddlDatabase.Location = new System.Drawing.Point(156, 276);
             this.ddlDatabase.Name = "ddlDatabase";
             this.ddlDatabase.Size = new System.Drawing.Size(131, 20);
-            this.ddlDatabase.TabIndex = 5;
+            this.ddlDatabase.TabIndex = 8;
             this.ddlDatabase.ThemeName = "Office2010Blue";
             // 
             // cbShow
@@ -237,7 +237,7 @@
             this.txtUserDb.Location = new System.Drawing.Point(156, 302);
             this.txtUserDb.Name = "txtUserDb";
             this.txtUserDb.Size = new System.Drawing.Size(131, 20);
-            this.txtUserDb.TabIndex = 1;
+            this.txtUserDb.TabIndex = 9;
             this.txtUserDb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPassword_KeyPress);
             // 
             // txtPassDb
@@ -245,7 +245,7 @@
             this.txtPassDb.Location = new System.Drawing.Point(156, 328);
             this.txtPassDb.Name = "txtPassDb";
             this.txtPassDb.Size = new System.Drawing.Size(131, 20);
-            this.txtPassDb.TabIndex = 1;
+            this.txtPassDb.TabIndex = 10;
             this.txtPassDb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPassword_KeyPress);
             // 
             // radLabel4
