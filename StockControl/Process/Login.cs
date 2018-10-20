@@ -60,7 +60,7 @@ namespace StockControl
             ddlServer.Text = ConnectDB.server;
             txtUserDb.Text = ConnectDB.Userdb;
             txtPassDb.Text = ConnectDB.PassDb;
-            if (System.Environment.MachineName == "NB09" || System.Environment.MachineName == "Pongsakorn_s")
+            if (System.Environment.MachineName == "NB09" || System.Environment.MachineName == "PONGSAKORN_S")
             {
                 txtUser.Text = "admin";
                 txtPassword.Text = "1234";
