@@ -440,6 +440,42 @@ namespace StockControl
                 return "Waiting";
         }
 
+        //Sale Order DT Status
+        public static string setSaleOrderStatus(mh_SaleOrderDT dt)
+        {
+            string ret = "Waiting";
+            using (var db = new DataClasses1DataContext())
+            {
+                var m = db.mh_SaleOrders.Where(x => x.SONo == dt.SONo).FirstOrDefault();
+                if (m != null)
+                {
+                    if (m.SeqStatus == 0)
+                        ret = "Waiting";
+                    else if (m.SeqStatus == 1)
+                        ret = "Waiting Approved";
+                    else
+                    {//Approve
+                        var ship = db.mh_ShipmentDTs.Where(x => x.Active && x.RefId == dt.id)
+                            .Join(db.mh_Shipments.Where(x => x.Active == true)
+                            , ss => ss.SSNo
+                            , hd => hd.SSNo
+                            , (ss, hd) => new { hd, ss }).ToList();
+                        var shipQ = 0.00m;
+                        if(ship.Count > 0)
+                            shipQ = ship.Sum(x => x.ss.Qty - x.ss.OutShip);
+
+                        if (dt.Qty - shipQ <= 0)
+                            ret = "Completed";
+                        else if (shipQ > 0)
+                            ret = "Partial";
+                        else if (shipQ == 0 || m.SeqStatus == 2)
+                            ret = "Process";
+                    }
+                }
+            }
+            return ret;
+        }
+
         //move reserve stock 
         public static void moveReserveStock(int idCstmPODt_Free, int idCstmPODt
             , int id_tb_Stock, decimal ReserveQty)
@@ -726,7 +762,7 @@ namespace StockControl
                                     , dd => dd.DocNo
                                     , hd => hd.DocNo
                                     , (dd, hd) => new { hd, dd }).ToList();
-                if(accd.Count > 0)
+                if (accd.Count > 0)
                     ret = accd.Sum(x => Math.Round(x.dd.QTY * x.dd.PCSUnit, 2));
             }
             return ret;

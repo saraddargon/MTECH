@@ -521,6 +521,49 @@ namespace StockControl
                     var itemNo = e.Row.Cells["ItemNo"].Value.ToSt();
                     if (e.Column.Name.Equals("UnitPrice") || e.Column.Name.Equals("Qty"))
                     {
+                        if (e.Column.Name.Equals("Qty"))
+                        {
+                            if (e.Row.Cells["Status"].Value.ToSt() == "Waiting" || e.Row.Cells["Status"].Value.ToSt() == "")
+                            {
+                                decimal outso = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal(), 2);
+                                var outplan = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
+                                var outqty = outplan;
+                                e.Row.Cells["OutSO"].Value = outso;
+                                e.Row.Cells["OutPlan"].Value = outplan;
+                                e.Row.Cells["OutQty"].Value = outqty;
+                            }
+                            else
+                            {
+                                var qtyB = e.Row.Cells["QtyB"].Value.ToDecimal();
+                                var outSOB = e.Row.Cells["OutSOB"].Value.ToDecimal();
+                                var outPlanB = e.Row.Cells["OutPlanB"].Value.ToDecimal();
+                                var outQtyB = e.Row.Cells["OutQtyB"].Value.ToDecimal();
+                                var sumQB = Math.Round(qtyB * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
+                                var soQB = qtyB - outSOB;
+                                var plQB = sumQB - outPlanB;
+                                var qtQB = sumQB - outQtyB;
+
+
+                                var newQ = e.Row.Cells["Qty"].Value.ToDecimal();
+                                var sumQ = Math.Round(newQ * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
+
+                                if (newQ < soQB)
+                                {
+                                    baseClass.Warning("ไม่สามารถแก้ไข Order Q'ty น้อยกว่าจำนวนที่เปิด Sale Order ไปแล้วได้.!");
+                                    e.Row.Cells["Qty"].Value = cQty;
+                                }
+                                else
+                                {
+                                    var outso1 = newQ - soQB;
+                                    var outplan1 = sumQ - plQB;
+                                    var outqty1 = sumQ - qtQB;
+                                    e.Row.Cells["OutSO"].Value = outso1;
+                                    e.Row.Cells["OutPlan"].Value = outplan1;
+                                    e.Row.Cells["OutQty"].Value = outqty1;
+                                }
+                            }
+                        }
+
                         if (e.Row.Cells["Qty"].Value.ToDecimal() > 0)
                         {
                             var m = Math.Round(e.Row.Cells["UnitPrice"].Value.ToDecimal() * e.Row.Cells["Qty"].Value.ToDecimal(), 2);
@@ -528,46 +571,6 @@ namespace StockControl
                         }
                         else
                             dgvData.Rows[e.RowIndex].Cells["Amount"].Value = 0;
-
-                        if (e.Row.Cells["Status"].Value.ToSt() == "Waiting" || e.Row.Cells["Status"].Value.ToSt() == "")
-                        {
-                            decimal outso = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal(), 2);
-                            var outplan = Math.Round(e.Row.Cells["Qty"].Value.ToDecimal() * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
-                            var outqty = outplan;
-                            e.Row.Cells["OutSO"].Value = outso;
-                            e.Row.Cells["OutPlan"].Value = outplan;
-                            e.Row.Cells["OutQty"].Value = outqty;
-                        }
-                        else
-                        {
-                            var qtyB = e.Row.Cells["QtyB"].Value.ToDecimal();
-                            var outSOB = e.Row.Cells["OutSOB"].Value.ToDecimal();
-                            var outPlanB = e.Row.Cells["OutPlanB"].Value.ToDecimal();
-                            var outQtyB = e.Row.Cells["OutQtyB"].Value.ToDecimal();
-                            var sumQB = Math.Round(qtyB * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
-                            var soQB = qtyB - outSOB;
-                            var plQB = sumQB - outPlanB;
-                            var qtQB = sumQB - outQtyB;
-                            
-
-                            var newQ = e.Row.Cells["Qty"].Value.ToDecimal();
-                            var sumQ = Math.Round(newQ * e.Row.Cells["PCSUnit"].Value.ToDecimal(), 2);
-
-                            if (newQ < soQB)
-                            {
-                                baseClass.Warning("ไม่สามารถแก้ไข Order Q'ty น้อยกว่าจำนวนที่เปิด Sale Order ไปแล้วได้.!");
-                                e.Row.Cells["Qty"].Value = cQty;
-                            }
-                            else
-                            {
-                                decimal outso1 = newQ - soQB;
-                                var outplan1 = sumQ - plQB;
-                                var outqty1 = sumQ - qtQB;
-                                e.Row.Cells["OutSO"].Value = outso1;
-                                e.Row.Cells["OutPlan"].Value = outplan1;
-                                e.Row.Cells["OutQty"].Value = outqty1;
-                            }
-                        }
 
                         CallTotal();
                     }
