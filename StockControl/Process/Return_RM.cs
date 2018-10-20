@@ -1054,11 +1054,11 @@ namespace StockControl
                             if (QTY > 0)
                             {
                                 int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
-                                int Free = 0;
-                                if (idCSTMPODt > 0) Free = 0;
+                                int Free = 1;
+                                //if (idCSTMPODt > 0) Free = 0;
                                 //else if (idCSTMPODt == 0) Free = 1;
 
-                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), QTY, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
+                                e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), Temp, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
                             }
 
 
@@ -1078,8 +1078,8 @@ namespace StockControl
                         int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            string Category = "SafetyStock";
-                            if (idCSTMPODt > 0) Category = "CstmPOID";
+                            string Category = "Free";
+                            //if (idCSTMPODt > 0) Category = "CstmPOID";
                             //else if (idCSTMPODt == 0) Category = "Free";
 
                             e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), Category, 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
@@ -1361,7 +1361,7 @@ namespace StockControl
 
                             ItemNo = d.InternalName;
                             ItemDescription = d.InternalDescription;
-                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "SafetyStock"
+                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(CodeNo), "Free"
                                 , 0, "Warehouse", idCSTMPODt)));//Convert.ToDecimal(d.StockInv);
                             Unit = d.PurchaseUOM;
                             PCSUnit = dbClss.Con_UOM(CodeNo, d.PurchaseUOM);
