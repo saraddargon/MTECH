@@ -634,7 +634,7 @@
             this.btnAdd_Part.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAdd_Part.Enabled = false;
             this.btnAdd_Part.Name = "btnAdd_Part";
-            this.btnAdd_Part.Size = new System.Drawing.Size(152, 22);
+            this.btnAdd_Part.Size = new System.Drawing.Size(150, 22);
             this.btnAdd_Part.Text = "เพิ่ม พาร์ท";
             this.btnAdd_Part.Click += new System.EventHandler(this.btnAdd_Part_Click);
             // 
@@ -643,7 +643,7 @@
             this.btnAdd_Item.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAdd_Item.Enabled = false;
             this.btnAdd_Item.Name = "btnAdd_Item";
-            this.btnAdd_Item.Size = new System.Drawing.Size(152, 22);
+            this.btnAdd_Item.Size = new System.Drawing.Size(150, 22);
             this.btnAdd_Item.Text = "เพิ่ม รายการ P/R";
             this.btnAdd_Item.Click += new System.EventHandler(this.เพมพารทToolStripMenuItem_Click);
             // 
@@ -652,35 +652,35 @@
             this.btnAdd_Row.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAdd_Row.Enabled = false;
             this.btnAdd_Row.Name = "btnAdd_Row";
-            this.btnAdd_Row.Size = new System.Drawing.Size(152, 22);
+            this.btnAdd_Row.Size = new System.Drawing.Size(150, 22);
             this.btnAdd_Row.Text = "เพิ่ม รายการใหม่";
             this.btnAdd_Row.Click += new System.EventHandler(this.btnAdd_Row_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(147, 6);
             // 
             // btnDel_Item
             // 
             this.btnDel_Item.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnDel_Item.Enabled = false;
             this.btnDel_Item.Name = "btnDel_Item";
-            this.btnDel_Item.Size = new System.Drawing.Size(152, 22);
+            this.btnDel_Item.Size = new System.Drawing.Size(150, 22);
             this.btnDel_Item.Text = "ลบ พาร์ท";
             this.btnDel_Item.Click += new System.EventHandler(this.ลบพารทToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
             // 
             // btnDiscon_Item
             // 
             this.btnDiscon_Item.BackColor = System.Drawing.Color.SkyBlue;
             this.btnDiscon_Item.Enabled = false;
             this.btnDiscon_Item.Name = "btnDiscon_Item";
-            this.btnDiscon_Item.Size = new System.Drawing.Size(152, 22);
+            this.btnDiscon_Item.Size = new System.Drawing.Size(150, 22);
             this.btnDiscon_Item.Text = "Discon";
             this.btnDiscon_Item.Visible = false;
             this.btnDiscon_Item.Click += new System.EventHandler(this.btnDiscon_Item_Click);
@@ -688,14 +688,14 @@
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(147, 6);
             this.toolStripSeparator3.Visible = false;
             // 
             // openPRToolStripMenuItem
             // 
             this.openPRToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.openPRToolStripMenuItem.Name = "openPRToolStripMenuItem";
-            this.openPRToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openPRToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.openPRToolStripMenuItem.Text = "เปิดเอกสารอ้างอิง";
             this.openPRToolStripMenuItem.Click += new System.EventHandler(this.openPRToolStripMenuItem_Click);
             // 

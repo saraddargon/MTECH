@@ -2668,9 +2668,10 @@ namespace StockControl
                     string PRNO = "";
                     int Refid = 0;
                     int id = 0;
+                    int idCSTMPODt = -2;
                     DateTime? dgvDeliveryDate = null;
                     Add_Item(Row, CodeNo, ItemName, ItemDescription, GroupCode, OrderQty, PCSUnit
-                        , Unit, Cost, PRNO, dgvDeliveryDate, Status, Refid, id, false, 0);
+                        , Unit, Cost, PRNO, dgvDeliveryDate, Status, Refid, id, false, idCSTMPODt);
 
                 }
                 else
@@ -2735,10 +2736,10 @@ namespace StockControl
                     ee.Cells["dgvCodeNo"].ReadOnly = true;
                     ee.Cells["dgvItemName"].ReadOnly = true;
                     ee.Cells["dgvItemDesc"].ReadOnly = true;
-                    ee.Cells["dgvPCSUnit"].ReadOnly = true;
-                    ee.Cells["dgvOrderQty"].ReadOnly = true;
+                    //ee.Cells["dgvPCSUnit"].ReadOnly = true;
+                    //ee.Cells["dgvOrderQty"].ReadOnly = true;
                     ee.Cells["dgvGroupCode"].ReadOnly = true;
-                    ee.Cells["dgvUnit"].ReadOnly = true;
+                    //ee.Cells["dgvUnit"].ReadOnly = true;
                 }
                 ee.Cells["dgvChangeQty"].ReadOnly = true;
 
@@ -2834,9 +2835,9 @@ namespace StockControl
                     int Refid = 0;
                     int id = 0;
                     DateTime? dgvDeliveryDate = null;
-
+                    int idCSTMPODt = -2;
                     Add_Item(Row, CodeNo, ItemNo, ItemDescription, GroupCode, OrderQty
-                        , PCSUnit, UnitBuy, StandardCost, PRNO, dgvDeliveryDate, Status, Refid, id, true, 0);
+                        , PCSUnit, UnitBuy, StandardCost, PRNO, dgvDeliveryDate, Status, Refid, id, true, idCSTMPODt);
 
                 }
             }
@@ -3947,7 +3948,6 @@ namespace StockControl
                                                     u.OrderQty = StockControl.dbClss.TDe(g.Cells["dgvOrderQty"].Value);
 
                                                     cc += 1;
-
                                                     db.SubmitChanges();
                                                     dbClss.AddHistory(this.Name, "แก้ไข Item PO", "แก้ไขยกเลิกการรับส่วนที่เหลือ [" + u.CodeNo.ToString() + "]", txtPONo.Text);
 
