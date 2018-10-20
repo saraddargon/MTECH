@@ -99,6 +99,10 @@ namespace StockControl
         {
             return val.ToString("dd/MMM/yyyy HH:mm");
         }
+        public static decimal Round2(this decimal val)
+        {
+            return Math.Round(val, 2);
+        }
 
         public static void Info(string Mssg)
         {
@@ -449,9 +453,9 @@ namespace StockControl
                 var m = db.mh_SaleOrders.Where(x => x.SONo == dt.SONo).FirstOrDefault();
                 if (m != null)
                 {
-                    if (m.SeqStatus == 0)
+                    if (m.SeqStatus.ToInt() == 0)
                         ret = "Waiting";
-                    else if (m.SeqStatus == 1)
+                    else if (m.SeqStatus.ToInt() == 1)
                         ret = "Waiting Approved";
                     else
                     {//Approve

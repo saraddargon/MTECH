@@ -223,6 +223,9 @@ namespace StockControl
                             radButton2.Enabled = true;
                         }
                         txtSOStatus.Text = lblStatus.Text;
+
+                        if (t.SeqStatus <= 0 || t.SeqStatus == null)
+                            radButtonElement3.Enabled = true;
                     }
                     else if (warningMssg)
                         baseClass.Warning("Sale Order not found.!!");
@@ -723,6 +726,10 @@ namespace StockControl
                     gg = new mh_SaleOrder();
                     gg.CreateBy = ClassLib.Classlib.User;
                     gg.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
+                    gg.Status = "Waiting";
+                    gg.SendApproveBy = "";
+                    gg.ApproveBy = "";
+                    gg.SeqStatus = 0;
                     db.mh_SaleOrders.InsertOnSubmit(gg);
                     dbClss.AddHistory(this.Name, "เพิ่ม Sale order", "สร้าง Sale order [" + SONo + "]", txtSONo.Text);
                 }
@@ -747,9 +754,6 @@ namespace StockControl
                 gg.VatAmnt = dbClss.TDe(txtVatAmnt.Text);
                 gg.TotalPriceIncVat = dbClss.TDe(txtGrandTotal.Text);
                 gg.Active = true;
-                gg.Status = "Waiting";
-                gg.SendApproveBy = "";
-                gg.ApproveBy = "";
                 gg.DemandType = 0;
 
 
@@ -1199,6 +1203,8 @@ namespace StockControl
                     int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentCell.RowInfo.Cells["id"].Value), out id);
                     if (id <= 0)
                         dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
+                    else
+                        rowe.IsVisible = false;
 
                     if (dgvData.Rows.Count == 0)
                         cbbCSTM.Enabled = true;
