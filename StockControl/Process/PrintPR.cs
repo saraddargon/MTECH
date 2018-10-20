@@ -796,6 +796,18 @@ namespace StockControl
                                     {
                                         refNo = sm.SSNo;
                                         sName = sm.CustomerName;
+                                        //ถ้า Shipment ออก Invoice แล้ว ให้เอา
+                                        var inv = db.mh_InvoiceDTs.Where(x => x.RefId == sm.id && x.Active)
+                                            .Join(db.mh_InvoiceHDs.Where(x => x.Active)
+                                            , dt => dt.IVNo
+                                            , hd => hd.IVNo
+                                            , (dt, hd) => new { hd, dt }).FirstOrDefault();
+                                        if(inv != null)
+                                        {
+                                            refNo = inv.hd.IVNo;
+                                            sName = inv.hd.CustomerName;
+                                            
+                                        }
                                     }
                                 }
                             }

@@ -338,7 +338,7 @@ namespace StockControl
                             //var stockCustomerPO = tdata.findStock_CustomerPO(0); //idCstmPO = 0 = Safety Stock
                             //var stockFree = 0;//tdata.findStock_Free();
                             //var stockAll = stockCustomerPO + stockFree;
-                            var stockAll = tdata.SafetyStock + tdata.QtyBackOrderSafety;
+                            var stockAll = tdata.QtySafety + tdata.QtyBackOrderSafety;
 
                             if (tdata.ReorderType == ReorderType.Fixed)
                             {
