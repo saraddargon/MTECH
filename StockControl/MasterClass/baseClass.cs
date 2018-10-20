@@ -529,7 +529,7 @@ namespace StockControl
                                     , 0, tbst.Location, "Warehouse", tool.BaseUOM, pcsunit
                                     , tool.BaseUOM, pcsunit, idCstmPODt_Free
                                     , idProductionOrderRM
-                                    , -1
+                                    , 1
                                     );
 
                 //**Stock Receive ใส่ Customer PODt id ใบใหม่

@@ -1305,8 +1305,7 @@ namespace StockControl
                             {
 
                                 Qty_Remain = (Convert.ToDecimal(db.Cal_QTY(vv.CodeNo, "", 0)));  //sum ทั้งหมด
-                                                                                                 //Qty_DL = (Convert.ToDecimal(db.Cal_QTY(vv.CodeNo, "Temp", 0))); // sum เฉพาะ DL
-
+                                      
                                 if (Qty_Cancel <= Qty_Remain)
                                 {
                                     UnitCost = Math.Abs( Math.Round((Amount / (Convert.ToDecimal(vv.QTY) * Convert.ToDecimal(vv.PCSUnit) * BasePCSUnit)), 2));
@@ -1366,6 +1365,10 @@ namespace StockControl
                                     //gg.RefidJobCode = null;
                                     //gg.RefJobCode = null;
                                     gg.idCSTMPODt = dbClss.TInt(vv.idCSTMPODt);
+                                    if (dbClss.TInt(vv.idCSTMPODt) == 0)
+                                        gg.Free = false;
+                                    else
+                                        gg.Free = true;
 
                                     db.tb_Stocks.InsertOnSubmit(gg);
                                     db.SubmitChanges();

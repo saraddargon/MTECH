@@ -316,7 +316,7 @@ namespace StockControl
                                     {
                                         x.Cells["OutShip"].Value = dbClss.TDe(t.FirstOrDefault().OutShip);
                                     }
-                                        x.Cells["RemainQty"].Value = dbClss.TDe(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["CodeNo"].Value), "CstmPOID", 0, Convert.ToString(x.Cells["Location"].Value), dbClss.TInt(x.Cells["idCSTMPODt"].Value)));
+                                        x.Cells["RemainQty"].Value = dbClss.TDe(db.Cal_QTY_Remain_Location(Convert.ToString(x.Cells["CodeNo"].Value), "Free", 0, Convert.ToString(x.Cells["Location"].Value), dbClss.TInt(x.Cells["idCSTMPODt"].Value)));
                                 }
                             }
                             Cal_Amount();
@@ -946,10 +946,10 @@ namespace StockControl
                                     Amount = (-QTY) * UnitCost;
 
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "CstmPOID", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "Free", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
+                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,0))//dbClss.TInt(vv.idCSTMPODt)))
                                         + Amount;
 
                                     sum_Qty = RemainQty + (-QTY);
@@ -990,6 +990,7 @@ namespace StockControl
                                     gg.TLQty = 0;
                                     gg.ShipQty = 0;
                                     gg.idCSTMPODt = dbClss.TInt(vv.idCSTMPODt);
+                                    gg.Free = true;
 
                                     db.tb_Stocks.InsertOnSubmit(gg);
                                     db.SubmitChanges();
@@ -1008,10 +1009,10 @@ namespace StockControl
                                     Amount = (-QTY) * UnitCost;
 
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "CstmPOID", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "Free", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))
+                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,0))// dbClss.TInt(vv.idCSTMPODt)))
                                         + Amount;
 
                                     sum_Qty = RemainQty + (-QTY);
@@ -1051,6 +1052,7 @@ namespace StockControl
                                     gg.TLQty = 0;
                                     gg.ShipQty = 0;
                                     gg.idCSTMPODt =dbClss.TInt(vv.idCSTMPODt);
+                                    gg.Free = true;
 
                                     db.tb_Stocks.InsertOnSubmit(gg);
                                     db.SubmitChanges();
@@ -1261,7 +1263,7 @@ namespace StockControl
                     {
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
-                            string Category1 = "CstmPOID";
+                            string Category1 = "Free";
                             int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
                             e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), Category1, 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
 
@@ -2197,7 +2199,7 @@ namespace StockControl
 
 
                                         //แบบที่ 1 จะไป sum ใหม่
-                                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.ItemNo, "CstmPOID", 0, Location, dbClss.TInt(vv.idCSTMPODt))));
+                                        RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.ItemNo, "Free", 0, Location, dbClss.TInt(vv.idCSTMPODt))));
                                         //แบบที่ 2 จะไปดึงล่าสุดมา
                                         //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
                                         sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.ItemNo, "", "", "RemainAmount", Location, dbClss.TInt(vv.idCSTMPODt)))
@@ -2245,6 +2247,7 @@ namespace StockControl
                                         gg.ShelfNo = ShelfNo;
                                         gg.LotNo = LotNo;
                                         gg.idCSTMPODt = vv.idCSTMPODt;
+                                        gg.Free = dbClss.TBo(r.FirstOrDefault().Free);
 
                                         //ต้องไม่ใช่ Item ที่มีในระบบ
                                         var c = (from ix in db.mh_Items

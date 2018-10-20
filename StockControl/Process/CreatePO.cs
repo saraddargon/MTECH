@@ -553,8 +553,8 @@ namespace StockControl
                         else if
                             (Status.Equals("Completed")
                             || Status.Equals("Process")
-                            || Status.Equals("Waiting Approve")
-                            || Status.Equals("Approved")
+                            //|| Status.Equals("Waiting Approve")
+                            //|| Status.Equals("Approved")                            
                             )
                         {
                             //ddlFactory.Enabled = false;
@@ -1153,9 +1153,7 @@ namespace StockControl
                             //p.RemainQty = p.OrderQty;
                             p.PoNo = "";
                             p.RefPOid = 0;
-
-
-
+                            
                             dbClss.AddHistory(this.Name, "ปรับสถานะ Item PR", "ลบ PO จาก POid :" + StockControl.dbClss.TSt(g.Cells["dgvid"].Value)
                                 + " PONo :" + txtPONo.Text.Trim()
                                 + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(g.Cells["dgvPRNo"].Value));
@@ -1551,9 +1549,24 @@ namespace StockControl
                             + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", PRNo);
 
                         db.SubmitChanges();
-
                         //update status pr
                         db.sp_023_PRHD_Cal_Status(p.TempNo, p.PRNo);
+
+                        int idCstmPODt = dbClss.TInt(p.idCstmPODt);
+                        if (idCstmPODt > 0)
+                        {
+                            var d = (from ix in db.mh_SaleOrderDTs
+                                     where ix.id == idCstmPODt
+                                     select ix).ToList();
+                            if (d.Count > 0)
+                            {
+                                foreach (var dd in d)
+                                {
+                                    dd.genPR = false;
+                                    db.SubmitChanges();
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1692,7 +1705,24 @@ namespace StockControl
                                 SaveHerder();
                                 AddPR_d();
 
+                                //Calculate Status
+                                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                                {
+                                    db.sp_022_POHD_Cal_Status(txtTempNo.Text, txtPONo.Text);
 
+                                    //update cost receive PODetail
+                                    db.sp_042_Cal_POCost(txtPONo.Text);
+
+                                    if (Ac.Equals("New"))
+                                        db.sp_062_mh_ApproveList_Add(txtPONo.Text.Trim(), "Purchase Order", ClassLib.Classlib.User);
+                                    else if (Ac.Equals("Edit"))
+                                    {
+                                        if (baseClass.IsSendApprove())
+                                        {
+                                            db.sp_062_mh_ApproveList_Add(txtPONo.Text.Trim(), "Purchase Order", ClassLib.Classlib.User);
+                                        }
+                                    }
+                                }
 
                                 Ac = "View";
                                 btnEdit.Enabled = true;
@@ -1701,20 +1731,9 @@ namespace StockControl
                                 Enable_Status(false, "View");
 
 
-                                //Calculate Status
-                                using (DataClasses1DataContext db = new DataClasses1DataContext())
-                                {
-                                    db.sp_022_POHD_Cal_Status(txtTempNo.Text, txtPONo.Text);
-
-                                    //update cost receive PODetail
-                                    db.sp_042_Cal_POCost(txtPONo.Text);
-                                }
-
                                 DataLoad();
-
                                 //change status pr
                                 Chage_status_Pr();
-
                                 ////insert Stock temp
                                 Insert_Stock_temp();
 

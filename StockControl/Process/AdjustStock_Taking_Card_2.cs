@@ -800,7 +800,7 @@ namespace StockControl
                                 gg.Location = Location;
                                 gg.ShelfNo = ShelfNo;
                                 gg.LotNo = LotNo;
-                                gg.idCSTMPODt = 0;
+                                gg.idCSTMPODt = -3;
                                 gg.Free = true;
 
                                 //ต้องไม่ใช่ Item ที่มีในระบบ

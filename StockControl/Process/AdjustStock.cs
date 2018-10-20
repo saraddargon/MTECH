@@ -699,11 +699,11 @@ namespace StockControl
                                     UnitCost = Math.Round((Amount / (Convert.ToDecimal(vv.Qty)*dbClss.TDe(vv.PCSUnit))),2);
 
                                     //แบบที่ 1 จะไป sum ใหม่
-                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
+                                    RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "Free", 0,vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                                     //แบบที่ 2 จะไปดึงล่าสุดมา
                                     //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
 
-                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location, dbClss.TInt(vv.idCSTMPODt)))
+                                    sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,0))// dbClss.TInt(vv.idCSTMPODt)))
                                         + Amount;
 
                                     sum_Qty = RemainQty + Math.Round((Convert.ToDecimal(vv.Qty) * dbClss.TDe(vv.PCSUnit)),2);
@@ -743,8 +743,9 @@ namespace StockControl
                                 gg.RefJobCode = vv.RefJobCard;
                                 gg.RefTempJobCode = vv.RefTempJobCard;
                                 gg.LotNo = vv.LotNo;
-                                gg.idCSTMPODt = vv.idCSTMPODt;
+                                gg.idCSTMPODt = -3;
                                 gg.Free = true;
+                                
                                 db.tb_Stocks.InsertOnSubmit(gg);
                                 db.SubmitChanges();
 
@@ -1101,7 +1102,7 @@ namespace StockControl
                         using (DataClasses1DataContext db = new DataClasses1DataContext())
                         {
                             int idCSTMPODt = dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
-                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Invoice", 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
+                            e.Row.Cells["RemainQty"].Value = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(Convert.ToString(e.Row.Cells["CodeNo"].Value), "Free", 0, Convert.ToString(e.Row.Cells["Location"].Value), idCSTMPODt)));
                         }
                     }
                     else if (dgvData.Columns["Unit"].Index == e.ColumnIndex)
