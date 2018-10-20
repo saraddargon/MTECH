@@ -1056,11 +1056,17 @@ namespace StockControl
                                 UnitCost = Math.Round((Amount / (Convert.ToDecimal(vv.QTY) * Convert.ToDecimal(vv.PCSUnit) * BasePCSUnit )), 2);
 
                             }
+                            string Cagory = "Free";
+                            if (dbClss.TInt(vv.idCSTMPODt) == 0)
+                                Cagory = "SafetyStock";
+                            else
+                                Cagory = "Free";
+
                             //แบบที่ 1 จะไป sum ใหม่
-                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0, vv.Location, dbClss.TInt(vv.idCSTMPODt))));
+                            RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, Cagory, 0, vv.Location, dbClss.TInt(vv.idCSTMPODt))));
                             //แบบที่ 2 จะไปดึงล่าสุดมา
                             //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                            sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
+                            sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,0))//dbClss.TInt(vv.idCSTMPODt)))
                                 + Amount;
 
                             sum_Qty = RemainQty + Math.Round(((Convert.ToDecimal(vv.QTY)* Convert.ToDecimal(vv.PCSUnit) * BasePCSUnit)),2);
@@ -1214,11 +1220,16 @@ namespace StockControl
 
                                 Amount = (QTY) * UnitCost;
 
+                                string Cagory = "Free";
+                                if (dbClss.TInt(vv.idCSTMPODt) == 0)
+                                    Cagory = "SafetyStock";
+                                else
+                                    Cagory = "Free";
                                 //แบบที่ 1 จะไป sum ใหม่
-                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
+                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, Cagory, 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
                                 //แบบที่ 2 จะไปดึงล่าสุดมา
                                 //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
+                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,0))//dbClss.TInt(vv.idCSTMPODt)))
                                     + Amount;
 
                                 sum_Qty = RemainQty + (QTY * Convert.ToDecimal(vv.PCSUnit));
@@ -1399,11 +1410,16 @@ namespace StockControl
                                 }
 
                                 Amount = (QTY) * UnitCost ;
+                                string Cagory = "Free";
+                                if (dbClss.TInt(vv.idCSTMPODt) == 0)
+                                    Cagory = "SafetyStock";
+                                else
+                                    Cagory = "Free";
                                 //แบบที่ 1 จะไป sum ใหม่
-                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, "", 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
+                                RemainQty = (Convert.ToDecimal(db.Cal_QTY_Remain_Location(vv.CodeNo, Cagory, 0,vv.Location,dbClss.TInt(vv.idCSTMPODt))));
                                 //แบบที่ 2 จะไปดึงล่าสุดมา
                                 //RemainQty = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainQty"));
-                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,dbClss.TInt(vv.idCSTMPODt)))
+                                sum_Remain = Convert.ToDecimal(dbClss.Get_Stock(vv.CodeNo, "", "", "RemainAmount",vv.Location,0))//dbClss.TInt(vv.idCSTMPODt)))
                                     + Amount;
 
                                 sum_Qty = RemainQty + Math.Round(((QTY*dbClss.TDe(vv.PCSUnit) * BasePCSUnit)),2);

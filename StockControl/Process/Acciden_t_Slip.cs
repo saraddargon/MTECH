@@ -1349,7 +1349,7 @@ namespace StockControl
                             {
                                 int idCSTMPODt = 0; //dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
                                 int Free = 0;//---1;
-                                if (idCSTMPODt > 0) Free = 0;
+                                //if (idCSTMPODt > 0) Free = 0;
                                 //else if (idCSTMPODt == 0) Free = 1;
 
                                 e.Row.Cells["UnitCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), Temp, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);

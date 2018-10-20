@@ -254,6 +254,7 @@ namespace StockControl
                 cboRouting.Enabled = ss;
                 seStandardPrice.Enabled = ss;
                 seStandardCost.Enabled = ss;
+                sePackingSTD.Enabled = ss;
 
                 btnAddDWG.Enabled = ss;
                 btnDeleteDWG.Enabled = ss;
@@ -301,6 +302,7 @@ namespace StockControl
                 cboRouting.Enabled = ss;
                 seStandardPrice.Enabled = ss;
                 seStandardCost.Enabled = ss;
+                sePackingSTD.Enabled = ss;
 
                 btnAddDWG.Enabled = ss;
                 btnDeleteDWG.Enabled = ss;
@@ -347,6 +349,7 @@ namespace StockControl
                 cboRouting.Enabled = ss;
                 seStandardPrice.Enabled = ss;
                 seStandardCost.Enabled = ss;
+                sePackingSTD.Enabled = ss;
 
                 btnAddDWG.Enabled = ss;
                 btnDeleteDWG.Enabled = ss;
