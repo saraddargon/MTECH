@@ -401,17 +401,17 @@ namespace StockControl
                         db.SubmitChanges(); //Save Detail
 
                         //update OutQty -- Job
-                        var job = db.mh_ProductionOrders.Where(x => x.id == idJob && x.FGNo == dt.ItemNo).FirstOrDefault();
+                        var job = prod;
                         if (job != null)
                         {
                             job.OutQty -= dt.Qty;
                             if (job.OutQty <= 0)
                             {
                                 job.CloseJob = true;
-                                //รับครบ
-                                var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == item.Cells["idCstmPODt"].Value.ToInt() && x.TLQty > 0 && x.Type != "Receive By Job").ToList();
-                                foreach (var ss in slist)
-                                    ss.Free = true;
+                                ////รับครบ
+                                //var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == item.Cells["idCstmPODt"].Value.ToInt() && x.TLQty > 0 && x.Type != "Receive By Job").ToList();
+                                //foreach (var ss in slist)
+                                //    ss.Free = true;
                                 db.SubmitChanges();
                             }
 
@@ -438,6 +438,7 @@ namespace StockControl
                             s.Category = "Invoice";
                             s.Refid = dt.id; //id mh_PackingDt
 
+
                             //กรณีปกติจะบันทึก idCustomerPO Dt เพื่อระบุว่าของที่รับเข้าใช้สำหรับ Customer PO ใด
                             s.idCSTMPODt = job.RefDocId; //idCstmPODt -->เปลี่ยนเป็น idSaleOrder
 
@@ -446,20 +447,25 @@ namespace StockControl
                                 , sodt => sodt.SONo
                                 , sohd => sohd.SONo
                                 , (sodt, sohd) => new { sohd, sodt }).FirstOrDefault();
-                            if (so != null)
+                            if (so == null) continue; // Packing จาก Job ต้องมาจาก SaleOrder เท่านั้น
+                            //เช็คว่าเป็น FG ที่ผลิตเพื่อ Customer PO (Safety stock หรือไม่) :::: DemandType = 1 --> ผลิตเพื่อ Safety Stock
+                            if (so.sodt.ItemNo == s.CodeNo)
                             {
-                                //เช็คว่าเป็น FG ที่ผลิตเพื่อ Customer PO (Safety stock หรือไม่) :::: DemandType = 1 --> ผลิตเพื่อ Safety Stock
-                                if (so.sodt.ItemNo == s.CodeNo)
+                                if (so.sodt.forSafetyStock && so.sohd.DemandType == 1) //เป็น FG ที่ผลิตเพื่อ Safety Stock ให้ใส่ idCstmPO =0
                                 {
-                                    if (so.sodt.forSafetyStock && so.sohd.DemandType == 1) //เป็น FG ที่ผลิตเพื่อ Safety Stock ให้ใส่ idCstmPO =0
-                                        s.idCSTMPODt = 0;
-
-                                    so.sodt.OutQty -= s.QTY.ToDecimal();
-                                    if (so.sodt.OutQty < 0)
-                                        so.sodt.OutQty = 0;
-                                    //dbClss.AddHistory("CustomerPO", "Customer P/O", $"Receive by Packing no. {m.PackingNo} : {s.QTY}", cstmpo.pohd.CustomerPONo);
+                                    s.idCSTMPODt = 0;
+                                    s.Free = false;
                                 }
+                                else
+                                    s.Free = true;
+
+                                so.sodt.OutQty -= s.QTY.ToDecimal();
+                                if (so.sodt.OutQty < 0)
+                                    so.sodt.OutQty = 0;
+                                //dbClss.AddHistory("CustomerPO", "Customer P/O", $"Receive by Packing no. {m.PackingNo} : {s.QTY}", cstmpo.pohd.CustomerPONo);
                             }
+                            else //เป็น SEMI Component หรือ FG Component
+                                s.Free = true;
 
                             if (false)
                             {
@@ -1025,17 +1031,6 @@ namespace StockControl
                             if (uom != null) pcsunit = uom.QuantityPer;
                             foreach (var ss in st)
                             {
-                                ////คืน Qty Customer P/O Dt
-                                //var cstmpo = db.mh_CustomerPODTs.Where(x => x.id == d.idCstmPODt).FirstOrDefault();
-                                //if (cstmpo != null)
-                                //{
-                                //    cstmpo.OutQty += d.Qty;
-                                //    db.SubmitChanges();
-
-                                //    var po = db.mh_CustomerPOs.Where(x => x.id == cstmpo.idCustomerPO).FirstOrDefault();
-                                //    if (po != null)
-                                //        dbClss.AddHistory("CustomerPO", "Customer P/O", $"Cancel Packing {pkNo} : {d.Qty}", po.CustomerPONo);
-                                //}
 
                                 //คืน Qty Customer P/O Dt
                                 var so = db.mh_SaleOrderDTs.Where(x => x.id == d.idCstmPODt).FirstOrDefault();
@@ -1054,15 +1049,14 @@ namespace StockControl
 
                                     dbClss.AddHistory("ProductionOrder", "Job Order Sheet", $"Cancel Packing {pkNo} : {d.Qty}", pro.JobNo);
                                 }
-
-
-                                //stock กลับมาเป็นไม่ฟรี
-                                var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == d.idCstmPODt && x.TLQty > 0).ToList();
-                                foreach (var s1 in slist)
-                                {
-                                    if(s1.Free.ToBool()) s1.Free = null;
-                                }
-                                db.SubmitChanges();
+                                
+                                ////stock กลับมาเป็นไม่ฟรี
+                                //var slist = db.tb_Stocks.Where(x => x.idCSTMPODt == d.idCstmPODt && x.TLQty > 0).ToList();
+                                //foreach (var s1 in slist)
+                                //{
+                                //    if (s1.Free.ToBool()) s1.Free = null;
+                                //}
+                                //db.SubmitChanges();
 
                                 //เขียน ship ออก จาก id tb_Stock
                                 db.sp_057_Cut_Stock(pkNo, ss.CodeNo, ss.TLQty, ClassLib.Classlib.User
