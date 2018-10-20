@@ -1197,8 +1197,8 @@ namespace StockControl
                                 // ใช้ 0 เพราะต้องการเอาราคาล่าสุดของ stock free
                                 // ใช้ -1 คือเอาทุกรายการรับ
                                 int idCSTMPODt =  dbClss.TInt(e.Row.Cells["idCSTMPODt"].Value);
-                                int Free = 0;
-                                if (idCSTMPODt > 0) Free = 0;
+                                int Free = 1;
+                                //if (idCSTMPODt > 0) Free = 0;
                                 //else if (idCSTMPODt == 0) Free = 1;
 
                                 e.Row.Cells["StandardCost"].Value = Get_UnitCostFIFO(dbClss.TSt(e.Row.Cells["CodeNo"].Value), Temp, dbClss.TSt(e.Row.Cells["Location"].Value), idCSTMPODt, Free);
