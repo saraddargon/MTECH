@@ -88646,8 +88646,6 @@ namespace StockControl
 	public partial class sp_054_SaleOrder_ListResult
 	{
 		
-		private string _SS;
-		
 		private string _SONo;
 		
 		private System.Nullable<System.DateTime> _SODate;
@@ -88690,24 +88688,12 @@ namespace StockControl
 		
 		private int _RefId;
 		
+		private System.Nullable<int> _SeqStatus;
+		
+		private string _SS;
+		
 		public sp_054_SaleOrder_ListResult()
 		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SS", DbType="VarChar(15) NOT NULL", CanBeNull=false)]
-		public string SS
-		{
-			get
-			{
-				return this._SS;
-			}
-			set
-			{
-				if ((this._SS != value))
-				{
-					this._SS = value;
-				}
-			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SONo", DbType="NVarChar(50)")]
@@ -89042,6 +89028,38 @@ namespace StockControl
 				if ((this._RefId != value))
 				{
 					this._RefId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SeqStatus", DbType="Int")]
+		public System.Nullable<int> SeqStatus
+		{
+			get
+			{
+				return this._SeqStatus;
+			}
+			set
+			{
+				if ((this._SeqStatus != value))
+				{
+					this._SeqStatus = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SS", DbType="VarChar(16) NOT NULL", CanBeNull=false)]
+		public string SS
+		{
+			get
+			{
+				return this._SS;
+			}
+			set
+			{
+				if ((this._SS != value))
+				{
+					this._SS = value;
 				}
 			}
 		}
