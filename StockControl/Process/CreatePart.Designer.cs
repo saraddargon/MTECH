@@ -275,6 +275,8 @@
             this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuSeparatorItem1 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.radMenuItem2 = new Telerik.WinControls.UI.RadMenuItem();
+            this.sePackingSTD = new Telerik.WinControls.UI.RadSpinEditor();
+            this.radLabel65 = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).BeginInit();
@@ -436,6 +438,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel54)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel56)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sePackingSTD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel65)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -608,9 +612,9 @@
             this.radGroupBox4.Controls.Add(this.txtidRouting);
             this.radGroupBox4.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radGroupBox4.HeaderText = "";
-            this.radGroupBox4.Location = new System.Drawing.Point(483, 283);
+            this.radGroupBox4.Location = new System.Drawing.Point(483, 291);
             this.radGroupBox4.Name = "radGroupBox4";
-            this.radGroupBox4.Size = new System.Drawing.Size(341, 70);
+            this.radGroupBox4.Size = new System.Drawing.Size(341, 68);
             this.radGroupBox4.TabIndex = 8;
             this.radGroupBox4.ThemeName = "Office2010Blue";
             // 
@@ -1085,6 +1089,8 @@
             // radGroupBox2
             // 
             this.radGroupBox2.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
+            this.radGroupBox2.Controls.Add(this.sePackingSTD);
+            this.radGroupBox2.Controls.Add(this.radLabel65);
             this.radGroupBox2.Controls.Add(this.txtShelfNo);
             this.radGroupBox2.Controls.Add(this.radLabel53);
             this.radGroupBox2.Controls.Add(this.cbInspaction);
@@ -1114,7 +1120,7 @@
             this.radGroupBox2.HeaderText = "คลังสินค้า";
             this.radGroupBox2.Location = new System.Drawing.Point(483, 6);
             this.radGroupBox2.Name = "radGroupBox2";
-            this.radGroupBox2.Size = new System.Drawing.Size(341, 274);
+            this.radGroupBox2.Size = new System.Drawing.Size(341, 283);
             this.radGroupBox2.TabIndex = 5;
             this.radGroupBox2.TabStop = false;
             this.radGroupBox2.Text = "คลังสินค้า";
@@ -1154,7 +1160,7 @@
             // seReOrderPoint
             // 
             this.seReOrderPoint.DecimalPlaces = 2;
-            this.seReOrderPoint.Location = new System.Drawing.Point(122, 161);
+            this.seReOrderPoint.Location = new System.Drawing.Point(122, 154);
             this.seReOrderPoint.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -1168,7 +1174,7 @@
             // seReOrderQty
             // 
             this.seReOrderQty.DecimalPlaces = 2;
-            this.seReOrderQty.Location = new System.Drawing.Point(122, 185);
+            this.seReOrderQty.Location = new System.Drawing.Point(122, 177);
             this.seReOrderQty.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -1182,7 +1188,7 @@
             // seMinimum
             // 
             this.seMinimum.DecimalPlaces = 2;
-            this.seMinimum.Location = new System.Drawing.Point(122, 112);
+            this.seMinimum.Location = new System.Drawing.Point(122, 108);
             this.seMinimum.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -1196,7 +1202,7 @@
             // seMaximum
             // 
             this.seMaximum.DecimalPlaces = 2;
-            this.seMaximum.Location = new System.Drawing.Point(122, 87);
+            this.seMaximum.Location = new System.Drawing.Point(122, 85);
             this.seMaximum.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -1210,7 +1216,7 @@
             // seMaximumInventory
             // 
             this.seMaximumInventory.DecimalPlaces = 2;
-            this.seMaximumInventory.Location = new System.Drawing.Point(122, 233);
+            this.seMaximumInventory.Location = new System.Drawing.Point(122, 223);
             this.seMaximumInventory.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -1224,7 +1230,7 @@
             // seSafetyStock
             // 
             this.seSafetyStock.DecimalPlaces = 2;
-            this.seSafetyStock.Location = new System.Drawing.Point(122, 209);
+            this.seSafetyStock.Location = new System.Drawing.Point(122, 200);
             this.seSafetyStock.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -1244,7 +1250,7 @@
             this.ddlReOrderType.Items.Add(radListDataItem6);
             this.ddlReOrderType.Items.Add(radListDataItem7);
             this.ddlReOrderType.Items.Add(radListDataItem8);
-            this.ddlReOrderType.Location = new System.Drawing.Point(122, 137);
+            this.ddlReOrderType.Location = new System.Drawing.Point(122, 131);
             this.ddlReOrderType.Name = "ddlReOrderType";
             this.ddlReOrderType.Size = new System.Drawing.Size(118, 20);
             this.ddlReOrderType.TabIndex = 19;
@@ -1253,7 +1259,7 @@
             // radLabel15
             // 
             this.radLabel15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel15.Location = new System.Drawing.Point(24, 114);
+            this.radLabel15.Location = new System.Drawing.Point(24, 110);
             this.radLabel15.Name = "radLabel15";
             this.radLabel15.Size = new System.Drawing.Size(90, 17);
             this.radLabel15.TabIndex = 0;
@@ -1262,7 +1268,7 @@
             // radLabel52
             // 
             this.radLabel52.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel52.Location = new System.Drawing.Point(10, 235);
+            this.radLabel52.Location = new System.Drawing.Point(10, 225);
             this.radLabel52.Name = "radLabel52";
             this.radLabel52.Size = new System.Drawing.Size(114, 17);
             this.radLabel52.TabIndex = 0;
@@ -1280,7 +1286,7 @@
             // radLabel14
             // 
             this.radLabel14.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel14.Location = new System.Drawing.Point(23, 88);
+            this.radLabel14.Location = new System.Drawing.Point(23, 86);
             this.radLabel14.Name = "radLabel14";
             this.radLabel14.Size = new System.Drawing.Size(93, 17);
             this.radLabel14.TabIndex = 0;
@@ -1289,7 +1295,7 @@
             // radLabel43
             // 
             this.radLabel43.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel43.Location = new System.Drawing.Point(37, 212);
+            this.radLabel43.Location = new System.Drawing.Point(37, 203);
             this.radLabel43.Name = "radLabel43";
             this.radLabel43.Size = new System.Drawing.Size(76, 17);
             this.radLabel43.TabIndex = 0;
@@ -1298,7 +1304,7 @@
             // radLabel51
             // 
             this.radLabel51.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel51.Location = new System.Drawing.Point(43, 186);
+            this.radLabel51.Location = new System.Drawing.Point(43, 178);
             this.radLabel51.Name = "radLabel51";
             this.radLabel51.Size = new System.Drawing.Size(72, 17);
             this.radLabel51.TabIndex = 0;
@@ -1307,7 +1313,7 @@
             // radLabel50
             // 
             this.radLabel50.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel50.Location = new System.Drawing.Point(60, 164);
+            this.radLabel50.Location = new System.Drawing.Point(60, 157);
             this.radLabel50.Name = "radLabel50";
             this.radLabel50.Size = new System.Drawing.Size(54, 17);
             this.radLabel50.TabIndex = 0;
@@ -1316,7 +1322,7 @@
             // radLabel19
             // 
             this.radLabel19.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel19.Location = new System.Drawing.Point(246, 115);
+            this.radLabel19.Location = new System.Drawing.Point(246, 111);
             this.radLabel19.Name = "radLabel19";
             this.radLabel19.Size = new System.Drawing.Size(76, 17);
             this.radLabel19.TabIndex = 0;
@@ -1335,7 +1341,7 @@
             // radLabel18
             // 
             this.radLabel18.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel18.Location = new System.Drawing.Point(246, 90);
+            this.radLabel18.Location = new System.Drawing.Point(246, 88);
             this.radLabel18.Name = "radLabel18";
             this.radLabel18.Size = new System.Drawing.Size(76, 17);
             this.radLabel18.TabIndex = 0;
@@ -1344,7 +1350,7 @@
             // radLabel13
             // 
             this.radLabel13.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel13.Location = new System.Drawing.Point(20, 137);
+            this.radLabel13.Location = new System.Drawing.Point(20, 131);
             this.radLabel13.Name = "radLabel13";
             this.radLabel13.Size = new System.Drawing.Size(95, 17);
             this.radLabel13.TabIndex = 0;
@@ -1354,7 +1360,7 @@
             // 
             this.radLabel44.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel44.ForeColor = System.Drawing.Color.DarkGray;
-            this.radLabel44.Location = new System.Drawing.Point(246, 189);
+            this.radLabel44.Location = new System.Drawing.Point(246, 181);
             this.radLabel44.Name = "radLabel44";
             this.radLabel44.Size = new System.Drawing.Size(74, 17);
             this.radLabel44.TabIndex = 0;
@@ -1365,7 +1371,7 @@
             // 
             this.radLabel34.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel34.ForeColor = System.Drawing.Color.DarkGray;
-            this.radLabel34.Location = new System.Drawing.Point(246, 140);
+            this.radLabel34.Location = new System.Drawing.Point(246, 134);
             this.radLabel34.Name = "radLabel34";
             this.radLabel34.Size = new System.Drawing.Size(87, 17);
             this.radLabel34.TabIndex = 0;
@@ -1376,7 +1382,7 @@
             // 
             this.radLabel33.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radLabel33.ForeColor = System.Drawing.Color.DarkGray;
-            this.radLabel33.Location = new System.Drawing.Point(247, 163);
+            this.radLabel33.Location = new System.Drawing.Point(247, 156);
             this.radLabel33.Name = "radLabel33";
             this.radLabel33.Size = new System.Drawing.Size(80, 17);
             this.radLabel33.TabIndex = 0;
@@ -3128,6 +3134,44 @@
             this.radMenuItem2.Text = "History View";
             this.radMenuItem2.Click += new System.EventHandler(this.radMenuItem2_Click);
             // 
+            // sePackingSTD
+            // 
+            this.sePackingSTD.DecimalPlaces = 2;
+            this.sePackingSTD.Location = new System.Drawing.Point(122, 246);
+            this.sePackingSTD.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.sePackingSTD.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.sePackingSTD.Name = "sePackingSTD";
+            this.sePackingSTD.NullableValue = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.sePackingSTD.Size = new System.Drawing.Size(118, 20);
+            this.sePackingSTD.TabIndex = 24;
+            this.sePackingSTD.TabStop = false;
+            this.sePackingSTD.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // radLabel65
+            // 
+            this.radLabel65.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel65.Location = new System.Drawing.Point(35, 248);
+            this.radLabel65.Name = "radLabel65";
+            this.radLabel65.Size = new System.Drawing.Size(76, 17);
+            this.radLabel65.TabIndex = 23;
+            this.radLabel65.Text = "Packing STD :";
+            // 
             // CreatePart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3318,6 +3362,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel54)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel56)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sePackingSTD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel65)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -3494,5 +3540,7 @@
         private Telerik.WinControls.UI.RadLabel radLabel62;
         private Telerik.WinControls.UI.RadLabel radLabel61;
         private Telerik.WinControls.UI.RadButtonElement btnWhereUsed;
+        private Telerik.WinControls.UI.RadSpinEditor sePackingSTD;
+        private Telerik.WinControls.UI.RadLabel radLabel65;
     }
 }

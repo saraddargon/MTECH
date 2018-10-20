@@ -97,6 +97,8 @@ namespace StockControl
             dt_PRD.Columns.Add(new DataColumn("VATType", typeof(string)));
             dt_PRD.Columns.Add(new DataColumn("VendorNo", typeof(string)));
             dt_PRD.Columns.Add(new DataColumn("VendorName", typeof(string)));
+            dt_PRD.Columns.Add(new DataColumn("idCstmPODt", typeof(int)));
+            
         }
         
         string Ac = "";
@@ -581,7 +583,7 @@ namespace StockControl
                             u.VATType = StockControl.dbClss.TSt(g.Cells["dgvVATType"].Value);
                             u.VendorNo = StockControl.dbClss.TSt(g.Cells["dgvVendorNo"].Value);
                             u.VendorName = StockControl.dbClss.TSt(g.Cells["dgvVendorName"].Value);
-
+                            u.idCstmPODt = dbClss.TInt(g.Cells["dgvidCstmPODt"].Value);
                             //u.LotNo = StockControl.dbClss.TSt(g.Cells["dgvLotNo"].Value);
                             //u.SerialNo = StockControl.dbClss.TSt(g.Cells["dgvSerialNo"].Value);
                             //u.MCName = StockControl.dbClss.TSt(g.Cells["dgvMCName"].Value);
@@ -682,6 +684,8 @@ namespace StockControl
 
                                                 dbClss.AddHistory(this.Name, "แก้ไข Item PR", "แก้ไขผู้ขาย [" + u.VendorNo + "]", txtPRNo.Text);
                                             }
+                                            u.idCstmPODt = dbClss.TInt(g.Cells["dgvidCstmPODt"].Value);
+
                                             //if (!StockControl.dbClss.TSt(g.Cells["dgvLotNo"].Value).Equals(row["LotNo"].ToString()))
                                             //{
                                             //    u.LotNo = StockControl.dbClss.TSt(g.Cells["dgvLotNo"].Value);
@@ -1484,8 +1488,9 @@ namespace StockControl
                     int id = 0;
                     string Status = "Adding";
                     string VatType = dbClss.TSt(g.FirstOrDefault().VatType);
+                    int idCstmPODt = -3;
                     Add_Item(Row, CodeNo, ItemName, ItemDesc, GroupCode
-                      , OrderQty, UOM, PCSUOM, Cost, Amount, VendorNo, VendorName, Remark, VatType, id, Status, Sys);
+                      , OrderQty, UOM, PCSUOM, Cost, Amount, VendorNo, VendorName, Remark, VatType, id, Status, Sys, idCstmPODt);
                 }
             }
         }
@@ -1638,6 +1643,7 @@ namespace StockControl
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            
             btnEdit.Enabled = true;
             btnView.Enabled = false;
             btnNew.Enabled = true;
@@ -1798,8 +1804,9 @@ namespace StockControl
                 int id = 0;
                 string Status = "Adding";
                 string VatType = "";
+                int idCstmPODt = -3;
                 Add_Item(Row, CodeNo, ItemName,ItemDesc, GroupCode
-                    , OrderQty, UOM, PCSUOM, Cost, Amount, VendorNo, VendorName, Remark, VatType, id, Status,false);
+                    , OrderQty, UOM, PCSUOM, Cost, Amount, VendorNo, VendorName, Remark, VatType, id, Status,false, idCstmPODt);
 
 
             }
@@ -1808,7 +1815,7 @@ namespace StockControl
         }
         private void Add_Item(int Row,string CodeNo,string ItemName, string ItemDesc
             , string GroupCode, decimal OrderQty, string UOM, decimal PCSUOM,decimal Cost,decimal Amount
-            ,string VendorNo, string VendorName,string Remark,string VatType, int id, string Status,bool Sys)
+            ,string VendorNo, string VendorName,string Remark,string VatType, int id, string Status,bool Sys,int idCstmPODt)
         {
                 
             try
@@ -1839,6 +1846,7 @@ namespace StockControl
                 ee.Cells["dgvid"].Value = id;
                 ee.Cells["dgvStatus"].Value = Status;
                 ee.Cells["dgvVATType"].Value = VatType;
+                ee.Cells["dgvidCstmPODt"].Value = idCstmPODt;
                 //if (!statuss.Equals("Completed") || !statuss.Equals("Process")) //|| (!dbclass.TBo(ApproveFlag) && dbclass.TSt(status) != "Reject"))
                 //    dgvData.ReadOnly = false;
                 //if (statuss == "Del")

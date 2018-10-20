@@ -1111,6 +1111,10 @@ namespace StockControl
                             gg.ShelfNo = vv.ShelfNo;
                             gg.LotNo = vv.LotNo;
                             gg.idCSTMPODt = vv.idCSTMPODt;
+                            if(dbClss.TInt(vv.idCSTMPODt)==0)
+                                gg.Free = false;
+                            else
+                                gg.Free = true;
 
                             //ต้องไม่ใช่ Item ที่มีในระบบ
                             var c = (from ix in db.mh_Items
@@ -1289,6 +1293,10 @@ namespace StockControl
                                 gg.Location = vv.Location;
                                 gg.ShelfNo = vv.ShelfNo;
                                 gg.idCSTMPODt = vv.idCSTMPODt;
+                                if (dbClss.TInt(vv.idCSTMPODt) == 0)
+                                    gg.Free = false;
+                                else
+                                    gg.Free = true;
 
                                 var ab = (from ix in db.tb_Shippings
                                          where ix.ShippingNo.Trim().ToUpper() == SHNo.Trim().ToUpper() && ix.Status != "Cancel"
@@ -1472,6 +1480,10 @@ namespace StockControl
                                 gg.Location = vv.Location;
                                 gg.ShelfNo = vv.ShelfNo;
                                 gg.idCSTMPODt = vv.idCSTMPODt;
+                                if (dbClss.TInt(vv.idCSTMPODt) == 0)
+                                    gg.Free = false;
+                                else
+                                    gg.Free = true;
 
                                 var ab = (from ix in db.tb_Shippings
                                           where ix.ShippingNo.Trim().ToUpper() == SHNo.Trim().ToUpper() && ix.Status != "Cancel"

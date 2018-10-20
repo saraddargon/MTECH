@@ -100,7 +100,8 @@ namespace StockControl
             dt_Part.Columns.Add(new DataColumn("ShelfNo", typeof(bool)));
             dt_Part.Columns.Add(new DataColumn("StandardPrice", typeof(decimal)));
             dt_Part.Columns.Add(new DataColumn("StandardCost", typeof(decimal)));
-
+            dt_Part.Columns.Add(new DataColumn("PackingSTD", typeof(decimal)));
+                        
             //dt_Import
             dt_Import = new DataTable();
             dt_Import.Columns.Add(new DataColumn("id", typeof(int)));
@@ -553,6 +554,7 @@ namespace StockControl
                         txtShelfNo.Text = dbClss.TSt(g.FirstOrDefault().ShelfNo);
                         seStandardCost.Value = dbClss.TDe(g.FirstOrDefault().StandardCost);
                         seStandardPrice.Value = dbClss.TDe(g.FirstOrDefault().StandardPrice);
+                        sePackingSTD.Value = dbClss.TDe(g.FirstOrDefault().PackingSTD);
 
                         if (dbClss.TInt(g.FirstOrDefault().Routing) > 0)
                         {
@@ -774,6 +776,7 @@ namespace StockControl
                         u.ShelfNo = txtShelfNo.Text.Trim();
                         u.StandardCost = dbClss.TDe(seStandardCost.Value);
                         u.StandardPrice = dbClss.TDe(seStandardPrice.Value);
+                        u.PackingSTD = dbClss.TDe(sePackingSTD.Value);
                         ///Save Drawing
                         if (chkDWG.Checked)
                         {
@@ -991,6 +994,12 @@ namespace StockControl
                                     int Timebucket = dbClss.TInt(seTimebucket.Value);
                                     gg.Timebucket = Timebucket;
                                     dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขกำหนดระยะเวลาที่: จะใช้ในการรวม order[ เดิม : " + row["Timebucket"].ToString() + " ใหม่ : " + Timebucket.ToString() + "]", txtInternalNo.Text);
+                                }
+                                if (!sePackingSTD.Text.Trim().Equals(row["PackingSTD"].ToString()))
+                                {
+                                    decimal PackingSTD = dbClss.TDe(sePackingSTD.Value);
+                                    gg.PackingSTD = PackingSTD;
+                                    dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไขPackingSTD [ เดิม : " + row["PackingSTD"].ToString() + " ใหม่ : " + PackingSTD.ToString() + "]", txtInternalNo.Text);
                                 }
                                 if (!txtDrawing.Text.Trim().Equals(row["Drawing"].ToString()))
                                 {
