@@ -350,6 +350,11 @@
             gridViewDecimalColumn1.FieldName = "OutInv";
             gridViewDecimalColumn1.FormatString = "{0:N2}";
             gridViewDecimalColumn1.HeaderText = "Remain Invoice";
+            gridViewDecimalColumn1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             gridViewDecimalColumn1.Name = "OutInv";
             gridViewDecimalColumn1.ReadOnly = true;
             gridViewDecimalColumn1.Width = 102;
@@ -357,6 +362,11 @@
             gridViewDecimalColumn2.FieldName = "Qty";
             gridViewDecimalColumn2.FormatString = "{0:N2}";
             gridViewDecimalColumn2.HeaderText = "Qty";
+            gridViewDecimalColumn2.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             gridViewDecimalColumn2.Name = "Qty";
             gridViewDecimalColumn2.Width = 66;
             gridViewMultiComboBoxColumn1.EnableExpressionEditor = false;

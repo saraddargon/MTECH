@@ -214,153 +214,153 @@ namespace StockControl
         private decimal update_RemainQty()
         {
             decimal re = 0;
-            //using (DataClasses1DataContext db = new DataClasses1DataContext())
-            //{
-            //    decimal OrderQty = 0;
-            //    int refid = 0;
-            //    string DocNo = "";
-            //    foreach (DataRow dr in dt_PRID.Rows)
-            //    {
-            //        refid = Convert.ToInt32(dr["PRID"]);
-            //        DocNo = Convert.ToString(dr["PRNo"]);
-            //        OrderQty = Convert.ToDecimal(dr["OrderQty"]);
+            using (DataClasses1DataContext db = new DataClasses1DataContext())
+            {
+                decimal OrderQty = 0;
+                int refid = 0;
+                string DocNo = "";
+                foreach (DataRow dr in dt_PRID.Rows)
+                {
+                    refid = Convert.ToInt32(dr["PRID"]);
+                    DocNo = Convert.ToString(dr["PRNo"]);
+                    OrderQty = Convert.ToDecimal(dr["OrderQty"]);
 
-            //        if (Convert.ToString(dr["TypeReceive"]) == "PR")
-            //        {
-            //            var g = (from ix in db.tb_PurchaseRequestLines
-            //                     where ix.id == refid
-            //                        && ix.PRNo == DocNo
-            //                        && ix.SS != 0
-            //                     select ix).ToList();
-            //            if (g.Count > 0)
-            //            {
-            //                //update รายการใน PR
-            //                var p = (from ix in db.tb_PurchaseRequestLines
-            //                         where ix.id == refid
-            //                            && ix.PRNo == DocNo
-            //                            && ix.SS != 0
-            //                         select ix).First();
+                    //if (Convert.ToString(dr["TypeReceive"]) == "PR")
+                    //{
+                    //    var g = (from ix in db.tb_PurchaseRequestLines
+                    //             where ix.id == refid
+                    //                && ix.PRNo == DocNo
+                    //                && ix.SS != 0
+                    //             select ix).ToList();
+                    //    if (g.Count > 0)
+                    //    {
+                    //        //update รายการใน PR
+                    //        var p = (from ix in db.tb_PurchaseRequestLines
+                    //                 where ix.id == refid
+                    //                    && ix.PRNo == DocNo
+                    //                    && ix.SS != 0
+                    //                 select ix).First();
 
-            //                if (dbClss.TDe(p.OrderQty) <= dbClss.TDe(p.RemainQty) + OrderQty)
-            //                    p.RemainQty = p.OrderQty;
-            //                else
-            //                    p.RemainQty = p.RemainQty + OrderQty;
+                    //        if (dbClss.TDe(p.OrderQty) <= dbClss.TDe(p.RemainQty) + OrderQty)
+                    //            p.RemainQty = p.OrderQty;
+                    //        else
+                    //            p.RemainQty = p.RemainQty + OrderQty;
 
-            //                p.RCNo = "";
-            //                p.RefRCid = 0;
-            //                p.Status = "Waiting";
+                    //        p.RCNo = "";
+                    //        p.RefRCid = 0;
+                    //        p.Status = "Waiting";
 
-            //                dbClss.AddHistory(this.Name, "คืนรายการรับสินค้า Return Receive", "ID :" + StockControl.dbClss.TSt(p.id)
-            //                     + " CodeNo :" + StockControl.dbClss.TSt(p.CodeNo) + " จำนวน : " + StockControl.dbClss.TSt(OrderQty)
-            //                     + " แก้ไขโดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(DocNo));
+                    //        dbClss.AddHistory(this.Name, "คืนรายการรับสินค้า Return Receive", "ID :" + StockControl.dbClss.TSt(p.id)
+                    //             + " CodeNo :" + StockControl.dbClss.TSt(p.CodeNo) + " จำนวน : " + StockControl.dbClss.TSt(OrderQty)
+                    //             + " แก้ไขโดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(DocNo));
 
-            //                db.SubmitChanges();
+                    //        db.SubmitChanges();
 
-            //                //Calculate stock ใหม่
-            //                db.sp_010_Update_StockItem(Convert.ToString(p.CodeNo), "");
+                    //        //Calculate stock ใหม่
+                    //        db.sp_010_Update_StockItem(Convert.ToString(p.CodeNo), "");
 
-            //                //Update status pr herder
-            //                db.sp_023_PRHD_Cal_Status(Convert.ToString(p.TempNo), DocNo);
-
-
-
-            //                ////---------------------------------------------------------------
-            //                //if (PRID > 0)
-            //                //{
-            //                //    db.sp_006_Update_PR_Remain(PRID, PRNo);
-            //                //}
-            //                //var g = (from ix in db.tb_PurchaseRequestLines
-            //                //         where  //ix.InvoiceNo.Trim() == txtInvoiceNo.Text.Trim() && ix.Status != "Cancel"
-            //                //           ix.id == PRID
-            //                //           && ix.PRNo == PRNo
-            //                //           && ix.SS != 0
-            //                //         select ix).ToList();
-            //                //if (g.Count > 0)
-            //                //{
-            //                //    foreach (var gg in g)
-            //                //    {
-            //                //        //Calculate stock ใหม่
-            //                //        db.sp_010_Update_StockItem(Convert.ToString(gg.CodeNo), "");
-
-            //                //        //Update status pr herder
-            //                //        db.sp_023_PRHD_Cal_Status(Convert.ToString(gg.TempNo), PRNo);
-            //                //    }
-            //                //}
-            //            }
-            //        }
-            //        else
-            //        {
-            //            var g = (from ix in db.tb_PurchaseOrderDetails
-            //                     where ix.id == refid
-            //                        && ix.PONo == DocNo
-            //                        && ix.SS != 0
-            //                     select ix).ToList();
-            //            if (g.Count > 0)
-            //            {
-            //                //update รายการใน PR
-            //                var p = (from ix in db.tb_PurchaseOrderDetails
-            //                         where ix.id == refid
-            //                            && ix.PONo == DocNo
-            //                            && ix.SS != 0
-            //                         select ix).First();
-
-            //                if (dbClss.TDe(p.OrderQty) <= dbClss.TDe(p.BackOrder) + OrderQty)
-            //                    p.BackOrder = p.OrderQty;
-            //                else
-            //                    p.BackOrder = p.BackOrder + OrderQty;
-
-            //                p.RefRCNo = "";
-            //                p.RefRCid = 0;
-
-            //                dbClss.AddHistory(this.Name, "คืนรายการรับสินค้า Return Receive", "ID :" + StockControl.dbClss.TSt(p.id)
-            //                      + " CodeNo :" + StockControl.dbClss.TSt(p.CodeNo) + " จำนวน : " + StockControl.dbClss.TSt(OrderQty)
-            //                      + " แก้ไขโดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(DocNo));
-
-            //                db.SubmitChanges();
-
-            //                //Calculate stock ใหม่
-            //                db.sp_010_Update_StockItem(Convert.ToString(p.CodeNo), "");
-
-            //                //Update status pr herder
-            //                db.sp_022_POHD_Cal_Status(Convert.ToString(p.TempPNo), DocNo);
-            //            }
-            //        }
-            //    }
+                    //        //Update status pr herder
+                    //        db.sp_023_PRHD_Cal_Status(Convert.ToString(p.TempNo), DocNo);
 
 
 
-            //    //var distinctRows = (from DataRow dRow in dt_PRID.Rows
-            //    //                    select dRow["PRNo"]).Distinct();
+                    //        ////---------------------------------------------------------------
+                    //        //if (PRID > 0)
+                    //        //{
+                    //        //    db.sp_006_Update_PR_Remain(PRID, PRNo);
+                    //        //}
+                    //        //var g = (from ix in db.tb_PurchaseRequestLines
+                    //        //         where  //ix.InvoiceNo.Trim() == txtInvoiceNo.Text.Trim() && ix.Status != "Cancel"
+                    //        //           ix.id == PRID
+                    //        //           && ix.PRNo == PRNo
+                    //        //           && ix.SS != 0
+                    //        //         select ix).ToList();
+                    //        //if (g.Count > 0)
+                    //        //{
+                    //        //    foreach (var gg in g)
+                    //        //    {
+                    //        //        //Calculate stock ใหม่
+                    //        //        db.sp_010_Update_StockItem(Convert.ToString(gg.CodeNo), "");
 
-            //    //if (distinctRows.Count() > 0)
-            //    //{
-            //    //    foreach (var gg in distinctRows)
-            //    //    {
-            //    //        //update Status pr
+                    //        //        //Update status pr herder
+                    //        //        db.sp_023_PRHD_Cal_Status(Convert.ToString(gg.TempNo), PRNo);
+                    //        //    }
+                    //        //}
+                    //    }
+                    //}
+                    //else
+                    {
+                        var g = (from ix in db.mh_PurchaseOrderDetails
+                                 where ix.id == refid
+                                    && ix.PONo == DocNo
+                                    && ix.SS != 0
+                                 select ix).ToList();
+                        if (g.Count > 0)
+                        {
+                            //update รายการใน PR
+                            var p = (from ix in db.mh_PurchaseOrderDetails
+                                     where ix.id == refid
+                                        && ix.PONo == DocNo
+                                        && ix.SS != 0
+                                     select ix).First();
 
-            //    //        var hh = (from ix in db.tb_PurchaseRequestLines
-            //    //                  where ix.PRNo == gg.ToString()
-            //    //                        && ix.RemainQty < ix.OrderQty
-            //    //                  select ix).ToList();
-            //    //        if (hh.Count > 0)
-            //    //        {
-            //    //            var pp = (from ix in db.tb_PurchaseRequests
-            //    //                      where ix.PRNo == gg.ToString()
-            //    //                      select ix).First();
-            //    //            pp.Status = "Completed";
-            //    //        }
-            //    //        else
-            //    //        {
-            //    //            var pp = (from ix in db.tb_PurchaseRequests
-            //    //                      where ix.PRNo == gg.ToString()
-            //    //                      select ix).First();
-            //    //            pp.Status = "Waiting";
-            //    //        }
+                            if (dbClss.TDe(p.OrderQty) <= dbClss.TDe(p.BackOrder) + OrderQty)
+                                p.BackOrder = p.OrderQty;
+                            else
+                                p.BackOrder = p.BackOrder + OrderQty;
 
-            //    //        db.SubmitChanges();
-            //    //    }
-            //    //}
-            //}
+                            p.RefRCNo = "";
+                            p.RefRCid = 0;
+
+                            dbClss.AddHistory(this.Name, "คืนรายการรับสินค้า Return Receive", "ID :" + StockControl.dbClss.TSt(p.id)
+                                  + " CodeNo :" + StockControl.dbClss.TSt(p.CodeNo) + " จำนวน : " + StockControl.dbClss.TSt(OrderQty)
+                                  + " แก้ไขโดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", StockControl.dbClss.TSt(DocNo));
+
+                            db.SubmitChanges();
+
+                            //Calculate stock ใหม่
+                            db.sp_010_Update_StockItem(Convert.ToString(p.CodeNo), "");
+
+                            //Update status pr herder
+                            db.sp_022_POHD_Cal_Status(Convert.ToString(p.TempPNo), DocNo);
+                        }
+                    }
+                }
+
+
+
+                //var distinctRows = (from DataRow dRow in dt_PRID.Rows
+                //                    select dRow["PRNo"]).Distinct();
+
+                //if (distinctRows.Count() > 0)
+                //{
+                //    foreach (var gg in distinctRows)
+                //    {
+                //        //update Status pr
+
+                //        var hh = (from ix in db.tb_PurchaseRequestLines
+                //                  where ix.PRNo == gg.ToString()
+                //                        && ix.RemainQty < ix.OrderQty
+                //                  select ix).ToList();
+                //        if (hh.Count > 0)
+                //        {
+                //            var pp = (from ix in db.tb_PurchaseRequests
+                //                      where ix.PRNo == gg.ToString()
+                //                      select ix).First();
+                //            pp.Status = "Completed";
+                //        }
+                //        else
+                //        {
+                //            var pp = (from ix in db.tb_PurchaseRequests
+                //                      where ix.PRNo == gg.ToString()
+                //                      select ix).First();
+                //            pp.Status = "Waiting";
+                //        }
+
+                //        db.SubmitChanges();
+                //    }
+                //}
+            }
             return re;
         }
         

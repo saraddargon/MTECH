@@ -382,7 +382,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name, "txtPONo.Text");
+            HistoryView hw = new HistoryView(this.Name, txtIVNo.Text);
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }

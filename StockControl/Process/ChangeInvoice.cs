@@ -60,7 +60,10 @@ namespace StockControl
             GETDTRow();
             DefaultItem();
             //radGridView1.ReadOnly = false;
-           // DataLoad();
+            // DataLoad();
+
+            dtInvDate.Value = DateTime.Now;
+            cbInvoiceDate.Checked = false;
 
             crow = 0;
         }
@@ -171,22 +174,28 @@ namespace StockControl
                                       where ix.InvoiceNo.Trim() == txtInvoiceNo.Text.Trim() && ix.Status != "Cancel"
                                       //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
                                       select ix).First();
-
-                            gg.UpdateBy = ClassLib.Classlib.User;
-                            gg.UpdateDate = DateTime.Now;
-                            gg.InvoiceNo = txtInvoiceNo2.Text;
-
-
+                            
                             //detail
                             var vv = (from ix in db.tb_Receives
                                       where ix.InvoiceNo.Trim() == txtInvoiceNo.Text.Trim() && ix.Status != "Cancel"
                                       //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
-                                      select ix).First();
+                                      select ix).ToList();
+                            if (vv.Count > 0)
+                            {
+                                foreach (var vg in vv)
+                                {
+                                    vg.InvoiceNo = txtInvoiceNo2.Text;
+                                    db.SubmitChanges();
+                                }
+                            }
 
-                            vv.InvoiceNo = txtInvoiceNo2.Text;
-
-
+                            gg.UpdateBy = ClassLib.Classlib.User;
+                            gg.UpdateDate = DateTime.Now;
+                            gg.InvoiceNo = txtInvoiceNo2.Text;
+                            if (cbInvoiceDate.Checked && dtInvDate.Text != "")
+                                gg.InvoiceDate = Convert.ToDateTime(dtInvDate.Value);
                             db.SubmitChanges();
+
                             //dbClss.AddHistory(this.Name + txtInvoiceNo.Text.Trim(), "เปลี่ยนเลขที่ Invoice/DL No การรับ Receive", " โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", "");
                             //dbClss.AddHistory(this.Name + RCNo, "เปลี่ยนเลขที่ Invoice/DL No การรับ Receive", " โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", "");
                             //dbClss.AddHistory(this.Name, "เปลี่ยนเลขที่ Invoice/DL No การรับ Receive"," เลขเดิม : " +txtInvoiceNo.Text + " เลขใหม่ : "+ txtInvoiceNo2.Text +" โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy") + "]", "");
@@ -200,6 +209,8 @@ namespace StockControl
                     MessageBox.Show("บันทึกสำเร็จ!");
                     txtInvoiceNo.Text = "";
                     txtInvoiceNo2.Text = "";
+                    cbInvoiceDate.Checked = false;
+                    dtInvDate.Value = DateTime.Now;
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }

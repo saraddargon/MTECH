@@ -44,6 +44,9 @@
             this.radLabelElement1 = new Telerik.WinControls.UI.RadLabelElement();
             this.panel1 = new System.Windows.Forms.Panel();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
+            this.cbInvoiceDate = new Telerik.WinControls.UI.RadCheckBox();
+            this.dtInvDate = new Telerik.WinControls.UI.RadDateTimePicker();
+            this.radLabel16 = new Telerik.WinControls.UI.RadLabel();
             this.txtInvoiceNo2 = new Telerik.WinControls.UI.RadTextBox();
             this.txtInvoiceNo = new Telerik.WinControls.UI.RadTextBox();
             this.radButton1 = new Telerik.WinControls.UI.RadButton();
@@ -59,6 +62,9 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             this.radPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbInvoiceDate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtInvDate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtInvoiceNo2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtInvoiceNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton1)).BeginInit();
@@ -89,7 +95,7 @@
             // 
             // 
             this.radRibbonBar1.RootElement.AutoSizeMode = Telerik.WinControls.RadAutoSizeMode.WrapAroundChildren;
-            this.radRibbonBar1.Size = new System.Drawing.Size(487, 161);
+            this.radRibbonBar1.Size = new System.Drawing.Size(487, 160);
             this.radRibbonBar1.StartButtonImage = ((System.Drawing.Image)(resources.GetObject("radRibbonBar1.StartButtonImage")));
             this.radRibbonBar1.StartMenuItems.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuItem1,
@@ -109,6 +115,7 @@
             this.radRibbonBarGroup3});
             this.ribbonTab1.Name = "ribbonTab1";
             this.ribbonTab1.Text = "Action";
+            this.ribbonTab1.UseMnemonic = false;
             // 
             // radRibbonBarGroup1
             // 
@@ -191,7 +198,6 @@
             this.radStatusStrip1.Size = new System.Drawing.Size(487, 26);
             this.radStatusStrip1.SizingGrip = false;
             this.radStatusStrip1.TabIndex = 1;
-            this.radStatusStrip1.Text = "radStatusStrip1";
             // 
             // radLabelElement1
             // 
@@ -205,14 +211,17 @@
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.radPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 161);
+            this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(487, 245);
+            this.panel1.Size = new System.Drawing.Size(487, 246);
             this.panel1.TabIndex = 2;
             // 
             // radPanel1
             // 
             this.radPanel1.BackColor = System.Drawing.Color.LavenderBlush;
+            this.radPanel1.Controls.Add(this.cbInvoiceDate);
+            this.radPanel1.Controls.Add(this.dtInvDate);
+            this.radPanel1.Controls.Add(this.radLabel16);
             this.radPanel1.Controls.Add(this.txtInvoiceNo2);
             this.radPanel1.Controls.Add(this.txtInvoiceNo);
             this.radPanel1.Controls.Add(this.radButton1);
@@ -221,15 +230,42 @@
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radPanel1.Location = new System.Drawing.Point(0, 0);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(487, 245);
+            this.radPanel1.Size = new System.Drawing.Size(487, 246);
             this.radPanel1.TabIndex = 0;
             this.radPanel1.ThemeName = "Office2010Blue";
             this.radPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.radPanel1_Paint);
             // 
+            // cbInvoiceDate
+            // 
+            this.cbInvoiceDate.Location = new System.Drawing.Point(52, 157);
+            this.cbInvoiceDate.Name = "cbInvoiceDate";
+            this.cbInvoiceDate.Size = new System.Drawing.Size(15, 15);
+            this.cbInvoiceDate.TabIndex = 19;
+            // 
+            // dtInvDate
+            // 
+            this.dtInvDate.CustomFormat = "dd/MM/yyyy";
+            this.dtInvDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtInvDate.Location = new System.Drawing.Point(73, 154);
+            this.dtInvDate.Name = "dtInvDate";
+            this.dtInvDate.Size = new System.Drawing.Size(102, 20);
+            this.dtInvDate.TabIndex = 6;
+            this.dtInvDate.TabStop = false;
+            this.dtInvDate.Text = "04/09/2018";
+            this.dtInvDate.Value = new System.DateTime(2018, 9, 4, 18, 42, 59, 380);
+            // 
+            // radLabel16
+            // 
+            this.radLabel16.Location = new System.Drawing.Point(68, 130);
+            this.radLabel16.Name = "radLabel16";
+            this.radLabel16.Size = new System.Drawing.Size(68, 18);
+            this.radLabel16.TabIndex = 5;
+            this.radLabel16.Text = "Invoice Date";
+            // 
             // txtInvoiceNo2
             // 
             this.txtInvoiceNo2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.txtInvoiceNo2.Location = new System.Drawing.Point(68, 110);
+            this.txtInvoiceNo2.Location = new System.Drawing.Point(68, 102);
             this.txtInvoiceNo2.Name = "txtInvoiceNo2";
             this.txtInvoiceNo2.Size = new System.Drawing.Size(187, 20);
             this.txtInvoiceNo2.TabIndex = 4;
@@ -237,7 +273,7 @@
             // 
             // txtInvoiceNo
             // 
-            this.txtInvoiceNo.Location = new System.Drawing.Point(68, 52);
+            this.txtInvoiceNo.Location = new System.Drawing.Point(68, 44);
             this.txtInvoiceNo.Name = "txtInvoiceNo";
             this.txtInvoiceNo.Size = new System.Drawing.Size(187, 20);
             this.txtInvoiceNo.TabIndex = 4;
@@ -246,7 +282,7 @@
             // radButton1
             // 
             this.radButton1.Image = ((System.Drawing.Image)(resources.GetObject("radButton1.Image")));
-            this.radButton1.Location = new System.Drawing.Point(274, 48);
+            this.radButton1.Location = new System.Drawing.Point(274, 40);
             this.radButton1.Name = "radButton1";
             this.radButton1.Size = new System.Drawing.Size(58, 26);
             this.radButton1.TabIndex = 3;
@@ -256,7 +292,7 @@
             // 
             // radLabel2
             // 
-            this.radLabel2.Location = new System.Drawing.Point(68, 86);
+            this.radLabel2.Location = new System.Drawing.Point(68, 78);
             this.radLabel2.Name = "radLabel2";
             this.radLabel2.Size = new System.Drawing.Size(110, 18);
             this.radLabel2.TabIndex = 0;
@@ -264,7 +300,7 @@
             // 
             // radLabel1
             // 
-            this.radLabel1.Location = new System.Drawing.Point(68, 27);
+            this.radLabel1.Location = new System.Drawing.Point(68, 19);
             this.radLabel1.Name = "radLabel1";
             this.radLabel1.Size = new System.Drawing.Size(107, 18);
             this.radLabel1.TabIndex = 0;
@@ -329,6 +365,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
             this.radPanel1.ResumeLayout(false);
             this.radPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbInvoiceDate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtInvDate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtInvoiceNo2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtInvoiceNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radButton1)).EndInit();
@@ -367,5 +406,8 @@
         private Telerik.WinControls.UI.RadTextBox txtInvoiceNo;
         private Telerik.WinControls.UI.RadTextBox txtInvoiceNo2;
         private Telerik.WinControls.UI.RadLabel radLabel2;
+        private Telerik.WinControls.UI.RadDateTimePicker dtInvDate;
+        private Telerik.WinControls.UI.RadLabel radLabel16;
+        private Telerik.WinControls.UI.RadCheckBox cbInvoiceDate;
     }
 }
