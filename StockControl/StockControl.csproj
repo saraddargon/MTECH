@@ -149,6 +149,12 @@
     </Compile>
     <Compile Include="MasterClass\baseClass.cs" />
     <Compile Include="MasterClass\getGrid.cs" />
+    <Compile Include="Process\CustomerPOSummary_Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\CustomerPOSummary_Report.Designer.cs">
+      <DependentUpon>CustomerPOSummary_Report.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Customer_List.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1250,6 +1256,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Mainfrom.resx">
       <DependentUpon>Mainfrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\CustomerPOSummary_Report.resx">
+      <DependentUpon>CustomerPOSummary_Report.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Customer_List.resx">
       <DependentUpon>Customer_List.cs</DependentUpon>
