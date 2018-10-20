@@ -5377,32 +5377,6 @@
     <Parameter Name="idCSTMPODt" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.sp_024_tb_Shipping_ADD" Method="sp_024_tb_Shipping_ADD">
-    <Parameter Name="ShippingNo" Parameter="shippingNo" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="NVarChar(250)" />
-    <Parameter Name="QTYPlan" Parameter="qTYPlan" Type="System.Decimal" DbType="Decimal(18,6)" />
-    <Parameter Name="QTY" Parameter="qTY" Type="System.Decimal" DbType="Decimal(18,6)" />
-    <Parameter Name="Remark" Parameter="remark" Type="System.String" DbType="NVarChar(512)" />
-    <Parameter Name="LineName" Parameter="lineName" Type="System.String" DbType="NVarChar(512)" />
-    <Parameter Name="MachineName" Parameter="machineName" Type="System.String" DbType="NVarChar(512)" />
-    <Parameter Name="SerialNo" Parameter="serialNo" Type="System.String" DbType="NVarChar(512)" />
-    <Parameter Name="LotNo" Parameter="lotNo" Type="System.String" DbType="NVarChar(512)" />
-    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
-    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="RefJobNo" Parameter="refJobNo" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="RefTempJobNo" Parameter="refTempJobNo" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="RefidJobNo" Parameter="refidJobNo" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="ToLocation" Parameter="toLocation" Type="System.String" DbType="VarChar(100)" />
-    <Parameter Name="BaseUOM" Parameter="baseUOM" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="BasePCSUOM" Parameter="basePCSUOM" Type="System.Decimal" DbType="Decimal(18,2)" />
-    <Parameter Name="UnitShip" Parameter="unitShip" Type="System.String" DbType="VarChar(50)" />
-    <Parameter Name="PCSUnit" Parameter="pCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" />
-    <Parameter Name="idCSTMPODt" Type="System.Int32" DbType="Int" />
-    <Parameter Name="idProductionOrderRM" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Free" Parameter="free" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.sp_052_Reture_RM" Method="sp_052_Reture_RM">
     <Parameter Name="ReturnNo" Parameter="returnNo" Type="System.String" DbType="NVarChar(50)" />
     <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="NVarChar(250)" />
@@ -5590,5 +5564,31 @@
       <Column Name="SeqStatus" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="SS" Type="System.String" DbType="VarChar(16) NOT NULL" CanBeNull="false" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.sp_024_tb_Shipping_ADD" Method="sp_024_tb_Shipping_ADD">
+    <Parameter Name="ShippingNo" Parameter="shippingNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CodeNo" Parameter="codeNo" Type="System.String" DbType="NVarChar(250)" />
+    <Parameter Name="QTYPlan" Parameter="qTYPlan" Type="System.Decimal" DbType="Decimal(18,6)" />
+    <Parameter Name="QTY" Parameter="qTY" Type="System.Decimal" DbType="Decimal(18,6)" />
+    <Parameter Name="Remark" Parameter="remark" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="LineName" Parameter="lineName" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="MachineName" Parameter="machineName" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="SerialNo" Parameter="serialNo" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="LotNo" Parameter="lotNo" Type="System.String" DbType="NVarChar(512)" />
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CreateBy" Parameter="createBy" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefJobNo" Parameter="refJobNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefTempJobNo" Parameter="refTempJobNo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RefidJobNo" Parameter="refidJobNo" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Location" Parameter="location" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="ToLocation" Parameter="toLocation" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="BaseUOM" Parameter="baseUOM" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="BasePCSUOM" Parameter="basePCSUOM" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="UnitShip" Parameter="unitShip" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="PCSUnit" Parameter="pCSUnit" Type="System.Decimal" DbType="Decimal(18,2)" />
+    <Parameter Name="idCSTMPODt" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idProductionOrderRM" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Free" Parameter="free" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>
