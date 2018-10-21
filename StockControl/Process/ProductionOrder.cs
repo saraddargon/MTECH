@@ -1139,8 +1139,6 @@ namespace StockControl
         {
             try
             {
-                //PrintPR a = new PrintPR(txtJobNo.Text, txtJobNo.Text, "ReportProductionOrder");
-                //a.ShowDialog();
                 string JobNo = txtJobNo.Text.Trim();
                 if (JobNo != "")
                 {
@@ -1150,15 +1148,6 @@ namespace StockControl
                     Report.Reportx1 op = new Report.Reportx1("JobOrderSheet3.rpt");
                     op.Show();
                 }
-                //if (dgvData.CurrentCell.RowIndex >= 0)
-                //{
-                //    string JobNo = dgvData.Rows[dgvData.CurrentCell.RowIndex].Cells["JobNo"].Value.ToSt();
-                //    Report.Reportx1.Value = new string[1];
-                //    Report.Reportx1.Value[0] = JobNo;
-                //    Report.Reportx1.WReport = "JOBNoList";
-                //    Report.Reportx1 op = new Report.Reportx1("JobOrderSheet3.rpt");
-                //    op.Show();
-                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
