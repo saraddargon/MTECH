@@ -1458,7 +1458,7 @@ namespace StockControl
                     {
                         discount_per = txtDiscountPer.Value.ToDecimal();
                         if (discount_per > 0)
-                            discount_amnt = (amnt - (amnt * (discount_per / 100))).Round2();
+                            discount_amnt = (amnt * (discount_per / 100)).Round2();
                     }
                 }
                 txtDiscountAmnt.Value = discount_amnt;
@@ -1470,7 +1470,7 @@ namespace StockControl
                 if (cbVat.Checked)
                     vat = afterdiscount * Math.Round(vatA / 100, 2);
                 txtVatAmnt.Value = vat;
-                txtGrandTotal.Value = amnt + vat;
+                txtGrandTotal.Value = afterdiscount + vat;
             }
             catch (Exception ex) { MessageBox.Show("err2: " + ex.Message); }
         }
@@ -1705,7 +1705,7 @@ namespace StockControl
                 using (var db = new DataClasses1DataContext())
                 {
                     var so = db.mh_SaleOrders.Where(x => x.Active && x.SONo.Equals(txtSONo.Text.Trim())).ToList();
-                    if (so.Count > 0 && (lblStatus.Text == "Waiting" || lblStatus.Text == "Waiting Approve"))
+                    if (so.Count > 0 && (txtSOStatus.Text == "Waiting" || txtSOStatus.Text == "Waiting Approve"))
                     {
                         if (baseClass.IsSendApprove())
                         {
