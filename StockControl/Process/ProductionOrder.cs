@@ -130,6 +130,10 @@ namespace StockControl
                             var accdQ = baseClass.GetQtyAccidenSlip(dt.id);
                             outQ += accdQ;
 
+                            var rm2 = db.mh_ProductionOrderRM_2s.Where(x => x.Active && x.idProductionOrderRM == dt.id).ToList();
+                            if(rm2.Count > 0)
+                                outQ -= rm2.Sum(x => x.Qty);
+
                             addRow(dt.id, dt.ItemNo, dt.ItemName, dt.Qty, dt.UOM, dt.PCSUnit
                                 , outQ, dt.GroupType, dt.Type, dt.InvGroup);
                         }

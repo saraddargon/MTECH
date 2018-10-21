@@ -501,6 +501,7 @@ namespace Report
                         rptDc.SetParameterValue("@yy", Convert.ToInt32(Value[0]));
                         rptDc.SetParameterValue("@mm", Convert.ToInt32(Value[1]));
                         rptDc.SetParameterValue("@ItemNo", Convert.ToString(Value[2]));
+                        rptDc.SetParameterValue("@Cstm", Value[3]);
                         rptDc.SetParameterValue("@DateNow", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;

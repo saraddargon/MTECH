@@ -75,11 +75,11 @@ namespace StockControl
 
                 var Customers = db.mh_Customers.Where(x => x.Active)
                     .Select(x => new CustomerCombo { No = x.No, Name = x.Name }).ToList();
-                Customers.Add(new CustomerCombo
-                {
-                    No = "",
-                    Name = "",
-                });
+                //Customers.Add(new CustomerCombo
+                //{
+                //    No = "",
+                //    Name = "",
+                //});
                 Customers = Customers.OrderBy(x => x.No).ToList();
                 cbbCSTM.AutoSizeDropDownToBestFit = true;
                 cbbCSTM.DisplayMember = "Name";
@@ -423,15 +423,16 @@ namespace StockControl
         {
             if (cbbMM.SelectedIndex > 0)
             {
-                //Report.Reportx1.Value = new string[3];
-                //Report.Reportx1.Value[0] = cbbYY.Text.ToSt();
-                //Report.Reportx1.Value[1] = (cbbMM.SelectedIndex + 1).ToSt();
-                //Report.Reportx1.Value[2] = cbbItem.SelectedValue.ToSt();
-                //Report.Reportx1.WReport = "DeliveryPlanning";
-                //Report.Reportx1 op = new Report.Reportx1("DeliveryPlanning.rpt");
-                //op.Show();
-                var c = new CustomerPOSummary_Report();
-                c.ShowDialog();
+                Report.Reportx1.Value = new string[4];
+                Report.Reportx1.Value[0] = cbbYY.Text.ToSt();
+                Report.Reportx1.Value[1] = (cbbMM.SelectedIndex + 1).ToSt();
+                Report.Reportx1.Value[2] = cbbItem.SelectedValue.ToSt();
+                Report.Reportx1.Value[3] = cbbCSTM.SelectedValue.ToSt();
+                Report.Reportx1.WReport = "DeliveryPlanning";
+                Report.Reportx1 op = new Report.Reportx1("DeliveryPlanning.rpt");
+                op.Show();
+                //var c = new CustomerPOSummary_Report();
+                //c.ShowDialog();
             }
         }
 

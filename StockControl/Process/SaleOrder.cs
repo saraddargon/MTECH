@@ -361,6 +361,8 @@ namespace StockControl
                 txtRemark.Enabled = ss;
                 cbVat.Enabled = ss;
                 txtVatA.Enabled = ss;
+                txtDiscountAmnt.Enabled = ss;
+                txtDiscountPer.Enabled = ss;
             }
             else if (Condition.Equals("View"))
             {
@@ -371,6 +373,8 @@ namespace StockControl
                 txtRemark.Enabled = ss;
                 cbVat.Enabled = ss;
                 txtVatA.Enabled = ss;
+                txtDiscountAmnt.Enabled = ss;
+                txtDiscountPer.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
@@ -381,6 +385,8 @@ namespace StockControl
                 txtRemark.Enabled = ss;
                 cbVat.Enabled = ss;
                 txtVatA.Enabled = ss;
+                txtDiscountAmnt.Enabled = ss;
+                txtDiscountPer.Enabled = ss;
             }
         }
 
@@ -1760,6 +1766,18 @@ namespace StockControl
         private void cbCon2_ToggleStateChanged(object sender, StateChangedEventArgs args)
         {
 
+        }
+
+        private void txtDiscountAmnt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                CallTotal(true);
+        }
+
+        private void txtDiscountPer_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                CallTotal(false);
         }
     }
 
