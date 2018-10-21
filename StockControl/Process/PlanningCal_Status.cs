@@ -201,6 +201,15 @@ namespace StockControl
                                     ApproveDate = DateTime.Now,
                                     SandApproveDate = DateTime.Now,
                                     VatGroup = 0,
+                                    AfterDiscount = 0,
+                                    Con1 = false,
+                                    Con2 = false,
+                                    Con3 = false,
+                                    ConDate = DateTime.Now,
+                                    ConDay1 = 0,
+                                    ConDay2 = 0,
+                                    DiscountAmnt = 0,
+                                    DiscountPer = 0,
                                 };
                                 db.mh_SaleOrders.InsertOnSubmit(so);
                             }

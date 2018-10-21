@@ -44,7 +44,8 @@ namespace StockControl
                                     hdSS => hdSS.SSNo,
                                     (dtSS, hdSS) => new { dtSS, hdSS }).ToList();
                                 if (ss.Count > 0)
-                                    shipQ += ss.Sum(x => x.dtSS.Qty).ToDecimal();
+                                    shipQ += ss.Sum(x => x.dtSS.Qty - x.dtSS.OutShip).ToDecimal();
+                                    //shipQ += ss.Sum(x => x.dtSS.Qty).ToDecimal();
                             }
 
                             //find Job

@@ -264,11 +264,6 @@ namespace StockControl
                                     if (err != "")
                                         break;
                                 }
-                                //if (p.Where(x => x.dt.OutQty < 0).Count() > 0) //เบิก RM เข้ามาเกิน
-                                //{
-                                //    err += $"- “{JobNo}:” จำนวนเบิกใช้ 'วัตถุดิบ' เกินกำหนด กรุณาทำ Return RM หรือ Accident Slip กรณีไม่สามารถคืนวัตถุดิบได้ \n";
-                                //    break;
-                                //}
                             }
                         }
                     }

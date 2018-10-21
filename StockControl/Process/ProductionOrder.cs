@@ -131,7 +131,7 @@ namespace StockControl
                             outQ += accdQ;
 
                             var rm2 = db.mh_ProductionOrderRM_2s.Where(x => x.Active && x.idProductionOrderRM == dt.id).ToList();
-                            if(rm2.Count > 0)
+                            if (rm2.Count > 0)
                                 outQ -= rm2.Sum(x => x.Qty);
 
                             addRow(dt.id, dt.ItemNo, dt.ItemName, dt.Qty, dt.UOM, dt.PCSUnit
@@ -154,6 +154,11 @@ namespace StockControl
                         {
                             btnRecal.Enabled = false;
                             btnHoldJob.Enabled = false;
+                        }
+                        else
+                        {
+                            btnRecal.Enabled = true;
+                            btnHoldJob.Enabled = true;
                         }
 
                         //****Load Pr in Job
@@ -2483,7 +2488,7 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    if (db.mh_ProductionOrders.Where(x => x.JobNo == txtJobNo.Text.Trim() && x.Active).Count() > 0 && txtSeqStatus.Text.ToInt() <= 1)
+                    if (db.mh_ProductionOrders.Where(x => x.JobNo == txtJobNo.Text.Trim() && x.Active).Count() > 0 && txtSeqStatus.Text.ToInt() < 1)
                     {
                         if (baseClass.IsSendApprove())
                         {

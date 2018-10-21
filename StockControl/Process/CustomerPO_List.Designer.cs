@@ -283,12 +283,12 @@
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "Shipped";
             gridViewDecimalColumn2.FormatString = "{0:N2}";
-            gridViewDecimalColumn2.HeaderText = "Shipped";
+            gridViewDecimalColumn2.HeaderText = "Shipping Q\'ty";
             gridViewDecimalColumn2.Name = "Shipped";
-            gridViewDecimalColumn2.Width = 72;
+            gridViewDecimalColumn2.Width = 100;
             gridViewDecimalColumn3.EnableExpressionEditor = false;
             gridViewDecimalColumn3.FieldName = "Remain";
-            gridViewDecimalColumn3.HeaderText = "Out Shipment Q\'ty";
+            gridViewDecimalColumn3.HeaderText = "Out Shipping Q\'ty";
             gridViewDecimalColumn3.Name = "Remain";
             gridViewDecimalColumn3.Width = 100;
             gridViewCheckBoxColumn2.EnableExpressionEditor = false;
