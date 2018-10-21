@@ -844,8 +844,8 @@
             // ddlType
             // 
             this.ddlType.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDownList;
-            radListDataItem1.Text = "CutStock";
-            radListDataItem2.Text = "None";
+            radListDataItem1.Text = "Shipping safety";
+            radListDataItem2.Text = "Can\'t return rm";
             this.ddlType.Items.Add(radListDataItem1);
             this.ddlType.Items.Add(radListDataItem2);
             this.ddlType.Location = new System.Drawing.Point(346, 18);
