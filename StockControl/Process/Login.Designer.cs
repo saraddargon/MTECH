@@ -206,7 +206,7 @@
             this.lbVer.Name = "lbVer";
             this.lbVer.Size = new System.Drawing.Size(198, 18);
             this.lbVer.TabIndex = 21;
-            this.lbVer.Text = "version : 1.0.3";
+            this.lbVer.Text = "version : 1.0.4";
             this.lbVer.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // btnUpdate
