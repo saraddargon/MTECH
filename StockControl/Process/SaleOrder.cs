@@ -133,7 +133,6 @@ namespace StockControl
                         txtCreateDate.Text = t.CreateDate.ToDtString();
                         txtCreateBy.Text = t.CreateBy;
 
-
                         dgvData.Rows.Clear();
                         int ss = 0;
                         var comp = 0;
@@ -176,7 +175,17 @@ namespace StockControl
                             }
                         }
                         SetRowNo1(dgvData);
-                        CallTotal();
+                        CallTotal(true);
+                        txtDiscountPer.Value = t.DiscountPer;
+                        txtDiscountAmnt.Value = t.DiscountAmnt;
+                        txtAfterDiscount.Value = t.AfterDiscount;
+
+                        cbCon1.Checked = t.Con1;
+                        cbCon2.Checked = t.Con2;
+                        cbCon3.Checked = t.Con3;
+                        dtConDate.Value = t.ConDate.Date;
+                        txtConDay1.Value = t.ConDay1;
+                        txtConDay2.Value = t.ConDay2;
 
                         btnView_Click(null, null);
                         if (comp >= dgvData.Rows.Count)
@@ -309,7 +318,10 @@ namespace StockControl
                         //});
                     }
                     SetRowNo1(dgvData);
-                    CallTotal();
+                    txtDiscountAmnt.Value = 0;
+                    txtDiscountPer.Value = 0;
+                    txtAfterDiscount.Value = 0;
+                    CallTotal(true);
                 }
             }
             catch (Exception ex)
@@ -393,6 +405,15 @@ namespace StockControl
             cbbCSTM.Enabled = true;
             txtSOStatus.Text = "Waiting";
             cQty = 0.00m;
+            txtAfterDiscount.Value = 0;
+            txtDiscountPer.Value = 0;
+            txtDiscountAmnt.Value = 0;
+            cbCon1.Checked = false;
+            cbCon2.Checked = false;
+            cbCon3.Checked = false;
+            dtConDate.Value = DateTime.Now;
+            txtConDay1.Value = 0;
+            txtConDay2.Value = 0;
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -660,7 +681,7 @@ namespace StockControl
             {
                 string sono = txtSONo.Text;
                 string cstmNo = txtCSTMNo.Text;
-                CallTotal();
+                CallTotal(true);
                 using (var db = new DataClasses1DataContext())
                 {
 
@@ -755,7 +776,21 @@ namespace StockControl
                 gg.TotalPriceIncVat = dbClss.TDe(txtGrandTotal.Text);
                 gg.Active = true;
                 gg.DemandType = 0;
-
+                gg.DiscountPer = txtDiscountPer.Value.ToDecimal();
+                gg.DiscountAmnt = txtDiscountAmnt.Value.ToDecimal();
+                gg.AfterDiscount = txtAfterDiscount.Value.ToDecimal();
+                gg.Con1 = cbCon1.Checked;
+                gg.Con2 = cbCon2.Checked;
+                gg.Con3 = cbCon3.Checked;
+                gg.ConDate = dtConDate.Value.Date;
+                if (gg.Con1)
+                    gg.ConDay1 = txtConDay1.Value.ToInt();
+                else
+                    gg.ConDay1 = 0;
+                if (gg.Con2)
+                    gg.ConDay2 = txtConDay2.Value.ToInt();
+                else
+                    gg.ConDay2 = 0;
 
                 db.SubmitChanges();
             }
@@ -812,7 +847,7 @@ namespace StockControl
                         gg.CustomerPartNo = ix.Cells["CustomerPartNo"].Value.ToSt();
                         gg.CustomerPartName = ix.Cells["CustomerPartName"].Value.ToSt();
                     }
-                    else if(!ix.IsVisible && id > 0)
+                    else if (!ix.IsVisible && id > 0)
                     {
                         gg.Active = false;
                         dbClss.AddHistory(this.Name, "แก้ไข Sale Order", $"ลบรายการ [{gg.ItemNo}]", txtSONo.Text);
@@ -969,7 +1004,7 @@ namespace StockControl
                         else
                             dgvData.Rows[e.RowIndex].Cells["Amount"].Value = 0;
 
-                        CallTotal();
+                        CallTotal(true);
                     }
                     else if (e.Column.Name.Equals("ItemNo"))
                     {
@@ -1036,7 +1071,7 @@ namespace StockControl
                         {
                             var m = baseClass.GetPriceList(itemNo, ReqDate.Value.Date);
                             e.Row.Cells["UnitPrice"].Value = m;
-                            CallTotal();
+                            CallTotal(true);
                         }
                     }
 
@@ -1162,7 +1197,7 @@ namespace StockControl
                 //    baseClass.Warning("สถานะไม่สามารถลบรายการได้.\n");
                 //    return;
                 //}
-                if(dgvData.CurrentCell == null)
+                if (dgvData.CurrentCell == null)
                 {
                     baseClass.Warning("กรุณาเลือกรายการ.\n");
                     return;
@@ -1171,12 +1206,12 @@ namespace StockControl
                 var qtyB = rowe.Cells["QtyB"].Value.ToDecimal();
                 var shipB = rowe.Cells["OutShipB"].Value.ToDecimal();
                 var planB = rowe.Cells["OutPlan"].Value.ToDecimal();
-                if(planB == 0)
+                if (planB == 0)
                 {
                     baseClass.Warning("ไม่สามารถลบรายการได้เนื่องจาก รายการดังกล่าวทำ Planning Job Order Sheet แล้ว.\n");
                     return;
                 }
-                else if(shipB != qtyB)
+                else if (shipB != qtyB)
                 {
                     baseClass.Warning("ไม่สามารถลบรายการได้เนื่องจาก รายการดังกล่าวทำ Shipment แล้ว.\n");
                 }
@@ -1383,14 +1418,14 @@ namespace StockControl
                             , "T", false, false, "", t.CustomerPartNo, t.CustomerPartName);
                     }
                     SetRowNo1(dgvData);
-                    CallTotal();
+                    CallTotal(true);
 
                 }
             }
         }
 
 
-        private void CallTotal()
+        private void CallTotal(bool calAmnt)
         {
             try
             {
@@ -1401,10 +1436,33 @@ namespace StockControl
                     amnt += item.Cells["Amount"].Value.ToDecimal();
                 }
                 txtTotal.Value = amnt;
+
+                var discount_amnt = 0.00m;
+                var discount_per = 0.00m;
+                var afterdiscount = amnt;
+                if (amnt > 0)
+                {
+                    if (calAmnt)
+                    {
+                        discount_amnt = txtDiscountAmnt.Value.ToDecimal();
+                        if (discount_amnt > 0)
+                            discount_per = ((discount_amnt * 100) / amnt).Round2();
+                    }
+                    else
+                    {
+                        discount_per = txtDiscountPer.Value.ToDecimal();
+                        if (discount_per > 0)
+                            discount_amnt = (amnt - (amnt * (discount_per / 100))).Round2();
+                    }
+                }
+                txtDiscountAmnt.Value = discount_amnt;
+                txtDiscountPer.Value = discount_per;
+                afterdiscount = (amnt - discount_amnt).Round2();
+                txtAfterDiscount.Value = afterdiscount;
                 var vat = 0.00m;
                 var vatA = txtVatA.Value.ToDecimal();
                 if (cbVat.Checked)
-                    vat = amnt * Math.Round(vatA / 100, 2);
+                    vat = afterdiscount * Math.Round(vatA / 100, 2);
                 txtVatAmnt.Value = vat;
                 txtGrandTotal.Value = amnt + vat;
             }
@@ -1450,7 +1508,7 @@ namespace StockControl
             }
 
             AddPartE();
-            CallTotal();
+            CallTotal(true);
         }
         void AddPartE()
         {
@@ -1593,13 +1651,13 @@ namespace StockControl
 
         private void cbVat_ToggleStateChanged(object sender, StateChangedEventArgs args)
         {
-            CallTotal();
+            CallTotal(true);
         }
 
         private void txtVatA_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-                CallTotal();
+                CallTotal(true);
         }
 
         private void btnSendApprove_Click(object sender, EventArgs e)
@@ -1671,7 +1729,7 @@ namespace StockControl
                     var reqDate = dgvData.CurrentCell.RowInfo.Cells["ReqDate"].Value.ToDateTime();
                     if (itemNo != "" && reqDate != null)
                         dgvData.CurrentCell.RowInfo.Cells["UnitPrice"].Value = baseClass.GetPriceList(itemNo, reqDate.Value.Date);
-                    CallTotal();
+                    CallTotal(true);
                 }
             }
             catch (Exception ex)
@@ -1683,6 +1741,26 @@ namespace StockControl
                 this.Cursor = Cursors.Default;
             }
         }
+
+        private void btnCal_Click(object sender, EventArgs e)
+        {
+            CallTotal(true);
+        }
+
+        private void radGroupBox4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbCon1_ToggleStateChanged(object sender, StateChangedEventArgs args)
+        {
+
+        }
+
+        private void cbCon2_ToggleStateChanged(object sender, StateChangedEventArgs args)
+        {
+
+        }
     }
 
 
@@ -1693,7 +1771,8 @@ namespace StockControl
         public decimal poAmnt { get; set; }
         public decimal pricePer
         {
-            get {
+            get
+            {
                 return Math.Round(poAmnt / poQty, 2);
             }
         }

@@ -516,7 +516,7 @@ namespace StockControl
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (txtFGNo.Text == "") return;
-            if (txtOutQty.Value.ToDecimal() == 0)
+            if (cbCloseJob.Checked)
             {
                 baseClass.Warning("- ไม่สามารถลบได้เนื่องจากสถานะเป็น 'Completed'.\n");
                 return;
@@ -2490,7 +2490,7 @@ namespace StockControl
             {
                 using (var db = new DataClasses1DataContext())
                 {
-                    if (db.mh_SaleOrders.Where(x=>x.SONo == txtJobNo.Text.Trim() && x.Active).Count() > 0 && txtSeqStatus.Text.ToInt() <= 1)
+                    if (db.mh_ProductionOrders.Where(x => x.JobNo == txtJobNo.Text.Trim() && x.Active).Count() > 0 && txtSeqStatus.Text.ToInt() <= 1)
                     {
                         if (baseClass.IsSendApprove())
                         {
