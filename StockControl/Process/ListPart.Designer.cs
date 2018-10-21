@@ -498,7 +498,7 @@
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "CurrentStock";
             gridViewDecimalColumn1.FormatString = "{0:N2}";
-            gridViewDecimalColumn1.HeaderText = "CurrentStock";
+            gridViewDecimalColumn1.HeaderText = "Current Stock";
             gridViewDecimalColumn1.Name = "CurrentStock";
             gridViewDecimalColumn1.ReadOnly = true;
             gridViewDecimalColumn1.Width = 94;
@@ -513,13 +513,14 @@
             gridViewDecimalColumn3.FieldName = "ReservationStock";
             gridViewDecimalColumn3.FormatString = "{0:N2}";
             gridViewDecimalColumn3.HeaderText = "Reservation Stock";
+            gridViewDecimalColumn3.IsVisible = false;
             gridViewDecimalColumn3.Name = "ReservationStock";
             gridViewDecimalColumn3.ReadOnly = true;
             gridViewDecimalColumn3.Width = 108;
             gridViewDecimalColumn4.EnableExpressionEditor = false;
             gridViewDecimalColumn4.FieldName = "UnReservationStock";
             gridViewDecimalColumn4.FormatString = "{0:N2}";
-            gridViewDecimalColumn4.HeaderText = "Un-Reservation Stock";
+            gridViewDecimalColumn4.HeaderText = "Normal Stock";
             gridViewDecimalColumn4.Name = "UnReservationStock";
             gridViewDecimalColumn4.ReadOnly = true;
             gridViewDecimalColumn4.Width = 124;

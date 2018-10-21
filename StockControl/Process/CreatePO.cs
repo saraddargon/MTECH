@@ -2925,11 +2925,11 @@ namespace StockControl
                             //else
                             //{
 
-                            //Total += Convert.ToDouble(rd.Cells["dgvAmount"].Value);
-                            //VatDetail += Convert.ToDouble(rd.Cells["dgvAmount"].Value) * vat4x;
+                            Total += Convert.ToDouble(rd.Cells["dgvAmount"].Value);
+                            VatDetail += Convert.ToDouble(rd.Cells["dgvAmount"].Value) * vat4x;
 
-                            Total += Convert.ToDouble(rd.Cells["dgvExtendedCost"].Value);
-                            VatDetail += Convert.ToDouble(rd.Cells["dgvExtendedCost"].Value) * vat4x;
+                            //Total += Convert.ToDouble(rd.Cells["dgvExtendedCost"].Value);
+                            //VatDetail += Convert.ToDouble(rd.Cells["dgvExtendedCost"].Value) * vat4x;
 
                             //}
                         }
