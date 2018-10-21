@@ -184,8 +184,8 @@ namespace StockControl
                         cbCon2.Checked = t.Con2;
                         cbCon3.Checked = t.Con3;
                         dtConDate.Value = t.ConDate.Date;
-                        txtConDay1.Value = t.Con1;
-                        txtConDay2.Value = t.Con2;
+                        txtConDay1.Value = t.ConDay1;
+                        txtConDay2.Value = t.ConDay2;
 
                         btnView_Click(null, null);
                         if (comp >= dgvData.Rows.Count)
@@ -783,8 +783,14 @@ namespace StockControl
                 gg.Con2 = cbCon2.Checked;
                 gg.Con3 = cbCon3.Checked;
                 gg.ConDate = dtConDate.Value.Date;
-                gg.ConDay1 = txtConDay1.Value.ToInt();
-                gg.ConDay2 = txtConDay2.Value.ToInt();
+                if (gg.Con1)
+                    gg.ConDay1 = txtConDay1.Value.ToInt();
+                else
+                    gg.ConDay1 = 0;
+                if (gg.Con2)
+                    gg.ConDay2 = txtConDay2.Value.ToInt();
+                else
+                    gg.ConDay2 = 0;
 
                 db.SubmitChanges();
             }
@@ -1742,6 +1748,16 @@ namespace StockControl
         }
 
         private void radGroupBox4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbCon1_ToggleStateChanged(object sender, StateChangedEventArgs args)
+        {
+
+        }
+
+        private void cbCon2_ToggleStateChanged(object sender, StateChangedEventArgs args)
         {
 
         }
