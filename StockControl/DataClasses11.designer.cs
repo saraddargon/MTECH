@@ -51428,6 +51428,10 @@ namespace StockControl
 		
 		private bool _Con3;
 		
+		private int _ConDay1;
+		
+		private int _ConDay2;
+		
 		private System.DateTime _ConDate;
 		
     #region Extensibility Method Definitions
@@ -51496,6 +51500,10 @@ namespace StockControl
     partial void OnCon2Changed();
     partial void OnCon3Changing(bool value);
     partial void OnCon3Changed();
+    partial void OnConDay1Changing(int value);
+    partial void OnConDay1Changed();
+    partial void OnConDay2Changing(int value);
+    partial void OnConDay2Changed();
     partial void OnConDateChanging(System.DateTime value);
     partial void OnConDateChanged();
     #endregion
@@ -52121,6 +52129,46 @@ namespace StockControl
 					this._Con3 = value;
 					this.SendPropertyChanged("Con3");
 					this.OnCon3Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConDay1", DbType="Int NOT NULL")]
+		public int ConDay1
+		{
+			get
+			{
+				return this._ConDay1;
+			}
+			set
+			{
+				if ((this._ConDay1 != value))
+				{
+					this.OnConDay1Changing(value);
+					this.SendPropertyChanging();
+					this._ConDay1 = value;
+					this.SendPropertyChanged("ConDay1");
+					this.OnConDay1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConDay2", DbType="Int NOT NULL")]
+		public int ConDay2
+		{
+			get
+			{
+				return this._ConDay2;
+			}
+			set
+			{
+				if ((this._ConDay2 != value))
+				{
+					this.OnConDay2Changing(value);
+					this.SendPropertyChanging();
+					this._ConDay2 = value;
+					this.SendPropertyChanged("ConDay2");
+					this.OnConDay2Changed();
 				}
 			}
 		}

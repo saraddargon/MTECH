@@ -2367,6 +2367,8 @@
       <Column Name="Con1" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Con2" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Con3" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ConDay1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ConDay2" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ConDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>

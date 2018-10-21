@@ -133,7 +133,6 @@ namespace StockControl
                         txtCreateDate.Text = t.CreateDate.ToDtString();
                         txtCreateBy.Text = t.CreateBy;
 
-
                         dgvData.Rows.Clear();
                         int ss = 0;
                         var comp = 0;
@@ -185,6 +184,8 @@ namespace StockControl
                         cbCon2.Checked = t.Con2;
                         cbCon3.Checked = t.Con3;
                         dtConDate.Value = t.ConDate.Date;
+                        txtConDay1.Value = t.Con1;
+                        txtConDay2.Value = t.Con2;
 
                         btnView_Click(null, null);
                         if (comp >= dgvData.Rows.Count)
@@ -407,6 +408,12 @@ namespace StockControl
             txtAfterDiscount.Value = 0;
             txtDiscountPer.Value = 0;
             txtDiscountAmnt.Value = 0;
+            cbCon1.Checked = false;
+            cbCon2.Checked = false;
+            cbCon3.Checked = false;
+            dtConDate.Value = DateTime.Now;
+            txtConDay1.Value = 0;
+            txtConDay2.Value = 0;
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -776,6 +783,8 @@ namespace StockControl
                 gg.Con2 = cbCon2.Checked;
                 gg.Con3 = cbCon3.Checked;
                 gg.ConDate = dtConDate.Value.Date;
+                gg.ConDay1 = txtConDay1.Value.ToInt();
+                gg.ConDay2 = txtConDay2.Value.ToInt();
 
                 db.SubmitChanges();
             }
@@ -1425,7 +1434,7 @@ namespace StockControl
                 var discount_amnt = 0.00m;
                 var discount_per = 0.00m;
                 var afterdiscount = amnt;
-                if(amnt > 0)
+                if (amnt > 0)
                 {
                     if (calAmnt)
                     {
@@ -1730,6 +1739,11 @@ namespace StockControl
         private void btnCal_Click(object sender, EventArgs e)
         {
             CallTotal(true);
+        }
+
+        private void radGroupBox4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

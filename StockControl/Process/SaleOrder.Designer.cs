@@ -159,6 +159,10 @@
             this.dtConDate = new Telerik.WinControls.UI.RadDateTimePicker();
             this.cbCon2 = new Telerik.WinControls.UI.RadCheckBox();
             this.cbCon3 = new Telerik.WinControls.UI.RadCheckBox();
+            this.txtConDay2 = new Telerik.WinControls.UI.RadMaskedEditBox();
+            this.txtConDay1 = new Telerik.WinControls.UI.RadMaskedEditBox();
+            this.radLabel18 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel19 = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
@@ -218,6 +222,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtConDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbCon2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbCon3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtConDay2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtConDay1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel18)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel19)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -712,16 +720,16 @@
             // 
             this.txtRemark.AutoSize = false;
             this.txtRemark.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRemark.Location = new System.Drawing.Point(105, 83);
+            this.txtRemark.Location = new System.Drawing.Point(477, 23);
             this.txtRemark.Multiline = true;
             this.txtRemark.Name = "txtRemark";
-            this.txtRemark.Size = new System.Drawing.Size(311, 46);
+            this.txtRemark.Size = new System.Drawing.Size(185, 70);
             this.txtRemark.TabIndex = 7;
             // 
             // radLabel6
             // 
             this.radLabel6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLabel6.Location = new System.Drawing.Point(44, 85);
+            this.radLabel6.Location = new System.Drawing.Point(417, 29);
             this.radLabel6.Name = "radLabel6";
             this.radLabel6.Size = new System.Drawing.Size(44, 17);
             this.radLabel6.TabIndex = 8;
@@ -1411,12 +1419,17 @@
             this.radGroupBox4.Controls.Add(this.dtConDate);
             this.radGroupBox4.Controls.Add(this.cbCon2);
             this.radGroupBox4.Controls.Add(this.cbCon3);
+            this.radGroupBox4.Controls.Add(this.txtConDay1);
+            this.radGroupBox4.Controls.Add(this.txtConDay2);
+            this.radGroupBox4.Controls.Add(this.radLabel19);
+            this.radGroupBox4.Controls.Add(this.radLabel18);
             this.radGroupBox4.HeaderText = "เงื่อนไขการจ่ายเงิน (Payment Term)";
-            this.radGroupBox4.Location = new System.Drawing.Point(105, 8);
+            this.radGroupBox4.Location = new System.Drawing.Point(29, 8);
             this.radGroupBox4.Name = "radGroupBox4";
-            this.radGroupBox4.Size = new System.Drawing.Size(311, 69);
+            this.radGroupBox4.Size = new System.Drawing.Size(364, 121);
             this.radGroupBox4.TabIndex = 22;
             this.radGroupBox4.Text = "เงื่อนไขการจ่ายเงิน (Payment Term)";
+            this.radGroupBox4.Click += new System.EventHandler(this.radGroupBox4_Click);
             // 
             // cbCon1
             // 
@@ -1431,7 +1444,7 @@
             this.dtConDate.CustomFormat = "dd/MMM/yyyy";
             this.dtConDate.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtConDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtConDate.Location = new System.Drawing.Point(19, 45);
+            this.dtConDate.Location = new System.Drawing.Point(135, 87);
             this.dtConDate.Name = "dtConDate";
             this.dtConDate.Size = new System.Drawing.Size(96, 19);
             this.dtConDate.TabIndex = 20;
@@ -1441,7 +1454,7 @@
             // 
             // cbCon2
             // 
-            this.cbCon2.Location = new System.Drawing.Point(116, 21);
+            this.cbCon2.Location = new System.Drawing.Point(19, 53);
             this.cbCon2.Name = "cbCon2";
             this.cbCon2.Size = new System.Drawing.Size(91, 18);
             this.cbCon2.TabIndex = 19;
@@ -1449,11 +1462,57 @@
             // 
             // cbCon3
             // 
-            this.cbCon3.Location = new System.Drawing.Point(222, 21);
+            this.cbCon3.Location = new System.Drawing.Point(19, 87);
             this.cbCon3.Name = "cbCon3";
             this.cbCon3.Size = new System.Drawing.Size(80, 18);
             this.cbCon3.TabIndex = 19;
             this.cbCon3.Text = "อื่นๆ (Other)";
+            // 
+            // txtConDay2
+            // 
+            this.txtConDay2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtConDay2.Location = new System.Drawing.Point(135, 53);
+            this.txtConDay2.Mask = "n0";
+            this.txtConDay2.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            this.txtConDay2.Name = "txtConDay2";
+            this.txtConDay2.Size = new System.Drawing.Size(46, 20);
+            this.txtConDay2.TabIndex = 14;
+            this.txtConDay2.TabStop = false;
+            this.txtConDay2.Text = "0";
+            this.txtConDay2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtConDay2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVatA_KeyDown);
+            // 
+            // txtConDay1
+            // 
+            this.txtConDay1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtConDay1.Location = new System.Drawing.Point(135, 20);
+            this.txtConDay1.Mask = "n0";
+            this.txtConDay1.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            this.txtConDay1.Name = "txtConDay1";
+            this.txtConDay1.Size = new System.Drawing.Size(46, 20);
+            this.txtConDay1.TabIndex = 14;
+            this.txtConDay1.TabStop = false;
+            this.txtConDay1.Text = "0";
+            this.txtConDay1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtConDay1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVatA_KeyDown);
+            // 
+            // radLabel18
+            // 
+            this.radLabel18.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel18.Location = new System.Drawing.Point(187, 23);
+            this.radLabel18.Name = "radLabel18";
+            this.radLabel18.Size = new System.Drawing.Size(25, 17);
+            this.radLabel18.TabIndex = 8;
+            this.radLabel18.Text = "Day";
+            // 
+            // radLabel19
+            // 
+            this.radLabel19.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLabel19.Location = new System.Drawing.Point(187, 56);
+            this.radLabel19.Name = "radLabel19";
+            this.radLabel19.Size = new System.Drawing.Size(124, 17);
+            this.radLabel19.TabIndex = 8;
+            this.radLabel19.Text = "Day After Delivery Date";
             // 
             // SaleOrder
             // 
@@ -1538,6 +1597,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtConDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbCon2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbCon3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtConDay2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtConDay1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel19)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1641,5 +1704,9 @@
         private Telerik.WinControls.UI.RadDateTimePicker dtConDate;
         private Telerik.WinControls.UI.RadCheckBox cbCon2;
         private Telerik.WinControls.UI.RadCheckBox cbCon3;
+        private Telerik.WinControls.UI.RadMaskedEditBox txtConDay1;
+        private Telerik.WinControls.UI.RadMaskedEditBox txtConDay2;
+        private Telerik.WinControls.UI.RadLabel radLabel19;
+        private Telerik.WinControls.UI.RadLabel radLabel18;
     }
 }
