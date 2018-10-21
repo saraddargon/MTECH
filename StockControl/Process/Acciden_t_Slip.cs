@@ -194,7 +194,17 @@ namespace StockControl
                             DateTime? temp_date = null;
                             txtRemark.Text = StockControl.dbClss.TSt(g.FirstOrDefault().Remark);
                             txtJobCard.Text = StockControl.dbClss.TSt(g.FirstOrDefault().JobCard);
-                            ddlType.Text = dbClss.TSt(g.FirstOrDefault().Type);
+                            string Type = dbClss.TSt(g.FirstOrDefault().Type);
+                            if (ddlType.Text == "None")
+                            {
+                                Type = "Can't return rm";
+                            }
+                            else
+                            {
+                                Type = "shipping safety";
+                            }
+
+                            ddlType.Text = Type;
                             txtSHNo.Text = dbClss.TSt(g.FirstOrDefault().DocNo);
 
                             if (txtJobCard.Text != "")
@@ -311,8 +321,10 @@ namespace StockControl
                                     // x.Cells["QtyUsed"].Value = dbClss.TDe( db.Get_ShipQty(Convert.ToString(x.Cells["CodeNo"].Value),txtJobCard.Text));
 
                                     x.Cells["Qty"].Value = Math.Round((dbClss.TDe(x.Cells["QtyShip"].Value) * dbClss.TDe(x.Cells["PCSUnit"].Value)),2);
+
                                     
-                                    if (ddlType.Text == "CutStock")
+
+                                    if (ddlType.Text == "shipping safety")
                                     {
                                         var s = (from ix in db.tb_Stocks select ix)
                                        .Where(a => a.DocNo == txtSHNo.Text.Trim()
@@ -540,7 +552,9 @@ namespace StockControl
                             c += 1;
                             //CutStock ต้องระบุจำนวน
                             //None ไม่ต้องระบุจำนวน
-                            if (ddlType.Text == "CutStock")
+                            
+
+                            if (ddlType.Text == "shipping safety")
                             {
                                 CodeNo = "";
                                 PCSUnit = 1;
@@ -774,9 +788,17 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 string Status = "Waiting";
-                if (ddlType.Text == "None")
-                    Status = "Completed";
+                string Type = "";
 
+                if (ddlType.Text == "Can't return rm")
+                {
+                    Status = "Completed";
+                    Type = "None";
+                }
+                else
+                {
+                    Type = "CutStock";
+                }
                 var g = (from ix in db.mh_Accident_SlipHs
                          where ix.DocNo.Trim() == txtSHNo.Text.Trim() && ix.Status != "Cancel"                    
                          select ix).ToList();
@@ -799,10 +821,10 @@ namespace StockControl
                         if (StockControl.dbClss.TSt(gg.BarCode).Equals(""))
                             gg.BarCode = StockControl.dbClss.SaveQRCode2D(txtSHNo.Text.Trim());
                         gg.Accident_Type = "RM";
-                        if (!ddlType.Text.Trim().Equals(row["Type"].ToString()))
+                        if (!Type.Trim().Equals(row["Type"].ToString()))
                         {
-                            gg.Type = ddlType.Text;
-                            dbClss.AddHistory(this.Name, "แก้ไขการเบิก", "แก้ไขประเภท [" + ddlType.Text.Trim() + " เดิม :" + row["Type"].ToString() + "]", txtSHNo.Text);
+                            gg.Type = Type;
+                            dbClss.AddHistory(this.Name, "แก้ไขการเบิก", "แก้ไขประเภท [" + Type + " เดิม :" + row["Type"].ToString() + "]", txtSHNo.Text);
                         }
                         if (!txtJobCard.Text.Trim().Equals(row["JobCard"].ToString()))
                         {
@@ -839,7 +861,7 @@ namespace StockControl
                     gg.Remark = txtRemark.Text;
                     gg.JobCard = txtJobCard.Text.Trim();                   
                     gg.BarCode = barcode;
-                    gg.Type = ddlType.Text;                
+                    gg.Type = Type;                
                     db.mh_Accident_SlipHs.InsertOnSubmit(gg);
                     db.SubmitChanges();
 
@@ -854,9 +876,17 @@ namespace StockControl
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
                 int seq = 1;
-                string Status = "Waiting";
-                if (ddlType.Text == "None")
+                string Status = "Waiting";                
+                string Type = "";
+                if (ddlType.Text == "Can't return rm")
+                {
                     Status = "Completed";
+                    Type = "None";
+                }
+                else
+                {
+                    Type = "CutStock";
+                }
 
                 foreach (var g in dgvData.Rows)
                 {
@@ -877,7 +907,7 @@ namespace StockControl
                                 u.ItemNo = StockControl.dbClss.TSt(g.Cells["ItemNo"].Value);
                                 u.ItemDescription = StockControl.dbClss.TSt(g.Cells["ItemDescription"].Value);
                                 u.QTY = StockControl.dbClss.TDe(g.Cells["QtyShip"].Value);
-                                if (ddlType.Text == "None")
+                                if (Type == "None")
                                     u.OutShip = 0;
                                 else
                                     u.OutShip = StockControl.dbClss.TDe(g.Cells["QtyShip"].Value);
@@ -1749,8 +1779,19 @@ namespace StockControl
                 txtRefidJobNo.Text = Refid;
                 ddlType.Text = Type;
 
+                string Type1 = "";
+                if (ddlType.Text == "Can't return rm")
+                {
+                    Type1 = "None";
+                }
+                else
+                {
+                    Type1 = "CutStock";
+                }
+
+
                 int dgvNo = 0;
-                var r = (from ix in db.sp_051_Job_list_2(JobCard,ddlType.Text)
+                var r = (from ix in db.sp_051_Job_list_2(JobCard, Type1)
                          select ix).ToList();
                 if (r.Count > 0)
                 {
@@ -1796,12 +1837,22 @@ namespace StockControl
                 txtJobCard.Text = JobCard;
                 ddlType.Text = Type;
 
+                string Type1 = "";
+                if (ddlType.Text == "Can't return rm")
+                {
+                    Type1 = "None";
+                }
+                else
+                {
+                    Type1 = "CutStock";
+                }
+
                 //txtTempJobCard.Text = TempJob;
                 txtRefidJobNo.Text = Refid;
                 //txtLocation.Text = loca;
                 
                 int dgvNo = 0;
-                var r = (from ix in db.sp_051_Job_list_2(JobCard,ddlType.Text)
+                var r = (from ix in db.sp_051_Job_list_2(JobCard, Type1)
                          select ix).ToList();
                 if (r.Count > 0)
                 {
@@ -1884,7 +1935,9 @@ namespace StockControl
                 ee.Cells["Qty"].Value = Qty;
                 ee.Cells["RemainAccident"].Value = RemainAccident;
 
-                if (ddlType.Text == "None")
+                
+
+                if (ddlType.Text == "Can't return rm")
                 {
                     ee.Cells["QtyShip"].ReadOnly = true;
                     ee.Cells["UnitShip"].ReadOnly = true;                   
@@ -2142,13 +2195,15 @@ namespace StockControl
                     txtRefidJobNo.Text = "0";
                     return;
                 }
-
-                if (ddlType.Text=="None")
+                
+                if (ddlType.Text == "Can't return rm")
                 {
+                    //Type1 = "None";
                     Insert_data_New_Location_None();
                 }
-                else if (ddlType.Text == "CutStock")
+                else
                 {
+                    //Type1 = "CutStock";
                     Insert_data_New_Location();
                 }
             }
