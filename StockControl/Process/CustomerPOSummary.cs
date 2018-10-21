@@ -75,11 +75,11 @@ namespace StockControl
 
                 var Customers = db.mh_Customers.Where(x => x.Active)
                     .Select(x => new CustomerCombo { No = x.No, Name = x.Name }).ToList();
-                //Customers.Add(new CustomerCombo
-                //{
-                //    No = "",
-                //    Name = "",
-                //});
+                Customers.Add(new CustomerCombo
+                {
+                    No = "",
+                    Name = "",
+                });
                 Customers = Customers.OrderBy(x => x.No).ToList();
                 cbbCSTM.AutoSizeDropDownToBestFit = true;
                 cbbCSTM.DisplayMember = "Name";

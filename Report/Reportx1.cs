@@ -83,7 +83,7 @@ namespace Report
                 }
                 //this.Cursor = Cursors.Default;
             }
-            catch { }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { }
             // this.reportViewer1.RefreshReport();
 
@@ -495,13 +495,14 @@ namespace Report
                     {
                         rptDc.SetParameterValue("@Date1", DateTime.ParseExact(Value[0], "dd/MMM/yyyy", new CultureInfo("en-US")));
                         rptDc.SetParameterValue("@Date2", DateTime.ParseExact(Value[1], "dd/MMM/yyyy", new CultureInfo("en-US")).AddDays(1).AddMinutes(-1));
-                    }break;
+                    }
+                    break;
                 case "DeliveryPlanning":
                     {
                         rptDc.SetParameterValue("@yy", Convert.ToInt32(Value[0]));
                         rptDc.SetParameterValue("@mm", Convert.ToInt32(Value[1]));
                         rptDc.SetParameterValue("@ItemNo", Convert.ToString(Value[2]));
-                        rptDc.SetParameterValue("@Cstm", Value[3]);
+                        rptDc.SetParameterValue("@Cstm", Convert.ToString(Value[3]));
                         rptDc.SetParameterValue("@DateNow", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;
