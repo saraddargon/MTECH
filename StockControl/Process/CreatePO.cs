@@ -2078,6 +2078,8 @@ namespace StockControl
                         }
 
                         CallTotal();
+                        if (cbvatDetail.Checked)
+                            getTotal();
 
                     }
                 }
@@ -2879,7 +2881,7 @@ namespace StockControl
         private void cbvatDetail_ToggleStateChanged(object sender, StateChangedEventArgs args)
         {
             LessPoDiscountAmount_KeyPress((char)13);
-            getTotal();
+            //getTotal();a
         }
         private void getTotal()
         {
@@ -2904,8 +2906,7 @@ namespace StockControl
                     double vat4x = vat3x - 1;
 
                     double FxCost = 0;
-
-
+                    
                     foreach (GridViewRowInfo rd in dgvData.Rows)
                     {
                         if (rd.IsVisible)
@@ -2925,8 +2926,12 @@ namespace StockControl
                             //else
                             //{
 
-                            Total += Convert.ToDouble(rd.Cells["dgvAmount"].Value);
-                            VatDetail += Convert.ToDouble(rd.Cells["dgvAmount"].Value) * vat4x;
+                            //Discount
+                            Total += Convert.ToDouble(rd.Cells["dgvAmount"].Value)- Discount;
+                            VatDetail += (Convert.ToDouble(rd.Cells["dgvAmount"].Value) * vat4x)- Discount;
+
+                            //Total += Convert.ToDouble(rd.Cells["dgvAmount"].Value);
+                            //VatDetail += Convert.ToDouble(rd.Cells["dgvAmount"].Value) * vat4x;
 
                             //Total += Convert.ToDouble(rd.Cells["dgvExtendedCost"].Value);
                             //VatDetail += Convert.ToDouble(rd.Cells["dgvExtendedCost"].Value) * vat4x;
@@ -2964,8 +2969,12 @@ namespace StockControl
                         if (Discount > 0)
                         {
                             //สำหรับส่วนลด หลักจากรวม vat ในรายการ
-                            afDiscount = System.Math.Floor(((Total - Discount) * 100 / vat2x) * 100) / 100;
+                            afDiscount = System.Math.Floor(((Total) * 100 / vat2x) * 100) / 100;
                             txtAfterDiscount.Text = afDiscount.ToString("##,###,##0.00");
+
+                            ////สำหรับส่วนลด หลักจากรวม vat ในรายการ
+                            //afDiscount = System.Math.Floor(((Total - Discount) * 100 / vat2x) * 100) / 100;
+                            //txtAfterDiscount.Text = afDiscount.ToString("##,###,##0.00");
                         }
                         else
                         {
@@ -3020,13 +3029,21 @@ namespace StockControl
                         double.TryParse(lbTotalOrder.Text, out GrandTx);
                         if (Discount > 0)
                         {
-                            if (GrandTx != (TotalSum - Discount))
+                            if (GrandTx != (TotalSum))
                             {
-                                Pus = Math.Abs(GrandTx - (TotalSum - Discount));
+                                Pus = Math.Abs(GrandTx - (TotalSum));
                                 // Total = Total + Pus;                               
                                 txtAfterDiscount.Text = (afDiscount + Pus).ToString("##,###,##0.00");
                                 lbTotalOrder.Text = (afDiscount + vat + Pus).ToString("##,###,##0.00");
                             }
+
+                            //if (GrandTx != (TotalSum - Discount))
+                            //{
+                            //    Pus = Math.Abs(GrandTx - (TotalSum - Discount));
+                            //    // Total = Total + Pus;                               
+                            //    txtAfterDiscount.Text = (afDiscount + Pus).ToString("##,###,##0.00");
+                            //    lbTotalOrder.Text = (afDiscount + vat + Pus).ToString("##,###,##0.00");
+                            //}
                         }
                         else
                         {
