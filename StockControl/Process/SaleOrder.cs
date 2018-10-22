@@ -175,7 +175,12 @@ namespace StockControl
                             }
                         }
                         SetRowNo1(dgvData);
-                        CallTotal(true);
+                        //CallTotal(true);
+                        txtTotal.Value = t.TotalPrice;
+                        txtVatA.Value = t.VatA;
+                        txtVatAmnt.Value = t.VatAmnt;
+                        cbVat.Checked = t.Vat;
+                        txtGrandTotal.Value = t.TotalPriceIncVat;
                         txtDiscountPer.Value = t.DiscountPer;
                         txtDiscountAmnt.Value = t.DiscountAmnt;
                         txtAfterDiscount.Value = t.AfterDiscount;
