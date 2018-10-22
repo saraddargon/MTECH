@@ -105,6 +105,7 @@ namespace StockControl
                         HeaderText = dTemp.ToString("MMM"),
                         FormatString = "{0:N2}",
                         TextAlignment = ContentAlignment.MiddleRight,
+                        Width = 80,
                     });
                     var sum1 = new GridViewSummaryItem(dTemp.ToString("MMM"), "{0:N2}", GridAggregateFunction.Sum);
                     sumaryRow.Add(sum1);
@@ -423,16 +424,16 @@ namespace StockControl
         {
             if (cbbMM.SelectedIndex > 0)
             {
-                Report.Reportx1.Value = new string[4];
-                Report.Reportx1.Value[0] = cbbYY.Text.ToSt();
-                Report.Reportx1.Value[1] = (cbbMM.SelectedIndex + 1).ToSt();
-                Report.Reportx1.Value[2] = cbbItem.SelectedValue.ToSt();
-                Report.Reportx1.Value[3] = cbbCSTM.SelectedValue.ToSt();
-                Report.Reportx1.WReport = "DeliveryPlanning";
-                Report.Reportx1 op = new Report.Reportx1("DeliveryPlanning.rpt");
-                op.Show();
-                //var c = new CustomerPOSummary_Report();
-                //c.ShowDialog();
+                //Report.Reportx1.Value = new string[4];
+                //Report.Reportx1.Value[0] = cbbYY.Text.ToSt();
+                //Report.Reportx1.Value[1] = (cbbMM.SelectedIndex + 1).ToSt();
+                //Report.Reportx1.Value[2] = cbbItem.SelectedValue.ToSt();
+                //Report.Reportx1.Value[3] = cbbCSTM.SelectedValue.ToSt();
+                //Report.Reportx1.WReport = "DeliveryPlanning";
+                //Report.Reportx1 op = new Report.Reportx1("DeliveryPlanning.rpt");
+                //op.Show();
+                var c = new CustomerPOSummary_Report(0);
+                c.ShowDialog();
             }
         }
 
@@ -444,6 +445,12 @@ namespace StockControl
                 var f = e.RowElement.Font;
                 e.RowElement.Font = new Font(f, FontStyle.Bold);
             }
+        }
+
+        private void btnPrintM_Click(object sender, EventArgs e)
+        {
+            var c = new CustomerPOSummary_Report(1);
+            c.ShowDialog();
         }
     }
 

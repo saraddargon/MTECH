@@ -13,12 +13,26 @@ namespace StockControl
 {
     public partial class CustomerPOSummary_Report : Telerik.WinControls.UI.RadRibbonForm
     {
-        public CustomerPOSummary_Report()
+        //0:วัน
+        //1:เดือน
+        int tReport = 0;
+        public CustomerPOSummary_Report(int typeReport)
         {
             InitializeComponent();
+            this.tReport = typeReport;
         }
 
         private void CustomerPO_List_Print_Load(object sender, EventArgs e)
+        {
+            LoadDef();
+
+            if (tReport == 1)
+            {
+                lbTo.Visible = true;
+                cbbMM2.Visible = true;
+            }
+        }
+        void LoadDef()
         {
             using (var db = new DataClasses1DataContext())
             {
@@ -35,12 +49,19 @@ namespace StockControl
                 {
                     DateTime dTemp = new DateTime(yy, mm, 1);
                     cbbMM.Items.Add(dTemp.ToString("MMM"));
+                    cbbMM2.Items.Add(dTemp.ToString("MMM"));
                     mm++;
                 }
                 cbbMM.SelectedIndex = DateTime.Now.Month - 1;
+                cbbMM2.SelectedIndex = DateTime.Now.Month - 1;
 
                 var Customers = db.mh_Customers.Where(x => x.Active)
                     .Select(x => new CustomerCombo { No = x.No, Name = x.Name }).ToList();
+                Customers.Add(new CustomerCombo
+                {
+                    Name = "",
+                    No = "",
+                });
                 Customers = Customers.OrderBy(x => x.No).ToList();
                 cbbCSTM.AutoSizeDropDownToBestFit = true;
                 cbbCSTM.DisplayMember = "Name";
@@ -73,13 +94,35 @@ namespace StockControl
         }
         void PrintE()
         {
-            Report.Reportx1.Value = new string[3];
-            Report.Reportx1.Value[0] = cbbYY.Text.ToSt();
-            Report.Reportx1.Value[1] = (cbbMM.SelectedIndex + 1).ToSt();
-            Report.Reportx1.Value[2] = cbbItem.SelectedValue.ToSt();
-            Report.Reportx1.WReport = "DeliveryPlanning";
-            Report.Reportx1 op = new Report.Reportx1("DeliveryPlanning.rpt");
-            op.Show();
+            if (tReport == 0)
+            {
+                Report.Reportx1.Value = new string[4];
+                Report.Reportx1.Value[0] = cbbYY.Text.ToSt();
+                Report.Reportx1.Value[1] = (cbbMM.SelectedIndex + 1).ToSt();
+                Report.Reportx1.Value[2] = cbbItem.SelectedValue.ToSt();
+                Report.Reportx1.Value[3] = cbbCSTM.SelectedValue.ToSt();
+                Report.Reportx1.WReport = "DeliveryPlanning";
+                Report.Reportx1 op = new Report.Reportx1("DeliveryPlanning.rpt");
+                op.Show();
+            }
+            else if (tReport == 1)
+            {
+                if (cbbMM.SelectedIndex > cbbMM2.SelectedIndex)
+                {
+                    baseClass.Warning("ไม่สามารถเลือกเดือนเริ่มต้นมากกว่าเดือนสิ้นสุดได้.\n");
+                    return;
+                }
+
+                Report.Reportx1.Value = new string[5];
+                Report.Reportx1.Value[0] = cbbYY.Text.ToSt();
+                Report.Reportx1.Value[1] = (cbbMM.SelectedIndex + 1).ToSt();
+                Report.Reportx1.Value[2] = (cbbMM2.SelectedIndex + 1).ToSt();
+                Report.Reportx1.Value[3] = cbbItem.SelectedValue.ToSt();
+                Report.Reportx1.Value[4] = cbbCSTM.SelectedValue.ToSt();
+                Report.Reportx1.WReport = "DeliveryPlanningMonth";
+                Report.Reportx1 op = new Report.Reportx1("DeliveryPlanningMonth.rpt");
+                op.Show();
+            }
         }
 
 

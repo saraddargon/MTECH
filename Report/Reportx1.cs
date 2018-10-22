@@ -506,6 +506,16 @@ namespace Report
                         rptDc.SetParameterValue("@DateNow", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
                     }
                     break;
+                case "DeliveryPlanningMonth":
+                    {
+                        rptDc.SetParameterValue("@yy", Convert.ToInt32(Value[0]));
+                        rptDc.SetParameterValue("@mm", Convert.ToInt32(Value[1]));
+                        rptDc.SetParameterValue("@mm2", Convert.ToInt32(Value[2]));
+                        rptDc.SetParameterValue("@ItemNo", Convert.ToString(Value[3]));
+                        rptDc.SetParameterValue("@Cstm", Convert.ToString(Value[4]));
+                        rptDc.SetParameterValue("@DateNow", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")));
+                    }
+                    break;
                 case "ReportChangeJob":
                     {
 
