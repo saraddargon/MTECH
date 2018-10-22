@@ -722,6 +722,7 @@ namespace StockControl
 
                     if (txtSONo.Text != "")
                     {
+                        CallTotal(true);
                         SaveHerder(sono);
                         SaveDetail();
 
@@ -1755,7 +1756,7 @@ namespace StockControl
 
         private void btnCal_Click(object sender, EventArgs e)
         {
-            CallTotal(true);
+            CallTotal(false);
         }
 
         private void radGroupBox4_Click(object sender, EventArgs e)
