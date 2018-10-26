@@ -11,6 +11,8 @@ using Telerik.WinControls.UI;
 using System.Globalization;
 using Microsoft.VisualBasic;
 using Telerik.WinControls;
+using OfficeOpenXml;
+using System.IO;
 
 namespace StockControl
 {
@@ -20,7 +22,7 @@ namespace StockControl
         {
             InitializeComponent();
         }
-        public Bom(string PartNox,string BomNox)
+        public Bom(string PartNox, string BomNox)
         {
             InitializeComponent();
             PartNo_temp = PartNox;
@@ -44,7 +46,7 @@ namespace StockControl
         private void radMenuItem2_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            HistoryView hw = new HistoryView(this.Name,txtPartNo.Text);
+            HistoryView hw = new HistoryView(this.Name, txtPartNo.Text);
             this.Cursor = Cursors.Default;
             hw.ShowDialog();
         }
@@ -71,7 +73,7 @@ namespace StockControl
             dt_HD.Columns.Add(new DataColumn("ModifyDate", typeof(DateTime)));
             dt_HD.Columns.Add(new DataColumn("ShelfNo", typeof(DateTime)));
             dt_HD.Columns.Add(new DataColumn("YieldOperation", typeof(decimal)));
-            
+
 
             dt_DT.Columns.Add(new DataColumn("id", typeof(string)));
             dt_DT.Columns.Add(new DataColumn("PartNo", typeof(string)));
@@ -88,7 +90,7 @@ namespace StockControl
             dt_DT.Columns.Add(new DataColumn("chk_YieldOperation", typeof(decimal)));
 
         }
-        
+
         string Ac = "";
         private void Unit_Load(object sender, EventArgs e)
         {
@@ -99,7 +101,7 @@ namespace StockControl
                 dgvData.AutoGenerateColumns = false;
                 GETDTRow();
                 DefaultItem();
-               
+
                 ClearData();
                 btnNew_Click(null, null);
 
@@ -208,16 +210,24 @@ namespace StockControl
                                  EndDate = a.EndDate,
                                  Status = a.Status,
                                  ReplenishmentType = b.ReplenishmentType
-                                 , GroupType = b.GroupType
-                                 , Version = a.Version
+                                 ,
+                                 GroupType = b.GroupType
+                                 ,
+                                 Version = a.Version
                                  ,
                                  YieldOperation = a.YieldOperation
-                                 ,CustomerNo = a.CustomerNo
-                                 ,id_Customer = a.id_Customer
-                                 ,PackingSTD = a.PackingSTD
-                                 ,Size = a.Size
-                                 ,RevDate = a.RevDate
-                                 ,Model = a.Model
+                                 ,
+                                 CustomerNo = a.CustomerNo
+                                 ,
+                                 id_Customer = a.id_Customer
+                                 ,
+                                 PackingSTD = a.PackingSTD
+                                 ,
+                                 Size = a.Size
+                                 ,
+                                 RevDate = a.RevDate
+                                 ,
+                                 Model = a.Model
 
                              }//.Where(ab => ab.VendorNo.Contains(Vendorno))
                               ).ToList();
@@ -260,12 +270,12 @@ namespace StockControl
                         txtModel.Text = dbClss.TSt(g.FirstOrDefault().Model);
 
                         txtCreateby.Text = StockControl.dbClss.TSt(g.FirstOrDefault().CreateBy);
-                        DateTime temp = Convert.ToDateTime(g.FirstOrDefault().CreateDate,new CultureInfo("en-US"));
+                        DateTime temp = Convert.ToDateTime(g.FirstOrDefault().CreateDate, new CultureInfo("en-US"));
                         txtCreateDate.Text = temp.ToString("dd/MMM/yyyy");
-                       
+
                         if (!StockControl.dbClss.TSt(g.FirstOrDefault().ModifyBy).Equals(""))
                         {
-                            DateTime temp2 = Convert.ToDateTime(g.FirstOrDefault().ModifyDate,new CultureInfo("en-US"));
+                            DateTime temp2 = Convert.ToDateTime(g.FirstOrDefault().ModifyDate, new CultureInfo("en-US"));
                             txtCreateDate.Text = temp2.ToString("dd/MMM/yyyy");
                             txtCreateby.Text = StockControl.dbClss.TSt(g.FirstOrDefault().ModifyBy);
                         }
@@ -273,12 +283,12 @@ namespace StockControl
                         //    txtCreateDate.Text = "";
 
                         if (!StockControl.dbClss.TSt(g.FirstOrDefault().StartDate).Equals(""))
-                            dtBegin.Value = Convert.ToDateTime(g.FirstOrDefault().StartDate,new CultureInfo("en-US"));
+                            dtBegin.Value = Convert.ToDateTime(g.FirstOrDefault().StartDate, new CultureInfo("en-US"));
                         else
                             dtBegin.Value = Convert.ToDateTime(temp_date);
 
                         if (!StockControl.dbClss.TSt(g.FirstOrDefault().EndDate).Equals(""))
-                            dtEnd.Value = Convert.ToDateTime(g.FirstOrDefault().EndDate,new CultureInfo("en-US"));
+                            dtEnd.Value = Convert.ToDateTime(g.FirstOrDefault().EndDate, new CultureInfo("en-US"));
                         else
                             dtEnd.Value = Convert.ToDateTime(temp_date);
 
@@ -398,9 +408,9 @@ namespace StockControl
                             ck += 1;
                         }
                     }
-                    else if(txtPartNo.Text.Trim() != "")
+                    else if (txtPartNo.Text.Trim() != "")
                     {
-                        var i = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == txtPartNo.Text && (a.InventoryGroup =="FG" || a.InventoryGroup =="SEMI" )).ToList();
+                        var i = (from ix in db.mh_Items select ix).Where(a => a.InternalNo == txtPartNo.Text && (a.InventoryGroup == "FG" || a.InventoryGroup == "SEMI")).ToList();
                         if (i.Count() > 0)
                         {
                             txtPartName.Text = StockControl.dbClss.TSt(i.FirstOrDefault().InternalName);
@@ -452,11 +462,11 @@ namespace StockControl
                                   //&& ix.Status != "Cancel"
                                   ////&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
                                   select ix).First();
-                        
+
                         gg.ModifyBy = ClassLib.Classlib.User;
                         gg.ModifyDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
 
-                        dbClss.AddHistory(this.Name, "แก้ไข Bom", "แก้ไข Bom โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US")) + "]", txtBomNo.Text.Trim() + "-"+txtPartNo.Text.Trim());
+                        dbClss.AddHistory(this.Name, "แก้ไข Bom", "แก้ไข Bom โดย [" + ClassLib.Classlib.User + " วันที่ :" + DateTime.Now.ToString("dd/MMM/yyyy", new CultureInfo("en-US")) + "]", txtBomNo.Text.Trim() + "-" + txtPartNo.Text.Trim());
 
                         var i = (from ix in db.mh_Items select ix).Where(a => a.InternalNo.Equals(txtPartNo.Text.Trim().ToUpper())).ToList();
                         if (i.Count > 0)
@@ -476,17 +486,17 @@ namespace StockControl
                         gg.Size = txtSize.Text;
                         gg.PackingSTD = dbClss.TDe(sePackingSTD.Value);
                         gg.Model = txtModel.Text;
-                   
-                        if(dtRevDate.Text !="")
+
+                        if (dtRevDate.Text != "")
                         {
-                           gg.RevDate =  Convert.ToDateTime(dtRevDate.Value, new CultureInfo("en-US"));
+                            gg.RevDate = Convert.ToDateTime(dtRevDate.Value, new CultureInfo("en-US"));
                         }
                         if (!dtBegin.Text.Trim().Equals("") && !dtEnd.Text.Trim().Equals(""))
                         {
                             gg.StartDate = Convert.ToDateTime(dtBegin.Value, new CultureInfo("en-US"));
                             gg.EndDate = Convert.ToDateTime(dtEnd.Value, new CultureInfo("en-US"));
 
-                            dbClss.AddHistory(this.Name, "แก้ไข Bom", "แก้ไขวันเริ่มและสิ้นสุด [ วันที่เริ่ม : " + dtBegin.Text.Trim() +" วันที่สิ้นสุด : "+ dtEnd.Text.Trim() + "]", txtBomNo.Text.Trim() + "-" + txtPartNo.Text.Trim());
+                            dbClss.AddHistory(this.Name, "แก้ไข Bom", "แก้ไขวันเริ่มและสิ้นสุด [ วันที่เริ่ม : " + dtBegin.Text.Trim() + " วันที่สิ้นสุด : " + dtEnd.Text.Trim() + "]", txtBomNo.Text.Trim() + "-" + txtPartNo.Text.Trim());
                         }
                         if (!txtRemarkHD.Text.Trim().Equals(row["Remark"].ToString()))
                         {
@@ -501,7 +511,7 @@ namespace StockControl
                     //byte[] barcode = null;
                     //if (!txtPRNo.Text.Equals(""))
                     //    barcode = StockControl.dbClss.SaveQRCode2D(txtPRNo.Text.Trim());
-                   
+
 
                     tb_BomHD gg = new tb_BomHD();
                     gg.ModifyBy = ClassLib.Classlib.User;
@@ -559,7 +569,7 @@ namespace StockControl
                 {
                     if (g.IsVisible.Equals(true))
                     {
-                       // line_t += 50;
+                        // line_t += 50;
                         DateTime? d = null;
                         var i = (from ix in db.mh_Items select ix).Where(a => a.InternalNo.Contains(StockControl.dbClss.TSt(g.Cells["dgvComponent"].Value))).ToList();
                         if (i.Count > 0)
@@ -571,11 +581,11 @@ namespace StockControl
 
                         if (StockControl.dbClss.TInt(g.Cells["dgvid"].Value) <= 0)  //New ใหม่
                         {
-                            
-                                tb_BomDT u = new tb_BomDT();
+
+                            tb_BomDT u = new tb_BomDT();
                             u.PartNo = txtPartNo.Text.Trim();
                             u.BomNo = txtBomNo.Text.Trim().ToUpper();
-                            
+
                             u.Line = line_t;
                             u.Component = StockControl.dbClss.TSt(g.Cells["dgvComponent"].Value);
                             u.ComponentDescription = StockControl.dbClss.TSt(g.Cells["dgvComponentDescription"].Value);
@@ -639,8 +649,8 @@ namespace StockControl
                                             // u.Unit = StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value);
                                             dbClss.AddHistory(this.Name, "แก้ไข Item Bom", "แก้ไขหน่วย [" + StockControl.dbClss.TSt(g.Cells["dgvUnit"].Value) + "]", txtBomNo.Text.Trim() + "-" + txtPartNo.Text.Trim());
                                         }
-                                       
-                                       
+
+
 
                                         //u.UnitCost = StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value);
                                         //u.Cost = StockControl.dbClss.TDe(g.Cells["dgvCost"].Value);
@@ -655,12 +665,12 @@ namespace StockControl
                                             , StockControl.dbClss.TDe(g.Cells["dgvUnitCost"].Value)
                                             , StockControl.dbClss.TDe(g.Cells["dgvCost"].Value)
                                             , StockControl.dbClss.TDe(g.Cells["dgvPCSUnit"].Value)
-                                            ,StockControl.dbClss.TBo(g.Cells["dgvchk_YieldOperation"].Value)
+                                            , StockControl.dbClss.TBo(g.Cells["dgvchk_YieldOperation"].Value)
                                             , ClassLib.Classlib.User
-                                            
+
                                             );
                                         //db.SubmitChanges();
-                                         line_t += 50;
+                                        line_t += 50;
                                         break;
                                     }
                                 }
@@ -690,10 +700,10 @@ namespace StockControl
 
             return ck;
         }
-       
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
-           
+
         }
         private void Enable_Status(bool ss, string Condition)
         {
@@ -705,7 +715,7 @@ namespace StockControl
                 dtBegin.Enabled = ss;
                 dtEnd.Enabled = ss;
                 dgvData.ReadOnly = false;
-                txtRemarkHD.Enabled = ss;              
+                txtRemarkHD.Enabled = ss;
                 btnAdd_Item.Enabled = ss;
                 btnDel_Item.Enabled = ss;
                 txtVersion.Enabled = ss;
@@ -723,9 +733,9 @@ namespace StockControl
                 txtBomNo.Enabled = ss;
                 //txtDescription.Enabled = ss;
                 dtBegin.Enabled = ss;
-                dtEnd.Enabled = ss;               
+                dtEnd.Enabled = ss;
                 dgvData.ReadOnly = !ss;
-                txtRemarkHD.Enabled = ss; 
+                txtRemarkHD.Enabled = ss;
                 btnAdd_Item.Enabled = ss;
                 btnDel_Item.Enabled = ss;
                 txtVersion.Enabled = ss;
@@ -740,11 +750,11 @@ namespace StockControl
             {
                 txtPartNo.Enabled = ss;
                 txtBomNo.Enabled = ss;
-               // txtDescription.Enabled = ss;
+                // txtDescription.Enabled = ss;
                 dtBegin.Enabled = ss;
-                dtEnd.Enabled = ss;               
+                dtEnd.Enabled = ss;
                 dgvData.ReadOnly = !ss;
-                txtRemarkHD.Enabled = ss;              
+                txtRemarkHD.Enabled = ss;
                 btnAdd_Item.Enabled = ss;
                 btnDel_Item.Enabled = ss;
                 txtVersion.Enabled = ss;
@@ -756,7 +766,7 @@ namespace StockControl
                 dtRevDate.Enabled = ss;
             }
         }
-       
+
         private void ClearData()
         {
             txtPartNo.Text = "";
@@ -807,7 +817,7 @@ namespace StockControl
             btnEdit.Enabled = true;
             btnNew.Enabled = true;
             btnSave.Enabled = true;
-          
+
             Enable_Status(false, "View");
             lblStatus.Text = "View";
             Ac = "View";
@@ -820,12 +830,12 @@ namespace StockControl
             btnNew.Enabled = true;
             btnSave.Enabled = true;
             btnDelete.Enabled = true;
-            
+
 
             Enable_Status(true, "Edit");
             lblStatus.Text = "Edit";
             Ac = "Edit";
-           
+
 
         }
         private void btnDelete_Click(object sender, EventArgs e)
@@ -840,7 +850,7 @@ namespace StockControl
                     using (DataClasses1DataContext db = new DataClasses1DataContext())
                     {
                         db.sp_018_Bom_Del(0, txtBomNo.Text, txtPartNo.Text, ClassLib.Classlib.User);
-                        
+
                         //dbClss.AddHistory(this.Name, "ลบ Bom", "Delete Bom [ Bom No. : " + txtBomNo.Text.Trim()+" Part No. : "+txtPartNo.Text + "]", txtBomNo.Text+"_"+txtPartNo.Text);
 
                         db.SubmitChanges();
@@ -873,8 +883,8 @@ namespace StockControl
                     err += "- “ประเภททูล:” เป็นค่าว่าง \n";
                 else if (txtTypePart.Text != "")
                 {
-                    if(txtTypePart.Text != "FG" && txtTypePart.Text != "SEMI")
-                    err += "- “ประเภททูล:” ต้องเป็น FG หรือ SEMI เท่านั่น \n";
+                    if (txtTypePart.Text != "FG" && txtTypePart.Text != "SEMI")
+                        err += "- “ประเภททูล:” ต้องเป็น FG หรือ SEMI เท่านั่น \n";
                 }
                 if (txtBomNo.Text.Equals(""))
                     err += "- “รหัสบอม:” เป็นค่าว่าง \n";
@@ -967,7 +977,7 @@ namespace StockControl
                                     {
 
                                         var p = (from ix in db.tb_BomHDs
-                                                 where ix.PartNo.ToUpper().Trim() == txtPartNo.Text.Trim() 
+                                                 where ix.PartNo.ToUpper().Trim() == txtPartNo.Text.Trim()
                                                  && ix.BomNo.ToUpper().Trim() == txtBomNo.Text.Trim()
                                                  //&& ix.Status != "Cancel"
                                                  //&& ix.TEMPNo.Trim() == txtTempNo.Text.Trim()
@@ -1027,7 +1037,7 @@ namespace StockControl
 
         //    //    using (DataClasses1DataContext db = new DataClasses1DataContext())
         //    //    {
-                  
+
         //    //        var g = (from ix in db.tb_PurchaseRequestLines
         //    //                     //join i in db.tb_Items on ix.CodeNo equals i.CodeNo
         //    //                 where ix.TempNo.Trim() == txtTempNo.Text.Trim() && ix.SS == 1
@@ -1103,7 +1113,7 @@ namespace StockControl
             }
         }
 
-        
+
 
         int row = -1;
         private void radGridView1_CellClick(object sender, Telerik.WinControls.UI.GridViewCellEventArgs e)
@@ -1111,7 +1121,7 @@ namespace StockControl
             row = e.RowIndex;
         }
 
-    
+
         private void btnFilter1_Click(object sender, EventArgs e)
         {
             dgvData.EnableFiltering = true;
@@ -1172,7 +1182,7 @@ namespace StockControl
 
         private void cboModelName_SelectedIndexChanged(object sender, EventArgs e)
         {
-         
+
         }
 
         private void radLabel5_Click(object sender, EventArgs e)
@@ -1232,11 +1242,11 @@ namespace StockControl
             return re;
 
         }
-        private void Add_Part(string CodeNo,decimal OrderQty)
+        private void Add_Part(string CodeNo, decimal OrderQty)
         {
             using (DataClasses1DataContext db = new DataClasses1DataContext())
             {
-                int Row = 0; Row = dgvData.Rows.Count()+1;
+                int Row = 0; Row = dgvData.Rows.Count() + 1;
                 var g = (from ix in db.mh_Items select ix).Where(a => a.InternalNo.Contains(CodeNo)).ToList();
                 if (g.Count > 0)
                 {
@@ -1325,7 +1335,7 @@ namespace StockControl
         {
             try
             {
-               
+
                 if (dgvData.Rows.Count <= 0)
                     return;
 
@@ -1333,12 +1343,12 @@ namespace StockControl
                 if (Ac.Equals("New") || Ac.Equals("Edit"))
                 {
                     this.Cursor = Cursors.WaitCursor;
-                    
+
                     int id = 0;
                     int.TryParse(StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["dgvid"].Value), out id);
                     if (id <= 0)
                         dgvData.Rows.Remove(dgvData.CurrentRow);
-                    
+
                     else
                     {
                         string CodeNo = ""; StockControl.dbClss.TSt(dgvData.CurrentRow.Cells["dgvCompanent"]);
@@ -1428,7 +1438,7 @@ namespace StockControl
                 //Cleardata();
                 btnNew_Click(null, null);
 
-                
+
 
                 this.Cursor = Cursors.WaitCursor;
                 Bom_List sc = new Bom_List(txtPartNo, txtBomNo, "FG-SEMI");
@@ -1441,7 +1451,7 @@ namespace StockControl
                 ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
                 ClassLib.Memory.Heap();
 
-                if(txtPartNo.Text != "" && txtBomNo.Text != "")
+                if (txtPartNo.Text != "" && txtBomNo.Text != "")
                     Enable_Status(false, "View");
                 else
                     Enable_Status(false, "New");
@@ -1488,7 +1498,7 @@ namespace StockControl
 
             string Temp1 = txtBomNo.Text;
             string Tmep2 = txtPartNo.Text;
-             ClearData();
+            ClearData();
             Enable_Status(false, "View");
 
             txtBomNo.Text = Temp1;
@@ -1515,8 +1525,8 @@ namespace StockControl
                 this.Cursor = Cursors.WaitCursor;
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var ga = (from ix in db.mh_Items select ix).Where(a => a.InternalNo.Contains(txtPartNo.Text.Trim())  
-                        && (a.InventoryGroup == "FG" || a.InventoryGroup == "SEMI" )).ToList();
+                    var ga = (from ix in db.mh_Items select ix).Where(a => a.InternalNo.Contains(txtPartNo.Text.Trim())
+                        && (a.InventoryGroup == "FG" || a.InventoryGroup == "SEMI")).ToList();
                     if (ga.Count > 0)
                     {
                         txtDescription.Text = dbClss.TSt(ga.FirstOrDefault().InternalDescription);
@@ -1524,7 +1534,8 @@ namespace StockControl
                         txtTypePart.Text = StockControl.dbClss.TSt(ga.FirstOrDefault().InventoryGroup);
                     }
                 }
-            }catch(Exception ex) { MessageBox.Show(ex.Message); }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
         }
         private void CreatePR_from_WaitingPR()
@@ -1559,7 +1570,7 @@ namespace StockControl
             //                            txtTel.Text = g.FirstOrDefault().Tel;
             //                            txtFax.Text = g.FirstOrDefault().Fax;
             //                            txtEmail.Text = g.FirstOrDefault().Email;
-                                        
+
             //                        }
             //                    }
             //                }
@@ -1572,7 +1583,7 @@ namespace StockControl
             //                Add_Part(CodeNo,StockControl.dbClss.TInt(ee.Cells["Order"].Value));
 
             //            }
-                        
+
             //        }
             //    }
             //}
@@ -1589,14 +1600,14 @@ namespace StockControl
 
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    var g = (from ix in db.sp_R015_Report_Bom(PartNo,BomNo,"","", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                    var g = (from ix in db.sp_R015_Report_Bom(PartNo, BomNo, "", "", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
                     if (g.Count() > 0)
                     {
 
                         Report.Reportx1.Value = new string[4];
                         Report.Reportx1.Value[0] = PartNo;
                         Report.Reportx1.Value[1] = BomNo;
-                        Report.Reportx1.Value[2] ="";
+                        Report.Reportx1.Value[2] = "";
                         Report.Reportx1.Value[3] = "";
                         Report.Reportx1.WReport = "Bom";
                         Report.Reportx1 op = new Report.Reportx1("BillOfMaterial.rpt");
@@ -1662,10 +1673,10 @@ namespace StockControl
                 string PartT = txtPartNo.Text;
 
                 this.Cursor = Cursors.WaitCursor;
-                ListPart sc = new ListPart(txtPartNo, "FG-SEMI","Bom");
+                ListPart sc = new ListPart(txtPartNo, "FG-SEMI", "Bom");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
-                if(PartT != txtPartNo.Text)
+                if (PartT != txtPartNo.Text)
                 {
                     if (Ac == "New")
                     { }
@@ -1708,9 +1719,9 @@ namespace StockControl
                 // Enable_Status(false, "View");
                 //List<GridViewRowInfo> dgvRow_List = new List<GridViewRowInfo>();
 
-                this.Cursor = Cursors.WaitCursor;              
+                this.Cursor = Cursors.WaitCursor;
 
-                Bom_List sc = new Bom_List(txtPartNo,txtBomNo, "FG-SEMI");
+                Bom_List sc = new Bom_List(txtPartNo, txtBomNo, "FG-SEMI");
                 this.Cursor = Cursors.Default;
                 sc.ShowDialog();
                 GC.Collect();
@@ -1729,7 +1740,7 @@ namespace StockControl
 
         }
 
-       
+
 
         private void txtBomNo_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
@@ -1793,19 +1804,19 @@ namespace StockControl
             //    }
 
             //กรณีที่ Key Item and bom ทั้งคู่
-           
-                if (!txtPartNo.Text.Trim().Equals("") && !txtBomNo.Text.Trim().Equals(""))
-                {
-                    string PartT = txtPartNo.Text;
-                    string BomT = txtBomNo.Text;
-                    btnNew_Click(null, null);
-                    txtPartNo.Text = PartT;
-                    txtBomNo.Text = BomT;
 
-                    DataLoad();
-                }
-               
-            
+            if (!txtPartNo.Text.Trim().Equals("") && !txtBomNo.Text.Trim().Equals(""))
+            {
+                string PartT = txtPartNo.Text;
+                string BomT = txtBomNo.Text;
+                btnNew_Click(null, null);
+                txtPartNo.Text = PartT;
+                txtBomNo.Text = BomT;
+
+                DataLoad();
+            }
+
+
 
         }
 
@@ -1852,9 +1863,10 @@ namespace StockControl
                     }
                    );
                 }
-            }catch(Exception ex) { MessageBox.Show(ex.Message); }
-
             }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+        }
 
         private void btnCustomer_Click(object sender, EventArgs e)
         {
@@ -1879,7 +1891,7 @@ namespace StockControl
 
                 ClassLib.Memory.SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
                 ClassLib.Memory.Heap();
-                
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); dbClss.AddError("Bom", ex.Message + " : btnFind_Click", this.Name); }
 
@@ -1916,5 +1928,109 @@ namespace StockControl
             }
         }
 
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            if (txtBomNo.Text != "")
+                ExcelE();
+        }
+        void ExcelE()
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    var g = (from ix in db.sp_R015_Report_Bom(txtPartNo.Text.Trim(), txtBomNo.Text.Trim()
+                             , "", "", Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"))) select ix).ToList();
+                    if (g.Count() > 0)
+                    {
+
+                        saveFileDialog1.Filter = "Excel file | *.xlsx";
+                        if(saveFileDialog1.ShowDialog() == DialogResult.OK && saveFileDialog1.FileName.ToSt() != "")
+                        {
+                            var ebom = new List<exBOM>();
+                            int rNo = 1;
+                            foreach (var item in g)
+                            {
+                                ebom.Add(new exBOM
+                                {
+                                    CostUnit = item.UnitCost,
+                                    Customer = item.CustomerName,
+                                    CycleTime = item.Cycle_Time,
+                                    LeadTime = item.LeadTime,
+                                    Machine = item.workCenterNo,
+                                    MatName = item.Component,
+                                    MatNo = item.ComponentName,
+                                    Model = item.Model,
+                                    No = rNo++,
+                                    PackingSTD = item.PackingSTD,
+                                    ProductCode = item.PartNo,
+                                    ProductName = item.ItemName,
+                                    Qty = item.Qty,
+                                    REV = item.Version,
+                                    REVDate = (item.RevDate != null) ? (DateTime?)item.RevDate.ToDateTime().Value : null,
+                                    Size = item.Size,
+                                    Supplier = item.SupplierName,
+                                    TotalAmount = item.Cost,
+                                    TotalCapacity = item.Capacity,
+                                    Type = item.Typeg,
+                                    Unit = item.Unit,
+                                    Yield = item.YieldOperation,
+                                });
+                            }
+
+                            string mFile = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Report", "BillOfMaterial.xlsx");
+                            string tFile = saveFileDialog1.FileName.ToSt();
+                            File.Copy(mFile, tFile, true);
+
+                            using (var package = new ExcelPackage(new FileInfo(tFile)))
+                            {
+                                var ws = package.Workbook.Worksheets[1];
+                                ws.Cells[6, 1].LoadFromCollection<exBOM>(ebom);
+                                package.Save();
+                            }
+                            baseClass.Info("Export completed.");
+                            //System.Diagnostics.Process.Start(tFile);
+                        }
+
+                    }
+                    else
+                        MessageBox.Show("not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                baseClass.Error(ex.Message);
+            }
+            finally { this.Cursor = Cursors.Default; }
+        }
+
+
+    }
+
+    public class exBOM
+    {
+        public int No { get; set; }
+        public string Model { get; set; }
+        public string Customer { get; set; }
+        public string ProductCode { get; set; }
+        public string ProductName { get; set; }
+        public string Size { get; set; }
+        public decimal? PackingSTD { get; set; }
+        public string REV { get; set; }
+        public DateTime? REVDate { get; set; }
+        public decimal? Yield { get; set; }
+        public string MatNo { get; set; }
+        public string MatName { get; set; }
+        public string Type { get; set; }
+        public string Supplier { get; set; }
+        public decimal? LeadTime { get; set; }
+        public string Unit { get; set; }
+        public decimal? Qty { get; set; }
+        public decimal? CostUnit { get; set; }
+        public decimal? TotalAmount { get; set; }
+        public string Machine { get; set; }
+        public decimal? CycleTime { get; set; }
+        public decimal? TotalCapacity { get; set; }
     }
 }

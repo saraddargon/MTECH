@@ -1819,6 +1819,9 @@
       <LastGenOutput>DataClasses11.designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Process\Report\BillOfMaterial.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Process\Report\Excel_001_Part_Export.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
