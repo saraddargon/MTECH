@@ -497,6 +497,13 @@ namespace StockControl
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
+            //Report.Reportx1.Value = new string[2];
+            //Report.Reportx1.Value[0] = ""; //BomNo
+            //Report.Reportx1.Value[1] = ClassLib.Classlib.User; //USERID
+            //Report.Reportx1.WReport = "TagFG";
+            //Report.Reportx1 op1 = new Report.Reportx1("FG_TAG.rpt");
+            //op1.Show();
+
             this.Cursor = Cursors.WaitCursor;
             try
             {

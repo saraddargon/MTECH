@@ -1149,14 +1149,14 @@ namespace StockControl
             try
             {
                 string JobNo = txtJobNo.Text.Trim();
-                if (JobNo != "")
-                {
+                //if (JobNo != "")
+                //{
                     Report.Reportx1.Value = new string[1];
                     Report.Reportx1.Value[0] = JobNo;
                     Report.Reportx1.WReport = "JOBNoList";
                     Report.Reportx1 op = new Report.Reportx1("JobOrderSheet3.rpt");
                     op.Show();
-                }
+                //}
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -2470,8 +2470,8 @@ namespace StockControl
 
         private void btnShipping_Click(object sender, EventArgs e)
         {
-            if (txtJobNo.Text.Trim() != "")
-            {
+            //if (txtJobNo.Text.Trim() != "")
+            //{
                 Report.Reportx1.Value = new string[1];
                 Report.Reportx1.Value[0] = txtJobNo.Text.Trim();
                 Report.Reportx1.WReport = "PickSlip_RM";
@@ -2479,7 +2479,7 @@ namespace StockControl
                 Report.Reportx1 op = new Report.Reportx1("PickSlip_RM.rpt");
 
                 op.Show();
-            }
+            //}
         }
 
         private void btnSendApprove_Click(object sender, EventArgs e)
