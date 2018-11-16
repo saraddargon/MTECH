@@ -55,7 +55,7 @@ namespace StockControl
             //getConfig();
 
             //cbConfig.Checked = true;
-            txtUser.Text = "";//ConnectDB.ConnectDB.user;
+            txtUser.Text = ConnectDB.user;
             ddlDatabase.Text = ConnectDB.dbname;
             ddlServer.Text = ConnectDB.server;
             txtUserDb.Text = ConnectDB.Userdb;
