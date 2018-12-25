@@ -1933,7 +1933,8 @@ namespace StockControl
                     var setupAll = 0.00m;
                     if (rt.Count > 0)
                     {
-                        var minCapaHr = rt.Min(x => x.workcenter.CapacityHour);
+                        //var minCapaHr = rt.Min(x => x.workcenter.CapacityHour);
+                        var minCapaHr = rt.Min(x => x.hd.CapacityHour.ToDecimal());
                         minCapa = Math.Round(minCapaHr / 60, 9);
                         setupAll = rt.Sum(x => x.SetupTime);
 
@@ -1947,13 +1948,15 @@ namespace StockControl
 
                         var idRoute = rt.FirstOrDefault().hd.RoutingId;
                         //หาวันที่ working day จาก work ที่มี min Capa
-                        var ttCapa = rt.FirstOrDefault().workcenter.CapacityHour;
+                        var ttCapa = rt.FirstOrDefault().hd.CapacityHour.ToDecimal(); // rt.FirstOrDefault().workcenter.CapacityHour;
                         var idWorkCenter = 0;
                         foreach (var item in rt)
                         {
-                            if (ttCapa >= item.workcenter.CapacityHour)
+                            //if (ttCapa >= item.workcenter.CapacityHour)
+                            if(ttCapa >= item.hd.CapacityHour.ToDecimal())
                             {
-                                ttCapa = item.workcenter.CapacityHour;
+                                //ttCapa = item.workcenter.CapacityHour;
+                                ttCapa = item.hd.CapacityHour.ToDecimal();
                                 idWorkCenter = item.idWorkCenter;
                             }
                         }

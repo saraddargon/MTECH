@@ -89,6 +89,7 @@ namespace StockControl
 
                         decimal sumCost = 0.00m;
                         decimal sumCapa = 0.00m;
+                        decimal sumHr = 0.00m;
                         int workId = txtWorkId.Text.ToInt();
                         if (WorkId > 0)
                         {
@@ -97,11 +98,13 @@ namespace StockControl
                             {
                                 sumCost += item.CostPerUOM;
                                 sumCapa += item.Capacity;
+                                sumHr += item.CapacityHour;
                             }
 
                             var whd = db.mh_WorkCenters.Where(x => x.id == workId).First();
                             whd.Capacity = sumCapa;
                             whd.CostPerUOM = sumCost;
+                            whd.CapacityHour = sumHr;
                             db.SubmitChanges();
                         }
                     }
