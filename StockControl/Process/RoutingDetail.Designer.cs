@@ -86,6 +86,7 @@
             this.radLabel9 = new Telerik.WinControls.UI.RadLabel();
             this.btnCal = new Telerik.WinControls.UI.RadButton();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel5 = new Telerik.WinControls.UI.RadLabel();
             this.cbbUOM = new Telerik.WinControls.UI.RadDropDownList();
             this.txtMonth = new Telerik.WinControls.UI.RadMaskedEditBox();
@@ -96,6 +97,7 @@
             this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel7 = new Telerik.WinControls.UI.RadLabel();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
+            this.txtMinCycleTime = new Telerik.WinControls.UI.RadMaskedEditBox();
             this.txtHr = new Telerik.WinControls.UI.RadMaskedEditBox();
             this.txtDescription = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel8 = new Telerik.WinControls.UI.RadLabel();
@@ -114,8 +116,6 @@
             this.radMenuSeparatorItem2 = new Telerik.WinControls.UI.RadMenuSeparatorItem();
             this.RMenu6 = new Telerik.WinControls.UI.RadMenuItem();
             this.radContextMenuManager1 = new Telerik.WinControls.UI.RadContextMenuManager();
-            this.txtMinCycleTime = new Telerik.WinControls.UI.RadMaskedEditBox();
-            this.radLabel10 = new Telerik.WinControls.UI.RadLabel();
             ((System.ComponentModel.ISupportInitialize)(this.radRibbonBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -125,6 +125,7 @@
             this.radPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbUOM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMonth)).BeginInit();
@@ -135,6 +136,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMinCycleTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDescription)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).BeginInit();
@@ -142,8 +144,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingNo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtMinCycleTime)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -657,6 +657,15 @@
             this.panel2.TabIndex = 5;
             this.panel2.Visible = false;
             // 
+            // radLabel10
+            // 
+            this.radLabel10.Location = new System.Drawing.Point(689, 89);
+            this.radLabel10.Name = "radLabel10";
+            this.radLabel10.Size = new System.Drawing.Size(55, 18);
+            this.radLabel10.TabIndex = 1;
+            this.radLabel10.Text = "Min Cycle";
+            this.radLabel10.Visible = false;
+            // 
             // radLabel5
             // 
             this.radLabel5.Location = new System.Drawing.Point(599, 89);
@@ -750,6 +759,20 @@
             this.radLabel1.Size = new System.Drawing.Size(66, 18);
             this.radLabel1.TabIndex = 1;
             this.radLabel1.Text = "Routing No.";
+            // 
+            // txtMinCycleTime
+            // 
+            this.txtMinCycleTime.Location = new System.Drawing.Point(664, 113);
+            this.txtMinCycleTime.Mask = "N2";
+            this.txtMinCycleTime.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
+            this.txtMinCycleTime.Name = "txtMinCycleTime";
+            this.txtMinCycleTime.ReadOnly = true;
+            this.txtMinCycleTime.Size = new System.Drawing.Size(80, 20);
+            this.txtMinCycleTime.TabIndex = 3;
+            this.txtMinCycleTime.TabStop = false;
+            this.txtMinCycleTime.Text = "0.00";
+            this.txtMinCycleTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtMinCycleTime.Visible = false;
             // 
             // txtHr
             // 
@@ -888,28 +911,6 @@
             this.RMenu6.Name = "RMenu6";
             this.RMenu6.Text = "Delete Row";
             // 
-            // txtMinCycleTime
-            // 
-            this.txtMinCycleTime.Location = new System.Drawing.Point(664, 113);
-            this.txtMinCycleTime.Mask = "N2";
-            this.txtMinCycleTime.MaskType = Telerik.WinControls.UI.MaskType.Numeric;
-            this.txtMinCycleTime.Name = "txtMinCycleTime";
-            this.txtMinCycleTime.ReadOnly = true;
-            this.txtMinCycleTime.Size = new System.Drawing.Size(80, 20);
-            this.txtMinCycleTime.TabIndex = 3;
-            this.txtMinCycleTime.TabStop = false;
-            this.txtMinCycleTime.Text = "0.00";
-            this.txtMinCycleTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // radLabel10
-            // 
-            this.radLabel10.Location = new System.Drawing.Point(689, 89);
-            this.radLabel10.Name = "radLabel10";
-            this.radLabel10.Size = new System.Drawing.Size(55, 18);
-            this.radLabel10.TabIndex = 1;
-            this.radLabel10.Text = "Min Cycle";
-            this.radLabel10.Visible = false;
-            // 
             // RoutingDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -938,6 +939,7 @@
             this.radPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbbUOM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMonth)).EndInit();
@@ -948,6 +950,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMinCycleTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHr)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDescription)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel8)).EndInit();
@@ -955,8 +958,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoutingNo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtMinCycleTime)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
