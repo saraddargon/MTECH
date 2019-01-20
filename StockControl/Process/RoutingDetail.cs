@@ -495,6 +495,7 @@ namespace StockControl
                             e.Row.Cells["Description"].Value = t.WorkCenterName;
                             e.Row.Cells["UnitCost"].Value = t.CostPerUOM;
                             e.Row.Cells["CycleTime"].Value = t.CycleTime;
+                            e.Row.Cells["SetupTime"].Value = 0;
                             e.Row.Cells["Capacity"].Value = t.CapacityHour;
                             e.Row.Cells["CapacityHour"].Value = t.CapacityHour;
                             e.Row.Cells["CapacityDay"].Value = Math.Round(t.CapacityHour * 8, 2);
