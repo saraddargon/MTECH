@@ -397,35 +397,39 @@ namespace StockControl
                             c += 1;
                             //TODO: Process field
                             //MessageBox.Show(field);
-                            if (a>1)
+                            if (a>=7)
                             {
-                                if(c==1)
+                                if (c == 2 && Convert.ToString(field).Equals(""))
+                                {
+                                    break;
+                                }
+
+                                if (c==2)
                                     rd["UnitCode"] = Convert.ToString(field);
-                                else if(c==2)
-                                    rd["UnitDetail"] = Convert.ToString(field);
                                 else if(c==3)
+                                    rd["UnitDetail"] = Convert.ToString(field);
+                                else if(c==4)
                                     rd["UnitActive"] = Convert.ToBoolean(field);
 
                             }
                             else
                             {
-                                if (c == 1)
+                                if (c == 2)
                                     rd["UnitCode"] = "";
-                                else if (c == 2)
-                                    rd["UnitDetail"] = "";
                                 else if (c == 3)
+                                    rd["UnitDetail"] = "";
+                                else if (c == 4)
                                     rd["UnitActive"] = false;
-
-
-
-
+                                
                             }
 
                             //
                             //rd[""] = "";
                             //rd[""]
                         }
-                        dt.Rows.Add(rd);
+
+                        if(dbClss.TSt(rd["UnitCode"])!="")
+                            dt.Rows.Add(rd);
 
                     }
                 }
