@@ -92,17 +92,36 @@ namespace StockControl
             if (dgvData.CurrentCell != null)
             {
                 int id = dgvData.CurrentCell.RowInfo.Cells["dgvCodetemp"].Value.ToInt();
+                int idRoute = 0;
                 if (id > 0)
                 {
                     using (var db = new DataClasses1DataContext())
                     {
                         var w = db.mh_RoutingDTs.Where(x => x.id == id).First();
+                        idRoute = w.RoutingId;
                         w.Active = false;
                         db.SubmitChanges();
                     }
                 }
 
                 dgvData.Rows.Remove(dgvData.CurrentCell.RowInfo);
+
+                CalE();
+                //recal CycleTime, CapacityHour
+                using (var db = new DataClasses1DataContext())
+                {
+                    var m = db.mh_Routings.Where(x => x.id == idRoute).FirstOrDefault();
+                    if(m != null)
+                    {
+                        m.CycleTime = txtMinCycleTime.Value.ToDecimal();
+                        m.Min = txtMin.Value.ToDecimal();
+                        m.Hr = txtHr.Value.ToDecimal();
+                        m.Day = txtDay.Value.ToDecimal();
+                        m.Month = txtMonth.Value.ToDecimal();
+
+                        db.SubmitChanges();
+                    }
+                }
 
                 baseClass.Info("Delete complete.");
 
@@ -175,6 +194,7 @@ namespace StockControl
                 txtHr.Value = g.Hr.ToDecimal();
                 txtDay.Value = g.Day.ToDecimal();
                 txtMonth.Value = g.Month.ToDecimal();
+                txtMinCycleTime.Value = g.CycleTime.ToDecimal();
 
                 var dt = db.mh_RoutingDTs.Where(x => x.RoutingId == RoutingId && x.Active).OrderBy(x => x.RNo).ToList();
                 DataTable dt2 = ClassLib.Classlib.LINQToDataTable(dt);
@@ -183,17 +203,20 @@ namespace StockControl
 
                 foreach (var item in dgvData.Rows)
                 {
-                    var w = db.mh_WorkCenters.Where(x => x.id == item.Cells["WorkCenter"].Value.ToInt()).FirstOrDefault();
-                    var m = 0.00m;
-                    var c = 0.00m;
-                    if (w != null)
-                    {
-                        m = w.CapacityHour;
-                        c = w.CycleTime;
-                    }
-                    item.Cells["CycleTime"].Value = c;
-                    item.Cells["Capacity"].Value = m; //Hour
-                    item.Cells["CapacityHour"].Value = m;
+                    //var w = db.mh_WorkCenters.Where(x => x.id == item.Cells["WorkCenter"].Value.ToInt()).FirstOrDefault();
+                    //var m = 0.00m;
+                    //var c = 0.00m;
+                    //if (w != null)
+                    //{
+                    //    m = w.CapacityHour;
+                    //    c = w.CycleTime;
+                    //}
+                    //item.Cells["CycleTime"].Value = c;
+                    //item.Cells["Capacity"].Value = m; //Hour
+                    //item.Cells["CapacityHour"].Value = m;
+
+                    var m = item.Cells["CapacityHour"].Value.ToDecimal();
+                    item.Cells["Capacity"].Value = m;
                     item.Cells["CapacityDay"].Value = Math.Round(m * 8, 2);
                     item.Cells["CapacityMonth"].Value = Math.Round(m * 8 * 26, 2);
                 }
@@ -239,6 +262,9 @@ namespace StockControl
                     hd.Hr = txtHr.Value.ToDecimal();
                     hd.Day = txtDay.Value.ToDecimal();
                     hd.Month = txtMonth.Value.ToDecimal();
+                    //add column CycleTime
+                    hd.CycleTime = txtMinCycleTime.Value.ToDecimal();
+
                     db.SubmitChanges();
                     txtid.Text = hd.id.ToSt();
                     RoutingId = hd.id;
@@ -265,6 +291,9 @@ namespace StockControl
                             t.WaitTime = g.Cells["WaitTime"].Value.ToDecimal();
                             t.UnitCost = g.Cells["UnitCost"].Value.ToDecimal();
                             t.Active = true;
+                            //add column CapacityHour, CycleTime
+                            t.CapacityHour = g.Cells["Capacity"].Value.ToDecimal();
+                            t.CycleTime = g.Cells["CycleTime"].Value.ToDecimal();
 
                             db.SubmitChanges();
                         }
@@ -466,12 +495,21 @@ namespace StockControl
                             e.Row.Cells["Description"].Value = t.WorkCenterName;
                             e.Row.Cells["UnitCost"].Value = t.CostPerUOM;
                             e.Row.Cells["CycleTime"].Value = t.CycleTime;
+                            e.Row.Cells["SetupTime"].Value = 0;
                             e.Row.Cells["Capacity"].Value = t.CapacityHour;
                             e.Row.Cells["CapacityHour"].Value = t.CapacityHour;
                             e.Row.Cells["CapacityDay"].Value = Math.Round(t.CapacityHour * 8, 2);
                             e.Row.Cells["CapacityMonth"].Value = Math.Round(t.CapacityHour * 8 * 26, 2);
                         }
                     }
+                }
+                else if (//e.Column.Name.Equals("CapacityHour") || 
+                    e.Column.Name.Equals("Capacity"))
+                {
+                    var m = e.Value.ToDecimal();
+                    e.Row.Cells["Capacity"].Value = m;
+                    e.Row.Cells["CapacityDay"].Value = Math.Round(m * 8, 2);
+                    e.Row.Cells["CapacityMonth"].Value = Math.Round(m * 8 * 26, 2);
                 }
 
             }
@@ -710,33 +748,38 @@ namespace StockControl
             txtHr.Value = 0;
             txtDay.Value = 0;
             txtMonth.Value = 0;
+            txtMinCycleTime.Value = 0;
 
             var setup = 0.00m;
             using (var db = new DataClasses1DataContext())
             {
                 var minCapa = -1.00m;
+                var myCycle = 0.00m;
                 foreach (var item in dgvData.Rows)
                 {
                     var t = item.Cells["Capacity"].Value.ToDecimal();
                     var s = item.Cells["SetupTime"].Value.ToDecimal();
+                    var c = item.Cells["CycleTime"].Value.ToDecimal();
                     if (minCapa < 0)
                     {
                         minCapa = t;
                         setup = s;
+                        myCycle = c;
                     }
                     if (t <= minCapa)
                     {
                         minCapa = t;
-                        if(t == minCapa && s < setup)
-                        {
+                        if (t == minCapa && s < setup)
                             setup = s;
-                        }
+                        if (t == minCapa && c < myCycle)
+                            myCycle = c;
                     }
                 }
 
                 txtHr.Value = minCapa;
                 txtDay.Value = Math.Round(minCapa * 8, 2);
                 txtMonth.Value = Math.Round(minCapa * 8 * 26, 2);
+                txtMinCycleTime.Value = Math.Round(myCycle, 2);
 
                 //6 นาที ผลิตได้ 600 ตัว
             }

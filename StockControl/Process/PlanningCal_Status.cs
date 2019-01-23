@@ -167,7 +167,7 @@ namespace StockControl
                             else
                                 reorderQty = tdata.SafetyStock - stockAll;
 
-                            if (reorderQty == 0) continue;
+                            if (reorderQty <= 0) continue;
 
                             //Create TEMP JOB P/O
                             string tempNo = $"SO-SF{DateTime.Now.ToString("yyyyMM")}-0001";
@@ -1151,7 +1151,8 @@ namespace StockControl
                 var setupAll = 0.00m;
                 if (rt.Count > 0)
                 {
-                    var minCapaHr = rt.Min(x => x.workcenter.CapacityHour);
+                    //var minCapaHr = rt.Min(x => x.workcenter.CapacityHour);
+                    var minCapaHr = rt.Min(x => x.hd.CapacityHour.ToDecimal());
                     minCapa = Math.Round(minCapaHr / 60, 9);
                     setupAll = rt.Sum(x => x.SetupTime);
 
@@ -1170,8 +1171,10 @@ namespace StockControl
                     foreach (var item in rt)
                     {
                         if (ttCapa >= item.workcenter.CapacityHour)
+                        //if(ttCapa >= item.hd.CapacityHour)
                         {
                             ttCapa = item.workcenter.CapacityHour;
+                            //ttCapa = item.hd.CapacityHour.ToDecimal();
                             idWorkCenter = item.idWorkCenter;
                         }
                     }
@@ -1547,6 +1550,8 @@ namespace StockControl
                     gPlan.StartingDate = finalStartingDate;
                     gPlan.EndingDate = finalEndingDate;
                 }
+                else
+                    return null;
             }
 
 

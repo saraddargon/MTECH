@@ -1933,7 +1933,8 @@ namespace StockControl
                     var setupAll = 0.00m;
                     if (rt.Count > 0)
                     {
-                        var minCapaHr = rt.Min(x => x.workcenter.CapacityHour);
+                        //var minCapaHr = rt.Min(x => x.workcenter.CapacityHour);
+                        var minCapaHr = rt.Min(x => x.hd.CapacityHour.ToDecimal());
                         minCapa = Math.Round(minCapaHr / 60, 9);
                         setupAll = rt.Sum(x => x.SetupTime);
 
@@ -1952,8 +1953,10 @@ namespace StockControl
                         foreach (var item in rt)
                         {
                             if (ttCapa >= item.workcenter.CapacityHour)
+                            //if(ttCapa >= item.hd.CapacityHour.ToDecimal())
                             {
                                 ttCapa = item.workcenter.CapacityHour;
+                                //ttCapa = item.hd.CapacityHour.ToDecimal();
                                 idWorkCenter = item.idWorkCenter;
                             }
                         }
