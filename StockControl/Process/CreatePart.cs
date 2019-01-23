@@ -764,8 +764,16 @@ namespace StockControl
                         u.MaximumInventory = dbClss.TDe(seMaximumInventory);
                         u.SafetyStock = dbClss.TDe(seSafetyStock.Value);
                         u.ItemUOM = 0;
-                        u.BillOfMaterials = dbClss.TInt(txtidBOM.Text);
-                        u.Routing = dbClss.TInt(txtidRouting.Text);
+
+                        if (cboRouting.Text != "")
+                            u.Routing = dbClss.TInt(txtidRouting.Text);
+                        else
+                            u.Routing = 0;
+                        if (cboBOM.Text != "")
+                            u.BillOfMaterials = dbClss.TInt(txtidBOM.Text);
+                        else
+                            u.BillOfMaterials = 0;
+
                         u.WorkCenter = 0;
                         u.Active = true;
                         u.VendorNo = txtVendorNo.Text;
@@ -1017,11 +1025,22 @@ namespace StockControl
                                 }
                                 if (!txtidBOM.Text.Trim().Equals(row["BillOfMaterials"].ToString()))
                                 {
+                                   
+                                    if (cboBOM.Text != "")
+                                        gg.BillOfMaterials = dbClss.TInt(txtidBOM.Text);
+                                    else
+                                        gg.BillOfMaterials = 0;
+
                                     gg.BillOfMaterials = dbClss.TInt(txtidBOM.Text);
                                     dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข BillOfMaterials No [ เดิม : " + row["BillOfMaterials"].ToString() + " ใหม่ : " + txtidBOM.Text.Trim() + "]", txtInternalNo.Text);
                                 }
                                 if (!txtidRouting.Text.Trim().Equals(row["Routing"].ToString()))
                                 {
+                                    if (cboRouting.Text != "")
+                                        gg.Routing = dbClss.TInt(txtidRouting.Text);
+                                    else
+                                        gg.Routing = 0;                                   
+
                                     gg.Routing = dbClss.TInt(txtidRouting.Text);
                                     dbClss.AddHistory(this.Name, "แก้ไข ทูล", "แก้ไข Routing No [ เดิม : " + row["Routing"].ToString() + " ใหม่ : " + txtidRouting.Text.Trim() + "]", txtInternalNo.Text);
                                 }
@@ -1162,6 +1181,15 @@ namespace StockControl
                     if (seReOrderQty.Value.Equals(0))
                         err += "- “จำนวนที่สั่งซื้อ:” น้อยกว่า 0 ไม่ได้ \n";
                 }
+                if (cboRouting.Text != "" || cboBOM.Text != "")
+                {
+                    if (cboBOM.Text == "" && cboRouting.Text != "")
+                        err += "- “BomNo:” เป็นค่าว่าง \n";
+                    if (cboBOM.Text != "" && cboRouting.Text == "")
+                        err += "- “Routing:” เป็นค่าว่าง \n";
+
+                }
+
 
 
                 ////---------------check codeno -------------------//
@@ -3465,8 +3493,12 @@ namespace StockControl
                         var I = (from ix in db.mh_Routings select ix).Where(a => a.RoutingNo == cboRouting.Text).ToList();
                         if (I.Count > 0)
                             txtidRouting.Text = dbClss.TSt(I.FirstOrDefault().id);
+
                     }
                 }
+                else if (cboRouting.Text.Equals(""))
+                    txtidRouting.Text = "0";
+
             }
             catch { }
         }
@@ -3595,11 +3627,16 @@ namespace StockControl
                         {
                             txtidBOM.Text = "0";
                             txtVersion.Text = "";
+                            cboBOM.Text = "";
+                            
                         }
                     }
                 }
                 else
+                {
                     txtidBOM.Text = "0";
+                    
+                }
             }
             catch { }
         }
@@ -3620,6 +3657,11 @@ namespace StockControl
             Report.Reportx1.WReport = "WhereUsed";
             Report.Reportx1 op = new Report.Reportx1("WhareUsed.rpt");
             op.Show();
+        }
+
+        private void cboBOM_Leave(object sender, EventArgs e)
+        {
+            cboBOM_SelectedIndexChanged(null, null);
         }
     }
 }

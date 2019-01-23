@@ -715,6 +715,7 @@
             this.cboBOM.TabStop = false;
             this.cboBOM.ThemeName = "Office2010Blue";
             this.cboBOM.SelectedIndexChanged += new System.EventHandler(this.cboBOM_SelectedIndexChanged);
+            this.cboBOM.Leave += new System.EventHandler(this.cboBOM_Leave);
             // 
             // cboRouting
             // 
