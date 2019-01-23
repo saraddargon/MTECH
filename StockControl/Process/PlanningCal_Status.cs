@@ -1550,6 +1550,8 @@ namespace StockControl
                     gPlan.StartingDate = finalStartingDate;
                     gPlan.EndingDate = finalEndingDate;
                 }
+                else
+                    return null;
             }
 
 
