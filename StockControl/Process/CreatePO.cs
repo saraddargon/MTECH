@@ -385,8 +385,9 @@ namespace StockControl
                         else
                             dtPaymentTermDate.Value = Convert.ToDateTime(temp_date);
 
-                        if (dbClss.TInt(g.FirstOrDefault().PaymentTerm) == 1)
-                            cbPaymentCash.Checked = true;
+                        txtPaymentTerm_Value.Text = (g.FirstOrDefault().PaymentTerm_Value);
+                        if (dbClss.TInt(g.FirstOrDefault().PaymentTerm) == 1)                        
+                            cbPaymentCash.Checked = true;                        
                         else if (dbClss.TInt(g.FirstOrDefault().PaymentTerm) == 2)
                             cbPaymentCredit.Checked = true;
                         else if (dbClss.TInt(g.FirstOrDefault().PaymentTerm) == 3)
@@ -794,9 +795,17 @@ namespace StockControl
 
                             dbClss.AddHistory(this.Name, "แก้ไข CreatePO", "แก้ไข PaymentTerm. [" + PaymentTerm_re + "]", txtPONo.Text);
                         }
+
                         if (dtPaymentTermDate.Text != "")
                             gg.PaymentTerm_Date = Convert.ToDateTime(dtPaymentTermDate.Value);
-                       
+                        else
+                        {
+                            DateTime? temp_payment = null;
+                            gg.PaymentTerm_Date = temp_payment;
+                        }
+                        
+                         gg.PaymentTerm_Value = txtPaymentTerm_Value.Text;
+
                         if (!txtDeliveryDate.Text.Trim().Equals(row["DeliveryDate"].ToString()))
                         {
                             gg.DeliveryDate = txtDeliveryDate.Text;
@@ -896,8 +905,16 @@ namespace StockControl
                     else if (cbPaymentOther.Checked)
                         PaymentTerm = 3;
                     gg.PaymentTerm = PaymentTerm;
+
                     if(dtPaymentTermDate.Text !="")
                         gg.PaymentTerm_Date = Convert.ToDateTime(dtPaymentTermDate.Value);
+                    else
+                    {
+                        DateTime? temp_payment = null;
+                        gg.PaymentTerm_Date = temp_payment;
+                    }
+                    gg.PaymentTerm_Value = txtPaymentTerm_Value.Text;
+
                     gg.DeliveryDate = txtDeliveryDate.Text;
 
                     DateTime? Duedate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
@@ -905,7 +922,6 @@ namespace StockControl
                         Duedate = dtDuedate.Value;
                     else
                         dtDuedate.Value = Duedate.Value;
-
 
                     gg.Duedate = Duedate;
                     gg.Remark = txtRemarkHD.Text.Trim();
@@ -1225,7 +1241,7 @@ namespace StockControl
                 cbPaymentCredit.Enabled = ss;
                 cbPaymentOther.Enabled = ss;
                 dtPaymentTermDate.Enabled = ss;
-
+                txtPaymentTerm_Value.Enabled = ss;
 
             }
             else if (Condition.Equals("View"))
@@ -1263,6 +1279,7 @@ namespace StockControl
                 cbPaymentCredit.Enabled = ss;
                 cbPaymentOther.Enabled = ss;
                 dtPaymentTermDate.Enabled = ss;
+                txtPaymentTerm_Value.Enabled = ss;
             }
             else if (Condition.Equals("Edit"))
             {
@@ -1298,6 +1315,7 @@ namespace StockControl
                 cbPaymentCredit.Enabled = ss;
                 cbPaymentOther.Enabled = ss;
                 dtPaymentTermDate.Enabled = ss;
+                txtPaymentTerm_Value.Enabled = ss;
             }
         }
 
@@ -1343,6 +1361,8 @@ namespace StockControl
             cbPaymentOther.Checked = false;
             dtPaymentTermDate.Value = DateTime.Now;
             dtPaymentTermDate.SetToNullValue();
+            lbRemark_PaymentTerm.Text = "";
+            txtPaymentTerm_Value.Text = "";
 
             dt_POHD.Rows.Clear();
             dt_PODT.Rows.Clear();
@@ -4170,6 +4190,7 @@ namespace StockControl
             {
                 cbPaymentCash.Checked = false;
                 cbPaymentCredit.Checked = false;
+                lbRemark_PaymentTerm.Text = "";
             }
         }
 
@@ -4179,6 +4200,7 @@ namespace StockControl
             {
                 cbPaymentOther.Checked = false;
                 cbPaymentCash.Checked = false;
+                lbRemark_PaymentTerm.Text = "";
             }
         }
 
@@ -4188,6 +4210,38 @@ namespace StockControl
             {
                 cbPaymentCredit.Checked = false;
                 cbPaymentOther.Checked = false;
+                lbRemark_PaymentTerm.Text = "(MM/dd/YYYY) เช่น 01/31/2018";
+            }
+        }
+
+        private void txtPaymentTerm_Value_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+
+                if (cbPaymentCredit.Checked || cbPaymentOther.Checked)
+                {
+                    dtPaymentTermDate.Value = DateTime.Now;
+                    dtPaymentTermDate.SetToNullValue();
+                }
+                else
+                {
+                    if (txtPaymentTerm_Value.Text.Trim() == "")
+                    {
+                        dtPaymentTermDate.Value = DateTime.Now;
+                        dtPaymentTermDate.SetToNullValue();
+                    }
+                    else
+                    {
+                        DateTime temp = DateTime.Now;
+                        temp = Convert.ToDateTime(dbClss.TDa(txtPaymentTerm_Value.Text));
+                        dtPaymentTermDate.Value = temp;
+                    }
+                }
+            }
+            catch {
+                dtPaymentTermDate.Value = DateTime.Now;
+                dtPaymentTermDate.SetToNullValue();
             }
         }
     }
