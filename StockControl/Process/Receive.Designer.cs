@@ -543,7 +543,6 @@
             gridViewMultiComboBoxColumn2.FieldName = "Location";
             gridViewMultiComboBoxColumn2.HeaderText = "สถานที่เก็บ";
             gridViewMultiComboBoxColumn2.Name = "Location";
-            gridViewMultiComboBoxColumn2.ReadOnly = true;
             gridViewMultiComboBoxColumn2.Width = 122;
             gridViewComboBoxColumn1.DropDownStyle = Telerik.WinControls.RadDropDownStyle.DropDown;
             gridViewComboBoxColumn1.EnableExpressionEditor = false;

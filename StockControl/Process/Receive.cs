@@ -725,7 +725,11 @@ namespace StockControl
                                 u.CodeNo = StockControl.dbClss.TSt(g.Cells["CodeNo"].Value);
                                 u.ItemNo = StockControl.dbClss.TSt(g.Cells["ItemNo"].Value);
                                 u.ItemDescription = StockControl.dbClss.TSt(g.Cells["ItemDescription"].Value);
-                                u.RemainQty = StockControl.dbClss.TDe(g.Cells["RemainQty"].Value) -
+
+                                if ((StockControl.dbClss.TDe(g.Cells["RemainQty"].Value) - StockControl.dbClss.TDe(g.Cells["QTY"].Value)) < 0)
+                                    u.RemainQty = 0;
+                                else
+                                    u.RemainQty = StockControl.dbClss.TDe(g.Cells["RemainQty"].Value) -
                                                 StockControl.dbClss.TDe(g.Cells["QTY"].Value);
 
                                 u.QTY = StockControl.dbClss.TDe(g.Cells["QTY"].Value);
@@ -1752,17 +1756,18 @@ namespace StockControl
                 if (e.RowIndex >= -1)
                 {
 
-                    if (dgvData.Columns["QTY"].Index == e.ColumnIndex)
-                    {
-                        decimal QTY = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["QTY"].Value), out QTY);
-                        decimal RemainQty = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["RemainQty"].Value), out RemainQty);
-                        if (QTY > RemainQty)
-                        {
-                            MessageBox.Show("ไม่สามารถรับเกินจำนวนคงเหลือได้");
-                            e.Row.Cells["QTY"].Value = 0;
-                        }
-                    }
-                    else if (dgvData.Columns["ShelfNo"].Index == e.ColumnIndex)
+                    //if (dgvData.Columns["QTY"].Index == e.ColumnIndex)
+                    //{
+                    //    decimal QTY = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["QTY"].Value), out QTY);
+                    //    decimal RemainQty = 0; decimal.TryParse(StockControl.dbClss.TSt(e.Row.Cells["RemainQty"].Value), out RemainQty);
+                    //    if (QTY > RemainQty)
+                    //    {
+                    //        MessageBox.Show("ไม่สามารถรับเกินจำนวนคงเหลือได้");
+                    //        e.Row.Cells["QTY"].Value = 0;
+                    //    }
+                    //}
+                    //else 
+                    if (dgvData.Columns["ShelfNo"].Index == e.ColumnIndex)
                     {
                         var cc = e.Row.Cells["ShelfNo"];
                         string CategoryTemp = Convert.ToString(e.Row.Cells["ShelfNo"].Value);
@@ -2322,6 +2327,10 @@ namespace StockControl
                 //    //ee.Cells["dgvUnitCode"].ReadOnly = false;
                 //    //ee.Cells["dgvStandardCost"].ReadOnly = false;
                 //}
+                if (Location == "")
+                    ee.Cells["Location"].ReadOnly = false;
+                else
+                    ee.Cells["Location"].ReadOnly = true;
 
                 ////if (lblStatus.Text.Equals("Completed"))//|| lbStatus.Text.Equals("Reject"))
                 ////    dgvData.AllowAddNewRow = false;
