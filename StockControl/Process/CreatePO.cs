@@ -460,18 +460,20 @@ namespace StockControl
                                         x.Cells["dgvGroupCode"].ReadOnly = true;
                                     }
 
-                                    if (dbClss.TInt(x.Cells["dgvPRItem"].Value) > 0)
-                                    {
-                                        x.Cells["dgvOrderQty"].ReadOnly = true;
-                                        x.Cells["dgvCodeNo"].ReadOnly = true;
-                                        x.Cells["dgvItemName"].ReadOnly = true;
-                                        x.Cells["dgvItemDesc"].ReadOnly = true;
-                                        x.Cells["dgvUnit"].ReadOnly = true;
-                                        x.Cells["dgvCost"].ReadOnly = true;
-                                        x.Cells["dgvPCSUnit"].ReadOnly = true;
-                                        x.Cells["dgvGroupCode"].ReadOnly = true;
-                                        //x.Cells["dgvDiscountAmount"].ReadOnly = true;
-                                    }
+                                    // พีตู่แจ้งว่าให้ไม่ต้องบล็อก ให้เอาออก--------------
+                                    //if (dbClss.TInt(x.Cells["dgvPRItem"].Value) > 0)
+                                    //{
+                                    //    x.Cells["dgvOrderQty"].ReadOnly = true;
+                                    //    x.Cells["dgvCodeNo"].ReadOnly = true;
+                                    //    x.Cells["dgvItemName"].ReadOnly = true;
+                                    //    x.Cells["dgvItemDesc"].ReadOnly = true;
+                                    //    x.Cells["dgvUnit"].ReadOnly = true;
+                                    //    x.Cells["dgvCost"].ReadOnly = true;
+                                    //    x.Cells["dgvPCSUnit"].ReadOnly = true;
+                                    //    x.Cells["dgvGroupCode"].ReadOnly = true;
+                                    //    //x.Cells["dgvDiscountAmount"].ReadOnly = true;
+                                    //}
+                                    //-------------
                                     x.Cells["dgvChangeQty"].ReadOnly = true;                                    
                                 }
                                 else if (dbClss.TDe(x.Cells["dgvBackOrder"].Value) 
@@ -1388,6 +1390,7 @@ namespace StockControl
                 row = 0;
             //getมาไว้ก่อน แต่ยังไมได้ save 
             //txtTempNo.Text = StockControl.dbClss.GetNo(10, 0);
+            txtPONo.Text = StockControl.dbClss.GetNo(11, 0);
 
         }
 
@@ -2579,6 +2582,12 @@ namespace StockControl
                         txtTempNo.Text = StockControl.dbClss.TSt(g.FirstOrDefault().TempPNo);
                         btnView_Click(null, null);
                         DataLoad();
+                    }
+                    else
+                    {
+                        string PONo = txtPONo.Text;
+                        btnNew_Click(null, null);
+                        txtPONo.Text = PONo;
                     }
                 }
 

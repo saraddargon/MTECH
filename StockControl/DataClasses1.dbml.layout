@@ -734,5 +734,17 @@
         <elementListCompartment Id="df11cc6f-7dbd-4a3d-93b1-aa8c6289fca2" absoluteBounds="22.015, 17.585, 1.9700000000000002, 13.5181884765625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="438e061b-c7da-415e-bf97-fb3738c1621a" isExpanded="false" absoluteBounds="3.375, 5.25, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/mh_InvoiceDT_Cancel" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1493f063-7d1e-44f2-9fbf-9c57e709f2a9" absoluteBounds="3.3899999999999997, 5.71, 1.9700000000000002, 5.826131184895833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c9b9be57-2063-4105-a63a-62447d29643e" isExpanded="false" absoluteBounds="3.375, 5.75, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/mh_InvoiceHD_Cancel" />
+      <nestedChildShapes>
+        <elementListCompartment Id="989398eb-6c5b-484a-85a8-e625313929e2" absoluteBounds="3.39, 6.21, 1.9700000000000002, 8.1337483723958321" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

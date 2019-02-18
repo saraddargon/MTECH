@@ -76,7 +76,9 @@ namespace StockControl
                 {
                     idList.Add(item);
                 }
-                txtIVNo.Text = t_SONo;
+
+                if(t_SONo!="")
+                    txtIVNo.Text = t_SONo;
                 
                 if (t_SONo != "" && t_CustomerNo != "")
                     DataLoad();
@@ -173,6 +175,7 @@ namespace StockControl
                     mh_InvoiceHD mh = db.mh_InvoiceHDs.Where(s => s.IVNo == txtIVNo.Text).FirstOrDefault();
                     if(mh!=null)
                     {
+                        txtIVNo.ReadOnly = true;
                         txtTel.Text = mh.Tel;
                         lbOrderSubtotal.Text = mh.TotalPrice.ToString();
                         lbTotalOrder.Text = mh.TotalPriceIncVat.ToString();
@@ -523,6 +526,8 @@ namespace StockControl
             //txtTempNo.Text = StockControl.dbClss.GetNo(10, 0);
             txtIVNo.Text = dbClss.GetNo(31, 0);
 
+            txtIVNo.ReadOnly = false;
+
             idList.Clear();
             //potoso.Clear();
         }
@@ -573,11 +578,11 @@ namespace StockControl
         {
             try
             {
-                string poNo = txtIVNo.Text.Trim();
+                string InvNo = txtIVNo.Text.Trim();
                 string cstmNo = txtCSTMNo.Text.Trim();
-                if (poNo != "" && cstmNo != "")
+                if (InvNo != "" && cstmNo != "")
                 {
-                    if (baseClass.IsDel($"Do you want to Delete invoice: {poNo} ?"))
+                    if (baseClass.IsDel($"Do you want to Delete invoice: {InvNo} ?"))
                     {
                         using (var db = new DataClasses1DataContext())
                         {
@@ -618,6 +623,8 @@ namespace StockControl
                                 dbClss.AddHistory(this.Name, "ลบ Invoice", "Delete Invoice [" + txtIVNo.Text.Trim() + "]", txtIVNo.Text);
                                 updateOutSO();
 
+                                Insert_Cancel_Invoice(InvNo);
+
                                 baseClass.Info("Delete invoice complete.");
                            
                                 btnNew_Click(null, null);
@@ -637,7 +644,17 @@ namespace StockControl
             finally { this.Cursor = Cursors.Default; }
 
         }
-
+       private void Insert_Cancel_Invoice(string InvNo)
+        {
+            try
+            {
+                using (var db = new DataClasses1DataContext())
+                {
+                    db.sp_085_Cancel_Invoice(InvNo);
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
         private bool Check_Save()
         {
             bool re = true;
@@ -728,17 +745,38 @@ namespace StockControl
             this.Cursor = Cursors.WaitCursor;
             try
             {
-                txtIVNo.Text = dbClss.GetNo(31, 2);
-                string sono = txtIVNo.Text;
-                string cstmNo = txtContactName.Text;
-                btnCal_Click(null, null);
-
                 using (DataClasses1DataContext db = new DataClasses1DataContext())
                 {
-                    mh_InvoiceHD sh = db.mh_InvoiceHDs.Where(s => s.IVNo == sono).FirstOrDefault();
+                    if (Ac == "New" && txtIVNo.Text.Trim() == "")
+                    {
+                        txtIVNo.Text = dbClss.GetNo(31, 2);
+                    }
+                    else if (Ac == "New" && txtIVNo.Text != "")
+                    {
+                        //ถ้ามีการใส่เลขที่ Inv เช็คดูว่ามีการใส่เลขนี้แล้วหรือไม่ ถ้ามีให้ใส่เลขอื่น
+                        var p = (from ix in db.mh_InvoiceHDs
+                                 where ix.IVNo.ToUpper().Trim() == txtIVNo.Text.Trim()
+                                 && ix.StatusHD != "Cancel"
+                                 select ix).ToList();
+                        //mh_InvoiceHD p = db.mh_InvoiceHDs.Where(s => s.IVNo == txtIVNo.Text.Trim().ToUpper() 
+                        //&& s.StatusHD != "Cancel").ToList();
+                        if (p.Count>0)
+                        {
+                            MessageBox.Show("เลขที่ Invoice No. ถูกใช้ไปแล้ว กรุณาใส่เลขใหม่");
+                            return;
+                        }
+                    }
+
+
+                    string sono = txtIVNo.Text;
+                    string cstmNo = txtContactName.Text;
+                    btnCal_Click(null, null);
+
+
+                    mh_InvoiceHD sh = db.mh_InvoiceHDs.Where(s => s.IVNo == sono && s.StatusHD != "Cancel").FirstOrDefault();
                     if (sh != null)
                     {
-
+                        return;
                     }
                     else
                     {
@@ -762,7 +800,7 @@ namespace StockControl
                         sh1.UpdateBy = ConnectDB.user;
                         sh1.CreateDate = Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US"));
                         sh1.CreateBy = ConnectDB.user;// ClassLib.Classlib.User;
-                        
+
                         sh1.CustomerNo = txtCSTMNo.Text;
                         sh1.CustomerName = cboCustomer.Text;
                         sh1.CustomerAddress = txtAddress.Text;
@@ -787,15 +825,15 @@ namespace StockControl
                         sh1.Reference = txtReference.Text;
                         sh1.Payment = ddlPayment.Text;
                         sh1.Credit = dbClss.TInt(txtCredit.Text);
-                       
 
-                        if(dtCredit_Date.Text !="")
+
+                        if (dtCredit_Date.Text != "")
                             sh1.Credit_Date = Convert.ToDateTime(dtCredit_Date.Value);
                         sh1.InvDate = Convert.ToDateTime(dtInvDate.Value);
                         sh1.Tax_identification_number = txtTax_identification_number.Text;
                         sh1.VatDetail = dbClss.TBo(cbvatDetail.Checked);
-                       
-                        
+
+
                         string s_ThaiBath = grantotal.ThaiBahtText();
                         sh1.ThaiBath = s_ThaiBath;
 
@@ -809,7 +847,7 @@ namespace StockControl
                         {
                             rno += 1;
 
-                           int ab = Convert.ToInt16(rd.Cells["RefId"].Value);
+                            int ab = Convert.ToInt16(rd.Cells["RefId"].Value);
 
                             mh_InvoiceDT nd = new mh_InvoiceDT();
 
@@ -842,10 +880,10 @@ namespace StockControl
                             ////Cut Stock
                             //if (Type_Button == 1)
                             //{
-                                var v = (from ix in db.mh_ShipmentDTs
-                                         where
-                                                   ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
-                                         select ix).ToList();
+                            var v = (from ix in db.mh_ShipmentDTs
+                                     where
+                                               ix.id == Convert.ToInt16(rd.Cells["RefId"].Value.ToSt())
+                                     select ix).ToList();
                             if (v.Count > 0)
                             {
                                 var p = (from ix in db.mh_ShipmentDTs
@@ -930,14 +968,15 @@ namespace StockControl
                             //}
                         }
                     }
-                }
+                
 
 
-                    baseClass.Info("Save complete(s).");
+                baseClass.Info("Save complete(s).");
                 ClearData();
                 //txtContactName.Text = t_CustomerNo;
                 txtIVNo.Text = sono;
                 DataLoad();
+            }
             }
             catch (Exception ex)
             {
