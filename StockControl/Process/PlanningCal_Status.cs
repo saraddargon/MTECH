@@ -40,13 +40,14 @@ namespace StockControl
             this.MPS = MPS;
         }
 
+        Thread td;
         bool startCal = false;
         private void PlanningCal_Status_Load(object sender, EventArgs e)
         {
             if (!startCal)
             {
-                startCal = false;
-                Thread td = new Thread(new ThreadStart(calE));
+                startCal = true;
+                td = new Thread(new ThreadStart(calE));
                 td.Start();
             }
         }
