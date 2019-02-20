@@ -512,7 +512,7 @@
             this.btnRecal.Image = ((System.Drawing.Image)(resources.GetObject("btnRecal.Image")));
             this.btnRecal.ImageAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnRecal.Name = "btnRecal";
-            this.btnRecal.Text = "Calculate Paln";
+            this.btnRecal.Text = "Calculate Plan";
             this.btnRecal.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnRecal.Click += new System.EventHandler(this.btnRecal_Click);
             // 

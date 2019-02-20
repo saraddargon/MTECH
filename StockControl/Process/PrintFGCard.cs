@@ -100,6 +100,12 @@ namespace StockControl
                 });
 
                 txtJobNo.Focus();
+
+
+
+                ////test
+                //addRow(DateTime.Now, "ItemNo", "ItemName", 6000, "PCS", 1, 1, 1, "LotNo", "Location", "Shelf", "JobNo", "CustomerPONo"
+                //    , 0, 0, 0, "Type", "GroupType", "InvGroup", "CstmNo", "CstmName");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             finally { this.Cursor = Cursors.Default; }
@@ -441,16 +447,17 @@ namespace StockControl
             rowe.Cells["InvGroup"].Value = InvGroup;
             rowe.Cells["TagCount"].Value = 1;
             rowe.Cells["PackingSTD"].Value = 1;
+
             using (var db = new DataClasses1DataContext())
             {
                 var t = db.mh_Items.Where(x => x.InternalNo == itemNo).FirstOrDefault();
                 if (t != null)
                 {
                     var b = db.tb_BomHDs.Where(x => x.id == t.BillOfMaterials).FirstOrDefault();
-                    if(b != null)
+                    if (b != null)
                     {
                         var std = b.PackingSTD.ToDecimal();
-                        if(std > 0)
+                        if (std > 0)
                         {
                             rowe.Cells["PackingSTD"].Value = std;
                             rowe.Cells["TagCount"].Value = Math.Ceiling(qty / std);
@@ -458,6 +465,9 @@ namespace StockControl
                     }
                 }
             }
+            //rowe.Cells["PackingSTD"].Value = 1700;
+            //rowe.Cells["TagCount"].Value = 2;
+
             rowe.Cells["CstmNo"].Value = cstmNo;
             rowe.Cells["CstmName"].Value = cstmName;
         }
@@ -530,18 +540,20 @@ namespace StockControl
                             decimal Qty = row.Cells["Qty"].Value.ToDecimal();
                             string printDate = DateTime.Now.ToString("ddMMyyyy");
                             int TagCount = row.Cells["TagCount"].Value.ToInt();
-                            decimal q1 = Math.Round(Qty / TagCount, 0);
-                            decimal q2 = Qty - Math.Round(q1 * (TagCount - 1), 0);
-                            var temp_tagCount = TagCount;
+                            decimal pkStd = row.Cells["PackingSTD"].Value.ToDecimal();
+                            //decimal q1 = Math.Round(Qty / TagCount, 0);
+                            //decimal q2 = Qty - Math.Round(q1 * (TagCount - 1), 0);
+                            var t = Math.Round(Qty / pkStd, MidpointRounding.AwayFromZero);
+                            if (t <= 0) t = 1;
+                            //var temp_tagCount = TagCount;
                             int ofTag = 0;
-
-                            while (temp_tagCount > 0)
+                            while(Qty > 0)
                             {
                                 ofTag++;
                                 rNo++;
-                                bool last = temp_tagCount == 1;
 
-                                string qr = $"{JobNo},{((last) ? q2 : q1)},{printDate},{ofTag}";
+                                var q1 = (Qty - pkStd > 0) ? pkStd : Qty;
+                                string qr = $"{JobNo},{q1},{printDate},{ofTag}";
                                 byte[] qrCode = dbClss.SaveQRCode2D(qr);
 
                                 var m = new mh_ProductTAG
@@ -551,7 +563,7 @@ namespace StockControl
                                     Seq = rNo,
                                     PartName = row.Cells["ItemName"].Value.ToSt(),
                                     LotNo = row.Cells["LotNo"].Value.ToSt(),
-                                    Qty = (last) ? q2 : q1,
+                                    Qty = q1,
                                     QRCode = qrCode,
                                     Machine = "",
                                     BOMNo = row.Cells["JobNo"].Value.ToSt(),
@@ -561,8 +573,38 @@ namespace StockControl
                                     ProdDate = row.Cells["ProductionDate"].Value.ToDateTime().Value.Date,
                                 };
                                 db.mh_ProductTAGs.InsertOnSubmit(m);
-                                temp_tagCount--;
+                                Qty -= pkStd;
                             }
+
+
+                            //while (t > 0)
+                            //{
+                            //    ofTag++;
+                            //    rNo++;
+                            //    bool last = temp_tagCount == 1;
+
+                            //    string qr = $"{JobNo},{((last) ? q2 : q1)},{printDate},{ofTag}";
+                            //    byte[] qrCode = dbClss.SaveQRCode2D(qr);
+
+                            //    var m = new mh_ProductTAG
+                            //    {
+                            //        UserID = ClassLib.Classlib.User,
+                            //        PartNo = row.Cells["ItemNo"].Value.ToSt(),
+                            //        Seq = rNo,
+                            //        PartName = row.Cells["ItemName"].Value.ToSt(),
+                            //        LotNo = row.Cells["LotNo"].Value.ToSt(),
+                            //        Qty = (last) ? q2 : q1,
+                            //        QRCode = qrCode,
+                            //        Machine = "",
+                            //        BOMNo = row.Cells["JobNo"].Value.ToSt(),
+                            //        OFTAG = ofTag.ToSt(),
+                            //        CustomerName = row.Cells["CstmName"].Value.ToSt(),
+                            //        CSTMShot = row.Cells["CstmNo"].Value.ToSt(),
+                            //        ProdDate = row.Cells["ProductionDate"].Value.ToDateTime().Value.Date,
+                            //    };
+                            //    db.mh_ProductTAGs.InsertOnSubmit(m);
+                            //    temp_tagCount--;
+                            //}
                             db.SubmitChanges();
 
                             //Save Production Date
