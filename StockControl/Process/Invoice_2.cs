@@ -755,7 +755,7 @@ namespace StockControl
                     {
                         //ถ้ามีการใส่เลขที่ Inv เช็คดูว่ามีการใส่เลขนี้แล้วหรือไม่ ถ้ามีให้ใส่เลขอื่น
                         var p = (from ix in db.mh_InvoiceHDs
-                                 where ix.IVNo.ToUpper().Trim() == txtIVNo.Text.Trim()
+                                 where ix.IVNo.ToUpper().Trim() == txtIVNo.Text.Trim().ToUpper()
                                  && ix.StatusHD != "Cancel"
                                  select ix).ToList();
                         //mh_InvoiceHD p = db.mh_InvoiceHDs.Where(s => s.IVNo == txtIVNo.Text.Trim().ToUpper() 
@@ -764,6 +764,13 @@ namespace StockControl
                         {
                             MessageBox.Show("เลขที่ Invoice No. ถูกใช้ไปแล้ว กรุณาใส่เลขใหม่");
                             return;
+                        }
+                        else
+                        {
+                            if(dbClss.GetNo(31, 0).ToUpper()==txtIVNo.Text.ToUpper().Trim())
+                            {
+                                txtIVNo.Text = dbClss.GetNo(31, 2);
+                            }
                         }
                     }
 
@@ -976,6 +983,7 @@ namespace StockControl
                 //txtContactName.Text = t_CustomerNo;
                 txtIVNo.Text = sono;
                 DataLoad();
+                    btnNew.Enabled = true;
             }
             }
             catch (Exception ex)
@@ -2177,16 +2185,20 @@ namespace StockControl
                     baseClass.Warning("Please enter Sale Order no.");
                     return;
                 }
+                
+
+                t_SONo = txtIVNo.Text;
+                
+                ClearData();
+                txtIVNo.Text = t_SONo;
+                DataLoad();
+                btnNew.Enabled = true;
                 if (txtContactName.Text.Trim() == "")
                 {
                     baseClass.Warning("Please enter Customer no.");
                     return;
                 }
-
-                t_SONo = txtIVNo.Text;
                 t_CustomerNo = txtContactName.Text;
-                ClearData();
-                DataLoad();
             }
         }
 
