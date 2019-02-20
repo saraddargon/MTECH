@@ -284,9 +284,10 @@
             gridViewTextBoxColumn7.Name = "dgvType";
             gridViewTextBoxColumn7.ReadOnly = true;
             gridViewTextBoxColumn7.Width = 86;
+            gridViewDecimalColumn1.DecimalPlaces = 4;
             gridViewDecimalColumn1.EnableExpressionEditor = false;
             gridViewDecimalColumn1.FieldName = "Qty";
-            gridViewDecimalColumn1.FormatString = "{0:N2}";
+            gridViewDecimalColumn1.FormatString = "{0:N4}";
             gridViewDecimalColumn1.HeaderText = "จำนวน";
             gridViewDecimalColumn1.Name = "dgvQty";
             gridViewDecimalColumn1.Width = 81;
@@ -295,9 +296,10 @@
             gridViewMultiComboBoxColumn1.HeaderText = "หน่วย";
             gridViewMultiComboBoxColumn1.Name = "dgvUnit";
             gridViewMultiComboBoxColumn1.Width = 88;
+            gridViewDecimalColumn2.DecimalPlaces = 4;
             gridViewDecimalColumn2.EnableExpressionEditor = false;
             gridViewDecimalColumn2.FieldName = "PCSUnit";
-            gridViewDecimalColumn2.FormatString = "{0:N2}";
+            gridViewDecimalColumn2.FormatString = "{0:N4}";
             gridViewDecimalColumn2.HeaderText = "จำนวน/หน่วย";
             gridViewDecimalColumn2.Minimum = new decimal(new int[] {
             1,
