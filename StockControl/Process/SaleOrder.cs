@@ -577,6 +577,8 @@ namespace StockControl
                                 db.SubmitChanges();
 
                                 updateOutSO_Customer();
+                                dbClss.AddHistory(this.Name, "ลบ Sale order", "ลบ Sale order [" + poNo + "]", txtSONo.Text);
+
 
                                 baseClass.Info("Delete Sale Order complete.");
                                 //ClearData();
