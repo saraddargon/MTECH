@@ -746,5 +746,11 @@
         <elementListCompartment Id="f1f80645-410d-4750-82fe-194d385b2ab8" absoluteBounds="7.39, 25.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="44ec38fd-e21f-4a71-9516-b9b4044586c3" isExpanded="false" absoluteBounds="0.5, 2.25, 2, 0.45">
+      <DataClassMoniker Name="/DataClasses1DataContext/mh_InvoiceRemark" />
+      <nestedChildShapes>
+        <elementListCompartment Id="65a9b218-dd19-49cc-9467-e29b8177af44" absoluteBounds="0.51500000000000012, 2.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

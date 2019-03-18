@@ -22,7 +22,7 @@ namespace StockControl
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="dbMTECH")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="dbMTECH_Import")]
 	public partial class DataClasses1DataContext : System.Data.Linq.DataContext
 	{
 		
@@ -390,10 +390,13 @@ namespace StockControl
     partial void Inserttb_BomDT(tb_BomDT instance);
     partial void Updatetb_BomDT(tb_BomDT instance);
     partial void Deletetb_BomDT(tb_BomDT instance);
+    partial void Insertmh_InvoiceRemark(mh_InvoiceRemark instance);
+    partial void Updatemh_InvoiceRemark(mh_InvoiceRemark instance);
+    partial void Deletemh_InvoiceRemark(mh_InvoiceRemark instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
-				base(global::StockControl.Properties.Settings.Default.dbStockControlConnectionString1, mappingSource)
+				base(global::StockControl.Properties.Settings.Default.dbMTECH_ImportConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -1411,6 +1414,14 @@ namespace StockControl
 			get
 			{
 				return this.GetTable<tb_BomDT>();
+			}
+		}
+		
+		public System.Data.Linq.Table<mh_InvoiceRemark> mh_InvoiceRemarks
+		{
+			get
+			{
+				return this.GetTable<mh_InvoiceRemark>();
 			}
 		}
 		
@@ -54070,6 +54081,164 @@ namespace StockControl
 					this._chk_YieldOperation = value;
 					this.SendPropertyChanged("chk_YieldOperation");
 					this.Onchk_YieldOperationChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.mh_InvoiceRemark")]
+	public partial class mh_InvoiceRemark : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _Seq;
+		
+		private string _InvNo;
+		
+		private int _Refid;
+		
+		private string _DetailRemark;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnSeqChanging(int value);
+    partial void OnSeqChanged();
+    partial void OnInvNoChanging(string value);
+    partial void OnInvNoChanged();
+    partial void OnRefidChanging(int value);
+    partial void OnRefidChanged();
+    partial void OnDetailRemarkChanging(string value);
+    partial void OnDetailRemarkChanged();
+    #endregion
+		
+		public mh_InvoiceRemark()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Seq", DbType="Int NOT NULL")]
+		public int Seq
+		{
+			get
+			{
+				return this._Seq;
+			}
+			set
+			{
+				if ((this._Seq != value))
+				{
+					this.OnSeqChanging(value);
+					this.SendPropertyChanging();
+					this._Seq = value;
+					this.SendPropertyChanged("Seq");
+					this.OnSeqChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InvNo", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string InvNo
+		{
+			get
+			{
+				return this._InvNo;
+			}
+			set
+			{
+				if ((this._InvNo != value))
+				{
+					this.OnInvNoChanging(value);
+					this.SendPropertyChanging();
+					this._InvNo = value;
+					this.SendPropertyChanged("InvNo");
+					this.OnInvNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Refid", DbType="Int NOT NULL")]
+		public int Refid
+		{
+			get
+			{
+				return this._Refid;
+			}
+			set
+			{
+				if ((this._Refid != value))
+				{
+					this.OnRefidChanging(value);
+					this.SendPropertyChanging();
+					this._Refid = value;
+					this.SendPropertyChanged("Refid");
+					this.OnRefidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DetailRemark", DbType="NVarChar(150)")]
+		public string DetailRemark
+		{
+			get
+			{
+				return this._DetailRemark;
+			}
+			set
+			{
+				if ((this._DetailRemark != value))
+				{
+					this.OnDetailRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._DetailRemark = value;
+					this.SendPropertyChanged("DetailRemark");
+					this.OnDetailRemarkChanged();
 				}
 			}
 		}

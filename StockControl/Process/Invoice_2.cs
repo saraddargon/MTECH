@@ -2922,6 +2922,22 @@ namespace StockControl
                 btnCal_Click(null, null);
             }
         }
+
+        private void addEditRemarkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (txtIVNo.Text.Trim() != "" && dgvData.Rows.Count > 0)
+            {
+                int id = 0;
+                id = dbClss.TInt(dgvData.CurrentRow.Cells["id"].Value);
+                if (id > 0)
+                {
+                    InvoiceRemark re = new InvoiceRemark(id, txtIVNo.Text, dbClss.TSt(dgvData.CurrentRow.Cells["ItemNo"].Value));
+                    re.Show();
+                }
+                else
+                    MessageBox.Show("not found id reference.");
+            }
+        }
     }
 
 

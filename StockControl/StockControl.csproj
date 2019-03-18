@@ -149,6 +149,12 @@
     </Compile>
     <Compile Include="MasterClass\baseClass.cs" />
     <Compile Include="MasterClass\getGrid.cs" />
+    <Compile Include="Process\InvoiceRemark.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\InvoiceRemark.Designer.cs">
+      <DependentUpon>InvoiceRemark.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\CustomerPOSummary_Report.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1256,6 +1262,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Mainfrom.resx">
       <DependentUpon>Mainfrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\InvoiceRemark.resx">
+      <DependentUpon>InvoiceRemark.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CustomerPOSummary_Report.resx">
       <DependentUpon>CustomerPOSummary_Report.cs</DependentUpon>
