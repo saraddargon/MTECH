@@ -425,6 +425,51 @@ namespace StockControl
             var clist = new CustomerPO_List_Print();
             clist.ShowDialog();
         }
+
+        private void btnCompleted_Click(object sender, EventArgs e)
+        {
+            dgvData.EndEdit();
+
+            if (baseClass.IsSave())
+            {
+                using (DataClasses1DataContext db = new DataClasses1DataContext())
+                {
+                    foreach (GridViewRowInfo rd in dgvData.Rows)
+                    {
+                        if (rd.IsVisible && dbClss.TSt(rd.Cells["SS"].Value)== "Process")
+                        {
+                            int id = (dbClss.TInt(rd.Cells["id"].Value));
+
+                            var v = (from ix in db.mh_SaleOrderDTs
+                                     where
+                                               ix.id == Convert.ToInt16(rd.Cells["id"].Value.ToSt())
+                                               && ix.OutShip > 0 && ix.Active == true
+                                     select ix).ToList();
+                            if (v.Count > 0)
+                            {
+                                var p = (from ix in db.mh_SaleOrderDTs
+                                         where
+                                            ix.id == Convert.ToInt16(rd.Cells["id"].Value.ToSt())
+                                             && ix.OutShip > 0 && ix.Active == true
+                                         select ix).First();
+
+                                //p.OutShip = p.OutShip - Convert.ToDecimal(rd.Cells["Qty"].Value.ToSt());
+                                //if (p.OutShip < 0)
+                                    p.OutShip = 0;
+
+                                dbClss.AddHistory(this.Name, "ปรับสถานะ mh_SaleOrderDTs ", "ปรับสถานะเป็น Completed ItemNo : " + dbClss.TSt(p.ItemNo) 
+                                + " SaleOrderDT :" + Convert.ToString(rd.Cells["SONo"].Value)
+                                + " ปรับโดย [" + ClassLib.Classlib.User + " วันที่ :" + Convert.ToDateTime(DateTime.Now, new CultureInfo("en-US")).ToString("dd/MMM/yyyy") + "]", Convert.ToString(rd.Cells["SONo"].Value));
+
+                                db.SubmitChanges();
+                                db.sp_058_Cal_SaleOrderHD_Status(p.SONo);
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
