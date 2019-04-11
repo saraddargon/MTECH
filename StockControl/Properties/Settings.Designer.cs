@@ -42,5 +42,15 @@ namespace StockControl.Properties {
                 return ((string)(this["dbMTECH_ImportConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=110.170.161.34;Initial Catalog=dbMTECH;User ID=z")]
+        public string dbMTECHConnectionString {
+            get {
+                return ((string)(this["dbMTECHConnectionString"]));
+            }
+        }
     }
 }
